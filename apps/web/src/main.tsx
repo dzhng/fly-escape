@@ -1,3 +1,4 @@
+import { About } from "./about";
 import { SetupGame } from "./setup";
 import { PlaybackLab } from "./playback";
 import { LifecycleLab } from "./lifecycle";
@@ -245,15 +246,24 @@ function BrainLab() {
 }
 
 createRoot(document.getElementById("root")!).render(
-  location.pathname === "/lab/setup" || location.pathname === "/" ? (
-    <SetupGame />
-  ) : location.pathname === "/lab/playback" ? (
-    <PlaybackLab />
-  ) : location.pathname === "/lab/lifecycle" ? (
-    <LifecycleLab />
-  ) : location.pathname === "/lab/fields" ? (
-    <FieldsLab />
+  new URLSearchParams(location.search).has("about") ? (
+    <About />
   ) : (
-    <BrainLab />
+    <>
+      {location.pathname === "/lab/setup" || location.pathname === "/" ? (
+        <SetupGame />
+      ) : location.pathname === "/lab/playback" ? (
+        <PlaybackLab />
+      ) : location.pathname === "/lab/lifecycle" ? (
+        <LifecycleLab />
+      ) : location.pathname === "/lab/fields" ? (
+        <FieldsLab />
+      ) : (
+        <BrainLab />
+      )}
+      <footer className="app-information">
+        <a href="/?about">About the data and models</a>
+      </footer>
+    </>
   ),
 );

@@ -273,3 +273,7 @@ A single sRGB JSON registry owns home surface roles for procedural production ge
 ## Production house loading — sound, high confidence
 
 Load the three house roles as one settled batch per view, then transfer them through the existing replacement owner. The task requested shared authored production assets without choosing partial loading semantics. Waiting for all three prevents a failed kit from leaving a mixed accepted house; every successful sibling is disposed on error or stale view. Temporary primitive geometry remains visible only while explicitly loading and is disposed by replacement. No permanent asset cache or second scene owner is introduced.
+
+## About route — sound, medium confidence
+
+The About surface uses a query on the origin root rather than an additional path, so a basic static file server can serve it without an index fallback. A composition footer links to it after the game, preserving the existing camera viewport and avoiding concurrent setup/playback edits. It is keyboard reachable but below the game; future navigation design can relocate the link without changing attribution content or the serving contract.

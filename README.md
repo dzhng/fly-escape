@@ -19,6 +19,18 @@ bun run dev
 
 Open the printed local URL. Source preparation downloads about 1.1 GB once and produces a small static graph artifact. See [graph preparation](scripts/connectome/README.md) for provenance and reproducibility, and [reference fixtures](scripts/reference/README.md) for the numerical oracle.
 
+## Serve the static build
+
+After `bun run build`, serve the game distribution:
+
+```sh
+python3 -m http.server 4173 --bind 127.0.0.1 --directory apps/web/dist
+```
+
+Open `http://127.0.0.1:4173/`. Keep the distribution at the origin root: workers load `/brain/` data, and asset URLs are rooted there. Serve through HTTP rather than opening the HTML file directly. No application backend is needed. The About link uses a query on the root document, so this simple server needs no route fallback for it; direct `/lab/*` diagnostic routes require a server with an index fallback.
+
+The in-app About page explains data attribution and modeling limits and links to the bundled graph manifest. Static serving alone is not release acceptance; production performance and platform gates remain in the active specification.
+
 ## Ownership
 
 Browser applications live under `apps/`: `apps/web` is the game and [`apps/asset-lab`](apps/asset-lab/README.md) provides local model replacement and inspection. `packages/` holds the client and renderer; `crates/` owns simulation and its thin WASM boundary. The browser requires no application backend.

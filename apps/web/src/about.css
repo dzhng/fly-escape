@@ -1,0 +1,34 @@
+.about-page {
+  display: block;
+  height: auto;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 36px 24px 56px;
+  line-height: 1.65;
+}
+.about-page h1 {
+  margin: 24px 0;
+  font-size: 30px;
+}
+.about-page h2 {
+  font-size: 21px;
+  margin: 30px 0 12px;
+}
+.about-page p {
+  margin: 12px 0;
+}
+.about-page a,
+.app-information a {
+  color: #245d54;
+  text-decoration: underline;
+}
+.about-page a:focus-visible,
+.app-information a:focus-visible {
+  outline: 3px solid #9b651b;
+  outline-offset: 4px;
+}
+.app-information {
+  padding: 14px 24px;
+  background: #f4f3e9;
+  font-size: 14px;
+}
