@@ -1,8 +1,11 @@
 import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
 import { chromium } from "playwright";
+import { pathToFileURL } from "node:url";
 const base = process.env.BRAIN_URL ?? "http://127.0.0.1:5184";
-const output = new URL("../../specs/help-the-fly-escape/assets/evidence/13/", import.meta.url);
+const output = process.env.SCIENCE_OUTPUT
+  ? pathToFileURL(process.env.SCIENCE_OUTPUT + "/")
+  : new URL("../../specs/help-the-fly-escape/assets/evidence/13/", import.meta.url);
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ channel: "chrome", headless: true });
 const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });

@@ -85,9 +85,12 @@ function Explanation({ group }: { group: Group }) {
           <strong>{group.label}</strong>
           <p>{pathway(group)}</p>
           <p>
-            Each modeled cell adds incoming signals while its membrane voltage leaks toward rest.
-            Crossing a threshold emits a spike, resets voltage and starts a brief refractory period.
-            A lower voltage can therefore follow firing.
+            A neuron is a signaling cell. It receives input through connections called synapses.
+            Electrical charge on either side of its membrane creates a voltage difference. In this
+            model, incoming signals change that voltage while it also drifts toward rest. Crossing
+            a threshold emits a brief signal called a spike, then resets the voltage. A refractory
+            period is the short interval when the cell cannot fire again. A lower voltage can
+            therefore follow firing.
           </p>
           <p>
             Measured here: average model voltage and the fraction of this group’s{" "}

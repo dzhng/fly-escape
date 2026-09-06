@@ -142,10 +142,36 @@ When a recorded fly switches from flying to walking, its model plays the authore
 
 When playback advances, the archive remembers the latest mode change and terminal tick for each fly. Seeking backwards rebuilds those few values from the bounded packed history. The plan required repeatable animation without specifying retained transition state. This adds at most 800 bytes for 100 flies, rather than another decoded history. The renderer samples each clip at an absolute time, so pause and reverse seek return the same pose without changing simulation state.
 
-### Slice 13 — science panel preparation
+## Sound — medium confidence (science panel)
 
-- **Provisional, reviewable:** Each fly shows both scientific traces for one independently selectable group, while its diagram retains all source-defined group activity. Overlaying every group’s two quantities would make the narrow cards unreadable. The selector exposes every group; this changes information density, not recorded signals.
-- **Sound:** The diagram shows exported links touching the selected group, explicitly labeled. A full mesh obscured direction and labels in independent reviews. Selecting another group reveals its connections; the UI never invents or recomputes wiring.
-- **Sound:** Keep a maximum ten-second trace window and read only visible/near-visible cards from packed storage. This bounds panel work without dropping historical records or allowing traces beyond displayed time.
-- **Sound:** Explain candidate circuit labels as inherited selections, alongside primary biological context and explicit model assumptions. The original body-ID names alone do not prove anatomical function.
-- **Provisional, reviewable:** Voltage plots scale to the visible data with printed bounds; firing plots keep a fixed 0–100% scale. This shows voltage changes without confusing voltage units with firing fractions. Desktop tooltips sit beside the card panel; smaller viewports use a scrollable overlay.
+### Each fly shows one selected group's two traces (slice 13)
+
+A player can see voltage and firing fraction together, then choose any other neuron group on that fly's card. All group activity nodes remain in the diagram. The user requested both views on every card but did not specify whether every group's history must be drawn simultaneously. Drawing every trace at once made the narrow card hard to read. This provisional density choice preserves access to every group and can be reversed without changing recordings.
+
+### Connectivity follows the selected group (slice 13)
+
+Choosing a group also reveals its incoming and outgoing connections. The panel uses the exported wiring and says explicitly that these are the selected group's links. The plan left diagram density unspecified; drawing the complete mesh obscured its arrows and labels. This makes direction readable while retaining all group nodes, but the player must change selections to inspect the full network.
+
+### Voltage axes follow visible values (slice 13)
+
+When a voltage exceeds the initial plot range, the plot expands and prints its current bounds. Firing fraction always uses zero to one hundred percent. The plan left axis policy open. This keeps voltage changes visible, but comparing cards requires reading their scales; the model units are not biological millivolts.
+
+### Explanations sit beside the panel when space permits (slice 13)
+
+On desktop, opening an explanation leaves its source card visible alongside it. Narrow windows use a bounded, scrollable overlay that covers the card until closed. The user asked for detailed tooltips without specifying small-window layout. This is a reversible presentation tradeoff, with keyboard and pointer access preserved.
+
+## Sound — high confidence (science panel)
+
+### History work is bounded to nearby cards (slice 13)
+
+Every fly keeps a card, but only cards near the visible part of the scroll panel read up to ten seconds of packed history for plotting. Scrolling or seeking rereads the original records; it does not delete older data or invent zeros for absent measurements. The plan required bounded work without choosing the displayed history window. This limits rendering cost while preserving replay accuracy.
+
+### Circuit labels are explicitly candidate interpretations (slice 13)
+
+A tooltip explains neuronal signaling and identifies which source-selected group it summarizes. It distinguishes biological research from assumptions in the simulation, because an inherited group name does not independently establish the anatomy of its chosen cells. The plan requested scientific explanation but left provenance wording open. Future annotations can improve those interpretations without misrepresenting today's model as a recording of living-fly activity.
+
+## Sound — medium confidence (airborne selection)
+
+### The selection circle follows the fly's height (slice 06 integration)
+
+When the selected fly takes off, its yellow circle now rises with its displayed body. Keeping it on the floor made the circle appear around neighboring flies in the angled view. The user asked for a yellow circle without specifying its altitude; the initial plan chose ground placement. This reversible correction keeps the same single ornament and perspective while making selection clear. It changes no physical position or collision.
