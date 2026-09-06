@@ -1,6 +1,6 @@
 # 09 — Readable white trails
 
-Status: bounded packed-history and renderer preparation in progress. Dependencies: 08.
+Status: integrated functional and independent visual gates passed; human review pending. Dependencies: 08.
 
 ## Contract and seam
 
@@ -34,6 +34,6 @@ Must stay green: all accepted dependency contracts and their focused fixtures; n
 
 The archive exposes only recorded pose/mode/outcome history for at most 40 ticks per fly, directly from packed fields; it does not decode or retain neural history for trails. The consumer caches this window until the integer playback tick changes. The first ten ticks are presentation-transition context; at most the most recent thirty ticks (three seconds) are visible, clipped further to two world units. The renderer uses the same presentation-height function as the fly. A mismatch between a tick's recorded input position and the prior resulting position breaks the path; an attempt replacement owns a fresh trail. Terminal samples stop adding new segments while their existing path fades with playback time.
 
-One reusable mesh stores white, alpha-fading horizontal ribbons, depth-tested with no depth writes or shadows. Initial width is 0.025 world units and will be judged in both close and overview frames. Pause and seek reconstruct from the playback cursor, never wall time. The fractional endpoint is the already interpolated displayed fly pose; it cannot read a future trail sample. At most 30 segments per fly are uploaded, with fixed buffer capacity for the current population. These bounded presentation choices are provisional until the visual gate.
+One reusable mesh stores white, alpha-fading horizontal ribbons, depth-tested with no depth writes or shadows. Pause and seek reconstruct from the playback cursor, never wall time. The fractional endpoint is the already interpolated displayed fly pose; it cannot read a future trail sample. At most 30 segments per fly are uploaded, with fixed buffer capacity for the current population. The integrated visual evidence is in [palette integration](../assets/evidence/09/palette-integrated/review.md).
 
 The first fixed-world-width candidate failed visual review: overly broad close trails painted over bodies, while Overview trails were nearly invisible. The revised candidate derives a 1.5 CSS-pixel width through the existing camera projector, bounded to 0.001–0.08 world units, and leaves one bounds-derived selection-ring radius of path behind the fly empty. Linear alpha fading preserves white visibility longer. Recompute projected width when the camera changes even during paused playback. This changes only trail visibility; the recorded path and age remain authoritative. Re-run the same close/Overview proof before acceptance.

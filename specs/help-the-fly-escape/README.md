@@ -6,11 +6,11 @@ Build a local, fully 3D browser game in which the player places environmental to
 
 ## Next Agent Prompt
 
-You are implementing the full browser game. Current pickup: finish the merged solid-house and setup checks, and pair revised trails with the cool house palette. The native Level 1 calibration preparation runs independently; no campaign level is accepted yet. Keep actual build identity attached to performance evidence.
+You are implementing the full browser game. Current pickup: complete authored-house loading in production, review the integrated trails, and finish lighting/food art. The native Level 1 calibration preparation runs independently; no campaign level is accepted yet. Keep actual build identity attached to performance evidence.
 
 Completed: 01–08 and 13. The [ten full 20-fly baseline runs](assets/evidence/05/full-playback/review.md) passed without underruns. A newer setup/core build also passes one full integration run and its matching 250 MiB memory probe; this is not a repeat of the ten-run baseline. 100 flies remains a future scaling problem.
 
-Priority order: verify the merged solid geometry and setup editor; finish the 14 food-art subpass for 15 composition; finish 09 Overview trail visibility with 11 palette; finish 12 lighting; then 15–16 campaign validation and 17 clean release. Solid footprints, setup lifecycle and their bounded Workers are integrated. The setup committed-click race is fixed with a delayed actual-WASM regression; rerun it on the merged production build. Preserve all original dependency gates when accepting prepared slices.
+Priority order: finish 10 production authored-house loading (the workbench alone was insufficient); complete 09/11 human review; finish 12 lighting and 14 food art; then 15–16 campaign validation and 17 clean release. Merged solid/core and setup committed-click checks are green. Preserve dependency gates and do not accept any campaign level from a three-seed diagnostic.
 
 Palette 11 is prepared with a shared runtime/Blender registry and [paired production evidence](assets/evidence/11/review.md). Integrate the current pixel-width trails and resolve final visual/dependency gates before acceptance.
 
