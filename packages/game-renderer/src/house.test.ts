@@ -4,7 +4,7 @@ import { HouseGeometry, cutAwayWalls, loadHousePart } from "./house";
 import geometry from "../../../assets/house/five-rooms.json";
 import { doorwayProbes } from "../../../apps/asset-lab/src/house-probes";
 
-test("nested GLB cutaway hides the complete segment while leaving neighbors visible", async () => {
+test("nested GLB cutaway retains a low segment base and restores full walls without an occluder query", async () => {
   const house = new HouseGeometry({ rooms: geometry.rooms, walls: [
     { a: { x: 0, z: -1 }, b: { x: 0, z: 1 } },
     { a: { x: 2, z: -1 }, b: { x: 2, z: 1 } },
@@ -14,7 +14,12 @@ test("nested GLB cutaway hides the complete segment while leaving neighbors visi
   house.root.updateMatrixWorld(true);
   const ray = new THREE.Raycaster(new THREE.Vector3(-1, 0.3, 0), new THREE.Vector3(1, 0, 0), 0, 1.5);
   cutAwayWalls(house.walls, ray);
-  expect(house.walls.children.map(w => w.visible)).toEqual([false, true]);
+  expect(house.walls.children.map(w => new THREE.Box3().setFromObject(w).getSize(new THREE.Vector3()).y)).toEqual([expect.closeTo(0.06, 4), expect.closeTo(0.6, 4)]);
+  // Repeated queries must restore before intersecting, or the short base escapes the ray.
+  cutAwayWalls(house.walls, ray);
+  expect(new THREE.Box3().setFromObject(house.walls.children[0]).max.y).toBeCloseTo(0.06, 4);
+  cutAwayWalls(house.walls);
+  expect(house.walls.children.map(w => new THREE.Box3().setFromObject(w).max.y)).toEqual([expect.closeTo(0.6, 4), expect.closeTo(0.6, 4)]);
 });
 
 test("authored meshes leave every geometry doorway open and release replaced resources", async () => {
@@ -36,4 +41,16 @@ test("authored meshes leave every geometry doorway open and release replaced res
   house.replace("wall", replacement.root);
   expect(disposals).toBe(resources.size);
   await expect(loadHousePart(await Bun.file(new URL("../../../assets/house/floor.glb", import.meta.url)).arrayBuffer(), "wall")).rejects.toThrow("bounds");
+});
+
+test("shared wall endpoints close the outside corner without filling doorway ends", async () => {
+  const house = new HouseGeometry({ rooms: geometry.rooms, walls: [
+    { a: { x: -1, z: 0 }, b: { x: 0, z: 0 } },
+    { a: { x: 0, z: -1 }, b: { x: 0, z: 0 } },
+  ] });
+  house.root.updateMatrixWorld(true);
+  const corner = new THREE.Raycaster(new THREE.Vector3(0.04, 1, 0.04), new THREE.Vector3(0, -1, 0));
+  expect(corner.intersectObjects(house.walls.children, true).length).toBeGreaterThan(0);
+  const openEnd = new THREE.Raycaster(new THREE.Vector3(-1.04, 1, 0), new THREE.Vector3(0, -1, 0));
+  expect(openEnd.intersectObjects(house.walls.children, true)).toEqual([]);
 });

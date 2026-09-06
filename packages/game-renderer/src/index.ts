@@ -155,7 +155,7 @@ export class WorldView {
   }
 
   get houseVisibility() {
-    return { segments: this.house.walls.children.length, hidden: this.house.walls.children.filter(wall => !wall.visible).length };
+    return { segments: this.house.walls.children.length, cutaway: this.house.walls.children.filter(wall => wall.scale.y < 1).length };
   }
 
   setHousePart(part: HousePart, source: THREE.Group): void {
@@ -514,26 +514,24 @@ export class WorldView {
 
   render(): void {
     this.controls?.update(performance.now());
+    let selectedTarget: THREE.Vector3 | undefined;
     if (this.selectedFly !== null) {
       const fly = this.flies[this.selectedFly];
-      this.navigation.track(fly.position.clone().add(new THREE.Vector3(0, this.subjectCenterY, 0)));
+      selectedTarget = fly.position.clone().add(new THREE.Vector3(0, this.subjectCenterY, 0));
+      this.navigation.track(selectedTarget);
       this.selectionRing.position.set(fly.position.x, fly.position.y + 0.03, fly.position.z);
       this.updateSelectionRing();
     }
     // Only visual occluders on the camera-to-subject ray cut away; floor/wall
     // collision geometry remains entirely owned by the simulation.
-    this.house.walls.children.forEach((wall) => {
-      wall.visible = true;
-    });
-    if (this.selectedFly !== null && this.navigation.state.following) {
-      const target = this.flies[this.selectedFly].position
-        .clone()
-        .add(new THREE.Vector3(0, this.subjectCenterY, 0));
-      const direction = target.clone().sub(this.navigation.camera.position);
+    if (selectedTarget && this.navigation.project(selectedTarget).visible) {
+      const direction = selectedTarget.clone().sub(this.navigation.camera.position);
       this.raycaster.set(this.navigation.camera.position, direction.clone().normalize());
       this.raycaster.far = direction.length();
       cutAwayWalls(this.house.walls, this.raycaster);
       this.raycaster.far = Infinity;
+    } else {
+      cutAwayWalls(this.house.walls);
     }
     this.renderer.render(this.scene, this.navigation.camera);
   }

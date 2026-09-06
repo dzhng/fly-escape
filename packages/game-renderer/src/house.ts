@@ -59,13 +59,32 @@ export class HouseGeometry {
     disposeObjectResources(owner);
     owner.clear();
     if (part === "wall") {
+      const joins = new Map<string, { x: number; z: number }[]>();
+      const key = (p: { x: number; z: number }) => `${p.x},${p.z}`;
+      for (const segment of this.geometry.walls) {
+        const direction = { x: segment.b.x - segment.a.x, z: segment.b.z - segment.a.z };
+        for (const point of [segment.a, segment.b]) {
+          const directions = joins.get(key(point)) ?? [];
+          directions.push(direction);
+          joins.set(key(point), directions);
+        }
+      }
       for (const segment of this.geometry.walls) {
         const dx = segment.b.x - segment.a.x;
         const dz = segment.b.z - segment.a.z;
         const placement = new THREE.Group();
         placement.add(source.clone(true));
-        placement.scale.x = Math.hypot(dx, dz);
-        placement.position.set((segment.a.x + segment.b.x) / 2, 0, (segment.a.z + segment.b.z) / 2);
+        const length = Math.hypot(dx, dz);
+        const extension = (point: { x: number; z: number }) =>
+          joins.get(key(point))!.some(d => Math.abs(d.x * dz - d.z * dx) > 1e-8) ? PART_BOUNDS.wall[5] : 0;
+        const start = extension(segment.a);
+        const end = extension(segment.b);
+        placement.scale.x = length + start + end;
+        placement.position.set(
+          (segment.a.x + segment.b.x) / 2 + (end - start) * dx / (2 * length),
+          0,
+          (segment.a.z + segment.b.z) / 2 + (end - start) * dz / (2 * length),
+        );
         placement.rotation.y = -Math.atan2(dz, dx);
         owner.add(placement);
       }
@@ -82,11 +101,15 @@ export class HouseGeometry {
   }
 }
 
-/** Recursive mesh hits remove their complete segment, including sibling meshes. */
-export function cutAwayWalls(walls: THREE.Group, raycaster: THREE.Raycaster): void {
+/** Keep the physical boundary legible while exposing a followed fly above a low base. */
+export function cutAwayWalls(walls: THREE.Group, raycaster?: THREE.Raycaster): void {
+  for (const wall of walls.children) wall.scale.y = 1;
+  // Ray queries must see the restored mesh, not the previous frame's reduced base.
+  walls.updateMatrixWorld(true);
+  if (!raycaster) return;
   for (const hit of raycaster.intersectObjects(walls.children, true)) {
     let owner = hit.object;
     while (owner.parent && owner.parent !== walls) owner = owner.parent;
-    if (owner.parent === walls) owner.visible = false;
+    if (owner.parent === walls) owner.scale.y = 0.1;
   }
 }

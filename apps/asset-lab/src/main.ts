@@ -156,7 +156,10 @@ function draw(now: number) {
   lastTime = now;
   pose();
   view.render();
-  if (house) app.dataset.houseVisibility = JSON.stringify(view.houseVisibility);
+  if (house) {
+    app.dataset.houseVisibility = JSON.stringify(view.houseVisibility);
+    app.dataset.houseCamera = JSON.stringify(view.cameraState);
+  }
   raf = requestAnimationFrame(draw);
 }
 raf = requestAnimationFrame(draw);

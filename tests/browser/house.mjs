@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
 import { chromium } from "playwright";
-const output = new URL("../../specs/help-the-fly-escape/assets/evidence/10/browser/", import.meta.url);
+const output = new URL("../../specs/help-the-fly-escape/assets/evidence/10/selected-visibility/", import.meta.url);
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ headless: true, channel: "chrome" });
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
@@ -18,9 +18,31 @@ try {
   await page.locator("#room").selectOption("5");
   await page.locator("#inspect-room").click();
   await shot("pantry-follow");
+  await page.getByRole("button", { name: "Overview", exact: true }).click();
+  await shot("pantry-overview-before");
   await page.locator("#cutaway").click();
-  await page.waitForFunction(() => JSON.parse(document.querySelector("#app").dataset.houseVisibility).hidden > 0);
+  await page.waitForFunction(() => JSON.parse(document.querySelector("#app").dataset.houseVisibility).cutaway > 0);
   await shot("pantry-cutaway");
+  await page.getByRole("button", { name: "Overview", exact: true }).click();
+  await page.waitForFunction(() => JSON.parse(document.querySelector("#app").dataset.houseVisibility).cutaway > 0);
+  await shot("corner-overview");
+  const cornerCamera = JSON.parse(await page.locator("#app").getAttribute("data-house-camera"));
+  const canvasBox = await page.locator("canvas").boundingBox();
+  const anchor = cornerCamera.flies[0];
+  await page.screenshot({ path: new URL("corner-marker-crop.png", output).pathname, clip: {
+    x: canvasBox.x + anchor.x - 40, y: canvasBox.y + anchor.y - 40, width: 80, height: 80,
+  } });
+  await page.getByRole("button", { name: "Extra close", exact: true }).click();
+  for (let i = 0; i < 2; ++i) {
+    await page.mouse.move(100, 500); await page.mouse.down();
+    await page.mouse.move(1050, 500, { steps: 5 }); await page.mouse.up();
+  }
+  await page.waitForFunction(() => !JSON.parse(document.querySelector("#app").dataset.houseCamera).flies[0].visible);
+  await page.waitForFunction(() => JSON.parse(document.querySelector("#app").dataset.houseVisibility).cutaway === 0);
+  await page.locator("#inspect-room").click();
+  await page.getByRole("button", { name: "Overview", exact: true }).click();
+  await page.waitForFunction(() => JSON.parse(document.querySelector("#app").dataset.houseVisibility).cutaway === 0);
+  await shot("restored-overview");
   for (const [value, name] of [["-1", "before"], ["0", "threshold"], ["1", "after"]]) {
     await page.locator("#doorway").selectOption("2");
     await page.locator("#crossing").fill(value);
