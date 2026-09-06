@@ -1,0 +1,34 @@
+{
+  "sha256": "7faca4c5548a69b6990627fbd75216f40b162fc59ce2167e9fc99f64c2ea3af2",
+  "triangles": 5166,
+  "materials": 3,
+  "meshes": 40,
+  "joints": 23,
+  "glb_bytes": 385448,
+  "clips": {
+    "Walk": {
+      "seconds": 1.0,
+      "channels": 69,
+      "maximum_endpoint_component_difference": 0.0,
+      "root_targeted": false
+    },
+    "Fly": {
+      "seconds": 0.5,
+      "channels": 69,
+      "maximum_endpoint_component_difference": 0.0,
+      "root_targeted": false
+    },
+    "Land": {
+      "seconds": 0.800000011920929,
+      "channels": 69,
+      "maximum_endpoint_component_difference": 1.3893156051635742,
+      "root_targeted": false
+    },
+    "Feed": {
+      "seconds": 1.0,
+      "channels": 69,
+      "maximum_endpoint_component_difference": 0.0,
+      "root_targeted": false
+    }
+  }
+}
