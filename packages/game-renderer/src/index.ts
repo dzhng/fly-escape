@@ -9,16 +9,18 @@ import { WorldCamera } from "./camera";
 import { cameraInput } from "./camera-input";
 import type { Geometry, FieldGrid, ContactRegion, ExitOpening } from "@fly-escape/sim-client";
 
-export type FieldChannel = "odor" | "brightness" | "shade" | "exitCue";
+export type FieldChannel = "attractiveOdor" | "repellentOdor" | "brightness" | "shade" | "exitCue";
 /** Fixed modeled cue value at half overlay strength; never normalized per frame. */
 export const FIELD_OVERLAY_HALF_VALUES: Record<FieldChannel, number> = {
-  odor: 1,
+  attractiveOdor: 1,
+  repellentOdor: 1,
   brightness: 0.1,
   shade: 1,
   exitCue: 1,
 };
 export const FIELD_COLORS: Record<FieldChannel, [number, number, number]> = {
-  odor: [215, 110, 35],
+  attractiveOdor: [215, 110, 35],
+  repellentOdor: [215, 110, 35],
   brightness: [67, 76, 211],
   shade: [74, 83, 166],
   exitCue: [45, 169, 156],

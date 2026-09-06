@@ -8,6 +8,14 @@ fn graph() -> Arc<Graph> {
         bytes.extend(value.to_le_bytes());
     }
     let manifest = json!({"schemaVersion":1,"neuronCount":4,"edgeCount":0,"graphHash":format!("{:x}",Sha256::digest(&bytes)),"bodyIds":["1","2","3","4"],"motor":{"dnL":[0],"dnR":[1],"mnL":[],"mnR":[]},"pathways":{},"groups":[{"id":"taste","label":"Taste","indices":[2,3]},{"id":"odorExcL","label":"Left odor","indices":[2]},{"id":"odorExcR","label":"Right odor","indices":[3]},{"id":"proboscis","label":"Proboscis","indices":[3]}],"groupLinks":[],"pathwayProvenance":"synthetic attempt fixture"});
+    let mut manifest = manifest;
+    for id in ["odorInhL", "odorInhR", "visionL", "visionR"] {
+        let index = if id.ends_with('L') { 2 } else { 3 };
+        manifest["groups"]
+            .as_array_mut()
+            .unwrap()
+            .push(json!({"id":id,"label":id,"indices":[index]}));
+    }
     Arc::new(Graph::from_bytes(&bytes, &manifest.to_string()).unwrap())
 }
 fn level(count: usize) -> LevelDef {
@@ -61,7 +69,7 @@ fn level(count: usize) -> LevelDef {
             position: Point { x: 2., z: 2. },
             radius: 0.5,
             rate: 1.,
-            kind: SourceKind::Odor,
+            kind: SourceKind::RepellentOdor,
         }],
         field_config: FieldConfig::default(),
         body_config: BodyConfig::default(),
@@ -200,10 +208,10 @@ fn sensory_and_taste_currents_sum_without_direct_motor_injection() {
         radius: 0.5,
     });
     let tuning = AttemptTuning {
-        cue: Some(CueInput {
+        cues: vec![CueInput {
             pathway: sim::sensory::CuePathway::ExcitatoryOdor,
             gain: 0.1,
-        }),
+        }],
         taste_gain: 0.1,
         ..Default::default()
     };
@@ -297,4 +305,93 @@ fn fixed_ablation_is_hashed_validated_and_clamps_neural_readouts() {
         ..Default::default()
     };
     assert!(Attempt::describe(&graph, &level, &invalid, "invalid", 1, 1).is_err());
+}
+
+#[test]
+fn simultaneous_senses_sum_and_each_channel_can_be_ablated() {
+    use sim::sensory::CuePathway::*;
+    let graph = graph();
+    let mut definition = level(1);
+    definition.field_config.baseline_brightness = 0.;
+    definition.sources = [
+        SourceKind::AttractiveOdor,
+        SourceKind::RepellentOdor,
+        SourceKind::Lamp,
+    ]
+    .into_iter()
+    .map(|kind| Source {
+        position: Point { x: 2., z: 1.6 },
+        radius: 0.8,
+        rate: 2.,
+        kind,
+    })
+    .collect();
+    // A tiny graph with overlapping sensory populations makes the exact sum
+    // observable in membrane voltage without relying on a lucky motor response.
+    for seed in [0, 7, 42] {
+        for enabled in [
+            [true, false, false],
+            [false, true, false],
+            [false, false, true],
+            [true, true, true],
+            [false, true, true],
+            [true, false, true],
+            [true, true, false],
+        ] {
+            for remove_disabled_sources in [false, true] {
+                let mut definition = definition.clone();
+                if remove_disabled_sources {
+                    definition.sources = definition
+                        .sources
+                        .into_iter()
+                        .zip(enabled)
+                        .filter(|(_, on)| *on)
+                        .map(|(s, _)| s)
+                        .collect();
+                }
+                let cues: Vec<_> = [InhibitoryOdor, ExcitatoryOdor, Vision]
+                    .into_iter()
+                    .zip(enabled)
+                    .filter(|(_, on)| *on)
+                    .map(|(pathway, _)| CueInput { pathway, gain: 0.1 })
+                    .collect();
+                let expected_current = cues.len() as f64 * 0.1;
+                let tuning = AttemptTuning {
+                    cues,
+                    ..Default::default()
+                };
+                let make = || {
+                    let spec =
+                        Attempt::describe(&graph, &definition, &tuning, "mixed", seed, 1).unwrap();
+                    Attempt::new(graph.clone(), definition.clone(), tuning.clone(), spec).unwrap()
+                };
+                let mut attempt = make();
+                let mut replay = make();
+                let frame = attempt.step().unwrap().unwrap();
+                let senses = frame.flies[0].sensory.unwrap();
+                assert_eq!(
+                    senses.left.attractive_odor > senses.right.attractive_odor,
+                    !remove_disabled_sources || enabled[0]
+                );
+                assert_eq!(
+                    senses.left.repellent_odor > senses.right.repellent_odor,
+                    !remove_disabled_sources || enabled[1]
+                );
+                assert_eq!(
+                    senses.left.brightness > senses.right.brightness,
+                    !remove_disabled_sources || enabled[2]
+                );
+                let mut reference =
+                    sim::Brain::new(graph.clone(), sim::Brain::seed_for_fly(seed, 0));
+                reference
+                    .set_external_current(&[(2, expected_current)])
+                    .unwrap();
+                assert_eq!(frame.flies[0].neural, Some(reference.step()));
+                assert_eq!(Some(frame), replay.step().unwrap());
+                for _ in 0..19 {
+                    assert_eq!(attempt.step().unwrap(), replay.step().unwrap());
+                }
+            }
+        }
+    }
 }

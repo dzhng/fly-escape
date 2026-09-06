@@ -1,0 +1,42 @@
+{
+  "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+  "hashed": "Every pose, neural motor/group activity, and sensory input pose; field samples excluded because their schema changes",
+  "mirrors": [
+    -1,
+    1
+  ],
+  "seeds": [
+    0,
+    7,
+    42
+  ],
+  "ticks": 30,
+  "traces": [
+    {
+      "scenario": "excitatoryOdor",
+      "traceHash": "43b20f47337071ca4a80a1e0fde32b13ee33b28fd6b0956ab90f13a623040b5d"
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "traceHash": "4403fa5233cef8c0219eecf56360d0903a684647bb2624143fac31c4304550d6"
+    },
+    {
+      "scenario": "lamp",
+      "traceHash": "6aba481d3b403edddb2a2d54cb523ae701f99372170bda69de023052af7f1032"
+    },
+    {
+      "scenario": "shade",
+      "traceHash": "363a041a428ec5d7f5fcb709e9ad75dcc2a60c170cd03c07538ead724c5df57a"
+    },
+    {
+      "scenario": "wind",
+      "traceHash": "4ea077699e4b28f03af681883585c04b897ec7035d2253995c2fbcd5522952cc"
+    },
+    {
+      "scenario": "exit",
+      "traceHash": "4088ef01a3c097ba34d28c3c8b04f5846561b078c6396e82ce8ce9c18ecf2273"
+    }
+  ],
+  "baselineCommit": "859df58",
+  "verdict": "All six diagnostic traces are byte-identical before/after channel migration."
+}

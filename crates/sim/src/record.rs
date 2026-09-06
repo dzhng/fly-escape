@@ -22,7 +22,7 @@ pub const ARCHIVE_CAP_BYTES: u64 = 128 * 1024 * 1024;
 // Landing, starting/ending feeding and termination emit at most six events.
 // Eight slots keep the archive bound conservative; larger output is an error.
 pub const MAX_EVENTS_PER_FLY_TICK: usize = 8;
-const VALUE_FIELDS: [&str; 21] = [
+const VALUE_FIELDS: [&str; 23] = [
     "inputX",
     "inputZ",
     "inputHeading",
@@ -34,11 +34,13 @@ const VALUE_FIELDS: [&str; 21] = [
     "turn",
     "flightThrust",
     "flightTurn",
-    "leftOdor",
+    "leftAttractiveOdor",
+    "leftRepellentOdor",
     "leftBrightness",
     "leftShade",
     "leftExitCue",
-    "rightOdor",
+    "rightAttractiveOdor",
+    "rightRepellentOdor",
     "rightBrightness",
     "rightShade",
     "rightExitCue",
@@ -234,9 +236,13 @@ impl PackedChunk {
                     wind: Point { x: 0., z: 0. },
                 });
                 for side in [sense.left, sense.right] {
-                    chunk
-                        .values
-                        .extend([side.odor, side.brightness, side.shade, side.exit_cue]);
+                    chunk.values.extend([
+                        side.attractive_odor,
+                        side.repellent_odor,
+                        side.brightness,
+                        side.shade,
+                        side.exit_cue,
+                    ]);
                 }
                 chunk.values.extend([sense.wind.x, sense.wind.z]);
                 if let Some(neural) = &fly.neural {
@@ -331,10 +337,11 @@ impl PackedChunk {
                     return Err("invalid presence flags".into());
                 }
                 let field = |i| FieldSample {
-                    odor: v[i],
-                    brightness: v[i + 1],
-                    shade: v[i + 2],
-                    exit_cue: v[i + 3],
+                    attractive_odor: v[i],
+                    repellent_odor: v[i + 1],
+                    brightness: v[i + 2],
+                    shade: v[i + 3],
+                    exit_cue: v[i + 4],
                 };
                 flies.push(FlyFrame {
                     id: id as u32,
@@ -347,8 +354,8 @@ impl PackedChunk {
                     },
                     sensory: (s[2] & 1 != 0).then(|| SensorySample {
                         left: field(11),
-                        right: field(15),
-                        wind: Point { x: v[19], z: v[20] },
+                        right: field(16),
+                        wind: Point { x: v[21], z: v[22] },
                     }),
                     neural: (s[2] & 2 != 0).then(|| StepOutput {
                         motor: MotorOutput {
@@ -364,8 +371,8 @@ impl PackedChunk {
                             .enumerate()
                             .map(|(g, id)| GroupActivity {
                                 id: id.clone(),
-                                mean_voltage: v[21 + g * 2],
-                                spike_fraction: v[22 + g * 2],
+                                mean_voltage: v[23 + g * 2],
+                                spike_fraction: v[24 + g * 2],
                             })
                             .collect(),
                     }),

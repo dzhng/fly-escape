@@ -77,8 +77,11 @@ fn run(
         out.heading_change += frame.neural.motor.turn * 0.1;
         out.final_x = frame.pose.x;
         out.final_z = frame.pose.z;
-        out.mean_odor_difference +=
-            (frame.sensory.left.odor - frame.sensory.right.odor) / MEASURE as f64;
+        out.mean_odor_difference += (frame.sensory.left.attractive_odor
+            + frame.sensory.left.repellent_odor
+            - frame.sensory.right.attractive_odor
+            - frame.sensory.right.repellent_odor)
+            / MEASURE as f64;
         out.mean_brightness_difference +=
             (frame.sensory.left.brightness - frame.sensory.right.brightness) / MEASURE as f64;
     }

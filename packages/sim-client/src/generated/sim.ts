@@ -30,7 +30,7 @@ export type BodyEvent = { tick: number, kind: BodyEventKind, };
 export type OutcomeSummary = { escaped: number, starved: number, zapped: number, timedOut: number, score: number, };
 export type LevelDef = { id: string, geometry: Geometry, spawnPoses: Array<BodyPose>, exit: ExitOpening, exitCue: ExitCue | null, food: Array<ContactRegion>, zappers: Array<ContactRegion>, sources: Array<Source>, fieldConfig: FieldConfig, bodyConfig: BodyConfig, initialReserve: number, durationTicks: number, starThresholds: [number, number, number], };
 export type CueInput = { pathway: CuePathway, gain: number, };
-export type AttemptTuning = { cue: CueInput | null, tasteGain: number,
+export type AttemptTuning = { cues: Array<CueInput>, tasteGain: number,
 /**
  * Experimental ablation, fixed for the complete attempt and included in its identity.
  */
@@ -68,14 +68,14 @@ decay: number, baselineBrightness: number, antennaOffset: number,
  * World-space velocity used for odor advection and exported to body physics.
  */
 wind: Point, };
-export type SourceKind = "odor" | "lamp" | "shade";
+export type SourceKind = "attractiveOdor" | "repellentOdor" | "lamp" | "shade";
 export type Source = { position: Point, radius: number,
 /**
  * Odor: total cue mass per second. Lamp/shade: peak brightness contribution.
  */
 rate: number, kind: SourceKind, };
 export type ExitCue = { position: Point, roomId: number, radius: number, strength: number, };
-export type FieldSample = { odor: number, brightness: number, shade: number, exitCue: number, };
+export type FieldSample = { attractiveOdor: number, repellentOdor: number, brightness: number, shade: number, exitCue: number, };
 export type SensorySample = { left: FieldSample, right: FieldSample, wind: Point, };
 export type FieldGrid = { origin: Point, max: Point, cellSize: number, width: number, height: number, cells: Array<FieldSample | null>, wind: Point, };
 export type CuePathway = "excitatoryOdor" | "inhibitoryOdor" | "vision" | "none";

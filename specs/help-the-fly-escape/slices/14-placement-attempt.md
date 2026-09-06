@@ -18,6 +18,8 @@ The accepted diagnostic fixtures select one sensory pathway for an entire attemp
 
 Changes to packed samples must regenerate the single Rust-owned layout and its TypeScript consumers together; no compatibility format survives in this unshipped app. Re-run the affected memory/performance gates before accepting mixed-tool attempts. Do this preparation in isolation from the sustained slice 05 benchmark so its build identity remains interpretable.
 
+Preparation passes 1–2 are implemented in isolation and verified through the core and generated record consumer; see [mixed-sensory evidence](../assets/evidence/14/mixed-sensory.md). Placement resolution and UI remain planned. Integration must rerun the affected browser memory/performance gates: a full 20-fly archive bound is now 80,104,384 bytes, still below 128 MiB. This does not close slice 14 or change its dependencies.
+
 ## Runnable review surface
 
 A five-room integration fixture with palette, valid/invalid placement, fan rotation, Run, cancel, result, replay and Retry.

@@ -21,7 +21,9 @@ const channelFor = (scenario: FieldScenario) =>
     ? "brightness"
     : scenario === "exit"
       ? "exitCue"
-      : "odor";
+      : scenario === "excitatoryOdor"
+        ? "repellentOdor"
+        : "attractiveOdor";
 
 export function FieldsLab() {
   const containers = [useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null)];
@@ -168,7 +170,7 @@ export function FieldsLab() {
           )}
           <p className="field-legend">
             Overlay:{" "}
-            <b>{channelFor(scenario) === "exitCue" ? "local exit signal" : channelFor(scenario)}</b>
+            <b>{channelFor(scenario) === "exitCue" ? "local exit signal" : channelFor(scenario) === "brightness" ? "brightness" : "odor"}</b>
             <span
               className="legend-ramp"
               style={{
@@ -187,7 +189,13 @@ export function FieldsLab() {
                 <b>Left</b>
                 <b>Right</b>
               </div>
-              {(["odor", "brightness", "exitCue"] as const).map((key) => (
+              {(
+                [
+                  scenario === "excitatoryOdor" ? "repellentOdor" : "attractiveOdor",
+                  "brightness",
+                  "exitCue",
+                ] as const
+              ).map((key) => (
                 <div className="sensor-row" key={key}>
                   <span>
                     {key === "exitCue"

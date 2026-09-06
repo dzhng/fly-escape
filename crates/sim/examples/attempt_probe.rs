@@ -42,10 +42,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let graph_rss = rss_kib();
     let level = swarm_lab::level(count)?;
     let tuning = AttemptTuning {
-        cue: Some(CueInput {
+        cues: vec![CueInput {
             pathway: CuePathway::ExcitatoryOdor,
             gain: 1.,
-        }),
+        }],
         taste_gain: 0.,
         ..Default::default()
     };

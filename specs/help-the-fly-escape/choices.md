@@ -175,3 +175,19 @@ A tooltip explains neuronal signaling and identifies which source-selected group
 ### The selection circle follows the fly's height (slice 06 integration)
 
 When the selected fly takes off, its yellow circle now rises with its displayed body. Keeping it on the floor made the circle appear around neighboring flies in the angled view. The user asked for a yellow circle without specifying its altitude; the initial plan chose ground placement. This reversible correction keeps the same single ornament and perspective while making selection clear. It changes no physical position or collision.
+
+## Sound — medium confidence (mixed sensory preparation, slice 14)
+
+### Treat the nearby exit signal as part of the attractive odor input
+
+When a fly samples the room-local exit cue, that value joins the attractive odor concentration before left/right contrast selects the inhibitory-labeled sensory population. Repellent sources have their own concentration and drive the excitatory-labeled population. The plan required independent attractive/repellent inputs but did not place the existing exit signal between them. Keeping it with the attraction candidate preserves the measured exit diagnostic and avoids a new unmeasured input pathway. This is a model binding, not a claim that real flies sense exits as smells. It constrains future exit cue calibration. Verdict: sound; confidence: medium.
+
+## Sound — high confidence (mixed sensory preparation, slice 14)
+
+### Enable each odor or vision pathway at most once
+
+An attempt carries a small list of enabled sensory pathways and their gains. If attraction, avoidance and light are all enabled, their currents add before each neuron updates. Leaving one pathway out disables that input for a comparison; repeated entries are rejected rather than quietly doubling the stimulus. The plan required simultaneous input without choosing its representation. A maximum of three unique entries covers the actual channels and bounds work without an unrestricted routing graph. Taste remains separately controlled by physical contact. Verdict: sound; confidence: high.
+
+### Share transport geometry and scratch storage between odor channels
+
+Attractive and repellent sources diffuse and move with wind independently, but use the same floor cells, wall connections and transport coefficients. The solver reuses one temporary array after finishing each channel, and counts both channels against its work limit. The plan required shared transport without choosing memory ownership. This avoids duplicate geometry and a second algorithm while ensuring one scent never changes the other's concentration. Different chemical diffusion rates would require an explicit future model change. Verdict: sound; confidence: high.

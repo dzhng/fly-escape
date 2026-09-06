@@ -78,7 +78,7 @@ fn odor(chambers: Geometry, h: f64, wind: Point) -> FieldSet {
             position: Point { x: 2., z: 2. },
             radius: 0.7,
             rate: 1.,
-            kind: SourceKind::Odor,
+            kind: SourceKind::AttractiveOdor,
         }],
         None,
     )
@@ -95,7 +95,7 @@ fn mass_right(f: &FieldSet) -> f64 {
         .iter()
         .enumerate()
         .filter(|(i, _)| g.origin.x + (*i % g.width as usize) as f64 * g.cell_size >= 4.)
-        .map(|(_, v)| v.map_or(0., |s| s.odor) * g.cell_size * g.cell_size)
+        .map(|(_, v)| v.map_or(0., |s| s.attractive_odor) * g.cell_size * g.cell_size)
         .sum()
 }
 #[test]
@@ -132,7 +132,7 @@ fn plume(h: f64, wind: Point, source: Point) -> FieldSet {
             position: source,
             radius: 0.8,
             rate: 1.,
-            kind: SourceKind::Odor,
+            kind: SourceKind::AttractiveOdor,
         }],
         None,
     )
@@ -144,10 +144,10 @@ fn centroid(f: &FieldSet) -> Point {
     let mut p = Point::default();
     for (i, v) in g.cells.iter().enumerate() {
         if let Some(v) = v {
-            mass += v.odor;
-            p.x += v.odor
+            mass += v.attractive_odor;
+            p.x += v.attractive_odor
                 * (g.origin.x + (i % g.width as usize) as f64 * g.cell_size + g.cell_size / 2.);
-            p.z += v.odor
+            p.z += v.attractive_odor
                 * (g.origin.z + (i / g.width as usize) as f64 * g.cell_size + g.cell_size / 2.);
         }
     }
@@ -205,7 +205,7 @@ fn mirrored_fields_swap_antennae_and_export_exact_sampled_values() {
                 position: Point { x: 6., z },
                 radius: 0.8,
                 rate: 1.,
-                kind: SourceKind::Odor,
+                kind: SourceKind::AttractiveOdor,
             },
         ];
         let mut f = FieldSet::new(arena(), FieldConfig::default(), sources, None).unwrap();
@@ -214,12 +214,14 @@ fn mirrored_fields_swap_antennae_and_export_exact_sampled_values() {
     }
     let a = pair[0].sample(Point { x: 6., z: 6. }, 0., 20);
     let b = pair[1].sample(Point { x: 6., z: 6. }, 0., 20);
-    assert!(a.left.brightness > a.right.brightness && a.left.odor > a.right.odor);
+    assert!(
+        a.left.brightness > a.right.brightness && a.left.attractive_odor > a.right.attractive_odor
+    );
     assert!((a.left.brightness - b.right.brightness).abs() < 1e-12);
-    assert!((a.left.odor - b.right.odor).abs() < 1e-12);
-    assert!((a.right.odor - b.left.odor).abs() < 1e-12);
+    assert!((a.left.attractive_odor - b.right.attractive_odor).abs() < 1e-12);
+    assert!((a.right.attractive_odor - b.left.attractive_odor).abs() < 1e-12);
     let turned = pair[0].sample(Point { x: 6., z: 6. }, std::f64::consts::PI, 20);
-    assert!(turned.left.odor < turned.right.odor);
+    assert!(turned.left.attractive_odor < turned.right.attractive_odor);
     let g = pair[0].export_grid();
     for (i, cell) in g.cells.iter().enumerate() {
         let p = Point {
@@ -274,7 +276,7 @@ fn bounded_solver_preserves_mass_positivity_and_state_on_rejection() {
             position: Point { x: 2., z: 2. },
             radius: 0.7,
             rate: 2.,
-            kind: SourceKind::Odor,
+            kind: SourceKind::AttractiveOdor,
         }],
         None,
     )
@@ -286,8 +288,8 @@ fn bounded_solver_preserves_mass_positivity_and_state_on_rejection() {
         .iter()
         .flatten()
         .map(|v| {
-            assert!(v.odor.is_finite() && v.odor >= 0.);
-            v.odor * grid.cell_size.powi(2)
+            assert!(v.attractive_odor.is_finite() && v.attractive_odor >= 0.);
+            v.attractive_odor * grid.cell_size.powi(2)
         })
         .sum();
     assert!(
@@ -308,7 +310,7 @@ fn decay_reduces_total_concentration_at_the_declared_rate() {
         .cells
         .iter()
         .flatten()
-        .map(|v| v.odor * grid.cell_size.powi(2))
+        .map(|v| v.attractive_odor * grid.cell_size.powi(2))
         .sum();
     let continuous = (1. - (-0.1_f64 * 10.).exp()) / 0.1;
     assert!((mass - continuous).abs() / continuous < 0.01);
@@ -344,4 +346,46 @@ fn dead_end_branch_has_one_physical_connection_and_no_remote_exit_cue() {
     .unwrap();
     assert!(f.geometry().line_of_sight(branch, main));
     assert_eq!(f.sample_point(branch).exit_cue, 0.);
+}
+
+#[test]
+fn mixed_odors_transport_independently_through_the_same_doorway() {
+    for open in [false, true] {
+        let source = |kind, x| Source {
+            position: Point { x, z: 2. },
+            radius: 0.7,
+            rate: 1.,
+            kind,
+        };
+        let make =
+            |sources| FieldSet::new(chambers(open), FieldConfig::default(), sources, None).unwrap();
+        let mut attractive = make(vec![source(SourceKind::AttractiveOdor, 2.)]);
+        let mut repellent = make(vec![source(SourceKind::RepellentOdor, 6.)]);
+        let mut mixed = make(vec![
+            source(SourceKind::AttractiveOdor, 2.),
+            source(SourceKind::RepellentOdor, 6.),
+        ]);
+        for field in [&mut attractive, &mut repellent, &mut mixed] {
+            run(field, 12);
+        }
+        let a = attractive.export_grid();
+        let r = repellent.export_grid();
+        let m = mixed.export_grid();
+        for ((a, r), m) in a.cells.iter().zip(&r.cells).zip(&m.cells) {
+            if let (Some(a), Some(r), Some(m)) = (a, r, m) {
+                assert_eq!(m.attractive_odor, a.attractive_odor);
+                assert_eq!(m.repellent_odor, r.repellent_odor);
+                assert_eq!(a.repellent_odor, 0.);
+                assert_eq!(r.attractive_odor, 0.);
+            }
+        }
+        assert_eq!(
+            mixed.sample_point(Point { x: 2., z: 2. }).repellent_odor > 0.,
+            open
+        );
+        assert_eq!(
+            mixed.sample_point(Point { x: 6., z: 2. }).attractive_odor > 0.,
+            open
+        );
+    }
 }

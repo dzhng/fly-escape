@@ -91,11 +91,13 @@ export class FrameArchive {
       "turn",
       "flightThrust",
       "flightTurn",
-      "leftOdor",
+      "leftAttractiveOdor",
+      "leftRepellentOdor",
       "leftBrightness",
       "leftShade",
       "leftExitCue",
-      "rightOdor",
+      "rightAttractiveOdor",
+      "rightRepellentOdor",
       "rightBrightness",
       "rightShade",
       "rightExitCue",
@@ -355,7 +357,8 @@ export class FrameArchive {
           record * this.layout.stateFields.length + this.stateOffsets[name]
         ];
       const side = (prefix: string): FieldSample => ({
-        odor: v(`${prefix}Odor`),
+        attractiveOdor: v(`${prefix}AttractiveOdor`),
+        repellentOdor: v(`${prefix}RepellentOdor`),
         brightness: v(`${prefix}Brightness`),
         shade: v(`${prefix}Shade`),
         exitCue: v(`${prefix}ExitCue`),

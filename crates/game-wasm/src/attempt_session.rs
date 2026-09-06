@@ -260,10 +260,10 @@ pub fn swarm_request(
         fly_count,
         level,
         tuning: sim::attempt::AttemptTuning {
-            cue: Some(sim::attempt::CueInput {
+            cues: vec![sim::attempt::CueInput {
                 pathway: sim::sensory::CuePathway::ExcitatoryOdor,
                 gain: 1.0,
-            }),
+            }],
             ..Default::default()
         },
     };

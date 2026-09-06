@@ -28,7 +28,8 @@ impl Default for FieldConfig {
 #[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 pub enum SourceKind {
-    Odor,
+    AttractiveOdor,
+    RepellentOdor,
     Lamp,
     Shade,
 }
@@ -36,7 +37,7 @@ pub enum SourceKind {
 pub struct Source {
     pub position: Point,
     pub radius: f64,
-    /// Odor: total cue mass per second. Lamp/shade: peak brightness contribution.
+    /// Each odor channel: total cue mass per second. Lamp/shade: peak brightness contribution.
     pub rate: f64,
     pub kind: SourceKind,
 }
@@ -51,7 +52,8 @@ pub struct ExitCue {
 #[derive(Debug, Clone, Copy, Default, PartialEq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 pub struct FieldSample {
-    pub odor: f64,
+    pub attractive_odor: f64,
+    pub repellent_odor: f64,
     pub brightness: f64,
     pub shade: f64,
     pub exit_cue: f64,
@@ -85,9 +87,9 @@ pub struct FieldSet {
     height: usize,
     active: Vec<bool>,
     edges: Vec<(usize, usize, f64)>,
-    odor: Vec<f64>,
+    odors: [Vec<f64>; 2],
     scratch: Vec<f64>,
-    injection: Vec<f64>,
+    injection: [Vec<f64>; 2],
     brightness: Vec<f64>,
     shade: Vec<f64>,
 }
@@ -192,9 +194,9 @@ impl FieldSet {
             height,
             active: vec![false; count],
             edges: vec![],
-            odor: vec![0.; count],
+            odors: std::array::from_fn(|_| vec![0.; count]),
             scratch: vec![0.; count],
-            injection: vec![0.; count],
+            injection: std::array::from_fn(|_| vec![0.; count]),
             brightness: vec![0.; count],
             shade: vec![0.; count],
         };
@@ -223,7 +225,12 @@ impl FieldSet {
                 })
                 .collect();
             let area_sum = weights.iter().sum::<f64>() * set.config.cell_size.powi(2);
-            if s.kind == SourceKind::Odor && s.rate > 0. && area_sum == 0. {
+            if matches!(
+                s.kind,
+                SourceKind::AttractiveOdor | SourceKind::RepellentOdor
+            ) && s.rate > 0.
+                && area_sum == 0.
+            {
                 return Err(
                     "odor source footprint has no grid center; enlarge radius or refine grid"
                         .into(),
@@ -231,9 +238,10 @@ impl FieldSet {
             }
             for (i, w) in weights.into_iter().enumerate() {
                 match s.kind {
-                    SourceKind::Odor => {
+                    SourceKind::AttractiveOdor | SourceKind::RepellentOdor => {
                         if area_sum > 0. {
-                            set.injection[i] += s.rate * w / area_sum;
+                            set.injection[usize::from(s.kind == SourceKind::RepellentOdor)][i] +=
+                                s.rate * w / area_sum;
                         }
                     }
                     SourceKind::Lamp => set.brightness[i] += s.rate * w,
@@ -248,6 +256,7 @@ impl FieldSet {
         if set
             .injection
             .iter()
+            .flatten()
             .chain(&set.brightness)
             .chain(&set.shade)
             .any(|v| !v.is_finite())
@@ -292,34 +301,37 @@ impl FieldSet {
             + (self.config.wind.x.abs() + self.config.wind.z.abs()) / h
             + self.config.decay;
         let steps = (dt * loss / 0.9).ceil().max(1.);
-        let work = steps * self.odor.len() as f64;
+        let work = steps * self.active.len() as f64 * 2.;
         if !work.is_finite() || work > MAX_WORK as f64 {
             return Err(format!("field advance work limit {MAX_WORK} cell-substeps exceeded: {work}; reduce dt or transport coefficients"));
         }
         // Bound accumulation before mutating; finite inputs alone do not prevent overflow.
-        let bound = self.odor.iter().sum::<f64>() + dt * self.injection.iter().sum::<f64>();
+        let bound = self.odors.iter().flatten().sum::<f64>()
+            + dt * self.injection.iter().flatten().sum::<f64>();
         if !bound.is_finite() {
             return Err("field concentration overflow; advance rejected".into());
         }
         let step_dt = dt / steps;
         let diffusion = self.config.diffusion / (h * h);
-        for _ in 0..steps as usize {
-            for i in 0..self.odor.len() {
-                self.scratch[i] =
-                    self.odor[i] * (1. - step_dt * self.config.decay) + step_dt * self.injection[i];
+        for (odor, injection) in self.odors.iter_mut().zip(&self.injection) {
+            for _ in 0..steps as usize {
+                for i in 0..odor.len() {
+                    self.scratch[i] =
+                        odor[i] * (1. - step_dt * self.config.decay) + step_dt * injection[i];
+                }
+                for &(a, b, velocity) in &self.edges {
+                    let flux = step_dt
+                        * (diffusion * (odor[a] - odor[b])
+                            + (velocity.max(0.) * odor[a] + velocity.min(0.) * odor[b]) / h);
+                    self.scratch[a] -= flux;
+                    self.scratch[b] += flux;
+                }
+                // Only roundoff can cross zero under the CFL condition.
+                for value in &mut self.scratch {
+                    *value = value.max(0.);
+                }
+                std::mem::swap(odor, &mut self.scratch);
             }
-            for &(a, b, velocity) in &self.edges {
-                let flux = step_dt
-                    * (diffusion * (self.odor[a] - self.odor[b])
-                        + (velocity.max(0.) * self.odor[a] + velocity.min(0.) * self.odor[b]) / h);
-                self.scratch[a] -= flux;
-                self.scratch[b] += flux;
-            }
-            // Only roundoff can cross zero under the CFL condition.
-            for value in &mut self.scratch {
-                *value = value.max(0.);
-            }
-            std::mem::swap(&mut self.odor, &mut self.scratch);
         }
         Ok(())
     }
@@ -348,7 +360,8 @@ impl FieldSet {
                 e.strength * (1. - p.distance(e.position) / e.radius).max(0.)
             });
         FieldSample {
-            odor: self.odor[i],
+            attractive_odor: self.odors[0][i],
+            repellent_odor: self.odors[1][i],
             brightness: self.brightness[i],
             shade: self.shade[i],
             exit_cue,
@@ -381,7 +394,7 @@ impl FieldSet {
             cell_size: self.config.cell_size,
             width: self.width as u32,
             height: self.height as u32,
-            cells: (0..self.odor.len())
+            cells: (0..self.active.len())
                 .map(|i| self.active[i].then(|| self.sample_point(self.center(i))))
                 .collect(),
             wind: self.config.wind,

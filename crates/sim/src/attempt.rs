@@ -71,7 +71,7 @@ pub struct CueInput {
 #[derive(Clone, Debug, Default, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 pub struct AttemptTuning {
-    pub cue: Option<CueInput>,
+    pub cues: Vec<CueInput>,
     pub taste_gain: f64,
     /// Experimental ablation, fixed for the complete attempt and included in its identity.
     #[serde(default)]
@@ -218,14 +218,14 @@ impl Attempt {
         } else {
             vec![]
         };
-        if let Some(cue) = &tuning.cue {
+        for cue in &tuning.cues {
             let probe = fields.sample(
                 level.spawn_poses[0].position,
                 level.spawn_poses[0].heading,
                 0,
             );
             let currents = cue_currents(&graph, &probe, cue.pathway, cue.gain)?;
-            if cue.gain > 0. && !matches!(cue.pathway, CuePathway::None) && currents.is_empty() {
+            if cue.gain > 0. && currents.is_empty() {
                 return Err("cue group has no neurons outside motor readouts".into());
             }
         }
@@ -311,7 +311,7 @@ impl Attempt {
                     .fields
                     .sample(input_pose.position, input_pose.heading, self.tick);
                 let mut currents = BTreeMap::<u32, f64>::new();
-                if let Some(cue) = &self.tuning.cue {
+                for cue in &self.tuning.cues {
                     for (index, value) in cue_currents(&self.graph, &sample, cue.pathway, cue.gain)?
                     {
                         *currents.entry(index).or_default() += value;
@@ -389,12 +389,24 @@ fn validate_description(
             "attempt capacity requires 1..100 flies and enough spawn poses, at most 100".into(),
         );
     }
+    if tuning.cues.len() > 3
+        || tuning.cues.iter().enumerate().any(|(i, c)| {
+            matches!(c.pathway, CuePathway::None)
+                || tuning.cues[..i]
+                    .iter()
+                    .any(|prior| prior.pathway == c.pathway)
+        })
+    {
+        return Err(
+            "attempt accepts each odor/vision pathway at most once; omit disabled pathways".into(),
+        );
+    }
     if !tuning.taste_gain.is_finite()
         || !(0. ..=3.).contains(&tuning.taste_gain)
         || tuning
-            .cue
-            .as_ref()
-            .is_some_and(|c| !c.gain.is_finite() || !(0. ..=3.).contains(&c.gain))
+            .cues
+            .iter()
+            .any(|c| !c.gain.is_finite() || !(0. ..=3.).contains(&c.gain))
     {
         return Err("attempt sensory gains must be between zero and three".into());
     }

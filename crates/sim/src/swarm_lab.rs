@@ -79,7 +79,7 @@ pub fn level(count: u32) -> Result<LevelDef, String> {
             position: point(0., 0.),
             radius: 1.,
             rate: 1.,
-            kind: SourceKind::Odor,
+            kind: SourceKind::RepellentOdor,
         }],
         field_config: FieldConfig {
             wind: point(0., 0.),

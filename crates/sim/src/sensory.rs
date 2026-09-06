@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, HashSet};
 use ts_rs::TS;
 
-#[derive(Clone, Copy, Debug, Serialize, Deserialize, TS)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 pub enum CuePathway {
     ExcitatoryOdor,
@@ -13,6 +13,9 @@ pub enum CuePathway {
     None,
 }
 
+/// The measured chamber maps attractive odor to inhibitory-labeled inputs and
+/// repellent odor to excitatory-labeled inputs. These source bindings are modeling
+/// assumptions, not universal biological functions of excitation or inhibition.
 /// Local contrast selects sensory input. Side identity is retained;
 /// whether a pathway attracts or repels is an empirical result, not a sign flip.
 pub fn cue_currents(
@@ -27,16 +30,13 @@ pub fn cue_currents(
     let (ids, mut values) = match pathway {
         CuePathway::ExcitatoryOdor => (
             ["odorExcL", "odorExcR"],
-            [
-                sample.left.odor + sample.left.exit_cue,
-                sample.right.odor + sample.right.exit_cue,
-            ],
+            [sample.left.repellent_odor, sample.right.repellent_odor],
         ),
         CuePathway::InhibitoryOdor => (
             ["odorInhL", "odorInhR"],
             [
-                sample.left.odor + sample.left.exit_cue,
-                sample.right.odor + sample.right.exit_cue,
+                sample.left.attractive_odor + sample.left.exit_cue,
+                sample.right.attractive_odor + sample.right.exit_cue,
             ],
         ),
         CuePathway::Vision => (
@@ -147,11 +147,11 @@ mod tests {
             "manual sensory input sums overlapping groups and excludes motor neuron 3"
         );
         let strong = FieldSample {
-            odor: 0.8,
+            repellent_odor: 0.8,
             ..Default::default()
         };
         let weak = FieldSample {
-            odor: 0.2,
+            repellent_odor: 0.2,
             ..Default::default()
         };
         let mut sample = SensorySample {

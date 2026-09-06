@@ -25,13 +25,15 @@ fn frame(tick: u32) -> AttemptFrame {
             },
             sensory: Some(SensorySample {
                 left: FieldSample {
-                    odor: 0.1,
+                    attractive_odor: 0.1,
+                    repellent_odor: 0.9,
                     brightness: 0.2,
                     shade: 0.3,
                     exit_cue: 0.4,
                 },
                 right: FieldSample {
-                    odor: 0.5,
+                    attractive_odor: 0.5,
+                    repellent_odor: 0.3,
                     brightness: 0.6,
                     shade: 0.7,
                     exit_cue: 0.8,
