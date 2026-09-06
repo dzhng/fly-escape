@@ -62,4 +62,4 @@ export type { AttemptReply } from "./attempt-protocol";
 export { FrameArchive } from "./record";
 export { PlaybackClock } from "./playback";
 
-export type { RecordedMotion } from "./record";
+export type { RecordedMotion, RecordedPose } from "./record";

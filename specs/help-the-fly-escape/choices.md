@@ -241,3 +241,9 @@ The enclosure follow-up uses the explicitly requested low-base strategy: an occl
 
 
 The joined-wall follow-up derives shared noncollinear endpoints from the same Geometry payload and extends only those visual ends by half the kit thickness; lone door ends remain unchanged. This explicitly authorized geometry correction fills the missing corner quadrant without adding a prop, independent layout, or collision change. The selected-visibility policy is also explicit: Overview releases follow but retains selection, and an onscreen selected fly receives the same wall cutaway in every camera mode. Both policies are now in the architecture/spec handoff rather than hidden renderer choices.
+
+## Sound — medium confidence (trail preparation)
+
+### Rebuild a short recorded tail at each playback tick (slice 09)
+
+Each fly's trail uses up to four seconds of recorded positions, with the oldest second reserved for reconstructing a landing's height. Only the last three seconds and two world units are drawn. The user requested fading white trails without choosing storage or duration. Reading packed poses when the playback tick changes keeps seeks faithful without retaining a second full history or letting frame rate change the trail. Width and fade remain reversible visual tuning; the archive supplies motion context and the renderer shares the fly's height rule.

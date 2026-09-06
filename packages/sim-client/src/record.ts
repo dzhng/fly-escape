@@ -18,6 +18,16 @@ export type TransferChunk = Omit<
   events: Uint32Array;
   tickNeuralSteps: Uint32Array;
 };
+export type RecordedPose = {
+  tick: number;
+  x: number;
+  z: number;
+  inputX: number;
+  inputZ: number;
+  mode: BodyMode;
+  terminal: boolean;
+  motion: RecordedMotion;
+};
 export type RecordedMotion = {
   mode: BodyMode;
   previousMode: BodyMode;
@@ -34,10 +44,7 @@ function require(condition: unknown, message: string): asserts condition {
  * supplied by attempt metadata; frame() only reads recorded ticks starting at 1. */
 export class FrameArchive {
   private chunks: TransferChunk[] = [];
-  private readonly spec: Pick<
-    AttemptSpec,
-    "attemptId" | "flyCount" | "durationTicks"
-  >;
+  private readonly spec: Pick<AttemptSpec, "attemptId" | "flyCount" | "durationTicks">;
   private readonly layout: RecordLayout;
   private readonly valueOffsets: Record<string, number>;
   private readonly stateOffsets: Record<string, number>;
@@ -112,8 +119,7 @@ export class FrameArchive {
     for (const name of ["meanVoltage", "spikeFraction"])
       require(name in this.groupOffsets, `Missing group field ${name}`);
     this.valueStride =
-      layout.valueFields.length +
-      layout.groupIds.length * layout.groupFields.length;
+      layout.valueFields.length + layout.groupIds.length * layout.groupFields.length;
   }
   get computedTick() {
     return this.lastTick;
@@ -146,8 +152,7 @@ export class FrameArchive {
       chunk.schemaVersion === this.layout.schemaVersion &&
       chunk.sequence === this.chunks.length &&
       chunk.startTick === this.lastTick + 1 &&
-      chunk.flyCount ===
-        this.spec.flyCount, "Chunk identity or sequence mismatch");
+      chunk.flyCount === this.spec.flyCount, "Chunk identity or sequence mismatch");
     require(integer(chunk.tickCount) &&
       chunk.tickCount > 0 &&
       chunk.tickCount <= this.layout.maxChunkTicks, "Invalid chunk tick count");
@@ -157,8 +162,7 @@ export class FrameArchive {
     require(chunk.values instanceof Float64Array &&
       chunk.states instanceof Uint32Array &&
       chunk.events instanceof Uint32Array &&
-      chunk.tickNeuralSteps instanceof
-        Uint32Array, "Chunk requires transferred typed buffers");
+      chunk.tickNeuralSteps instanceof Uint32Array, "Chunk requires transferred typed buffers");
     require(chunk.values.length === count * this.valueStride &&
       chunk.states.length === count * this.layout.stateFields.length &&
       chunk.tickNeuralSteps.length === chunk.tickCount &&
@@ -178,30 +182,20 @@ export class FrameArchive {
     ), "Archive requires owned ArrayBuffers");
     // Match the core's envelope allowance and count backing allocations, including
     // any larger buffers retained by a subview. Shared graph metadata lives outside.
-    const bytes = [...buffers].reduce(
-      (sum, buffer) => sum + buffer.byteLength,
-      1024,
-    );
+    const bytes = [...buffers].reduce((sum, buffer) => sum + buffer.byteLength, 1024);
     require(this.bytes + bytes + 16384 <=
       this.archiveByteBound, "Record archive capacity exceeded");
     require(chunk.values.every(Number.isFinite), "Nonfinite recorded value");
-    const flags =
-      this.layout.sensoryPresentMask | this.layout.neuralPresentMask;
+    const flags = this.layout.sensoryPresentMask | this.layout.neuralPresentMask;
     for (let i = 0; i < count; i++) {
       const s = i * this.layout.stateFields.length;
-      require(chunk.states[s + this.stateOffsets.mode] <
-        this.layout.modes.length &&
-        chunk.states[s + this.stateOffsets.outcome] <
-          this.layout.outcomes.length &&
+      require(chunk.states[s + this.stateOffsets.mode] < this.layout.modes.length &&
+        chunk.states[s + this.stateOffsets.outcome] < this.layout.outcomes.length &&
         (chunk.states[s + this.stateOffsets.presence] & ~flags) ===
           0, "Invalid recorded state code");
     }
     const eventCounts = new Uint8Array(count);
-    for (
-      let i = 0;
-      i < chunk.events.length;
-      i += this.layout.eventFields.length
-    ) {
+    for (let i = 0; i < chunk.events.length; i += this.layout.eventFields.length) {
       const tick = chunk.events[i + this.eventOffsets.tick];
       const fly = chunk.events[i + this.eventOffsets.flyId];
       require(tick >= chunk.startTick &&
@@ -300,6 +294,56 @@ export class FrameArchive {
     }));
   }
 
+  /** Pose-only window for trails: no neural decoding or retained second history. */
+  poseHistory(endTick: number, windowTicks = 40): RecordedPose[][] {
+    require(integer(endTick) && endTick <= this.lastTick, "Tick has not been recorded");
+    require(integer(windowTicks) &&
+      windowTicks > 0 &&
+      windowTicks <= 40, "Pose window exceeds 40 ticks");
+    const histories: RecordedPose[][] = Array.from({ length: this.spec.flyCount }, () => []);
+    const start = Math.max(1, endTick - windowTicks + 1);
+    const motions: RecordedMotion[] = Array.from({ length: this.spec.flyCount }, () => ({
+      mode: "walking",
+      previousMode: "walking",
+      startedTick: 0,
+      cursorTick: 0,
+    }));
+    for (const chunk of this.chunks) {
+      const end = Math.min(endTick, chunk.startTick + chunk.tickCount - 1);
+      if (end < start) continue;
+      if (chunk.startTick > endTick) break;
+      for (let tick = Math.max(start, chunk.startTick); tick <= end; tick++) {
+        for (let id = 0; id < chunk.flyCount; id++) {
+          const record = (tick - chunk.startTick) * chunk.flyCount + id;
+          const base = record * this.valueStride;
+          const state = record * this.layout.stateFields.length;
+          const mode = this.layout.modes[chunk.states[state + this.stateOffsets.mode]];
+          const motion = motions[id];
+          if (tick === start && start > 1) {
+            motion.mode = motion.previousMode = mode;
+          } else if (mode !== motion.mode) {
+            motion.previousMode = motion.mode;
+            motion.mode = mode;
+            motion.startedTick = tick;
+          }
+          motion.cursorTick = tick;
+          histories[id].push({
+            tick,
+            x: chunk.values[base + this.valueOffsets.x],
+            z: chunk.values[base + this.valueOffsets.z],
+            inputX: chunk.values[base + this.valueOffsets.inputX],
+            inputZ: chunk.values[base + this.valueOffsets.inputZ],
+            mode,
+            motion: { ...motion },
+            terminal:
+              this.layout.outcomes[chunk.states[state + this.stateOffsets.outcome]] !== null,
+          });
+        }
+      }
+    }
+    return histories;
+  }
+
   /** Read one group's bounded history directly from packed storage. Missing
    * neural samples remain gaps, including terminal ticks; never invent zeros. */
   neuralTrace(flyId: number, groupId: string, endTick: number, windowTicks = 100) {
@@ -336,9 +380,7 @@ export class FrameArchive {
   }
 
   frame(tick: number): AttemptFrame {
-    require(integer(tick) &&
-      tick >= 1 &&
-      tick <= this.lastTick, "Tick has not been recorded");
+    require(integer(tick) && tick >= 1 && tick <= this.lastTick, "Tick has not been recorded");
     let low = 0,
       high = this.chunks.length - 1;
     while (low < high) {
@@ -350,12 +392,9 @@ export class FrameArchive {
     const tickIndex = tick - chunk.startTick;
     const flies = Array.from({ length: chunk.flyCount }, (_, id) => {
       const record = tickIndex * chunk.flyCount + id;
-      const v = (name: string) =>
-        chunk.values[record * this.valueStride + this.valueOffsets[name]];
+      const v = (name: string) => chunk.values[record * this.valueStride + this.valueOffsets[name]];
       const s = (name: string) =>
-        chunk.states[
-          record * this.layout.stateFields.length + this.stateOffsets[name]
-        ];
+        chunk.states[record * this.layout.stateFields.length + this.stateOffsets[name]];
       const side = (prefix: string): FieldSample => ({
         attractiveOdor: v(`${prefix}AttractiveOdor`),
         repellentOdor: v(`${prefix}RepellentOdor`),
@@ -400,10 +439,8 @@ export class FrameArchive {
                     group * this.layout.groupFields.length;
                   return {
                     id,
-                    meanVoltage:
-                      chunk.values[base + this.groupOffsets.meanVoltage],
-                    spikeFraction:
-                      chunk.values[base + this.groupOffsets.spikeFraction],
+                    meanVoltage: chunk.values[base + this.groupOffsets.meanVoltage],
+                    spikeFraction: chunk.values[base + this.groupOffsets.spikeFraction],
                   };
                 }),
               }
@@ -411,11 +448,7 @@ export class FrameArchive {
         events: [] as AttemptFrame["flies"][number]["events"],
       };
     });
-    for (
-      let i = 0;
-      i < chunk.events.length;
-      i += this.layout.eventFields.length
-    ) {
+    for (let i = 0; i < chunk.events.length; i += this.layout.eventFields.length) {
       if (chunk.events[i + this.eventOffsets.tick] === tick)
         flies[chunk.events[i + this.eventOffsets.flyId]].events.push({
           tick,
@@ -426,10 +459,7 @@ export class FrameArchive {
       tick,
       neuralSteps: chunk.tickNeuralSteps[tickIndex],
       flies,
-      result:
-        chunk.result?.completedTick === tick
-          ? structuredClone(chunk.result)
-          : null,
+      result: chunk.result?.completedTick === tick ? structuredClone(chunk.result) : null,
     };
   }
 
@@ -438,8 +468,7 @@ export class FrameArchive {
       b = chunk.events[i + this.eventOffsets.arg1];
     switch (this.layout.eventKinds[chunk.events[i + this.eventOffsets.kind]]) {
       case "modeChanged":
-        require(a < this.layout.modes.length &&
-          b < this.layout.modes.length, "Invalid event mode");
+        require(a < this.layout.modes.length && b < this.layout.modes.length, "Invalid event mode");
         return {
           type: "modeChanged",
           from: this.layout.modes[a],
@@ -449,8 +478,7 @@ export class FrameArchive {
         require(a === 0 && b === 0, "Invalid feeding event");
         return { type: "feedingStarted" };
       case "feedingEnded":
-        require(a < this.layout.feedingEnds.length &&
-          b === 0, "Invalid feeding end");
+        require(a < this.layout.feedingEnds.length && b === 0, "Invalid feeding end");
         return { type: "feedingEnded", reason: this.layout.feedingEnds[a] };
       case "terminal": {
         const outcome = this.layout.outcomes[a];

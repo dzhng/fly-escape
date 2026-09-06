@@ -1,4 +1,6 @@
 import * as THREE from "three";
+import { FlyTrails, type TrailPoint } from "./trails";
+export { recordedTrails } from "./trails";
 import { HouseGeometry, cutAwayWalls, type HousePart } from "./house";
 export { loadHousePart } from "./house";
 export type { HousePart } from "./house";
@@ -41,6 +43,7 @@ export interface FlyPose {
 /** A presentation-only fixture. The caller owns pose sampling and frame scheduling. */
 export class WorldView {
   private readonly scene = new THREE.Scene();
+  private readonly trails: FlyTrails;
   private readonly navigation: WorldCamera;
   private controls?: ReturnType<typeof cameraInput>;
   private selectedFly: number | null = null;
@@ -75,6 +78,8 @@ export class WorldView {
       throw new Error("Scene requires 1..100 flies");
     while (this.flies.length < flyCount) this.flies.push(this.flies[0].clone(true));
     this.house = new HouseGeometry(geometry);
+    this.trails = new FlyTrails(flyCount);
+    this.scene.add(this.trails.mesh);
     this.bounds = new THREE.Box3();
     for (const room of geometry.rooms) {
       this.bounds.expandByPoint(new THREE.Vector3(room.min.x, 0, room.min.z));
@@ -510,6 +515,10 @@ export class WorldView {
     const height = Math.max(1, this.container.clientHeight);
     this.renderer.setSize(width, height, false);
     this.navigation.resize(width, height);
+  }
+
+  setTrails(paths: readonly (readonly TrailPoint[])[], cursorTick: number): void {
+    this.trails.sample(paths, cursorTick);
   }
 
   render(): void {

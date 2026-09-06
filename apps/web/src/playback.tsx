@@ -1,11 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
-import { WorldView, loadFlyModel, flyAnimation, flyHeight, type FlyPose } from "@fly-escape/game-renderer";
+import {
+  WorldView,
+  loadFlyModel,
+  flyAnimation,
+  flyHeight,
+  recordedTrails,
+  type FlyPose,
+} from "@fly-escape/game-renderer";
 import {
   AttemptClient,
   FrameArchive,
   PlaybackClock,
   type AttemptInfo,
   type AttemptFrame,
+  type RecordedPose,
 } from "@fly-escape/sim-client";
 import { SciencePanel } from "./science-panel";
 import { NeuralExplanations } from "./neural-explanations";
@@ -57,6 +65,7 @@ type Run = {
   cachedTick: number;
   lower?: AttemptFrame;
   upper?: AttemptFrame;
+  trailHistory?: RecordedPose[][];
   frameIntervals: TimingSamples;
   interactions: TimingSamples;
 };
@@ -90,6 +99,7 @@ function sample(run: Run): FlyPose[] {
     run.cachedTick = tick;
     run.lower = tick > 0 ? run.archive.frame(tick) : undefined;
     run.upper = undefined;
+    run.trailHistory = run.archive.poseHistory(tick);
   }
   if (!run.upper && tick + 1 <= run.archive.computedTick) run.upper = run.archive.frame(tick + 1);
   const fraction = run.clock.cursorTick - tick;
@@ -285,7 +295,17 @@ export function PlaybackLab() {
           if (current.previousState === "playing" && current.clock.state === "buffering")
             current.underruns++;
           current.previousState = current.clock.state;
-          scene.current?.setPoses(sample(current));
+          const poses = sample(current);
+          scene.current?.setPoses(poses);
+          scene.current?.setTrails(
+            recordedTrails(
+              current.trailHistory ?? [],
+              current.clock.cursorTick,
+              poses,
+              TICK_SECONDS,
+            ),
+            current.clock.cursorTick,
+          );
           if (!document.hidden) {
             if (lastFrameAt !== null) current.frameIntervals.add(now - lastFrameAt);
             lastFrameAt = now;

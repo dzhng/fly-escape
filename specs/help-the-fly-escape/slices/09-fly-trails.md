@@ -1,6 +1,6 @@
 # 09 — Readable white trails
 
-Status: planned. Dependencies: 08.
+Status: bounded packed-history and renderer preparation in progress. Dependencies: 08.
 
 ## Contract and seam
 
@@ -29,3 +29,9 @@ Delegated: Fade curve and maximum duration/width, tuned at overview and close zo
 Human feedback that changes this slice: Crowding or obscured bodies changes trail width/lifetime, not simulation paths.
 
 Must stay green: all accepted dependency contracts and their focused fixtures; neural motor ownership, real-data provenance, bounded work and the [global invariants](../README.md#standing-gates-and-ownership). Do not broaden testing without a new failure or changed consumer. Record evidence under `assets/evidence/09/` and update the README handoff before ending the pass. Unlisted material decisions require a spec update.
+
+## Bounded history contract
+
+The archive exposes only recorded pose/mode/outcome history for at most 40 ticks per fly, directly from packed fields; it does not decode or retain neural history for trails. The consumer caches this window until the integer playback tick changes. The first ten ticks are presentation-transition context; at most the most recent thirty ticks (three seconds) are visible, clipped further to two world units. The renderer uses the same presentation-height function as the fly. A mismatch between a tick's recorded input position and the prior resulting position breaks the path; an attempt replacement owns a fresh trail. Terminal samples stop adding new segments while their existing path fades with playback time.
+
+One reusable mesh stores white, alpha-fading horizontal ribbons, depth-tested with no depth writes or shadows. Initial width is 0.025 world units and will be judged in both close and overview frames. Pause and seek reconstruct from the playback cursor, never wall time. The fractional endpoint is the already interpolated displayed fly pose; it cannot read a future trail sample. At most 30 segments per fly are uploaded, with fixed buffer capacity for the current population. These bounded presentation choices are provisional until the visual gate.

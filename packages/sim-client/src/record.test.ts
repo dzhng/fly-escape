@@ -32,8 +32,7 @@ const archive = () =>
 test("Rust packed records decode exactly across flies, chunks, events and terminal absence", () => {
   const record = archive();
   for (const chunk of fixture.chunks) record.append(transfer(chunk));
-  for (const frame of fixture.frames)
-    expect(record.frame(frame.tick)).toEqual(frame);
+  for (const frame of fixture.frames) expect(record.frame(frame.tick)).toEqual(frame);
   expect(record.complete).toBe(true);
   expect(record.result).toEqual(fixture.frames[3].result);
   expect(() => record.frame(0)).toThrow("not been recorded");
@@ -58,17 +57,12 @@ test("metadata field order determines the consumer offsets", () => {
   );
   for (const source of fixture.chunks) {
     const chunk = transfer(source);
-    const stride =
-      names.length + layout.groupIds.length * layout.groupFields.length;
+    const stride = names.length + layout.groupIds.length * layout.groupFields.length;
     for (let i = 0; i < chunk.values.length; i += stride)
-      [chunk.values[i + a], chunk.values[i + b]] = [
-        chunk.values[i + b],
-        chunk.values[i + a],
-      ];
+      [chunk.values[i + a], chunk.values[i + b]] = [chunk.values[i + b], chunk.values[i + a]];
     record.append(chunk);
   }
-  for (const frame of fixture.frames)
-    expect(record.frame(frame.tick)).toEqual(frame);
+  for (const frame of fixture.frames) expect(record.frame(frame.tick)).toEqual(frame);
 });
 
 test("stale attempts are ignored and invalid current chunks fail without changing history", () => {
@@ -275,4 +269,36 @@ test("bounded neural traces match recorded frames across seek and terminal gaps"
   expect(() => record.neuralTrace(0, groupId, 5)).toThrow();
   expect(() => record.neuralTrace(0, groupId, 4, 101)).toThrow();
   expect(() => record.neuralTrace(2, groupId, 4)).toThrow();
+});
+
+test("pose-only windows preserve recorded positions and terminal states across chunks and seeks", () => {
+  const record = archive();
+  for (const chunk of fixture.chunks) record.append(transfer(chunk));
+  const expected = (end: number, count: number) =>
+    Array.from({ length: 2 }, (_, id) =>
+      fixture.frames
+        .filter((f) => f.tick <= end && f.tick > end - count)
+        .map((f) => ({
+          tick: f.tick,
+          x: f.flies[id].body.pose.position.x,
+          z: f.flies[id].body.pose.position.z,
+          inputX: f.flies[id].inputPose.position.x,
+          inputZ: f.flies[id].inputPose.position.z,
+          mode: f.flies[id].body.mode,
+          terminal: f.flies[id].body.outcome !== null,
+        })),
+    );
+  const values = (end: number, count = 40) =>
+    record.poseHistory(end, count).map((h) => h.map(({ motion, ...pose }) => pose));
+  expect(values(4, 3)).toEqual(expected(4, 3));
+  expect(values(2, 2)).toEqual(expected(2, 2));
+  expect(values(4, 1)).toEqual(expected(4, 1));
+  expect(record.poseHistory(0)).toEqual([[], []]);
+  expect(() => record.poseHistory(5)).toThrow("not been recorded");
+  expect(() => record.poseHistory(4, 41)).toThrow("40 ticks");
+  record.poseHistory(4)[0][0].x = 999;
+  expect(values(4)).toEqual(expected(4, 40));
+  for (const history of record.poseHistory(4)) {
+    for (const pose of history) expect(pose.motion.mode).toBe(pose.mode);
+  }
 });
