@@ -14,7 +14,7 @@ Core group metadata/recorded summaries → sim-client decoder → web cards/tool
 
 ## Verification
 
-Check actual recorded values/time, no future traces, persistent terminal cards and stable order. Hover/keyboard tooltip stays on screen and can be read. Review every claim against sources and approximation labels. Test ordinary labels and both plots fit together; offscreen drawing may pause without dropping data.
+Check actual recorded values/time, no future traces, persistent terminal cards and stable order. Hover/keyboard tooltip stays on screen and can be read. Review every claim against sources and approximation labels. Descriptions must explain neuronal operation and circuit function, not game rules or placement advice; the user explicitly requested neuroscience education. Test ordinary labels and both plots fit together; offscreen drawing may pause without dropping data.
 
 Visual variable and crop: Panel information density/legibility; full panel, one card and tooltip crops against mock. World art and motion are out of scope.
 

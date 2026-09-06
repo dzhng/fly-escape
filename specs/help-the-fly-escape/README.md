@@ -1,14 +1,18 @@
 # Help the Fly Escape — browser game
 
-Status: **implementation active — slice 03 in progress**. Last updated: 2026-09-06.
+Status: **implementation active — slice 04 lifecycle integration**. Last updated: 2026-09-06.
 
 Build a local, fully 3D browser game in which the player places environmental tools and watches a real connectome-driven swarm attempt to escape. The [game contract](GAMEPLAY.md) owns user requirements; [architecture contracts](CONTRACTS.md) own runtime/data seams. This plan replaces the previous Python tech-demo scope.
 
 ## Next Agent Prompt
 
-You are implementing this browser game; implementation is authorized. Pick up [03 — sensory environment](slices/03-sensory-fields.md): integrate the geometry/field owner and measured neural cue probes, then build `/lab/fields`. Resolve cue direction from matched-seed evidence before exposing attraction/repulsion to level authors. Read GAMEPLAY.md and CONTRACTS.md before choosing interfaces. Browser applications live under `apps/`, including `apps/web`.
+You are implementing the full browser game. Current pickup is [04 — lifecycle browser integration](slices/04-lifecycle-outcomes.md): render the shared Attempt/Body outputs, verify actual neural feeding followed by starvation, and compare open/blocked swept exits. Native core and diagnostic fixtures are underway. The selected feeding demonstration seed is not a population-efficacy claim; campaign food gates remain open.
 
-Completed: [01 graph evidence](assets/evidence/01/review.md) proves the real 70,000-neuron / 798,715-edge artifact and reproducible export. [02 browser evidence](assets/evidence/02/review.md) proves Python-parity Rust dynamics, real WASM Worker execution, deterministic reset, visible failure/retry and measured 3D chamber telemetry. Reproduce artifacts with the [exporter](../../scripts/connectome/README.md); the [reference fixtures](../../scripts/reference/README.md) pin numerical behavior. Twenty-fly performance and game acceptance remain unverified.
+Completed evidence: [01 graph](assets/evidence/01/review.md), [02 neural browser](assets/evidence/02/review.md), and [03 sensory environment](assets/evidence/03/review.md). Categorical local sensing resolves odor closest-approach effects and opposite early lamp/shade orientation over 30 matched seeds; ablation removes the effects. Visual-cue closest-distance effects remain partly unresolved. No cue uses target steering; loom/threat is unavailable to authors.
+
+Next priorities: finish lifecycle browser/visual gates (04), then integrate bounded packed records and measure buffered 20-fly production (05), then advance camera/assets/science branches. Shared native Attempt and independent packing/throughput preparation exist; nothing beyond 03 is accepted as a complete slice. Keep the same Body owner in game and labs, and retire observation-only movement duplication before accepting lifecycle integration.
+
+Browser applications are under `apps/`, including `apps/web`. Neuroscience descriptions explain neurons and circuit activity, not game rules; controls have separate help. Preserve Python-parity LIF updates and the real graph. Reproduce ignored graph artifacts with the [exporter](../../scripts/connectome/README.md).
 
 The user authorized replacing all spike code. Keep useful evidence/tooling, delete outdated code as consumers retire, and add no compatibility layer. CLI second-opinion review currently fails because the installed client cannot use its configured model; use an independent read-only agent review and record that limitation until the tool works.
 
@@ -20,7 +24,7 @@ Open the [interactive roadmap](visualizations/roadmap.html) for dependency and m
 
 - [x] [01 — Reproducible graph and reference](slices/01-graph-reference.md) — dependencies: none.
 - [x] [02 — One real brain in the browser](slices/02-neural-browser.md) — dependencies: 01.
-- [ ] [03 — One sensory environment](slices/03-sensory-fields.md) — dependencies: 02.
+- [x] [03 — One sensory environment](slices/03-sensory-fields.md) — dependencies: 02.
 - [ ] [04 — Finite life and physical escape](slices/04-lifecycle-outcomes.md) — dependencies: 03.
 - [ ] [05 — Twenty flies with buffered replay](slices/05-swarm-playback.md) — dependencies: 04.
 - [ ] [06 — Close framing and shared selection](slices/06-camera-selection.md) — dependencies: 05.

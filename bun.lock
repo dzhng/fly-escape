@@ -29,6 +29,7 @@
       "name": "@fly-escape/game-renderer",
       "version": "0.0.0",
       "dependencies": {
+        "@fly-escape/sim-client": "workspace:*",
         "three": "^0.185.1",
       },
       "devDependencies": {

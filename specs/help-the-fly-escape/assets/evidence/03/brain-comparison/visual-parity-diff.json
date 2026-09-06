@@ -1,0 +1,204 @@
+{
+  "kind": "screenshot-parity-diff",
+  "generatedAt": "2026-09-06T15:46:20.107Z",
+  "note": "Lower parityDistance means the candidate is closer to the reference for this fixed pair. This is a distance metric, not an acceptance gate.",
+  "pairCount": 3,
+  "worstPair": "brain-card",
+  "results": [
+    {
+      "id": "brain-card",
+      "current": "../fly-escape/specs/help-the-fly-escape/assets/evidence/02/brain-card.png",
+      "candidate": "../fly-escape/specs/help-the-fly-escape/assets/evidence/03/brain-regression/brain-card.png",
+      "dimensions": {
+        "width": 350,
+        "height": 903
+      },
+      "parityDistance": 0.14032,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 47,
+          "colorEntropyBits": 1.33547,
+          "edgeDensity": 0.179,
+          "dominantColorShare": 0.81562,
+          "transparentShare": 0,
+          "luminanceMean": 240.53753,
+          "luminanceP5": 198.1532,
+          "luminanceP95": 248.5628,
+          "luminanceContrast": 50.4096
+        },
+        "candidate": {
+          "colorBuckets": 49,
+          "colorEntropyBits": 1.5399,
+          "edgeDensity": 0.26095,
+          "dominantColorShare": 0.76324,
+          "transparentShare": 0,
+          "luminanceMean": 238.99228,
+          "luminanceP5": 187.144,
+          "luminanceP95": 248.5628,
+          "luminanceContrast": 61.4188
+        }
+      },
+      "grayscale": {
+        "mae": 10.6895,
+        "rmse": 35.11896,
+        "diffRatio16": 0.1358,
+        "diffRatio32": 0.08801,
+        "diffRatio64": 0.06527,
+        "pixelmatchRatio": 0.10091
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.98277,
+        "terrainLikeRatioCandidate": 0.97911,
+        "avgLuminanceCurrent": 240.10047,
+        "avgLuminanceCandidate": 239.11666,
+        "avgLuminanceDelta": -0.9838,
+        "edgeEnergyCurrent": 0.1244,
+        "edgeEnergyCandidate": 0.13792,
+        "edgeEnergyRatio": 1.10872,
+        "edgeDiffRatio32": 0.2478
+      },
+      "artifacts": {
+        "sideBySide": "brain-comparison/brain-card-side-by-side.png",
+        "currentGray": "brain-comparison/brain-card-current-gray.png",
+        "candidateGray": "brain-comparison/brain-card-candidate-gray.png",
+        "absDiff": "brain-comparison/brain-card-absdiff.png",
+        "pixelmatch": "brain-comparison/brain-card-pixelmatch.png",
+        "currentEdges": "brain-comparison/brain-card-current-edges.png",
+        "candidateEdges": "brain-comparison/brain-card-candidate-edges.png",
+        "edgeDiff": "brain-comparison/brain-card-edge-diff.png"
+      }
+    },
+    {
+      "id": "brain-default",
+      "current": "../fly-escape/specs/help-the-fly-escape/assets/evidence/02/brain-default.png",
+      "candidate": "../fly-escape/specs/help-the-fly-escape/assets/evidence/03/brain-regression/brain-default.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "parityDistance": 0.12111,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 64,
+          "colorEntropyBits": 2.32485,
+          "edgeDensity": 0.15667,
+          "dominantColorShare": 0.42132,
+          "transparentShare": 0,
+          "luminanceMean": 235.06669,
+          "luminanceP5": 168.6004,
+          "luminanceP95": 252.7618,
+          "luminanceContrast": 84.1614
+        },
+        "candidate": {
+          "colorBuckets": 58,
+          "colorEntropyBits": 2.38627,
+          "edgeDensity": 0.11208,
+          "dominantColorShare": 0.43056,
+          "transparentShare": 0,
+          "luminanceMean": 237.24073,
+          "luminanceP5": 230.8552,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 21.6178
+        }
+      },
+      "grayscale": {
+        "mae": 9.92814,
+        "rmse": 28.33442,
+        "diffRatio16": 0.15261,
+        "diffRatio32": 0.09507,
+        "diffRatio64": 0.0637,
+        "pixelmatchRatio": 0.10274
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.99381,
+        "terrainLikeRatioCandidate": 0.99291,
+        "avgLuminanceCurrent": 235.31206,
+        "avgLuminanceCandidate": 237.33142,
+        "avgLuminanceDelta": 2.01937,
+        "edgeEnergyCurrent": 0.05791,
+        "edgeEnergyCandidate": 0.04921,
+        "edgeEnergyRatio": 0.8497,
+        "edgeDiffRatio32": 0.10763
+      },
+      "artifacts": {
+        "sideBySide": "brain-comparison/brain-default-side-by-side.png",
+        "currentGray": "brain-comparison/brain-default-current-gray.png",
+        "candidateGray": "brain-comparison/brain-default-candidate-gray.png",
+        "absDiff": "brain-comparison/brain-default-absdiff.png",
+        "pixelmatch": "brain-comparison/brain-default-pixelmatch.png",
+        "currentEdges": "brain-comparison/brain-default-current-edges.png",
+        "candidateEdges": "brain-comparison/brain-default-candidate-edges.png",
+        "edgeDiff": "brain-comparison/brain-default-edge-diff.png"
+      }
+    },
+    {
+      "id": "brain-explanation",
+      "current": "../fly-escape/specs/help-the-fly-escape/assets/evidence/02/brain-explanation.png",
+      "candidate": "../fly-escape/specs/help-the-fly-escape/assets/evidence/03/brain-regression/brain-explanation.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "parityDistance": 0.10345,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 66,
+          "colorEntropyBits": 2.30298,
+          "edgeDensity": 0.15978,
+          "dominantColorShare": 0.42118,
+          "transparentShare": 0,
+          "luminanceMean": 235.08986,
+          "luminanceP5": 168.0116,
+          "luminanceP95": 252.7618,
+          "luminanceContrast": 84.7502
+        },
+        "candidate": {
+          "colorBuckets": 69,
+          "colorEntropyBits": 2.29207,
+          "edgeDensity": 0.09441,
+          "dominantColorShare": 0.43111,
+          "transparentShare": 0,
+          "luminanceMean": 237.63691,
+          "luminanceP5": 234.5038,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 17.9692
+        }
+      },
+      "grayscale": {
+        "mae": 11.38155,
+        "rmse": 31.88817,
+        "diffRatio16": 0.15898,
+        "diffRatio32": 0.10422,
+        "diffRatio64": 0.07193,
+        "pixelmatchRatio": 0.11255
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0.00028,
+        "terrainLikeRatioCurrent": 0.99322,
+        "terrainLikeRatioCandidate": 0.98826,
+        "avgLuminanceCurrent": 235.43034,
+        "avgLuminanceCandidate": 236.81922,
+        "avgLuminanceDelta": 1.38888,
+        "edgeEnergyCurrent": 0.06074,
+        "edgeEnergyCandidate": 0.0584,
+        "edgeEnergyRatio": 0.96142,
+        "edgeDiffRatio32": 0.12127
+      },
+      "artifacts": {
+        "sideBySide": "brain-comparison/brain-explanation-side-by-side.png",
+        "currentGray": "brain-comparison/brain-explanation-current-gray.png",
+        "candidateGray": "brain-comparison/brain-explanation-candidate-gray.png",
+        "absDiff": "brain-comparison/brain-explanation-absdiff.png",
+        "pixelmatch": "brain-comparison/brain-explanation-pixelmatch.png",
+        "currentEdges": "brain-comparison/brain-explanation-current-edges.png",
+        "candidateEdges": "brain-comparison/brain-explanation-candidate-edges.png",
+        "edgeDiff": "brain-comparison/brain-explanation-edge-diff.png"
+      }
+    }
+  ]
+}

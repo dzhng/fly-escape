@@ -5,3 +5,10 @@ pub use graph::*;
 pub use lif::*;
 
 pub mod chamber;
+
+pub mod body;
+pub mod environment;
+pub mod field_lab;
+pub mod sensory;
+
+pub mod attempt;

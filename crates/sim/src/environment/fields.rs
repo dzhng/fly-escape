@@ -271,6 +271,9 @@ impl FieldSet {
             self.edges.push((a, b, wind));
         }
     }
+    pub fn antenna_offset(&self) -> f64 {
+        self.config.antenna_offset
+    }
     pub fn geometry(&self) -> &Geometry {
         &self.geometry
     }

@@ -135,8 +135,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .collect::<Result<Vec<_>, String>>()?;
     let mut results = vec![];
     for (scenario, groups) in [
-        (FieldScenario::ExcitatoryOdor, ["smellL", "smellR"]),
-        (FieldScenario::InhibitoryOdor, ["repelL", "repelR"]),
+        (FieldScenario::ExcitatoryOdor, ["odorExcL", "odorExcR"]),
+        (FieldScenario::InhibitoryOdor, ["odorInhL", "odorInhR"]),
         (FieldScenario::Lamp, ["visionL", "visionR"]),
         (FieldScenario::Shade, ["visionL", "visionR"]),
     ] {

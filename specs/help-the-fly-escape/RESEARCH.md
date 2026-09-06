@@ -38,3 +38,7 @@ Pin compatible dependency versions during implementation and commit lockfiles. T
 ## Scientific truth boundary
 
 The source code is evidence of what the prototype computes, not proof of neuroscience claims in its comments. Slice 03 records pathway identity, sensory injection, output readout, mirrored response and ablation evidence. Tooltips cite structural dataset/anatomical references where supported, and separately identify our model choices. Any new strong biological claim needs primary literature review during that slice; unsupported claims are softened or omitted, never inferred solely from an appealing animation.
+
+## Neuroscience explanation sources
+
+Descriptions teach neuronal processes rather than puzzle rules. The shared introductory explanations use [Gerstner et al., Neuronal Dynamics §1.3](https://neuronaldynamics.epfl.ch/online/Ch1.S3.html) for leaky integration, spike thresholds, reset and refractory modeling, and [Purves et al., Excitatory and Inhibitory Postsynaptic Potentials](https://www.ncbi.nlm.nih.gov/books/NBK11117/) for excitation/inhibition. Circuit-specific anatomical claims still need their own source review in slice 13; group names inherited from the spike are insufficient evidence.

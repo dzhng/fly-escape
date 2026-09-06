@@ -1,6 +1,6 @@
 # 04 — Finite life and physical escape
 
-Status: planned. Dependencies: 03.
+Status: native core/probes implemented; lifecycle browser integration pending. Dependencies: 03.
 
 ## Contract and seam
 

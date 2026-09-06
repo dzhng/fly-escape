@@ -7,4 +7,4 @@ const hash = new Bun.CryptoHasher('sha256').update(binary).digest('hex');
 if (manifest.synthetic || manifest.graphHash !== hash) throw new Error('Prepare and verify the real graph before building.');
 await mkdir(destination, { recursive: true });
 for (const file of ['graph.bin', 'manifest.json']) await cp(new URL(file, source), new URL(file, destination));
-console.log(`Prepared ${manifest.neuronCount.toLocaleString()} real neurons for static browser loading.`);
+console.log(`Prepared ${manifest.neuronCount.toLocaleString()} mapped neurons for static browser loading.`);

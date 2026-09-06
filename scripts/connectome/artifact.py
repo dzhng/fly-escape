@@ -57,17 +57,17 @@ def metadata(graph, annotations):
             mask = types.str.startswith(family) & ((sides == side) | ~sides.isin(['L', 'R']))
             motor[family.lower() + side] = np.flatnonzero(mask.to_numpy()).tolist()
     definitions = [
-        ('smellL', 'Smell · left', pathways['EXCITATORY_LH_MOTOR']['L']),
-        ('smellR', 'Smell · right', pathways['EXCITATORY_LH_MOTOR']['R']),
-        ('repelL', 'Repellent · left', pathways['INHIBITORY_LH_MOTOR']['L']),
-        ('repelR', 'Repellent · right', pathways['INHIBITORY_LH_MOTOR']['R']),
+        ('odorExcL', 'Smell excitation · left', pathways['EXCITATORY_LH_MOTOR']['L']),
+        ('odorExcR', 'Smell excitation · right', pathways['EXCITATORY_LH_MOTOR']['R']),
+        ('odorInhL', 'Smell inhibition · left', pathways['INHIBITORY_LH_MOTOR']['L']),
+        ('odorInhR', 'Smell inhibition · right', pathways['INHIBITORY_LH_MOTOR']['R']),
         ('visionL', 'Vision · left', pathways['AOTU_LEFT']), ('visionR', 'Vision · right', pathways['AOTU_RIGHT']),
         ('turnL', 'Turning · left', pathways['OLFACTORY_DN_LEFT']), ('turnR', 'Turning · right', pathways['OLFACTORY_DN_RIGHT']),
         ('flightL', 'Flight · left', pathways['FLIGHT_DN_LEFT']), ('flightR', 'Flight · right', pathways['FLIGHT_DN_RIGHT']),
         ('landingL', 'Landing · left', pathways['LANDING_DN_LEFT']), ('landingR', 'Landing · right', pathways['LANDING_DN_RIGHT']),
         ('taste', 'Taste', pathways['TARSAL_GRN_IDS'] + pathways['BM_TASTE_IDS']),
         ('feeding', 'Feeding circuit', pathways['GNG_INTERNEURON_IDS']),
-        ('proboscis', 'Eating muscles', pathways['PROBOSCIS_MN_IDS']),
+        ('proboscis', 'Proboscis motor neurons', pathways['PROBOSCIS_MN_IDS']),
         ('loom', 'Approaching objects', [lookup[int(b)] for b in annotations.loc[annotations.type == 'LC4', 'bodyId'] if int(b) in lookup]),
     ]
     groups = [dict(id=id, label=label, indices=sorted(set(indices))) for id, label, indices in definitions]

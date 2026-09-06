@@ -1,6 +1,14 @@
 # 03 — One sensory environment
 
-Status: in progress. Dependencies: 02.
+Status: complete. Dependencies: 02.
+
+## Current subpasses
+
+- **03A — field owner and observation surface:** geometry, conservative odor transport, brightness, local exit cue, real sampled overlays and matched-seed lab are implemented. Production captures and fresh visual critique pass.
+- **03B — effective sensory encoding:** odor accepted on paired 30-seed turn and closest-approach evidence; opposite early lamp/shade orientation also supported; closest-distance effects remain partly unresolved. Continuous bilateral currents and stronger-turn-only experiments failed. Categorical lateral sensing with slower translation resolves opposite responses, removed by neural ablation. No motor sign flip, route lookup or goal-directed steering.
+- **03C — author availability:** odor and lamp/shade can enter authored experiments after their signed-response/ablation gates; campaign robustness remains a separate requirement. Threat/loom remains unavailable unless separately measured; it is not a hidden promised tool in a level. Scientific failure blocks dependent content acceptance, while independent lifecycle/transport and asset work may proceed.
+
+See [evidence and current verdict](../assets/evidence/03/review.md). This split is a maintenance response to the failed empirical gate, not a weaker acceptance criterion.
 
 ## Contract and seam
 

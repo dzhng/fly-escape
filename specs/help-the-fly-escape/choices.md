@@ -31,3 +31,27 @@ The fixture generator observes local values when the real `step` function return
 ### Assign synthetic motor groups directly (slice 01)
 
 A test neuron may belong to two motor groups so the fixture can detect incorrect averaging. These memberships are explicit test inputs, not claims about fly anatomy. The plan did not prescribe how a miniature graph would obtain memberships. Separating arithmetic tests from real annotation extraction lets both fail for useful, distinct reasons.
+
+## Sound — medium confidence (sensory/body integration)
+
+### Stimulation excludes neurons read directly as movement (slice 03)
+
+When a smell population overlaps a neuron whose voltage directly controls movement, the sensory adapter leaves that neuron unstimulated. The signal must reach the movement readout through the network. The plan required graph-driven behavior but did not define overlap handling. This avoids mistaking a direct motor injection for a circuit response; future sensory mappings inherit the same exclusion. Paired probes show the downstream response persists.
+
+### Body actions begin with spikes and can last between spikes (slice 04)
+
+A fly touching food starts a meal when enough proboscis motor neurons emit a spike. It then keeps eating during brief gaps between spikes, until contact, fullness or the bout limit ends the meal. The plan required neural initiation but left the signal decoder unspecified. A voltage threshold was nearly always active and could not distinguish initiation. Spike initiation preserves a neural cause without requiring every cell to fire continuously; silencing those neurons prevents every tested meal. Landing similarly enforces a short grounded interval before takeoff is possible again.
+
+### An attempt error ends that attempt (shared Attempt preparation)
+
+If advancing one fly fails after another fly has already advanced, retrying the tick would give them different histories. The Attempt owner remembers the failure and returns it on subsequent calls; the user can start a fresh attempt. The plan did not define partial-tick recovery. This keeps errors explicit without copying every brain on every tick for rollback. Future transport must present the error and must not retry the same attempt silently.
+
+## Sound — high confidence (sensory/body integration)
+
+### Replay identity includes the whole simulation source tree (shared Attempt preparation)
+
+A saved attempt carries a build identity computed from simulation source, dependencies and compiler/target information. Adding a new Rust module changes that identity even if someone forgets to list it manually. The plan required reproducible identities but left build fingerprinting mechanics unspecified. Future replay can reject a different simulation instead of presenting different results as the same run.
+
+### Field overlays show the actual sampled grid (slice 03)
+
+When a fly senses odor in a grid cell, the colored floor comes from that same cell value exported by Rust. JavaScript does not draw a separate smooth approximation. The plan required agreement but left interpolation unspecified. This makes abrupt cell boundaries honest and lets numeric antenna samples explain what the brain actually received; future visual smoothing must not change the simulation.

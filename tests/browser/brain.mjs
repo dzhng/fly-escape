@@ -1,87 +1,171 @@
-import assert from 'node:assert/strict';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { chromium } from 'playwright';
-const base = process.env.BRAIN_URL ?? 'http://127.0.0.1:5173';
-const output = new URL('../../specs/help-the-fly-escape/assets/evidence/02/', import.meta.url);
+import assert from "node:assert/strict";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
+import { chromium } from "playwright";
+const base = process.env.BRAIN_URL ?? "http://127.0.0.1:5173";
+const output = process.env.BRAIN_EVIDENCE_DIR
+  ? pathToFileURL(resolve(process.env.BRAIN_EVIDENCE_DIR) + "/")
+  : new URL("../../specs/help-the-fly-escape/assets/evidence/02/", import.meta.url);
 await mkdir(output, { recursive: true });
-const browser = await chromium.launch({ headless: true, channel: process.env.BROWSER_CHANNEL ?? 'chrome' });
+const browser = await chromium.launch({
+  headless: true,
+  channel: process.env.BROWSER_CHANNEL ?? "chrome",
+});
 const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
 const errors = [];
-page.on('pageerror', error => errors.push(error.message));
+page.on("pageerror", (error) => errors.push(error.message));
 const sample = async () => {
-  const saved = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Save sample' }).click();
+  const saved = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Save sample" }).click();
   const download = await saved;
-  return JSON.parse(await readFile(await download.path(), 'utf8'));
+  return JSON.parse(await readFile(await download.path(), "utf8"));
 };
-const waitReady = () => page.getByRole('button', { name: 'One tick' }).waitFor({ state: 'visible' }).then(() =>
-  page.waitForFunction(() => ![...document.querySelectorAll('button')].find(b => b.textContent === 'One tick').disabled));
+const waitReady = () =>
+  page
+    .getByRole("button", { name: "One tick" })
+    .waitFor({ state: "visible" })
+    .then(() =>
+      page.waitForFunction(
+        () =>
+          ![...document.querySelectorAll("button")].find((b) => b.textContent === "One tick")
+            .disabled,
+      ),
+    );
 try {
   await page.goto(`${base}/lab/brain`);
-  await page.waitForFunction(() => document.querySelector('[data-testid=tick]')?.textContent.match(/Tick ([1-9][0-9]*)/));
+  await page.waitForFunction(() =>
+    document.querySelector("[data-testid=tick]")?.textContent.match(/Tick ([1-9][0-9]*)/),
+  );
   const initialLoadSample = await sample();
-  await page.getByRole('button', { name: 'Pause', exact: true }).click();
-  await page.getByRole('button', { name: 'Reset brain' }).click();
+  await page.getByRole("button", { name: "Pause", exact: true }).click();
+  await page.getByRole("button", { name: "Reset brain" }).click();
   await waitReady();
-  await page.getByRole('button', { name: 'One tick' }).click();
-  await page.waitForFunction(() => document.querySelector('[data-testid=tick]').textContent === 'Tick 1');
+  await page.getByRole("button", { name: "One tick" }).click();
+  await page.waitForFunction(
+    () => document.querySelector("[data-testid=tick]").textContent === "Tick 1",
+  );
   const first = await sample();
   assert.equal(first.info.neuronCount, 70000);
   assert.equal(first.info.edgeCount, 798715);
   assert.equal(first.frame.neural.groups.length, 16);
-  assert.ok(first.frame.pose.x > first.info.initialPose.x, 'Neural thrust must move the fly');
-  assert.ok(first.frame.neural.groups.some(g => g.meanVoltage !== 0), 'Readouts must come from active neurons');
-  await page.getByRole('button', { name: 'One tick' }).click();
-  await page.waitForFunction(() => document.querySelector('[data-testid=tick]').textContent === 'Tick 2');
+  assert.ok(first.frame.pose.x > first.info.initialPose.x, "Neural thrust must move the fly");
+  assert.ok(
+    first.frame.neural.groups.some((g) => g.meanVoltage !== 0),
+    "Readouts must come from active neurons",
+  );
+  await page.getByRole("button", { name: "One tick" }).click();
+  await page.waitForFunction(
+    () => document.querySelector("[data-testid=tick]").textContent === "Tick 2",
+  );
   const unperturbedSecond = await sample();
-  await page.getByLabel('Seed', { exact: true }).fill('99');
-  assert.equal((await sample()).seed, 42, 'Editing next seed must not relabel the current sample');
-  await page.getByLabel('Seed', { exact: true }).fill('42');
-  await page.getByRole('button', { name: 'Reset brain' }).click();
+  await page.getByLabel("Seed", { exact: true }).fill("99");
+  assert.equal((await sample()).seed, 42, "Editing next seed must not relabel the current sample");
+  await page.getByLabel("Seed", { exact: true }).fill("42");
+  await page.getByRole("button", { name: "Reset brain" }).click();
   await waitReady();
-  await page.getByRole('button', { name: 'One tick' }).click();
-  await page.waitForFunction(() => document.querySelector('[data-testid=tick]').textContent === 'Tick 1');
-  assert.deepEqual((await sample()).frame, first.frame, 'Same-seed reset must reproduce the same frame');
-  await page.screenshot({ path: new URL('brain-default.png', output).pathname, fullPage: true });
-  await page.locator('aside').screenshot({ path: new URL('brain-card.png', output).pathname });
-  await page.getByText('What do these numbers mean?', { exact: true }).click();
-  await page.locator('aside').evaluate(el => el.scrollTo(0, el.scrollHeight));
-  await page.screenshot({ path: new URL('brain-explanation.png', output).pathname, fullPage: true });
-  await page.locator('aside').evaluate(el => el.scrollTo(0, 0));
-  assert.equal(await page.locator('aside').evaluate(el => el.scrollTop), 0);
-  await page.getByText('Input probe', { exact: true }).click();
-  await page.getByLabel('left smell current').fill('3');
-  await page.getByRole('button', { name: 'One tick' }).click();
-  await page.waitForFunction(() => document.querySelector('[data-testid=tick]').textContent === 'Tick 2');
+  await page.getByRole("button", { name: "One tick" }).click();
+  await page.waitForFunction(
+    () => document.querySelector("[data-testid=tick]").textContent === "Tick 1",
+  );
+  assert.deepEqual(
+    (await sample()).frame,
+    first.frame,
+    "Same-seed reset must reproduce the same frame",
+  );
+  await page.screenshot({ path: new URL("brain-default.png", output).pathname, fullPage: true });
+  await page.locator("aside").screenshot({ path: new URL("brain-card.png", output).pathname });
+  await page.getByText("What do these numbers mean?", { exact: true }).click();
+  await page.locator("aside").evaluate((el) => el.scrollTo(0, el.scrollHeight));
+  await page.screenshot({
+    path: new URL("brain-explanation.png", output).pathname,
+    fullPage: true,
+  });
+  await page.locator("aside").evaluate((el) => el.scrollTo(0, 0));
+  assert.equal(await page.locator("aside").evaluate((el) => el.scrollTop), 0);
+  await page.getByText("Input probe", { exact: true }).click();
+  await page.getByLabel("left smell current").fill("3");
+  await page.getByRole("button", { name: "One tick" }).click();
+  await page.waitForFunction(
+    () => document.querySelector("[data-testid=tick]").textContent === "Tick 2",
+  );
   const injected = await sample();
-  assert.notDeepEqual(injected.frame.neural, unperturbedSecond.frame.neural, 'Changing only the left input must change the real neural response');
-  await page.getByRole('button', { name: 'Resume', exact: true }).click();
-  await page.waitForFunction(() => Number(document.querySelector('[data-testid=tick]').textContent.slice(5)) >= 30);
+  assert.notDeepEqual(
+    injected.frame.neural,
+    unperturbedSecond.frame.neural,
+    "Changing only the left input must change the real neural response",
+  );
+  await page.getByRole("button", { name: "Resume", exact: true }).click();
+  await page.waitForFunction(
+    () => Number(document.querySelector("[data-testid=tick]").textContent.slice(5)) >= 30,
+  );
   const start = performance.now();
-  await page.getByRole('button', { name: 'Pause', exact: true }).click();
+  await page.getByRole("button", { name: "Pause", exact: true }).click();
   const pauseResponseMs = performance.now() - start;
-  assert.ok(pauseResponseMs < 1000, 'UI must respond while the real graph runs');
+  assert.ok(pauseResponseMs < 1000, "UI must respond while the real graph runs");
   const runningSample = await sample();
   assert.deepEqual(errors, []);
-  const report = { browser: browser.version(), viewport: '1440×1000', info: first.info, pauseResponseMs, initialLoadMs: initialLoadSample.loadMs, resetLoadMs: first.loadMs, lastStepMs: runningSample.stepMs, wasmBytes: runningSample.wasmBytes, frames: {first:first.frame, unperturbedSecond:unperturbedSecond.frame, injected:injected.frame, running:runningSample.frame}, errors };
-  await writeFile(new URL('browser.json', output), JSON.stringify(report, null, 2));
+  const report = {
+    browser: browser.version(),
+    viewport: "1440×1000",
+    info: first.info,
+    pauseResponseMs,
+    initialLoadMs: initialLoadSample.loadMs,
+    resetLoadMs: first.loadMs,
+    lastStepMs: runningSample.stepMs,
+    wasmBytes: runningSample.wasmBytes,
+    frames: {
+      first: first.frame,
+      unperturbedSecond: unperturbedSecond.frame,
+      injected: injected.frame,
+      running: runningSample.frame,
+    },
+    errors,
+  };
+  await writeFile(new URL("browser.json", output), JSON.stringify(report, null, 2));
   const fault = await browser.newPage();
-  await fault.route('**/brain/graph.bin', route => route.fulfill({ status: 503, body: 'unavailable' }));
+  await fault.route("**/brain/graph.bin", (route) =>
+    route.fulfill({ status: 503, body: "unavailable" }),
+  );
   await fault.goto(`${base}/lab/brain`);
-  await fault.getByRole('alert').waitFor();
-  assert.match(await fault.getByRole('alert').innerText(), /Graph download failed \(503\)/);
-  await fault.unroute('**/brain/graph.bin');
-  await fault.getByRole('button', {name:'Reset brain'}).click();
-  await fault.waitForFunction(() => Number(document.querySelector('[data-testid=tick]').textContent.slice(5)) >= 1);
+  await fault.getByRole("alert").waitFor();
+  assert.match(await fault.getByRole("alert").innerText(), /Graph download failed \(503\)/);
+  await fault.unroute("**/brain/graph.bin");
+  await fault.getByRole("button", { name: "Reset brain" }).click();
+  await fault.waitForFunction(
+    () => Number(document.querySelector("[data-testid=tick]").textContent.slice(5)) >= 1,
+  );
   await fault.close();
   const incomplete = await browser.newPage();
   const metadata = await (await fetch(`${base}/brain/manifest.json`)).json();
-  metadata.groups = metadata.groups.filter(group => group.id !== 'smellL');
-  metadata.groupLinks = metadata.groupLinks.filter(link => link.source !== 'smellL' && link.target !== 'smellL');
-  await incomplete.route('**/brain/manifest.json', route => route.fulfill({contentType:'application/json',body:JSON.stringify(metadata)}));
+  metadata.groups = metadata.groups.filter((group) => group.id !== "odorExcL");
+  metadata.groupLinks = metadata.groupLinks.filter(
+    (link) => link.source !== "odorExcL" && link.target !== "odorExcL",
+  );
+  await incomplete.route("**/brain/manifest.json", (route) =>
+    route.fulfill({ contentType: "application/json", body: JSON.stringify(metadata) }),
+  );
   await incomplete.goto(`${base}/lab/brain`);
-  await incomplete.getByRole('alert').waitFor();
-  assert.match(await incomplete.getByRole('alert').innerText(), /Missing required chamber group: smellL/);
+  await incomplete.getByRole("alert").waitFor();
+  assert.match(
+    await incomplete.getByRole("alert").innerText(),
+    /Missing required chamber group: odorExcL/,
+  );
   await incomplete.close();
-  console.log(JSON.stringify({ realGraph: true, sameSeedReset: true, neuralMovement: true, loadMs: first.loadMs, lastStepMs: runningSample.stepMs, pauseResponseMs, faultVisible: true, retryRecovered: true, partialManifestRejected: true, errors }));
-} finally { await browser.close(); }
+  console.log(
+    JSON.stringify({
+      realGraph: true,
+      sameSeedReset: true,
+      neuralMovement: true,
+      loadMs: first.loadMs,
+      lastStepMs: runningSample.stepMs,
+      pauseResponseMs,
+      faultVisible: true,
+      retryRecovered: true,
+      partialManifestRejected: true,
+      errors,
+    }),
+  );
+} finally {
+  await browser.close();
+}
