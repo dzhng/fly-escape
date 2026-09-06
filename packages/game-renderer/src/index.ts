@@ -1,8 +1,8 @@
 import * as THREE from "three";
 import { housePalette } from "./house-materials";
-import { FoodModels, isFoodKind, type FoodKind } from "./food";
-export { loadFoodModel } from "./food";
-export type { FoodKind } from "./food";
+import { PlacementModels, type PlacementKind } from "./placement-models";
+export { loadPlacementModel } from "./placement-models";
+export type { PlacementKind } from "./placement-models";
 import { FlyTrails, type TrailPoint } from "./trails";
 export { recordedTrails } from "./trails";
 import { HouseGeometry, cutAwayOccluders, type HousePart } from "./house";
@@ -47,7 +47,7 @@ export interface FlyPose {
 /** A presentation-only fixture. The caller owns pose sampling and frame scheduling. */
 export class WorldView {
   private readonly scene = new THREE.Scene();
-  private readonly foodModels = new FoodModels();
+  private readonly placementModels = new PlacementModels();
   private readonly trails: FlyTrails;
   private trailSample?: { paths: readonly (readonly TrailPoint[])[]; cursorTick: number };
   private readonly navigation: WorldCamera;
@@ -215,9 +215,9 @@ export class WorldView {
     );
     return hit ? { x: hit.x, z: hit.z } : null;
   }
-  setFoodModel(kind: FoodKind, root: THREE.Group): void {
-    this.foodModels.replace(kind, root);
-    this.scene.add(this.foodModels.root);
+  setPlacementModel(kind: PlacementKind, root: THREE.Group): void {
+    this.placementModels.replace(kind, root);
+    this.scene.add(this.placementModels.root);
   }
 
   setPlacements(
@@ -225,47 +225,21 @@ export class WorldView {
     catalog: ToolDef[],
     ghost?: { placement: Placement; valid: boolean | null },
   ): void {
-    this.foodModels.setPlacements(placements, catalog, ghost);
+    this.placementModels.setPlacements(placements, catalog, ghost);
     disposeObjectResources(this.placementMarkers);
     this.placementMarkers.clear();
     if (!this.placementMarkers.parent) this.scene.add(this.placementMarkers);
-    const colors = {
-      vinegar: "#ba8ae2",
-      lamp: "#fff0b0",
-      shade: "#6aa4bc",
-      fan: "#8cd4d4",
-    };
     for (const item of [
       ...placements.map((placement) => ({ placement, valid: true, ghost: false })),
       ...(ghost ? [{ ...ghost, ghost: true }] : []),
     ]) {
       const p = item.placement;
-      if (isFoodKind(p.kind)) continue;
-      const tool = catalog.find((tool) => tool.kind === p.kind);
-      if (!tool) throw new Error(`Missing tool definition: ${p.kind}`);
-      const radius = tool.footprintRadius;
-      const color = item.ghost
-        ? item.valid === null
-          ? "#e5dbaf"
-          : item.valid
-            ? "#67e5ae"
-            : "#ff657f"
-        : colors[p.kind];
-      const mesh = new THREE.Mesh(
-        new THREE.CylinderGeometry(radius, radius, item.ghost ? 0.04 : 0.25, 24),
-        new THREE.MeshStandardMaterial({
-          color,
-          transparent: item.ghost,
-          opacity: item.ghost ? 0.7 : 1,
-        }),
-      );
-      mesh.position.set(p.position.x, item.ghost ? 0.06 : 0.13, p.position.z);
-      this.placementMarkers.add(mesh);
+      const color = item.ghost ? item.valid === null ? "#e5dbaf" : item.valid ? "#67e5ae" : "#ff657f" : "#d9eacf";
       if (p.kind === "fan")
         this.placementMarkers.add(
           new THREE.ArrowHelper(
             new THREE.Vector3(Math.cos(p.heading), 0, Math.sin(p.heading)),
-            new THREE.Vector3(p.position.x, 0.35, p.position.z),
+            new THREE.Vector3(p.position.x, 0.015, p.position.z),
             0.85,
             color,
             0.25,
@@ -637,8 +611,8 @@ export class WorldView {
   }
 
   dispose(): void {
-    this.scene.remove(this.foodModels.root);
-    this.foodModels.dispose();
+    this.scene.remove(this.placementModels.root);
+    this.placementModels.dispose();
     this.motions.forEach((motion) => motion.dispose());
     this.controls?.dispose();
     this.observer.disconnect();

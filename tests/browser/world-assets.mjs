@@ -9,6 +9,10 @@ try {
     ["food/fruit", "fruit model request failed (503)"],
     ["food/crumbs", "crumbs model request failed (503)"],
     ["fly/fly", "Fly model request failed (503)"],
+    ...["vinegar", "fan", "lamp", "shade"].map((kind) => [
+      `tools/${kind}`,
+      `${kind} model request failed (503)`,
+    ]),
   ]) {
     const page = await browser.newPage();
     const errors = [];

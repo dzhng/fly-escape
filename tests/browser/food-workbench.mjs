@@ -13,7 +13,7 @@ try {
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto(process.env.ASSET_URL ?? "http://127.0.0.1:5210");
-  await page.locator("#food-status").filter({ hasText: "triangles" }).waitFor();
+  await page.locator("#tool-status").filter({ hasText: "tool assets ready" }).waitFor();
   await page.locator(".status").filter({ hasText: "triangles" }).waitFor();
   await page.getByRole("button", { name: "Extra close", exact: true }).click();
   const setTime = async (value) =>
@@ -28,30 +28,30 @@ try {
       .locator("#clip")
       .selectOption(kind === "fruit" ? "Feed" : "Static");
     await setTime(0.5);
-    await page.locator("#food-kind").selectOption(kind);
+    await page.locator("#tool-kind").selectOption(kind);
     await page.mouse.move(1430, 20);
     await page.waitForTimeout(100);
     await page.screenshot({ path: output + "/" + kind + ".png" });
   }
-  await page.locator("#food-kind").selectOption("fruit");
+  await page.locator("#tool-kind").selectOption("fruit");
   await page.waitForTimeout(100);
   const canvas = page.locator("canvas"),
     before = await canvas.screenshot();
-  await page.locator("#food-file").setInputFiles("assets/food/fruit.glb");
-  await page.locator("#food-status").filter({ hasText: "fruit ·" }).waitFor();
+  await page.locator("#tool-file").setInputFiles("assets/food/fruit.glb");
+  await page.locator("#tool-status").filter({ hasText: "fruit ·" }).waitFor();
   assert.deepEqual(
     await canvas.screenshot(),
     before,
     "valid replacement preserves shape/phase",
   );
-  await page.locator("#food-file").setInputFiles("assets/fly/fly.glb");
-  await page.locator("#food-status").filter({ hasText: "Error:" }).waitFor();
+  await page.locator("#tool-file").setInputFiles("assets/fly/fly.glb");
+  await page.locator("#tool-status").filter({ hasText: "Error:" }).waitFor();
   assert.deepEqual(
     await canvas.screenshot(),
     before,
     "invalid raised asset preserves accepted food",
   );
-  await page.locator("#food-status").scrollIntoViewIfNeeded();
+  await page.locator("#tool-status").scrollIntoViewIfNeeded();
   await page.screenshot({ path: output + "/rejected-replacement.png" });
   assert.deepEqual(errors, []);
   await writeFile(

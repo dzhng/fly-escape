@@ -277,3 +277,7 @@ Load the three house roles as one settled batch per view, then transfer them thr
 ## About route — sound, medium confidence
 
 The About surface uses a query on the origin root rather than an additional path, so a basic static file server can serve it without an index fallback. A composition footer links to it after the game, preserving the existing camera viewport and avoiding concurrent setup/playback edits. It is keyboard reachable but below the game; future navigation design can relocate the link without changing attribution content or the serving contract.
+
+## Remaining tool source representation
+
+The planar non-solid tool contract favors near-flush sources: vinegar saucer, inset fan vent, recessed lamp lens and slatted shade tile. Their geometry identifies catalog sources without adding obstacles or actual scene lights. Shade expresses the measured visual-cue source, not a physical canopy or computed cast shadow. All six tools share placement model ownership; food-only names are retired as the shared static contract expands.

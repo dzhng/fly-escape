@@ -1,4 +1,4 @@
-import { foodWorkbench } from "./food-workbench";
+import { placementWorkbench } from "./placement-workbench";
 import { WorldView, loadFlyModel, loadHousePart, type HousePart, type FlyAnimation } from "@fly-escape/game-renderer";
 import modelUrl from "../../../assets/fly/fly.glb?url";
 import "./style.css";
@@ -27,7 +27,7 @@ if (house) {
   app.querySelector("h1")!.textContent = "Five-room house";
   app.querySelector("aside")!.insertAdjacentHTML("afterbegin", `<h2>Geometry inspection</h2><p>Rooms 1–4 form the hall; room 5 is the one-door pantry. Paths below are diagnostic poses, not neural locomotion.</p><label>Room <select id="room">${houseGeometry.rooms.map(r => `<option value="${r.id}">Room ${r.id}${r.id === 5 ? " · pantry" : ""}</option>`).join("")}</select></label><button id="inspect-room">Inspect room</button><button id="cutaway">Follow at wall</button><label>Doorway <select id="doorway">${doorways.map((d, i) => `<option value="${i}">${d.label}</option>`).join("")}</select></label><label>Cross doorway <input id="crossing" type="range" min="-1" max="1" step="0.01" value="0"></label><label>Replace house part <select id="part"><option value="wall">Wall</option><option value="floor">Floor</option><option value="solid">Solid</option></select><input id="house-file" type="file" accept=".glb" aria-label="Replace house part"></label><p id="house-status" role="status">Loading modular kit…</p><p>Replacement must preserve the kit bounds and pivot. Walls: 1 × 0.6 × 0.12; floor: 1 × 0.25 × 1, top at Y=0. Solid: 1 × 1 × 1, base at Y=0. All solid footprints block every body mode.</p><h3>Solid collision probe</h3><p>Diagnostic core sweep, not neural motion.</p><label>Path <select id="solid-path"><option value="blocked">Through solid</option><option value="detour">Beside solid</option></select></label><label>Approach <input id="solid-progress" type="range" min="0" max="1" step="0.01" value="0"></label><button id="probe-solid">Inspect solid</button><p id="solid-status" role="status">Choose Inspect solid to run the core query.</p>`);
 }
-if (!house) void foodWorkbench(view, app.querySelector<HTMLElement>("aside")!);
+if (!house) void placementWorkbench(view, app.querySelector<HTMLElement>("aside")!);
 const firstRoom = houseGeometry.rooms[0];
 let position = house ? { x: (firstRoom.min.x + firstRoom.max.x) / 2, z: (firstRoom.min.z + firstRoom.max.z) / 2 } : { x: 0, z: 0 };
 let heading = 0;

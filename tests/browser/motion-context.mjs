@@ -28,7 +28,7 @@ try {
       });
       brain.startLifecycle(6,'mealThenStarvation');
     });
-    const {WorldView,loadFlyModel,loadFoodModel,flyAnimation,flyHeight}=await import(`${moduleRoot}/packages/game-renderer/src/index.ts`);
+    const {WorldView,loadFlyModel,loadPlacementModel,flyAnimation,flyHeight}=await import(`${moduleRoot}/packages/game-renderer/src/index.ts`);
     const model=await loadFlyModel(await (await fetch(`${moduleRoot}/assets/fly/fly.glb`)).arrayBuffer());
     const view = new WorldView(document.getElementById('world'),records.info.level.geometry);
     view.setFlyModel(model);
@@ -40,7 +40,7 @@ try {
     const region=records.info.level.food[0];
     // The lifecycle meal region is larger than a placed tool. Preserve its recorded boundary; scale only this diagnostic art using the catalog footprint/contact ratio.
     const diagnosticCatalog=[{...fruit,footprintRadius:region.radius*fruit.footprintRadius/fruit.effect.foodRadius}];
-    view.setFoodModel('fruit',(await loadFoodModel(await (await fetch(`${moduleRoot}/assets/food/fruit.glb`)).arrayBuffer())).root);
+    view.setPlacementModel('fruit',(await loadPlacementModel(await (await fetch(`${moduleRoot}/assets/food/fruit.glb`)).arrayBuffer())).root);
     view.setPlacements([{id:1,kind:'fruit',position:region.center,heading:0}],diagnosticCatalog);
     records.foodArt={catalogFruit:fruit,region,displayRadius:diagnosticCatalog[0].footprintRadius,provenance:'Diagnostic visual scale only; recorded lifecycle contact unchanged'};
     }
