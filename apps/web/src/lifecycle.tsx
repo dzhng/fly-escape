@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ChamberView } from "@fly-escape/game-renderer";
+import { WorldView } from "@fly-escape/game-renderer";
 import {
   BrainClient,
   type LifecycleScenario,
@@ -19,7 +19,7 @@ const scenarios: [LifecycleScenario, string][] = [
 export function LifecycleLab() {
   const container = useRef<HTMLDivElement>(null);
   const eventList = useRef<HTMLOListElement>(null);
-  const view = useRef<ChamberView | undefined>(undefined);
+  const view = useRef<WorldView | undefined>(undefined);
   const client = useRef<BrainClient | undefined>(undefined);
   const [scenario, setScenario] = useState<LifecycleScenario>("mealThenStarvation");
   const [info, setInfo] = useState<LifecycleInfo>();
@@ -40,7 +40,7 @@ export function LifecycleLab() {
         setInfo(reply.info);
         view.current?.dispose();
         try {
-          const scene = new ChamberView(container.current!, reply.info.level.geometry);
+          const scene = new WorldView(container.current!, reply.info.level.geometry);
           view.current = scene;
           const pose = reply.info.level.spawnPoses[0];
           scene.setPose({ x: pose.position.x, y: 0.1, z: pose.position.z, heading: pose.heading });

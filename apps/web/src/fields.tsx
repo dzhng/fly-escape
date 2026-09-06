@@ -1,6 +1,6 @@
 import { NeuralExplanations } from "./neural-explanations";
 import React, { useEffect, useRef, useState } from "react";
-import { ChamberView, FIELD_OVERLAY_HALF_VALUES, FIELD_COLORS } from "@fly-escape/game-renderer";
+import { WorldView, FIELD_OVERLAY_HALF_VALUES, FIELD_COLORS } from "@fly-escape/game-renderer";
 import {
   BrainClient,
   type FieldScenario,
@@ -25,7 +25,7 @@ const channelFor = (scenario: FieldScenario) =>
 
 export function FieldsLab() {
   const containers = [useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null)];
-  const views = useRef<ChamberView[]>([]);
+  const views = useRef<WorldView[]>([]);
   const client = useRef<BrainClient | undefined>(undefined);
   const antennaOffset = useRef(0);
   const scenarioRef = useRef<FieldScenario>("inhibitoryOdor");
@@ -48,7 +48,7 @@ export function FieldsLab() {
         try {
           views.current.forEach((v) => v.dispose());
           views.current = containers.map((container, i) => {
-            const view = new ChamberView(container.current!, reply.info.brain.geometry);
+            const view = new WorldView(container.current!, reply.info.brain.geometry);
             view.setPose(reply.info.brain.initialPose);
             view.setSensoryMarkers(reply.info.brain.initialPose, reply.info.brain.antennaOffset);
             view.setWind(reply.info.brain.initialPose, reply.info.grids[i].wind);

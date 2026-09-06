@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ChamberView, type FlyPose } from "@fly-escape/game-renderer";
+import { WorldView, type FlyPose } from "@fly-escape/game-renderer";
 import {
   AttemptClient,
   FrameArchive,
@@ -112,13 +112,20 @@ function sample(run: Run): FlyPose[] {
 export function PlaybackLab() {
   const container = useRef<HTMLDivElement>(null);
   const seekInput = useRef<HTMLInputElement>(null);
-  const scene = useRef<ChamberView | undefined>(undefined);
+  const scene = useRef<WorldView | undefined>(undefined);
   const run = useRef<Run | undefined>(undefined);
   const restart = useRef<() => void>(() => {});
   const interactionAt = useRef<number | null>(null);
   const [info, setInfo] = useState<AttemptInfo>();
   const [display, setDisplay] = useState(initialDisplay);
   const [selected, setSelected] = useState(0);
+  const cards = useRef(new Map<number, HTMLButtonElement>());
+  const selectFly = (id: number) => {
+    interactionAt.current = performance.now();
+    setSelected(id);
+    scene.current?.selectFly(id);
+    cards.current.get(id)?.scrollIntoView({ block: "nearest", inline: "nearest" });
+  };
   const [requested, setRequested] = useState(true);
   const [error, setError] = useState("");
 
@@ -172,7 +179,7 @@ export function PlaybackLab() {
           interactions: new TimingSamples(),
         };
         scene.current?.dispose();
-        scene.current = new ChamberView(
+        scene.current = new WorldView(
           container.current!,
           reply.info.level.geometry,
           reply.info.spec.flyCount,
@@ -183,6 +190,8 @@ export function PlaybackLab() {
           reply.info.level.exit,
         );
         scene.current.setPoses(sample(run.current));
+        scene.current.enableSelection(selectFly);
+        scene.current.selectFly(0);
         setInfo(reply.info);
       } else if (reply.type === "frames") {
         const current = run.current;
@@ -309,6 +318,7 @@ export function PlaybackLab() {
                 note: "WASM includes graph and brain state; do not add those again. Download report includes an on-demand GPU memory estimate.",
               },
               renderer: scene.current?.statistics,
+              camera: scene.current?.cameraState,
               result: current.archive.result,
             };
             lastPublished = now;
@@ -469,6 +479,7 @@ export function PlaybackLab() {
             >
               Replay
             </button>
+            <button disabled={!info || !!error} onClick={() => { interactionAt.current = performance.now(); scene.current?.overview(); }}>Overview</button>
             <button onClick={() => restart.current()}>New attempt</button>
             <button disabled={!info} onClick={save}>
               Download report
@@ -487,23 +498,19 @@ export function PlaybackLab() {
               {error}
             </p>
           )}
-          <label className="scenario-label">
-            Fly
-            <select
-              aria-label="Selected fly"
-              value={selected}
-              onChange={(event) => {
-                interactionAt.current = performance.now();
-                setSelected(Number(event.target.value));
-              }}
-            >
-              {Array.from({ length: FLY_COUNT }, (_, id) => (
-                <option key={id} value={id}>
-                  Fly {String(id + 1).padStart(2, "0")}
-                </option>
-              ))}
-            </select>
-          </label>
+          <div className="fly-roster" aria-label="Fly roster">
+            {Array.from({ length: FLY_COUNT }, (_, id) => {
+              const body = display.frame?.flies[id].body;
+              return <button key={id} ref={element => { if (element) cards.current.set(id, element); else cards.current.delete(id); }}
+                className="fly-card" data-testid={`fly-card-${id}`} data-fly-id={id}
+                aria-label={`Select fly ${id + 1}`} aria-pressed={selected === id}
+                disabled={!info || !!error} onClick={() => selectFly(id)}>
+                <strong>Fly {String(id + 1).padStart(2, "0")}</strong>
+                <span>{body?.outcome ?? body?.mode ?? "Initial state"}</span>
+                <small>Reserve {(body?.reserve ?? info?.level.initialReserve ?? 0).toFixed(2)}</small>
+              </button>;
+            })}
+          </div>
           <div
             className="sensor-card"
             data-testid="selected-fly"
@@ -550,7 +557,7 @@ export function PlaybackLab() {
           </div>
           <NeuralExplanations />
           <details>
-            <summary>Playback controls</summary>
+            <summary>Playback and camera controls</summary>
             <p>
               Pause stops the shared playback cursor. Scrub within computed time or replay the
               stored record. A speed increase may need more buffering. A hidden tab freezes playback

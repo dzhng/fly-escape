@@ -30,7 +30,7 @@ try {
       page,
       "change",
       '[data-testid="selected-fly"][data-fly-id="19"]',
-      () => page.getByLabel("Selected fly", { exact: true }).selectOption("19"),
+      () => page.getByRole("button", { name: "Select fly 20", exact: true }).click(),
     );
     await page.waitForFunction(
       () => document.querySelector('[data-testid="selected-fly"]')?.dataset.flyId === "19",

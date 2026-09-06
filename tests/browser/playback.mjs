@@ -46,7 +46,7 @@ try {
   await page.waitForTimeout(180);
   assert.equal((await report()).cursorTick, paused.cursorTick);
   assert.equal(paused.sampleTick, Math.floor(paused.cursorTick));
-  await page.getByLabel("Selected fly", { exact: true }).selectOption("19");
+  await page.getByRole("button", { name: "Select fly 20", exact: true }).click();
   await page.waitForFunction(
     () => document.querySelector('[data-testid="selected-fly"]').dataset.flyId === "19",
   );

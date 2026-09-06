@@ -2,7 +2,7 @@ import { PlaybackLab } from "./playback";
 import { LifecycleLab } from "./lifecycle";
 import React, { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { ChamberView } from "@fly-escape/game-renderer";
+import { WorldView } from "@fly-escape/game-renderer";
 import { BrainClient, type BrainFrame, type BrainInfo } from "@fly-escape/sim-client";
 import "./style.css";
 import { FieldsLab } from "./fields";
@@ -10,7 +10,7 @@ import { NeuralExplanations } from "./neural-explanations";
 
 function BrainLab() {
   const container = useRef<HTMLDivElement>(null);
-  const view = useRef<ChamberView | undefined>(undefined);
+  const view = useRef<WorldView | undefined>(undefined);
   const client = useRef<BrainClient | undefined>(undefined);
   const [info, setInfo] = useState<BrainInfo>();
   const [frame, setFrame] = useState<BrainFrame>();
@@ -36,7 +36,7 @@ function BrainLab() {
       if (reply.type === "ready") {
         try {
           view.current?.dispose();
-          view.current = new ChamberView(container.current!, reply.info.geometry);
+          view.current = new WorldView(container.current!, reply.info.geometry);
           view.current.setPose(reply.info.initialPose);
           setInfo(reply.info);
           setLoadMs(reply.loadMs);

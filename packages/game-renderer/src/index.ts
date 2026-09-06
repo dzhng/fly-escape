@@ -1,4 +1,6 @@
 import * as THREE from "three";
+import { WorldCamera } from "./camera";
+import { cameraInput } from "./camera-input";
 import type { Geometry, FieldGrid, ContactRegion, ExitOpening } from "@fly-escape/sim-client";
 
 export type FieldChannel = "odor" | "brightness" | "shade" | "exitCue";
@@ -25,9 +27,14 @@ export interface FlyPose {
 }
 
 /** A presentation-only fixture. The caller owns pose sampling and frame scheduling. */
-export class ChamberView {
+export class WorldView {
   private readonly scene = new THREE.Scene();
-  private readonly camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+  private readonly navigation: WorldCamera;
+  private controls?: ReturnType<typeof cameraInput>;
+  private selectedFly: number | null = null;
+  private readonly selectionRing: THREE.Mesh<THREE.RingGeometry, THREE.MeshBasicMaterial>;
+  private readonly raycaster = new THREE.Raycaster();
+  private readonly walls = new THREE.Group();
   private readonly renderer: THREE.WebGLRenderer;
   private readonly flies = [createPlaceholderFly()];
   private readonly observer: ResizeObserver;
@@ -57,6 +64,11 @@ export class ChamberView {
       this.bounds.expandByPoint(new THREE.Vector3(room.max.x, 1, room.max.z));
     }
     if (this.bounds.isEmpty()) throw new Error("Scene requires room geometry");
+    const modelBounds = new THREE.Box3().setFromObject(this.flies[0]);
+    const modelSize = modelBounds.getSize(new THREE.Vector3());
+    const ringRadius = Math.max(modelSize.x, modelSize.z) * 0.6;
+    this.selectionRing = new THREE.Mesh(new THREE.RingGeometry(ringRadius, ringRadius + 0.055, 48), new THREE.MeshBasicMaterial({ color: "#f5cc35", transparent: true, side: THREE.DoubleSide, depthWrite: false }));
+    this.navigation = new WorldCamera(this.bounds, modelBounds.getSize(new THREE.Vector3()).y);
     const center = this.bounds.getCenter(new THREE.Vector3());
     const radius = this.bounds.getSize(new THREE.Vector3()).length() / 2;
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -84,7 +96,10 @@ export class ChamberView {
     sun.shadow.camera.near = 1;
     sun.shadow.camera.far = radius * 5;
     sun.shadow.normalBias = 0.025;
-    this.scene.add(sun, sun.target, createRoomGeometry(geometry), ...this.flies, this.contactMarkers);
+    this.scene.add(sun, sun.target, createRoomGeometry(geometry, this.walls), ...this.flies, this.contactMarkers, this.selectionRing);
+    this.selectionRing.rotation.x = -Math.PI / 2;
+    this.selectionRing.visible = false;
+    this.flies.forEach((fly, id) => { fly.userData.flyId = id; });
     this.sensorMarkers.forEach((marker) => {
       marker.visible = false;
       this.scene.add(marker);
@@ -97,6 +112,7 @@ export class ChamberView {
     this.observer = new ResizeObserver(() => this.resize());
     this.observer.observe(container);
     this.resize();
+    this.navigation.overview();
   }
 
   setContactRegions(food: ContactRegion[], hazards: ContactRegion[], exit: ExitOpening): void {
@@ -213,11 +229,41 @@ export class ChamberView {
       textures: this.renderer.info.memory.textures };
   }
 
+  /** Web owns selected ID. Model picks return through its same card action. */
+  enableSelection(onSelect: (id: number) => void): void {
+    this.controls?.dispose();
+    const canvas = this.renderer.domElement;
+    this.controls = cameraInput(canvas, this.navigation, (x, y) => {
+      this.scene.updateMatrixWorld(true);
+      this.raycaster.setFromCamera(new THREE.Vector2(x / canvas.clientWidth * 2 - 1, 1 - y / canvas.clientHeight * 2), this.navigation.camera);
+      const hit = this.raycaster.intersectObjects(this.flies, true)[0];
+      if (!hit) return;
+      let owner: THREE.Object3D | null = hit.object;
+      while (owner && owner.userData.flyId === undefined) owner = owner.parent;
+      if (owner) onSelect(owner.userData.flyId);
+    });
+  }
+
+  selectFly(id: number): void {
+    const fly = this.flies[id];
+    if (!fly) throw new Error("Selected fly does not exist");
+    this.selectedFly = id;
+    this.selectionRing.visible = true;
+    this.navigation.follow(fly.position.clone().add(new THREE.Vector3(0, 0.35, 0)));
+  }
+
+  overview(): void { this.navigation.overview(); }
+
+  get cameraState() {
+    return { ...this.navigation.state, selectedFlyId: this.selectedFly,
+      flies: this.flies.map((fly, id) => ({ id, ...this.navigation.project(fly.position.clone().add(new THREE.Vector3(0, 0.35, 0))) })) };
+  }
+
   /** Visual anchors for the recorded input pose, using the core's antenna offset. */
   setSensoryMarkers(pose: FlyPose, antennaOffset: number): void {
     const dx = Math.sin(pose.heading) * antennaOffset;
     const dz = -Math.cos(pose.heading) * antennaOffset;
-    const cameraRight = new THREE.Vector3().setFromMatrixColumn(this.camera.matrixWorld, 0);
+    const cameraRight = new THREE.Vector3().setFromMatrixColumn(this.navigation.camera.matrixWorld, 0);
     const leftOnScreenRight = dx * cameraRight.x + dz * cameraRight.z >= 0;
     this.sensorMarkers.forEach((marker, i) => {
       const side = i === 0 ? 1 : -1;
@@ -309,43 +355,32 @@ export class ChamberView {
     const width = Math.max(1, this.container.clientWidth);
     const height = Math.max(1, this.container.clientHeight);
     this.renderer.setSize(width, height, false);
-    this.camera.aspect = width / height;
-    const verticalHalfAngle = THREE.MathUtils.degToRad(this.camera.fov / 2);
-    const horizontalHalfAngle = Math.atan(Math.tan(verticalHalfAngle) * this.camera.aspect);
-    const center = this.bounds.getCenter(new THREE.Vector3());
-    const backward = new THREE.Vector3(1, 1.8, 1).normalize();
-    const right = new THREE.Vector3()
-      .crossVectors(new THREE.Vector3(0, 1, 0), backward)
-      .normalize();
-    const up = new THREE.Vector3().crossVectors(backward, right);
-    let distance = 0;
-    // Fit every corner in camera space. Perspective depth matters on the near edge.
-    for (const x of [this.bounds.min.x, this.bounds.max.x]) {
-      for (const y of [this.bounds.min.y, this.bounds.max.y]) {
-        for (const z of [this.bounds.min.z, this.bounds.max.z]) {
-          const corner = new THREE.Vector3(x, y, z).sub(center);
-          distance = Math.max(
-            distance,
-            corner.dot(backward) +
-              Math.max(
-                Math.abs(corner.dot(right)) / (Math.tan(horizontalHalfAngle) * 0.92),
-                Math.abs(corner.dot(up)) / (Math.tan(verticalHalfAngle) * 0.92),
-              ),
-          );
-        }
-      }
-    }
-    this.camera.position.copy(backward).multiplyScalar(distance).add(center);
-    this.camera.far = distance + this.bounds.getSize(new THREE.Vector3()).length() * 2;
-    this.camera.lookAt(center);
-    this.camera.updateProjectionMatrix();
+    this.navigation.resize(width, height);
   }
 
   render(): void {
-    this.renderer.render(this.scene, this.camera);
+    this.controls?.update(performance.now());
+    if (this.selectedFly !== null) {
+      const fly = this.flies[this.selectedFly];
+      this.navigation.track(fly.position.clone().add(new THREE.Vector3(0, 0.35, 0)));
+      this.selectionRing.position.set(fly.position.x, 0.03, fly.position.z);
+    }
+    // Only visual occluders on the camera-to-subject ray cut away; floor/wall
+    // collision geometry remains entirely owned by the simulation.
+    this.walls.children.forEach(wall => { wall.visible = true; });
+    if (this.selectedFly !== null && this.navigation.state.following) {
+      const target = this.flies[this.selectedFly].position.clone().add(new THREE.Vector3(0, 0.35, 0));
+      const direction = target.clone().sub(this.navigation.camera.position);
+      this.raycaster.set(this.navigation.camera.position, direction.clone().normalize());
+      this.raycaster.far = direction.length();
+      this.raycaster.intersectObjects(this.walls.children, false).forEach(hit => { hit.object.visible = false; });
+      this.raycaster.far = Infinity;
+    }
+    this.renderer.render(this.scene, this.navigation.camera);
   }
 
   dispose(): void {
+    this.controls?.dispose();
     this.observer.disconnect();
     const geometries = new Set<THREE.BufferGeometry>();
     const materials = new Set<THREE.Material>();
@@ -376,7 +411,7 @@ export class ChamberView {
 }
 
 /** Wall segments already contain doorway gaps; no room adjacency is inferred here. */
-function createRoomGeometry(geometry: Geometry): THREE.Group {
+function createRoomGeometry(geometry: Geometry, walls: THREE.Group): THREE.Group {
   const group = new THREE.Group();
   const floorMaterial = new THREE.MeshStandardMaterial({ color: "#d9dfca", roughness: 1 });
   const wallMaterial = new THREE.MeshStandardMaterial({ color: "#8aab9d", roughness: 1 });
@@ -397,8 +432,9 @@ function createRoomGeometry(geometry: Geometry): THREE.Group {
     wall.position.set((segment.a.x + segment.b.x) / 2, 0.3, (segment.a.z + segment.b.z) / 2);
     wall.rotation.y = -Math.atan2(dz, dx);
     wall.castShadow = wall.receiveShadow = true;
-    group.add(wall);
+    walls.add(wall);
   }
+  group.add(walls);
   return group;
 }
 

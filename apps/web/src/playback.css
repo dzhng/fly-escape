@@ -1,7 +1,7 @@
 .playback-lab .workspace {
   grid-template-columns: minmax(0, 1fr) 365px;
 }
-.playback-world > .canvas {
+.playback-lab .playback-world > .canvas {
   top: 108px;
   bottom: 170px;
 }
@@ -73,10 +73,19 @@
   .playback-world {
     height: 580px;
   }
-  .playback-world > .canvas {
+  .playback-lab .playback-world > .canvas {
     bottom: 190px;
   }
   .playback-counters {
     gap: 8px;
   }
 }
+
+.fly-roster { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; max-height: 188px; overflow: auto; padding: 4px; margin: 12px -4px; }
+.fly-card { display: grid; grid-template-columns: 1fr auto; gap: 4px; text-align: left; min-height: 58px; padding: 9px; }
+.fly-card strong { font-size: 12px; }
+.fly-card span { font-size: 10px; text-transform: capitalize; }
+.fly-card small { grid-column: 1 / -1; font-size: 10px; color: #59705f; }
+.fly-card[aria-pressed="true"] { background: #e5edd4; border-color: #6d8850; box-shadow: inset 3px 0 #e8c43e; }
+.fly-card:focus-visible { outline: 2px solid #ad781e; outline-offset: -3px; }
+.playback-world canvas:focus { outline: none; }
