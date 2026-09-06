@@ -141,3 +141,11 @@ When a recorded fly switches from flying to walking, its model plays the authore
 ### Motion phases are reconstructed from packed records (slice 08)
 
 When playback advances, the archive remembers the latest mode change and terminal tick for each fly. Seeking backwards rebuilds those few values from the bounded packed history. The plan required repeatable animation without specifying retained transition state. This adds at most 800 bytes for 100 flies, rather than another decoded history. The renderer samples each clip at an absolute time, so pause and reverse seek return the same pose without changing simulation state.
+
+### Slice 13 — science panel preparation
+
+- **Provisional, reviewable:** Each fly shows both scientific traces for one independently selectable group, while its diagram retains all source-defined group activity. Overlaying every group’s two quantities would make the narrow cards unreadable. The selector exposes every group; this changes information density, not recorded signals.
+- **Sound:** The diagram shows exported links touching the selected group, explicitly labeled. A full mesh obscured direction and labels in independent reviews. Selecting another group reveals its connections; the UI never invents or recomputes wiring.
+- **Sound:** Keep a maximum ten-second trace window and read only visible/near-visible cards from packed storage. This bounds panel work without dropping historical records or allowing traces beyond displayed time.
+- **Sound:** Explain candidate circuit labels as inherited selections, alongside primary biological context and explicit model assumptions. The original body-ID names alone do not prove anatomical function.
+- **Provisional, reviewable:** Voltage plots scale to the visible data with printed bounds; firing plots keep a fixed 0–100% scale. This shows voltage changes without confusing voltage units with firing fractions. Desktop tooltips sit beside the card panel; smaller viewports use a scrollable overlay.

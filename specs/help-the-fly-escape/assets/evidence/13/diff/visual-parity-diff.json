@@ -1,0 +1,115 @@
+{
+  "kind": "screenshot-parity-diff",
+  "generatedAt": "2026-09-06T18:05:27.506Z",
+  "note": "Lower parityDistance means the candidate is closer to the reference for this fixed pair. This is a distance metric, not an acceptance gate.",
+  "pairCount": 1,
+  "worstPair": "panel",
+  "results": [
+    {
+      "id": "panel",
+      "current": "../../../../tmp/fly-escape-science-panel/specs/help-the-fly-escape/assets/evidence/13/before/panel.png",
+      "candidate": "../../../../tmp/fly-escape-science-panel/specs/help-the-fly-escape/assets/evidence/13/panel.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "parityDistance": 0.08144,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 88,
+          "colorEntropyBits": 2.31264,
+          "edgeDensity": 0.13568,
+          "dominantColorShare": 0.43799,
+          "transparentShare": 0,
+          "luminanceMean": 242.41343,
+          "luminanceP5": 217.5074,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 34.9656
+        },
+        "candidate": {
+          "colorBuckets": 96,
+          "colorEntropyBits": 2.70415,
+          "edgeDensity": 0.1472,
+          "dominantColorShare": 0.25312,
+          "transparentShare": 0,
+          "luminanceMean": 238.69995,
+          "luminanceP5": 179.8174,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 72.6556
+        }
+      },
+      "grayscale": {
+        "mae": 11.88427,
+        "rmse": 31.77009,
+        "diffRatio16": 0.26749,
+        "diffRatio32": 0.08018,
+        "diffRatio64": 0.05474,
+        "pixelmatchRatio": 0.08768
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0.00006,
+        "terrainLikeRatioCurrent": 0.98277,
+        "terrainLikeRatioCandidate": 0.98857,
+        "avgLuminanceCurrent": 241.97723,
+        "avgLuminanceCandidate": 238.47316,
+        "avgLuminanceDelta": -3.50407,
+        "edgeEnergyCurrent": 0.06401,
+        "edgeEnergyCandidate": 0.06674,
+        "edgeEnergyRatio": 1.04265,
+        "edgeDiffRatio32": 0.08968
+      },
+      "artifacts": {
+        "sideBySide": "diff/panel-side-by-side.png",
+        "currentGray": "diff/panel-current-gray.png",
+        "candidateGray": "diff/panel-candidate-gray.png",
+        "absDiff": "diff/panel-absdiff.png",
+        "pixelmatch": "diff/panel-pixelmatch.png",
+        "currentEdges": "diff/panel-current-edges.png",
+        "candidateEdges": "diff/panel-candidate-edges.png",
+        "edgeDiff": "diff/panel-edge-diff.png"
+      },
+      "worldCrop": {
+        "label": "science-panel",
+        "bounds": {
+          "x": 1075,
+          "y": 97,
+          "width": 365,
+          "height": 903
+        },
+        "parityDistance": 0.14303,
+        "grayscale": {
+          "mae": 14.02167,
+          "rmse": 35.58076,
+          "diffRatio16": 0.21891,
+          "diffRatio32": 0.09756,
+          "diffRatio64": 0.06771,
+          "pixelmatchRatio": 0.10848
+        },
+        "contentProxies": {
+          "blackRatioCurrent": 0,
+          "blackRatioCandidate": 0.00027,
+          "terrainLikeRatioCurrent": 0.97695,
+          "terrainLikeRatioCandidate": 0.98661,
+          "avgLuminanceCurrent": 237.89267,
+          "avgLuminanceCandidate": 240.40165,
+          "avgLuminanceDelta": 2.50898,
+          "edgeEnergyCurrent": 0.13705,
+          "edgeEnergyCandidate": 0.1525,
+          "edgeEnergyRatio": 1.1127,
+          "edgeDiffRatio32": 0.23462
+        },
+        "artifacts": {
+          "sideBySide": "diff/panel-world-crop-side-by-side.png",
+          "currentGray": "diff/panel-world-crop-current-gray.png",
+          "candidateGray": "diff/panel-world-crop-candidate-gray.png",
+          "absDiff": "diff/panel-world-crop-absdiff.png",
+          "pixelmatch": "diff/panel-world-crop-pixelmatch.png",
+          "currentEdges": "diff/panel-world-crop-current-edges.png",
+          "candidateEdges": "diff/panel-world-crop-candidate-edges.png",
+          "edgeDiff": "diff/panel-world-crop-edge-diff.png"
+        }
+      }
+    }
+  ]
+}

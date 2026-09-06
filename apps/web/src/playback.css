@@ -19,14 +19,6 @@
   max-width: none;
   gap: 8px;
 }
-.playback-lab .group,
-.playback-lab .group output {
-  font-size: 13px;
-}
-.playback-lab .group-heading {
-  font-size: 11px;
-  color: #425b48;
-}
 .playback-status {
   display: flex;
   width: 100%;
@@ -81,11 +73,6 @@
   }
 }
 
-.fly-roster { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; max-height: 188px; overflow: auto; padding: 4px; margin: 12px -4px; }
-.fly-card { display: grid; grid-template-columns: 1fr auto; gap: 4px; text-align: left; min-height: 58px; padding: 9px; }
-.fly-card strong { font-size: 12px; }
-.fly-card span { font-size: 10px; text-transform: capitalize; }
-.fly-card small { grid-column: 1 / -1; font-size: 10px; color: #59705f; }
-.fly-card[aria-pressed="true"] { background: #e5edd4; border-color: #6d8850; box-shadow: inset 3px 0 #e8c43e; }
-.fly-card:focus-visible { outline: 2px solid #ad781e; outline-offset: -3px; }
-.playback-world canvas:focus { outline: none; }
+.playback-world canvas:focus {
+  outline: none;
+}

@@ -252,3 +252,27 @@ test("motion follows packed mode transitions across chunk boundaries and resets 
     cursorTick: 0,
   });
 });
+
+test("bounded neural traces match recorded frames across seek and terminal gaps", () => {
+  const record = archive();
+  for (const chunk of fixture.chunks) record.append(transfer(chunk));
+  const groupId = fixture.layout.groupIds[0];
+  for (const flyId of [0, 1]) {
+    const expected = fixture.frames.map((frame) => {
+      const group = frame.flies[flyId].neural?.groups.find((group) => group.id === groupId);
+      return {
+        tick: frame.tick,
+        meanVoltage: group?.meanVoltage ?? null,
+        spikeFraction: group?.spikeFraction ?? null,
+      };
+    });
+    expect(record.neuralTrace(flyId, groupId, 4)).toEqual(expected);
+    expect(record.neuralTrace(flyId, groupId, 2)).toEqual(expected.slice(0, 2));
+    expect(record.neuralTrace(flyId, groupId, 4, 2)).toEqual(expected.slice(2));
+    expect(record.neuralTrace(flyId, groupId, 0)).toEqual([]);
+    expect(record.neuralTrace(flyId, groupId, 4)).toEqual(expected);
+  }
+  expect(() => record.neuralTrace(0, groupId, 5)).toThrow();
+  expect(() => record.neuralTrace(0, groupId, 4, 101)).toThrow();
+  expect(() => record.neuralTrace(2, groupId, 4)).toThrow();
+});

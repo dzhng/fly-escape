@@ -298,6 +298,41 @@ export class FrameArchive {
     }));
   }
 
+  /** Read one group's bounded history directly from packed storage. Missing
+   * neural samples remain gaps, including terminal ticks; never invent zeros. */
+  neuralTrace(flyId: number, groupId: string, endTick: number, windowTicks = 100) {
+    require(integer(flyId) && flyId < this.spec.flyCount, "Unknown fly");
+    require(integer(endTick) && endTick <= this.lastTick, "Tick has not been recorded");
+    require(integer(windowTicks) &&
+      windowTicks > 0 &&
+      windowTicks <= 100, "Trace window exceeds 100 ticks");
+    const group = this.layout.groupIds.indexOf(groupId);
+    require(group >= 0, "Unknown neural group");
+    const points: { tick: number; meanVoltage: number | null; spikeFraction: number | null }[] = [];
+    const start = Math.max(1, endTick - windowTicks + 1);
+    for (const chunk of this.chunks) {
+      const end = Math.min(endTick, chunk.startTick + chunk.tickCount - 1);
+      if (end < start) continue;
+      if (chunk.startTick > endTick) break;
+      for (let tick = Math.max(start, chunk.startTick); tick <= end; tick++) {
+        const record = (tick - chunk.startTick) * chunk.flyCount + flyId;
+        const present =
+          chunk.states[record * this.layout.stateFields.length + this.stateOffsets.presence] &
+          this.layout.neuralPresentMask;
+        const base =
+          record * this.valueStride +
+          this.layout.valueFields.length +
+          group * this.layout.groupFields.length;
+        points.push({
+          tick,
+          meanVoltage: present ? chunk.values[base + this.groupOffsets.meanVoltage] : null,
+          spikeFraction: present ? chunk.values[base + this.groupOffsets.spikeFraction] : null,
+        });
+      }
+    }
+    return points;
+  }
+
   frame(tick: number): AttemptFrame {
     require(integer(tick) &&
       tick >= 1 &&

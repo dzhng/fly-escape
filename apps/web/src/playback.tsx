@@ -7,6 +7,7 @@ import {
   type AttemptInfo,
   type AttemptFrame,
 } from "@fly-escape/sim-client";
+import { SciencePanel } from "./science-panel";
 import { NeuralExplanations } from "./neural-explanations";
 import "./playback.css";
 import flyModelUrl from "../../../assets/fly/fly.glb?url";
@@ -127,7 +128,10 @@ export function PlaybackLab() {
     interactionAt.current = performance.now();
     setSelected(id);
     scene.current?.selectFly(id);
-    cards.current.get(id)?.scrollIntoView({ block: "nearest", inline: "nearest" });
+    cards.current
+      .get(id)
+      ?.closest("article")
+      ?.scrollIntoView({ block: "start", inline: "nearest" });
   };
   const [requested, setRequested] = useState(true);
   const [error, setError] = useState("");
@@ -393,7 +397,6 @@ export function PlaybackLab() {
     link.click();
     URL.revokeObjectURL(url);
   };
-  const fly = display.frame?.flies[selected];
   const counts = { escaped: 0, starved: 0, zapped: 0, timedOut: 0 };
   for (const frameFly of display.frame?.flies ?? [])
     if (frameFly.body.outcome) counts[frameFly.body.outcome]++;
@@ -517,7 +520,7 @@ export function PlaybackLab() {
             </button>
           </div>
         </div>
-        <aside aria-label="Selected fly playback data">
+        <aside aria-label="All fly neural activity">
           <span className="eyebrow">Recorded neural activity</span>
           <h2>Read any fly’s record</h2>
           <p className="intro">
@@ -529,77 +532,20 @@ export function PlaybackLab() {
               {error}
             </p>
           )}
-          <div className="fly-roster" aria-label="Fly roster">
-            {Array.from({ length: FLY_COUNT }, (_, id) => {
-              const body = display.frame?.flies[id].body;
-              return (
-                <button
-                  key={id}
-                  ref={(element) => {
-                    if (element) cards.current.set(id, element);
-                    else cards.current.delete(id);
-                  }}
-                  className="fly-card"
-                  data-testid={`fly-card-${id}`}
-                  data-fly-id={id}
-                  aria-label={`Select fly ${id + 1}`}
-                  aria-pressed={selected === id}
-                  disabled={!info || !!error}
-                  onClick={() => selectFly(id)}
-                >
-                  <strong>Fly {String(id + 1).padStart(2, "0")}</strong>
-                  <span>{body?.outcome ?? body?.mode ?? "Initial state"}</span>
-                  <small>
-                    Reserve {(body?.reserve ?? info?.level.initialReserve ?? 0).toFixed(2)}
-                  </small>
-                </button>
-              );
-            })}
-          </div>
-          <div
-            className="sensor-card"
-            data-testid="selected-fly"
-            data-fly-id={selected}
-            data-sample-tick={display.frame?.tick ?? 0}
-          >
-            <h3>{fly?.body.outcome ?? fly?.body.mode ?? "Initial state"}</h3>
-            <p>
-              Reserve{" "}
-              <output data-testid="selected-reserve">
-                {(fly?.body.reserve ?? info?.level.initialReserve ?? 0).toFixed(3)}
-              </output>
-            </p>
-            <p>
-              Sample tick <output data-testid="selected-tick">{display.frame?.tick ?? 0}</output> ·{" "}
-              {(display.cursor * TICK_SECONDS).toFixed(1)} s cursor
-            </p>
-            <p>
-              {fly?.neural
-                ? `${fly.neural.spikeCount} neurons fired this tick`
-                : fly?.body.outcome
-                  ? "Terminal fly — no new neural measurement"
-                  : "Waiting for the first recorded measurement"}
-            </p>
-          </div>
-          <div className="group-heading">
-            <span>Neural group</span>
-            <span>Voltage</span>
-            <span>Firing</span>
-          </div>
-          <div className="groups">
-            {info?.groups.map((group) => {
-              const activity = fly?.neural?.groups.find((g) => g.id === group.id);
-              return (
-                <div className="group" key={group.id}>
-                  <span>{group.label}</span>
-                  <output>{activity?.meanVoltage.toFixed(3) ?? "—"}</output>
-                  <output>
-                    {activity ? `${(activity.spikeFraction * 100).toFixed(1)}%` : "—"}
-                  </output>
-                </div>
-              );
-            })}
-          </div>
+          {info && (
+            <SciencePanel
+              key={info.spec.attemptId}
+              info={info}
+              frame={display.frame}
+              archive={run.current?.archive}
+              selected={selected}
+              selectFly={selectFly}
+              register={(id, element) => {
+                if (element) cards.current.set(id, element);
+                else cards.current.delete(id);
+              }}
+            />
+          )}
           <NeuralExplanations />
           <details>
             <summary>Playback and camera controls</summary>

@@ -56,6 +56,8 @@ Before closing a substantive pass, review ownership with [refactor-clean](../../
 
 ## Evidence and remaining uncertainty
 
+- [Science panel preparation](assets/evidence/13/review.md): all-card diagrams and bounded packed traces are prepared; integration and dependency acceptance remain open.
+
 - [Research and reproduction](RESEARCH.md): actual source defects, reference architecture, primary external documentation and reproduction spikes.
 - [Draft synthesis](assets/planning/synthesis.md): three independent approaches, tradeoffs and scrollback audit.
 - [UI reference evidence](assets/ui/mock-review.md): mock limits; nearby images include approved framing and the rejected focus indicator.

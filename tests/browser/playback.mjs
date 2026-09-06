@@ -21,14 +21,14 @@ const state = (value) =>
     (s) => document.querySelector('[data-testid="playback-lab"]')?.dataset.playbackState === s,
     value,
   );
-const readout = () => page.locator(".groups").innerText();
+const readout = () => page.locator('[data-testid="selected-fly"] .science-current').innerText();
 const seekOne = async () => {
   const slider = page.getByLabel("Playback time", { exact: true });
   await slider.focus();
   await slider.press("Home");
   for (let i = 0; i < 10; i++) await slider.press("ArrowRight");
   await page.waitForFunction(
-    () => document.querySelector('[data-testid="selected-tick"]')?.textContent === "1",
+    () => document.querySelector('[data-testid="selected-fly"]')?.dataset.sampleTick === "1",
   );
 };
 try {
@@ -57,7 +57,7 @@ try {
   const first = await readout();
   await page.getByLabel("Playback time", { exact: true }).press("End");
   await page.waitForFunction(
-    () => Number(document.querySelector('[data-testid="selected-tick"]').textContent) > 1,
+    () => Number(document.querySelector('[data-testid="selected-fly"]').dataset.sampleTick) > 1,
   );
   await seekOne();
   assert.equal(await readout(), first, "seeking back must restore the same recorded neuron values");
