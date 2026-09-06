@@ -3,9 +3,9 @@ import type { Geometry, FieldGrid } from '@fly-escape/sim-client';
 
 export type FieldChannel = 'odor' | 'brightness' | 'shade' | 'exitCue';
 /** Fixed modeled cue value at half overlay strength; never normalized per frame. */
-export const FIELD_OVERLAY_HALF_VALUE = 1;
-const FIELD_COLORS: Record<FieldChannel, [number, number, number]> = {
-  odor: [215, 110, 35], brightness: [248, 206, 45], shade: [74, 83, 166], exitCue: [45, 169, 156],
+export const FIELD_OVERLAY_HALF_VALUES: Record<FieldChannel, number> = { odor: 1, brightness: 0.1, shade: 1, exitCue: 1 };
+export const FIELD_COLORS: Record<FieldChannel, [number, number, number]> = {
+  odor: [215, 110, 35], brightness: [67, 76, 211], shade: [74, 83, 166], exitCue: [45, 169, 156],
 };
 
 export interface FlyPose {
@@ -23,6 +23,8 @@ export class ChamberView {
   private readonly renderer: THREE.WebGLRenderer;
   private readonly fly = createPlaceholderFly();
   private readonly observer: ResizeObserver;
+  private readonly sensorMarkers = [createSensorMarker('L'), createSensorMarker('R')];
+  private readonly windArrow = new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), new THREE.Vector3(), 1, '#244f88');
   private readonly bounds: THREE.Box3;
   private fieldOverlay: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial> | null = null;
   private fieldTexture: THREE.DataTexture | null = null;
@@ -62,6 +64,9 @@ export class ChamberView {
     sun.shadow.camera.far = radius * 5;
     sun.shadow.normalBias = 0.025;
     this.scene.add(sun, sun.target, createRoomGeometry(geometry), this.fly);
+    this.sensorMarkers.forEach(marker => { marker.visible = false; this.scene.add(marker); });
+    this.windArrow.visible = false;
+    this.scene.add(this.windArrow);
     this.setPose({ x: 0, y: 0, z: 0, heading: 0 });
     this.observer = new ResizeObserver(() => this.resize());
     this.observer.observe(container);
@@ -72,6 +77,32 @@ export class ChamberView {
     this.fly.position.set(pose.x, pose.y, pose.z);
     // The replaceable model is +Y up, +Z forward, with its pivot at foot contact.
     this.fly.rotation.y = Math.PI / 2 - pose.heading;
+  }
+
+  /** Visual anchors for the recorded input pose, using the core's antenna offset. */
+  setSensoryMarkers(pose: FlyPose, antennaOffset: number): void {
+    const dx = Math.sin(pose.heading) * antennaOffset;
+    const dz = -Math.cos(pose.heading) * antennaOffset;
+    const cameraRight = new THREE.Vector3().setFromMatrixColumn(this.camera.matrixWorld, 0);
+    const leftOnScreenRight = dx * cameraRight.x + dz * cameraRight.z >= 0;
+    this.sensorMarkers.forEach((marker, i) => {
+      const side = i === 0 ? 1 : -1;
+      marker.position.set(pose.x + side * dx, pose.y, pose.z + side * dz);
+      marker.visible = true;
+      for (const child of marker.children) {
+        if (child instanceof THREE.Sprite) child.center.x = ((i === 0) === leftOnScreenRight) ? 0 : 1;
+      }
+    });
+  }
+
+  /** Arrow length is one second of the exported world-space wind velocity. */
+  setWind(pose: FlyPose, wind: { x: number; z: number }): void {
+    const length = Math.hypot(wind.x, wind.z);
+    this.windArrow.visible = length > 0;
+    if (length === 0) return;
+    this.windArrow.position.set(pose.x, 0.05, pose.z);
+    this.windArrow.setDirection(new THREE.Vector3(wind.x / length, 0, wind.z / length));
+    this.windArrow.setLength(length, Math.min(0.2, length * 0.3), Math.min(0.15, length * 0.2));
   }
 
   /** Display core-exported cell samples. The renderer never evaluates a sensory field. */
@@ -103,7 +134,7 @@ export class ChamberView {
         // Plane UV bottom is world +Z after rotation; reverse rows to preserve core coordinates.
         const offset = ((grid.height - 1 - z) * grid.width + x) * 4;
         data[offset] = color[0]; data[offset + 1] = color[1]; data[offset + 2] = color[2];
-        data[offset + 3] = Math.round(220 * Math.max(0, value) / (FIELD_OVERLAY_HALF_VALUE + Math.max(0, value)));
+        data[offset + 3] = Math.round(220 * Math.max(0, value) / (FIELD_OVERLAY_HALF_VALUES[channel] + Math.max(0, value)));
       }
     }
     this.fieldTexture.needsUpdate = true;
@@ -120,10 +151,24 @@ export class ChamberView {
     const verticalHalfAngle = THREE.MathUtils.degToRad(this.camera.fov / 2);
     const horizontalHalfAngle = Math.atan(Math.tan(verticalHalfAngle) * this.camera.aspect);
     const center = this.bounds.getCenter(new THREE.Vector3());
-    const radius = this.bounds.getSize(new THREE.Vector3()).length() / 2;
-    const distance = radius * 1.08 / Math.sin(Math.min(verticalHalfAngle, horizontalHalfAngle));
-    this.camera.position.set(1, 1.8, 1).normalize().multiplyScalar(distance).add(center);
-    this.camera.far = distance + radius * 3;
+    const backward = new THREE.Vector3(1, 1.8, 1).normalize();
+    const right = new THREE.Vector3().crossVectors(new THREE.Vector3(0, 1, 0), backward).normalize();
+    const up = new THREE.Vector3().crossVectors(backward, right);
+    let distance = 0;
+    // Fit every corner in camera space. Perspective depth matters on the near edge.
+    for (const x of [this.bounds.min.x, this.bounds.max.x]) {
+      for (const y of [this.bounds.min.y, this.bounds.max.y]) {
+        for (const z of [this.bounds.min.z, this.bounds.max.z]) {
+          const corner = new THREE.Vector3(x, y, z).sub(center);
+          distance = Math.max(distance, corner.dot(backward) + Math.max(
+            Math.abs(corner.dot(right)) / (Math.tan(horizontalHalfAngle) * 0.92),
+            Math.abs(corner.dot(up)) / (Math.tan(verticalHalfAngle) * 0.92),
+          ));
+        }
+      }
+    }
+    this.camera.position.copy(backward).multiplyScalar(distance).add(center);
+    this.camera.far = distance + this.bounds.getSize(new THREE.Vector3()).length() * 2;
     this.camera.lookAt(center);
     this.camera.updateProjectionMatrix();
   }
@@ -136,11 +181,13 @@ export class ChamberView {
     this.observer.disconnect();
     const geometries = new Set<THREE.BufferGeometry>();
     const materials = new Set<THREE.Material>();
+    const textures = new Set<THREE.Texture>();
     this.scene.traverse((object) => {
-      if (object instanceof THREE.Mesh || object instanceof THREE.LineSegments) {
+      if (object instanceof THREE.Mesh || object instanceof THREE.Line || object instanceof THREE.Sprite) {
         geometries.add(object.geometry);
         for (const material of Array.isArray(object.material) ? object.material : [object.material]) {
           materials.add(material);
+          if (material instanceof THREE.SpriteMaterial && material.map) textures.add(material.map);
         }
       }
       if (object instanceof THREE.DirectionalLight) object.shadow.dispose();
@@ -148,6 +195,7 @@ export class ChamberView {
     geometries.forEach((geometry) => geometry.dispose());
     materials.forEach((material) => material.dispose());
     this.fieldTexture?.dispose();
+    textures.forEach(texture => texture.dispose());
     this.renderer.dispose();
     this.renderer.domElement.remove();
   }
@@ -213,4 +261,28 @@ function createPlaceholderFly(): THREE.Group {
     }
   }
   return fly;
+}
+
+function createSensorMarker(label: 'L' | 'R'): THREE.Group {
+  const group = new THREE.Group();
+  const color = label === 'L' ? '#174845' : '#742b20';
+  const pin = new THREE.Mesh(new THREE.SphereGeometry(0.045, 8, 6), new THREE.MeshBasicMaterial({ color }));
+  const leader = new THREE.Line(new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0.85, 0),
+  ]), new THREE.LineBasicMaterial({ color }));
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = 64;
+  const context = canvas.getContext('2d')!;
+  context.fillStyle = '#ffffff';
+  context.beginPath(); context.arc(32, 32, 29, 0, Math.PI * 2); context.fill();
+  context.fillStyle = color; context.font = 'bold 42px sans-serif';
+  context.textAlign = 'center'; context.textBaseline = 'middle'; context.fillText(label, 32, 34);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture, depthWrite: false, sizeAttenuation: false }));
+  sprite.position.y = 0.85;
+  sprite.scale.set(0.023, 0.023, 1);
+  sprite.center.set(0.5, 0.5);
+  group.add(pin, leader, sprite);
+  return group;
 }
