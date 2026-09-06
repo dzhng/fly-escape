@@ -205,6 +205,7 @@ fn sensory_and_taste_currents_sum_without_direct_motor_injection() {
             gain: 0.1,
         }),
         taste_gain: 0.1,
+        ..Default::default()
     };
     let spec = Attempt::describe(&graph, &definition, &tuning, "currents", 11, 1).unwrap();
     let mut attempt = Attempt::new(graph.clone(), definition, tuning, spec).unwrap();
@@ -263,4 +264,37 @@ fn invalid_spawn_footprints_and_capacity_are_rejected_before_simulation() {
     assert!(Attempt::describe(&graph, &definition, &tuning, "horizon", 0, 1).is_err());
     let mut allowed = attempt(graph, level(100), 0, 100);
     assert_eq!(allowed.step().unwrap().unwrap().neural_steps, 100);
+}
+
+#[test]
+fn fixed_ablation_is_hashed_validated_and_clamps_neural_readouts() {
+    let graph = graph();
+    let mut level = level(1);
+    level.duration_ticks = 10;
+    let tuning = AttemptTuning {
+        silenced_neurons: vec![3],
+        ..Default::default()
+    };
+    let spec = Attempt::describe(&graph, &level, &tuning, "ablation", 1, 1).unwrap();
+    let control =
+        Attempt::describe(&graph, &level, &AttemptTuning::default(), "ablation", 1, 1).unwrap();
+    assert_ne!(spec.tuning_hash, control.tuning_hash);
+    let mut attempt = Attempt::new(graph.clone(), level.clone(), tuning, spec).unwrap();
+    for _ in 0..5 {
+        let frame = attempt.step().unwrap().unwrap();
+        let group = frame.flies[0]
+            .neural
+            .as_ref()
+            .unwrap()
+            .groups
+            .iter()
+            .find(|g| g.id == "proboscis")
+            .unwrap();
+        assert_eq!((group.mean_voltage, group.spike_fraction), (0., 0.));
+    }
+    let invalid = AttemptTuning {
+        silenced_neurons: vec![graph.neuron_count() as u32],
+        ..Default::default()
+    };
+    assert!(Attempt::describe(&graph, &level, &invalid, "invalid", 1, 1).is_err());
 }

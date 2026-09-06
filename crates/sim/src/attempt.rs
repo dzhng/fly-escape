@@ -42,6 +42,9 @@ pub struct CueInput {
 pub struct AttemptTuning {
     pub cue: Option<CueInput>,
     pub taste_gain: f64,
+    /// Experimental ablation, fixed for the complete attempt and included in its identity.
+    #[serde(default)]
+    pub silenced_neurons: Vec<u32>,
 }
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
@@ -114,6 +117,14 @@ impl Attempt {
         fly_count: u32,
     ) -> Result<AttemptSpec, String> {
         validate_description(level, tuning, attempt_id, fly_count)?;
+        if tuning.silenced_neurons.len() > graph.neuron_count()
+            || tuning
+                .silenced_neurons
+                .iter()
+                .any(|&i| i as usize >= graph.neuron_count())
+        {
+            return Err("silenced neuron index out of graph bounds".into());
+        }
         Ok(AttemptSpec {
             schema_version: 1,
             attempt_id: attempt_id.into(),
@@ -191,8 +202,10 @@ impl Attempt {
             .iter()
             .enumerate()
             .map(|(id, &pose)| {
+                let mut brain = Brain::new(graph.clone(), Brain::seed_for_fly(seed, id as u32));
+                brain.set_silenced_neurons(&tuning.silenced_neurons)?;
                 Ok(Fly {
-                    brain: Brain::new(graph.clone(), Brain::seed_for_fly(seed, id as u32)),
+                    brain,
                     body: Body::new(pose, level.initial_reserve, level.body_config.clone())?,
                 })
             })
