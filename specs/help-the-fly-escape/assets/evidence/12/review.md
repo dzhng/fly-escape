@@ -11,3 +11,5 @@ Source/shape review: one scalar in the existing light owner; no additional pass,
 Verdict: accept the narrow wall self-shadow correction provisionally. Complete slice 12 still needs authored production house/food composition, exit emphasis and the final human window. No claim that this one setting completes the lighting slice.
 
 Final independent lighting review inspected all six production views, five solid views, and seven actual food-context full/crop frames plus their sequence. No blocking lighting, depth, grounding, marker or exit defect was found. The orange exit remains discernible without adding another light. Soft small leg shadows and floor-colored radial fruit gaps are nonblocking limitations; the latter belongs to asset silhouette. The final human window opens at 19:34 UTC for approximately five minutes.
+
+The final human window closed at 19:39 UTC without a course correction. Root accepts slice 12 from its localized shadow comparison, complete production/food visual review and hardware profile. No additional light was needed: the existing warm orange exit marker remains readable. Future campaign composition still checks these components together.

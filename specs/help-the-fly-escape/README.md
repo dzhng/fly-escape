@@ -6,11 +6,11 @@ Build a local, fully 3D browser game in which the player places environmental to
 
 ## Next Agent Prompt
 
-You are implementing the whole browser game. Current pickup: resolve the Level 1 navigation/placement-benefit gate while completing remaining tool art and release preparation in parallel. No campaign level is accepted. Native probes use the real graph and the same paired seeds; the heading bracket failed to improve placement benefit, so the next diagnostic examines the existing neural turning output and body turn gain. See [15 evidence](assets/evidence/15/README.md). Do not replace neural movement with steering or lower the campaign criteria.
+You are implementing the whole browser game. Current pickup: resolve the Level 1 navigation/placement-benefit gate while completing remaining tool art and release preparation in parallel. No campaign level is accepted. Native probes use the real graph and the same paired seeds; heading and gain brackets failed to improve placement benefit, so current diagnostics measure directional odor availability and isolate cold startup from field/neural settling. See [15 evidence](assets/evidence/15/README.md). Do not replace neural movement with steering or lower the campaign criteria.
 
-Completed: 01–11 and 13. The authored house, shared palette and thin trails pass integrated source, browser and independent visual checks. Slice 12's shadow correction and twenty-fly hardware profile pass; its complete food/exit review is resolving. Slice 14's editor, fruit/crumb assets and combined model-readiness gate are integrated; remaining tool shapes are an explicitly bounded subpass. [17 cleanup](assets/evidence/17/cleanup.md) retires the Python runtime while preserving byte-identical offline reference oracles; [About/static-use preparation](assets/evidence/17/about/review.md) adds attribution and local serving guidance.
+Completed: 01–13. The authored house, shared palette and thin trails pass integrated source, browser and independent visual checks. Lighting passes its complete food/exit review and twenty-fly hardware profile. Slice 14's editor, fruit/crumb assets and combined model-readiness gate are integrated; remaining tool shapes are an explicitly bounded subpass. [17 cleanup](assets/evidence/17/cleanup.md) retires the Python runtime while preserving byte-identical offline reference oracles; [About/static-use preparation](assets/evidence/17/about/review.md) adds attribution and local serving guidance.
 
-Priority order: finish the 12 lighting review and 14 remaining-tool/readiness gates; resolve 15 with tuning and held-out evidence; author/validate 16; then run 17 release gates and whole-spec review. Keep prepared work separate from accepted dependent slices. Update this prompt, the checklist and slice status together after each pass.
+Priority order: finish 14 remaining-tool/readiness gates; resolve 15 with tuning and held-out evidence; author/validate 16; then run 17 release gates and whole-spec review. Keep prepared work separate from accepted dependent slices. Update this prompt, the checklist and slice status together after each pass.
 
 Performance evidence is build-specific: [ten full baseline attempts](assets/evidence/05/full-playback/review.md) passed without underruns, and a later setup/core build passes one full integration run plus a matching 250 MiB memory probe. Neither substitutes for final release validation. 100 flies remains a future capacity target. Browser apps live under `apps/`; neurons and measured circuit activity are explained separately from controls and game rules.
 
@@ -31,7 +31,7 @@ Open the [interactive roadmap](visualizations/roadmap.html) for dependency and m
 - [x] [09 — Readable white trails](slices/09-fly-trails.md) — dependencies: 08.
 - [x] [10 — A readable 3D house](slices/10-house-geometry.md) — dependencies: 07.
 - [x] [11 — House materials and color](slices/11-house-palette.md) — dependencies: 07,10.
-- [ ] [12 — Depth and exit lighting](slices/12-house-lighting.md) — dependencies: 11.
+- [x] [12 — Depth and exit lighting](slices/12-house-lighting.md) — dependencies: 11.
 - [x] [13 — All-fly science and explanations](slices/13-science-panel.md) — dependencies: 05,06.
 - [ ] [14 — Editable setup and attempt loop](slices/14-placement-attempt.md) — dependencies: 05,06,10,13.
 - [ ] [15 — Level 1 is the tutorial](slices/15-first-level.md) — dependencies: 03,04,09,12,14.
