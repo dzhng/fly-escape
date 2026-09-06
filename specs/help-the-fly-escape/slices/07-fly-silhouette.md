@@ -8,6 +8,10 @@ A true 3D fly remains recognizable at close zoom and can be replaced without app
 
 Blender source → GLB contract → game-renderer asset loader → apps/asset-lab.
 
+## Scale correction
+
+The first authored model spans about 1.24 world units while the diagnostic fly bodies are only 0.4 units apart and use a 0.1-unit collision radius. Correct the authored asset to one-quarter of its current linear size (about 0.31 units maximum span), so the visible body fits its physical footprint and neighboring default spawns remain distinguishable. This is a source-asset correction applied everywhere, not a per-fixture renderer scale or changed simulation spacing. Bounds-derived follow distance must preserve the requested screen detail. Keep ground contact at zero and recheck clips, replacement bounds and selected-ring separation.
+
 ## Runnable review surface
 
 Use Blender MCP to model/export; workbench accepts a local GLB replacement and shows validation errors, orientation and three zoom distances.
