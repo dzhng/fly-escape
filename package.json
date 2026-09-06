@@ -5,6 +5,24 @@
   "scripts": {
     "data:prepare": ".venv/bin/python scripts/prepare-graph.py --download",
     "test:graph": ".venv/bin/python -m unittest discover -s tests/connectome -v",
-    "test:reference": ".venv/bin/python -m unittest discover -s tests/reference -v"
+    "test:reference": ".venv/bin/python -m unittest discover -s tests/reference -v",
+    "dev": "bun run --cwd apps/web dev",
+    "build:wasm": "wasm-pack build crates/game-wasm --target web --release --out-dir ../../packages/sim-client/src/wasm",
+    "build": "bun run types:generate && bun run assets:brain && bun run build:wasm && bun run --cwd apps/web build",
+    "typecheck": "tsc --noEmit",
+    "test": "bun run test:graph && bun run test:reference && cargo test",
+    "assets:brain": "bun scripts/copy-brain.ts",
+    "types:generate": "cargo run -q -p sim --example export_types > packages/sim-client/src/generated/sim.ts",
+    "test:browser": "node tests/browser/brain.mjs"
+  },
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "typescript": "^6.0.3",
+    "@types/bun": "^1.3.0",
+    "playwright": "^1.60.0"
   }
 }

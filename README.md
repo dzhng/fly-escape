@@ -1,9 +1,26 @@
 # Help the Fly Escape
 
-A planned browser game where a fly connectome drives the flies and the player shapes their environment to help them escape.
+A local browser game where a fly connectome drives the flies and the player shapes their environment to help them escape.
 
-The [browser implementation spec](specs/help-the-fly-escape/README.md) is the current project direction. It covers local execution, a Rust/WASM simulation, a fully 3D TypeScript client, and five authored levels.
+The browser currently has a real-graph neural observation chamber at `/lab/brain`: a Rust/WASM brain runs in a Worker, while the 3D view and measured activity stay responsive. The full five-level game is still being built. Follow the [active specification](specs/help-the-fly-escape/README.md) for completed gates and the next checkpoint.
 
-The repository currently contains Python research code, not the browser game. Preserve reproducible neural evidence before replacing it; historical behavior claims are not browser validation. No compatibility or data migration is required.
+## Run locally
 
-See the [interactive roadmap](specs/help-the-fly-escape/visualizations/roadmap.html) to review the planned checkpoints, and the [research record](specs/help-the-fly-escape/RESEARCH.md) for source provenance and known defects in the prototype.
+Requires Bun, Rust with the `wasm32-unknown-unknown` target, wasm-pack, and Python/uv. On a fresh checkout:
+
+```sh
+uv venv .venv
+uv pip install --python .venv/bin/python -r scripts/requirements.txt
+bun install
+bun run data:prepare
+bun run build
+bun run dev
+```
+
+Open the printed local URL with `/lab/brain`. Source preparation downloads about 1.1 GB once and produces a small static graph artifact. See [graph preparation](scripts/connectome/README.md) for provenance and reproducibility, and [reference fixtures](scripts/reference/README.md) for the numerical oracle.
+
+## Ownership
+
+Browser applications live under `apps/`: `apps/web` is the game and `apps/asset-lab` is planned for asset iteration. `packages/` holds the client and renderer; `crates/` owns simulation and its thin WASM boundary. The browser requires no application backend.
+
+Existing Python simulation code is disposable spike material. Retain useful evidence, adapt useful algorithms into their natural owner, and delete obsolete paths as their consumers retire. No compatibility or data migration is required. The [architecture contract](specs/help-the-fly-escape/CONTRACTS.md) defines the final shape and the [roadmap](specs/help-the-fly-escape/visualizations/roadmap.html) shows the remaining work.

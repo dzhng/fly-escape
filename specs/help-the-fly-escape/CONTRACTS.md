@@ -15,10 +15,12 @@ No application server, Python runtime in the browser, GPU neural computation, Sh
 | `crates/game-wasm` | Instantiate core, advance bounded work, expose owned output; no second simulation |
 | `packages/sim-client` | Generated Rust wire types, Worker protocol, frame archive, playback cursor, telemetry decoding |
 | `packages/game-renderer` | Scene, asset loading, animation, camera, picking, trails; receives recorded data |
-| `web` | Placement and attempt UI, one selected-fly ID, science panel, local progress |
+| `apps/web` | Placement and attempt UI, one selected-fly ID, science panel, local progress |
 | `apps/asset-lab` | Fast model replacement and validation using the production renderer |
 
-Dedicated `/lab/brain`, `/lab/fields`, `/lab/lifecycle`, `/lab/playback` routes in `web` expose the same owners as the product. Do not create parallel test simulations. Rust owns serializable domain/wire structs; derive TypeScript with `ts-rs` into `packages/sim-client`. Renderer imports data types, never the React application. Render geometry comes from the core's level geometry export, never a hand-maintained second wall map.
+Both browser applications live under `apps/`; there is no top-level `web/` application.
+
+Dedicated `/lab/brain`, `/lab/fields`, `/lab/lifecycle`, `/lab/playback` routes in `apps/web` expose the same owners as the product. Do not create parallel test simulations. Rust owns serializable domain/wire structs; derive TypeScript with `ts-rs` into `packages/sim-client`. Renderer imports data types, never the React application. Render geometry comes from the core's level geometry export, never a hand-maintained second wall map.
 
 ## Existing spike code
 

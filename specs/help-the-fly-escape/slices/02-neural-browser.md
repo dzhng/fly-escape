@@ -1,6 +1,6 @@
 # 02 — One real brain in the browser
 
-Status: planned. Dependencies: 01.
+Status: complete. Dependencies: 01. See [checkpoint evidence](../assets/evidence/02/review.md).
 
 ## Contract and seam
 

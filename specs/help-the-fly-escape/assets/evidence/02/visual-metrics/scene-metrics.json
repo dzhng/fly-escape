@@ -1,0 +1,84 @@
+{
+  "kind": "screenshot-scene-metrics",
+  "generatedAt": "2026-09-06T14:33:06.090Z",
+  "note": "Absolute per-image telemetry, no reference involved. Low values locate flat, sparse, or empty captures; they never accept or reject an image on their own.",
+  "imageCount": 4,
+  "results": [
+    {
+      "id": "brain-card",
+      "image": "../fly-escape/specs/help-the-fly-escape/assets/evidence/02/brain-card.png",
+      "dimensions": {
+        "width": 350,
+        "height": 903
+      },
+      "sceneMetrics": {
+        "colorBuckets": 47,
+        "colorEntropyBits": 1.3341,
+        "edgeDensity": 0.17906,
+        "dominantColorShare": 0.81575,
+        "transparentShare": 0,
+        "luminanceMean": 240.54043,
+        "luminanceP5": 198.1532,
+        "luminanceP95": 248.5628,
+        "luminanceContrast": 50.4096
+      }
+    },
+    {
+      "id": "brain-default",
+      "image": "../fly-escape/specs/help-the-fly-escape/assets/evidence/02/brain-default.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sceneMetrics": {
+        "colorBuckets": 64,
+        "colorEntropyBits": 2.32485,
+        "edgeDensity": 0.15667,
+        "dominantColorShare": 0.42132,
+        "transparentShare": 0,
+        "luminanceMean": 235.06669,
+        "luminanceP5": 168.6004,
+        "luminanceP95": 252.7618,
+        "luminanceContrast": 84.1614
+      }
+    },
+    {
+      "id": "brain-explanation",
+      "image": "../fly-escape/specs/help-the-fly-escape/assets/evidence/02/brain-explanation.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sceneMetrics": {
+        "colorBuckets": 66,
+        "colorEntropyBits": 2.30298,
+        "edgeDensity": 0.15978,
+        "dominantColorShare": 0.42118,
+        "transparentShare": 0,
+        "luminanceMean": 235.09031,
+        "luminanceP5": 168.0116,
+        "luminanceP95": 252.7618,
+        "luminanceContrast": 84.7502
+      }
+    },
+    {
+      "id": "brain-first",
+      "image": "../fly-escape/specs/help-the-fly-escape/assets/evidence/02/brain-first.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sceneMetrics": {
+        "colorBuckets": 63,
+        "colorEntropyBits": 2.32115,
+        "edgeDensity": 0.15434,
+        "dominantColorShare": 0.42194,
+        "transparentShare": 0,
+        "luminanceMean": 235.13293,
+        "luminanceP5": 175.2174,
+        "luminanceP95": 252.7618,
+        "luminanceContrast": 77.5444
+      }
+    }
+  ]
+}

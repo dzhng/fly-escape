@@ -1,6 +1,6 @@
 # 03 — One sensory environment
 
-Status: planned. Dependencies: 02.
+Status: in progress. Dependencies: 02.
 
 ## Contract and seam
 

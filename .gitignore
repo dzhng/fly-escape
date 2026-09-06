@@ -35,3 +35,9 @@ terminals/
 # Incomplete source transfers and generated provenance for local raw files
 data/raw/*.part
 data/raw/sources.json
+
+# Rust, browser builds and generated WASM
+target/
+dist/
+packages/sim-client/src/wasm/
+apps/web/public/brain/

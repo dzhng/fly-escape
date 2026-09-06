@@ -1,0 +1,21 @@
+{
+  "name": "@fly-escape/web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5173 --strictPort",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@fly-escape/sim-client": "workspace:*",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "@fly-escape/game-renderer": "workspace:*"
+  },
+  "devDependencies": {
+    "vite": "^8.0.16",
+    "typescript": "^6.0.3",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3"
+  }
+}

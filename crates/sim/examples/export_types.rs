@@ -1,3 +1,4 @@
+use sim::chamber::{BrainFrame, BrainInfo, Pose};
 use sim::{Group, GroupActivity, GroupLink, MotorOutput, StepOutput};
 use ts_rs::TS;
 fn main() {
@@ -8,6 +9,9 @@ fn main() {
         MotorOutput::decl(),
         GroupActivity::decl(),
         StepOutput::decl(),
+        Pose::decl(),
+        BrainFrame::decl(),
+        BrainInfo::decl(),
     ] {
         println!("export {declaration}");
     }

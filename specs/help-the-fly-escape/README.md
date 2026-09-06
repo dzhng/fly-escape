@@ -1,14 +1,14 @@
 # Help the Fly Escape — browser game
 
-Status: **implementation active — slice 02 next**. Last updated: 2026-09-06.
+Status: **implementation active — slice 03 in progress**. Last updated: 2026-09-06.
 
 Build a local, fully 3D browser game in which the player places environmental tools and watches a real connectome-driven swarm attempt to escape. The [game contract](GAMEPLAY.md) owns user requirements; [architecture contracts](CONTRACTS.md) own runtime/data seams. This plan replaces the previous Python tech-demo scope.
 
 ## Next Agent Prompt
 
-You are implementing this browser game; implementation is authorized. Pick up [02 — neural browser](slices/02-neural-browser.md): port the LIF core against the committed synthetic oracle, reproduce Worker/WASM messaging, then show a real graph-driven fly in a 3D chamber. Read GAMEPLAY.md and CONTRACTS.md before choosing interfaces.
+You are implementing this browser game; implementation is authorized. Pick up [03 — sensory environment](slices/03-sensory-fields.md): integrate the geometry/field owner and measured neural cue probes, then build `/lab/fields`. Resolve cue direction from matched-seed evidence before exposing attraction/repulsion to level authors. Read GAMEPLAY.md and CONTRACTS.md before choosing interfaces. Browser applications live under `apps/`, including `apps/web`.
 
-Slice 01 passed: real sources downloaded and verified; 70,000 neurons / 798,715 signed edges match the stabilized Python oracle; two exports match bytes; all 16 telemetry groups are populated. See [graph evidence](assets/evidence/01/review.md), [exporter usage](../../scripts/connectome/README.md) and [neural reference fixtures](../../scripts/reference/README.md). Prepared artifacts are in ignored `data/processed/brain`; reproduce them with the exporter if absent. No browser performance or game acceptance gate has passed yet.
+Completed: [01 graph evidence](assets/evidence/01/review.md) proves the real 70,000-neuron / 798,715-edge artifact and reproducible export. [02 browser evidence](assets/evidence/02/review.md) proves Python-parity Rust dynamics, real WASM Worker execution, deterministic reset, visible failure/retry and measured 3D chamber telemetry. Reproduce artifacts with the [exporter](../../scripts/connectome/README.md); the [reference fixtures](../../scripts/reference/README.md) pin numerical behavior. Twenty-fly performance and game acceptance remain unverified.
 
 The user authorized replacing all spike code. Keep useful evidence/tooling, delete outdated code as consumers retire, and add no compatibility layer. CLI second-opinion review currently fails because the installed client cannot use its configured model; use an independent read-only agent review and record that limitation until the tool works.
 
@@ -19,7 +19,7 @@ Use the slice dependency graph below. Keep each change bounded to its contract; 
 Open the [interactive roadmap](visualizations/roadmap.html) for dependency and milestone navigation.
 
 - [x] [01 — Reproducible graph and reference](slices/01-graph-reference.md) — dependencies: none.
-- [ ] [02 — One real brain in the browser](slices/02-neural-browser.md) — dependencies: 01.
+- [x] [02 — One real brain in the browser](slices/02-neural-browser.md) — dependencies: 01.
 - [ ] [03 — One sensory environment](slices/03-sensory-fields.md) — dependencies: 02.
 - [ ] [04 — Finite life and physical escape](slices/04-lifecycle-outcomes.md) — dependencies: 03.
 - [ ] [05 — Twenty flies with buffered replay](slices/05-swarm-playback.md) — dependencies: 04.

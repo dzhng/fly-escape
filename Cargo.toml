@@ -1,3 +1,7 @@
 [workspace]
-members = ["crates/sim"]
+members = ["crates/sim", "crates/game-wasm"]
 resolver = "2"
+
+[profile.release]
+opt-level = 3
+lto = "thin"

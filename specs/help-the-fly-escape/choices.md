@@ -10,6 +10,18 @@ When a reference tick contains a noise value, the Rust port must add that value 
 
 Python and Rust can round an arithmetic operation slightly differently. The four-neuron reference therefore accepts absolute or relative differences up to 1e-12 for floating values, while spikes and countdowns must match exactly. The plan required stated tolerances without selecting them. This tight numerical check is sound for these small fixtures; it is not a claim that large noisy simulations remain identical forever.
 
+### One-fly transport uses generated JSON before packed swarm records (slice 02)
+
+The lab requests one neural tick and receives a small JSON frame whose type comes from Rust. This makes the first real browser checkpoint inspectable without inventing the whole swarm archive at once. The plan did not specify the intermediate transport encoding. It is a temporary, bounded one-fly seam; slice 05 replaces its per-tick JSON transfer with packed chunk buffers while retaining the same authoritative simulation and playback data.
+
+### Lab movement is a bounded observation fixture (slice 02)
+
+The first fly moves on a twelve-unit square from its neural thrust and turn. A wall stops penetration without choosing a new direction. This gives us an observable brain before sensory fields and body mechanics are ready; it is not a substitute for the final locomotion model. The plan requested a chamber without fixing its movement scale. The dimensions are exported by the core, and slice 03 replaces the chamber-only geometry path with the general environment owner.
+
+### Browser smoke tests use installed Chrome (slice 02)
+
+The browser checks launch the locally installed Chrome through Playwright, so the evidence names an actual desktop browser. Playwright's newly installed default Chromium binary was absent. The test exposes a browser-channel setting rather than silently downloading a different browser or calling the missing executable a passed test. Firefox/Safari release coverage is still required later.
+
 ## Sound — high confidence
 
 ### Read intermediate values from the running Python oracle (slice 01)

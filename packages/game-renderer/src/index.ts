@@ -16,7 +16,7 @@ export class ChamberView {
   private readonly fly = createPlaceholderFly();
   private readonly observer: ResizeObserver;
 
-  constructor(private readonly container: HTMLElement) {
+  constructor(private readonly container: HTMLElement, private readonly chamberSize: number) {
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.shadowMap.enabled = true;
@@ -41,7 +41,7 @@ export class ChamberView {
     sun.shadow.camera.near = 1;
     sun.shadow.camera.far = 35;
     sun.shadow.normalBias = 0.025;
-    this.scene.add(sun, sun.target, createChamberFixture(), this.fly);
+    this.scene.add(sun, sun.target, createChamberFixture(chamberSize), this.fly);
     this.setPose({ x: 0, y: 0, z: 0, heading: 0 });
     this.observer = new ResizeObserver(() => this.resize());
     this.observer.observe(container);
@@ -61,7 +61,7 @@ export class ChamberView {
     this.camera.aspect = width / height;
     const verticalHalfAngle = THREE.MathUtils.degToRad(this.camera.fov / 2);
     const horizontalHalfAngle = Math.atan(Math.tan(verticalHalfAngle) * this.camera.aspect);
-    const distance = 9 / Math.sin(Math.min(verticalHalfAngle, horizontalHalfAngle));
+    const distance = (this.chamberSize * 0.75) / Math.sin(Math.min(verticalHalfAngle, horizontalHalfAngle));
     this.camera.position.set(1, 1.8, 1).normalize().multiplyScalar(distance);
     this.camera.lookAt(0, 0.3, 0);
     this.camera.updateProjectionMatrix();
@@ -91,26 +91,27 @@ export class ChamberView {
   }
 }
 
-// This neural-lab fixture has no collision or sensory semantics. Replace it with
-// exported LevelDef geometry when the environment seam lands; do not copy it into sim.
-function createChamberFixture(): THREE.Group {
+// Dimensions come from the core. The environment seam replaces this chamber-only
+// mesh builder with exported room/wall geometry; it never owns collision rules.
+function createChamberFixture(size: number): THREE.Group {
+  const half = size / 2;
   const chamber = new THREE.Group();
   const floorMaterial = new THREE.MeshStandardMaterial({ color: '#d9dfca', roughness: 1 });
   const wallMaterial = new THREE.MeshStandardMaterial({ color: '#8aab9d', roughness: 1 });
-  const floor = new THREE.Mesh(new THREE.BoxGeometry(12.4, 0.25, 12.4), floorMaterial);
+  const floor = new THREE.Mesh(new THREE.BoxGeometry(size + 0.4, 0.25, size + 0.4), floorMaterial);
   floor.position.y = -0.125;
   floor.receiveShadow = true;
   chamber.add(floor);
   for (const [x, z, width, depth, height] of [
-    [0, -6.1, 12.4, 0.2, 1.6], [-6.1, 0, 0.2, 12.4, 1.6],
-    [0, 6.1, 12.4, 0.2, 0.18], [6.1, 0, 0.2, 12.4, 0.18],
+    [0, -half-0.1, size+0.4, 0.2, 1.6], [-half-0.1, 0, 0.2, size+0.4, 1.6],
+    [0, half+0.1, size+0.4, 0.2, 0.18], [half+0.1, 0, 0.2, size+0.4, 0.18],
   ] as const) {
     const wall = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), wallMaterial);
     wall.position.set(x, height / 2, z);
     wall.castShadow = wall.receiveShadow = true;
     chamber.add(wall);
   }
-  const grid = new THREE.GridHelper(12, 12, '#acbca9', '#c0ccb9');
+  const grid = new THREE.GridHelper(size, 12, '#acbca9', '#c0ccb9');
   grid.position.y = 0.006;
   chamber.add(grid);
   return chamber;
