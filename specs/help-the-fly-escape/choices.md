@@ -219,3 +219,20 @@ Placing, moving or removing a tool first builds a candidate list. Core validatio
 ### Put canonical placements in attempt identity and expose resolved inputs separately
 
 Before a run, Rust sorts placements by ID, normalizes headings to a stable value below one full turn and resolves them into field sources, food regions and fan fields. The frozen attempt specification contains these placements; metadata also exposes exactly the resolved setup the attempt uses. The plan required immutable placements but did not specify the representation. Keeping authored level content separate prevents retry from accidentally resolving placed sources a second time, while recorded metadata makes the runtime environment inspectable. IDs determine source accumulation order for exact repeatability. Verdict: sound; confidence: high.
+## Slice 10 — bounded house renderer checkpoint
+
+### Sound · medium confidence — local house replacement keeps native kit bounds
+
+When an artist uploads a new wall, the workbench accepts it only if its outer bounds and pivot match the authored unit wall. A wall that is wider, taller, off-center or animated is rejected, leaving the previous asset displayed. The plan required scale validation without choosing rejection versus automatic normalization. Rejecting avoids silently stretching a differently authored part into misleading collision space. Future house art inherits this unit-part contract; changing wall height requires deliberately changing the kit contract rather than a local accidental upload. This checks outer bounds, not complete mesh solidity: final authored assets still require the visual/collision consumer gate. The loader also uses the existing fly-scale 20,000-triangle ceiling as a bounded initial part budget; later house profiling may tighten it.
+
+### Sound · high confidence — house inspection is a separate fixture in the existing workbench
+
+Opening the ordinary workbench still shows the fly and its animation controls. Following “Five-room house” reloads that same application with the shared geometry fixture and additional room/door controls. The plan requested a room fixture but did not choose how to expose it. A URL fixture keeps the ordinary workflow stable and makes browser checks reproducible, while both views use the same renderer. Local replacements are intentionally lost when leaving the page, as with the existing fly workflow; source files are never overwritten.
+
+### Sound · high confidence — doorway motion is a geometry-derived diagnostic path
+
+Choosing a doorway and dragging its slider moves the preview fly through the missing wall segment. The workbench finds that opening by comparing the supplied room boundaries with supplied wall coverage; it stores no second layout. The plan asked for a crossing review without specifying a neural recording or manual diagnostic motion. These controls are labeled diagnostic because they establish mesh/collision alignment, not neural success. Future campaign playback must continue to consume recorded poses, and must not reuse these paths as steering.
+
+### Sound · high confidence — solid props remain a separate core contract checkpoint
+
+A chair-shaped obstacle cannot be honestly added today because Geometry exports rooms and wall segments, with no prop footprint. Drawing it would make the fly pass through something that looks solid. The plan names props but leaves their authoritative wire shape unspecified. This checkpoint therefore adds no props and leaves slice 10 open. Its next pass must first add collision/sensory footprints in the core and a consumer fixture, then place authored meshes from that data. This keeps the ongoing performance baseline untouched and avoids baking uncollidable decoration into later levels.

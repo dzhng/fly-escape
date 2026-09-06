@@ -1,17 +1,30 @@
-import { WorldView, loadFlyModel, type FlyAnimation } from "@fly-escape/game-renderer";
+import { WorldView, loadFlyModel, loadHousePart, type HousePart, type FlyAnimation } from "@fly-escape/game-renderer";
 import modelUrl from "../../../assets/fly/fly.glb?url";
 import "./style.css";
+import houseGeometry from "../../../assets/house/five-rooms.json";
+import wallUrl from "../../../assets/house/wall.glb?url";
+import floorUrl from "../../../assets/house/floor.glb?url";
+import { doorwayProbes } from "./house-probes";
+const house = new URLSearchParams(location.search).get("fixture") === "house";
+const doorways = doorwayProbes(houseGeometry);
 
 const app = document.querySelector<HTMLDivElement>("#app")!;
 app.innerHTML = `<header><div><p>Fly escape · model workbench</p><h1>Meet the fly</h1></div><label>Replace model <input type="file" accept=".glb" aria-label="Replace fly model"></label></header>
 <main><div class="world" aria-label="Fly model preview"></div><aside><h2>Inspect the model</h2><p>Use the wheel to zoom. Drag to pan. Choose a view to return to the fly.</p><nav><button data-view="overview">Overview</button><button data-view="follow">Follow</button><button data-view="close">Extra close</button></nav><p class="status" role="status">Loading fly…</p><p id="resources"></p><h3>Animation</h3><label>Clip <select id="clip"><option>Static</option><option>Walk</option><option>Fly</option><option>Land</option><option>Feed</option></select></label><label>Clip time (seconds) <input id="time" type="range" min="0" max="2" step="0.025" value="0"></label><output id="phase">0.000 s</output><button id="play">Play animation</button><button id="heading">Turn 90°</button><h3>Model contract</h3><p>GLB, +Y up and +Z forward. Ground contact at the origin; one unit equals one game world unit. Inspect the head and feet to verify orientation and scale.</p><p>Up to 20,000 triangles, 3 materials and 1024-pixel textures.</p></aside></main>`;
 const world = app.querySelector<HTMLDivElement>(".world")!;
 const status = app.querySelector<HTMLParagraphElement>(".status")!;
-const view = new WorldView(world, {
+const view = new WorldView(world, house ? houseGeometry : {
   rooms: [{ id: 1, min: { x: -3, z: -3 }, max: { x: 3, z: 3 } }],
   walls: [],
 });
 view.enableSelection((id) => view.selectFly(id));
+app.querySelector("aside")!.insertAdjacentHTML("afterbegin", `<p><a href="${house ? "?" : "?fixture=house"}">${house ? "Fly workbench" : "Five-room house"}</a></p>`);
+if (house) {
+  app.querySelector("h1")!.textContent = "Five-room house";
+  app.querySelector("aside")!.insertAdjacentHTML("afterbegin", `<h2>Geometry inspection</h2><p>Rooms 1–4 form the hall; room 5 is the one-door pantry. Paths below are diagnostic poses, not neural locomotion.</p><label>Room <select id="room">${houseGeometry.rooms.map(r => `<option value="${r.id}">Room ${r.id}${r.id === 5 ? " · pantry" : ""}</option>`).join("")}</select></label><button id="inspect-room">Inspect room</button><button id="cutaway">Follow at wall</button><label>Doorway <select id="doorway">${doorways.map((d, i) => `<option value="${i}">${d.label}</option>`).join("")}</select></label><label>Cross doorway <input id="crossing" type="range" min="-1" max="1" step="0.01" value="0"></label><label>Replace house part <select id="part"><option value="wall">Wall</option><option value="floor">Floor</option></select><input id="house-file" type="file" accept=".glb" aria-label="Replace house part"></label><p id="house-status" role="status">Loading modular kit…</p><p>Replacement must preserve the kit bounds and pivot. Walls: 1 × 0.6 × 0.12; floor: 1 × 0.25 × 1, top at Y=0. Solid props await a collision contract.</p>`);
+}
+const firstRoom = houseGeometry.rooms[0];
+let position = house ? { x: (firstRoom.min.x + firstRoom.max.x) / 2, z: (firstRoom.min.z + firstRoom.max.z) / 2 } : { x: 0, z: 0 };
 let heading = 0;
 let seconds = 0;
 let playing = false;
@@ -21,9 +34,9 @@ const playControl = app.querySelector<HTMLButtonElement>("#play")!;
 function pose() {
   const clip = clipControl.value;
   view.setPose({
-    x: 0,
-    y: clip === "Fly" ? 0.6 : 0,
-    z: 0,
+    x: position.x,
+    y: clip === "Fly" ? (house ? 0.15 : 0.6) : 0,
+    z: position.z,
     heading,
     animation: clip === "Static" ? undefined : { clip: clip as FlyAnimation["clip"], seconds },
   });
@@ -45,6 +58,7 @@ playControl.addEventListener("click", () => {
 });
 view.setPose({ x: 0, y: 0, z: 0, heading });
 let generation = 0;
+const houseGenerations = { wall: 0, floor: 0 };
 async function replace(source: Promise<ArrayBuffer>) {
   const ticket = ++generation;
   status.textContent = "Loading fly…";
@@ -93,6 +107,45 @@ void replace(
     return response.arrayBuffer();
   }),
 );
+if (house) {
+  async function replacePart(part: HousePart, bytes: Promise<ArrayBuffer>) {
+    const ticket = ++houseGenerations[part];
+    const label = app.querySelector<HTMLElement>("#house-status")!;
+    try {
+      const model = await loadHousePart(await bytes, part);
+      if (ticket !== houseGenerations[part]) { model.dispose(); return; }
+      view.setHousePart(part, model.root);
+      view.render();
+      label.textContent = `${part} loaded · source files unchanged`;
+      app.dataset.houseResources = JSON.stringify(view.statistics);
+    } catch (error) { if (ticket === houseGenerations[part]) label.textContent = `Previous part retained. ${error instanceof Error ? error.message : error}`; }
+  }
+  void Promise.all([replacePart("wall", fetch(wallUrl).then(r => r.arrayBuffer())), replacePart("floor", fetch(floorUrl).then(r => r.arrayBuffer()))]).then(() => { app.dataset.houseReady = "true"; });
+  app.querySelector<HTMLInputElement>("#house-file")!.addEventListener("change", event => {
+    const file = (event.currentTarget as HTMLInputElement).files?.[0];
+    if (file) void replacePart(app.querySelector<HTMLSelectElement>("#part")!.value as HousePart, file.arrayBuffer());
+  });
+  app.querySelector<HTMLButtonElement>("#inspect-room")!.addEventListener("click", () => {
+    const room = houseGeometry.rooms.find(r => r.id === Number(app.querySelector<HTMLSelectElement>("#room")!.value))!;
+    position = { x: (room.min.x + room.max.x) / 2, z: (room.min.z + room.max.z) / 2 };
+    clipControl.value = "Static"; pose(); view.selectFly(0);
+  });
+  app.querySelector("#cutaway")!.addEventListener("click", () => {
+    const room = houseGeometry.rooms.find(r => r.id === Number(app.querySelector<HTMLSelectElement>("#room")!.value))!;
+    position = { x: room.max.x - 0.15, z: room.max.z - 0.15 };
+    clipControl.value = "Static"; pose(); view.selectFly(0);
+  });
+  const cross = () => {
+    const door = doorways[Number(app.querySelector<HTMLSelectElement>("#doorway")!.value)];
+    const t = Number(app.querySelector<HTMLInputElement>("#crossing")!.value);
+    position = { x: door.x + door.dx * t, z: door.z + door.dz * t };
+    heading = Math.atan2(door.dz, door.dx);
+    clipControl.value = "Fly"; pose(); view.selectFly(0);
+    app.dataset.crossing = JSON.stringify({ ...position, t, door: door.label });
+  };
+  app.querySelector("#crossing")!.addEventListener("input", cross);
+  app.querySelector("#doorway")!.addEventListener("change", cross);
+}
 let raf = 0;
 let lastTime: number | undefined;
 function draw(now: number) {
@@ -103,12 +156,15 @@ function draw(now: number) {
   lastTime = now;
   pose();
   view.render();
+  if (house) app.dataset.houseVisibility = JSON.stringify(view.houseVisibility);
   raf = requestAnimationFrame(draw);
 }
 raf = requestAnimationFrame(draw);
 window.addEventListener("pagehide", (event) => {
   if (event.persisted) return;
   ++generation;
+  ++houseGenerations.wall;
+  ++houseGenerations.floor;
   cancelAnimationFrame(raf);
   view.dispose();
 });

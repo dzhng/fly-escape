@@ -1,4 +1,7 @@
 import * as THREE from "three";
+import { HouseGeometry, cutAwayWalls, type HousePart } from "./house";
+export { loadHousePart } from "./house";
+export type { HousePart } from "./house";
 import { FlyMotion, type FlyAnimation } from "./fly-motion";
 export { flyAnimation } from "./fly-motion";
 export type { FlyAnimation } from "./fly-motion";
@@ -43,7 +46,7 @@ export class WorldView {
   private selectedFly: number | null = null;
   private readonly selectionRing: THREE.Mesh<THREE.RingGeometry, THREE.MeshBasicMaterial>;
   private readonly raycaster = new THREE.Raycaster();
-  private readonly walls = new THREE.Group();
+  private readonly house: HouseGeometry;
   private readonly renderer: THREE.WebGLRenderer;
   private readonly flies: THREE.Object3D[] = [createPlaceholderFly()];
   private motions: FlyMotion[] = [];
@@ -71,6 +74,7 @@ export class WorldView {
     if (!Number.isInteger(flyCount) || flyCount < 1 || flyCount > 100)
       throw new Error("Scene requires 1..100 flies");
     while (this.flies.length < flyCount) this.flies.push(this.flies[0].clone(true));
+    this.house = new HouseGeometry(geometry);
     this.bounds = new THREE.Box3();
     for (const room of geometry.rooms) {
       this.bounds.expandByPoint(new THREE.Vector3(room.min.x, 0, room.min.z));
@@ -125,7 +129,7 @@ export class WorldView {
     this.scene.add(
       sun,
       sun.target,
-      createRoomGeometry(geometry, this.walls),
+      this.house.root,
       ...this.flies,
       this.contactMarkers,
       this.selectionRing,
@@ -148,6 +152,14 @@ export class WorldView {
     this.observer.observe(container);
     this.resize();
     this.navigation.overview();
+  }
+
+  get houseVisibility() {
+    return { segments: this.house.walls.children.length, hidden: this.house.walls.children.filter(wall => !wall.visible).length };
+  }
+
+  setHousePart(part: HousePart, source: THREE.Group): void {
+    this.house.replace(part, source);
   }
 
   /** Takes ownership of the model and all its shared resources. */
@@ -510,7 +522,7 @@ export class WorldView {
     }
     // Only visual occluders on the camera-to-subject ray cut away; floor/wall
     // collision geometry remains entirely owned by the simulation.
-    this.walls.children.forEach((wall) => {
+    this.house.walls.children.forEach((wall) => {
       wall.visible = true;
     });
     if (this.selectedFly !== null && this.navigation.state.following) {
@@ -520,9 +532,7 @@ export class WorldView {
       const direction = target.clone().sub(this.navigation.camera.position);
       this.raycaster.set(this.navigation.camera.position, direction.clone().normalize());
       this.raycaster.far = direction.length();
-      this.raycaster.intersectObjects(this.walls.children, false).forEach((hit) => {
-        hit.object.visible = false;
-      });
+      cutAwayWalls(this.house.walls, this.raycaster);
       this.raycaster.far = Infinity;
     }
     this.renderer.render(this.scene, this.navigation.camera);
@@ -536,34 +546,6 @@ export class WorldView {
     this.renderer.dispose();
     this.renderer.domElement.remove();
   }
-}
-
-/** Wall segments already contain doorway gaps; no room adjacency is inferred here. */
-function createRoomGeometry(geometry: Geometry, walls: THREE.Group): THREE.Group {
-  const group = new THREE.Group();
-  const floorMaterial = new THREE.MeshStandardMaterial({ color: "#d9dfca", roughness: 1 });
-  const wallMaterial = new THREE.MeshStandardMaterial({ color: "#8aab9d", roughness: 1 });
-  for (const room of geometry.rooms) {
-    const floor = new THREE.Mesh(
-      new THREE.BoxGeometry(room.max.x - room.min.x, 0.25, room.max.z - room.min.z),
-      floorMaterial,
-    );
-    floor.position.set((room.min.x + room.max.x) / 2, -0.125, (room.min.z + room.max.z) / 2);
-    floor.receiveShadow = true;
-    group.add(floor);
-  }
-  // Low lab walls expose both the sampled floor and the fly. Final house art is a later slice.
-  for (const segment of geometry.walls) {
-    const dx = segment.b.x - segment.a.x;
-    const dz = segment.b.z - segment.a.z;
-    const wall = new THREE.Mesh(new THREE.BoxGeometry(Math.hypot(dx, dz), 0.6, 0.12), wallMaterial);
-    wall.position.set((segment.a.x + segment.b.x) / 2, 0.3, (segment.a.z + segment.b.z) / 2);
-    wall.rotation.y = -Math.atan2(dz, dx);
-    wall.castShadow = wall.receiveShadow = true;
-    walls.add(wall);
-  }
-  group.add(walls);
-  return group;
 }
 
 function createPlaceholderFly(): THREE.Group {

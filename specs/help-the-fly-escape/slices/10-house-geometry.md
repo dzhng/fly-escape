@@ -1,6 +1,6 @@
 # 10 — A readable 3D house
 
-Status: modular kit and shared topology fixture prepared; renderer integration open. Dependencies: 07.
+Status: modular kit integrated in the shared renderer and house workbench; final acceptance and solid-prop contract open. Dependencies: 07.
 
 ## Contract and seam
 
@@ -33,3 +33,9 @@ Must stay green: all accepted dependency contracts and their focused fixtures; n
 ## Prepared assets and topology
 
 The [modular kit](../assets/evidence/10/kit.md) and [five-room collision fixture](../assets/evidence/10/topology.md) are prepared. The renderer must consume that same geometry payload; do not copy a second doorway/layout map into TypeScript. This fixture establishes room connectivity, not campaign balance.
+
+## Bounded renderer checkpoint
+
+[Workbench evidence](../assets/evidence/10/renderer.md) covers topology-driven modular placement, doorway diagnostic poses, recursive cutaway, local part replacement and disposal. The ordinary fly workbench remains the default route. The loaded asset must preserve the kit bounds/pivot; replacement never changes collision data.
+
+The remaining solid-prop requirement is a separate contract checkpoint: add core-owned prop footprints and export them through Geometry, pin swept collision and sensory visibility against a consumer fixture, then map authored meshes to those footprints and review local prop replacement. Do not add decorative obstacles before that seam exists. This pass leaves Rust/WASM unchanged while slice 05 measurement runs; it does not complete slice 10 or authorize palette, lighting, or campaign work.

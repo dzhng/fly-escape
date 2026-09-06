@@ -14,6 +14,7 @@
       "name": "@fly-escape/asset-lab",
       "dependencies": {
         "@fly-escape/game-renderer": "workspace:*",
+        "@fly-escape/sim-client": "workspace:*",
       },
       "devDependencies": {
         "typescript": "^6.0.3",
