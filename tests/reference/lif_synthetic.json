@@ -2,7 +2,7 @@
   "synthetic": true,
   "purpose": "Tiny numerical porting oracle; not a biological graph or real-data acceptance",
   "oracle": {
-    "path": "src/lif_sim.py",
+    "path": "scripts/reference/lif_sim.py",
     "sha256": "fe8cfe229b538d01715f77baa0d93237398fe3cc783500e0a2e3894351cec1b5"
   },
   "edge_columns": [

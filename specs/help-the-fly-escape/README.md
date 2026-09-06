@@ -6,6 +6,8 @@ Build a local, fully 3D browser game in which the player places environmental to
 
 ## Next Agent Prompt
 
+[Slice 17 cleanup preparation](assets/evidence/17/cleanup.md) removes retired Python runtime consumers while preserving byte-identical offline oracles under scripts/reference. Release gates and campaign dependencies remain open.
+
 You are implementing the full browser game. Current pickup: complete authored-house loading in production, review the integrated trails, and finish lighting/food art. The native Level 1 calibration preparation runs independently; no campaign level is accepted yet. Keep actual build identity attached to performance evidence.
 
 The [production authored-house gate](assets/evidence/10/production/review.md) loads all three validated kit parts; independent source/visual review passed. Rerun its lifecycle checks after integration.

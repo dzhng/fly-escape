@@ -2,8 +2,7 @@
 
 # Spike Documentation Index
 
-> **Origin `src/` is the spike code home** — all working code lives at repo root.
-> These docs capture learnings, locks, and decisions from the spike phase.
+The archived documents record experiments from the retired Python runtime. Current graph and numerical checks retain faithful offline oracles under [scripts/reference](../../../scripts/reference/README.md).
 
 ---
 
@@ -73,25 +72,6 @@
 - Motor readout from DN/MN
 - Subgraph construction choices
 - Soft stub justifications
-
----
-
-## Spike Code Location
-
-All spike code lives at **repo root** (`/workspace/src/`):
-
-| File | Purpose |
-|------|---------|
-| `src/graph_loader.py` | VisualMotorGraph (70k neurons) |
-| `src/lif_sim.py` | LIF simulator |
-| `src/feeding_maze_sim.py` | Game loop, state, collision |
-| `src/landing_feeding.py` | Behavior states, injection |
-| `src/flight.py` | Walk/fly dynamics |
-| `src/maze.py` | Level structures, stimuli |
-| `src/house_level.py` | Demo level definitions |
-| `run_level_playtest.py` | Level playtest runner |
-| `run_p0_spikes.py` | P0 spike tests |
-| `run_swarm_test.py` | Swarm testing |
 
 ---
 

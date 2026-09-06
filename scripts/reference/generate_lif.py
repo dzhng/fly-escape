@@ -12,7 +12,7 @@ from scipy import sparse
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
-from src.lif_sim import LIFParams, LIFSimulator
+from scripts.reference.lif_sim import LIFParams, LIFSimulator
 
 
 class InjectedNoise:
@@ -118,8 +118,8 @@ def generate():
     return {
         "synthetic": True,
         "purpose": "Tiny numerical porting oracle; not a biological graph or real-data acceptance",
-        "oracle": {"path": "src/lif_sim.py",
-                   "sha256": hashlib.sha256((ROOT / "src/lif_sim.py").read_bytes()).hexdigest()},
+        "oracle": {"path": "scripts/reference/lif_sim.py",
+                   "sha256": hashlib.sha256((ROOT / "scripts/reference/lif_sim.py").read_bytes()).hexdigest()},
         "edge_columns": ["presynaptic_index", "postsynaptic_index", "weight"],
         "noise_semantics": "Already-scaled additive samples returned by rng.normal, not z-scores",
         "float_comparison": {"absolute_tolerance": 1e-12, "relative_tolerance": 1e-12},

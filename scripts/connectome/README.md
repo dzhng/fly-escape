@@ -6,6 +6,6 @@ Create the local Python environment with `uv venv .venv`. Install the offline de
 
 The manifest identifies the dataset, actual source hashes/generations, exporter content hash, stable-selection correction, byte format and pathway memberships. Brain group links summarize real selected edges, including overlapping groups; they are not a substitute for behavior probes. Unknown transmitter signs preserve the spike's positive fallback and are reported explicitly.
 
-`--verify-reference` compares every selected body and signed edge against the spike with only selection ordering stabilized. That optional oracle depends on the current spike loader until its reference evidence is captured; normal export has no import from `src/`. Do not promote spike biological claims into tooltip facts without the sensory/ablation gates.
+`--verify-reference` compares every selected body and signed edge against the spike with only selection ordering stabilized. The optional [faithful loader oracle](../reference/graph_loader.py) is retained under the reference owner; normal export remains independent of it. Do not promote spike biological claims into tooltip facts without the sensory/ablation gates.
 
 Run `.venv/bin/python -m unittest discover -s tests/connectome -v` for small synthetic extraction/format contracts. Their graphs are test inputs, never evidence of successful real-fly behavior.

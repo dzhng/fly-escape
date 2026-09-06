@@ -1,6 +1,6 @@
 # Neural reference evidence
 
-The [generator](generate_lif.py) executes `src/lif_sim.py:LIFSimulator` with
+The [generator](generate_lif.py) executes [`lif_sim.py:LIFSimulator`](lif_sim.py) with
 injected noise and records its actual local intermediate arrays at return.
 It does not implement a second neural model. The [JSON fixture](../../tests/reference/lif_synthetic.json)
 is synthetic numerical evidence, never evidence of biological fidelity or
@@ -10,7 +10,7 @@ regeneration should be an intentional review when that source changes.
 Run `python scripts/reference/generate_lif.py`, then
 `python -m unittest discover -s tests/reference -v` in the repository's Python
 environment. Generation needs the oracle's NumPy, SciPy and pandas dependencies.
-The committed JSON remains usable without Python when the spike is retired.
+The committed JSON remains usable without Python. The retained oracle implementations are offline evidence tools, not browser runtime consumers. The graph preparer independently checks its extraction against [`graph_loader.py`](graph_loader.py).
 
 For the Rust consumer, each edge names a presynaptic source and postsynaptic
 destination. Python stores source rows and uses the transpose during stepping;

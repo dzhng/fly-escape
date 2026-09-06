@@ -1,6 +1,6 @@
 # 17 — Browser release and clean cutover
 
-Status: planned. Dependencies: 16.
+Status: cleanup preparation; release verification remains pending. Dependencies: 16.
 
 ## Contract and seam
 

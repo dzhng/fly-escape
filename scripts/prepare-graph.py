@@ -67,7 +67,7 @@ def main():
 def verify_reference(annotations, transmitters, weights, graph):
     """Run the spike as an independent oracle, with only deterministic selection corrected."""
     import types
-    reference_path = Path(__file__).resolve().parents[1] / 'src/graph_loader.py'
+    reference_path = Path(__file__).resolve().parents[1] / 'scripts/reference/graph_loader.py'
     source = reference_path.read_text()
     source = source.replace('set(list(olf_bodies["MBON"])[:200])', 'set(sorted(olf_bodies["MBON"])[:200])')
     source = source.replace('key=lambda x: -x[1]', 'key=lambda x: (-x[1], x[0])')
