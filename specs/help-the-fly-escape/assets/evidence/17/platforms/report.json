@@ -1,0 +1,65 @@
+[
+  {
+    "engine": "chromium",
+    "errors": [],
+    "version": "152.0.7977.77",
+    "attempt": {
+      "schemaVersion": 1,
+      "attemptId": "c71998c5-a809-41ed-af02-916b45152a26",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "tuningHash": "1d1314e91cdb31e32bbdfe4fa0f971f38eba16ffea56e25eff5bca7835a12657",
+      "placements": [],
+      "levelHash": "1339a4500bb7a09e06fdb3454883fa85bdcdce66dacdeb04fe7995e6c2f5e882",
+      "levelId": "five-room-setup",
+      "rootSeed": "476327516612094820",
+      "flyCount": 20,
+      "durationTicks": 600
+    },
+    "pauseAndSeek": true,
+    "passed": true
+  },
+  {
+    "engine": "firefox",
+    "errors": [],
+    "version": "155.0",
+    "attempt": {
+      "schemaVersion": 1,
+      "attemptId": "62bc422c-442f-46d7-abac-3a7c22a516c8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "tuningHash": "1d1314e91cdb31e32bbdfe4fa0f971f38eba16ffea56e25eff5bca7835a12657",
+      "placements": [],
+      "levelHash": "1339a4500bb7a09e06fdb3454883fa85bdcdce66dacdeb04fe7995e6c2f5e882",
+      "levelId": "five-room-setup",
+      "rootSeed": "3306364512381340157",
+      "flyCount": 20,
+      "durationTicks": 600
+    },
+    "pauseAndSeek": true,
+    "passed": true
+  },
+  {
+    "engine": "webkit",
+    "errors": [],
+    "version": "26.6",
+    "attempt": {
+      "schemaVersion": 1,
+      "attemptId": "df9c733a-6c0e-425c-ade6-bd111c00cb14",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "tuningHash": "1d1314e91cdb31e32bbdfe4fa0f971f38eba16ffea56e25eff5bca7835a12657",
+      "placements": [],
+      "levelHash": "1339a4500bb7a09e06fdb3454883fa85bdcdce66dacdeb04fe7995e6c2f5e882",
+      "levelId": "five-room-setup",
+      "rootSeed": "9080120617522742645",
+      "flyCount": 20,
+      "durationTicks": 600
+    },
+    "pauseAndSeek": true,
+    "passed": true
+  }
+]

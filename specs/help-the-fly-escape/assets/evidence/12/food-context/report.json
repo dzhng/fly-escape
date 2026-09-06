@@ -1,0 +1,120 @@
+{
+  "provenance": "BrainClient LifecycleSession seed 6 mealThenStarvation, unchanged graph/WASM",
+  "pauseAndReverseCanvasIdentical": true,
+  "captures": [
+    {
+      "stem": "feed--0.1-after",
+      "tick": 49.9,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 44,
+        "cursorTick": 49.9,
+        "y": 0.10232578125000018,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.5899999999999999
+        }
+      }
+    },
+    {
+      "stem": "feed-0-after",
+      "tick": 50,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 50,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0
+        }
+      }
+    },
+    {
+      "stem": "feed-1-after",
+      "tick": 51,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 51,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.1
+        }
+      }
+    },
+    {
+      "stem": "feed-2-after",
+      "tick": 52,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 52,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.2
+        }
+      }
+    },
+    {
+      "stem": "feed-4-after",
+      "tick": 54,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 54,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.4
+        }
+      }
+    },
+    {
+      "stem": "feed-6-after",
+      "tick": 56,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 56,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "stem": "feed-8-after",
+      "tick": 58,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 58,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.8
+        }
+      }
+    }
+  ],
+  "landingTransitions": [
+    44,
+    66,
+    86,
+    105,
+    129,
+    151
+  ],
+  "errors": []
+}

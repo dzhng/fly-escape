@@ -1,30 +1,20 @@
 # Help the Fly Escape — browser game
 
-Status: **implementation active — motion context and house/setup integration**. Last updated: 2026-09-07.
+Status: **implementation active — campaign feasibility and remaining tool art**. Last updated: 2026-09-07.
 
 Build a local, fully 3D browser game in which the player places environmental tools and watches a real connectome-driven swarm attempt to escape. The [game contract](GAMEPLAY.md) owns user requirements; [architecture contracts](CONTRACTS.md) own runtime/data seams. This plan replaces the previous Python tech-demo scope.
 
 ## Next Agent Prompt
 
-[Slice 17 cleanup preparation](assets/evidence/17/cleanup.md) removes retired Python runtime consumers while preserving byte-identical offline oracles under scripts/reference. Release gates and campaign dependencies remain open.
+You are implementing the whole browser game. Current pickup: resolve the Level 1 navigation/placement-benefit gate while completing remaining tool art and release preparation in parallel. No campaign level is accepted. Native probes use the real graph and the same paired seeds; the heading bracket failed to improve placement benefit, so the next diagnostic examines the existing neural turning output and body turn gain. See [15 evidence](assets/evidence/15/README.md). Do not replace neural movement with steering or lower the campaign criteria.
 
-You are implementing the full browser game. Current pickup: complete authored-house loading in production, review the integrated trails, and finish lighting/food art. The native Level 1 calibration preparation runs independently; no campaign level is accepted yet. Keep actual build identity attached to performance evidence.
+Completed: 01–11 and 13. The authored house, shared palette and thin trails pass integrated source, browser and independent visual checks. Slice 12's shadow correction and twenty-fly hardware profile pass; its complete food/exit review is resolving. Slice 14's editor, fruit/crumb assets and combined model-readiness gate are integrated; remaining tool shapes are an explicitly bounded subpass. [17 cleanup](assets/evidence/17/cleanup.md) retires the Python runtime while preserving byte-identical offline reference oracles.
 
-The [production authored-house gate](assets/evidence/10/production/review.md) loads all three validated kit parts; independent source/visual review passed. Rerun its lifecycle checks after integration.
+Priority order: finish the 12 lighting review and 14 remaining-tool/readiness gates; resolve 15 with tuning and held-out evidence; author/validate 16; then run 17 release gates and whole-spec review. Keep prepared work separate from accepted dependent slices. Update this prompt, the checklist and slice status together after each pass.
 
-Completed: 01–11 and 13. The [ten full 20-fly baseline runs](assets/evidence/05/full-playback/review.md) passed without underruns. A newer setup/core build also passes one full integration run and its matching 250 MiB memory probe; this is not a repeat of the ten-run baseline. 100 flies remains a future scaling problem.
+Performance evidence is build-specific: [ten full baseline attempts](assets/evidence/05/full-playback/review.md) passed without underruns, and a later setup/core build passes one full integration run plus a matching 250 MiB memory probe. Neither substitutes for final release validation. 100 flies remains a future capacity target. Browser apps live under `apps/`; neurons and measured circuit activity are explained separately from controls and game rules.
 
-Priority order: finish 10 production authored-house loading (the workbench alone was insufficient); resolve the 10/11 house integration review; finish 12 lighting and 14 food art; then 15–16 campaign validation and 17 clean release. Merged solid/core and setup committed-click checks are green. Preserve dependency gates and do not accept any campaign level from a three-seed diagnostic.
-
-Palette 11 is prepared with a shared runtime/Blender registry and [paired production evidence](assets/evidence/11/review.md). Integrate the current pixel-width trails and resolve final visual/dependency gates before acceptance.
-
-Evidence: [08 context](assets/evidence/08/context/review.md) shows attached landing/feeding poses and exact pause/reverse sampling; interrupted feeding retains a small documented height cut. [09 first candidate](assets/evidence/09/browser/review.md) was rejected for body paint and faint Overview paths; camera-derived width, a head gap and the cool floor palette now pass close/Overview readability. [10 solids](assets/evidence/10/solid/review.md) has independent source/visual evidence awaiting merged checks. [14 setup](assets/evidence/14/setup/README.md) has real browser lifecycle and persistence proof; it is an integration fixture, not balanced Level 1.
-
-Browser applications are under `apps/`, including `apps/web`. Neuroscience descriptions explain neurons and circuit activity, not game rules; controls have separate help. Preserve Python-parity LIF updates and the real graph. Reproduce ignored graph artifacts with the [exporter](../../scripts/connectome/README.md).
-
-The user authorized replacing all spike code. Keep useful evidence/tooling, delete outdated code as consumers retire, and add no compatibility layer. CLI second-opinion review currently fails because the installed client cannot use its configured model; use an independent read-only agent review and record that limitation until the tool works.
-
-Use the slice dependency graph below. Keep each change bounded to its contract; update the spec before an unlisted material choice or widening a slice. Run focused verification, record evidence and decisions, and update this prompt, statuses and global checklist before ending every implementation pass. Do not call placeholders final art or old Python reports browser proof.
+Use the existing contract owners and preserve real graph provenance and Python-parity neural updates. No compatibility layer is required. CLI second-opinion review remains unavailable with the installed client/configured model; independent agent source/visual reviews are recorded instead. Reproduce ignored graph artifacts with the [exporter](../../scripts/connectome/README.md). Continue through all open items; a committed pass is a checkpoint, not completion.
 
 ## Global checklist and review map
 
@@ -62,7 +52,7 @@ Before closing a substantive pass, review ownership with [refactor-clean](../../
 
 ## Evidence and remaining uncertainty
 
-- [Prepared solid geometry](assets/evidence/10/solid/review.md) shares core collision, field visibility, placement and authored mesh footprints; native/browser/fresh visual checks pass, with integrated acceptance pending.
+- [Integrated house](assets/evidence/10/production/review.md) consumes authored meshes with shared physical footprints, bounded loading and independently reviewed visibility.
 
 - [Science panel preparation](assets/evidence/13/review.md): all-card diagrams, bounded packed traces and neuron explanations pass integrated browser and dependency checks.
 
