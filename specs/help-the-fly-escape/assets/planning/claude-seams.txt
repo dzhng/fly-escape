@@ -1,0 +1,76 @@
+## Independent implementation plan — Help the Fly Escape (browser), bias C: seams, ownership, testability
+
+**Recon status.** Read: `specs/help-the-fly-escape/BROWSER_GAME_MAP.md`, `src/graph_loader.py`, `src/lif_sim.py`, `src/feeding_maze_sim.py`, `src/landing_feeding.py`, `src/maze.py`, `src/house_level.py`, `src/olfaction.py`, `package.json`, `.agents/skills/{write-spec,write-tests,renderer}/SKILL.md`. **Blocked:** `/Users/david/dev/game` and the mock HTML under `~/.codex/visualizations/...` — both reads were denied by the sandbox. Every claim below about the reference architecture is marked *(inference)*. There is **no test directory and no test runner** in this repo today; the plan must create the harness, not extend one.
+
+### Architecture decision
+
+Rust core + `wasm-bindgen` + TypeScript shell, sim on a Worker. Justification, not assumption: the hot loop is `adj.T @ spikes` over a ~70k-neuron signed CSR (`src/lif_sim.py:185`) plus per-neuron Gaussian noise over 20 flies per tick — a per-tick allocation-free sparse matvec that JS cannot express without GC pressure, and it must run off the UI thread to satisfy the buffered-playback decision. The WASM boundary stays **thin and data-only**: no callbacks into JS, no rendering types crossing it. If the Slice 8 benchmark shows a single-threaded JS/TS core meets budget, the seam is unchanged — only the crate behind it. That is the point of putting the boundary at frames, not at objects.
+
+### Single-owner map (no parallel abstractions; refactor-clean invariant)
+
+| Concept | Owner | Nobody else may |
+|---|---|---|
+| Connectome asset + IDs + pathway membership | `tools/graph-export` → `flynet.v1` file | Load raw feathers at runtime |
+| Neural dynamics | `crates/neural` | Reimplement LIF in TS |
+| Environment scalar/vector fields (odor, light, shadow, wind, exit cue) | `crates/sensing::Field` | Sample a Gaussian directly (kills the `feeding_maze_sim.py:253` split-brain) |
+| Body state machine, hunger reserve, feeding gate | `crates/body` | Set `FEEDING` from contact |
+| Level geometry, rooms, doorways, LOS | `crates/world` | Hold a second wall list in TS |
+| Episode outcome + score | `crates/episode` | Decide "escaped" anywhere else |
+| Frame buffer + playback clock | `ts/playback` | Read `performance.now()` in renderer for sim time |
+| Camera state (pan/zoom/follow) | `ts/camera` | Mutate three.js camera outside it |
+| Selection (world ↔ card) | `ts/selection` | Keep a second "selectedFly" |
+| Telemetry decode | `ts/telemetry` | Recompute neural values in the panel |
+
+### Cross-cutting seams (frozen early, tested at the seam)
+
+- **`flynet.v1`** — versioned binary: CSR indptr/indices/weights (i16 signed), body-id table, `PathwayId → neuron index ranges`, injection-site tables (ORN L/R, AOTU L/R, LC4, landing DNs, proboscis MNs), provenance block (source dataset, extraction params, git SHA). Extraction reproduces `graph_loader.extract_visual_motor`'s **seed-touching-edge** rule verbatim (`src/graph_loader.py:400-466`), including `target_neurons=70000` and `min_weight=5`; it is not an induced subgraph and must not silently become one.
+- **`EpisodeSpec`** (TS→WASM): level id, seed, tool placements, fly count, tick budget. Fully serializable; replaying a spec byte-for-byte reproduces the episode.
+- **`FrameBatch`** (WASM→TS): one flat `Float32Array`/`Int32Array` pair per tick range — poses (x,y,z,θ,state), and per fly per pathway group a scalar activity. **One timestamp field shared by poses and telemetry.** No per-neuron voltages (the map's 16.8 GB calculation stands).
+- **`WorkerProtocol`**: `{start(spec)} → {frames(batch)} | {done(result)} | {error}`. Pure messages; testable in Node without a browser.
+
+### Slice ladder
+
+Each slice: owner module, seam, human-runnable artifact, gates. Visual slices end with an unprimed **screenshot-critique**; where a target exists (the mock, or the prior look) they also run **compare-screenshots**, one visual variable and one crop each. Human checkpoints are non-blocking (~5 min via preview-shots, then decide on evidence and record it).
+
+**S1 — Evidence capture & cutover skeleton.** Copy the current artifacts and the behavior claims they support into `specs/help-the-fly-escape/assets/evidence/` *before* any deletion; stand up `crates/`, `ts/`, `tools/`, `tests/`, a Vite dev server and `cargo test` + `vitest`. Gate: `npm test` and `cargo test` both run green on a placeholder test; evidence files exist. No product behavior.
+
+**S2 — Graph asset pipeline.** `tools/graph-export` restores source data (resolving the `graph_loader.py:55` vs `scripts/download-neurons.js` filename mismatch — **open**, see Uncertainties), runs extraction, emits `flynet.v1` + a human-readable `provenance.json` and a stats HTML page (neuron counts per pathway, degree histogram, sign balance). Gates: re-running export twice byte-matches; loader round-trip test in Rust asserts nnz, n, and five spot-checked signed edges against the Python extraction; **a synthetic mini-graph fixture is allowed for unit tests and must be labeled `SYNTHETIC` in the file header — never used as product evidence.**
+
+**S3 — `crates/neural`.** Port `LIFSimulator.step` (`src/lif_sim.py:174-206`) and motor readout. Deterministic RNG (seeded xoshiro, per-fly stream). Tests as contracts, not golden dumps: refractory neurons never spike; V clamps to ±2; zero input + zero noise decays monotonically; identical seed → identical spike train; different seed → different train. One cross-check test against a recorded Python trace on the mini-graph, marked as a port-fidelity fixture.
+
+**S4 — `crates/sensing`, single field owner.** One `Field` type answers concentration/gradient at a point for odor, light, shadow and wind, with advection applied **once** (`src/maze.py:518-590` has advection; `feeding_maze_sim.py:63` bypasses it — this slice removes the second path). Bilateral sampling reuses the antenna/eye offsets (`src/olfaction.py:275`, `src/landing_feeding.py:643`). Exit cue becomes `ExitCue { near_field_radius, requires_same_room, requires_los }` instead of a bare Gaussian. Gates: property test — a wall between sample point and source drives exit-cue to zero; wind advection displaces the plume peak downwind; rendered wind arrows and sampled values come from the same call (asserted, not eyeballed).
+
+**S5 — AOTU sign probe (spike, blocking for S6 tuning only).** `src/landing_feeding.py:669-698` adds light into the *same* variable as shadow, so "opposite responses" is unproven. Deliverable: a headless probe sweeping light-only and shadow-only, left and right, reporting signed turn rate with CIs over ≥30 seeds, as an HTML chart. Outcome either confirms lateral mapping or forces separate injection sites before any level design uses light/shadow tools.
+
+**S6 — `crates/body`.** Hunger becomes a finite replenishable reserve; delete the `fed_count == 0` starvation exemption (`landing_feeding.py:881`) and the `contact_strength > 0.5 && hunger > 0.5` feeding bypass (`landing_feeding.py:924`). Feeding requires proboscis-MN readout above threshold. Gates: a fly that has fed and then starves does die; with proboscis MNs pinned silent, contact alone never enters `FEEDING`; reserve after a meal is bounded and decays.
+
+**S7 — `crates/world` + `crates/episode`.** Rooms/doorways/LOS as first-class (today rooms are implicit rectangles of walls, `src/house_level.py:114-160`); escape-only outcome — timeout with meals is `TIMEOUT`, never `WON` (deletes `feeding_maze_sim.py:659-665` and `run_swarm_test.py:38` semantics). Gates: an episode that times out after feeding scores zero escapes; crossing the exit plane scores exactly one; 20 flies advance independently under one shared field.
+
+**★ Checkpoint A (first useful playable) — S8 — WASM boundary + worker + minimal canvas.** `EpisodeSpec` in, `FrameBatch` out, `ts/playback` buffering, a deliberately ugly 2D-ish top-down canvas and **one** live telemetry card. This is the brief's mandated first checkpoint: a real graph-driven fly with real telemetry, before any art or campaign work. Gates: protocol contract tests in Node (no DOM); the same spec replayed twice yields identical frames; telemetry timestamps equal pose timestamps for every frame; buffer underrun surfaces as an explicit state, not a stutter.
+
+**S9 — Performance benchmark, named baseline.** Full work including telemetry at 1/20/100 flies on a named desktop browser + machine; report ticks/s, frames buffered/s vs consumed/s, peak memory, load time. Explicitly verify finished episodes do not inflate throughput with no-op ticks (the `perf_audit.py:154` trap). Output: HTML report + a go/no-go on episode length, playback speeds and initial buffer lead. **A short lead cannot fix sustained underproduction** — if production < consumption, this slice returns a tick-rate or fly-count decision, not a bigger buffer.
+
+**S10 — Renderer core: scene, lighting, camera, picking.** Fixed angled dollhouse camera; whole-house = minimum zoom, close = default. `ts/camera` owns pan/zoom/follow; picking returns a fly id only. Replaceable placeholder 3D props. Visual variable: **camera framing only**; crop = full frame vs the mock. Gates: compare-screenshots against the mock for framing; unit tests for camera math (world→screen, zoom clamps, follow keeps target within center box while zoom is user-driven).
+
+**S11 — Fly model & trails.** Blender-MCP fly model with a replacement contract (placeholder swaps by filename, no code change). Variable: **fly silhouette at close zoom**; then a separate pass for **trail fade** (white, stronger for selection). Two slices' worth of judgment; keep them separate shots.
+
+**S12 — Selection + panel.** Yellow selection ring only; suppress the pointer-click focus ring while **retaining keyboard focus visibility** (test both: pointer click → no outline; Tab → visible outline). 20 scrollable cards, selected card scrolls fully into view, world↔card equivalence tested through `ts/selection`.
+
+**S13 — Grouped pathway network + traces.** Group membership defined in `flynet.v1`, aggregation and cadence defined here; plain-language labels lead, tooltips carry the neuroscience and the honest approximation caveat. Gate: a tooltip-accuracy review pass; no trace may be drawn from data the sim did not produce.
+
+**S14 — Five levels + tuning.** Level 1 = five rooms, teaches by layout; later levels grow, with intentional dead ends. Per-level star thresholds tuned over **seed sets**, not single runs. Gate per level: a documented reference solution beats a documented bad placement across ≥30 seeds with non-overlapping CIs; level 1 shows measurable placement benefit.
+
+**S15 — Progression, retry, persistence.** Sequential unlock at one star; retry restores the prior placement as editable defaults; attempt seeds stored so a replay reproduces its outcome while new attempts get fresh seeds. Gate: replay-of-stored-attempt equality test; unlock state survives reload.
+
+### Uncertainties (owner-visible, not hand-waved)
+
+1. **Raw connectome availability** — `data/` holds only `.gitkeep`; `graph_loader.py:55` wants three short-named feathers, `scripts/download-neurons.js` fetches different significant-only files. S2 cannot start until one path is proven; this is the single largest schedule risk.
+2. **Reference architecture unread** (permission denied) — all "similar to ~/dev/game" claims are inferences; S1 should re-read it once access is granted and adjust package boundaries only.
+3. **Mock HTML unread** — S10's compare-screenshots target must be copied into `specs/help-the-fly-escape/assets/` first.
+4. **AOTU signs** (S5) — puzzle design must not assume light/shadow opposition until measured.
+5. **Browser budget** (S9) — 100 flies is a capacity probe, not an MVP promise.
+6. **Blender MCP capability** for a close-up-quality fly is unverified; S11 ships a placeholder if it isn't.
+
+### Delegated to the implementer
+
+Internal crate module naming, RNG algorithm choice, binary field ordering within `flynet.v1`, trail length/fade constants within "readable at min zoom", exact tick↔frame ratio within the S9 budget, panel card layout details. Everything else — seams, ownership, scoring semantics, feeding gate, test contracts — is decided here.

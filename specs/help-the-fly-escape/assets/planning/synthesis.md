@@ -1,0 +1,19 @@
+# Independent draft synthesis — 2026-09-06
+
+Three read-only agents received the same [brief](brief.md), without access to each other's answers. A and B inspected local code and the reference repository. C ran Claude Opus/high via a read-only CLI. Its sandbox denied the external reference repo and mock, so those claims were treated as inference; the primary agent inspected both directly. The [full Claude output](claude-seams.txt) is retained as a rejected/accepted-ideas record, not build instructions.
+
+| Lens | Proposed cut | Adopted | Rejected or resliced |
+|---|---|---|---|
+| A: fewest slices | Six broad slices, graph/browser first, then swarm, game, camera, art/science and campaign | Early useful real-graph browser checkpoint; minimal crates; shared graph and compact records | Combined art/science and combined semantic repair hide several independent variables; split them |
+| B: risk first | Nine slices, data/port/semantics/buffer before campaign | Stable graph extraction; active-work benchmarks; cancel/backpressure; finite reserve; no tick dropping from reference | Extra contract crate has no independent domain need; visual bundles require smaller gates |
+| C: seams, Claude | Fifteen stages separating neural, fields, body, world and client | Single owners; field sampling removes divergent Gaussian paths; poses/telemetry share timestamps; feeding/exit ablations | First useful browser at stage 8 is too late; top-down 2D-ish canvas contradicts 3D; i16 weights/range-based groups lack evidence; reducing fly count on perf failure violates 20; “JS cannot avoid GC” is unsupported |
+
+Canonical synthesis uses 17 small checkpoints grouped into proof, camera/asset work, game/campaign and release. This is not 17 infrastructure packages: most visual slices change one renderer or asset variable. The first real graph-driven 3D browser scene arrives at slice 02; runtime feasibility is resolved by 05. House geometry can branch after the shared asset workbench while fly animation proceeds. Content tuning waits for corrected senses/lifecycle and measured 20-fly playback.
+
+Rust/WASM is selected for predictable simulation ownership, native comparison probes and alignment with the reference project. TypeScript typed arrays remain a plausible alternative, but maintaining both implementations would duplicate the authoritative dynamics. Three.js WebGL2 is selected for the MVP rather than copying the reference's larger WebGPU renderer. One Rust sim crate with coherent internal modules is enough; generated types belong in the client boundary package.
+
+Recursive fog audit split sensory correctness from reserve/outcome repair, simulation buffering from camera, fly silhouette from motion from trails, and room geometry from material color from lighting. Campaign content shares one existing schema and is accepted one level at a time. The final composition slice may inspect the whole frame only after these variables have evidence.
+
+Scrollback audit: fixed 20 flies, future 100, five authored levels/first five rooms, no tutorial/shop/server/migration, fresh retries/exact replay, finite food reserve, both science views on every card, plain language plus detail, close follow from either selection surface, white trails, real Blender 3D assets, minimum whole-house zoom, dead ends and yellow-only pointer selection all have owners in GAMEPLAY/CONTRACTS. Earlier bare A/B answers are not independently interpretable; the completed discovery map and common interview brief supplied their meaning. No unstated answer is manufactured from a letter.
+
+The old three-slice Python plan and root README are archived under `superseded/`; old spike documents and the discovery map have explicit historical banners. These are research inputs, not alternate instructions. No runtime code was deleted during planning. Future hard cutover preserves only useful exporter/fidelity evidence, not a second supported game.

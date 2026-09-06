@@ -1,0 +1,55 @@
+# Game and player experience
+
+## User requirements
+
+The shipped game runs locally in a desktop browser and contains five authored levels of increasing size and difficulty. Every level has 20 flies. Level 1 has five rooms and teaches through its layout; there is no separate tutorial. Dead ends are intentional choices, not malformed rooms. Structure the simulation for up to 100 flies later without making that optimization an MVP gate.
+
+The player shapes the environment before releasing the flies. Each level supplies a fixed inventory, without money or a shop. Attempts use fresh random seeds; replay preserves the same attempt. One star unlocks the next level; higher stars reward more escaped flies. Eating extends a finite life reserve and must matter on larger maps. Only flies that physically escape count toward the score.
+
+The world is fully 3D, with a fixed angled camera, RTS scrolling and zoom. Whole-house framing is the most zoomed-out view. Clicking a model or its right-hand card enters close follow; further zoom keeps the camera following. White fading trails help the player track small flies. Pointer selection needs only a yellow circle, as clarified by the [rejected focus indicator](assets/ui/rejected-focus-indicator.png).
+
+Every fly has a card in the scrollable right panel, containing both a grouped neural diagram and time traces. Selection scrolls to its card. Plain language is primary; detailed tooltips explain neuroscience for a reader with no background. The [approved mock evidence](assets/ui/mock-review.md) establishes the visual direction and interaction intent; its SVG world is not the production renderer.
+
+## Defaults selected by the planner
+
+These fill ordinary implementation gaps; they are not quoted user answers. Pre-run placement allows choosing, moving, rotating directional tools, and removing items with immediate inventory refunds. Freeze placements during simulation/playback. Retry preserves the setup as editable defaults but creates a fresh seed on the next Run. Start, buffering, playing, paused, complete and error are explicit states. Cancelling returns to editable placement. Replay and seeking never award progress twice.
+
+Place tools on open floor, outside solid props/walls, the spawn footprint and the exit opening; keep placement centres separate while allowing sensory fields to overlap. Invalid placement gives a specific visible reason and does not consume inventory. A fan's arrow shows its direction. The placement preview and simulation share field and geometry owners. No mandatory introductory modal or tutorial checklist.
+
+Tool vocabulary: food fruit (odor plus edible landing surface), scent crumbs (odor without food), vinegar (repellent mapping), lamp/shade (measured visual cues), fan (wind), and threat cue. Levels introduce only tools whose graph-mediated effect passed the field/ablation probes. Fixed zappers are optional hazards, at most one per level, never at spawn or covering the only exit opening. Do not use hazard randomness to fake difficulty.
+
+All placement tuning, exact layouts, tool counts, time budgets and star numbers are delegated to the implementing agent **within the campaign acceptance criteria below**. Do not quietly substitute a weaker simulation if a puzzle is unwinnable; first adjust geometry, inventory and sensory tuning within documented interfaces.
+
+Progress uses localStorage: best stars per level, preferences and last editable placements. Unlocks derive from best stars. Store completed results once per attempt; failures to persist do not destroy the current playable session. No accounts, migration, cross-device saves or persistent replay library. Reset progress is an explicit player action. Reloading ends an unfinished attempt.
+
+## Five authored levels
+
+Names, themes and the 6→9 room progression below are planner starting points, delegated to rename/tune. The first five-room count and five-level total are fixed user requirements; subsequent counts must increase.
+
+| Level | Rooms | Design question | Authored structure |
+|---|---:|---|---|
+| 1 — Open Window | 5 | Can a clear scent route help flies escape? | Four-room main route plus a one-door pantry; generous reserve; fruit and crumbs; no lethal hazard |
+| 2 — Wrong Turn | 6 | Can placement pull flies away from a tempting dead end? | Two branches, a food alcove and repellent control; no new UI explanation required |
+| 3 — Shade Route | 7 | Can a visual cue support the scent route? | A contrasting bright/shaded choice; add only a measured effective cue, never assume opposite AOTU responses |
+| 4 — Long Crossing | 8 | Where should flies eat before a longer journey? | Separated feeding stops, a fan and longer traversal; food materially changes survival |
+| 5 — Way Out | 9 | Can the player combine the learned tools? | Main route, a loop and multiple dead ends; food timing and wind; at most one avoidable zapper |
+
+Each layout is connected from spawn to exit, has legal placement surfaces and a reachable exit opening. A room may have one doorway; doors are bidirectional passage openings, not mandatory entry/exit pairs. Use a topology diagram and a greybox run to inspect each layout before decoration. Later levels must grow in room count and decision complexity, not merely shrink time limits.
+
+For each level publish a reference placement and a deliberately poor but legal placement. Evaluate both using the same 30 root seeds, 20 flies each; hold another 30 seeds out for final validation. Record distributions, star rates and paired escape differences, not a cherry-picked run. Reference placement should earn ≥1 star in at least 27/30 attempts and improve median escapes by ≥4/20 over the poor placement. Initial targets are planner gates; if they prove mismatched to the neural model, revise the spec with evidence rather than silently lowering the bar. Freeze all three increasing star thresholds before holdout evaluation. No threshold may be zero.
+
+For levels 4 and 5, compare the same reference with its food replenishment disabled while odor remains unchanged: median escapes must fall and starvation must rise. This isolates eating from attraction. Confirm a representative fly can eat, leave, and eventually need food again. Difficulty also needs a human route/inventory review—statistics alone do not establish fun.
+
+## Science panel and honest explanations
+
+Render all 20 cards in a scrollable panel, keeping each card's grouped network and trace visible together when the card is in view. Off-screen plots may pause drawing; their sampled data remains available. Do not replace all-card information with a selected-fly-only inspector. Label fly number, mode, reserve, terminal state and currently visible simulation time.
+
+Use friendly headings such as “Smell”, “Turning”, “Taking off” and “Eating”; let tooltips reveal anatomy and computation. Each tooltip answers: what this means in plain language, what the simulation measures, which data/pathway it uses, and what is approximated. Distinguish “average electrical state” from “fraction firing this tick”; do not call a voltage trace firing rate. Group links indicate the model's grouped connectivity, not a live animation of every synapse. Explain that the structural connectome is real data, while neural dynamics, sensory injection, movement decoding and energy rules are models.
+
+Tooltip wording requires source review; old spike prose is not proof. Show detailed tooltips on hover and keyboard focus, keep them within the viewport, and allow sufficient time to read them. Colors need labels, terminal flies stay in their original card positions, and selection should not reorder the roster.
+
+## Visual references and limits
+
+Use `assets/ui/` for approved framing/panel examples and the explicit negative selection reference. The source fragment is preserved at [ui-mock.fragment.html](visualizations/ui-mock.fragment.html); it expects the conversation visualization host and is evidence, not a standalone game or build dependency. The original whole-house image sets a zoom limit, not the default shot. Art direction is a cool, softly lit whimsical home with a warm orange exit and legible, appealing close-up flies.
+
+Deferred: camera rotation, mobile layout, procedural levels, accounts, shop/currency, full-neuron inspection, persistent replay sharing, GPU neural compute, multiplayer, and 100-fly performance optimization. Actual 3D assets and food extending life are not deferred.

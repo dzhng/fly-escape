@@ -1,3 +1,5 @@
+> Historical Python proposal, superseded on 2026-09-06. Not implementation instructions. Start at `specs/help-the-fly-escape/README.md`. Historical relative links may no longer resolve.
+
 # Slice 03: Demo Pack + Zapper Policy + Turbo Playback → Ship
 
 > **Kill Gate**: Demo pack viable (all 4 levels: escape_rate ≥ 0% AND ≤ 100%)

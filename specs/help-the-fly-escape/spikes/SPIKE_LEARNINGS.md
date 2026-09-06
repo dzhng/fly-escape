@@ -1,3 +1,5 @@
+> Historical spike evidence only. Browser scope and current contracts live in [the browser spec](../README.md). Claims below require reproduction; they are not release guarantees or current build instructions.
+
 # SPIKE_LEARNINGS.md — Fly Maze Science Diary
 
 **Purpose**: Document learnings from spike exploration of MaleCNS sensory→motor pathways.

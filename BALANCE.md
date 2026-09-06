@@ -1,3 +1,5 @@
+> Historical spike evidence only. Browser scope and current contracts live in [the browser spec](specs/help-the-fly-escape/README.md). Claims below require reproduction; they are not release guarantees or current build instructions.
+
 # BALANCE.md — Fly Maze Game Design Constraint Sheet
 
 This document catalogs **every tweakable parameter** in the simulation, organized by subsystem. Use this as a reference for level design, tuning, and understanding the levers available for game balance.

@@ -1,257 +1,57 @@
-# Help the Fly Escape — Implementation Spec
+# Help the Fly Escape — browser game
 
-> **STATUS**: SPEC COMPLETE — DO NOT START IMPLEMENT-SPEC UNTIL DAVID SAYS GO
+Status: **spec ready; implementation not started**. Last updated: 2026-09-06.
 
----
+Build a local, fully 3D browser game in which the player places environmental tools and watches a real connectome-driven swarm attempt to escape. The [game contract](GAMEPLAY.md) owns user requirements; [architecture contracts](CONTRACTS.md) own runtime/data seams. This plan replaces the previous Python tech-demo scope.
 
 ## Next Agent Prompt
 
-```
-You are implementing "Help the Fly Escape" — a tech-demo game where a real fly brain
-(MaleCNS LIF 70k neurons) navigates a house to reach an exit.
+You are implementing this browser game when the user requests implementation. Start at [01 — graph reference](slices/01-graph-reference.md), then deliver the real graph-driven 3D browser checkpoint in 02 before art or campaign work. Read GAMEPLAY.md, CONTRACTS.md and RESEARCH.md first. The plan itself is complete; no game implementation or benchmark has passed yet.
 
-STEP 0 (if no chat context):
-- Read HANDOFF.md first — single entry for scoping
-- Read DECISIONS.md — key chat decisions table
-- Read spikes/README.md — spike documentation index
+Raw source data is missing locally. Resolve the downloader/loader mismatch and preserve deterministic Python reference evidence before replacing runtime code. Synthetic fixtures can unblock harness work, but cannot pass real-neural or release gates. Browser throughput and several claimed sensory behaviors are unverified. The user already authorized hard replacement: no backward compatibility or migrations are required, and no further cutover permission is needed.
 
-The spec is in `specs/help-the-fly-escape/`. Read slices in order: 01 → 02 → 03.
-Each slice has Contract, Seam, Playable, Verification, Delegated, Must-stay-green.
+Use the slice dependency graph below. Keep each change bounded to its contract; update the spec before an unlisted material choice or widening a slice. Run focused verification, record evidence and decisions, and update this prompt, statuses and global checklist before ending every implementation pass. Do not call placeholders final art or old Python reports browser proof.
 
-KEY CONSTRAINTS:
-- Pure graph motor (no chemotaxis_gain, no dist<ε cheats)
-- SoftInterfaceRegistry for all geometric→neural boundaries
-- Kill gates verify escape before proceeding
-- 1-fly live sandbox must work before swarm
+## Global checklist and review map
 
-The game already has:
-- Working chemotaxis (bilateral LH), scototaxis (AOTU), escape loom (LC4→DNp04)
-- Walk-vs-fly with takeoff (DNb01/02), landing (DNp07/10), feeding
-- 4 demo levels, zapper hazard, house layout with occluded exit
+Open the [interactive roadmap](visualizations/roadmap.html) for dependency and milestone navigation.
 
-You are CUTTING OVER from spike code, not building from scratch.
-Preserve proven neural pathways; wrap soft stubs in SoftInterfaceRegistry.
-```
+- [ ] [01 — Reproducible graph and reference](slices/01-graph-reference.md) — dependencies: none.
+- [ ] [02 — One real brain in the browser](slices/02-neural-browser.md) — dependencies: 01.
+- [ ] [03 — One sensory environment](slices/03-sensory-fields.md) — dependencies: 02.
+- [ ] [04 — Finite life and physical escape](slices/04-lifecycle-outcomes.md) — dependencies: 03.
+- [ ] [05 — Twenty flies with buffered replay](slices/05-swarm-playback.md) — dependencies: 04.
+- [ ] [06 — Close framing and shared selection](slices/06-camera-selection.md) — dependencies: 05.
+- [ ] [07 — Blender fly and replacement workbench](slices/07-fly-silhouette.md) — dependencies: 06.
+- [ ] [08 — Playback-driven fly animation](slices/08-fly-motion.md) — dependencies: 07.
+- [ ] [09 — Readable white trails](slices/09-fly-trails.md) — dependencies: 08.
+- [ ] [10 — A readable 3D house](slices/10-house-geometry.md) — dependencies: 07.
+- [ ] [11 — House materials and color](slices/11-house-palette.md) — dependencies: 07,10.
+- [ ] [12 — Depth and exit lighting](slices/12-house-lighting.md) — dependencies: 11.
+- [ ] [13 — All-fly science and explanations](slices/13-science-panel.md) — dependencies: 05,06.
+- [ ] [14 — Editable setup and attempt loop](slices/14-placement-attempt.md) — dependencies: 05,06,10,13.
+- [ ] [15 — Level 1 is the tutorial](slices/15-first-level.md) — dependencies: 03,04,09,12,14.
+- [ ] [16 — Four more authored puzzles](slices/16-campaign.md) — dependencies: 15.
+- [ ] [17 — Browser release and clean cutover](slices/17-static-release.md) — dependencies: 16.
 
----
+## Standing gates and ownership
 
-## Global TODO
+Every implementation pass preserves one owner per concept: graph/provenance in the exporter; neural dynamics, fields, geometry, body and results in their Rust modules; Worker transport/archive/playback in sim-client; projection/camera/assets in renderer; selected fly and UI attempt state in web. The panel consumes recorded values, the renderer consumes exported geometry, and no second simulation or pathfinding controller is allowed. Details and typed seams live in CONTRACTS.md.
 
-| Priority | Item | Slice | Status |
-|----------|------|-------|--------|
-| P0 | SoftInterfaceRegistry abstraction | 01 | TODO |
-| P0 | InjectBundle canonical types | 01 | TODO |
-| P0 | 1-fly live sandbox working | 01 | TODO |
-| P0 | Hard cutover from spike code | 01 | TODO |
-| P1 | Swarm (N=20) batch + replay | 02 | TODO |
-| P1 | Right-wall exit + baffle verified | 02 | TODO |
-| P1 | Shadow Corridor lead level | 02 | TODO |
-| P1 | Kill gate: escape rate > 0% | 02 | TODO |
-| P2 | 4-level demo pack | 03 | TODO |
-| P2 | ZapperPolicy (0 or 1) | 03 | TODO |
-| P2 | Turbo playback | 03 | TODO |
-| P2 | Ship artifact | 03 | TODO |
+The result should read as designed today, not as a web wrapper around the Python game. All existing code is disposable spike material: keep or adapt useful parts in their natural owners and delete outdated parts. Follow the [spike reuse policy](CONTRACTS.md#existing-spike-code). Keep Python only for offline graph preparation and focused reference fixtures that earn their place. The Worker reproduction spike is removed in 02; replaceable asymmetric model placeholders give way to Blender assets in 07 and 10; obsolete runtime paths/dependencies are removed as their useful consumers disappear, with a final audit in 17. No transitional compatibility owner survives release.
 
----
+Every visual slice explicitly inherits [compare-screenshots](../../.agents/skills/compare-screenshots/SKILL.md) when it has a reference/prior look, using telemetry and a less-wrong verdict. It also runs an unprimed [screenshot-critique](../../.agents/skills/screenshot-critique/SKILL.md) as its last visual acceptance check. Each slice names one visual variable and crop/mask; unrelated visible wrongness belongs to another slice. Integration reviews combine only previously accepted variables.
 
-## Goal / Non-Goals
+Human shot reviews are non-blocking: use [preview-shots](../../.agents/skills/preview-shots/SKILL.md), allow about five minutes while independent work continues, then make and record an evidence-based reversible decision if no response arrives and close the shots. This is not a new scope approval mechanism. Record failed probes as well as successful captures under the owning slice's `assets/evidence/NN/` folder.
 
-### Goals
+Before closing a substantive pass, review ownership with [refactor-clean](../../.agents/skills/refactor-clean/SKILL.md), then the change with [code-review](../../.agents/skills/code-review/SKILL.md); keep docs focused on rationale and authoritative contracts. A failed scientific/performance gate blocks dependent content acceptance, not unrelated asset/harness work. Reslice measured problems; never quietly lower the 20-fly requirement, shrink the graph or add steering cheats.
 
-1. **Cool tech demo** of real fly brain navigating a house
-2. **Playable** — not perfectly balanced, but winnable with strategy
-3. **Quirky behaviors** emerge from neural dynamics (desirable!)
-4. **Pure graph motor** — behavior from MaleCNS, not external cheats
-5. **1-fly live** for tutorial, **swarm batch** for scored levels
+## Evidence and remaining uncertainty
 
-### Non-Goals
+- [Research and reproduction](RESEARCH.md): actual source defects, reference architecture, primary external documentation and reproduction spikes.
+- [Draft synthesis](assets/planning/synthesis.md): three independent approaches, tradeoffs and scrollback audit.
+- [UI reference evidence](assets/ui/mock-review.md): mock limits; nearby images include approved framing and the rejected focus indicator.
+- [Discovery map](BROWSER_GAME_MAP.md): historical interview record, superseded by this plan.
+- [Planning validation](assets/planning/review.md): review results for this specification, not game acceptance.
 
-1. ❌ Perfectly balanced competitive game
-2. ❌ Full shop UI with drag-drop
-3. ❌ Dm8/R7-R8 full phototaxis subgraph
-4. ❌ 100-fly optimization
-5. ❌ Campaign progression
-6. ❌ Procedural level generation
-7. ❌ Mobile/web deployment
-
----
-
-## Ownership Invariants
-
-These boundaries MUST NOT be crossed without explicit approval:
-
-| Boundary | Owner | Invariant |
-|----------|-------|-----------|
-| Neural pathways | MaleCNS LIF | All motor output from graph dynamics |
-| Soft interfaces | SoftInterfaceRegistry | All geometric→neural boundaries registered |
-| Purity bar | BANNED list | No chemotaxis_gain, no dist<ε, no teleport |
-| Graph data | visual_motor subgraph | 70k neurons, no expansion without OOM check |
-| Game state | FeedingMazeSimulator | Single source of truth for fly position/state |
-
----
-
-## Soft-Interface Register
-
-All "soft stubs" (geometric computation injected to neural pathway) MUST be registered:
-
-| Interface | Input | Output | Neural Target | Purity |
-|-----------|-------|--------|---------------|--------|
-| `LandingLoom` | fruit position, fly velocity | loom signal | DNp07, DNp10 | ⚠️ Soft |
-| `EscapeLoom` | threat position, fly velocity | loom signal | LC4 (then graph) | ✅ Graph from LC4 |
-| `Scototaxis` | shadow/light zones, fly position | bilateral intensity | AOTU L/R | ⚠️ Soft cue, graph motor |
-| `ExitMagnet` | exit position, fly position, LOS | fruit-like odor | Excitatory LH | ⚠️ Proxy (no CO₂ ORNs) |
-| `TakeoffGate` | hunger level, threat loom | injection current | DNb01, DNb02 | ⚠️ Soft threshold |
-
-### Registry Contract
-
-```python
-class SoftInterfaceRegistry:
-    """Register and audit all geometric→neural boundaries."""
-    
-    def register(self, name: str, input_type: str, output_type: str, 
-                 neural_target: str, purity: str) -> None: ...
-    
-    def audit(self) -> List[SoftInterface]: ...
-    
-    def is_pure(self, name: str) -> bool: ...
-```
-
----
-
-## Kill Gates
-
-Each slice has a kill gate — a verification that MUST pass before proceeding:
-
-| Slice | Kill Gate | Metric | Threshold |
-|-------|-----------|--------|-----------|
-| 01 | 1-fly escapes | escape_rate(N=1, Shadow Corridor) | > 0% |
-| 02 | Swarm escapes | escape_rate(N=20, Shadow Corridor) | > 10% |
-| 03 | Demo pack viable | min(escape_rate) across 4 levels | ≥ 0% AND max ≤ 100% |
-
-If a kill gate fails, STOP and debug before proceeding.
-
----
-
-## Draft Synthesis
-
-### Fewest Canonical Components
-
-| Component | Purpose | Status |
-|-----------|---------|--------|
-| `VisualMotorGraph` | 70k neuron subgraph + adjacency | ✅ Exists |
-| `LIFSimulator` | Leaky integrate-and-fire dynamics | ✅ Exists |
-| `FeedingMazeSimulator` | Game loop, state, collision | ✅ Exists |
-| `FlightDynamics` | Walk/fly physics + mode switching | ✅ Exists |
-| `LandingFeedingSystem` | Behavior states, feeding, takeoff | ✅ Exists |
-| `SoftInterfaceRegistry` | Audit soft stubs | 🆕 Slice 01 |
-| `InjectBundle` | Canonical current injection | 🆕 Slice 01 |
-| `SwarmRunner` | Batch N flies, aggregate metrics | 🆕 Slice 02 |
-| `TurboPlayback` | Fast-forward sim, replay paths | 🆕 Slice 03 |
-
-### Risk-First → Verify Order
-
-1. **Risk**: Soft stubs untracked → ship with hidden cheats
-   - **Verify**: SoftInterfaceRegistry audit before Slice 02
-
-2. **Risk**: 1-fly doesn't escape → swarm will fail
-   - **Verify**: Kill gate 01 (1-fly escape > 0%)
-
-3. **Risk**: Exit baffle blocks all flies → 0% escape
-   - **Verify**: Kill gate 02 (swarm > 10%) with Shadow Corridor
-
-4. **Risk**: Zappers are RNG death → unfun
-   - **Verify**: ZapperPolicy(0-1) in Slice 03, escape_rate delta measured
-
-### 19-Seam REJECTED
-
-We considered a 19-seam architecture with separate modules for each neural pathway.
-**REJECTED** because:
-- Spike code already works with colocated injection logic
-- Refactoring adds risk without adding capability
-- SoftInterfaceRegistry provides audit without restructuring
-
----
-
-## Firewalls
-
-These are OUT OF SCOPE — do not build:
-
-| Item | Reason | Deferred To |
-|------|--------|-------------|
-| Shop UI | Not blocking tech demo | Post-ship |
-| Dm8 phototaxis | Not in subgraph, AOTU sufficient | Never (OOM) |
-| 100-fly batch | 20 sufficient for demo | Post-ship |
-| Campaign progression | Levels are demo, not campaign | Post-ship |
-| Wind advection | Stubbed, not critical for demo | P2 |
-| CO₂/hygro exit cue | Fruit proxy works, PNs available if needed | P2 |
-| Procedural levels | Hand-crafted for demo | Post-ship |
-| Mobile/web | Desktop demo only | Post-ship |
-
----
-
-## Deferred Fog
-
-Things we know we don't know:
-
-| Fog | Impact | Mitigation |
-|-----|--------|------------|
-| Budget economy depth | Unknown if meaningful choices exist | P0.2 showed noise; defer until N=10+ tested |
-| Optimal trail configs | Unknown best placement | Playtest pass found 20% escape; iterate |
-| Zapper fairness | 3 zappers = RNG death | ZapperPolicy(0-1) in Slice 03 |
-| Scototaxis vs chemotaxis dominance | Unknown which wins in conflict | Playtest showed shadow preference; document |
-| Exit PN injection | Untested V/VL/VP injection for exit | Fruit proxy works; defer unless needed |
-
----
-
-## Slice Summary
-
-| Slice | Name | Deliverable |
-|-------|------|-------------|
-| [01](slices/01-cutover-sandbox.md) | Cutover Shell + Live Sandbox | SoftInterfaceRegistry, InjectBundle, 1-fly live, hard cutover |
-| [02](slices/02-swarm-exit-lead.md) | Swarm Run + Stars + Exit Lock | N≈20 batch, right-wall exit + baffle, Shadow Corridor lead |
-| [03](slices/03-demo-pack-zapper-turbo.md) | Demo Pack + Zapper + Turbo | 4 levels, ZapperPolicy, turbo playback, ship |
-
----
-
-## Spikes (In-Spec)
-
-All spike documentation lives in [`spikes/`](spikes/):
-
-| Document | Purpose |
-|----------|---------|
-| [spikes/README.md](spikes/README.md) | **Index** — Timeline, doc index, code locations |
-| [spikes/GAME_DESIGN.md](spikes/GAME_DESIGN.md) | Product vision, locks, art direction |
-| [spikes/MECHANICS_DERISK.md](spikes/MECHANICS_DERISK.md) | P0 spike results, derisk assessment |
-| [spikes/SPIKE_LEARNINGS.md](spikes/SPIKE_LEARNINGS.md) | Science diary — neural pathway discoveries |
-| [spikes/BALANCE.md](spikes/BALANCE.md) | Tweakable parameters, designer levers |
-| [spikes/choices.md](spikes/choices.md) | Technical decision log |
-
-**Origin `src/` is the spike code home** — all working code lives at repo root.
-
-### Key Spike Findings
-
-| Finding | Source | Impact |
-|---------|--------|--------|
-| Bilateral LH injection = real chemotaxis | SPIKE_LEARNINGS §1 | Core mechanic works |
-| LHAD1g1 is GABAergic (aversion) | SPIKE_LEARNINGS §2 | Vinegar pathway |
-| LC4→DNp04 = Giant Fiber escape | SPIKE_LEARNINGS §6 | Escape loom pure graph |
-| AOTU→DNa02/03 = scototaxis | SPIKE_LEARNINGS §6 | Shadow preference |
-| 3 zappers = RNG death | MECHANICS_DERISK P0.3 | ZapperPolicy(0-1) |
-| 20% escape on Shadow Corridor | Level playtest | Lead demo level |
-
----
-
-## Visualizations
-
-- [Roadmap](visualizations/roadmap.html)
-
----
-
-## ⚠️ DO NOT START IMPLEMENT-SPEC
-
-This spec is complete. Implementation awaits David's explicit "go" signal.
-
-Until then:
-- Review spec for gaps
-- Ask clarifying questions
-- Do NOT write implementation code
+The open empirical questions are explicit: source availability/extraction group coverage (01), correct neural port and observed movement (02), effective cue mappings (03), graph-driven feeding (04), sustainable 20-fly production (05), close asset readability (07–12), and puzzle robustness (15–16). Their slices name the experiment and verdict. Ordinary tuning is delegated there; these unknowns are not reasons to invent extra architecture up front.

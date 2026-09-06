@@ -1,3 +1,5 @@
+> Historical spike evidence only. Browser scope and current contracts live in [the browser spec](../README.md). Claims below require reproduction; they are not release guarantees or current build instructions.
+
 # GAME_DESIGN.md — Fly Maze Product Vision
 
 **PRODUCT LOCK** — This document captures the core game design. Changes need David's approval.

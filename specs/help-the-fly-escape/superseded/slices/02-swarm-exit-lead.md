@@ -1,3 +1,5 @@
+> Historical Python proposal, superseded on 2026-09-06. Not implementation instructions. Start at `specs/help-the-fly-escape/README.md`. Historical relative links may no longer resolve.
+
 # Slice 02: Swarm Run + Stars + Exit Lock + Shadow Corridor Lead
 
 > **Kill Gate**: Swarm escapes Shadow Corridor (escape_rate > 10%, N=20)

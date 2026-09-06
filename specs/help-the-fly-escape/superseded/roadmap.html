@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help the Fly Escape — Implementation Roadmap</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #eee;
+            min-height: 100vh;
+        }
+        h1 { 
+            color: #ff9f43; 
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 40px;
+        }
+        .warning-banner {
+            background: linear-gradient(90deg, #e74c3c 0%, #c0392b 100%);
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 20px 0 40px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+        .slice-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .slice {
+            background: rgba(45, 45, 68, 0.8);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 5px solid #54a0ff;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .slice:hover {
+            transform: translateX(5px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        .slice.slice-01 { border-left-color: #00d2d3; }
+        .slice.slice-02 { border-left-color: #54a0ff; }
+        .slice.slice-03 { border-left-color: #ff9f43; }
+        .slice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .slice h3 { 
+            color: #fff; 
+            margin: 0;
+            font-size: 1.4em;
+        }
+        .slice-num {
+            background: rgba(255,255,255,0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            color: #888;
+        }
+        .slice p {
+            color: #aaa;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        .deliverables {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        .tag {
+            background: rgba(255,255,255,0.1);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            color: #ddd;
+        }
+        .tag.key { background: rgba(255,159,67,0.3); color: #ff9f43; }
+        .kill-gate {
+            background: rgba(231,76,60,0.2);
+            border: 1px solid rgba(231,76,60,0.5);
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+        .kill-gate strong { color: #e74c3c; }
+        .arrow {
+            text-align: center;
+            font-size: 28px;
+            color: #54a0ff;
+            margin: 5px 0;
+        }
+        .section {
+            margin-top: 50px;
+        }
+        .section h2 {
+            color: #54a0ff;
+            border-bottom: 2px solid rgba(84,160,255,0.3);
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        th {
+            background: rgba(255,255,255,0.05);
+            color: #54a0ff;
+            font-weight: 600;
+        }
+        tr:hover { background: rgba(255,255,255,0.02); }
+        .pure { color: #2ecc71; }
+        .soft { color: #f39c12; }
+        .proxy { color: #e74c3c; }
+        .firewall {
+            background: rgba(231,76,60,0.1);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .firewall h3 { color: #e74c3c; margin-top: 0; }
+        .firewall ul { margin: 0; padding-left: 20px; }
+        .firewall li { margin: 8px 0; color: #aaa; }
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #666;
+        }
+    </style>
+</head>
+<body><p style="padding:16px;background:#ffe4a7;color:#222">Historical Python plan — superseded. Read specs/help-the-fly-escape/README.md for the browser game.</p>
+    <h1>🪰 Help the Fly Escape</h1>
+    <p class="subtitle">Implementation Roadmap — 3-Slice Ladder</p>
+    
+    <div class="warning-banner">
+        ⚠️ DO NOT START IMPLEMENT-SPEC UNTIL DAVID SAYS GO
+    </div>
+
+    <div class="slice-container">
+        <div class="slice slice-01">
+            <div class="slice-header">
+                <h3>Cutover Shell + Live Sandbox</h3>
+                <span class="slice-num">SLICE 01</span>
+            </div>
+            <p>Hard cutover from spike code. Wrap soft stubs in SoftInterfaceRegistry. Create canonical InjectBundle. Get 1-fly live sandbox working at ~300 FPS.</p>
+            <div class="deliverables">
+                <span class="tag key">SoftInterfaceRegistry</span>
+                <span class="tag key">InjectBundle</span>
+                <span class="tag">1-fly live</span>
+                <span class="tag">Hard cutover</span>
+            </div>
+            <div class="kill-gate">
+                <strong>Kill Gate:</strong> 1-fly escapes Shadow Corridor (escape_rate > 0%)
+            </div>
+        </div>
+
+        <div class="arrow">↓</div>
+
+        <div class="slice slice-02">
+            <div class="slice-header">
+                <h3>Swarm Run + Stars + Exit Lock</h3>
+                <span class="slice-num">SLICE 02</span>
+            </div>
+            <p>Batch N≈20 flies with SwarmRunner. Implement star scoring (25/50/75%). Verify exit layout lock: right-wall + baffle + near-field magnet. Shadow Corridor as lead level.</p>
+            <div class="deliverables">
+                <span class="tag key">SwarmRunner (N=20)</span>
+                <span class="tag key">Exit lock verified</span>
+                <span class="tag">Star scoring</span>
+                <span class="tag">Shadow Corridor ★</span>
+            </div>
+            <div class="kill-gate">
+                <strong>Kill Gate:</strong> Swarm escapes Shadow Corridor (escape_rate > 10%, N=20)
+            </div>
+        </div>
+
+        <div class="arrow">↓</div>
+
+        <div class="slice slice-03">
+            <div class="slice-header">
+                <h3>Demo Pack + Zapper + Turbo → Ship</h3>
+                <span class="slice-num">SLICE 03</span>
+            </div>
+            <p>Full 4-level demo pack. ZapperPolicy limits to 0-1 zappers (no RNG death). Turbo playback for fast-forward sim. Ship artifact with single command.</p>
+            <div class="deliverables">
+                <span class="tag key">4 demo levels</span>
+                <span class="tag key">ZapperPolicy(0-1)</span>
+                <span class="tag">Turbo playback</span>
+                <span class="tag">Ship artifact</span>
+            </div>
+            <div class="kill-gate">
+                <strong>Kill Gate:</strong> All 4 levels viable (0% ≤ escape ≤ 100%, at least 1 winnable)
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Soft Interface Register</h2>
+        <table>
+            <tr>
+                <th>Interface</th>
+                <th>Neural Target</th>
+                <th>Purity</th>
+            </tr>
+            <tr>
+                <td>LandingLoom</td>
+                <td>DNp07, DNp10</td>
+                <td class="soft">⚠️ Soft stub</td>
+            </tr>
+            <tr>
+                <td>EscapeLoom</td>
+                <td>LC4 → DNp04</td>
+                <td class="pure">✅ Pure graph (from LC4)</td>
+            </tr>
+            <tr>
+                <td>Scototaxis</td>
+                <td>AOTU L/R</td>
+                <td class="soft">⚠️ Soft cue, graph motor</td>
+            </tr>
+            <tr>
+                <td>ExitMagnet</td>
+                <td>Excitatory LH</td>
+                <td class="proxy">⚠️ Proxy (no CO₂ ORNs)</td>
+            </tr>
+            <tr>
+                <td>TakeoffGate</td>
+                <td>DNb01, DNb02</td>
+                <td class="soft">⚠️ Soft threshold</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Demo Levels</h2>
+        <table>
+            <tr>
+                <th>Level</th>
+                <th>Demonstrates</th>
+                <th>Target</th>
+            </tr>
+            <tr>
+                <td>Shadow Corridor</td>
+                <td>Scototaxis (shadow preference)</td>
+                <td>20%+ ★</td>
+            </tr>
+            <tr>
+                <td>Dead End Trap</td>
+                <td>Aversive chemotaxis, trap behavior</td>
+                <td>0-10% (hard)</td>
+            </tr>
+            <tr>
+                <td>Long Hallway</td>
+                <td>Flight necessity (walk too slow)</td>
+                <td>20%+ ★</td>
+            </tr>
+            <tr>
+                <td>Light vs Dark</td>
+                <td>Scototaxis vs chemotaxis conflict</td>
+                <td>0-10% (hard)</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Firewalls (Out of Scope)</h2>
+        <div class="firewall">
+            <h3>🚫 Do Not Build</h3>
+            <ul>
+                <li><strong>Shop UI</strong> — Not blocking tech demo</li>
+                <li><strong>Dm8 phototaxis</strong> — Not in subgraph, AOTU sufficient</li>
+                <li><strong>100-fly batch</strong> — 20 sufficient for demo</li>
+                <li><strong>Campaign progression</strong> — Levels are demo, not campaign</li>
+                <li><strong>Wind advection</strong> — Stubbed, not critical</li>
+                <li><strong>Procedural levels</strong> — Hand-crafted for demo</li>
+                <li><strong>Mobile/web</strong> — Desktop demo only</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>Help the Fly Escape — Implementation Spec</p>
+        <p style="color: #444;">Spec complete. Awaiting David's go signal.</p>
+    </footer>
+</body>
+</html>

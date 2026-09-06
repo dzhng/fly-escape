@@ -1,3 +1,5 @@
+> Historical spike evidence only. Browser scope and current contracts live in [the browser spec](specs/help-the-fly-escape/README.md). Claims below require reproduction; they are not release guarantees or current build instructions.
+
 # Fly Maze Design Choices
 
 ## THE FLY IS FLYING, NOT WALKING

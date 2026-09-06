@@ -1,0 +1,79 @@
+# Architecture and contracts
+
+These are planned interfaces, not claims about existing implementation. Exact internal module names and packing offsets are delegated; changes to ownership, semantics, or user requirements require updating the spec before widening a slice.
+
+## Architecture choice
+
+Use a native-testable Rust simulation compiled through a thin `wasm-bindgen` crate, inside one dedicated browser Worker. TypeScript, React, Vite and Three.js WebGL2 provide the client. Bun manages the workspace and root commands. This follows the useful division in `~/dev/game` without copying its large renderer or campaign framework. Rust is chosen for the sizeable sparse neural loop, predictable memory ownership, native probes, and the user's reference architecture—not because TypeScript cannot perform numerical work. Browser throughput remains unproven until slice 05.
+
+No application server, Python runtime in the browser, GPU neural computation, SharedArrayBuffer requirement, account, or cloud service. A local development server or static host delivers assets. Offline use after installation, service workers, and double-clicking `file://` are not MVP requirements.
+
+| Planned home | Sole responsibility |
+|---|---|
+| `scripts/prepare-graph.py` | Offline source acquisition, stable extraction, provenance, reference fixtures |
+| `crates/sim` | Neural state, sensory fields, body state, geometry, attempts and authoritative outcomes; ordinary internal modules, not a crate per pathway |
+| `crates/game-wasm` | Instantiate core, advance bounded work, expose owned output; no second simulation |
+| `packages/sim-client` | Generated Rust wire types, Worker protocol, frame archive, playback cursor, telemetry decoding |
+| `packages/game-renderer` | Scene, asset loading, animation, camera, picking, trails; receives recorded data |
+| `web` | Placement and attempt UI, one selected-fly ID, science panel, local progress |
+| `apps/asset-lab` | Fast model replacement and validation using the production renderer |
+
+Dedicated `/lab/brain`, `/lab/fields`, `/lab/lifecycle`, `/lab/playback` routes in `web` expose the same owners as the product. Do not create parallel test simulations. Rust owns serializable domain/wire structs; derive TypeScript with `ts-rs` into `packages/sim-client`. Renderer imports data types, never the React application. Render geometry comes from the core's level geometry export, never a hand-maintained second wall map.
+
+## Existing spike code
+
+All current code was written to explore game mechanics. No existing file, module layout, API, script or data artifact must survive merely because it exists. Reuse useful algorithms, tooling and evidence in their natural workspace owner; rewrite or delete outdated pieces. Capture focused reference fixtures where they help validate the neural port, without preserving known bugs or the old application. Git history is sufficient for discarded experiments; do not create a permanent legacy runtime or copy the entire spike into the new structure.
+
+Remove obsolete code and dependencies during the slice that replaces their last useful consumer. Slice 17 audits any remaining leftovers; it is not a requirement to retain dead code until release. The neural fidelity gates preserve intended model behavior and provenance, not the spike's implementation shape.
+
+## Graph and fidelity boundary
+
+Create a versioned little-endian binary graph plus JSON manifest. Manifest includes source URLs, dataset release, source SHA-256 hashes, exporter revision, extraction parameters, graph hash, neuron/edge counts, missing annotations and neurotransmitter fallback counts. Browser downloads only prepared artifacts, not the raw Feathers. Body IDs are decimal strings at the JS boundary; neuron indices are u32. Preserve f64 weights/dynamics first; f32 render output is fine. Quantization is a later measured change.
+
+Use the existing visual/motor extraction target of approximately 70,000 neurons and minimum edge weight 5. Its edge selection is **seed-touching**, not every edge between selected neurons. Make every selection and tie-break deterministic using body ID; replace unordered MBON set truncation and record the resulting membership change. Groups are explicit index lists, may overlap, and are not assumed contiguous. Convert once to CSR with **postsynaptic rows, presynaptic columns**, so multiplying previous spikes yields incoming current. Verify signed asymmetric edges against the Python orientation. Preserve and label the prototype's unknown-transmitter fallback during fidelity work; it is not a biological certainty.
+
+Port the LIF update and motor readout with injected noise fixtures: previous spikes drive current, strict threshold, refractory update order, clamping and voltage-based readouts must match. Compare f64 intermediate values with stated tolerances and spike outcomes away from threshold boundaries. Exact NumPy RNG replication is unnecessary: production gets a specified stable PRNG with independent streams derived from root seed and fly ID. Same build, graph, tuning and seed must produce the same recorded attempt; cross-browser bit identity is not promised without evidence. Replay displays stored records and is exact.
+
+Initial cadence remains one neural update per 0.1 game seconds, matching the prototype's coupling. LIF `dt=1` is a model unit, not a claim of a millisecond of biology. Rendering interpolates; it does not increase neural cadence. Do not shrink the graph, lower 20 flies, or silently alter model cadence to pass performance.
+
+## Environment, body and result
+
+`LevelDef` owns room floor polygons, wall segments, doorway openings, spawn region, exit segment and outward normal, fixed hazards, tool inventory, duration and star thresholds. MVP uses one storey with planar collision and movement; walking/flying modes supply height for real 3D rendering. This is fully 3D presentation, not unconstrained six-axis flight simulation. This planner default is deliberate and reversible before implementation.
+
+`FieldSet.sample(position, heading, tick)` is the sole sensory field sampler: bilateral odor/light/shadow, loom and physical wind. One wall/door geometry owns collision and line of sight. Odor uses a deterministic wall-aware grid with source injection, diffusion, decay and wind advection; no-flux solid boundaries and doorway exchange. Grid resolution and solver constants are delegated after mirrored chamber probes, with a convergence comparison before tuning levels. Preview fields consume sampled/exported core data. No direct Gaussian side path may bypass walls/advection. A wind vector applies world-space force to the body; it does not secretly add a heading bias.
+
+Exit attraction is explicitly a modeled sensory proxy, active only in the exit room, with line of sight and a bounded near-field radius. It never communicates a route or distance-to-goal steering command. Only a swept outward crossing through the physical exit opening yields escape; a wall crossing, jar contact, meal or timeout does not. Collision/sensory contact may detect geometry; they must not choose a goal-directed motor turn or start feeding on their own.
+
+Finite reserve decreases over time, with mode-dependent costs. Ground contact with food delivers taste input; feeding requires a landed body and measured proboscis motor activity above its documented threshold. A feeding bout replenishes reserve while contact persists, up to a cap, and ends on loss of contact, satiation or bout timeout. Any fly can starve again after eating. Food sources need not deplete in MVP. Only neural readouts initiate locomotion/landing/feeding actions; sensory-to-current mappings and body decoding are labeled approximations. Do not assert that light and shadow have opposite behavioral effects until mirrored and ablation probes establish it.
+
+Terminal outcome is exactly `escaped | starved | zapped | timedOut`. Terminal flies stop neural stepping. Crossing counts once; outcome aggregation and star calculation live in `sim`. The browser never infers escape from a disappearance or feeding state.
+
+## Attempt and transfer seam
+
+`AttemptSpec` contains attempt ID, graph hash, simulation build ID, tuning hash, level content hash/ID, root seed, fly count, immutable placements and duration ticks. Worker input is `start(spec) | grantCredits(count) | cancel(attemptId)`. Output is `ready(metadata) | frames(chunk) | complete(result) | error(details)`, each tagged with attempt ID. Main thread ignores superseded attempts. Cancellation takes effect within one full simulation tick plus the next Worker event-loop yield; no uninterruptible full-episode call.
+
+`FrameChunk` has schema version, attempt ID, monotonic sequence, start tick, tick count and fly count. Contiguous typed buffers carry per-tick poses (position, heading, mode), reserve, motor/sensory values, grouped activity and timestamped transitions. Group activity includes mean membrane potential and spike fraction, clearly labeled. Up to 16 named groups are enough; preserve bilateral identity where needed. Aggregate values come from the core, not decorative UI inference. Metadata defines group membership and display provenance. The exporter also owns static directed group connectivity: for each source/target group pair, export edge count, summed positive weight and summed absolute negative weight from the selected graph. Count each underlying edge once within a pair; overlapping groups may legitimately represent that edge in multiple pairs, disclosed as overlapping summaries rather than disjoint circuitry. A tiny asymmetric overlapping-group fixture pins direction/sign/count through the UI consumer. Diagram widths may normalize these exported values for display, but the UI must not invent edges or recompute connectivity. Packing is generated/documented once at the Rust seam, with encode/decode consumer tests.
+
+Share one immutable graph among fly states. Never store full-neuron history. Copy WASM output into independently owned ArrayBuffers and transfer those buffers; never transfer WASM memory or retain stale views across memory growth. Allow at most two unacknowledged chunks. Worker yields between small batches and produces only when credited. Chunk size starts at ten ticks and is delegated downwards if cancellation or transfer latency misses budget.
+
+Keep the current attempt's complete compact record in RAM for replay and scrubbing through already-computed time. Maximum authored horizon is 6,000 ticks (ten game minutes); bound the archive at 128 MiB for 20 flies. Calculate this bound from actual schema before allocation, including events. Release the previous archive when starting another attempt. A record-cap failure is an explicit error, not silent history truncation. No persistent replay library or save-file compatibility in MVP.
+
+## Playback and responsiveness
+
+There are two clocks with different jobs: the core's integer simulation tick and one client playback cursor. World poses, animation, trails, outcome events and science panel all sample that cursor. Rendering never drives neural updates or skips simulation ticks to catch up. Do not copy the reference game's capped tick-dropping behavior.
+
+Before playback, estimate conservative production rate from active-neuron ticks, excluding graph loading and terminal no-ops. With buffered game seconds B, consumption speed S, production rate R and uncomputed game seconds T, require at least `B >= max(3*S, T*max(0,S/R-1)+2*S)` before starting; use a safety discount on measured R and re-evaluate as production continues. R=0 means wait or report failure. A fully computed record can always play without this lead test. A short buffer does not cure sustained underproduction.
+
+Pause/1×/2× and completed-record replay are MVP controls. Speed increases may require more buffering; display that state honestly. If production falls below prediction, freeze the playback cursor at the last safe timestamp and show buffering, then build enough lead before resuming. Never loop tiny resume/stall bursts, extrapolate unseen outcomes, or silently slow the clock. On hidden tabs freeze playback and stop granting new credits; resume at the same timestamp without catch-up. Bounded in-flight work may finish.
+
+Slice 05 establishes a named desktop/browser baseline. Initial engineering targets: warm first-play wait ≤10 seconds (investigate >30 seconds), rendered frame p95 ≤25 ms, interaction response ≤100 ms, and combined measured/estimated owned memory ≤512 MiB. These are planner targets, not measured claims. Smooth 1× playback across ten full 20-fly attempts is the release gate; initial-wait results must be reported. If >30 seconds persists, reslice performance before campaign tuning rather than quietly declaring success. Profile 100 flies for capacity and memory scaling, without promising MVP throughput.
+
+## Selection, camera and assets
+
+One selected-fly ID drives renderer and cards. Picking returns an ID; both model and card selection call the same action, enter close follow and scroll the card fully into view. Follow centers the interpolated fly in the drawable viewport excluding the panel. User zoom changes distance without releasing follow. Drag, keyboard/edge pan or Overview releases follow. A terminal fly remains selected at its last pose until the user changes selection.
+
+Use a fixed perspective camera, initially about 45° yaw/55° pitch. Whole-house fit is the minimum zoom, close framing the default; follow should make the body roughly 40–60 CSS pixels tall at a 1440×900 reference viewport, with further zoom reaching roughly twice that. Exact angles and easing are delegated within an angled RTS view. Walls may visually cut away to reveal the followed fly; physical collision geometry is unchanged. A yellow ground ring is the only pointer-selection ornament around the fly. No black/blue browser outline on the picked model. Retain visible keyboard focus on accessible UI controls/cards. White fading trails use recorded poses and playback time, including correct reconstruction on seek.
+
+Use Blender MCP to author `.blend` sources and export GLB fly/room/prop assets. Workbench accepts local GLB replacement immediately, validates and displays close/follow/overview views. Declare GLB +Y up, +Z forward; bind the simulator's heading convention in one renderer transform. Include an asymmetric placeholder and orientation fixture. Origin/pivot at ground contact, declared world scale, no animation root motion; clips are sampled by playback time. Missing Blender connection may temporarily use the same replaceable 3D placeholder, but final art acceptance requires a real model and recorded export/round-trip evidence. External generated services are unnecessary.
+
+Start with ≤20k triangles per fly, ≤3 materials, ≤1024 textures; profile rather than treating these as scientific constants. Instancing/LOD is delegated only after measurement and must preserve selected close-up detail. Resource disposal is required when replacing assets or attempts; it is not a separate generalized asset framework.

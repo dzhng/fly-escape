@@ -1,0 +1,121 @@
+[
+  {
+    "id": "01",
+    "slug": "graph-reference",
+    "title": "Reproducible graph and reference",
+    "deps": "none",
+    "contract": "Restore the real dataset and capture a trustworthy oracle before replacing Python."
+  },
+  {
+    "id": "02",
+    "slug": "neural-browser",
+    "title": "One real brain in the browser",
+    "deps": "01",
+    "contract": "The first useful browser checkpoint shows one graph-driven fly and measured neural values."
+  },
+  {
+    "id": "03",
+    "slug": "sensory-fields",
+    "title": "One sensory environment",
+    "deps": "02",
+    "contract": "All cues and physical wind use the same geometry-aware field owner."
+  },
+  {
+    "id": "04",
+    "slug": "lifecycle-outcomes",
+    "title": "Finite life and physical escape",
+    "deps": "03",
+    "contract": "Eating extends a finite reserve; only crossing the exit scores."
+  },
+  {
+    "id": "05",
+    "slug": "swarm-playback",
+    "title": "Twenty flies with buffered replay",
+    "deps": "04",
+    "contract": "A complete 20-fly attempt plays smoothly from bounded compact records."
+  },
+  {
+    "id": "06",
+    "slug": "camera-selection",
+    "title": "Close framing and shared selection",
+    "deps": "05",
+    "contract": "Model/card selection enters close follow; zoom preserves follow and only the yellow world ring marks pointer selection."
+  },
+  {
+    "id": "07",
+    "slug": "fly-silhouette",
+    "title": "Blender fly and replacement workbench",
+    "deps": "06",
+    "contract": "A true 3D fly remains recognizable at close zoom and can be replaced without application changes."
+  },
+  {
+    "id": "08",
+    "slug": "fly-motion",
+    "title": "Playback-driven fly animation",
+    "deps": "07",
+    "contract": "Walking, flying, landing and eating are recognizable without animation changing simulation."
+  },
+  {
+    "id": "09",
+    "slug": "fly-trails",
+    "title": "Readable white trails",
+    "deps": "08",
+    "contract": "All small flies can be followed through recent recorded paths."
+  },
+  {
+    "id": "10",
+    "slug": "house-geometry",
+    "title": "A readable 3D house",
+    "deps": "07",
+    "contract": "Room walls, doorways, dead ends and solid props are real meshes driven by authoritative geometry."
+  },
+  {
+    "id": "11",
+    "slug": "house-palette",
+    "title": "House materials and color",
+    "deps": "07,10",
+    "contract": "Cool home surfaces, readable flies and a warm orange exit establish the approved direction."
+  },
+  {
+    "id": "12",
+    "slug": "house-lighting",
+    "title": "Depth and exit lighting",
+    "deps": "11",
+    "contract": "Lighting makes the 3D room readable while the exit remains a clear focal point."
+  },
+  {
+    "id": "13",
+    "slug": "science-panel",
+    "title": "All-fly science and explanations",
+    "deps": "05,06",
+    "contract": "Every fly card shows both grouped network activity and time traces synchronized with the world."
+  },
+  {
+    "id": "14",
+    "slug": "placement-attempt",
+    "title": "Editable setup and attempt loop",
+    "deps": "05,06,10,13",
+    "contract": "Players can place a fixed inventory, run, inspect results and retry with their setup intact."
+  },
+  {
+    "id": "15",
+    "slug": "first-level",
+    "title": "Level 1 is the tutorial",
+    "deps": "03,04,09,12,14",
+    "contract": "The first complete five-room game teaches placement through an easy, winnable layout."
+  },
+  {
+    "id": "16",
+    "slug": "campaign",
+    "title": "Four more authored puzzles",
+    "deps": "15",
+    "contract": "Five sequentially unlocked levels grow in rooms and decisions; food sustains larger-map routes."
+  },
+  {
+    "id": "17",
+    "slug": "static-release",
+    "title": "Browser release and clean cutover",
+    "deps": "16",
+    "contract": "A static build contains the complete game, real graph, models and reproducible evidence."
+  }
+]

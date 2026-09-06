@@ -1,3 +1,5 @@
+> Historical spike evidence only. Browser scope and current contracts live in [the browser spec](../README.md). Claims below require reproduction; they are not release guarantees or current build instructions.
+
 # Spike Documentation Index
 
 > **Origin `src/` is the spike code home** — all working code lives at repo root.
