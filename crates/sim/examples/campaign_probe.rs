@@ -102,6 +102,11 @@ fn run(
     let mut stalled = vec![0u32; 20];
     let mut boundary_stalled = vec![0u32; 20];
     let mut samples = vec![];
+    let mut wall_motor_samples = vec![];
+    let mut wall_sample_counts = [0u32; 20];
+    let mut wall_abs_turn_sum = [0f64; 20];
+    let mut wall_abs_turn_max = [0f64; 20];
+    let mut wall_abs_heading_delta_sum = [0f64; 20];
     let mut first_tick_seconds = None;
     loop {
         let frame = attempt.step()?.ok_or("missing terminal frame")?;
@@ -121,16 +126,37 @@ fn run(
                     .geometry
                     .contains_body(b, content.level.body_config.body_radius + 1e-5)
                 {
-                    boundary_stalled[fly.id as usize] += 1;
+                    let id = fly.id as usize;
+                    boundary_stalled[id] += 1;
+                    if let Some(neural) = &fly.neural {
+                        let turn = if fly.body.mode == sim::body::BodyMode::Flying {
+                            neural.motor.flight_turn
+                        } else {
+                            neural.motor.turn
+                        };
+                        let delta = (fly.body.pose.heading - fly.input_pose.heading
+                            + std::f64::consts::PI)
+                            .rem_euclid(std::f64::consts::TAU)
+                            - std::f64::consts::PI;
+                        wall_abs_turn_sum[id] += turn.abs();
+                        wall_abs_turn_max[id] = wall_abs_turn_max[id].max(turn.abs());
+                        wall_abs_heading_delta_sum[id] += delta.abs();
+                        if wall_sample_counts[id] < 8
+                            && (boundary_stalled[id] <= 2 || frame.tick % 200 == 0)
+                        {
+                            wall_sample_counts[id] += 1;
+                            wall_motor_samples.push(json!({"tick":frame.tick,"flyId":id,"inputPose":fly.input_pose,"body":fly.body,"motor":neural.motor,"appliedTurn":turn,"headingDelta":delta}));
+                        }
+                    }
                 }
             }
         }
         if frame.tick % 50 == 0 || frame.result.is_some() {
-            samples.push(json!({"tick":frame.tick,"flies":frame.flies.iter().map(|f|json!({"id":f.id,"body":f.body})).collect::<Vec<_>>()}));
+            samples.push(json!({"tick":frame.tick,"flies":frame.flies.iter().map(|f|json!({"id":f.id,"inputPose":f.input_pose,"body":f.body,"motor":f.neural.as_ref().map(|n|&n.motor)})).collect::<Vec<_>>()}));
         }
         if let Some(result) = frame.result {
             return Ok(
-                json!({"seed":seed,"condition":label,"spec":spec,"result":result,"constructSeconds":construct_seconds,"firstTickSeconds":first_tick_seconds,"wallSeconds":start.elapsed().as_secs_f64(),"stalledTicks":stalled,"boundaryStalledTicks":boundary_stalled,"stallDefinition":"nonterminal nonfeeding displacement below 1e-8; boundary subset fails Geometry occupancy with body radius enlarged by 1e-5","samples":samples}),
+                json!({"seed":seed,"condition":label,"spec":spec,"result":result,"constructSeconds":construct_seconds,"firstTickSeconds":first_tick_seconds,"wallSeconds":start.elapsed().as_secs_f64(),"wallMotor":{"samples":wall_motor_samples,"maxSamplesPerFly":8,"absTurnSum":wall_abs_turn_sum,"absTurnMax":wall_abs_turn_max,"absHeadingDeltaSum":wall_abs_heading_delta_sum},"stalledTicks":stalled,"boundaryStalledTicks":boundary_stalled,"stallDefinition":"nonterminal nonfeeding displacement below 1e-8; boundary subset fails Geometry occupancy with body radius enlarged by 1e-5","samples":samples}),
             );
         }
     }

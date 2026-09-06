@@ -66,4 +66,4 @@ The open empirical questions are explicit: source availability/extraction group 
 
 ## Native Level 1 preparation handoff
 
-[Slice 15 exploratory calibration](assets/evidence/15/README.md) adds authorable content and a real Graph/Attempt paired-seed probe. Current unfrozen content fails the placement-effect pilot (+2 median versus required +4). No campaign promotion or 30+30 acceptance run. Continue the bounded heading experiment documented there; browser integration and performance remain separate gates.
+[Slice 15 exploratory calibration](assets/evidence/15/README.md) adds authorable content and a real Graph/Attempt paired-seed probe. Current unfrozen gain-8 content fails the placement-effect pilot (−2 median versus required +4). The heading bracket also failed; pause blind parameter search and measure sensory contrast/timing next. No campaign promotion or 30+30 acceptance run; browser integration and performance remain separate gates.
