@@ -1,0 +1,53 @@
+diff --git a/crates/sim/src/attempt.rs b/crates/sim/src/attempt.rs
+index 4530f41..32d260a 100644
+--- a/crates/sim/src/attempt.rs
++++ b/crates/sim/src/attempt.rs
+@@ -202,7 +202,7 @@ impl Attempt {
+             return Err("attempt identity mismatch: graph, build, tuning, resolved level, seed or horizon differs".into());
+         }
+         let resolved = resolve_placements(&level, &spec.placements)?;
+-        let fields = FieldSet::new(
++        let mut fields = FieldSet::new(
+             level.geometry.clone(),
+             resolved.field_config.clone(),
+             resolved.sources.clone(),
+@@ -240,16 +240,35 @@ impl Attempt {
+                 return Err("cue group has no neurons outside motor readouts".into());
+             }
+         }
++        // DIAGNOSTIC ONLY: settle odor without advancing any body or attempt tick.
++        for _ in 0..100 {
++            fields.advance(GAME_TICK_SECONDS)?;
++        }
++        let warm_world = BodyWorld::new(fields.geometry(), &resolved.food, &level.zappers,
++            level.exit, level.duration_ticks)?;
+         let flies = level.spawn_poses[..spec.fly_count as usize]
+             .iter()
+             .enumerate()
+             .map(|(id, &pose)| {
+                 let mut brain = Brain::new(graph.clone(), Brain::seed_for_fly(seed, id as u32));
+                 brain.set_silenced_neurons(&tuning.silenced_neurons)?;
+-                Ok(Fly {
+-                    brain,
+-                    body: Body::new(pose, level.initial_reserve, level.body_config.clone())?,
+-                })
++                let body = Body::new(pose, level.initial_reserve, level.body_config.clone())?;
++                // Same injection owner as an attempt tick, but fixed body and settled field.
++                let sample = fields.sample(pose.position, pose.heading, 0);
++                let mut currents = BTreeMap::<u32, f64>::new();
++                for cue in &tuning.cues {
++                    for (index, value) in cue_currents(&graph, &sample, cue.pathway, cue.gain)? {
++                        *currents.entry(index).or_default() += value;
++                    }
++                }
++                if body.contacts(&warm_world).food {
++                    for &index in &taste_indices {
++                        *currents.entry(index).or_default() += tuning.taste_gain;
++                    }
++                }
++                brain.set_external_current(&currents.into_iter().collect::<Vec<_>>())?;
++                for _ in 0..60 { brain.step(); }
++                Ok(Fly { brain, body })
+             })
+             .collect::<Result<_, String>>()?;
+         Ok(Self {

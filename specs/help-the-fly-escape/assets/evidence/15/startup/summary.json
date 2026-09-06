@@ -1,0 +1,42 @@
+{
+  "seed": 1000,
+  "fieldSettleTicks": 100,
+  "neuralWarmTicks": 60,
+  "rows": [
+    {
+      "startup": "cold",
+      "condition": "reference",
+      "escapes": 5,
+      "boundaryStalledFlyTicks": 7984,
+      "constructSeconds": 0.006667417,
+      "simulationBuildId": "12c00bdccfea05e64f312f496533d749d54e4246278523820d7ee65c4769b924"
+    },
+    {
+      "startup": "cold",
+      "condition": "empty",
+      "escapes": 6,
+      "boundaryStalledFlyTicks": 7612,
+      "constructSeconds": 0.007067,
+      "simulationBuildId": "12c00bdccfea05e64f312f496533d749d54e4246278523820d7ee65c4769b924"
+    },
+    {
+      "startup": "warm",
+      "condition": "reference",
+      "escapes": 1,
+      "boundaryStalledFlyTicks": 8618,
+      "constructSeconds": 1.625632125,
+      "simulationBuildId": "aa34ce30bc927f4a8349bec6abc112f7493069f324faa0f354707d619431b4bd"
+    },
+    {
+      "startup": "warm",
+      "condition": "empty",
+      "escapes": 2,
+      "boundaryStalledFlyTicks": 9349,
+      "constructSeconds": 1.837799291,
+      "simulationBuildId": "aa34ce30bc927f4a8349bec6abc112f7493069f324faa0f354707d619431b4bd"
+    }
+  ],
+  "coldReferenceMinusEmpty": -1,
+  "warmReferenceMinusEmpty": -1,
+  "expandToThree": false
+}

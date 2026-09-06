@@ -1,0 +1,16 @@
+diff --git a/crates/sim/examples/campaign_probe.rs b/crates/sim/examples/campaign_probe.rs
+index 3a9f6bc..7992587 100644
+--- a/crates/sim/examples/campaign_probe.rs
++++ b/crates/sim/examples/campaign_probe.rs
+@@ -191,10 +191,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
+     for &seed in seeds.iter().take(count) {
+         let mut conditions = vec![];
+         let empty = vec![];
+-        let mut arms = vec![("reference", &content.reference), ("poor", &content.poor)];
+-        if args.len() == 7 {
+-            arms.push(("empty", &empty));
+-        }
++        let arms = vec![("reference", &content.reference), ("empty", &empty)];
+         for (label, placements) in arms {
+             let row = run(&graph, &content, seed, label, placements)?;
+             eprintln!(
