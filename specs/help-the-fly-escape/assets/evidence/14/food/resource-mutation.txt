@@ -1,0 +1,23 @@
+bun test v1.3.14 (0d9b296a)
+
+packages/game-renderer/src/food.test.ts:
+(pass) food assets fit catalog-scaled floor footprints and replacement preserves placement [6.39ms]
+55 |   const meshes = first.root.children.length;
+56 |   food.replace("fruit", first.root);
+57 |   food.setPlacements([], []);
+58 |   expect(released).toBe(0);
+59 |   food.replace("fruit", (await load()).root);
+60 |   expect(released).toBe(meshes);
+                        ^
+error: expect(received).toBe(expected)
+
+Expected: 15
+Received: 0
+
+      at <anonymous> (/private/tmp/fly-food-art/packages/game-renderer/src/food.test.ts:60:20)
+(fail) shared food geometry survives edits and is released once when replaced [2.21ms]
+
+ 1 pass
+ 1 fail
+ 12 expect() calls
+Ran 2 tests across 1 file. [37.00ms]

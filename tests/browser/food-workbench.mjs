@@ -51,6 +51,7 @@ try {
     before,
     "invalid raised asset preserves accepted food",
   );
+  await page.locator("#food-status").scrollIntoViewIfNeeded();
   await page.screenshot({ path: output + "/rejected-replacement.png" });
   assert.deepEqual(errors, []);
   await writeFile(
