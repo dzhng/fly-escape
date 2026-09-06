@@ -44,6 +44,7 @@ export interface FlyPose {
 export class WorldView {
   private readonly scene = new THREE.Scene();
   private readonly trails: FlyTrails;
+  private trailSample?: { paths: readonly (readonly TrailPoint[])[]; cursorTick: number };
   private readonly navigation: WorldCamera;
   private controls?: ReturnType<typeof cameraInput>;
   private selectedFly: number | null = null;
@@ -79,7 +80,7 @@ export class WorldView {
       throw new Error("Scene requires 1..100 flies");
     while (this.flies.length < flyCount) this.flies.push(this.flies[0].clone(true));
     this.house = new HouseGeometry(geometry);
-    this.trails = new FlyTrails(flyCount);
+    this.trails = new FlyTrails(flyCount, p => this.navigation.project(new THREE.Vector3(p.x, p.y, p.z)));
     this.scene.add(this.trails.mesh);
     this.bounds = new THREE.Box3();
     for (const room of geometry.rooms) {
@@ -593,7 +594,7 @@ export class WorldView {
   }
 
   setTrails(paths: readonly (readonly TrailPoint[])[], cursorTick: number): void {
-    this.trails.sample(paths, cursorTick);
+    this.trailSample = { paths, cursorTick };
   }
 
   render(): void {
@@ -617,6 +618,8 @@ export class WorldView {
     } else {
       cutAwayWalls(this.house.walls);
     }
+    if (this.trailSample) this.trails.sample(this.trailSample.paths, this.trailSample.cursorTick,
+      this.selectionRing.geometry.parameters.outerRadius);
     this.renderer.render(this.scene, this.navigation.camera);
   }
 

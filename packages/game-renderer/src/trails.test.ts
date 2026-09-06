@@ -10,15 +10,15 @@ const snapshot = (trails: FlyTrails) => {
   };
 };
 test("trail geometry is bounded, fades by playback time and restores exact seek state", () => {
-  const trails = new FlyTrails(1);
+  const trails = new FlyTrails(1, (p) => ({ x: p.x * 100, y: p.z * 100 }));
   trails.sample([path], 40);
   const end = snapshot(trails);
   const xs = end.positions.filter((_, i) => i % 3 === 0);
   expect(Math.max(...xs) - Math.min(...xs)).toBeCloseTo(2);
   expect(trails.mesh.geometry.drawRange.count).toBeLessThanOrEqual(30 * 6);
   const alphas = end.colors.filter((_, i) => i % 4 === 3);
-  expect(Math.max(...alphas)).toBeCloseTo(0.8);
-  expect(Math.min(...alphas)).toBeLessThan(0.1);
+  expect(Math.max(...alphas)).toBeCloseTo(1);
+  expect(Math.min(...alphas)).toBeLessThan(0.5);
   trails.sample([path], 10);
   expect(Math.max(...snapshot(trails).positions.filter((_, i) => i % 3 === 0))).toBe(1);
   trails.sample([path], 40);
@@ -29,7 +29,7 @@ test("trail geometry is bounded, fades by playback time and restores exact seek 
   expect(trails.mesh.geometry.drawRange.count).toBe(0);
 });
 test("discontinuities stop paths and fresh attempts contain no old vertices", () => {
-  const trails = new FlyTrails(1);
+  const trails = new FlyTrails(1, (p) => ({ x: p.x * 100, y: p.z * 100 }));
   const broken = path.map((p) => ({ ...p, breakBefore: p.tick === 38 }));
   trails.sample([broken], 40);
   const xs = snapshot(trails).positions.filter((_, i) => i % 3 === 0);
@@ -71,4 +71,19 @@ test("recorded trails preserve mode height, detect input discontinuity and stop 
     0.1,
   )[0];
   expect(fractional.at(-1)).toEqual({ x: 0.15, y: 0.6, z: 0, tick: 1.5 });
+});
+
+test("trail width follows shared projection and the head gap excludes the fly footprint", () => {
+  let zoom = 100;
+  const trails = new FlyTrails(1, (p) => ({ x: p.x * zoom, y: p.z * zoom }));
+  const width = () => {
+    const zs = snapshot(trails).positions.filter((_, i) => i % 3 === 2);
+    return (Math.max(...zs) - Math.min(...zs)) * zoom;
+  };
+  trails.sample([path], 40, 0.18);
+  expect(Math.max(...snapshot(trails).positions.filter((_, i) => i % 3 === 0))).toBeCloseTo(3.82);
+  expect(width()).toBeCloseTo(1.5);
+  zoom = 1000;
+  trails.sample([path], 40, 0.18);
+  expect(width()).toBeCloseTo(1.5);
 });

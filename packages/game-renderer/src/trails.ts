@@ -37,14 +37,20 @@ export function recordedTrails(
 
 const SEGMENTS = 30;
 const LENGTH = 2;
-const WIDTH = 0.025;
+const PIXEL_WIDTH = 1.5;
 
 /** A bounded mesh, rebuilt from recorded points rather than accumulated frame deltas. */
 export class FlyTrails {
   readonly mesh: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial>;
   private readonly positions: THREE.BufferAttribute;
   private readonly colors: THREE.BufferAttribute;
-  constructor(private readonly flyCount: number) {
+  constructor(
+    private readonly flyCount: number,
+    private readonly project: (point: { x: number; y: number; z: number }) => {
+      x: number;
+      y: number;
+    },
+  ) {
     const geometry = new THREE.BufferGeometry();
     this.positions = new THREE.BufferAttribute(
       new Float32Array(flyCount * SEGMENTS * 6 * 3),
@@ -70,13 +76,13 @@ export class FlyTrails {
     this.mesh.frustumCulled = false;
   }
 
-  sample(paths: readonly (readonly TrailPoint[])[], cursorTick: number): void {
+  sample(paths: readonly (readonly TrailPoint[])[], cursorTick: number, gap = 0): void {
     if (paths.length !== this.flyCount) throw new Error("Trail population does not match scene");
     let vertex = 0;
     for (const path of paths) {
       let length = 0,
         segments = 0;
-      for (let i = path.length - 1; i > 0 && segments < SEGMENTS && length < LENGTH; i--) {
+      for (let i = path.length - 1; i > 0 && segments < SEGMENTS && length < LENGTH + gap; i--) {
         const b = path[i],
           a = path[i - 1];
         if (b.tick > cursorTick || a.tick > cursorTick) continue;
@@ -85,32 +91,47 @@ export class FlyTrails {
           dz = b.z - a.z;
         const distance = Math.hypot(dx, dz);
         if (distance < 1e-7) continue;
-        const fraction = Math.min(
+        const near = Math.max(0, (gap - length) / distance);
+        const far = Math.min(
           1,
-          (LENGTH - length) / distance,
+          (LENGTH + gap - length) / distance,
           (b.tick - Math.max(a.tick, cursorTick - SEGMENTS)) / (b.tick - a.tick),
         );
-        if (!(fraction > 0)) continue;
-        const start = {
+        length += distance;
+        if (!(far > near)) continue;
+        const at = (fraction: number): TrailPoint => ({
           x: b.x - dx * fraction,
           z: b.z - dz * fraction,
           y: b.y + (a.y - b.y) * fraction,
           tick: b.tick + (a.tick - b.tick) * fraction,
-        };
-        const nx = ((-dz / distance) * WIDTH) / 2,
-          nz = ((dx / distance) * WIDTH) / 2;
+        });
+        const start = at(far),
+          end = at(near);
+        const perpendicular = { x: -dz / distance, z: dx / distance };
+        const screen = this.project(end);
+        const probe = this.project({
+          x: end.x + perpendicular.x * 0.01,
+          y: end.y,
+          z: end.z + perpendicular.z * 0.01,
+        });
+        const pixels = Math.hypot(probe.x - screen.x, probe.y - screen.y);
+        const width = Math.min(
+          0.08,
+          Math.max(0.001, (PIXEL_WIDTH * 0.01) / Math.max(pixels, 1e-6)),
+        );
+        const nx = (perpendicular.x * width) / 2,
+          nz = (perpendicular.z * width) / 2;
         const add = (p: TrailPoint, side: number) => {
           this.positions.setXYZ(vertex, p.x + nx * side, p.y + 0.012, p.z + nz * side);
           const age = Math.max(0, (cursorTick - p.tick) / SEGMENTS);
-          this.colors.setXYZW(vertex++, 1, 1, 1, 0.8 * (1 - Math.min(1, age)) ** 2);
+          this.colors.setXYZW(vertex++, 1, 1, 1, 1 - Math.min(1, age));
         };
         add(start, -1);
         add(start, 1);
-        add(b, -1);
-        add(b, -1);
+        add(end, -1);
+        add(end, -1);
         add(start, 1);
-        add(b, 1);
-        length += distance * fraction;
+        add(end, 1);
         segments++;
       }
     }
