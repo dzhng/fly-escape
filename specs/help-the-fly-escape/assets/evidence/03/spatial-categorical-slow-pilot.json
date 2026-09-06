@@ -1,0 +1,3833 @@
+{
+  "bodyTranslationScale": 0.1,
+  "bodyTurnGain": 8.0,
+  "conditions": "Production field_lab::fixture and Brain; temporary categorical lateral odor cue_currents adapter and Chamber positive turn gain8 and distance coefficient .012. Brains warm60 unstimulated ticks at stationary initial pose(-2,0), heading0; then300 moving chamber ticks. Fields settle100 ticks before observation. Sources at(-2,-1) and(-2,+1). All source scenes use background brightness .2. No-current controls clear external current each step. Only odor scenarios are run; uniform controls equal no-current controls. Baseline fields omit source: wind0 and source fields cannot affect the body except through disabled neural injection. Bilateral ablation begins after warmup, includes original groups even where stimulus excludes readouts. All comparisons paired by seed.",
+  "elapsedSeconds": 59.808387708,
+  "experimentalMapping": "Odor only categorical lateral detection: when max(L,R)>=0.05 and abs(L-R)>0.05*(L+R), inject fixed1 into greater-side pathway and0 into other side; otherwise both0. Only local sensory magnitudes are consulted. Production side identity/readout exclusion are unchanged; body decoder uses positive turn gain8 and distance coefficient .012 instead of .12.",
+  "experimentalSourceSnapshots": {
+    "chamber.rs": "//! A small neural observation fixture. It has no escape target or scored outcomes.\nuse crate::environment::*;\nuse crate::sensory::{cue_currents, CuePathway};\nuse crate::{Brain, Graph, Group, GroupLink, StepOutput, PRNG_ID};\nuse serde::Serialize;\nuse std::sync::Arc;\nuse ts_rs::TS;\n\npub fn chamber_geometry() -> Geometry {\n    let p = |x, z| Point { x, z };\n    Geometry {\n        rooms: vec![RectRoom {\n            id: 0,\n            min: p(-6., -6.),\n            max: p(6., 6.),\n        }],\n        walls: vec![\n            Wall {\n                a: p(-6., -6.),\n                b: p(6., -6.),\n            },\n            Wall {\n                a: p(6., -6.),\n                b: p(6., 6.),\n            },\n            Wall {\n                a: p(6., 6.),\n                b: p(-6., 6.),\n            },\n            Wall {\n                a: p(-6., 6.),\n                b: p(-6., -6.),\n            },\n        ],\n    }\n}\n\n#[derive(Clone, Serialize, TS)]\n#[serde(rename_all = \"camelCase\")]\npub struct Pose {\n    pub x: f64,\n    pub y: f64,\n    pub z: f64,\n    pub heading: f64,\n}\n\n#[derive(Serialize, TS)]\n#[serde(rename_all = \"camelCase\")]\npub struct BrainFrame {\n    pub tick: u32,\n    pub pose: Pose,\n    pub neural: StepOutput,\n    pub sensory: SensorySample,\n}\n\n#[derive(Serialize, TS)]\n#[serde(rename_all = \"camelCase\")]\npub struct BrainInfo {\n    pub neuron_count: u32,\n    pub edge_count: u32,\n    pub graph_hash: String,\n    pub graph_bytes: u32,\n    pub geometry: Geometry,\n    pub initial_pose: Pose,\n    pub groups: Vec<Group>,\n    pub group_links: Vec<GroupLink>,\n    pub prng_id: String,\n}\n\npub struct Chamber {\n    graph: Arc<Graph>,\n    pub brain: Brain,\n    tick: u32,\n    pose: Pose,\n    pub fields: FieldSet,\n    cue: Option<(CuePathway, f64)>,\n}\n\nimpl Chamber {\n    pub fn new(graph: Arc<Graph>, seed: u64) -> Result<Self, String> {\n        let fields = FieldSet::new(chamber_geometry(), FieldConfig::default(), vec![], None)?;\n        Ok(Self::with_fields(graph, seed, fields, None))\n    }\n\n    pub fn with_fields(\n        graph: Arc<Graph>,\n        seed: u64,\n        fields: FieldSet,\n        cue: Option<(CuePathway, f64)>,\n    ) -> Self {\n        Self {\n            fields,\n            cue,\n            brain: Brain::new(graph.clone(), seed),\n            graph,\n            tick: 0,\n            pose: Pose {\n                x: -2.0,\n                y: 0.2,\n                z: 0.0,\n                heading: 0.0,\n            },\n        }\n    }\n\n    pub fn info(&self) -> BrainInfo {\n        BrainInfo {\n            neuron_count: self.graph.neuron_count() as u32,\n            edge_count: self.graph.edge_count() as u32,\n            graph_hash: self.graph.manifest.graph_hash.clone(),\n            graph_bytes: self.graph.storage_bytes() as u32,\n            geometry: self.fields.geometry().clone(),\n            initial_pose: self.pose.clone(),\n            groups: self.graph.manifest.groups.clone(),\n            group_links: self.graph.manifest.group_links.clone(),\n            prng_id: PRNG_ID.into(),\n        }\n    }\n\n    pub fn step(&mut self) -> Result<BrainFrame, String> {\n        self.fields.advance(0.1)?;\n        let sensory = self.fields.sample(\n            Point {\n                x: self.pose.x,\n                z: self.pose.z,\n            },\n            self.pose.heading,\n            self.tick,\n        );\n        if let Some((pathway, gain)) = self.cue {\n            self.brain.set_external_current(&cue_currents(\n                &self.graph,\n                &sensory,\n                pathway,\n                gain,\n            )?)?;\n        }\n        let neural = self.brain.step();\n        self.tick += 1;\n        self.pose.heading =\n            (self.pose.heading + neural.motor.turn * 0.1 * 8.0).rem_euclid(std::f64::consts::TAU);\n        let distance = neural.motor.thrust * 0.012;\n        let from = Point {\n            x: self.pose.x,\n            z: self.pose.z,\n        };\n        let next = self.fields.geometry().sweep(\n            from,\n            Point {\n                x: from.x + self.pose.heading.cos() * distance + sensory.wind.x * 0.1,\n                z: from.z + self.pose.heading.sin() * distance + sensory.wind.z * 0.1,\n            },\n            0.5,\n        );\n        self.pose.x = next.x;\n        self.pose.z = next.z;\n        Ok(BrainFrame {\n            tick: self.tick,\n            pose: self.pose.clone(),\n            neural,\n            sensory,\n        })\n    }\n}\n",
+    "field_probe.rs": "//! Finite moving-chamber interventions using the same field, adapter, and body owners as the lab.\nuse serde::Serialize;\nuse serde_json::{json, Value};\nuse sha2::{Digest, Sha256};\nuse sim::{\n    chamber::Chamber,\n    environment::*,\n    field_lab::{fixture, FieldScenario},\n    sensory::CuePathway,\n    Brain, Graph,\n};\nuse std::{sync::Arc, time::Instant};\n\nconst SEEDS: std::ops::Range<u64> = 0..10;\nconst WARMUP: usize = 60;\nconst MEASURE: usize = 300;\n#[derive(Clone, Serialize)]\n#[serde(rename_all = \"camelCase\")]\nstruct Observation {\n    turn: f64,\n    flight_turn: f64,\n    heading_change: f64,\n    final_x: f64,\n    final_z: f64,\n    mean_odor_difference: f64,\n    mean_brightness_difference: f64,\n    active_current_ticks: usize,\n    last_active_tick: Option<usize>,\n}\nimpl Observation {\n    fn metrics(&self, mirror: f64) -> [f64; 5] {\n        let dx = -2.0 - self.final_x;\n        let dz = -mirror - self.final_z;\n        let distance = dx.hypot(dz);\n        [\n            self.turn,\n            self.flight_turn,\n            -mirror * self.heading_change,\n            1.0 - distance,\n            if distance == 0.0 {\n                1.0\n            } else {\n                (dx * self.heading_change.cos() + dz * self.heading_change.sin()) / distance\n            },\n        ]\n    }\n}\nfn run(\n    graph: &Arc<Graph>,\n    seed: u64,\n    fields: FieldSet,\n    cue: CuePathway,\n    silence: &[u32],\n) -> Result<Observation, String> {\n    let mut chamber = Chamber::with_fields(\n        graph.clone(),\n        Brain::seed_for_fly(seed, 0),\n        fields,\n        Some((cue, 1.0)),\n    );\n    // Warm the brain alone, keeping every body at the identical source-relative pose.\n    for _ in 0..WARMUP {\n        chamber.brain.step();\n    }\n    chamber.brain.set_silenced_neurons(silence)?;\n    let mut out = Observation {\n        turn: 0.,\n        flight_turn: 0.,\n        heading_change: 0.,\n        final_x: -2.,\n        final_z: 0.,\n        mean_odor_difference: 0.,\n        mean_brightness_difference: 0.,\n        active_current_ticks: 0,\n        last_active_tick: None,\n    };\n    for tick in 0..MEASURE {\n        let frame = chamber.step()?;\n        if chamber.brain.external_current().iter().any(|&v| v != 0.0) {\n            out.active_current_ticks += 1;\n            out.last_active_tick = Some(tick);\n        }\n        out.turn += frame.neural.motor.turn / MEASURE as f64;\n        out.flight_turn += frame.neural.motor.flight_turn / MEASURE as f64;\n        out.heading_change += frame.neural.motor.turn * 0.1 * 8.0;\n        out.final_x = frame.pose.x;\n        out.final_z = frame.pose.z;\n        out.mean_odor_difference +=\n            (frame.sensory.left.odor - frame.sensory.right.odor) / MEASURE as f64;\n        out.mean_brightness_difference +=\n            (frame.sensory.left.brightness - frame.sensory.right.brightness) / MEASURE as f64;\n    }\n    Ok(out)\n}\nfn uniform_fields() -> Result<FieldSet, String> {\n    let (fields, _) = fixture(FieldScenario::Lamp, 1.0)?;\n    FieldSet::new(\n        fields.geometry().clone(),\n        FieldConfig {\n            baseline_brightness: 0.2,\n            ..FieldConfig::default()\n        },\n        vec![],\n        None,\n    )\n}\nfn stats(samples: &[[f64; 5]]) -> Value {\n    [\"turn\",\"flightTurn\",\"headingTowardSource\",\"distanceReduction\",\"finalAlignmentTowardSource\"].into_iter().enumerate().map(|(axis,name)| {\n        let n=samples.len() as f64;\n        let mean=samples.iter().map(|s|s[axis]).sum::<f64>()/n;\n        let sd=(samples.iter().map(|s|(s[axis]-mean).powi(2)).sum::<f64>()/(n-1.0)).sqrt();\n        let half=2.262157163*sd/n.sqrt();\n        (name.to_string(),json!({\"mean\":mean,\"ci95\":[mean-half,mean+half],\"positiveSeeds\":samples.iter().filter(|s|s[axis]>0.0).count(),\"negativeSeeds\":samples.iter().filter(|s|s[axis]<0.0).count()}))\n    }).collect()\n}\nfn contrast(a: &[Observation], b: &[Observation], mirror: f64) -> Value {\n    stats(\n        &a.iter()\n            .zip(b)\n            .map(|(a, b)| {\n                let a = a.metrics(mirror);\n                let b = b.metrics(mirror);\n                std::array::from_fn(|i| a[i] - b[i])\n            })\n            .collect::<Vec<_>>(),\n    )\n}\nfn main() -> Result<(), Box<dyn std::error::Error>> {\n    let args: Vec<_> = std::env::args().collect();\n    let path = args\n        .get(1)\n        .ok_or(\"Pass graph directory and output JSON path\")?;\n    let output = args.get(2).ok_or(\"Pass output JSON path\")?;\n    let bytes = std::fs::read(format!(\"{path}/graph.bin\"))?;\n    let manifest = std::fs::read_to_string(format!(\"{path}/manifest.json\"))?;\n    let graph = Arc::new(Graph::from_bytes(&bytes, &manifest)?);\n    let start = Instant::now();\n    let baseline = SEEDS\n        .map(|seed| run(&graph, seed, uniform_fields()?, CuePathway::None, &[]))\n        .collect::<Result<Vec<_>, String>>()?;\n    let uniform_vision = baseline.clone();\n    let mut results = vec![];\n    for (scenario, groups) in [\n        (FieldScenario::ExcitatoryOdor, [\"smellL\", \"smellR\"]),\n        (FieldScenario::InhibitoryOdor, [\"repelL\", \"repelR\"]),\n    ] {\n        let silence: Vec<_> = groups\n            .iter()\n            .flat_map(|id| {\n                graph\n                    .manifest\n                    .groups\n                    .iter()\n                    .find(|g| g.id == *id)\n                    .unwrap()\n                    .indices\n                    .iter()\n                    .copied()\n            })\n            .collect();\n        let ablated_baseline = SEEDS\n            .map(|seed| run(&graph, seed, uniform_fields()?, CuePathway::None, &silence))\n            .collect::<Result<Vec<_>, String>>()?;\n        let is_vision = matches!(scenario, FieldScenario::Lamp | FieldScenario::Shade);\n        let uniform_control = if is_vision {\n            &uniform_vision\n        } else {\n            &baseline\n        };\n        let ablated_uniform = if is_vision {\n            SEEDS\n                .map(|seed| {\n                    run(\n                        &graph,\n                        seed,\n                        uniform_fields()?,\n                        CuePathway::Vision,\n                        &silence,\n                    )\n                })\n                .collect::<Result<Vec<_>, String>>()?\n        } else {\n            ablated_baseline.clone()\n        };\n        let mut sides = vec![];\n        let mut side_samples = vec![];\n        for mirror in [1.0, -1.0] {\n            let stimulus = SEEDS\n                .map(|seed| {\n                    let (f, c) = fixture(scenario, mirror)?;\n                    run(&graph, seed, f, c, &[])\n                })\n                .collect::<Result<Vec<_>, String>>()?;\n            let ablated = SEEDS\n                .map(|seed| {\n                    let (f, c) = fixture(scenario, mirror)?;\n                    run(&graph, seed, f, c, &silence)\n                })\n                .collect::<Result<Vec<_>, String>>()?;\n            sides.push(json!({\"sourceZ\":-mirror,\"stimulusMinusNoCurrent\":contrast(&stimulus,&baseline,mirror),\"stimulusMinusUniformControl\":contrast(&stimulus,uniform_control,mirror),\"ablatedStimulusMinusAblatedNoCurrent\":contrast(&ablated,&ablated_baseline,mirror),\"ablatedStimulusMinusAblatedUniformControl\":contrast(&ablated,&ablated_uniform,mirror),\"absoluteStimulus\":stats(&stimulus.iter().map(|s|s.metrics(mirror)).collect::<Vec<_>>()),\"seedObservations\":{\"stimulus\":stimulus,\"noCurrent\":baseline,\"uniformControl\":uniform_control,\"ablatedStimulus\":ablated,\"ablatedNoCurrent\":ablated_baseline,\"ablatedUniformControl\":ablated_uniform}}));\n            side_samples.push(stimulus);\n        }\n        // Mirrored motor contrast retains raw motor signs; spatial metrics use each source side.\n        let mirrored = stats(\n            &side_samples[0]\n                .iter()\n                .zip(&side_samples[1])\n                .map(|(l, r)| {\n                    let l = l.metrics(1.0);\n                    let r = r.metrics(-1.0);\n                    std::array::from_fn(|i| l[i] - r[i])\n                })\n                .collect::<Vec<_>>(),\n        );\n        eprintln!(\n            \"{scenario:?} after {:.1}s: {}\",\n            start.elapsed().as_secs_f64(),\n            mirrored\n        );\n        results.push(json!({\"scenario\":scenario,\"silencedIndices\":silence,\"leftMinusRight\":mirrored,\"sides\":sides}));\n    }\n    let source_hashes: Value = [\n        (\"field_probe.rs\", include_str!(\"field_probe.rs\")),\n        (\"lif.rs\", include_str!(\"../src/lif.rs\")),\n        (\"graph.rs\", include_str!(\"../src/graph.rs\")),\n        (\"chamber.rs\", include_str!(\"../src/chamber.rs\")),\n        (\"sensory.rs\", include_str!(\"../src/sensory.rs\")),\n        (\"field_lab.rs\", include_str!(\"../src/field_lab.rs\")),\n        (\n            \"environment/mod.rs\",\n            include_str!(\"../src/environment/mod.rs\"),\n        ),\n        (\n            \"environment/fields.rs\",\n            include_str!(\"../src/environment/fields.rs\"),\n        ),\n    ]\n    .into_iter()\n    .map(|(k, v)| {\n        (\n            k.to_string(),\n            json!(format!(\"{:x}\", Sha256::digest(v.as_bytes()))),\n        )\n    })\n    .collect();\n    let evidence = json!({\"graphHash\":graph.manifest.graph_hash,\"sourceHashes\":source_hashes,\"rootSeeds\":SEEDS.collect::<Vec<_>>(),\"flyId\":0,\"warmupTicks\":WARMUP,\"measurementTicks\":MEASURE,\"gain\":1.0,\"bodyTurnGain\":8.0,\"bodyTranslationScale\":0.1,\"pilot\":true,\"experimentalMapping\":\"Odor only categorical lateral detection: when max(L,R)>=0.05 and abs(L-R)>0.05*(L+R), inject fixed1 into greater-side pathway and0 into other side; otherwise both0. Only local sensory magnitudes are consulted. Production side identity/readout exclusion are unchanged; body decoder uses positive turn gain8 and distance coefficient .012 instead of .12.\",\"experimentalSourceSnapshots\":{\"field_probe.rs\":include_str!(\"field_probe.rs\"),\"sensory.rs\":include_str!(\"../src/sensory.rs\"),\"chamber.rs\":include_str!(\"../src/chamber.rs\")},\"elapsedSeconds\":start.elapsed().as_secs_f64(),\"conditions\":\"Production field_lab::fixture and Brain; temporary categorical lateral odor cue_currents adapter and Chamber positive turn gain8 and distance coefficient .012. Brains warm60 unstimulated ticks at stationary initial pose(-2,0), heading0; then300 moving chamber ticks. Fields settle100 ticks before observation. Sources at(-2,-1) and(-2,+1). All source scenes use background brightness .2. No-current controls clear external current each step. Only odor scenarios are run; uniform controls equal no-current controls. Baseline fields omit source: wind0 and source fields cannot affect the body except through disabled neural injection. Bilateral ablation begins after warmup, includes original groups even where stimulus excludes readouts. All comparisons paired by seed.\",\"metrics\":\"turn/flightTurn are mean motor outputs. headingTowardSource is source-side signed net heading change; positive means yaw toward the initial source side. distanceReduction is initial distance1 minus final source distance. finalAlignmentTowardSource is final heading dot normalized vector to source, positive means facing toward it. Difference metrics subtract the matched control. leftMinusRight uses sourceZ=-1 minus sourceZ=+1; its spatial metrics are each oriented toward their own source.\",\"uncertainty\":\"Student t(9)95% intervals across paired seed means, descriptive without multiplicity correction. Free movement changes subsequent sensory histories; this is a finite closed-loop fixture, not proof of biological preference or asymptotic target seeking.\",\"results\":results});\n    std::fs::write(output, serde_json::to_string_pretty(&evidence)?)?;\n    Ok(())\n}\n",
+    "sensory.rs": "//! Modeled sensory-to-current adapter; no motor or target-direction commands.\nuse crate::{environment::SensorySample, Graph};\nuse serde::{Deserialize, Serialize};\nuse std::collections::{BTreeMap, HashSet};\nuse ts_rs::TS;\n\n#[derive(Clone, Copy, Debug, Serialize, Deserialize, TS)]\n#[serde(rename_all = \"camelCase\")]\npub enum CuePathway {\n    ExcitatoryOdor,\n    InhibitoryOdor,\n    Vision,\n    None,\n}\n\n/// The field magnitude is bounded before injection. Side identity is retained;\n/// whether a pathway attracts or repels is an empirical result, not a sign flip.\npub fn cue_currents(\n    graph: &Graph,\n    sample: &SensorySample,\n    pathway: CuePathway,\n    gain: f64,\n) -> Result<Vec<(u32, f64)>, String> {\n    if !gain.is_finite() || !(0.0..=3.0).contains(&gain) {\n        return Err(\"cue gain must be between zero and three\".into());\n    }\n    let (ids, values) = match pathway {\n        CuePathway::ExcitatoryOdor => (\n            [\"smellL\", \"smellR\"],\n            [\n                sample.left.odor + sample.left.exit_cue,\n                sample.right.odor + sample.right.exit_cue,\n            ],\n        ),\n        CuePathway::InhibitoryOdor => (\n            [\"repelL\", \"repelR\"],\n            [\n                sample.left.odor + sample.left.exit_cue,\n                sample.right.odor + sample.right.exit_cue,\n            ],\n        ),\n        CuePathway::Vision => (\n            [\"visionL\", \"visionR\"],\n            [sample.left.brightness, sample.right.brightness],\n        ),\n        CuePathway::None => return Ok(vec![]),\n    };\n    // Experimental categorical lateral detection from local sensory samples only.\n    let values = if matches!(\n        pathway,\n        CuePathway::ExcitatoryOdor | CuePathway::InhibitoryOdor\n    ) {\n        if values[0].max(values[1]) >= 0.05\n            && (values[0] - values[1]).abs() > 0.05 * (values[0] + values[1])\n        {\n            if values[0] > values[1] {\n                [1.0, 0.0]\n            } else {\n                [0.0, 1.0]\n            }\n        } else {\n            [0.0, 0.0]\n        }\n    } else {\n        values\n    };\n    // Keep sensory stimuli out of every motor readout. The confirmatory probe\n    // establishes the downstream response without directly driving a measured DN.\n    let m = &graph.manifest.motor;\n    let readouts: HashSet<u32> = m\n        .dn_left\n        .iter()\n        .chain(&m.dn_right)\n        .chain(&m.mn_left)\n        .chain(&m.mn_right)\n        .copied()\n        .chain(\n            [\n                \"OLFACTORY_DN_LEFT\",\n                \"OLFACTORY_DN_RIGHT\",\n                \"FLIGHT_DN_LEFT\",\n                \"FLIGHT_DN_RIGHT\",\n            ]\n            .into_iter()\n            .flat_map(|id| graph.pathway(id).iter().copied()),\n        )\n        .collect();\n    let mut currents = BTreeMap::new();\n    for (id, value) in ids.into_iter().zip(values) {\n        let group = graph\n            .manifest\n            .groups\n            .iter()\n            .find(|g| g.id == id && !g.indices.is_empty())\n            .ok_or_else(|| format!(\"missing sensory group {id}\"))?;\n        for &index in group.indices.iter().filter(|i| !readouts.contains(i)) {\n            *currents.entry(index).or_insert(0.0) += gain * value.clamp(0.0, 1.0);\n        }\n    }\n    Ok(currents.into_iter().collect())\n}\n"
+  },
+  "flyId": 0,
+  "gain": 1.0,
+  "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+  "measurementTicks": 300,
+  "metrics": "turn/flightTurn are mean motor outputs. headingTowardSource is source-side signed unwrapped net heading change; positive means yaw toward the initial source side. distanceReduction is initial distance1 minus final source distance. finalAlignmentTowardSource is final heading dot normalized vector to source, positive means facing toward it. Difference metrics subtract the matched control. leftMinusRight uses sourceZ=-1 minus sourceZ=+1; its spatial metrics are each oriented toward their own source.",
+  "pilot": true,
+  "results": [
+    {
+      "leftMinusRight": {
+        "distanceReduction": {
+          "ci95": [
+            -0.41347627189332786,
+            0.31811215062630155
+          ],
+          "mean": -0.04768206063351317,
+          "negativeSeeds": 4,
+          "positiveSeeds": 6
+        },
+        "finalAlignmentTowardSource": {
+          "ci95": [
+            0.005869539731882423,
+            0.5320960313989045
+          ],
+          "mean": 0.26898278556539346,
+          "negativeSeeds": 2,
+          "positiveSeeds": 8
+        },
+        "flightTurn": {
+          "ci95": [
+            0.01091259604753534,
+            0.018708657537859483
+          ],
+          "mean": 0.014810626792697412,
+          "negativeSeeds": 0,
+          "positiveSeeds": 10
+        },
+        "headingTowardSource": {
+          "ci95": [
+            -1.5102589730496203,
+            -0.14748691925313606
+          ],
+          "mean": -0.8288729461513782,
+          "negativeSeeds": 8,
+          "positiveSeeds": 2
+        },
+        "turn": {
+          "ci95": [
+            0.011766563179142642,
+            0.016402374811747167
+          ],
+          "mean": 0.014084468995444905,
+          "negativeSeeds": 0,
+          "positiveSeeds": 10
+        }
+      },
+      "scenario": "excitatoryOdor",
+      "sides": [
+        {
+          "ablatedStimulusMinusAblatedNoCurrent": {
+            "distanceReduction": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "flightTurn": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "headingTowardSource": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "turn": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            }
+          },
+          "ablatedStimulusMinusAblatedUniformControl": {
+            "distanceReduction": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "flightTurn": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "headingTowardSource": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "turn": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            }
+          },
+          "absoluteStimulus": {
+            "distanceReduction": {
+              "ci95": [
+                -2.0663232311961206,
+                -1.6237873205473075
+              ],
+              "mean": -1.845055275871714,
+              "negativeSeeds": 10,
+              "positiveSeeds": 0
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                -0.9033155925163822,
+                -0.30163243324169675
+              ],
+              "mean": -0.6024740128790395,
+              "negativeSeeds": 9,
+              "positiveSeeds": 1
+            },
+            "flightTurn": {
+              "ci95": [
+                0.0034128430848947853,
+                0.01204369848558912
+              ],
+              "mean": 0.007728270785241953,
+              "negativeSeeds": 1,
+              "positiveSeeds": 9
+            },
+            "headingTowardSource": {
+              "ci95": [
+                -2.469917262577739,
+                -1.7392282424804169
+              ],
+              "mean": -2.104572752529078,
+              "negativeSeeds": 10,
+              "positiveSeeds": 0
+            },
+            "turn": {
+              "ci95": [
+                0.007246784343668402,
+                0.010291321927407247
+              ],
+              "mean": 0.008769053135537825,
+              "negativeSeeds": 0,
+              "positiveSeeds": 10
+            }
+          },
+          "seedObservations": {
+            "ablatedNoCurrent": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.8179823803143533,
+                "finalZ": -0.3885629896527452,
+                "flightTurn": -0.040115022300608774,
+                "headingChange": -8.95781497547175,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.03732422906446562
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.5558897976121482,
+                "finalZ": -0.03144595825255045,
+                "flightTurn": -0.035399969010373074,
+                "headingChange": -7.963209140053916,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.033180038083557975
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -3.253402937148087,
+                "finalZ": -0.6626631764152046,
+                "flightTurn": -0.02355515786607453,
+                "headingChange": -4.62625229174364,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.019276051215598507
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.3603280213093012,
+                "finalZ": -0.3249232468761363,
+                "flightTurn": -0.0227390377467351,
+                "headingChange": -5.890234388797753,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.024542643286657274
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.5502494393850594,
+                "finalZ": -0.6453646593584867,
+                "flightTurn": -0.02356608749475273,
+                "headingChange": -8.241436591858612,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.03433931913274417
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.0623800724888857,
+                "finalZ": -0.26890962532418966,
+                "flightTurn": -0.034774190916585006,
+                "headingChange": -6.669153978663536,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.02778814157776474
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.883835727967806,
+                "finalZ": 0.022387783375592413,
+                "flightTurn": -0.03348128095184055,
+                "headingChange": -7.602304309028769,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.03167626795428654
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.38605648341674,
+                "finalZ": -0.24273182686311076,
+                "flightTurn": -0.04905404277220656,
+                "headingChange": -11.510700135678098,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.04796125056532541
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.8234390240072198,
+                "finalZ": -0.2496246365539513,
+                "flightTurn": -0.030410667477203033,
+                "headingChange": -6.189562326088984,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.02578984302537075
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.4164770515900487,
+                "finalZ": -0.11186148371459104,
+                "flightTurn": -0.024579729447964115,
+                "headingChange": -6.686773068957747,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.02786155445399062
+              }
+            ],
+            "ablatedStimulus": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.8179823803143533,
+                "finalZ": -0.3885629896527452,
+                "flightTurn": -0.040115022300608774,
+                "headingChange": -8.95781497547175,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.0098466033875346,
+                "turn": -0.03732422906446562
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.5558897976121482,
+                "finalZ": -0.03144595825255045,
+                "flightTurn": -0.035399969010373074,
+                "headingChange": -7.963209140053916,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.02029581454664175,
+                "turn": -0.033180038083557975
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -3.253402937148087,
+                "finalZ": -0.6626631764152046,
+                "flightTurn": -0.02355515786607453,
+                "headingChange": -4.62625229174364,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.003316663858524864,
+                "turn": -0.019276051215598507
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.3603280213093012,
+                "finalZ": -0.3249232468761363,
+                "flightTurn": -0.0227390377467351,
+                "headingChange": -5.890234388797753,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.08307178447746591,
+                "turn": -0.024542643286657274
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.5502494393850594,
+                "finalZ": -0.6453646593584867,
+                "flightTurn": -0.02356608749475273,
+                "headingChange": -8.241436591858612,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.07108366491274336,
+                "turn": -0.03433931913274417
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.0623800724888857,
+                "finalZ": -0.26890962532418966,
+                "flightTurn": -0.034774190916585006,
+                "headingChange": -6.669153978663536,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.03829074720274756,
+                "turn": -0.02778814157776474
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.883835727967806,
+                "finalZ": 0.022387783375592413,
+                "flightTurn": -0.03348128095184055,
+                "headingChange": -7.602304309028769,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.01651907305001674,
+                "turn": -0.03167626795428654
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.38605648341674,
+                "finalZ": -0.24273182686311076,
+                "flightTurn": -0.04905404277220656,
+                "headingChange": -11.510700135678098,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.03106755907796201,
+                "turn": -0.04796125056532541
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.8234390240072198,
+                "finalZ": -0.2496246365539513,
+                "flightTurn": -0.030410667477203033,
+                "headingChange": -6.189562326088984,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.12796485788273615,
+                "turn": -0.02578984302537075
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.4164770515900487,
+                "finalZ": -0.11186148371459104,
+                "flightTurn": -0.024579729447964115,
+                "headingChange": -6.686773068957747,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0481143729267903,
+                "turn": -0.02786155445399062
+              }
+            ],
+            "ablatedUniformControl": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.8179823803143533,
+                "finalZ": -0.3885629896527452,
+                "flightTurn": -0.040115022300608774,
+                "headingChange": -8.95781497547175,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.03732422906446562
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.5558897976121482,
+                "finalZ": -0.03144595825255045,
+                "flightTurn": -0.035399969010373074,
+                "headingChange": -7.963209140053916,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.033180038083557975
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -3.253402937148087,
+                "finalZ": -0.6626631764152046,
+                "flightTurn": -0.02355515786607453,
+                "headingChange": -4.62625229174364,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.019276051215598507
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.3603280213093012,
+                "finalZ": -0.3249232468761363,
+                "flightTurn": -0.0227390377467351,
+                "headingChange": -5.890234388797753,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.024542643286657274
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.5502494393850594,
+                "finalZ": -0.6453646593584867,
+                "flightTurn": -0.02356608749475273,
+                "headingChange": -8.241436591858612,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.03433931913274417
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.0623800724888857,
+                "finalZ": -0.26890962532418966,
+                "flightTurn": -0.034774190916585006,
+                "headingChange": -6.669153978663536,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.02778814157776474
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.883835727967806,
+                "finalZ": 0.022387783375592413,
+                "flightTurn": -0.03348128095184055,
+                "headingChange": -7.602304309028769,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.03167626795428654
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.38605648341674,
+                "finalZ": -0.24273182686311076,
+                "flightTurn": -0.04905404277220656,
+                "headingChange": -11.510700135678098,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.04796125056532541
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.8234390240072198,
+                "finalZ": -0.2496246365539513,
+                "flightTurn": -0.030410667477203033,
+                "headingChange": -6.189562326088984,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.02578984302537075
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.4164770515900487,
+                "finalZ": -0.11186148371459104,
+                "flightTurn": -0.024579729447964115,
+                "headingChange": -6.686773068957747,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.02786155445399062
+              }
+            ],
+            "noCurrent": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.6499994807216264,
+                "finalZ": -1.707358744764931,
+                "flightTurn": -0.0033083036606471232,
+                "headingChange": -1.3642819737248808,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.005684508223853667
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.4174096437264668,
+                "finalZ": -0.24999999942343723,
+                "flightTurn": -0.014384837840808056,
+                "headingChange": -1.9247107451835472,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.008019628104931436
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.1482541703727736,
+                "finalZ": 1.347073747412028,
+                "flightTurn": 0.008624077073270434,
+                "headingChange": 2.3482444834158214,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.009784352014232596
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.69054552175986,
+                "finalZ": 1.7023798627993512,
+                "flightTurn": 0.007211901253142454,
+                "headingChange": 0.5555792533747176,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.002314913555727988
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.0827595220751234,
+                "finalZ": -1.2966334079526156,
+                "flightTurn": 0.0008715003754685363,
+                "headingChange": -1.9137902048866533,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.007974125853694381
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.06873087268178789,
+                "finalZ": -0.10316532430637872,
+                "flightTurn": -0.011317598447231014,
+                "headingChange": -0.29313989160273957,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0012214162150114105
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000003549312,
+                "finalZ": -1.1685928857924879,
+                "flightTurn": -0.008246939436438958,
+                "headingChange": -0.4794700059019508,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0019977916912581255
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.8314595070077875,
+                "finalZ": -1.5755498273539459,
+                "flightTurn": -0.01891205202102429,
+                "headingChange": -3.5541515070307415,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.01480896461262808
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000005580426,
+                "finalZ": -0.28685332153866316,
+                "flightTurn": -0.00472867374686485,
+                "headingChange": 0.2997099964426895,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0012487916518445366
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000002735259,
+                "finalZ": 0.6142565366481424,
+                "flightTurn": 0.011925875936331869,
+                "headingChange": 0.6900967901902173,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0028754032924592403
+              }
+            ],
+            "stimulus": [
+              {
+                "activeCurrentTicks": 206,
+                "finalX": -1.3480506636821659,
+                "finalZ": 1.7153858975890768,
+                "flightTurn": 0.016588141022897383,
+                "headingChange": 2.668080012429611,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.02361222356420894,
+                "turn": 0.011117000051790045
+              },
+              {
+                "activeCurrentTicks": 174,
+                "finalX": -1.6787662067755071,
+                "finalZ": 2.033147965535001,
+                "flightTurn": 0.0027106066510283796,
+                "headingChange": 2.1217488110067753,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.011252218079242194,
+                "turn": 0.008840620045861563
+              },
+              {
+                "activeCurrentTicks": 188,
+                "finalX": -1.477738775779344,
+                "finalZ": 1.9508759055354439,
+                "flightTurn": 0.002400496399516897,
+                "headingChange": 1.9133051993594223,
+                "lastActiveTick": 279,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.02274527387999305,
+                "turn": 0.00797210499733094
+              },
+              {
+                "activeCurrentTicks": 174,
+                "finalX": -1.5070246081582497,
+                "finalZ": 1.919443618986912,
+                "flightTurn": 0.007059346777792175,
+                "headingChange": 0.8709283307566605,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.015222700691361116,
+                "turn": 0.0036288680448194133
+              },
+              {
+                "activeCurrentTicks": 150,
+                "finalX": -1.2696185390753636,
+                "finalZ": 1.9233154792482234,
+                "flightTurn": 0.01825236309470281,
+                "headingChange": 2.1021397862407967,
+                "lastActiveTick": 249,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.021917902234014287,
+                "turn": 0.008758915776003323
+              },
+              {
+                "activeCurrentTicks": 209,
+                "finalX": -1.4149066938297643,
+                "finalZ": 1.751786784542887,
+                "flightTurn": -0.00033007211256073037,
+                "headingChange": 2.3245824431289352,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.012883319906211771,
+                "turn": 0.009685760179703903
+              },
+              {
+                "activeCurrentTicks": 223,
+                "finalX": -0.4434011165845562,
+                "finalZ": 0.24999999959708816,
+                "flightTurn": 0.01083606601155991,
+                "headingChange": 2.7268965280046467,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.041628489642727175,
+                "turn": 0.011362068866686033
+              },
+              {
+                "activeCurrentTicks": 169,
+                "finalX": -1.2100325790623236,
+                "finalZ": 1.8135978784207762,
+                "flightTurn": 0.004659413768268594,
+                "headingChange": 1.9611928226665187,
+                "lastActiveTick": 292,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.02135500325142091,
+                "turn": 0.008171636761110485
+              },
+              {
+                "activeCurrentTicks": 149,
+                "finalX": -2.004733590830163,
+                "finalZ": 1.9278313453411997,
+                "flightTurn": 0.007247189306229718,
+                "headingChange": 2.2232612584690656,
+                "lastActiveTick": 283,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.012891274852301198,
+                "turn": 0.009263588576954434
+              },
+              {
+                "activeCurrentTicks": 171,
+                "finalX": -2.0833735344260544,
+                "finalZ": 1.9761337768722143,
+                "flightTurn": 0.007859156932984397,
+                "headingChange": 2.133592333228345,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.007564707903290369,
+                "turn": 0.008889968055118108
+              }
+            ],
+            "uniformControl": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.6499994807216264,
+                "finalZ": -1.707358744764931,
+                "flightTurn": -0.0033083036606471232,
+                "headingChange": -1.3642819737248808,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.005684508223853667
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.4174096437264668,
+                "finalZ": -0.24999999942343723,
+                "flightTurn": -0.014384837840808056,
+                "headingChange": -1.9247107451835472,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.008019628104931436
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.1482541703727736,
+                "finalZ": 1.347073747412028,
+                "flightTurn": 0.008624077073270434,
+                "headingChange": 2.3482444834158214,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.009784352014232596
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.69054552175986,
+                "finalZ": 1.7023798627993512,
+                "flightTurn": 0.007211901253142454,
+                "headingChange": 0.5555792533747176,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.002314913555727988
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.0827595220751234,
+                "finalZ": -1.2966334079526156,
+                "flightTurn": 0.0008715003754685363,
+                "headingChange": -1.9137902048866533,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.007974125853694381
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.06873087268178789,
+                "finalZ": -0.10316532430637872,
+                "flightTurn": -0.011317598447231014,
+                "headingChange": -0.29313989160273957,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0012214162150114105
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000003549312,
+                "finalZ": -1.1685928857924879,
+                "flightTurn": -0.008246939436438958,
+                "headingChange": -0.4794700059019508,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0019977916912581255
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.8314595070077875,
+                "finalZ": -1.5755498273539459,
+                "flightTurn": -0.01891205202102429,
+                "headingChange": -3.5541515070307415,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.01480896461262808
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000005580426,
+                "finalZ": -0.28685332153866316,
+                "flightTurn": -0.00472867374686485,
+                "headingChange": 0.2997099964426895,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0012487916518445366
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000002735259,
+                "finalZ": 0.6142565366481424,
+                "flightTurn": 0.011925875936331869,
+                "headingChange": 0.6900967901902173,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0028754032924592403
+              }
+            ]
+          },
+          "sourceZ": -1.0,
+          "stimulusMinusNoCurrent": {
+            "distanceReduction": {
+              "ci95": [
+                -1.6520035509281197,
+                -0.5185794088017638
+              ],
+              "mean": -1.0852914798649418,
+              "negativeSeeds": 9,
+              "positiveSeeds": 1
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                -0.48640797578973927,
+                0.5574674829723889
+              ],
+              "mean": 0.035529753591324806,
+              "negativeSeeds": 4,
+              "positiveSeeds": 6
+            },
+            "flightTurn": {
+              "ci95": [
+                0.003304348396239243,
+                0.018605203277204864
+              ],
+              "mean": 0.010954775836722053,
+              "negativeSeeds": 3,
+              "positiveSeeds": 7
+            },
+            "headingTowardSource": {
+              "ci95": [
+                -3.999981593848009,
+                -1.33634667219156
+              ],
+              "mean": -2.6681641330197845,
+              "negativeSeeds": 9,
+              "positiveSeeds": 1
+            },
+            "turn": {
+              "ci95": [
+                0.005568111134131501,
+                0.016666589974366697
+              ],
+              "mean": 0.0111173505542491,
+              "negativeSeeds": 1,
+              "positiveSeeds": 9
+            }
+          },
+          "stimulusMinusUniformControl": {
+            "distanceReduction": {
+              "ci95": [
+                -1.6520035509281197,
+                -0.5185794088017638
+              ],
+              "mean": -1.0852914798649418,
+              "negativeSeeds": 9,
+              "positiveSeeds": 1
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                -0.48640797578973927,
+                0.5574674829723889
+              ],
+              "mean": 0.035529753591324806,
+              "negativeSeeds": 4,
+              "positiveSeeds": 6
+            },
+            "flightTurn": {
+              "ci95": [
+                0.003304348396239243,
+                0.018605203277204864
+              ],
+              "mean": 0.010954775836722053,
+              "negativeSeeds": 3,
+              "positiveSeeds": 7
+            },
+            "headingTowardSource": {
+              "ci95": [
+                -3.999981593848009,
+                -1.33634667219156
+              ],
+              "mean": -2.6681641330197845,
+              "negativeSeeds": 9,
+              "positiveSeeds": 1
+            },
+            "turn": {
+              "ci95": [
+                0.005568111134131501,
+                0.016666589974366697
+              ],
+              "mean": 0.0111173505542491,
+              "negativeSeeds": 1,
+              "positiveSeeds": 9
+            }
+          }
+        },
+        {
+          "ablatedStimulusMinusAblatedNoCurrent": {
+            "distanceReduction": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "flightTurn": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "headingTowardSource": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "turn": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            }
+          },
+          "ablatedStimulusMinusAblatedUniformControl": {
+            "distanceReduction": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "flightTurn": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "headingTowardSource": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "turn": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            }
+          },
+          "absoluteStimulus": {
+            "distanceReduction": {
+              "ci95": [
+                -2.0962216712002446,
+                -1.4985247592761564
+              ],
+              "mean": -1.7973732152382005,
+              "negativeSeeds": 10,
+              "positiveSeeds": 0
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                -0.9432780242557948,
+                -0.7996355726330711
+              ],
+              "mean": -0.8714567984444329,
+              "negativeSeeds": 10,
+              "positiveSeeds": 0
+            },
+            "flightTurn": {
+              "ci95": [
+                -0.011794035835542664,
+                -0.002370676179368254
+              ],
+              "mean": -0.00708235600745546,
+              "negativeSeeds": 9,
+              "positiveSeeds": 1
+            },
+            "headingTowardSource": {
+              "ci95": [
+                -1.7790885668332028,
+                -0.7723110459221961
+              ],
+              "mean": -1.2756998063776994,
+              "negativeSeeds": 10,
+              "positiveSeeds": 0
+            },
+            "turn": {
+              "ci95": [
+                -0.007412869028471679,
+                -0.003217962691342483
+              ],
+              "mean": -0.005315415859907081,
+              "negativeSeeds": 10,
+              "positiveSeeds": 0
+            }
+          },
+          "seedObservations": {
+            "ablatedNoCurrent": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.8179823803143533,
+                "finalZ": -0.3885629896527452,
+                "flightTurn": -0.040115022300608774,
+                "headingChange": -8.95781497547175,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.03732422906446562
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.5558897976121482,
+                "finalZ": -0.03144595825255045,
+                "flightTurn": -0.035399969010373074,
+                "headingChange": -7.963209140053916,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.033180038083557975
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -3.253402937148087,
+                "finalZ": -0.6626631764152046,
+                "flightTurn": -0.02355515786607453,
+                "headingChange": -4.62625229174364,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.019276051215598507
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.3603280213093012,
+                "finalZ": -0.3249232468761363,
+                "flightTurn": -0.0227390377467351,
+                "headingChange": -5.890234388797753,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.024542643286657274
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.5502494393850594,
+                "finalZ": -0.6453646593584867,
+                "flightTurn": -0.02356608749475273,
+                "headingChange": -8.241436591858612,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.03433931913274417
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.0623800724888857,
+                "finalZ": -0.26890962532418966,
+                "flightTurn": -0.034774190916585006,
+                "headingChange": -6.669153978663536,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.02778814157776474
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.883835727967806,
+                "finalZ": 0.022387783375592413,
+                "flightTurn": -0.03348128095184055,
+                "headingChange": -7.602304309028769,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.03167626795428654
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.38605648341674,
+                "finalZ": -0.24273182686311076,
+                "flightTurn": -0.04905404277220656,
+                "headingChange": -11.510700135678098,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.04796125056532541
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.8234390240072198,
+                "finalZ": -0.2496246365539513,
+                "flightTurn": -0.030410667477203033,
+                "headingChange": -6.189562326088984,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.02578984302537075
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.4164770515900487,
+                "finalZ": -0.11186148371459104,
+                "flightTurn": -0.024579729447964115,
+                "headingChange": -6.686773068957747,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.02786155445399062
+              }
+            ],
+            "ablatedStimulus": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.8179823803143533,
+                "finalZ": -0.3885629896527452,
+                "flightTurn": -0.040115022300608774,
+                "headingChange": -8.95781497547175,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0036547459208773744,
+                "turn": -0.03732422906446562
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.5558897976121482,
+                "finalZ": -0.03144595825255045,
+                "flightTurn": -0.035399969010373074,
+                "headingChange": -7.963209140053916,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.03379858439905111,
+                "turn": -0.033180038083557975
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -3.253402937148087,
+                "finalZ": -0.6626631764152046,
+                "flightTurn": -0.02355515786607453,
+                "headingChange": -4.62625229174364,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.032812528298411414,
+                "turn": -0.019276051215598507
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.3603280213093012,
+                "finalZ": -0.3249232468761363,
+                "flightTurn": -0.0227390377467351,
+                "headingChange": -5.890234388797753,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.03629490206682619,
+                "turn": -0.024542643286657274
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.5502494393850594,
+                "finalZ": -0.6453646593584867,
+                "flightTurn": -0.02356608749475273,
+                "headingChange": -8.241436591858612,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.023521793459980865,
+                "turn": -0.03433931913274417
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.0623800724888857,
+                "finalZ": -0.26890962532418966,
+                "flightTurn": -0.034774190916585006,
+                "headingChange": -6.669153978663536,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.002118345052937062,
+                "turn": -0.02778814157776474
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.883835727967806,
+                "finalZ": 0.022387783375592413,
+                "flightTurn": -0.03348128095184055,
+                "headingChange": -7.602304309028769,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.01955916966385319,
+                "turn": -0.03167626795428654
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.38605648341674,
+                "finalZ": -0.24273182686311076,
+                "flightTurn": -0.04905404277220656,
+                "headingChange": -11.510700135678098,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.004701040661492857,
+                "turn": -0.04796125056532541
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.8234390240072198,
+                "finalZ": -0.2496246365539513,
+                "flightTurn": -0.030410667477203033,
+                "headingChange": -6.189562326088984,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.018783634245441685,
+                "turn": -0.02578984302537075
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.4164770515900487,
+                "finalZ": -0.11186148371459104,
+                "flightTurn": -0.024579729447964115,
+                "headingChange": -6.686773068957747,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.02945565494434562,
+                "turn": -0.02786155445399062
+              }
+            ],
+            "ablatedUniformControl": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.8179823803143533,
+                "finalZ": -0.3885629896527452,
+                "flightTurn": -0.040115022300608774,
+                "headingChange": -8.95781497547175,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.03732422906446562
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.5558897976121482,
+                "finalZ": -0.03144595825255045,
+                "flightTurn": -0.035399969010373074,
+                "headingChange": -7.963209140053916,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.033180038083557975
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -3.253402937148087,
+                "finalZ": -0.6626631764152046,
+                "flightTurn": -0.02355515786607453,
+                "headingChange": -4.62625229174364,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.019276051215598507
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.3603280213093012,
+                "finalZ": -0.3249232468761363,
+                "flightTurn": -0.0227390377467351,
+                "headingChange": -5.890234388797753,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.024542643286657274
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.5502494393850594,
+                "finalZ": -0.6453646593584867,
+                "flightTurn": -0.02356608749475273,
+                "headingChange": -8.241436591858612,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.03433931913274417
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.0623800724888857,
+                "finalZ": -0.26890962532418966,
+                "flightTurn": -0.034774190916585006,
+                "headingChange": -6.669153978663536,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.02778814157776474
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.883835727967806,
+                "finalZ": 0.022387783375592413,
+                "flightTurn": -0.03348128095184055,
+                "headingChange": -7.602304309028769,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.03167626795428654
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.38605648341674,
+                "finalZ": -0.24273182686311076,
+                "flightTurn": -0.04905404277220656,
+                "headingChange": -11.510700135678098,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.04796125056532541
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.8234390240072198,
+                "finalZ": -0.2496246365539513,
+                "flightTurn": -0.030410667477203033,
+                "headingChange": -6.189562326088984,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.02578984302537075
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.4164770515900487,
+                "finalZ": -0.11186148371459104,
+                "flightTurn": -0.024579729447964115,
+                "headingChange": -6.686773068957747,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.02786155445399062
+              }
+            ],
+            "noCurrent": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.6499994807216264,
+                "finalZ": -1.707358744764931,
+                "flightTurn": -0.0033083036606471232,
+                "headingChange": -1.3642819737248808,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.005684508223853667
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.4174096437264668,
+                "finalZ": -0.24999999942343723,
+                "flightTurn": -0.014384837840808056,
+                "headingChange": -1.9247107451835472,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.008019628104931436
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.1482541703727736,
+                "finalZ": 1.347073747412028,
+                "flightTurn": 0.008624077073270434,
+                "headingChange": 2.3482444834158214,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.009784352014232596
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.69054552175986,
+                "finalZ": 1.7023798627993512,
+                "flightTurn": 0.007211901253142454,
+                "headingChange": 0.5555792533747176,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.002314913555727988
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.0827595220751234,
+                "finalZ": -1.2966334079526156,
+                "flightTurn": 0.0008715003754685363,
+                "headingChange": -1.9137902048866533,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.007974125853694381
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.06873087268178789,
+                "finalZ": -0.10316532430637872,
+                "flightTurn": -0.011317598447231014,
+                "headingChange": -0.29313989160273957,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0012214162150114105
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000003549312,
+                "finalZ": -1.1685928857924879,
+                "flightTurn": -0.008246939436438958,
+                "headingChange": -0.4794700059019508,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0019977916912581255
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.8314595070077875,
+                "finalZ": -1.5755498273539459,
+                "flightTurn": -0.01891205202102429,
+                "headingChange": -3.5541515070307415,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.01480896461262808
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000005580426,
+                "finalZ": -0.28685332153866316,
+                "flightTurn": -0.00472867374686485,
+                "headingChange": 0.2997099964426895,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0012487916518445366
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000002735259,
+                "finalZ": 0.6142565366481424,
+                "flightTurn": 0.011925875936331869,
+                "headingChange": 0.6900967901902173,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0028754032924592403
+              }
+            ],
+            "stimulus": [
+              {
+                "activeCurrentTicks": 149,
+                "finalX": -1.4322334450495273,
+                "finalZ": -2.1108671155369665,
+                "flightTurn": -0.010284164528486942,
+                "headingChange": -2.164774082536527,
+                "lastActiveTick": 296,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.017357733252468446,
+                "turn": -0.009019892010568869
+              },
+              {
+                "activeCurrentTicks": 208,
+                "finalX": -0.8200725838031793,
+                "finalZ": -1.6315703005094564,
+                "flightTurn": -0.013438859682074901,
+                "headingChange": -1.4401860538537639,
+                "lastActiveTick": 290,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.0316810535670411,
+                "turn": -0.006000775224390686
+              },
+              {
+                "activeCurrentTicks": 174,
+                "finalX": -1.1584943395183491,
+                "finalZ": -2.037135636723494,
+                "flightTurn": -0.010962716116207322,
+                "headingChange": -1.8953445260020956,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.02412955966935072,
+                "turn": -0.007897268858342065
+              },
+              {
+                "activeCurrentTicks": 217,
+                "finalX": -0.5000000001388462,
+                "finalZ": -0.7172338474455966,
+                "flightTurn": -0.0014115319651270674,
+                "headingChange": -1.3508720201544426,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.05533731513269642,
+                "turn": -0.005628633417310173
+              },
+              {
+                "activeCurrentTicks": 138,
+                "finalX": -2.083841937924192,
+                "finalZ": -2.099150245836258,
+                "flightTurn": 0.0068060855688590344,
+                "headingChange": -1.3608711465719494,
+                "lastActiveTick": 290,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.006661752777247593,
+                "turn": -0.005670296444049786
+              },
+              {
+                "activeCurrentTicks": 254,
+                "finalX": -0.5000000002266408,
+                "finalZ": -0.37739280985198326,
+                "flightTurn": -0.010758529874853122,
+                "headingChange": -0.3141509860740377,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.054709748522578774,
+                "turn": -0.0013089624419751582
+              },
+              {
+                "activeCurrentTicks": 232,
+                "finalX": -0.6792325069782889,
+                "finalZ": -1.489673722624455,
+                "flightTurn": -0.005923619167850085,
+                "headingChange": -0.35385083730896605,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.027939115215068738,
+                "turn": -0.0014743784887873562
+              },
+              {
+                "activeCurrentTicks": 169,
+                "finalX": -1.9567032433950935,
+                "finalZ": -2.0349261927451563,
+                "flightTurn": -0.015340186835778799,
+                "headingChange": -2.248105627133326,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.0068455396391747395,
+                "turn": -0.009367106779722195
+              },
+              {
+                "activeCurrentTicks": 187,
+                "finalX": -0.9811564081474125,
+                "finalZ": -1.9738008020261473,
+                "flightTurn": -0.006456801076274908,
+                "headingChange": -1.034330180407408,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.025416682535977838,
+                "turn": -0.004309709085030869
+              },
+              {
+                "activeCurrentTicks": 171,
+                "finalX": -0.5000000006603142,
+                "finalZ": -0.8246011408513102,
+                "flightTurn": -0.0030532363967604777,
+                "headingChange": -0.5945126037344778,
+                "lastActiveTick": 270,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.04538014797900602,
+                "turn": -0.002477135848893658
+              }
+            ],
+            "uniformControl": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.6499994807216264,
+                "finalZ": -1.707358744764931,
+                "flightTurn": -0.0033083036606471232,
+                "headingChange": -1.3642819737248808,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.005684508223853667
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.4174096437264668,
+                "finalZ": -0.24999999942343723,
+                "flightTurn": -0.014384837840808056,
+                "headingChange": -1.9247107451835472,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.008019628104931436
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.1482541703727736,
+                "finalZ": 1.347073747412028,
+                "flightTurn": 0.008624077073270434,
+                "headingChange": 2.3482444834158214,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.009784352014232596
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.69054552175986,
+                "finalZ": 1.7023798627993512,
+                "flightTurn": 0.007211901253142454,
+                "headingChange": 0.5555792533747176,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.002314913555727988
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.0827595220751234,
+                "finalZ": -1.2966334079526156,
+                "flightTurn": 0.0008715003754685363,
+                "headingChange": -1.9137902048866533,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.007974125853694381
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.06873087268178789,
+                "finalZ": -0.10316532430637872,
+                "flightTurn": -0.011317598447231014,
+                "headingChange": -0.29313989160273957,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0012214162150114105
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000003549312,
+                "finalZ": -1.1685928857924879,
+                "flightTurn": -0.008246939436438958,
+                "headingChange": -0.4794700059019508,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0019977916912581255
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.8314595070077875,
+                "finalZ": -1.5755498273539459,
+                "flightTurn": -0.01891205202102429,
+                "headingChange": -3.5541515070307415,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.01480896461262808
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000005580426,
+                "finalZ": -0.28685332153866316,
+                "flightTurn": -0.00472867374686485,
+                "headingChange": 0.2997099964426895,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0012487916518445366
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000002735259,
+                "finalZ": 0.6142565366481424,
+                "flightTurn": 0.011925875936331869,
+                "headingChange": 0.6900967901902173,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0028754032924592403
+              }
+            ]
+          },
+          "sourceZ": 1.0,
+          "stimulusMinusNoCurrent": {
+            "distanceReduction": {
+              "ci95": [
+                -1.1983970587285415,
+                -0.22868301495472493
+              ],
+              "mean": -0.7135400368416333,
+              "negativeSeeds": 9,
+              "positiveSeeds": 1
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                -0.6512086626644424,
+                0.053747081860097634
+              ],
+              "mean": -0.29873079040217243,
+              "negativeSeeds": 6,
+              "positiveSeeds": 4
+            },
+            "flightTurn": {
+              "ci95": [
+                -0.009887967669570796,
+                0.002176265757620076
+              ],
+              "mean": -0.0038558509559753597,
+              "negativeSeeds": 5,
+              "positiveSeeds": 5
+            },
+            "headingTowardSource": {
+              "ci95": [
+                -1.853315167492433,
+                0.4290983157184476
+              ],
+              "mean": -0.7121084258869927,
+              "negativeSeeds": 6,
+              "positiveSeeds": 4
+            },
+            "turn": {
+              "ci95": [
+                -0.007722146531218473,
+                0.0017879096488268588
+              ],
+              "mean": -0.0029671184411958072,
+              "negativeSeeds": 6,
+              "positiveSeeds": 4
+            }
+          },
+          "stimulusMinusUniformControl": {
+            "distanceReduction": {
+              "ci95": [
+                -1.1983970587285415,
+                -0.22868301495472493
+              ],
+              "mean": -0.7135400368416333,
+              "negativeSeeds": 9,
+              "positiveSeeds": 1
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                -0.6512086626644424,
+                0.053747081860097634
+              ],
+              "mean": -0.29873079040217243,
+              "negativeSeeds": 6,
+              "positiveSeeds": 4
+            },
+            "flightTurn": {
+              "ci95": [
+                -0.009887967669570796,
+                0.002176265757620076
+              ],
+              "mean": -0.0038558509559753597,
+              "negativeSeeds": 5,
+              "positiveSeeds": 5
+            },
+            "headingTowardSource": {
+              "ci95": [
+                -1.853315167492433,
+                0.4290983157184476
+              ],
+              "mean": -0.7121084258869927,
+              "negativeSeeds": 6,
+              "positiveSeeds": 4
+            },
+            "turn": {
+              "ci95": [
+                -0.007722146531218473,
+                0.0017879096488268588
+              ],
+              "mean": -0.0029671184411958072,
+              "negativeSeeds": 6,
+              "positiveSeeds": 4
+            }
+          }
+        }
+      ],
+      "silencedIndices": [
+        1447,
+        1686,
+        5988,
+        7902,
+        8441,
+        9038,
+        9807,
+        16563,
+        52586,
+        54962,
+        2946,
+        5089,
+        7174,
+        7436,
+        7850,
+        8101,
+        8831,
+        9241,
+        9419,
+        51132
+      ]
+    },
+    {
+      "leftMinusRight": {
+        "distanceReduction": {
+          "ci95": [
+            -0.8577256182128721,
+            0.6122176192157178
+          ],
+          "mean": -0.12275399949857717,
+          "negativeSeeds": 4,
+          "positiveSeeds": 6
+        },
+        "finalAlignmentTowardSource": {
+          "ci95": [
+            -0.8961639542813217,
+            0.3618175871642032
+          ],
+          "mean": -0.26717318355855924,
+          "negativeSeeds": 6,
+          "positiveSeeds": 4
+        },
+        "flightTurn": {
+          "ci95": [
+            -0.025748969823187244,
+            -0.006593942056885356
+          ],
+          "mean": -0.0161714559400363,
+          "negativeSeeds": 9,
+          "positiveSeeds": 1
+        },
+        "headingTowardSource": {
+          "ci95": [
+            -2.393941001263133,
+            1.7699014267404096
+          ],
+          "mean": -0.31201978726136165,
+          "negativeSeeds": 7,
+          "positiveSeeds": 3
+        },
+        "turn": {
+          "ci95": [
+            -0.021741525998918244,
+            -0.004881997824451962
+          ],
+          "mean": -0.013311761911685102,
+          "negativeSeeds": 9,
+          "positiveSeeds": 1
+        }
+      },
+      "scenario": "inhibitoryOdor",
+      "sides": [
+        {
+          "ablatedStimulusMinusAblatedNoCurrent": {
+            "distanceReduction": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "flightTurn": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "headingTowardSource": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "turn": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            }
+          },
+          "ablatedStimulusMinusAblatedUniformControl": {
+            "distanceReduction": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "flightTurn": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "headingTowardSource": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "turn": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            }
+          },
+          "absoluteStimulus": {
+            "distanceReduction": {
+              "ci95": [
+                -0.6098031608711366,
+                0.2566097692671494
+              ],
+              "mean": -0.17659669580199358,
+              "negativeSeeds": 5,
+              "positiveSeeds": 5
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                -0.7988270072572404,
+                0.04048779377782796
+              ],
+              "mean": -0.37916960673970623,
+              "negativeSeeds": 7,
+              "positiveSeeds": 3
+            },
+            "flightTurn": {
+              "ci95": [
+                -0.015765026142103535,
+                -0.004221447144077007
+              ],
+              "mean": -0.009993236643090271,
+              "negativeSeeds": 9,
+              "positiveSeeds": 1
+            },
+            "headingTowardSource": {
+              "ci95": [
+                0.4198458802344003,
+                2.4629571913086634
+              ],
+              "mean": 1.441401535771532,
+              "negativeSeeds": 1,
+              "positiveSeeds": 9
+            },
+            "turn": {
+              "ci95": [
+                -0.01026232163045276,
+                -0.0017493578343099952
+              ],
+              "mean": -0.006005839732381378,
+              "negativeSeeds": 9,
+              "positiveSeeds": 1
+            }
+          },
+          "seedObservations": {
+            "ablatedNoCurrent": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.0832116828683884,
+                "finalZ": -1.74372600813244,
+                "flightTurn": -0.01360670779108019,
+                "headingChange": -2.4153908490956555,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.010064128537898566
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.20381397736575366,
+                "finalZ": -0.24999999982234916,
+                "flightTurn": -0.0045307538107021,
+                "headingChange": -0.9788677088544,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.004078615453560001
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.0708166577780849,
+                "finalZ": 1.1449770681920546,
+                "flightTurn": 0.006487590646561514,
+                "headingChange": 2.252744828618059,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.009386436785908584
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.7284641483012743,
+                "finalZ": 1.8502443300570413,
+                "flightTurn": 0.00391794253325035,
+                "headingChange": 0.40576073381079003,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0016906697242116218
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.6125468828187965,
+                "finalZ": -1.616725207143695,
+                "flightTurn": 0.0037362009118181343,
+                "headingChange": -0.5539311480468085,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0023080464501950273
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.17464125613336454,
+                "finalZ": -0.1628700401803663,
+                "flightTurn": -0.014695097659779431,
+                "headingChange": -0.2786511231082126,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0011610463462842207
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.3466933574010747,
+                "finalZ": -1.803562359513342,
+                "flightTurn": -0.008810491812577627,
+                "headingChange": -0.9334493244116014,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0038893721850483437
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -3.220126984496402,
+                "finalZ": -1.3262674266697567,
+                "flightTurn": -0.017532527321596606,
+                "headingChange": -2.9397247102731576,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.012248852959471495
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": 0.1317223262251009,
+                "finalZ": 0.16411615032281046,
+                "flightTurn": 0.000458275270067542,
+                "headingChange": 1.1222010137094864,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.004675837557122859
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000006683765,
+                "finalZ": -0.5733317123710973,
+                "flightTurn": 0.002861666135120435,
+                "headingChange": -0.6438501752946009,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.002682709063727505
+              }
+            ],
+            "ablatedStimulus": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.0832116828683884,
+                "finalZ": -1.74372600813244,
+                "flightTurn": -0.01360670779108019,
+                "headingChange": -2.4153908490956555,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.16514872481285803,
+                "turn": -0.010064128537898566
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.20381397736575366,
+                "finalZ": -0.24999999982234916,
+                "flightTurn": -0.0045307538107021,
+                "headingChange": -0.9788677088544,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.08875831157300307,
+                "turn": -0.004078615453560001
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.0708166577780849,
+                "finalZ": 1.1449770681920546,
+                "flightTurn": 0.006487590646561514,
+                "headingChange": 2.252744828618059,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.03724226423403275,
+                "turn": 0.009386436785908584
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.7284641483012743,
+                "finalZ": 1.8502443300570413,
+                "flightTurn": 0.00391794253325035,
+                "headingChange": 0.40576073381079003,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.026832321415964786,
+                "turn": 0.0016906697242116218
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.6125468828187965,
+                "finalZ": -1.616725207143695,
+                "flightTurn": 0.0037362009118181343,
+                "headingChange": -0.5539311480468085,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.15344011676327618,
+                "turn": -0.0023080464501950273
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.17464125613336454,
+                "finalZ": -0.1628700401803663,
+                "flightTurn": -0.014695097659779431,
+                "headingChange": -0.2786511231082126,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.06814856136804241,
+                "turn": -0.0011610463462842207
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.3466933574010747,
+                "finalZ": -1.803562359513342,
+                "flightTurn": -0.008810491812577627,
+                "headingChange": -0.9334493244116014,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.1714736647038561,
+                "turn": -0.0038893721850483437
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -3.220126984496402,
+                "finalZ": -1.3262674266697567,
+                "flightTurn": -0.017532527321596606,
+                "headingChange": -2.9397247102731576,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.0667792357489544,
+                "turn": -0.012248852959471495
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": 0.1317223262251009,
+                "finalZ": 0.16411615032281046,
+                "flightTurn": 0.000458275270067542,
+                "headingChange": 1.1222010137094864,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.07326584456621034,
+                "turn": 0.004675837557122859
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000006683765,
+                "finalZ": -0.5733317123710973,
+                "flightTurn": 0.002861666135120435,
+                "headingChange": -0.6438501752946009,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.07790751926164935,
+                "turn": -0.002682709063727505
+              }
+            ],
+            "ablatedUniformControl": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.0832116828683884,
+                "finalZ": -1.74372600813244,
+                "flightTurn": -0.01360670779108019,
+                "headingChange": -2.4153908490956555,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.010064128537898566
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.20381397736575366,
+                "finalZ": -0.24999999982234916,
+                "flightTurn": -0.0045307538107021,
+                "headingChange": -0.9788677088544,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.004078615453560001
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.0708166577780849,
+                "finalZ": 1.1449770681920546,
+                "flightTurn": 0.006487590646561514,
+                "headingChange": 2.252744828618059,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.009386436785908584
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.7284641483012743,
+                "finalZ": 1.8502443300570413,
+                "flightTurn": 0.00391794253325035,
+                "headingChange": 0.40576073381079003,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0016906697242116218
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.6125468828187965,
+                "finalZ": -1.616725207143695,
+                "flightTurn": 0.0037362009118181343,
+                "headingChange": -0.5539311480468085,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0023080464501950273
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.17464125613336454,
+                "finalZ": -0.1628700401803663,
+                "flightTurn": -0.014695097659779431,
+                "headingChange": -0.2786511231082126,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0011610463462842207
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.3466933574010747,
+                "finalZ": -1.803562359513342,
+                "flightTurn": -0.008810491812577627,
+                "headingChange": -0.9334493244116014,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0038893721850483437
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -3.220126984496402,
+                "finalZ": -1.3262674266697567,
+                "flightTurn": -0.017532527321596606,
+                "headingChange": -2.9397247102731576,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.012248852959471495
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": 0.1317223262251009,
+                "finalZ": 0.16411615032281046,
+                "flightTurn": 0.000458275270067542,
+                "headingChange": 1.1222010137094864,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.004675837557122859
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000006683765,
+                "finalZ": -0.5733317123710973,
+                "flightTurn": 0.002861666135120435,
+                "headingChange": -0.6438501752946009,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.002682709063727505
+              }
+            ],
+            "noCurrent": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.6499994807216264,
+                "finalZ": -1.707358744764931,
+                "flightTurn": -0.0033083036606471232,
+                "headingChange": -1.3642819737248808,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.005684508223853667
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.4174096437264668,
+                "finalZ": -0.24999999942343723,
+                "flightTurn": -0.014384837840808056,
+                "headingChange": -1.9247107451835472,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.008019628104931436
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.1482541703727736,
+                "finalZ": 1.347073747412028,
+                "flightTurn": 0.008624077073270434,
+                "headingChange": 2.3482444834158214,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.009784352014232596
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.69054552175986,
+                "finalZ": 1.7023798627993512,
+                "flightTurn": 0.007211901253142454,
+                "headingChange": 0.5555792533747176,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.002314913555727988
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.0827595220751234,
+                "finalZ": -1.2966334079526156,
+                "flightTurn": 0.0008715003754685363,
+                "headingChange": -1.9137902048866533,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.007974125853694381
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.06873087268178789,
+                "finalZ": -0.10316532430637872,
+                "flightTurn": -0.011317598447231014,
+                "headingChange": -0.29313989160273957,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0012214162150114105
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000003549312,
+                "finalZ": -1.1685928857924879,
+                "flightTurn": -0.008246939436438958,
+                "headingChange": -0.4794700059019508,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0019977916912581255
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.8314595070077875,
+                "finalZ": -1.5755498273539459,
+                "flightTurn": -0.01891205202102429,
+                "headingChange": -3.5541515070307415,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.01480896461262808
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000005580426,
+                "finalZ": -0.28685332153866316,
+                "flightTurn": -0.00472867374686485,
+                "headingChange": 0.2997099964426895,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0012487916518445366
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000002735259,
+                "finalZ": 0.6142565366481424,
+                "flightTurn": 0.011925875936331869,
+                "headingChange": 0.6900967901902173,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0028754032924592403
+              }
+            ],
+            "stimulus": [
+              {
+                "activeCurrentTicks": 215,
+                "finalX": -2.4261546492355706,
+                "finalZ": -1.5383429002086897,
+                "flightTurn": -0.01895293800359901,
+                "headingChange": -3.23244055899479,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.1335133292360181,
+                "turn": -0.013468502329144958
+              },
+              {
+                "activeCurrentTicks": 254,
+                "finalX": -1.2074353990698905,
+                "finalZ": -0.926862012992728,
+                "flightTurn": -0.017402800915426498,
+                "headingChange": -3.5506472855156948,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.1006259812120681,
+                "turn": -0.014794363689648725
+              },
+              {
+                "activeCurrentTicks": 233,
+                "finalX": -0.5000000001373838,
+                "finalZ": -0.7879537142227395,
+                "flightTurn": -0.00043921834133271216,
+                "headingChange": 1.092656593369415,
+                "lastActiveTick": 296,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.08642341687482591,
+                "turn": 0.004552735805705895
+              },
+              {
+                "activeCurrentTicks": 271,
+                "finalX": -0.1983727247504245,
+                "finalZ": -0.22376522521697412,
+                "flightTurn": 0.0020822448315432813,
+                "headingChange": -0.26339672075387466,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.05700278548757619,
+                "turn": -0.0010974863364744789
+              },
+              {
+                "activeCurrentTicks": 266,
+                "finalX": -1.785585636011433,
+                "finalZ": -1.6250269879263215,
+                "flightTurn": -0.002218047032279523,
+                "headingChange": -0.5684163006455166,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.10486077123172616,
+                "turn": -0.0023684012526896336
+              },
+              {
+                "activeCurrentTicks": 283,
+                "finalX": -0.2088297835714976,
+                "finalZ": -0.24999999920941843,
+                "flightTurn": -0.016087133854974907,
+                "headingChange": -1.442232195003252,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.07321202932422466,
+                "turn": -0.00600930081251355
+              },
+              {
+                "activeCurrentTicks": 267,
+                "finalX": -0.5000000000842091,
+                "finalZ": -1.3951037863676574,
+                "flightTurn": -0.01204234478966549,
+                "headingChange": -0.9915723956114778,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.14223876952553371,
+                "turn": -0.004131551648381148
+              },
+              {
+                "activeCurrentTicks": 271,
+                "finalX": -2.6126047920192463,
+                "finalZ": -1.5953528516941318,
+                "flightTurn": -0.016073826468372403,
+                "headingChange": -1.3623932210858078,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.08919863899858009,
+                "turn": -0.005676638421190852
+              },
+              {
+                "activeCurrentTicks": 237,
+                "finalX": -2.2080311269967177,
+                "finalZ": -1.0566789015246554,
+                "flightTurn": -0.015488101058205554,
+                "headingChange": -2.8164241937148358,
+                "lastActiveTick": 258,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.08534232675159166,
+                "turn": -0.011735100807145155
+              },
+              {
+                "activeCurrentTicks": 272,
+                "finalX": -0.5000000001558427,
+                "finalZ": -0.4937303024941907,
+                "flightTurn": -0.0033102007985898866,
+                "headingChange": -1.2791490797594842,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.089409318681206,
+                "turn": -0.005329787832331186
+              }
+            ],
+            "uniformControl": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.6499994807216264,
+                "finalZ": -1.707358744764931,
+                "flightTurn": -0.0033083036606471232,
+                "headingChange": -1.3642819737248808,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.005684508223853667
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.4174096437264668,
+                "finalZ": -0.24999999942343723,
+                "flightTurn": -0.014384837840808056,
+                "headingChange": -1.9247107451835472,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.008019628104931436
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.1482541703727736,
+                "finalZ": 1.347073747412028,
+                "flightTurn": 0.008624077073270434,
+                "headingChange": 2.3482444834158214,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.009784352014232596
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.69054552175986,
+                "finalZ": 1.7023798627993512,
+                "flightTurn": 0.007211901253142454,
+                "headingChange": 0.5555792533747176,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.002314913555727988
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.0827595220751234,
+                "finalZ": -1.2966334079526156,
+                "flightTurn": 0.0008715003754685363,
+                "headingChange": -1.9137902048866533,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.007974125853694381
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.06873087268178789,
+                "finalZ": -0.10316532430637872,
+                "flightTurn": -0.011317598447231014,
+                "headingChange": -0.29313989160273957,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0012214162150114105
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000003549312,
+                "finalZ": -1.1685928857924879,
+                "flightTurn": -0.008246939436438958,
+                "headingChange": -0.4794700059019508,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0019977916912581255
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.8314595070077875,
+                "finalZ": -1.5755498273539459,
+                "flightTurn": -0.01891205202102429,
+                "headingChange": -3.5541515070307415,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.01480896461262808
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000005580426,
+                "finalZ": -0.28685332153866316,
+                "flightTurn": -0.00472867374686485,
+                "headingChange": 0.2997099964426895,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0012487916518445366
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000002735259,
+                "finalZ": 0.6142565366481424,
+                "flightTurn": 0.011925875936331869,
+                "headingChange": 0.6900967901902173,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0028754032924592403
+              }
+            ]
+          },
+          "sourceZ": -1.0,
+          "stimulusMinusNoCurrent": {
+            "distanceReduction": {
+              "ci95": [
+                0.17560261132366922,
+                0.9907315890858879
+              ],
+              "mean": 0.5831671002047786,
+              "negativeSeeds": 2,
+              "positiveSeeds": 8
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                -0.03772800612272864,
+                0.5553963255840448
+              ],
+              "mean": 0.2588341597306581,
+              "negativeSeeds": 3,
+              "positiveSeeds": 7
+            },
+            "flightTurn": {
+              "ci95": [
+                -0.010945369398040044,
+                -0.002588093785180297
+              ],
+              "mean": -0.00676673159161017,
+              "negativeSeeds": 9,
+              "positiveSeeds": 1
+            },
+            "headingTowardSource": {
+              "ci95": [
+                -0.25226561819134274,
+                2.0078859287529927
+              ],
+              "mean": 0.8778101552808251,
+              "negativeSeeds": 2,
+              "positiveSeeds": 8
+            },
+            "turn": {
+              "ci95": [
+                -0.00836619136980414,
+                0.0010511067424639315
+              ],
+              "mean": -0.003657542313670105,
+              "negativeSeeds": 8,
+              "positiveSeeds": 2
+            }
+          },
+          "stimulusMinusUniformControl": {
+            "distanceReduction": {
+              "ci95": [
+                0.17560261132366922,
+                0.9907315890858879
+              ],
+              "mean": 0.5831671002047786,
+              "negativeSeeds": 2,
+              "positiveSeeds": 8
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                -0.03772800612272864,
+                0.5553963255840448
+              ],
+              "mean": 0.2588341597306581,
+              "negativeSeeds": 3,
+              "positiveSeeds": 7
+            },
+            "flightTurn": {
+              "ci95": [
+                -0.010945369398040044,
+                -0.002588093785180297
+              ],
+              "mean": -0.00676673159161017,
+              "negativeSeeds": 9,
+              "positiveSeeds": 1
+            },
+            "headingTowardSource": {
+              "ci95": [
+                -0.25226561819134274,
+                2.0078859287529927
+              ],
+              "mean": 0.8778101552808251,
+              "negativeSeeds": 2,
+              "positiveSeeds": 8
+            },
+            "turn": {
+              "ci95": [
+                -0.00836619136980414,
+                0.0010511067424639315
+              ],
+              "mean": -0.003657542313670105,
+              "negativeSeeds": 8,
+              "positiveSeeds": 2
+            }
+          }
+        },
+        {
+          "ablatedStimulusMinusAblatedNoCurrent": {
+            "distanceReduction": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "flightTurn": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "headingTowardSource": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "turn": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            }
+          },
+          "ablatedStimulusMinusAblatedUniformControl": {
+            "distanceReduction": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "flightTurn": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "headingTowardSource": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            },
+            "turn": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0,
+              "negativeSeeds": 0,
+              "positiveSeeds": 0
+            }
+          },
+          "absoluteStimulus": {
+            "distanceReduction": {
+              "ci95": [
+                -0.5287709736438494,
+                0.42108558103701654
+              ],
+              "mean": -0.053842696303416426,
+              "negativeSeeds": 5,
+              "positiveSeeds": 5
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                -0.6040391212075982,
+                0.3800462748453043
+              ],
+              "mean": -0.11199642318114697,
+              "negativeSeeds": 5,
+              "positiveSeeds": 5
+            },
+            "flightTurn": {
+              "ci95": [
+                -0.004500942585801806,
+                0.016857381179693872
+              ],
+              "mean": 0.006178219296946033,
+              "negativeSeeds": 2,
+              "positiveSeeds": 8
+            },
+            "headingTowardSource": {
+              "ci95": [
+                -0.027077647258267223,
+                3.5339202933240546
+              ],
+              "mean": 1.7534213230328937,
+              "negativeSeeds": 1,
+              "positiveSeeds": 9
+            },
+            "turn": {
+              "ci95": [
+                -0.00011282353024278605,
+                0.01472466788885023
+              ],
+              "mean": 0.007305922179303722,
+              "negativeSeeds": 1,
+              "positiveSeeds": 9
+            }
+          },
+          "seedObservations": {
+            "ablatedNoCurrent": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.0832116828683884,
+                "finalZ": -1.74372600813244,
+                "flightTurn": -0.01360670779108019,
+                "headingChange": -2.4153908490956555,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.010064128537898566
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.20381397736575366,
+                "finalZ": -0.24999999982234916,
+                "flightTurn": -0.0045307538107021,
+                "headingChange": -0.9788677088544,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.004078615453560001
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.0708166577780849,
+                "finalZ": 1.1449770681920546,
+                "flightTurn": 0.006487590646561514,
+                "headingChange": 2.252744828618059,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.009386436785908584
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.7284641483012743,
+                "finalZ": 1.8502443300570413,
+                "flightTurn": 0.00391794253325035,
+                "headingChange": 0.40576073381079003,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0016906697242116218
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.6125468828187965,
+                "finalZ": -1.616725207143695,
+                "flightTurn": 0.0037362009118181343,
+                "headingChange": -0.5539311480468085,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0023080464501950273
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.17464125613336454,
+                "finalZ": -0.1628700401803663,
+                "flightTurn": -0.014695097659779431,
+                "headingChange": -0.2786511231082126,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0011610463462842207
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.3466933574010747,
+                "finalZ": -1.803562359513342,
+                "flightTurn": -0.008810491812577627,
+                "headingChange": -0.9334493244116014,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0038893721850483437
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -3.220126984496402,
+                "finalZ": -1.3262674266697567,
+                "flightTurn": -0.017532527321596606,
+                "headingChange": -2.9397247102731576,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.012248852959471495
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": 0.1317223262251009,
+                "finalZ": 0.16411615032281046,
+                "flightTurn": 0.000458275270067542,
+                "headingChange": 1.1222010137094864,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.004675837557122859
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000006683765,
+                "finalZ": -0.5733317123710973,
+                "flightTurn": 0.002861666135120435,
+                "headingChange": -0.6438501752946009,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.002682709063727505
+              }
+            ],
+            "ablatedStimulus": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.0832116828683884,
+                "finalZ": -1.74372600813244,
+                "flightTurn": -0.01360670779108019,
+                "headingChange": -2.4153908490956555,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.024665267953948234,
+                "turn": -0.010064128537898566
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.20381397736575366,
+                "finalZ": -0.24999999982234916,
+                "flightTurn": -0.0045307538107021,
+                "headingChange": -0.9788677088544,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.059980714032496676,
+                "turn": -0.004078615453560001
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.0708166577780849,
+                "finalZ": 1.1449770681920546,
+                "flightTurn": 0.006487590646561514,
+                "headingChange": 2.252744828618059,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.10622392282794438,
+                "turn": 0.009386436785908584
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.7284641483012743,
+                "finalZ": 1.8502443300570413,
+                "flightTurn": 0.00391794253325035,
+                "headingChange": 0.40576073381079003,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.17031117330823267,
+                "turn": 0.0016906697242116218
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.6125468828187965,
+                "finalZ": -1.616725207143695,
+                "flightTurn": 0.0037362009118181343,
+                "headingChange": -0.5539311480468085,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.020403090600522367,
+                "turn": -0.0023080464501950273
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.17464125613336454,
+                "finalZ": -0.1628700401803663,
+                "flightTurn": -0.014695097659779431,
+                "headingChange": -0.2786511231082126,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.06226832004997215,
+                "turn": -0.0011610463462842207
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.3466933574010747,
+                "finalZ": -1.803562359513342,
+                "flightTurn": -0.008810491812577627,
+                "headingChange": -0.9334493244116014,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.01941153927960053,
+                "turn": -0.0038893721850483437
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -3.220126984496402,
+                "finalZ": -1.3262674266697567,
+                "flightTurn": -0.017532527321596606,
+                "headingChange": -2.9397247102731576,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.013766951411933024,
+                "turn": -0.012248852959471495
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": 0.1317223262251009,
+                "finalZ": 0.16411615032281046,
+                "flightTurn": 0.000458275270067542,
+                "headingChange": 1.1222010137094864,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.0776800779173576,
+                "turn": 0.004675837557122859
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000006683765,
+                "finalZ": -0.5733317123710973,
+                "flightTurn": 0.002861666135120435,
+                "headingChange": -0.6438501752946009,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.05259015339925942,
+                "turn": -0.002682709063727505
+              }
+            ],
+            "ablatedUniformControl": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.0832116828683884,
+                "finalZ": -1.74372600813244,
+                "flightTurn": -0.01360670779108019,
+                "headingChange": -2.4153908490956555,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.010064128537898566
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.20381397736575366,
+                "finalZ": -0.24999999982234916,
+                "flightTurn": -0.0045307538107021,
+                "headingChange": -0.9788677088544,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.004078615453560001
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.0708166577780849,
+                "finalZ": 1.1449770681920546,
+                "flightTurn": 0.006487590646561514,
+                "headingChange": 2.252744828618059,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.009386436785908584
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.7284641483012743,
+                "finalZ": 1.8502443300570413,
+                "flightTurn": 0.00391794253325035,
+                "headingChange": 0.40576073381079003,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0016906697242116218
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.6125468828187965,
+                "finalZ": -1.616725207143695,
+                "flightTurn": 0.0037362009118181343,
+                "headingChange": -0.5539311480468085,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0023080464501950273
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.17464125613336454,
+                "finalZ": -0.1628700401803663,
+                "flightTurn": -0.014695097659779431,
+                "headingChange": -0.2786511231082126,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0011610463462842207
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.3466933574010747,
+                "finalZ": -1.803562359513342,
+                "flightTurn": -0.008810491812577627,
+                "headingChange": -0.9334493244116014,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0038893721850483437
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -3.220126984496402,
+                "finalZ": -1.3262674266697567,
+                "flightTurn": -0.017532527321596606,
+                "headingChange": -2.9397247102731576,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.012248852959471495
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": 0.1317223262251009,
+                "finalZ": 0.16411615032281046,
+                "flightTurn": 0.000458275270067542,
+                "headingChange": 1.1222010137094864,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.004675837557122859
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000006683765,
+                "finalZ": -0.5733317123710973,
+                "flightTurn": 0.002861666135120435,
+                "headingChange": -0.6438501752946009,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.002682709063727505
+              }
+            ],
+            "noCurrent": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.6499994807216264,
+                "finalZ": -1.707358744764931,
+                "flightTurn": -0.0033083036606471232,
+                "headingChange": -1.3642819737248808,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.005684508223853667
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.4174096437264668,
+                "finalZ": -0.24999999942343723,
+                "flightTurn": -0.014384837840808056,
+                "headingChange": -1.9247107451835472,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.008019628104931436
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.1482541703727736,
+                "finalZ": 1.347073747412028,
+                "flightTurn": 0.008624077073270434,
+                "headingChange": 2.3482444834158214,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.009784352014232596
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.69054552175986,
+                "finalZ": 1.7023798627993512,
+                "flightTurn": 0.007211901253142454,
+                "headingChange": 0.5555792533747176,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.002314913555727988
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.0827595220751234,
+                "finalZ": -1.2966334079526156,
+                "flightTurn": 0.0008715003754685363,
+                "headingChange": -1.9137902048866533,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.007974125853694381
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.06873087268178789,
+                "finalZ": -0.10316532430637872,
+                "flightTurn": -0.011317598447231014,
+                "headingChange": -0.29313989160273957,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0012214162150114105
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000003549312,
+                "finalZ": -1.1685928857924879,
+                "flightTurn": -0.008246939436438958,
+                "headingChange": -0.4794700059019508,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0019977916912581255
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.8314595070077875,
+                "finalZ": -1.5755498273539459,
+                "flightTurn": -0.01891205202102429,
+                "headingChange": -3.5541515070307415,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.01480896461262808
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000005580426,
+                "finalZ": -0.28685332153866316,
+                "flightTurn": -0.00472867374686485,
+                "headingChange": 0.2997099964426895,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0012487916518445366
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000002735259,
+                "finalZ": 0.6142565366481424,
+                "flightTurn": 0.011925875936331869,
+                "headingChange": 0.6900967901902173,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0028754032924592403
+              }
+            ],
+            "stimulus": [
+              {
+                "activeCurrentTicks": 291,
+                "finalX": -0.5000000000162969,
+                "finalZ": 0.26939190448797673,
+                "flightTurn": 0.004083667072945276,
+                "headingChange": 0.9233149238907812,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.10120328889033749,
+                "turn": 0.0038471455162115914
+              },
+              {
+                "activeCurrentTicks": 280,
+                "finalX": -1.2557964721864132,
+                "finalZ": 1.658090613415609,
+                "flightTurn": 0.010746136278617945,
+                "headingChange": 2.653722116684762,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.14769280057736034,
+                "turn": 0.011057175486186505
+              },
+              {
+                "activeCurrentTicks": 186,
+                "finalX": -2.4721928727683036,
+                "finalZ": 0.887052015482688,
+                "flightTurn": 0.011862488207895322,
+                "headingChange": 3.399191383994774,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.11581614259443035,
+                "turn": 0.014163297433311564
+              },
+              {
+                "activeCurrentTicks": 162,
+                "finalX": -1.7080590863531973,
+                "finalZ": 1.9716704271409222,
+                "flightTurn": 0.007537825963144971,
+                "headingChange": 1.015637144535555,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.015047607540175612,
+                "turn": 0.004231821435564812
+              },
+              {
+                "activeCurrentTicks": 285,
+                "finalX": -0.6310483794842117,
+                "finalZ": 1.2122319100927392,
+                "flightTurn": 0.017716153056252508,
+                "headingChange": 2.540219897995833,
+                "lastActiveTick": 293,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.12428577817750375,
+                "turn": 0.010584249574982635
+              },
+              {
+                "activeCurrentTicks": 211,
+                "finalX": -2.3599779081200714,
+                "finalZ": 0.9700951708426264,
+                "flightTurn": -0.0007004025641086385,
+                "headingChange": 3.4137972526663445,
+                "lastActiveTick": 247,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.12411275096107206,
+                "turn": 0.014224155219443107
+              },
+              {
+                "activeCurrentTicks": 260,
+                "finalX": -0.15586263494851244,
+                "finalZ": 0.2499999998018004,
+                "flightTurn": 0.011309124099287245,
+                "headingChange": 1.3681290696802606,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.08425959693944948,
+                "turn": 0.005700537790334424
+              },
+              {
+                "activeCurrentTicks": 216,
+                "finalX": -3.1022744718395496,
+                "finalZ": -0.5447892676910318,
+                "flightTurn": -0.032472487777419665,
+                "headingChange": -4.697415334140116,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.019499108878059328,
+                "turn": -0.019572563892250504
+              },
+              {
+                "activeCurrentTicks": 291,
+                "finalX": -2.266322353323076,
+                "finalZ": 1.5848051416484394,
+                "flightTurn": 0.010437414887249601,
+                "headingChange": 3.3043317309411413,
+                "lastActiveTick": 299,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.21480655756946235,
+                "turn": 0.013768048878921411
+              },
+              {
+                "activeCurrentTicks": 240,
+                "finalX": -2.024929552859707,
+                "finalZ": 1.0955658830919073,
+                "flightTurn": 0.02126227374559576,
+                "headingChange": 3.613285044079601,
+                "lastActiveTick": 291,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": -0.19689804675472236,
+                "turn": 0.015055354350331673
+              }
+            ],
+            "uniformControl": [
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.6499994807216264,
+                "finalZ": -1.707358744764931,
+                "flightTurn": -0.0033083036606471232,
+                "headingChange": -1.3642819737248808,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.005684508223853667
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.4174096437264668,
+                "finalZ": -0.24999999942343723,
+                "flightTurn": -0.014384837840808056,
+                "headingChange": -1.9247107451835472,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.008019628104931436
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -1.1482541703727736,
+                "finalZ": 1.347073747412028,
+                "flightTurn": 0.008624077073270434,
+                "headingChange": 2.3482444834158214,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.009784352014232596
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.69054552175986,
+                "finalZ": 1.7023798627993512,
+                "flightTurn": 0.007211901253142454,
+                "headingChange": 0.5555792533747176,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.002314913555727988
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.0827595220751234,
+                "finalZ": -1.2966334079526156,
+                "flightTurn": 0.0008715003754685363,
+                "headingChange": -1.9137902048866533,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.007974125853694381
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.06873087268178789,
+                "finalZ": -0.10316532430637872,
+                "flightTurn": -0.011317598447231014,
+                "headingChange": -0.29313989160273957,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0012214162150114105
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000003549312,
+                "finalZ": -1.1685928857924879,
+                "flightTurn": -0.008246939436438958,
+                "headingChange": -0.4794700059019508,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.0019977916912581255
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -2.8314595070077875,
+                "finalZ": -1.5755498273539459,
+                "flightTurn": -0.01891205202102429,
+                "headingChange": -3.5541515070307415,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": -0.01480896461262808
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000005580426,
+                "finalZ": -0.28685332153866316,
+                "flightTurn": -0.00472867374686485,
+                "headingChange": 0.2997099964426895,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0012487916518445366
+              },
+              {
+                "activeCurrentTicks": 0,
+                "finalX": -0.5000000002735259,
+                "finalZ": 0.6142565366481424,
+                "flightTurn": 0.011925875936331869,
+                "headingChange": 0.6900967901902173,
+                "lastActiveTick": null,
+                "meanBrightnessDifference": 0.0,
+                "meanOdorDifference": 0.0,
+                "turn": 0.0028754032924592403
+              }
+            ]
+          },
+          "sourceZ": 1.0,
+          "stimulusMinusNoCurrent": {
+            "distanceReduction": {
+              "ci95": [
+                0.6973099263293778,
+                1.3626710378569244
+              ],
+              "mean": 1.0299904820931511,
+              "negativeSeeds": 0,
+              "positiveSeeds": 10
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                -0.12339666061155541,
+                1.0448558303337823
+              ],
+              "mean": 0.4607295848611135,
+              "negativeSeeds": 2,
+              "positiveSeeds": 8
+            },
+            "flightTurn": {
+              "ci95": [
+                0.0015239460973547597,
+                0.0172855025994975
+              ],
+              "mean": 0.009404724348426131,
+              "negativeSeeds": 1,
+              "positiveSeeds": 9
+            },
+            "headingTowardSource": {
+              "ci95": [
+                1.0175273807257075,
+                3.6164980263214943
+              ],
+              "mean": 2.317012703523601,
+              "negativeSeeds": 1,
+              "positiveSeeds": 9
+            },
+            "turn": {
+              "ci95": [
+                0.004239697419690438,
+                0.015068741776339552
+              ],
+              "mean": 0.009654219598014996,
+              "negativeSeeds": 1,
+              "positiveSeeds": 9
+            }
+          },
+          "stimulusMinusUniformControl": {
+            "distanceReduction": {
+              "ci95": [
+                0.6973099263293778,
+                1.3626710378569244
+              ],
+              "mean": 1.0299904820931511,
+              "negativeSeeds": 0,
+              "positiveSeeds": 10
+            },
+            "finalAlignmentTowardSource": {
+              "ci95": [
+                -0.12339666061155541,
+                1.0448558303337823
+              ],
+              "mean": 0.4607295848611135,
+              "negativeSeeds": 2,
+              "positiveSeeds": 8
+            },
+            "flightTurn": {
+              "ci95": [
+                0.0015239460973547597,
+                0.0172855025994975
+              ],
+              "mean": 0.009404724348426131,
+              "negativeSeeds": 1,
+              "positiveSeeds": 9
+            },
+            "headingTowardSource": {
+              "ci95": [
+                1.0175273807257075,
+                3.6164980263214943
+              ],
+              "mean": 2.317012703523601,
+              "negativeSeeds": 1,
+              "positiveSeeds": 9
+            },
+            "turn": {
+              "ci95": [
+                0.004239697419690438,
+                0.015068741776339552
+              ],
+              "mean": 0.009654219598014996,
+              "negativeSeeds": 1,
+              "positiveSeeds": 9
+            }
+          }
+        }
+      ],
+      "silencedIndices": [
+        126,
+        880,
+        3150,
+        3292,
+        4441,
+        49730,
+        255,
+        1436,
+        4063,
+        6711,
+        7303,
+        56268
+      ]
+    }
+  ],
+  "rootSeeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "sourceHashes": {
+    "chamber.rs": "7197f93dcee3a9d779723be608e187fabdedd22adb78b11586cc46fc7b0f3257",
+    "environment/fields.rs": "8fc6e7925ada069db4c410df99024a08455572c49545bf1880f4d24909b384d7",
+    "environment/mod.rs": "e3aa0b7699ebb30aae25eae7cdf88ab83b364c55e7661f83d766ef3f592d4a55",
+    "field_lab.rs": "8798e2990769c182dc2a6a79e16ac129fd7c0173b1a6329262ba6e19729716b6",
+    "field_probe.rs": "b8f6fa45d2c83723f2ca57049405134bcf0705d0728f1dd40708ed3e28bd9251",
+    "graph.rs": "379c05b56369f3009b1015ab50ce0a6e0ccaff9603f811eafe86dd85dcf63c2e",
+    "lif.rs": "7394c44c26718bd00cf6c9c4ae191274b3b6bd60a12878bd752e27fdc9a258a1",
+    "sensory.rs": "79c2ba327e2eec1b9baa67366d9a8d544540946e32c70e17f807cd07ad5edc62"
+  },
+  "uncertainty": "Student t(9)95% intervals across paired seed means, descriptive without multiplicity correction. Free movement changes subsequent sensory histories; this is a finite closed-loop fixture, not proof of biological preference or asymptotic target seeking.",
+  "warmupTicks": 60,
+  "reproduction": "In an isolated checkout with sourceHashes core versions, replace files with experimentalSourceSnapshots and run cargo run -p sim --release --example field_probe -- GRAPH_DIRECTORY OUTPUT_JSON. Original files were restored afterward."
+}
