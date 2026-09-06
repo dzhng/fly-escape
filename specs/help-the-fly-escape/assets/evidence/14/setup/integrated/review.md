@@ -1,0 +1,5 @@
+# Merged setup checkpoint
+
+The merged production browser passes placement, movement, rotation, removal/refund, invalid feedback, freeze, cancellation, reload, fresh seeds, completed results, replay and storage failure. The underlying input remains the unbalanced five-room integration fixture. Root source review preserved one Worker and one playback/archive owner, and found a committed-intent race: palette/placed selection could clear an edit while its reply was pending. The delayed actual-WASM regression reproduced it; the isolated fix is integrated but awaits the refreshed production build check.
+
+The earlier performance harness also still listened for a dropdown change after the selection control became a button. It could wait without ever starting measurement. The probe now listens for the actual click and has a bounded missing-input failure; the restarted full integration run proceeds. No performance threshold was lowered. Review of client setup generation, cleanup and progress persistence found no additional blocking source issue.
