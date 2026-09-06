@@ -191,3 +191,10 @@ An attempt carries a small list of enabled sensory pathways and their gains. If 
 ### Share transport geometry and scratch storage between odor channels
 
 Attractive and repellent sources diffuse and move with wind independently, but use the same floor cells, wall connections and transport coefficients. The solver reuses one temporary array after finishing each channel, and counts both channels against its work limit. The plan required shared transport without choosing memory ownership. This avoids duplicate geometry and a second algorithm while ensuring one scent never changes the other's concentration. Different chemical diffusion rates would require an explicit future model change. Verdict: sound; confidence: high.
+
+
+## Sound — medium confidence (local fan preparation, slice 14)
+
+### A fan produces a bounded, wall-occluded rectangular jet
+
+When a fly is in front of a fan, it samples a wind vector that fades with forward and sideways distance; behind the fan, beyond its reach or behind a wall, that fan contributes nothing. Several fans add their vectors. The plan required placed directional wind but did not choose its shape. A rectangular footprint with linear falloff is simple to show in placement previews and uses existing line-of-sight geometry, without claiming to solve air turbulence. Odor moves using face averages of the same cell vectors that push the bodies. Fan reach, width and speed remain calibration choices for authored levels. Verdict: sound; confidence: medium.

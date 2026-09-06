@@ -47,6 +47,7 @@ fn main() {
         Wall::decl(),
         Geometry::decl(),
         FieldConfig::decl(),
+        FanField::decl(),
         SourceKind::decl(),
         Source::decl(),
         ExitCue::decl(),

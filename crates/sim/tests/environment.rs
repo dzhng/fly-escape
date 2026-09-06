@@ -389,3 +389,108 @@ fn mixed_odors_transport_independently_through_the_same_doorway() {
         );
     }
 }
+
+#[test]
+fn fan_wind_is_local_directional_and_blocked_by_walls() {
+    let fan = FanField {
+        position: Point { x: 2., z: 2. },
+        heading: 0.,
+        reach: 5.,
+        half_width: 1.,
+        speed: 2.,
+    };
+    let make = |open, fan| {
+        FieldSet::new(
+            chambers(open),
+            FieldConfig {
+                fans: vec![fan],
+                ..Default::default()
+            },
+            vec![],
+            None,
+        )
+        .unwrap()
+    };
+    let closed = make(false, fan.clone());
+    let wind = |fields: &FieldSet, x, z| fields.sample(Point { x, z }, 0., 0).wind;
+    assert!(wind(&closed, 3., 2.).x > 0.);
+    assert_eq!(wind(&closed, 1., 2.), Point::default());
+    assert_eq!(wind(&closed, 3., 3.5), Point::default());
+    assert_eq!(wind(&closed, 6., 2.), Point::default());
+    let open = make(true, fan.clone());
+    assert!(wind(&open, 6., 2.).x > 0.);
+    let rotated = make(
+        true,
+        FanField {
+            heading: std::f64::consts::FRAC_PI_2,
+            ..fan
+        },
+    );
+    assert!(wind(&rotated, 2., 3.).z > 0.);
+    assert!(wind(&rotated, 2., 3.).x.abs() < 1e-12);
+    let grid = open.export_grid();
+    for (i, expected) in grid.wind_cells.iter().enumerate() {
+        let p = Point {
+            x: grid.origin.x
+                + (i % grid.width as usize) as f64 * grid.cell_size
+                + grid.cell_size / 2.,
+            z: grid.origin.z
+                + (i / grid.width as usize) as f64 * grid.cell_size
+                + grid.cell_size / 2.,
+        };
+        assert_eq!(open.sample(p, 0., 0).wind, *expected);
+    }
+}
+
+#[test]
+fn local_fans_advect_odor_conservatively_without_global_drift() {
+    let make = |fans| {
+        FieldSet::new(
+            chambers(true),
+            FieldConfig {
+                fans,
+                diffusion: 0.,
+                decay: 0.,
+                ..Default::default()
+            },
+            vec![Source {
+                position: Point { x: 3., z: 2. },
+                radius: 0.7,
+                rate: 1.,
+                kind: SourceKind::AttractiveOdor,
+            }],
+            None,
+        )
+        .unwrap()
+    };
+    let mut still = make(vec![]);
+    let mut blowing = make(vec![FanField {
+        position: Point { x: 2., z: 2. },
+        heading: 0.,
+        reach: 5.,
+        half_width: 1.,
+        speed: 8.,
+    }]);
+    for field in [&mut still, &mut blowing] {
+        run(field, 2);
+    }
+    let centroid = |field: &FieldSet| {
+        let grid = field.export_grid();
+        let mut mass = 0.;
+        let mut weighted_x = 0.;
+        for (i, cell) in grid.cells.iter().enumerate() {
+            if let Some(cell) = cell {
+                assert!(cell.attractive_odor >= 0. && cell.attractive_odor.is_finite());
+                let amount = cell.attractive_odor * grid.cell_size.powi(2);
+                mass += amount;
+                weighted_x += amount
+                    * (grid.origin.x
+                        + (i % grid.width as usize) as f64 * grid.cell_size
+                        + grid.cell_size / 2.);
+            }
+        }
+        assert!((mass - 2.).abs() < 1e-12);
+        weighted_x / mass
+    };
+    assert!(centroid(&blowing) > centroid(&still) + 0.5);
+}

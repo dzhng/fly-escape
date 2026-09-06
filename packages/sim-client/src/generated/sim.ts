@@ -65,19 +65,24 @@ diffusion: number,
  */
 decay: number, baselineBrightness: number, antennaOffset: number,
 /**
- * World-space velocity used for odor advection and exported to body physics.
+ * Uniform ambient velocity, combined with local fans for advection and body physics.
  */
-wind: Point, };
+wind: Point, fans: Array<FanField>, };
+export type FanField = { position: Point, heading: number, reach: number, halfWidth: number, speed: number, };
 export type SourceKind = "attractiveOdor" | "repellentOdor" | "lamp" | "shade";
 export type Source = { position: Point, radius: number,
 /**
- * Odor: total cue mass per second. Lamp/shade: peak brightness contribution.
+ * Each odor channel: total cue mass per second. Lamp/shade: peak brightness contribution.
  */
 rate: number, kind: SourceKind, };
 export type ExitCue = { position: Point, roomId: number, radius: number, strength: number, };
 export type FieldSample = { attractiveOdor: number, repellentOdor: number, brightness: number, shade: number, exitCue: number, };
 export type SensorySample = { left: FieldSample, right: FieldSample, wind: Point, };
-export type FieldGrid = { origin: Point, max: Point, cellSize: number, width: number, height: number, cells: Array<FieldSample | null>, wind: Point, };
+export type FieldGrid = { origin: Point, max: Point, cellSize: number, width: number, height: number, cells: Array<FieldSample | null>,
+/**
+ * Uniform ambient vector for diagnostic labels; local samples use wind_cells.
+ */
+wind: Point, windCells: Array<Point>, };
 export type CuePathway = "excitatoryOdor" | "inhibitoryOdor" | "vision" | "none";
 export type Group = { id: string, label: string, indices: Array<number>, };
 export type GroupLink = { source: string, target: string, edgeCount: number, positiveWeight: number, negativeWeight: number, };

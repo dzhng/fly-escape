@@ -10,8 +10,9 @@ pub struct FieldConfig {
     pub decay: f64,
     pub baseline_brightness: f64,
     pub antenna_offset: f64,
-    /// World-space velocity used for odor advection and exported to body physics.
+    /// Uniform ambient velocity, combined with local fans for advection and body physics.
     pub wind: Point,
+    pub fans: Vec<FanField>,
 }
 impl Default for FieldConfig {
     fn default() -> Self {
@@ -22,6 +23,43 @@ impl Default for FieldConfig {
             baseline_brightness: 1.,
             antenna_offset: 0.15,
             wind: Point::default(),
+            fans: vec![],
+        }
+    }
+}
+/// A stylized, wall-occluded jet; heading zero is +X and positive turns toward +Z.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+pub struct FanField {
+    pub position: Point,
+    pub heading: f64,
+    pub reach: f64,
+    pub half_width: f64,
+    pub speed: f64,
+}
+impl FanField {
+    fn velocity(&self, p: Point, geometry: &Geometry) -> Point {
+        let direction = Point {
+            x: self.heading.cos(),
+            z: self.heading.sin(),
+        };
+        let delta = Point {
+            x: p.x - self.position.x,
+            z: p.z - self.position.z,
+        };
+        let along = delta.x * direction.x + delta.z * direction.z;
+        let across = (delta.x * direction.z - delta.z * direction.x).abs();
+        if along < 0.
+            || along >= self.reach
+            || across >= self.half_width
+            || !geometry.line_of_sight(self.position, p)
+        {
+            return Point::default();
+        }
+        let speed = self.speed * (1. - along / self.reach) * (1. - across / self.half_width);
+        Point {
+            x: speed * direction.x,
+            z: speed * direction.z,
         }
     }
 }
@@ -75,7 +113,9 @@ pub struct FieldGrid {
     pub width: u32,
     pub height: u32,
     pub cells: Vec<Option<FieldSample>>,
+    /// Uniform ambient vector for diagnostic labels; local samples use wind_cells.
     pub wind: Point,
+    pub wind_cells: Vec<Point>,
 }
 
 pub struct FieldSet {
@@ -87,6 +127,8 @@ pub struct FieldSet {
     height: usize,
     active: Vec<bool>,
     edges: Vec<(usize, usize, f64)>,
+    wind: Vec<Point>,
+    loss_rate: f64,
     odors: [Vec<f64>; 2],
     scratch: Vec<f64>,
     injection: [Vec<f64>; 2],
@@ -119,6 +161,23 @@ impl FieldSet {
                 "field config requires finite nonnegative coefficients and positive cell_size"
                     .into(),
             );
+        }
+        if config.fans.len() > 64 {
+            return Err("fan limit 64 exceeded".into());
+        }
+        for fan in &config.fans {
+            if !fan.position.finite()
+                || geometry.room_at(fan.position).is_none()
+                || !fan.heading.is_finite()
+                || !fan.reach.is_finite()
+                || fan.reach <= 0.
+                || !fan.half_width.is_finite()
+                || fan.half_width <= 0.
+                || !fan.speed.is_finite()
+                || fan.speed < 0.
+            {
+                return Err("fan requires floor position, finite heading, positive reach/width and nonnegative speed".into());
+            }
         }
         if sources.len() > 256 {
             return Err("field source limit 256 exceeded".into());
@@ -181,7 +240,7 @@ impl FieldSet {
         // Visibility is evaluated once during construction, not per solver step.
         let work = count
             .saturating_mul(geometry.rooms.len() + geometry.walls.len())
-            .saturating_mul(sources.len() + 3);
+            .saturating_mul(sources.len() + config.fans.len() + 3);
         if work > MAX_WORK {
             return Err(format!("field topology work limit {MAX_WORK} exceeded: {work} checks; coarsen grid or simplify geometry/sources"));
         }
@@ -194,6 +253,8 @@ impl FieldSet {
             height,
             active: vec![false; count],
             edges: vec![],
+            wind: vec![Point::default(); count],
+            loss_rate: 0.,
             odors: std::array::from_fn(|_| vec![0.; count]),
             scratch: vec![0.; count],
             injection: std::array::from_fn(|_| vec![0.; count]),
@@ -202,17 +263,40 @@ impl FieldSet {
         };
         for i in 0..count {
             set.active[i] = set.geometry.room_at(set.center(i)).is_some();
+            if set.active[i] {
+                let mut wind = set.config.wind;
+                for fan in &set.config.fans {
+                    let velocity = fan.velocity(set.center(i), &set.geometry);
+                    wind.x += velocity.x;
+                    wind.z += velocity.z;
+                }
+                if !wind.finite() {
+                    return Err("fan velocity accumulation overflow".into());
+                }
+                set.wind[i] = wind;
+            }
         }
         for i in 0..count {
             if !set.active[i] {
                 continue;
             }
             if i % width + 1 < width {
-                set.add_edge(i, i + 1, set.config.wind.x);
+                set.add_edge(i, i + 1, (set.wind[i].x + set.wind[i + 1].x) / 2.);
             }
             if i / width + 1 < height {
-                set.add_edge(i, i + width, set.config.wind.z);
+                set.add_edge(i, i + width, (set.wind[i].z + set.wind[i + width].z) / 2.);
             }
+        }
+        let h = set.config.cell_size;
+        let diffusion = set.config.diffusion / (h * h);
+        let mut outgoing = vec![set.config.decay; count];
+        for &(a, b, velocity) in &set.edges {
+            outgoing[a] += diffusion + velocity.max(0.) / h;
+            outgoing[b] += diffusion + (-velocity).max(0.) / h;
+        }
+        set.loss_rate = outgoing.into_iter().fold(0., f64::max);
+        if !set.loss_rate.is_finite() {
+            return Err("field transport coefficient overflow".into());
         }
         for s in sources {
             let weights: Vec<f64> = (0..count)
@@ -297,10 +381,7 @@ impl FieldSet {
             return Ok(());
         }
         let h = self.config.cell_size;
-        let loss = 4. * self.config.diffusion / (h * h)
-            + (self.config.wind.x.abs() + self.config.wind.z.abs()) / h
-            + self.config.decay;
-        let steps = (dt * loss / 0.9).ceil().max(1.);
+        let steps = (dt * self.loss_rate / 0.9).ceil().max(1.);
         let work = steps * self.active.len() as f64 * 2.;
         if !work.is_finite() || work > MAX_WORK as f64 {
             return Err(format!("field advance work limit {MAX_WORK} cell-substeps exceeded: {work}; reduce dt or transport coefficients"));
@@ -335,20 +416,26 @@ impl FieldSet {
         }
         Ok(())
     }
-    pub fn sample_point(&self, p: Point) -> FieldSample {
+    fn cell_at(&self, p: Point) -> Option<usize> {
         if !p.finite() || self.geometry.room_at(p).is_none() {
-            return FieldSample::default();
+            return None;
         }
         let x = ((p.x - self.origin.x) / self.config.cell_size).floor() as usize;
         let z = ((p.z - self.origin.z) / self.config.cell_size).floor() as usize;
         if x >= self.width || z >= self.height {
-            return FieldSample::default();
+            return None;
         }
         let i = z * self.width + x;
         // A cut cell must not expose values through an internal wall.
         if !self.active[i] || !self.geometry.line_of_sight(p, self.center(i)) {
-            return FieldSample::default();
+            return None;
         }
+        Some(i)
+    }
+    pub fn sample_point(&self, p: Point) -> FieldSample {
+        let Some(i) = self.cell_at(p) else {
+            return FieldSample::default();
+        };
         let exit_cue = self
             .exit
             .as_ref()
@@ -381,7 +468,9 @@ impl FieldSet {
                 x: position.x - dx,
                 z: position.z - dz,
             }),
-            wind: self.config.wind,
+            wind: self
+                .cell_at(position)
+                .map_or(Point::default(), |i| self.wind[i]),
         }
     }
     pub fn export_grid(&self) -> FieldGrid {
@@ -398,6 +487,7 @@ impl FieldSet {
                 .map(|i| self.active[i].then(|| self.sample_point(self.center(i))))
                 .collect(),
             wind: self.config.wind,
+            wind_cells: self.wind.clone(),
         }
     }
 }
