@@ -1,3 +1,4 @@
+import type { LifecycleScenario, LifecycleInfo, AttemptFrame } from "./generated/sim";
 import type {
   BrainFrame,
   BrainInfo,
@@ -13,11 +14,27 @@ export type {
   FieldLabFrame,
 } from "./generated/sim";
 export type Request =
+  | { type: "startLifecycle"; generation: number; seed: number; scenario: LifecycleScenario }
   | { type: "start"; generation: number; seed: number }
   | { type: "startFields"; generation: number; seed: number; scenario: FieldScenario }
   | { type: "step"; generation: number }
   | { type: "inject"; generation: number; left: number; right: number };
 export type Reply =
+  | {
+      type: "lifecycleReady";
+      generation: number;
+      info: LifecycleInfo;
+      loadMs: number;
+      wasmBytes: number;
+    }
+  | {
+      type: "lifecycleFrame";
+      generation: number;
+      frame: AttemptFrame;
+      stepMs: number;
+      wasmBytes: number;
+    }
+  | { type: "lifecycleComplete"; generation: number }
   | {
       type: "fieldsReady";
       generation: number;

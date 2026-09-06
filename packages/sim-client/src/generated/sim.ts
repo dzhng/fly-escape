@@ -1,5 +1,49 @@
 // Generated from crates/sim; do not edit.
 
+export type BodyPose = { position: Point, heading: number, };
+export type BodyMode = "walking" | "flying" | "feeding";
+export type TerminalOutcome = "escaped" | "starved" | "zapped" | "timedOut";
+export type BodyState = { pose: BodyPose, mode: BodyMode, reserve: number, outcome: TerminalOutcome | null, };
+export type BodyConfig = { reserveCapacity: number, idleCost: number, walkingCost: number, flyingCost: number, feedingRate: number, maxBoutSeconds: number, bodyRadius: number, walkSpeed: number, flightSpeed: number, turnGain: number, takeoffThreshold: number,
+/**
+ * Emitted spike fraction, averaged across the two landing groups.
+ */
+landingThreshold: number,
+/**
+ * Minimum ground time after neural landing; independent of neural cadence.
+ */
+landingDwellSeconds: number,
+/**
+ * Emitted proboscis spike fraction; a qualifying pulse starts a latched bout.
+ */
+proboscisThreshold: number, };
+export type ContactRegion = { center: Point, radius: number, };
+export type ExitOpening = { a: Point, b: Point, outward: Point, };
+export type BodyContacts = { food: boolean, zapper: boolean, };
+export type FeedingEnd = "contactLost" | "satiated" | "boutLimit" | "terminal";
+export type BodyEventKind = { "type": "modeChanged", from: BodyMode, to: BodyMode, } | { "type": "feedingStarted" } | { "type": "feedingEnded", reason: FeedingEnd, } | { "type": "terminal", outcome: TerminalOutcome, };
+export type BodyEvent = { tick: number, kind: BodyEventKind, };
+export type OutcomeSummary = { escaped: number, starved: number, zapped: number, timedOut: number, score: number, };
+export type LevelDef = { id: string, geometry: Geometry, spawnPoses: Array<BodyPose>, exit: ExitOpening, exitCue: ExitCue | null, food: Array<ContactRegion>, zappers: Array<ContactRegion>, sources: Array<Source>, fieldConfig: FieldConfig, bodyConfig: BodyConfig, initialReserve: number, durationTicks: number, starThresholds: [number, number, number], };
+export type CueInput = { pathway: CuePathway, gain: number, };
+export type AttemptTuning = { cue: CueInput | null, tasteGain: number,
+/**
+ * Experimental ablation, fixed for the complete attempt and included in its identity.
+ */
+silencedNeurons: Array<number>, };
+export type AttemptSpec = { schemaVersion: number, attemptId: string, graphHash: string, graphManifestHash: string, simulationBuildId: string, tuningHash: string, levelHash: string, levelId: string,
+/**
+ * Decimal u64 wire value; JavaScript numbers cannot represent every seed.
+ */
+rootSeed: string, flyCount: number, durationTicks: number, };
+export type FlyFrame = { id: number, inputPose: BodyPose, sensory: SensorySample | null, neural: StepOutput | null, body: BodyState, events: Array<BodyEvent>, };
+export type AttemptResult = { attemptId: string, completedTick: number, outcomes: OutcomeSummary, stars: number, };
+export type AttemptFrame = { tick: number, neuralSteps: number, flies: Array<FlyFrame>, result: AttemptResult | null, };
+export type LifecycleScenario = "mealThenStarvation" | "proboscisSilenced" | "openExit" | "blockedExit";
+export type LifecycleInfo = { scenario: LifecycleScenario, spec: AttemptSpec, level: LevelDef, initialGrid: FieldGrid, };
+export type LifecycleEvent = { flyId: number, event: BodyEvent, };
+export type RecordLayout = { schemaVersion: number, valueFields: Array<string>, stateFields: Array<string>, eventFields: Array<string>, groupIds: Array<string>, groupFields: Array<string>, modes: Array<BodyMode>, outcomes: Array<TerminalOutcome | null>, feedingEnds: Array<FeedingEnd>, eventKinds: Array<string>, sensoryPresentMask: number, neuralPresentMask: number, maxChunkTicks: number, maxEventsPerFlyTick: number, };
+export type PackedChunk = { schemaVersion: number, attemptId: string, sequence: number, startTick: number, tickCount: number, flyCount: number, values: Array<number>, states: Array<number>, events: Array<number>, tickNeuralSteps: Array<number>, result: AttemptResult | null, };
 export type FieldScenario = "excitatoryOdor" | "inhibitoryOdor" | "lamp" | "shade" | "wind" | "exit";
 export type FieldLabInfo = { brain: BrainInfo, scenario: FieldScenario, grids: [FieldGrid, FieldGrid], };
 export type FieldLabFrame = { tick: number, flies: [BrainFrame, BrainFrame], grids: [FieldGrid, FieldGrid], };

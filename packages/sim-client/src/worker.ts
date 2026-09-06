@@ -1,16 +1,24 @@
-import init, { BrainSession, FieldSession, type InitOutput } from "./wasm/game_wasm";
+import init, {
+  BrainSession,
+  FieldSession,
+  LifecycleSession,
+  type InitOutput,
+} from "./wasm/game_wasm";
 import type {
   BrainFrame,
   BrainInfo,
   FieldLabInfo,
   FieldLabFrame,
-  Reply,
-  Request,
-} from "./protocol";
+  LifecycleInfo,
+  AttemptFrame,
+} from "./generated/sim";
+import type { Reply, Request } from "./protocol";
 let generation = 0;
-let session: BrainSession | FieldSession | undefined;
-let isFields = false;
-let info: BrainInfo | undefined;
+let session:
+  | { kind: "brain"; core: BrainSession }
+  | { kind: "fields"; core: FieldSession }
+  | { kind: "lifecycle"; core: LifecycleSession }
+  | undefined;
 let memory: WebAssembly.Memory;
 const reply = (value: Reply) => self.postMessage(value);
 let assets: Promise<[InitOutput, Uint8Array, string]> | undefined;
@@ -32,60 +40,77 @@ const loadAssets = () =>
 self.onmessage = async (event: MessageEvent<Request>) => {
   const message = event.data;
   try {
-    if (message.type === "start" || message.type === "startFields") {
+    if (
+      message.type === "start" ||
+      message.type === "startFields" ||
+      message.type === "startLifecycle"
+    ) {
       generation = message.generation;
-      session?.free();
+      session?.core.free();
       session = undefined;
       const began = performance.now();
       const [wasm, bytes, manifest] = await loadAssets();
       if (message.generation !== generation) return;
       memory = wasm.memory;
-      isFields = message.type === "startFields";
+      const timing = () => ({
+        generation,
+        loadMs: performance.now() - began,
+        wasmBytes: memory.buffer.byteLength,
+      });
       if (message.type === "startFields") {
-        session = new FieldSession(bytes, manifest, message.seed, JSON.stringify(message.scenario));
-        const fieldInfo = JSON.parse(session.info()) as FieldLabInfo;
-        info = fieldInfo.brain;
+        const core = new FieldSession(
+          bytes,
+          manifest,
+          message.seed,
+          JSON.stringify(message.scenario),
+        );
+        session = { kind: "fields", core };
+        reply({ type: "fieldsReady", info: JSON.parse(core.info()) as FieldLabInfo, ...timing() });
+      } else if (message.type === "startLifecycle") {
+        const core = new LifecycleSession(
+          bytes,
+          manifest,
+          message.seed,
+          JSON.stringify(message.scenario),
+        );
+        session = { kind: "lifecycle", core };
         reply({
-          type: "fieldsReady",
-          generation,
-          info: fieldInfo,
-          loadMs: performance.now() - began,
-          wasmBytes: memory.buffer.byteLength,
+          type: "lifecycleReady",
+          info: JSON.parse(core.info()) as LifecycleInfo,
+          ...timing(),
         });
       } else {
-        session = new BrainSession(bytes, manifest, message.seed);
-        info = JSON.parse(session.info()) as BrainInfo;
-        reply({
-          type: "ready",
-          generation,
-          info,
-          loadMs: performance.now() - began,
-          wasmBytes: memory.buffer.byteLength,
-        });
+        const core = new BrainSession(bytes, manifest, message.seed);
+        session = { kind: "brain", core };
+        reply({ type: "ready", info: JSON.parse(core.info()) as BrainInfo, ...timing() });
       }
-    } else if (message.generation === generation && session && info) {
+    } else if (message.generation === generation && session) {
       if (message.type === "inject") {
-        if (!(session instanceof BrainSession)) return;
-        session.inject(message.left, message.right);
+        if (session.kind === "brain") session.core.inject(message.left, message.right);
       } else {
         const began = performance.now();
-        const frame = JSON.parse(session.step()) as BrainFrame | FieldLabFrame;
-        if (isFields)
+        const timing = () => ({
+          generation,
+          stepMs: performance.now() - began,
+          wasmBytes: memory.buffer.byteLength,
+        });
+        if (session.kind === "fields") {
           reply({
             type: "fieldsFrame",
-            generation,
-            frame: frame as FieldLabFrame,
-            stepMs: performance.now() - began,
-            wasmBytes: memory.buffer.byteLength,
+            frame: JSON.parse(session.core.step()) as FieldLabFrame,
+            ...timing(),
           });
-        else
+        } else if (session.kind === "brain") {
           reply({
             type: "frame",
-            generation,
-            frame: frame as BrainFrame,
-            stepMs: performance.now() - began,
-            wasmBytes: memory.buffer.byteLength,
+            frame: JSON.parse(session.core.step()) as BrainFrame,
+            ...timing(),
           });
+        } else {
+          const frame = JSON.parse(session.core.step()) as AttemptFrame | null;
+          if (frame) reply({ type: "lifecycleFrame", frame, ...timing() });
+          else reply({ type: "lifecycleComplete", generation });
+        }
       }
     }
   } catch (error) {

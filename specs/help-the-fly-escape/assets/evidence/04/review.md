@@ -1,0 +1,15 @@
+# Lifecycle integration evidence
+
+Status: complete for slice 04; population foraging and campaign efficacy remain separately gated.
+
+The lifecycle route composes the same Attempt, field, neural and Body owners used by future swarm runs. The browser displays recorded reserve, modes, transitions and final results. The observation labs now share the body's bounded locomotion calculation instead of maintaining a separate movement equation; they still deliberately observe the walking readout, while lifecycle probes run all body modes.
+
+[Spike decoder evidence](feeding-spike-decoder.md) establishes neural meal initiation and its ablation. The [diagnostic attempt probe](lifecycle-attempt-probe.md) records the bounded ten-seed experiment without a hidden neural warmup. Seed 6 gains reserve, loses food contact and later starves. Its silenced counterpart never eats and dies sooner. This selected demonstration is explicitly labelled, and is not campaign foraging efficacy.
+
+[Browser records](browser.json) use the real graph through the WASM Worker. Assertions require reserve gain, a neural feeding event, contact loss, later starvation and longer life than the ablated counterpart. The open/blocked exit pair differs in its wall and verifies swept physical escape and exactly one terminal event. Wind deliberately carries the diagnostic body; it does not prove neural navigation. Reset reproduces the recorded first frame. Completion no longer overwrites the user's pause preference.
+
+Native tests cover food contact without neural initiation, reserve caps, later starvation, terminal freezing, swept wall/exit/hazard ordering, independent fly streams and shared field advancement. The real-graph lifecycle test is an explicit separate invocation using the prepared graph path. Initial harness failures were an incorrect relative artifact path and a missing accessible select name; neither was treated as passing evidence.
+
+Independent integration review found the completion/pause issue above; it is fixed and covered through the browser. The shared movement calculation keeps wind in world coordinates and adopts the body clamps in observation scenes. CLI review remains unavailable because the installed client rejects its configured model; independent read-only agents provide review.
+
+Final production captures and crops pass a fresh independent review of all eighteen images. Earlier findings prompted scenario-specific diagnostic copy, plain event reasons, a measured-center marker and an event viewport aligned to whole text rows. Keyboard Home/End checks verify access to earlier and latest events. Pixel comparisons show the targeted changes (four affected states changed; the unaffected open-exit state remains identical). Review shots opened at 16:12 UTC; after more than five minutes without feedback, the reversible decision is to accept state/time legibility based on behavior checks, pixel evidence and the clean fresh critique. Preview is closed. Fly art and final scene styling are later slices; this review owns readable state, reserve and event timing.

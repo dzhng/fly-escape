@@ -408,3 +408,19 @@ header a {
     grid-template-rows: 1fr 1fr 64px;
   }
 }
+
+.lifecycle-events {
+  max-height: 198px;
+  overflow: auto;
+  padding-left: 20px;
+  font-size: 13px;
+  line-height: 22px;
+}
+.lifecycle-events time {
+  font-variant-numeric: tabular-nums;
+  color: #647b68;
+}
+progress {
+  width: 100%;
+  accent-color: #769553;
+}

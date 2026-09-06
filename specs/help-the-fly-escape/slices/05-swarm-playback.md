@@ -1,6 +1,6 @@
 # 05 — Twenty flies with buffered replay
 
-Status: planned. Dependencies: 04.
+Status: native Attempt and packed record format implemented; Worker/archive/playback integration in progress. Dependencies: 04.
 
 ## Contract and seam
 

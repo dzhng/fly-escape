@@ -1,0 +1,1864 @@
+{
+  "browser": "152.0.7977.77",
+  "viewport": "1440×1000",
+  "info": {
+    "neuronCount": 70000,
+    "edgeCount": 798715,
+    "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+    "graphBytes": 9864584,
+    "geometry": {
+      "rooms": [
+        {
+          "id": 0,
+          "min": {
+            "x": -6,
+            "z": -6
+          },
+          "max": {
+            "x": 6,
+            "z": 6
+          }
+        }
+      ],
+      "walls": [
+        {
+          "a": {
+            "x": -6,
+            "z": -6
+          },
+          "b": {
+            "x": 6,
+            "z": -6
+          }
+        },
+        {
+          "a": {
+            "x": 6,
+            "z": -6
+          },
+          "b": {
+            "x": 6,
+            "z": 6
+          }
+        },
+        {
+          "a": {
+            "x": 6,
+            "z": 6
+          },
+          "b": {
+            "x": -6,
+            "z": 6
+          }
+        },
+        {
+          "a": {
+            "x": -6,
+            "z": 6
+          },
+          "b": {
+            "x": -6,
+            "z": -6
+          }
+        }
+      ]
+    },
+    "antennaOffset": 0.15,
+    "initialPose": {
+      "x": -2,
+      "y": 0.2,
+      "z": 0,
+      "heading": 0
+    },
+    "groups": [
+      {
+        "id": "odorExcL",
+        "label": "Smell excitation · left",
+        "indices": [
+          1447,
+          1686,
+          5988,
+          7902,
+          8441,
+          9038,
+          9807,
+          16563,
+          52586,
+          54962
+        ]
+      },
+      {
+        "id": "odorExcR",
+        "label": "Smell excitation · right",
+        "indices": [
+          2946,
+          5089,
+          7174,
+          7436,
+          7850,
+          8101,
+          8831,
+          9241,
+          9419,
+          51132
+        ]
+      },
+      {
+        "id": "odorInhL",
+        "label": "Smell inhibition · left",
+        "indices": [
+          126,
+          880,
+          3150,
+          3292,
+          4441,
+          49730
+        ]
+      },
+      {
+        "id": "odorInhR",
+        "label": "Smell inhibition · right",
+        "indices": [
+          255,
+          1436,
+          4063,
+          6711,
+          7303,
+          56268
+        ]
+      },
+      {
+        "id": "visionL",
+        "label": "Vision · left",
+        "indices": [
+          54,
+          127,
+          180,
+          187,
+          420,
+          441,
+          533,
+          740,
+          743,
+          1161,
+          1233,
+          1544,
+          1566,
+          1715,
+          1722,
+          2035,
+          2182,
+          2232,
+          2887,
+          3310,
+          3609,
+          4174,
+          4612,
+          4632,
+          6056,
+          6178,
+          6226,
+          6780,
+          6982,
+          7300,
+          7716,
+          7790,
+          9110,
+          9142,
+          10162,
+          10372,
+          10417,
+          11088,
+          11108,
+          11449,
+          13589,
+          13829,
+          14072,
+          14681,
+          15329,
+          16767,
+          19312,
+          19547,
+          19784,
+          20152,
+          20269,
+          20453,
+          20506,
+          21711,
+          22125,
+          22722,
+          24850,
+          27276,
+          29149,
+          29291,
+          29641,
+          32404,
+          32704,
+          34390,
+          35158,
+          36402,
+          37165,
+          37302,
+          37449,
+          37590,
+          38100,
+          39084,
+          40474,
+          41356,
+          41394,
+          41555,
+          41719,
+          42685,
+          45870,
+          46966,
+          49410,
+          49838,
+          50217,
+          50218,
+          50243,
+          50495,
+          50706,
+          50753,
+          50790,
+          50791,
+          50792,
+          50793,
+          50819,
+          51018,
+          51117,
+          51384,
+          51409,
+          51451,
+          51842,
+          51852,
+          52186,
+          52187,
+          52210,
+          52279,
+          52428,
+          52895,
+          53214,
+          53607,
+          53609,
+          53706,
+          53878,
+          54134,
+          54146,
+          54296,
+          55619,
+          56024,
+          56082,
+          56114,
+          56161,
+          56199,
+          56364,
+          69331
+        ]
+      },
+      {
+        "id": "visionR",
+        "label": "Vision · right",
+        "indices": [
+          3,
+          22,
+          204,
+          339,
+          342,
+          655,
+          720,
+          992,
+          1002,
+          1341,
+          1507,
+          1525,
+          1750,
+          1778,
+          2368,
+          2820,
+          2904,
+          3605,
+          3631,
+          3866,
+          4261,
+          4411,
+          4447,
+          4520,
+          4657,
+          4941,
+          4993,
+          5638,
+          5653,
+          5887,
+          5959,
+          5981,
+          6001,
+          6073,
+          6079,
+          6193,
+          6416,
+          6508,
+          6630,
+          6903,
+          7121,
+          7140,
+          7213,
+          7271,
+          7310,
+          7400,
+          7483,
+          7575,
+          7598,
+          7837,
+          7855,
+          7910,
+          8168,
+          8390,
+          8450,
+          8982,
+          8993,
+          9346,
+          9754,
+          9805,
+          10067,
+          10179,
+          10323,
+          10337,
+          10406,
+          10870,
+          10911,
+          11328,
+          11561,
+          11681,
+          11828,
+          12008,
+          12060,
+          12100,
+          12292,
+          12364,
+          12609,
+          12766,
+          13704,
+          14116,
+          14227,
+          14231,
+          14606,
+          14834,
+          14976,
+          15146,
+          15209,
+          15378,
+          15559,
+          15739,
+          15781,
+          15929,
+          16222,
+          16280,
+          16407,
+          17373,
+          18327,
+          18588,
+          18889,
+          19126,
+          20695,
+          21019,
+          21985,
+          22203,
+          23085,
+          27568,
+          28452,
+          29965,
+          32092,
+          32503,
+          33578,
+          33658,
+          33661,
+          35191,
+          36079,
+          38427,
+          41614,
+          44673,
+          45715,
+          51855,
+          52410,
+          52691,
+          52983,
+          53090,
+          54281,
+          56198,
+          56257,
+          56565
+        ]
+      },
+      {
+        "id": "turnL",
+        "label": "Turning · left",
+        "indices": [
+          99,
+          212,
+          244,
+          356,
+          390,
+          567,
+          604,
+          636,
+          679,
+          1006,
+          1008,
+          1025,
+          1062,
+          1210,
+          1343,
+          1456,
+          1661,
+          1676,
+          1958,
+          2431,
+          3013,
+          51318,
+          52528,
+          52647,
+          56297
+        ]
+      },
+      {
+        "id": "turnR",
+        "label": "Turning · right",
+        "indices": [
+          43,
+          48,
+          49,
+          164,
+          202,
+          225,
+          386,
+          698,
+          779,
+          837,
+          928,
+          1100,
+          1129,
+          1156,
+          1285,
+          1291,
+          1508,
+          1883,
+          1884,
+          2410,
+          2848,
+          2946,
+          7384,
+          49332,
+          53164
+        ]
+      },
+      {
+        "id": "flightL",
+        "label": "Flight · left",
+        "indices": [
+          367,
+          550,
+          636,
+          663,
+          904,
+          2347,
+          52820,
+          52964,
+          53752
+        ]
+      },
+      {
+        "id": "flightR",
+        "label": "Flight · right",
+        "indices": [
+          301,
+          641,
+          642,
+          684,
+          837,
+          985,
+          1896,
+          3271,
+          49434
+        ]
+      },
+      {
+        "id": "landingL",
+        "label": "Landing · left",
+        "indices": [
+          356,
+          1456
+        ]
+      },
+      {
+        "id": "landingR",
+        "label": "Landing · right",
+        "indices": [
+          360,
+          1291
+        ]
+      },
+      {
+        "id": "taste",
+        "label": "Taste",
+        "indices": [
+          10028,
+          14533,
+          15365,
+          16009,
+          19320,
+          22332,
+          22971,
+          26066,
+          26650,
+          28326,
+          28588,
+          29405,
+          30134,
+          31754,
+          32477,
+          33100,
+          46139,
+          46836,
+          47308
+        ]
+      },
+      {
+        "id": "feeding",
+        "label": "Feeding circuit",
+        "indices": [
+          719,
+          810,
+          814,
+          819,
+          867,
+          1500,
+          2510,
+          2517,
+          3180,
+          9657
+        ]
+      },
+      {
+        "id": "proboscis",
+        "label": "Proboscis motor neurons",
+        "indices": [
+          913,
+          4398,
+          56792,
+          69087
+        ]
+      },
+      {
+        "id": "loom",
+        "label": "Approaching objects",
+        "indices": [
+          1734,
+          2000,
+          2394,
+          3955,
+          4046,
+          4790,
+          4798,
+          5137,
+          5249,
+          5317,
+          5402,
+          5542,
+          5545,
+          5582,
+          5597,
+          5664,
+          5710,
+          5751,
+          5781,
+          5790,
+          5910,
+          5946,
+          5975,
+          6066,
+          6105,
+          6230,
+          6254,
+          6278,
+          6740,
+          6829,
+          6894,
+          6898,
+          6951,
+          7045,
+          7134,
+          7171,
+          7312,
+          7373,
+          7396,
+          7455,
+          7476,
+          7487,
+          7535,
+          7610,
+          7635,
+          7669,
+          7690,
+          7692,
+          7784,
+          7792,
+          7827,
+          7867,
+          7880,
+          7888,
+          8075,
+          8120,
+          8234,
+          8321,
+          8397,
+          8619,
+          8663,
+          8699,
+          8720,
+          8723,
+          8779,
+          8836,
+          8845,
+          8922,
+          9120,
+          9192,
+          9387,
+          9481,
+          10029,
+          10293,
+          11045,
+          11096,
+          11139,
+          11691,
+          11712,
+          11945,
+          11970,
+          11996,
+          12025,
+          12282,
+          12463,
+          12627,
+          12844,
+          12865,
+          12869,
+          12923,
+          13457,
+          13711,
+          14448,
+          14619,
+          14776,
+          15642,
+          15861,
+          30394,
+          31535,
+          36764,
+          38326,
+          39278,
+          49399,
+          49559,
+          49683,
+          50247,
+          50388,
+          50522,
+          50651,
+          50961,
+          51200,
+          51274,
+          51377,
+          51407,
+          51478,
+          51548,
+          51756,
+          51859,
+          52051,
+          53150,
+          53401,
+          53571,
+          53894,
+          54368,
+          54534,
+          54884
+        ]
+      }
+    ],
+    "groupLinks": [
+      {
+        "source": "odorExcL",
+        "target": "odorExcL",
+        "edgeCount": 8,
+        "positiveWeight": 158,
+        "negativeWeight": 0
+      },
+      {
+        "source": "odorExcL",
+        "target": "odorInhL",
+        "edgeCount": 3,
+        "positiveWeight": 28,
+        "negativeWeight": 0
+      },
+      {
+        "source": "odorExcL",
+        "target": "visionL",
+        "edgeCount": 1,
+        "positiveWeight": 30,
+        "negativeWeight": 0
+      },
+      {
+        "source": "odorExcL",
+        "target": "turnL",
+        "edgeCount": 59,
+        "positiveWeight": 1712,
+        "negativeWeight": 0
+      },
+      {
+        "source": "odorExcL",
+        "target": "turnR",
+        "edgeCount": 8,
+        "positiveWeight": 163,
+        "negativeWeight": 0
+      },
+      {
+        "source": "odorExcL",
+        "target": "landingL",
+        "edgeCount": 5,
+        "positiveWeight": 69,
+        "negativeWeight": 0
+      },
+      {
+        "source": "odorExcR",
+        "target": "odorExcR",
+        "edgeCount": 10,
+        "positiveWeight": 181,
+        "negativeWeight": 0
+      },
+      {
+        "source": "odorExcR",
+        "target": "odorInhR",
+        "edgeCount": 6,
+        "positiveWeight": 90,
+        "negativeWeight": 0
+      },
+      {
+        "source": "odorExcR",
+        "target": "visionR",
+        "edgeCount": 2,
+        "positiveWeight": 43,
+        "negativeWeight": 0
+      },
+      {
+        "source": "odorExcR",
+        "target": "turnL",
+        "edgeCount": 8,
+        "positiveWeight": 157,
+        "negativeWeight": 0
+      },
+      {
+        "source": "odorExcR",
+        "target": "turnR",
+        "edgeCount": 41,
+        "positiveWeight": 1231,
+        "negativeWeight": 0
+      },
+      {
+        "source": "odorExcR",
+        "target": "landingR",
+        "edgeCount": 3,
+        "positiveWeight": 49,
+        "negativeWeight": 0
+      },
+      {
+        "source": "odorInhL",
+        "target": "odorExcL",
+        "edgeCount": 5,
+        "positiveWeight": 0,
+        "negativeWeight": 184
+      },
+      {
+        "source": "odorInhL",
+        "target": "odorInhL",
+        "edgeCount": 2,
+        "positiveWeight": 0,
+        "negativeWeight": 28
+      },
+      {
+        "source": "odorInhL",
+        "target": "turnL",
+        "edgeCount": 4,
+        "positiveWeight": 0,
+        "negativeWeight": 177
+      },
+      {
+        "source": "odorInhL",
+        "target": "turnR",
+        "edgeCount": 1,
+        "positiveWeight": 0,
+        "negativeWeight": 24
+      },
+      {
+        "source": "odorInhL",
+        "target": "flightL",
+        "edgeCount": 3,
+        "positiveWeight": 0,
+        "negativeWeight": 29
+      },
+      {
+        "source": "odorInhL",
+        "target": "loom",
+        "edgeCount": 8,
+        "positiveWeight": 0,
+        "negativeWeight": 46
+      },
+      {
+        "source": "odorInhR",
+        "target": "odorExcR",
+        "edgeCount": 7,
+        "positiveWeight": 0,
+        "negativeWeight": 226
+      },
+      {
+        "source": "odorInhR",
+        "target": "odorInhL",
+        "edgeCount": 1,
+        "positiveWeight": 0,
+        "negativeWeight": 5
+      },
+      {
+        "source": "odorInhR",
+        "target": "odorInhR",
+        "edgeCount": 2,
+        "positiveWeight": 0,
+        "negativeWeight": 30
+      },
+      {
+        "source": "odorInhR",
+        "target": "visionR",
+        "edgeCount": 1,
+        "positiveWeight": 0,
+        "negativeWeight": 5
+      },
+      {
+        "source": "odorInhR",
+        "target": "turnR",
+        "edgeCount": 8,
+        "positiveWeight": 0,
+        "negativeWeight": 269
+      },
+      {
+        "source": "odorInhR",
+        "target": "flightR",
+        "edgeCount": 2,
+        "positiveWeight": 0,
+        "negativeWeight": 19
+      },
+      {
+        "source": "odorInhR",
+        "target": "loom",
+        "edgeCount": 12,
+        "positiveWeight": 0,
+        "negativeWeight": 76
+      },
+      {
+        "source": "visionL",
+        "target": "odorInhL",
+        "edgeCount": 1,
+        "positiveWeight": 35,
+        "negativeWeight": 0
+      },
+      {
+        "source": "visionL",
+        "target": "odorInhR",
+        "edgeCount": 1,
+        "positiveWeight": 50,
+        "negativeWeight": 0
+      },
+      {
+        "source": "visionL",
+        "target": "turnL",
+        "edgeCount": 47,
+        "positiveWeight": 665,
+        "negativeWeight": 476
+      },
+      {
+        "source": "visionL",
+        "target": "turnR",
+        "edgeCount": 8,
+        "positiveWeight": 206,
+        "negativeWeight": 182
+      },
+      {
+        "source": "visionL",
+        "target": "flightL",
+        "edgeCount": 44,
+        "positiveWeight": 1512,
+        "negativeWeight": 14
+      },
+      {
+        "source": "visionL",
+        "target": "flightR",
+        "edgeCount": 28,
+        "positiveWeight": 525,
+        "negativeWeight": 480
+      },
+      {
+        "source": "visionL",
+        "target": "landingL",
+        "edgeCount": 11,
+        "positiveWeight": 28,
+        "negativeWeight": 197
+      },
+      {
+        "source": "visionL",
+        "target": "landingR",
+        "edgeCount": 4,
+        "positiveWeight": 21,
+        "negativeWeight": 11
+      },
+      {
+        "source": "visionR",
+        "target": "odorExcR",
+        "edgeCount": 1,
+        "positiveWeight": 5,
+        "negativeWeight": 0
+      },
+      {
+        "source": "visionR",
+        "target": "odorInhL",
+        "edgeCount": 1,
+        "positiveWeight": 20,
+        "negativeWeight": 0
+      },
+      {
+        "source": "visionR",
+        "target": "odorInhR",
+        "edgeCount": 1,
+        "positiveWeight": 50,
+        "negativeWeight": 0
+      },
+      {
+        "source": "visionR",
+        "target": "turnL",
+        "edgeCount": 18,
+        "positiveWeight": 316,
+        "negativeWeight": 88
+      },
+      {
+        "source": "visionR",
+        "target": "turnR",
+        "edgeCount": 44,
+        "positiveWeight": 803,
+        "negativeWeight": 270
+      },
+      {
+        "source": "visionR",
+        "target": "flightL",
+        "edgeCount": 36,
+        "positiveWeight": 676,
+        "negativeWeight": 495
+      },
+      {
+        "source": "visionR",
+        "target": "flightR",
+        "edgeCount": 44,
+        "positiveWeight": 1270,
+        "negativeWeight": 50
+      },
+      {
+        "source": "visionR",
+        "target": "landingL",
+        "edgeCount": 6,
+        "positiveWeight": 37,
+        "negativeWeight": 23
+      },
+      {
+        "source": "visionR",
+        "target": "landingR",
+        "edgeCount": 12,
+        "positiveWeight": 40,
+        "negativeWeight": 184
+      },
+      {
+        "source": "turnL",
+        "target": "odorExcL",
+        "edgeCount": 5,
+        "positiveWeight": 33,
+        "negativeWeight": 0
+      },
+      {
+        "source": "turnL",
+        "target": "odorInhL",
+        "edgeCount": 3,
+        "positiveWeight": 17,
+        "negativeWeight": 0
+      },
+      {
+        "source": "turnL",
+        "target": "visionL",
+        "edgeCount": 6,
+        "positiveWeight": 61,
+        "negativeWeight": 0
+      },
+      {
+        "source": "turnL",
+        "target": "visionR",
+        "edgeCount": 3,
+        "positiveWeight": 33,
+        "negativeWeight": 0
+      },
+      {
+        "source": "turnL",
+        "target": "turnL",
+        "edgeCount": 34,
+        "positiveWeight": 705,
+        "negativeWeight": 63
+      },
+      {
+        "source": "turnL",
+        "target": "turnR",
+        "edgeCount": 24,
+        "positiveWeight": 395,
+        "negativeWeight": 67
+      },
+      {
+        "source": "turnL",
+        "target": "flightL",
+        "edgeCount": 5,
+        "positiveWeight": 46,
+        "negativeWeight": 6
+      },
+      {
+        "source": "turnL",
+        "target": "flightR",
+        "edgeCount": 6,
+        "positiveWeight": 171,
+        "negativeWeight": 5
+      },
+      {
+        "source": "turnL",
+        "target": "landingL",
+        "edgeCount": 4,
+        "positiveWeight": 22,
+        "negativeWeight": 0
+      },
+      {
+        "source": "turnL",
+        "target": "landingR",
+        "edgeCount": 2,
+        "positiveWeight": 32,
+        "negativeWeight": 0
+      },
+      {
+        "source": "turnL",
+        "target": "feeding",
+        "edgeCount": 5,
+        "positiveWeight": 26,
+        "negativeWeight": 10
+      },
+      {
+        "source": "turnR",
+        "target": "odorExcL",
+        "edgeCount": 1,
+        "positiveWeight": 5,
+        "negativeWeight": 0
+      },
+      {
+        "source": "turnR",
+        "target": "odorExcR",
+        "edgeCount": 3,
+        "positiveWeight": 24,
+        "negativeWeight": 0
+      },
+      {
+        "source": "turnR",
+        "target": "odorInhL",
+        "edgeCount": 1,
+        "positiveWeight": 36,
+        "negativeWeight": 0
+      },
+      {
+        "source": "turnR",
+        "target": "odorInhR",
+        "edgeCount": 3,
+        "positiveWeight": 23,
+        "negativeWeight": 0
+      },
+      {
+        "source": "turnR",
+        "target": "visionL",
+        "edgeCount": 6,
+        "positiveWeight": 36,
+        "negativeWeight": 0
+      },
+      {
+        "source": "turnR",
+        "target": "visionR",
+        "edgeCount": 12,
+        "positiveWeight": 86,
+        "negativeWeight": 5
+      },
+      {
+        "source": "turnR",
+        "target": "turnL",
+        "edgeCount": 26,
+        "positiveWeight": 387,
+        "negativeWeight": 6
+      },
+      {
+        "source": "turnR",
+        "target": "turnR",
+        "edgeCount": 23,
+        "positiveWeight": 768,
+        "negativeWeight": 47
+      },
+      {
+        "source": "turnR",
+        "target": "flightL",
+        "edgeCount": 6,
+        "positiveWeight": 89,
+        "negativeWeight": 0
+      },
+      {
+        "source": "turnR",
+        "target": "flightR",
+        "edgeCount": 4,
+        "positiveWeight": 48,
+        "negativeWeight": 0
+      },
+      {
+        "source": "turnR",
+        "target": "landingL",
+        "edgeCount": 3,
+        "positiveWeight": 27,
+        "negativeWeight": 6
+      },
+      {
+        "source": "turnR",
+        "target": "landingR",
+        "edgeCount": 3,
+        "positiveWeight": 11,
+        "negativeWeight": 6
+      },
+      {
+        "source": "turnR",
+        "target": "feeding",
+        "edgeCount": 7,
+        "positiveWeight": 51,
+        "negativeWeight": 62
+      },
+      {
+        "source": "flightL",
+        "target": "visionR",
+        "edgeCount": 2,
+        "positiveWeight": 0,
+        "negativeWeight": 52
+      },
+      {
+        "source": "flightL",
+        "target": "turnL",
+        "edgeCount": 3,
+        "positiveWeight": 9,
+        "negativeWeight": 33
+      },
+      {
+        "source": "flightL",
+        "target": "turnR",
+        "edgeCount": 4,
+        "positiveWeight": 118,
+        "negativeWeight": 21
+      },
+      {
+        "source": "flightL",
+        "target": "flightL",
+        "edgeCount": 9,
+        "positiveWeight": 151,
+        "negativeWeight": 24
+      },
+      {
+        "source": "flightL",
+        "target": "flightR",
+        "edgeCount": 4,
+        "positiveWeight": 112,
+        "negativeWeight": 45
+      },
+      {
+        "source": "flightR",
+        "target": "visionL",
+        "edgeCount": 3,
+        "positiveWeight": 5,
+        "negativeWeight": 22
+      },
+      {
+        "source": "flightR",
+        "target": "visionR",
+        "edgeCount": 1,
+        "positiveWeight": 6,
+        "negativeWeight": 0
+      },
+      {
+        "source": "flightR",
+        "target": "turnL",
+        "edgeCount": 3,
+        "positiveWeight": 12,
+        "negativeWeight": 25
+      },
+      {
+        "source": "flightR",
+        "target": "turnR",
+        "edgeCount": 3,
+        "positiveWeight": 107,
+        "negativeWeight": 19
+      },
+      {
+        "source": "flightR",
+        "target": "flightL",
+        "edgeCount": 7,
+        "positiveWeight": 60,
+        "negativeWeight": 40
+      },
+      {
+        "source": "flightR",
+        "target": "flightR",
+        "edgeCount": 7,
+        "positiveWeight": 57,
+        "negativeWeight": 26
+      },
+      {
+        "source": "landingL",
+        "target": "turnL",
+        "edgeCount": 2,
+        "positiveWeight": 24,
+        "negativeWeight": 0
+      },
+      {
+        "source": "landingL",
+        "target": "turnR",
+        "edgeCount": 3,
+        "positiveWeight": 33,
+        "negativeWeight": 0
+      },
+      {
+        "source": "landingL",
+        "target": "landingR",
+        "edgeCount": 2,
+        "positiveWeight": 32,
+        "negativeWeight": 0
+      },
+      {
+        "source": "landingR",
+        "target": "visionR",
+        "edgeCount": 1,
+        "positiveWeight": 5,
+        "negativeWeight": 0
+      },
+      {
+        "source": "landingR",
+        "target": "turnL",
+        "edgeCount": 5,
+        "positiveWeight": 58,
+        "negativeWeight": 0
+      },
+      {
+        "source": "landingR",
+        "target": "turnR",
+        "edgeCount": 4,
+        "positiveWeight": 24,
+        "negativeWeight": 0
+      },
+      {
+        "source": "landingR",
+        "target": "landingL",
+        "edgeCount": 2,
+        "positiveWeight": 32,
+        "negativeWeight": 0
+      },
+      {
+        "source": "landingR",
+        "target": "landingR",
+        "edgeCount": 1,
+        "positiveWeight": 5,
+        "negativeWeight": 0
+      },
+      {
+        "source": "feeding",
+        "target": "turnL",
+        "edgeCount": 4,
+        "positiveWeight": 0,
+        "negativeWeight": 42
+      },
+      {
+        "source": "feeding",
+        "target": "turnR",
+        "edgeCount": 1,
+        "positiveWeight": 0,
+        "negativeWeight": 16
+      },
+      {
+        "source": "proboscis",
+        "target": "proboscis",
+        "edgeCount": 3,
+        "positiveWeight": 36,
+        "negativeWeight": 0
+      },
+      {
+        "source": "loom",
+        "target": "odorInhL",
+        "edgeCount": 18,
+        "positiveWeight": 158,
+        "negativeWeight": 0
+      },
+      {
+        "source": "loom",
+        "target": "odorInhR",
+        "edgeCount": 27,
+        "positiveWeight": 275,
+        "negativeWeight": 0
+      },
+      {
+        "source": "loom",
+        "target": "visionR",
+        "edgeCount": 2,
+        "positiveWeight": 11,
+        "negativeWeight": 0
+      },
+      {
+        "source": "loom",
+        "target": "turnL",
+        "edgeCount": 84,
+        "positiveWeight": 1910,
+        "negativeWeight": 0
+      },
+      {
+        "source": "loom",
+        "target": "turnR",
+        "edgeCount": 52,
+        "positiveWeight": 678,
+        "negativeWeight": 0
+      },
+      {
+        "source": "loom",
+        "target": "flightL",
+        "edgeCount": 71,
+        "positiveWeight": 1827,
+        "negativeWeight": 0
+      },
+      {
+        "source": "loom",
+        "target": "flightR",
+        "edgeCount": 50,
+        "positiveWeight": 665,
+        "negativeWeight": 0
+      },
+      {
+        "source": "loom",
+        "target": "loom",
+        "edgeCount": 1387,
+        "positiveWeight": 9814,
+        "negativeWeight": 0
+      }
+    ],
+    "prngId": "splitmix64-box-muller-v1"
+  },
+  "pauseResponseMs": 35.508834000000206,
+  "initialLoadMs": 182.79999995231628,
+  "resetLoadMs": 27.299999952316284,
+  "lastStepMs": 2.299999952316284,
+  "wasmBytes": 31522816,
+  "frames": {
+    "first": {
+      "tick": 1,
+      "pose": {
+        "x": -1.9994047280443028,
+        "y": 0.2,
+        "z": -0.0000011638223775246234,
+        "heading": 6.2812301992940185
+      },
+      "neural": {
+        "motor": {
+          "thrust": 0.0496060911163979,
+          "turn": -0.0024438848569596286,
+          "flightThrust": 0.096489921837455,
+          "flightTurn": -0.00302153825708908
+        },
+        "groups": [
+          {
+            "id": "odorExcL",
+            "meanVoltage": 0.04590009227523968,
+            "spikeFraction": 0
+          },
+          {
+            "id": "odorExcR",
+            "meanVoltage": 0.05164671370711503,
+            "spikeFraction": 0
+          },
+          {
+            "id": "odorInhL",
+            "meanVoltage": 0.05484880473704711,
+            "spikeFraction": 0
+          },
+          {
+            "id": "odorInhR",
+            "meanVoltage": 0.0504427473709556,
+            "spikeFraction": 0
+          },
+          {
+            "id": "visionL",
+            "meanVoltage": 0.05187295248477574,
+            "spikeFraction": 0
+          },
+          {
+            "id": "visionR",
+            "meanVoltage": 0.0500799510893437,
+            "spikeFraction": 0
+          },
+          {
+            "id": "turnL",
+            "meanVoltage": 0.052092297808149876,
+            "spikeFraction": 0
+          },
+          {
+            "id": "turnR",
+            "meanVoltage": 0.049648412951190234,
+            "spikeFraction": 0
+          },
+          {
+            "id": "flightL",
+            "meanVoltage": 0.04821668299166302,
+            "spikeFraction": 0
+          },
+          {
+            "id": "flightR",
+            "meanVoltage": 0.047061376191404124,
+            "spikeFraction": 0
+          },
+          {
+            "id": "landingL",
+            "meanVoltage": 0.04197171327591644,
+            "spikeFraction": 0
+          },
+          {
+            "id": "landingR",
+            "meanVoltage": 0.036562673333464746,
+            "spikeFraction": 0
+          },
+          {
+            "id": "taste",
+            "meanVoltage": 0.05358215086660685,
+            "spikeFraction": 0
+          },
+          {
+            "id": "feeding",
+            "meanVoltage": 0.044108668046919125,
+            "spikeFraction": 0
+          },
+          {
+            "id": "proboscis",
+            "meanVoltage": 0.04396390731456564,
+            "spikeFraction": 0
+          },
+          {
+            "id": "loom",
+            "meanVoltage": 0.05046003305036928,
+            "spikeFraction": 0
+          }
+        ],
+        "spikeCount": 0
+      },
+      "sensory": {
+        "left": {
+          "odor": 0,
+          "brightness": 1,
+          "shade": 0,
+          "exitCue": 0
+        },
+        "right": {
+          "odor": 0,
+          "brightness": 1,
+          "shade": 0,
+          "exitCue": 0
+        },
+        "wind": {
+          "x": 0,
+          "z": 0
+        }
+      },
+      "sensoryPose": {
+        "x": -2,
+        "y": 0.2,
+        "z": 0,
+        "heading": 0
+      }
+    },
+    "unperturbedSecond": {
+      "tick": 2,
+      "pose": {
+        "x": -1.9982382013337165,
+        "y": 0.2,
+        "z": -0.000004617139087986498,
+        "heading": 6.2802249749460195
+      },
+      "neural": {
+        "motor": {
+          "thrust": 0.09721098517269561,
+          "turn": -0.001256530434998654,
+          "flightThrust": 0.18959993347786186,
+          "flightTurn": -0.00011046721026456569
+        },
+        "groups": [
+          {
+            "id": "odorExcL",
+            "meanVoltage": 0.09134482945079266,
+            "spikeFraction": 0
+          },
+          {
+            "id": "odorExcR",
+            "meanVoltage": 0.10061355005618414,
+            "spikeFraction": 0
+          },
+          {
+            "id": "odorInhL",
+            "meanVoltage": 0.09733010241643723,
+            "spikeFraction": 0
+          },
+          {
+            "id": "odorInhR",
+            "meanVoltage": 0.09748287755183528,
+            "spikeFraction": 0
+          },
+          {
+            "id": "visionL",
+            "meanVoltage": 0.09923183553043737,
+            "spikeFraction": 0
+          },
+          {
+            "id": "visionR",
+            "meanVoltage": 0.09899622281675782,
+            "spikeFraction": 0
+          },
+          {
+            "id": "turnL",
+            "meanVoltage": 0.10238942286988262,
+            "spikeFraction": 0
+          },
+          {
+            "id": "turnR",
+            "meanVoltage": 0.10113289243488399,
+            "spikeFraction": 0
+          },
+          {
+            "id": "flightL",
+            "meanVoltage": 0.09272327518136868,
+            "spikeFraction": 0
+          },
+          {
+            "id": "flightR",
+            "meanVoltage": 0.09501540163083685,
+            "spikeFraction": 0
+          },
+          {
+            "id": "landingL",
+            "meanVoltage": 0.09947183240231779,
+            "spikeFraction": 0
+          },
+          {
+            "id": "landingR",
+            "meanVoltage": 0.0824874874055456,
+            "spikeFraction": 0
+          },
+          {
+            "id": "taste",
+            "meanVoltage": 0.09822268012823827,
+            "spikeFraction": 0
+          },
+          {
+            "id": "feeding",
+            "meanVoltage": 0.09466450093607953,
+            "spikeFraction": 0
+          },
+          {
+            "id": "proboscis",
+            "meanVoltage": 0.09485253840599582,
+            "spikeFraction": 0
+          },
+          {
+            "id": "loom",
+            "meanVoltage": 0.09882477292654544,
+            "spikeFraction": 0
+          }
+        ],
+        "spikeCount": 0
+      },
+      "sensory": {
+        "left": {
+          "odor": 0,
+          "brightness": 1,
+          "shade": 0,
+          "exitCue": 0
+        },
+        "right": {
+          "odor": 0,
+          "brightness": 1,
+          "shade": 0,
+          "exitCue": 0
+        },
+        "wind": {
+          "x": 0,
+          "z": 0
+        }
+      },
+      "sensoryPose": {
+        "x": -1.9994047280443028,
+        "y": 0.2,
+        "z": -0.0000011638223775246234,
+        "heading": 6.2812301992940185
+      }
+    },
+    "injected": {
+      "tick": 2,
+      "pose": {
+        "x": -1.9982382013337165,
+        "y": 0.2,
+        "z": -0.000004617139087986498,
+        "heading": 6.2802249749460195
+      },
+      "neural": {
+        "motor": {
+          "thrust": 0.09721098517269561,
+          "turn": -0.001256530434998654,
+          "flightThrust": 0.18959993347786186,
+          "flightTurn": -0.00011046721026456569
+        },
+        "groups": [
+          {
+            "id": "odorExcL",
+            "meanVoltage": 0,
+            "spikeFraction": 1
+          },
+          {
+            "id": "odorExcR",
+            "meanVoltage": 0.10061355005618414,
+            "spikeFraction": 0
+          },
+          {
+            "id": "odorInhL",
+            "meanVoltage": 0.09733010241643723,
+            "spikeFraction": 0
+          },
+          {
+            "id": "odorInhR",
+            "meanVoltage": 0.09748287755183528,
+            "spikeFraction": 0
+          },
+          {
+            "id": "visionL",
+            "meanVoltage": 0.09923183553043737,
+            "spikeFraction": 0
+          },
+          {
+            "id": "visionR",
+            "meanVoltage": 0.09899622281675782,
+            "spikeFraction": 0
+          },
+          {
+            "id": "turnL",
+            "meanVoltage": 0.10238942286988262,
+            "spikeFraction": 0
+          },
+          {
+            "id": "turnR",
+            "meanVoltage": 0.10113289243488399,
+            "spikeFraction": 0
+          },
+          {
+            "id": "flightL",
+            "meanVoltage": 0.09272327518136868,
+            "spikeFraction": 0
+          },
+          {
+            "id": "flightR",
+            "meanVoltage": 0.09501540163083685,
+            "spikeFraction": 0
+          },
+          {
+            "id": "landingL",
+            "meanVoltage": 0.09947183240231779,
+            "spikeFraction": 0
+          },
+          {
+            "id": "landingR",
+            "meanVoltage": 0.0824874874055456,
+            "spikeFraction": 0
+          },
+          {
+            "id": "taste",
+            "meanVoltage": 0.09822268012823827,
+            "spikeFraction": 0
+          },
+          {
+            "id": "feeding",
+            "meanVoltage": 0.09466450093607953,
+            "spikeFraction": 0
+          },
+          {
+            "id": "proboscis",
+            "meanVoltage": 0.09485253840599582,
+            "spikeFraction": 0
+          },
+          {
+            "id": "loom",
+            "meanVoltage": 0.09882477292654544,
+            "spikeFraction": 0
+          }
+        ],
+        "spikeCount": 10
+      },
+      "sensory": {
+        "left": {
+          "odor": 0,
+          "brightness": 1,
+          "shade": 0,
+          "exitCue": 0
+        },
+        "right": {
+          "odor": 0,
+          "brightness": 1,
+          "shade": 0,
+          "exitCue": 0
+        },
+        "wind": {
+          "x": 0,
+          "z": 0
+        }
+      },
+      "sensoryPose": {
+        "x": -1.9994047280443028,
+        "y": 0.2,
+        "z": -0.0000011638223775246234,
+        "heading": 6.2812301992940185
+      }
+    },
+    "running": {
+      "tick": 30,
+      "pose": {
+        "x": -1.8400484111120268,
+        "y": 0.2,
+        "z": -0.07624900421531974,
+        "heading": 5.575749994772592
+      },
+      "neural": {
+        "motor": {
+          "thrust": 0.78560232521404,
+          "turn": -0.031110090610758756,
+          "flightThrust": 1.5808324823931064,
+          "flightTurn": -0.03390968967148239
+        },
+        "groups": [
+          {
+            "id": "odorExcL",
+            "meanVoltage": 0,
+            "spikeFraction": 1
+          },
+          {
+            "id": "odorExcR",
+            "meanVoltage": 0.8001474060607123,
+            "spikeFraction": 0
+          },
+          {
+            "id": "odorInhL",
+            "meanVoltage": 0.8225459814081182,
+            "spikeFraction": 0
+          },
+          {
+            "id": "odorInhR",
+            "meanVoltage": 0.8216700234534414,
+            "spikeFraction": 0
+          },
+          {
+            "id": "visionL",
+            "meanVoltage": 0.7780051024849228,
+            "spikeFraction": 0
+          },
+          {
+            "id": "visionR",
+            "meanVoltage": 0.7865486137435915,
+            "spikeFraction": 0
+          },
+          {
+            "id": "turnL",
+            "meanVoltage": 0.8299078750801481,
+            "spikeFraction": 0
+          },
+          {
+            "id": "turnR",
+            "meanVoltage": 0.7987977844693891,
+            "spikeFraction": 0
+          },
+          {
+            "id": "flightL",
+            "meanVoltage": 0.7950413576534561,
+            "spikeFraction": 0
+          },
+          {
+            "id": "flightR",
+            "meanVoltage": 0.7894421595320088,
+            "spikeFraction": 0
+          },
+          {
+            "id": "landingL",
+            "meanVoltage": 0.8028121455845487,
+            "spikeFraction": 0
+          },
+          {
+            "id": "landingR",
+            "meanVoltage": 0.7896972810429639,
+            "spikeFraction": 0
+          },
+          {
+            "id": "taste",
+            "meanVoltage": 0.7851949306735275,
+            "spikeFraction": 0
+          },
+          {
+            "id": "feeding",
+            "meanVoltage": 0.7605432227302813,
+            "spikeFraction": 0
+          },
+          {
+            "id": "proboscis",
+            "meanVoltage": 0.7923639362805348,
+            "spikeFraction": 0
+          },
+          {
+            "id": "loom",
+            "meanVoltage": 0.7812336311446257,
+            "spikeFraction": 0
+          }
+        ],
+        "spikeCount": 10
+      },
+      "sensory": {
+        "left": {
+          "odor": 0,
+          "brightness": 1,
+          "shade": 0,
+          "exitCue": 0
+        },
+        "right": {
+          "odor": 0,
+          "brightness": 1,
+          "shade": 0,
+          "exitCue": 0
+        },
+        "wind": {
+          "x": 0,
+          "z": 0
+        }
+      },
+      "sensoryPose": {
+        "x": -1.8472133977879168,
+        "y": 0.2,
+        "z": -0.0701223744842782,
+        "heading": 5.600638067261199
+      }
+    }
+  },
+  "errors": []
+}

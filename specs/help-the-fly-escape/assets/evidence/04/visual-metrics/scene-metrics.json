@@ -1,0 +1,141 @@
+{
+  "kind": "screenshot-scene-metrics",
+  "generatedAt": "2026-09-06T16:21:49.577Z",
+  "note": "Absolute per-image telemetry, no reference involved. Low values locate flat, sparse, or empty captures; they never accept or reject an image on their own.",
+  "imageCount": 7,
+  "results": [
+    {
+      "id": "lifecycle-blockedExit",
+      "image": "../fly-escape/specs/help-the-fly-escape/assets/evidence/04/lifecycle-blockedExit.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sceneMetrics": {
+        "colorBuckets": 62,
+        "colorEntropyBits": 2.42343,
+        "edgeDensity": 0.10918,
+        "dominantColorShare": 0.42896,
+        "transparentShare": 0,
+        "luminanceMean": 234.69728,
+        "luminanceP5": 193.834,
+        "luminanceP95": 252.473,
+        "luminanceContrast": 58.639
+      }
+    },
+    {
+      "id": "lifecycle-events-crop",
+      "image": "../fly-escape/specs/help-the-fly-escape/assets/evidence/04/lifecycle-events-crop.png",
+      "dimensions": {
+        "width": 350,
+        "height": 800
+      },
+      "sceneMetrics": {
+        "colorBuckets": 44,
+        "colorEntropyBits": 1.46902,
+        "edgeDensity": 0.22942,
+        "dominantColorShare": 0.76166,
+        "transparentShare": 0,
+        "luminanceMean": 236.28717,
+        "luminanceP5": 143.9458,
+        "luminanceP95": 248.5628,
+        "luminanceContrast": 104.617
+      }
+    },
+    {
+      "id": "lifecycle-events-zoom",
+      "image": "../fly-escape/specs/help-the-fly-escape/assets/evidence/04/lifecycle-events-zoom.png",
+      "dimensions": {
+        "width": 700,
+        "height": 1600
+      },
+      "sceneMetrics": {
+        "colorBuckets": 47,
+        "colorEntropyBits": 1.69118,
+        "edgeDensity": 0.24812,
+        "dominantColorShare": 0.73416,
+        "transparentShare": 0,
+        "luminanceMean": 236.825,
+        "luminanceP5": 154.0116,
+        "luminanceP95": 248.5628,
+        "luminanceContrast": 94.5512
+      }
+    },
+    {
+      "id": "lifecycle-meal",
+      "image": "../fly-escape/specs/help-the-fly-escape/assets/evidence/04/lifecycle-meal.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sceneMetrics": {
+        "colorBuckets": 72,
+        "colorEntropyBits": 2.50105,
+        "edgeDensity": 0.12529,
+        "dominantColorShare": 0.43097,
+        "transparentShare": 0,
+        "luminanceMean": 233.50701,
+        "luminanceP5": 191.1444,
+        "luminanceP95": 252.473,
+        "luminanceContrast": 61.3286
+      }
+    },
+    {
+      "id": "lifecycle-mealThenStarvation",
+      "image": "../fly-escape/specs/help-the-fly-escape/assets/evidence/04/lifecycle-mealThenStarvation.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sceneMetrics": {
+        "colorBuckets": 69,
+        "colorEntropyBits": 2.53181,
+        "edgeDensity": 0.12918,
+        "dominantColorShare": 0.43118,
+        "transparentShare": 0,
+        "luminanceMean": 232.82192,
+        "luminanceP5": 175.438,
+        "luminanceP95": 252.473,
+        "luminanceContrast": 77.035
+      }
+    },
+    {
+      "id": "lifecycle-openExit",
+      "image": "../fly-escape/specs/help-the-fly-escape/assets/evidence/04/lifecycle-openExit.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sceneMetrics": {
+        "colorBuckets": 64,
+        "colorEntropyBits": 2.41158,
+        "edgeDensity": 0.1043,
+        "dominantColorShare": 0.4291,
+        "transparentShare": 0,
+        "luminanceMean": 235.12115,
+        "luminanceP5": 193.834,
+        "luminanceP95": 252.473,
+        "luminanceContrast": 58.639
+      }
+    },
+    {
+      "id": "lifecycle-proboscisSilenced",
+      "image": "../fly-escape/specs/help-the-fly-escape/assets/evidence/04/lifecycle-proboscisSilenced.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sceneMetrics": {
+        "colorBuckets": 65,
+        "colorEntropyBits": 2.52682,
+        "edgeDensity": 0.12741,
+        "dominantColorShare": 0.4309,
+        "transparentShare": 0,
+        "luminanceMean": 232.83443,
+        "luminanceP5": 174.803,
+        "luminanceP95": 252.473,
+        "luminanceContrast": 77.67
+      }
+    }
+  ]
+}

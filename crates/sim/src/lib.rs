@@ -12,3 +12,6 @@ pub mod field_lab;
 pub mod sensory;
 
 pub mod attempt;
+
+pub mod lifecycle_lab;
+pub mod record;

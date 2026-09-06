@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import type { Geometry, FieldGrid } from "@fly-escape/sim-client";
+import type { Geometry, FieldGrid, ContactRegion, ExitOpening } from "@fly-escape/sim-client";
 
 export type FieldChannel = "odor" | "brightness" | "shade" | "exitCue";
 /** Fixed modeled cue value at half overlay strength; never normalized per frame. */
@@ -31,7 +31,7 @@ export class ChamberView {
   private readonly renderer: THREE.WebGLRenderer;
   private readonly fly = createPlaceholderFly();
   private readonly observer: ResizeObserver;
-  private readonly sensorMarkers = [createSensorMarker("L"), createSensorMarker("R")];
+  private readonly sensorMarkers = [createPointMarker("L"), createPointMarker("R")];
   private readonly windArrow = new THREE.ArrowHelper(
     new THREE.Vector3(1, 0, 0),
     new THREE.Vector3(),
@@ -39,6 +39,8 @@ export class ChamberView {
     "#244f88",
   );
   private readonly bounds: THREE.Box3;
+  private readonly contactMarkers = new THREE.Group();
+  private readonly contactCenter = createPointMarker("C");
   private fieldOverlay: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial> | null = null;
   private fieldTexture: THREE.DataTexture | null = null;
 
@@ -79,11 +81,13 @@ export class ChamberView {
     sun.shadow.camera.near = 1;
     sun.shadow.camera.far = radius * 5;
     sun.shadow.normalBias = 0.025;
-    this.scene.add(sun, sun.target, createRoomGeometry(geometry), this.fly);
+    this.scene.add(sun, sun.target, createRoomGeometry(geometry), this.fly, this.contactMarkers);
     this.sensorMarkers.forEach((marker) => {
       marker.visible = false;
       this.scene.add(marker);
     });
+    this.contactCenter.visible = false;
+    this.scene.add(this.contactCenter);
     this.windArrow.visible = false;
     this.scene.add(this.windArrow);
     this.setPose({ x: 0, y: 0, z: 0, heading: 0 });
@@ -92,8 +96,47 @@ export class ChamberView {
     this.resize();
   }
 
+  setContactRegions(food: ContactRegion[], hazards: ContactRegion[], exit: ExitOpening): void {
+    this.contactCenter.visible = food.length > 0;
+    for (const child of [...this.contactMarkers.children]) {
+      if (child instanceof THREE.Mesh) {
+        child.geometry.dispose();
+        child.material.dispose();
+      }
+      this.contactMarkers.remove(child);
+    }
+    for (const [regions, color] of [
+      [food, "#6b9d52"],
+      [hazards, "#bd5349"],
+    ] as const) {
+      for (const region of regions) {
+        const mesh = new THREE.Mesh(
+          new THREE.CircleGeometry(region.radius, 48),
+          new THREE.MeshBasicMaterial({
+            color,
+            transparent: true,
+            opacity: 0.55,
+            depthWrite: false,
+          }),
+        );
+        mesh.rotation.x = -Math.PI / 2;
+        mesh.position.set(region.center.x, 0.025, region.center.z);
+        this.contactMarkers.add(mesh);
+      }
+    }
+    const length = Math.hypot(exit.b.x - exit.a.x, exit.b.z - exit.a.z);
+    const doorway = new THREE.Mesh(
+      new THREE.BoxGeometry(length, 0.025, 0.09),
+      new THREE.MeshBasicMaterial({ color: "#e9b843" }),
+    );
+    doorway.position.set((exit.a.x + exit.b.x) / 2, 0.04, (exit.a.z + exit.b.z) / 2);
+    doorway.rotation.y = -Math.atan2(exit.b.z - exit.a.z, exit.b.x - exit.a.x);
+    this.contactMarkers.add(doorway);
+  }
+
   setPose(pose: FlyPose): void {
     this.fly.position.set(pose.x, pose.y, pose.z);
+    this.contactCenter.position.set(pose.x, 0, pose.z);
     // The replaceable model is +Y up, +Z forward, with its pivot at foot contact.
     this.fly.rotation.y = Math.PI / 2 - pose.heading;
   }
@@ -336,7 +379,7 @@ function createPlaceholderFly(): THREE.Group {
   return fly;
 }
 
-function createSensorMarker(label: "L" | "R"): THREE.Group {
+function createPointMarker(label: "L" | "R"): THREE.Group {
   const group = new THREE.Group();
   const color = label === "L" ? "#174845" : "#742b20";
   const pin = new THREE.Mesh(

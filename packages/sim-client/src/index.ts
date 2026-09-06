@@ -1,4 +1,4 @@
-import type { FieldScenario } from "./generated/sim";
+import type { FieldScenario, LifecycleScenario } from "./generated/sim";
 import type { Reply, Request } from "./protocol";
 export type * from "./generated/sim";
 export type { Reply } from "./protocol";
@@ -37,6 +37,12 @@ export class BrainClient {
     this.ready = false;
     this.pending = false;
     this.send({ type: "startFields", generation: this.generation, seed, scenario });
+  }
+  startLifecycle(seed: number, scenario: LifecycleScenario): void {
+    this.generation++;
+    this.ready = false;
+    this.pending = false;
+    this.send({ type: "startLifecycle", generation: this.generation, seed, scenario });
   }
   step(): void {
     if (!this.ready || this.pending) return;

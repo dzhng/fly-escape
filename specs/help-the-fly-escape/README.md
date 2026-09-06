@@ -1,16 +1,16 @@
 # Help the Fly Escape — browser game
 
-Status: **implementation active — slice 04 lifecycle integration**. Last updated: 2026-09-06.
+Status: **implementation active — slice 05 buffered replay**. Last updated: 2026-09-06.
 
 Build a local, fully 3D browser game in which the player places environmental tools and watches a real connectome-driven swarm attempt to escape. The [game contract](GAMEPLAY.md) owns user requirements; [architecture contracts](CONTRACTS.md) own runtime/data seams. This plan replaces the previous Python tech-demo scope.
 
 ## Next Agent Prompt
 
-You are implementing the full browser game. Current pickup is [04 — lifecycle browser integration](slices/04-lifecycle-outcomes.md): render the shared Attempt/Body outputs, verify actual neural feeding followed by starvation, and compare open/blocked swept exits. Native core and diagnostic fixtures are underway. The selected feeding demonstration seed is not a population-efficacy claim; campaign food gates remain open.
+You are implementing the full browser game. Current pickup is [05 — buffered swarm replay](slices/05-swarm-playback.md): integrate the bounded WASM AttemptSession, owned-buffer archive and single playback clock, then measure real 20-fly browser throughput/startup/memory and ten smooth full 1× runs. Native throughput is about 3.2× for a full active 20-fly horizon; 100-fly native production is below 1× and remains capacity-only evidence.
 
-Completed evidence: [01 graph](assets/evidence/01/review.md), [02 neural browser](assets/evidence/02/review.md), and [03 sensory environment](assets/evidence/03/review.md). Categorical local sensing resolves odor closest-approach effects and opposite early lamp/shade orientation over 30 matched seeds; ablation removes the effects. Visual-cue closest-distance effects remain partly unresolved. No cue uses target steering; loom/threat is unavailable to authors.
+Completed evidence: [01 graph](assets/evidence/01/review.md), [02 neural browser](assets/evidence/02/review.md), [03 sensory environment](assets/evidence/03/review.md), [04 lifecycle](assets/evidence/04/review.md). Categorical local sensing resolves odor closest-approach effects and opposite early lamp/shade orientation; ablation removes them. Visual-cue closest-distance results remain partly unresolved. The selected lifecycle seed demonstrates neural eating and later starvation, not population foraging. Campaign gates remain open; loom/threat is unavailable.
 
-Next priorities: finish lifecycle browser/visual gates (04), then integrate bounded packed records and measure buffered 20-fly production (05), then advance camera/assets/science branches. Shared native Attempt and independent packing/throughput preparation exist; nothing beyond 03 is accepted as a complete slice. Keep the same Body owner in game and labs, and retire observation-only movement duplication before accepting lifecycle integration.
+Next priorities: finish the browser transport/playback gates (05), then camera/selection (06) and asset/science branches. The Rust packed format, WASM session and client archive/clock have focused tests; integration and browser performance remain open. Blender fly source/GLB is prepared and round-trip checked, but not accepted game art. Nothing beyond 04 is a completed slice. Keep one owner per concept and preserve the complete active-work benchmark; do not count terminal no-ops as production throughput.
 
 Browser applications are under `apps/`, including `apps/web`. Neuroscience descriptions explain neurons and circuit activity, not game rules; controls have separate help. Preserve Python-parity LIF updates and the real graph. Reproduce ignored graph artifacts with the [exporter](../../scripts/connectome/README.md).
 
@@ -25,7 +25,7 @@ Open the [interactive roadmap](visualizations/roadmap.html) for dependency and m
 - [x] [01 — Reproducible graph and reference](slices/01-graph-reference.md) — dependencies: none.
 - [x] [02 — One real brain in the browser](slices/02-neural-browser.md) — dependencies: 01.
 - [x] [03 — One sensory environment](slices/03-sensory-fields.md) — dependencies: 02.
-- [ ] [04 — Finite life and physical escape](slices/04-lifecycle-outcomes.md) — dependencies: 03.
+- [x] [04 — Finite life and physical escape](slices/04-lifecycle-outcomes.md) — dependencies: 03.
 - [ ] [05 — Twenty flies with buffered replay](slices/05-swarm-playback.md) — dependencies: 04.
 - [ ] [06 — Close framing and shared selection](slices/06-camera-selection.md) — dependencies: 05.
 - [ ] [07 — Blender fly and replacement workbench](slices/07-fly-silhouette.md) — dependencies: 06.

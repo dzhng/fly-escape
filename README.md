@@ -2,7 +2,7 @@
 
 A local browser game where a fly connectome drives the flies and the player shapes their environment to help them escape.
 
-The browser currently has a neural observation chamber at `/lab/brain` and matched sensory chambers at `/lab/fields`: the real neural graph runs in Rust/WASM in a Worker, while the 3D view and measured activity stay responsive. The full five-level game is still being built. Follow the [active specification](specs/help-the-fly-escape/README.md) for completed gates and the next checkpoint.
+The browser currently has a neural observation chamber at `/lab/brain`, matched sensory chambers at `/lab/fields`, and finite-life probes at `/lab/lifecycle`: the real neural graph runs in Rust/WASM in a Worker, while the 3D view and measured activity stay responsive. The full five-level game is still being built. Follow the [active specification](specs/help-the-fly-escape/README.md) for completed gates and the next checkpoint.
 
 ## Run locally
 

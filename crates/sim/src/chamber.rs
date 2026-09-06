@@ -150,21 +150,26 @@ impl Chamber {
         }
         let neural = self.brain.step();
         self.tick += 1;
-        self.pose.heading =
-            (self.pose.heading + neural.motor.turn * 0.8).rem_euclid(std::f64::consts::TAU);
-        let distance = neural.motor.thrust * 0.012;
         let from = Point {
             x: self.pose.x,
             z: self.pose.z,
         };
-        let next = self.fields.geometry().sweep(
-            from,
-            Point {
-                x: from.x + self.pose.heading.cos() * distance + sensory.wind.x * 0.1,
-                z: from.z + self.pose.heading.sin() * distance + sensory.wind.z * 0.1,
+        let desired = crate::body::desired_pose(
+            crate::body::BodyPose {
+                position: from,
+                heading: self.pose.heading,
             },
-            0.5,
+            crate::body::Locomotion {
+                thrust: neural.motor.thrust,
+                turn: neural.motor.turn,
+                speed: 0.12,
+                turn_gain: 8.0,
+            },
+            sensory.wind,
+            0.1,
         );
+        self.pose.heading = desired.heading;
+        let next = self.fields.geometry().sweep(from, desired.position, 0.5);
         self.pose.x = next.x;
         self.pose.z = next.z;
         Ok(BrainFrame {

@@ -85,3 +85,28 @@ impl FieldSession {
             .map_err(|e| JsValue::from_str(&e.to_string()))
     }
 }
+
+#[wasm_bindgen]
+pub struct LifecycleSession {
+    lab: sim::lifecycle_lab::LifecycleLab,
+}
+#[wasm_bindgen]
+impl LifecycleSession {
+    #[wasm_bindgen(constructor)]
+    pub fn new(bytes: &[u8], manifest: &str, seed: u32, scenario: &str) -> Result<Self, JsValue> {
+        let graph = verified_graph(bytes, manifest)?;
+        let scenario = serde_json::from_str(scenario)
+            .map_err(|e| JsValue::from_str(&format!("Invalid lifecycle scenario: {e}")))?;
+        Ok(Self {
+            lab: sim::lifecycle_lab::LifecycleLab::new(Arc::new(graph), seed as u64, scenario)
+                .map_err(|e| JsValue::from_str(&e))?,
+        })
+    }
+    pub fn info(&self) -> Result<String, JsValue> {
+        serde_json::to_string(&self.lab.info()).map_err(|e| JsValue::from_str(&e.to_string()))
+    }
+    pub fn step(&mut self) -> Result<String, JsValue> {
+        serde_json::to_string(&self.lab.step().map_err(|e| JsValue::from_str(&e))?)
+            .map_err(|e| JsValue::from_str(&e.to_string()))
+    }
+}

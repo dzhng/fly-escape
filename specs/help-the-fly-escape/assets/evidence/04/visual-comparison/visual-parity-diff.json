@@ -1,0 +1,334 @@
+{
+  "kind": "screenshot-parity-diff",
+  "generatedAt": "2026-09-06T16:07:32.542Z",
+  "note": "Lower parityDistance means the candidate is closer to the reference for this fixed pair. This is a distance metric, not an acceptance gate.",
+  "pairCount": 5,
+  "worstPair": "lifecycle-proboscisSilenced",
+  "results": [
+    {
+      "id": "lifecycle-proboscisSilenced",
+      "current": "../fly-escape/specs/help-the-fly-escape/assets/evidence/04/before-corrections/lifecycle-proboscisSilenced.png",
+      "candidate": "../fly-escape/specs/help-the-fly-escape/assets/evidence/04/lifecycle-proboscisSilenced.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "parityDistance": 0.02163,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 63,
+          "colorEntropyBits": 2.5043,
+          "edgeDensity": 0.11943,
+          "dominantColorShare": 0.43118,
+          "transparentShare": 0,
+          "luminanceMean": 233.24366,
+          "luminanceP5": 191.1444,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 61.3286
+        },
+        "candidate": {
+          "colorBuckets": 63,
+          "colorEntropyBits": 2.51211,
+          "edgeDensity": 0.12282,
+          "dominantColorShare": 0.43097,
+          "transparentShare": 0,
+          "luminanceMean": 233.0832,
+          "luminanceP5": 188.505,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 63.968
+        }
+      },
+      "grayscale": {
+        "mae": 1.82163,
+        "rmse": 15.65015,
+        "diffRatio16": 0.01737,
+        "diffRatio32": 0.01483,
+        "diffRatio64": 0.01168,
+        "pixelmatchRatio": 0.01672
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.99053,
+        "terrainLikeRatioCandidate": 0.99049,
+        "avgLuminanceCurrent": 233.48832,
+        "avgLuminanceCandidate": 233.418,
+        "avgLuminanceDelta": -0.07032,
+        "edgeEnergyCurrent": 0.04725,
+        "edgeEnergyCandidate": 0.04861,
+        "edgeEnergyRatio": 1.0287,
+        "edgeDiffRatio32": 0.02456
+      },
+      "artifacts": {
+        "sideBySide": "visual-comparison/lifecycle-proboscisSilenced-side-by-side.png",
+        "currentGray": "visual-comparison/lifecycle-proboscisSilenced-current-gray.png",
+        "candidateGray": "visual-comparison/lifecycle-proboscisSilenced-candidate-gray.png",
+        "absDiff": "visual-comparison/lifecycle-proboscisSilenced-absdiff.png",
+        "pixelmatch": "visual-comparison/lifecycle-proboscisSilenced-pixelmatch.png",
+        "currentEdges": "visual-comparison/lifecycle-proboscisSilenced-current-edges.png",
+        "candidateEdges": "visual-comparison/lifecycle-proboscisSilenced-candidate-edges.png",
+        "edgeDiff": "visual-comparison/lifecycle-proboscisSilenced-edge-diff.png"
+      }
+    },
+    {
+      "id": "lifecycle-openExit",
+      "current": "../fly-escape/specs/help-the-fly-escape/assets/evidence/04/before-corrections/lifecycle-openExit.png",
+      "candidate": "../fly-escape/specs/help-the-fly-escape/assets/evidence/04/lifecycle-openExit.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "parityDistance": 0.01548,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 62,
+          "colorEntropyBits": 2.42165,
+          "edgeDensity": 0.10861,
+          "dominantColorShare": 0.42944,
+          "transparentShare": 0,
+          "luminanceMean": 234.95707,
+          "luminanceP5": 193.834,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 58.639
+        },
+        "candidate": {
+          "colorBuckets": 64,
+          "colorEntropyBits": 2.41158,
+          "edgeDensity": 0.1043,
+          "dominantColorShare": 0.4291,
+          "transparentShare": 0,
+          "luminanceMean": 235.12115,
+          "luminanceP5": 193.834,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 58.639
+        }
+      },
+      "grayscale": {
+        "mae": 0.50401,
+        "rmse": 7.35587,
+        "diffRatio16": 0.00531,
+        "diffRatio32": 0.00464,
+        "diffRatio64": 0.00349,
+        "pixelmatchRatio": 0.0051
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.99216,
+        "terrainLikeRatioCandidate": 0.99252,
+        "avgLuminanceCurrent": 235.20892,
+        "avgLuminanceCandidate": 235.31493,
+        "avgLuminanceDelta": 0.10601,
+        "edgeEnergyCurrent": 0.04031,
+        "edgeEnergyCandidate": 0.03833,
+        "edgeEnergyRatio": 0.95106,
+        "edgeDiffRatio32": 0.0069
+      },
+      "artifacts": {
+        "sideBySide": "visual-comparison/lifecycle-openExit-side-by-side.png",
+        "currentGray": "visual-comparison/lifecycle-openExit-current-gray.png",
+        "candidateGray": "visual-comparison/lifecycle-openExit-candidate-gray.png",
+        "absDiff": "visual-comparison/lifecycle-openExit-absdiff.png",
+        "pixelmatch": "visual-comparison/lifecycle-openExit-pixelmatch.png",
+        "currentEdges": "visual-comparison/lifecycle-openExit-current-edges.png",
+        "candidateEdges": "visual-comparison/lifecycle-openExit-candidate-edges.png",
+        "edgeDiff": "visual-comparison/lifecycle-openExit-edge-diff.png"
+      }
+    },
+    {
+      "id": "lifecycle-blockedExit",
+      "current": "../fly-escape/specs/help-the-fly-escape/assets/evidence/04/before-corrections/lifecycle-blockedExit.png",
+      "candidate": "../fly-escape/specs/help-the-fly-escape/assets/evidence/04/lifecycle-blockedExit.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "parityDistance": 0.01407,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 62,
+          "colorEntropyBits": 2.43877,
+          "edgeDensity": 0.11448,
+          "dominantColorShare": 0.4291,
+          "transparentShare": 0,
+          "luminanceMean": 234.47621,
+          "luminanceP5": 193.834,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 58.639
+        },
+        "candidate": {
+          "colorBuckets": 62,
+          "colorEntropyBits": 2.4286,
+          "edgeDensity": 0.11017,
+          "dominantColorShare": 0.42875,
+          "transparentShare": 0,
+          "luminanceMean": 234.64028,
+          "luminanceP5": 193.834,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 58.639
+        }
+      },
+      "grayscale": {
+        "mae": 0.50401,
+        "rmse": 7.35587,
+        "diffRatio16": 0.00531,
+        "diffRatio32": 0.00464,
+        "diffRatio64": 0.00349,
+        "pixelmatchRatio": 0.0051
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.99028,
+        "terrainLikeRatioCandidate": 0.99064,
+        "avgLuminanceCurrent": 234.75737,
+        "avgLuminanceCandidate": 234.86337,
+        "avgLuminanceDelta": 0.10601,
+        "edgeEnergyCurrent": 0.0462,
+        "edgeEnergyCandidate": 0.04423,
+        "edgeEnergyRatio": 0.9573,
+        "edgeDiffRatio32": 0.0069
+      },
+      "artifacts": {
+        "sideBySide": "visual-comparison/lifecycle-blockedExit-side-by-side.png",
+        "currentGray": "visual-comparison/lifecycle-blockedExit-current-gray.png",
+        "candidateGray": "visual-comparison/lifecycle-blockedExit-candidate-gray.png",
+        "absDiff": "visual-comparison/lifecycle-blockedExit-absdiff.png",
+        "pixelmatch": "visual-comparison/lifecycle-blockedExit-pixelmatch.png",
+        "currentEdges": "visual-comparison/lifecycle-blockedExit-current-edges.png",
+        "candidateEdges": "visual-comparison/lifecycle-blockedExit-candidate-edges.png",
+        "edgeDiff": "visual-comparison/lifecycle-blockedExit-edge-diff.png"
+      }
+    },
+    {
+      "id": "lifecycle-meal",
+      "current": "../fly-escape/specs/help-the-fly-escape/assets/evidence/04/before-corrections/lifecycle-meal.png",
+      "candidate": "../fly-escape/specs/help-the-fly-escape/assets/evidence/04/lifecycle-meal.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "parityDistance": 0,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 71,
+          "colorEntropyBits": 2.48942,
+          "edgeDensity": 0.12112,
+          "dominantColorShare": 0.43083,
+          "transparentShare": 0,
+          "luminanceMean": 233.37846,
+          "luminanceP5": 183.9586,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 68.5144
+        },
+        "candidate": {
+          "colorBuckets": 71,
+          "colorEntropyBits": 2.48942,
+          "edgeDensity": 0.12112,
+          "dominantColorShare": 0.43083,
+          "transparentShare": 0,
+          "luminanceMean": 233.37846,
+          "luminanceP5": 183.9586,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 68.5144
+        }
+      },
+      "grayscale": {
+        "mae": 0,
+        "rmse": 0,
+        "diffRatio16": 0,
+        "diffRatio32": 0,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.99183,
+        "terrainLikeRatioCandidate": 0.99183,
+        "avgLuminanceCurrent": 234.15388,
+        "avgLuminanceCandidate": 234.15388,
+        "avgLuminanceDelta": 0,
+        "edgeEnergyCurrent": 0.0439,
+        "edgeEnergyCandidate": 0.0439,
+        "edgeEnergyRatio": 1,
+        "edgeDiffRatio32": 0
+      },
+      "artifacts": {
+        "sideBySide": "visual-comparison/lifecycle-meal-side-by-side.png",
+        "currentGray": "visual-comparison/lifecycle-meal-current-gray.png",
+        "candidateGray": "visual-comparison/lifecycle-meal-candidate-gray.png",
+        "absDiff": "visual-comparison/lifecycle-meal-absdiff.png",
+        "pixelmatch": "visual-comparison/lifecycle-meal-pixelmatch.png",
+        "currentEdges": "visual-comparison/lifecycle-meal-current-edges.png",
+        "candidateEdges": "visual-comparison/lifecycle-meal-candidate-edges.png",
+        "edgeDiff": "visual-comparison/lifecycle-meal-edge-diff.png"
+      }
+    },
+    {
+      "id": "lifecycle-mealThenStarvation",
+      "current": "../fly-escape/specs/help-the-fly-escape/assets/evidence/04/before-corrections/lifecycle-mealThenStarvation.png",
+      "candidate": "../fly-escape/specs/help-the-fly-escape/assets/evidence/04/lifecycle-mealThenStarvation.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "parityDistance": 0,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 67,
+          "colorEntropyBits": 2.53569,
+          "edgeDensity": 0.12974,
+          "dominantColorShare": 0.43083,
+          "transparentShare": 0,
+          "luminanceMean": 232.7458,
+          "luminanceP5": 175.3658,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 77.1072
+        },
+        "candidate": {
+          "colorBuckets": 67,
+          "colorEntropyBits": 2.53569,
+          "edgeDensity": 0.12974,
+          "dominantColorShare": 0.43083,
+          "transparentShare": 0,
+          "luminanceMean": 232.7458,
+          "luminanceP5": 175.3658,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 77.1072
+        }
+      },
+      "grayscale": {
+        "mae": 0,
+        "rmse": 0,
+        "diffRatio16": 0,
+        "diffRatio32": 0,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.98997,
+        "terrainLikeRatioCandidate": 0.98997,
+        "avgLuminanceCurrent": 233.25559,
+        "avgLuminanceCandidate": 233.25559,
+        "avgLuminanceDelta": 0,
+        "edgeEnergyCurrent": 0.05204,
+        "edgeEnergyCandidate": 0.05204,
+        "edgeEnergyRatio": 1,
+        "edgeDiffRatio32": 0
+      },
+      "artifacts": {
+        "sideBySide": "visual-comparison/lifecycle-mealThenStarvation-side-by-side.png",
+        "currentGray": "visual-comparison/lifecycle-mealThenStarvation-current-gray.png",
+        "candidateGray": "visual-comparison/lifecycle-mealThenStarvation-candidate-gray.png",
+        "absDiff": "visual-comparison/lifecycle-mealThenStarvation-absdiff.png",
+        "pixelmatch": "visual-comparison/lifecycle-mealThenStarvation-pixelmatch.png",
+        "currentEdges": "visual-comparison/lifecycle-mealThenStarvation-current-edges.png",
+        "candidateEdges": "visual-comparison/lifecycle-mealThenStarvation-candidate-edges.png",
+        "edgeDiff": "visual-comparison/lifecycle-mealThenStarvation-edge-diff.png"
+      }
+    }
+  ]
+}

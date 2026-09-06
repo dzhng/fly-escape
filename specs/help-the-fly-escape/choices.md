@@ -55,3 +55,19 @@ A saved attempt carries a build identity computed from simulation source, depend
 ### Field overlays show the actual sampled grid (slice 03)
 
 When a fly senses odor in a grid cell, the colored floor comes from that same cell value exported by Rust. JavaScript does not draw a separate smooth approximation. The plan required agreement but left interpolation unspecified. This makes abrupt cell boundaries honest and lets numeric antenna samples explain what the brain actually received; future visual smoothing must not change the simulation.
+
+## Sound — medium confidence (lifecycle and records)
+
+### A selected seed demonstrates the full lifecycle (slice 04)
+
+The lifecycle lab opens a seed that actually lands, starts eating through neural spikes, leaves food and later starves. A bounded ten-seed check found one such demonstration; the screen says that the seed was selected. The plan required a short review surface without prescribing how to ensure the sequence is visible. This is a reproducible example, not a claim that a typical fly finds food. Population feeding and campaign robustness still require their own tests.
+
+### Eight event slots bound each fly’s tick (slice 05 preparation)
+
+A fly can land, begin and end a meal, and reach a terminal outcome during the same tick. The compact record budgets eight events per fly per tick, above the six-transition combination exercised by the current body. If a future behavior exceeds that count, encoding fails explicitly until the bound is reconsidered. The plan required memory to include events but left their maximum representation open. This keeps the archive estimate honest without allocating unbounded event history.
+
+## Sound — high confidence (records)
+
+### Replay retains the original numeric precision and absent samples (slice 05 preparation)
+
+A recorded neural voltage stays a 64-bit floating-point value, rather than being rounded for transfer. Once a fly is terminal, its absent neural/sensory samples remain absent through explicit presence flags; zeros would falsely look like measured inactivity. The plan required consistent replay without choosing the numeric encoding. The complete 20-fly horizon fits the archive limit with this precision, so compression does not need to change the observations.

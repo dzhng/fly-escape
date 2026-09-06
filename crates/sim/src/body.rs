@@ -13,6 +13,26 @@ pub struct BodyPose {
     pub position: Point,
     pub heading: f64,
 }
+/// Neural locomotion gains are shared by body transitions and observation labs.
+pub struct Locomotion {
+    pub thrust: f64,
+    pub turn: f64,
+    pub speed: f64,
+    pub turn_gain: f64,
+}
+pub fn desired_pose(pose: BodyPose, motion: Locomotion, wind: Point, dt: f64) -> BodyPose {
+    let heading = (pose.heading + motion.turn.clamp(-2., 2.) * motion.turn_gain * dt)
+        .rem_euclid(std::f64::consts::TAU);
+    let velocity = motion.thrust.clamp(0., 2.) * motion.speed;
+    BodyPose {
+        position: Point {
+            x: pose.position.x + (heading.cos() * velocity + wind.x) * dt,
+            z: pose.position.z + (heading.sin() * velocity + wind.z) * dt,
+        },
+        heading,
+    }
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 pub enum BodyMode {
@@ -416,14 +436,21 @@ impl Body {
             BodyMode::Feeding => (0., 0., 0., self.config.idle_cost),
         };
         let from = self.state.pose.position;
-        let heading = (self.state.pose.heading + turn.clamp(-2., 2.) * self.config.turn_gain * dt)
-            .rem_euclid(std::f64::consts::TAU);
-        let velocity = thrust.clamp(0., 2.) * speed;
-        let desired = Point {
-            x: from.x + (heading.cos() * velocity + wind.x) * dt,
-            z: from.z + (heading.sin() * velocity + wind.z) * dt,
-        };
-        let to = world.geometry.sweep(from, desired, self.config.body_radius);
+        let desired = desired_pose(
+            self.state.pose,
+            Locomotion {
+                thrust,
+                turn,
+                speed,
+                turn_gain: self.config.turn_gain,
+            },
+            wind,
+            dt,
+        );
+        let heading = desired.heading;
+        let to = world
+            .geometry
+            .sweep(from, desired.position, self.config.body_radius);
         let food_after = self.state.mode == BodyMode::Feeding
             && world
                 .food

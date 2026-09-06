@@ -1,3 +1,4 @@
+import { LifecycleLab } from "./lifecycle";
 import React, { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { ChamberView } from "@fly-escape/game-renderer";
@@ -242,5 +243,11 @@ function BrainLab() {
 }
 
 createRoot(document.getElementById("root")!).render(
-  location.pathname === "/lab/fields" ? <FieldsLab /> : <BrainLab />,
+  location.pathname === "/lab/lifecycle" ? (
+    <LifecycleLab />
+  ) : location.pathname === "/lab/fields" ? (
+    <FieldsLab />
+  ) : (
+    <BrainLab />
+  ),
 );
