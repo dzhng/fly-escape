@@ -198,3 +198,24 @@ Attractive and repellent sources diffuse and move with wind independently, but u
 ### A fan produces a bounded, wall-occluded rectangular jet
 
 When a fly is in front of a fan, it samples a wind vector that fades with forward and sideways distance; behind the fan, beyond its reach or behind a wall, that fan contributes nothing. Several fans add their vectors. The plan required placed directional wind but did not choose its shape. A rectangular footprint with linear falloff is simple to show in placement previews and uses existing line-of-sight geometry, without claiming to solve air turbulence. Odor moves using face averages of the same cell vectors that push the bodies. Fan reach, width and speed remain calibration choices for authored levels. Verdict: sound; confidence: medium.
+
+
+## Sound — medium confidence (placement preparation, slice 14)
+
+### Keep each tool footprint inside one room
+
+When a player places a tool near a doorway or floor edge, its conservative square footprint must fit within one room rectangle and clear walls. A tool cannot straddle a room seam even when an unusually wide opening would physically allow it; its sensory field can still cross the doorway. The plan required open-floor placement without choosing boundary clearance. This conservative rule keeps the first placement interface predictable and avoids visually clipped tools. It can be relaxed later using a general union-of-floor footprint test if authored layouts need seam placement. Reserved circles mark solid prop interiors or extra protected floor; spawn body circles and the exit are always protected. Verdict: sound; confidence: medium.
+
+## Sound — high confidence (placement preparation, slice 14)
+
+### One tool catalog supplies effects across levels
+
+Fruit always resolves through the same catalog entry into an attractive odor source and a separate edible contact region; crumbs use the odor source without food. The level chooses quantities, while the core catalog owns footprints, source dimensions and fan dimensions. The plan delegated tuning but did not choose where it lives. Shared definitions let palette information and simulation resolve the same object, and prevent a fruit silently changing properties between rooms or levels. Inventories are bounded at 64 total tools across the available types, keeping edit validation and source counts bounded for the MVP. Current values remain provisional until campaign evaluation. Verdict: sound; confidence: high.
+
+### Derive inventory from a validated replacement setup
+
+Placing, moving or removing a tool first builds a candidate list. Core validation then derives remaining counts from that list and the level inventory. A rejected move returns an error and no replacement; there is no separately decremented counter to repair. Repeating the same placement or removing an already absent item leaves a valid setup unchanged; reusing an ID for a different placement is rejected. The plan required immediate refunds and no consumption on invalid edits without choosing state ownership. This keeps retries and saved editable setups consistent, and gives the future UI one result to accept atomically. Verdict: sound; confidence: high.
+
+### Put canonical placements in attempt identity and expose resolved inputs separately
+
+Before a run, Rust sorts placements by ID, normalizes headings and resolves them into field sources, food regions and fan fields. The frozen attempt specification contains these placements; metadata also exposes exactly the resolved setup the attempt uses. The plan required immutable placements but did not specify the representation. Keeping authored level content separate prevents retry from accidentally resolving placed sources a second time, while recorded metadata makes the runtime environment inspectable. IDs determine source accumulation order for exact repeatability. Verdict: sound; confidence: high.

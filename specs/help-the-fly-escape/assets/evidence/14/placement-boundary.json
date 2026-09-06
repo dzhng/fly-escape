@@ -1,0 +1,455 @@
+{
+  "browser": "152.0.7977.77",
+  "catalog": [
+    {
+      "kind": "fruit",
+      "footprintRadius": 0.35,
+      "effect": {
+        "type": "source",
+        "kind": "attractiveOdor",
+        "radius": 0.75,
+        "rate": 1,
+        "foodRadius": 0.4
+      }
+    },
+    {
+      "kind": "crumbs",
+      "footprintRadius": 0.2,
+      "effect": {
+        "type": "source",
+        "kind": "attractiveOdor",
+        "radius": 0.75,
+        "rate": 1,
+        "foodRadius": null
+      }
+    },
+    {
+      "kind": "vinegar",
+      "footprintRadius": 0.2,
+      "effect": {
+        "type": "source",
+        "kind": "repellentOdor",
+        "radius": 0.75,
+        "rate": 1,
+        "foodRadius": null
+      }
+    },
+    {
+      "kind": "lamp",
+      "footprintRadius": 0.25,
+      "effect": {
+        "type": "source",
+        "kind": "lamp",
+        "radius": 1.5,
+        "rate": 0.4,
+        "foodRadius": null
+      }
+    },
+    {
+      "kind": "shade",
+      "footprintRadius": 0.25,
+      "effect": {
+        "type": "source",
+        "kind": "shade",
+        "radius": 1.5,
+        "rate": 0.2,
+        "foodRadius": null
+      }
+    },
+    {
+      "kind": "fan",
+      "footprintRadius": 0.25,
+      "effect": {
+        "type": "fan",
+        "reach": 3,
+        "halfWidth": 0.75,
+        "speed": 0.5
+      }
+    }
+  ],
+  "state": {
+    "placements": [
+      {
+        "id": 1,
+        "kind": "fruit",
+        "position": {
+          "x": -2,
+          "z": -2.45
+        },
+        "heading": 0
+      },
+      {
+        "id": 2,
+        "kind": "fan",
+        "position": {
+          "x": -3,
+          "z": -2
+        },
+        "heading": 0
+      }
+    ],
+    "remaining": [
+      {
+        "kind": "fruit",
+        "count": 0
+      },
+      {
+        "kind": "fan",
+        "count": 0
+      }
+    ]
+  },
+  "rejected": "tool overlaps a reserved prop or spawn footprint",
+  "resolved": {
+    "state": {
+      "placements": [
+        {
+          "id": 1,
+          "kind": "fruit",
+          "position": {
+            "x": -2,
+            "z": -2.45
+          },
+          "heading": 0
+        },
+        {
+          "id": 2,
+          "kind": "fan",
+          "position": {
+            "x": -3,
+            "z": -2
+          },
+          "heading": 0
+        }
+      ],
+      "remaining": [
+        {
+          "kind": "fruit",
+          "count": 0
+        },
+        {
+          "kind": "fan",
+          "count": 0
+        }
+      ]
+    },
+    "sources": [
+      {
+        "position": {
+          "x": -2,
+          "z": -2.45
+        },
+        "radius": 0.75,
+        "rate": 1,
+        "kind": "attractiveOdor"
+      }
+    ],
+    "food": [
+      {
+        "center": {
+          "x": -2,
+          "z": -2.45
+        },
+        "radius": 0.4
+      }
+    ],
+    "fieldConfig": {
+      "cellSize": 0.25,
+      "diffusion": 0.2,
+      "decay": 0.1,
+      "baselineBrightness": 1,
+      "antennaOffset": 0.15,
+      "wind": {
+        "x": 0,
+        "z": 0
+      },
+      "fans": [
+        {
+          "position": {
+            "x": -3,
+            "z": -2
+          },
+          "heading": 0,
+          "reach": 3,
+          "halfWidth": 0.75,
+          "speed": 0.5
+        }
+      ]
+    }
+  },
+  "removed": {
+    "placements": [
+      {
+        "id": 2,
+        "kind": "fan",
+        "position": {
+          "x": -3,
+          "z": -2
+        },
+        "heading": 0
+      }
+    ],
+    "remaining": [
+      {
+        "kind": "fruit",
+        "count": 1
+      },
+      {
+        "kind": "fan",
+        "count": 0
+      }
+    ]
+  },
+  "spec": {
+    "schemaVersion": 1,
+    "attemptId": "placement-check",
+    "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+    "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+    "simulationBuildId": "87627e70c02f5b51c603ae2c5b78aedac515aee5e50f004bc3b912684118b645",
+    "tuningHash": "df55552569a5a99a8769a99f30ba643c7b97f697d000b70094d25a9f58c3a63d",
+    "placements": [
+      {
+        "id": 1,
+        "kind": "fruit",
+        "position": {
+          "x": -2,
+          "z": -2.45
+        },
+        "heading": 0
+      },
+      {
+        "id": 2,
+        "kind": "fan",
+        "position": {
+          "x": -3,
+          "z": -2
+        },
+        "heading": 0
+      }
+    ],
+    "levelHash": "8cb092a0116b0c3be6355e14e3345cbc31070fc00d564f9d3c3533bde9aec8b5",
+    "levelId": "active-native-benchmark",
+    "rootSeed": "42",
+    "flyCount": 1,
+    "durationTicks": 20
+  },
+  "metadataSetup": {
+    "state": {
+      "placements": [
+        {
+          "id": 1,
+          "kind": "fruit",
+          "position": {
+            "x": -2,
+            "z": -2.45
+          },
+          "heading": 0
+        },
+        {
+          "id": 2,
+          "kind": "fan",
+          "position": {
+            "x": -3,
+            "z": -2
+          },
+          "heading": 0
+        }
+      ],
+      "remaining": [
+        {
+          "kind": "fruit",
+          "count": 0
+        },
+        {
+          "kind": "fan",
+          "count": 0
+        }
+      ]
+    },
+    "sources": [
+      {
+        "position": {
+          "x": -2,
+          "z": -2.45
+        },
+        "radius": 0.75,
+        "rate": 1,
+        "kind": "attractiveOdor"
+      }
+    ],
+    "food": [
+      {
+        "center": {
+          "x": -2,
+          "z": -2.45
+        },
+        "radius": 0.4
+      }
+    ],
+    "fieldConfig": {
+      "cellSize": 0.25,
+      "diffusion": 0.2,
+      "decay": 0.1,
+      "baselineBrightness": 1,
+      "antennaOffset": 0.15,
+      "wind": {
+        "x": 0,
+        "z": 0
+      },
+      "fans": [
+        {
+          "position": {
+            "x": -3,
+            "z": -2
+          },
+          "heading": 0,
+          "reach": 3,
+          "halfWidth": 0.75,
+          "speed": 0.5
+        }
+      ]
+    }
+  },
+  "frame": {
+    "tick": 1,
+    "neuralSteps": 1,
+    "flies": [
+      {
+        "id": 0,
+        "inputPose": {
+          "position": {
+            "x": -2,
+            "z": -2
+          },
+          "heading": 0
+        },
+        "body": {
+          "pose": {
+            "position": {
+              "x": -1.968977486344288,
+              "z": -1.9999997933882632
+            },
+            "heading": 0.00004148124551103874
+          },
+          "mode": "walking",
+          "reserve": 999.96,
+          "outcome": null
+        },
+        "sensory": {
+          "left": {
+            "attractiveOdor": 0.08742219438310032,
+            "repellentOdor": 0,
+            "brightness": 1,
+            "shade": 0,
+            "exitCue": 0
+          },
+          "right": {
+            "attractiveOdor": 0.03615361445028793,
+            "repellentOdor": 0,
+            "brightness": 1,
+            "shade": 0,
+            "exitCue": 0
+          },
+          "wind": {
+            "x": 0.2604166666666667,
+            "z": 0
+          }
+        },
+        "neural": {
+          "motor": {
+            "thrust": 0.049808469933306856,
+            "turn": 0.0004148124551103874,
+            "flightThrust": 0.10154069549929953,
+            "flightTurn": 0.00032422041651967645
+          },
+          "spikeCount": 25,
+          "groups": [
+            {
+              "id": "odorExcL",
+              "meanVoltage": 0.04919772987736411,
+              "spikeFraction": 0
+            },
+            {
+              "id": "odorExcR",
+              "meanVoltage": 0.05727479483371366,
+              "spikeFraction": 0
+            },
+            {
+              "id": "odorInhL",
+              "meanVoltage": 0,
+              "spikeFraction": 1
+            },
+            {
+              "id": "odorInhR",
+              "meanVoltage": 0.05163755695558871,
+              "spikeFraction": 0
+            },
+            {
+              "id": "visionL",
+              "meanVoltage": 0.05097683162042687,
+              "spikeFraction": 0
+            },
+            {
+              "id": "visionR",
+              "meanVoltage": 0.05253224233901098,
+              "spikeFraction": 0
+            },
+            {
+              "id": "turnL",
+              "meanVoltage": 0.04878462102838191,
+              "spikeFraction": 0
+            },
+            {
+              "id": "turnR",
+              "meanVoltage": 0.04919943348349231,
+              "spikeFraction": 0
+            },
+            {
+              "id": "flightL",
+              "meanVoltage": 0.051109675798281705,
+              "spikeFraction": 0
+            },
+            {
+              "id": "flightR",
+              "meanVoltage": 0.05092849172110028,
+              "spikeFraction": 0
+            },
+            {
+              "id": "landingL",
+              "meanVoltage": 0.041733343288906065,
+              "spikeFraction": 0
+            },
+            {
+              "id": "landingR",
+              "meanVoltage": 0.04850730303802652,
+              "spikeFraction": 0
+            },
+            {
+              "id": "taste",
+              "meanVoltage": 0,
+              "spikeFraction": 1
+            },
+            {
+              "id": "feeding",
+              "meanVoltage": 0.053924481783834265,
+              "spikeFraction": 0
+            },
+            {
+              "id": "proboscis",
+              "meanVoltage": 0.05282635795576304,
+              "spikeFraction": 0
+            },
+            {
+              "id": "loom",
+              "meanVoltage": 0.04914301213603587,
+              "spikeFraction": 0
+            }
+          ]
+        },
+        "events": []
+      }
+    ],
+    "result": null
+  },
+  "deterministic": true
+}

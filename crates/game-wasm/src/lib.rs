@@ -112,3 +112,33 @@ impl LifecycleSession {
             .map_err(|e| JsValue::from_str(&e.to_string()))
     }
 }
+
+#[wasm_bindgen]
+pub fn tool_catalog() -> Result<String, JsValue> {
+    serde_json::to_string(&sim::placement::tool_catalog())
+        .map_err(|e| JsValue::from_str(&e.to_string()))
+}
+
+#[wasm_bindgen]
+pub fn resolve_setup(level: &str, placements: &str) -> Result<String, JsValue> {
+    let level = serde_json::from_str(level)
+        .map_err(|e| JsValue::from_str(&format!("invalid level: {e}")))?;
+    let placements: Vec<sim::placement::Placement> = serde_json::from_str(placements)
+        .map_err(|e| JsValue::from_str(&format!("invalid placements: {e}")))?;
+    let resolved = sim::placement::resolve_placements(&level, &placements)
+        .map_err(|e| JsValue::from_str(&e))?;
+    serde_json::to_string(&resolved).map_err(|e| JsValue::from_str(&e.to_string()))
+}
+
+#[wasm_bindgen]
+pub fn edit_setup(level: &str, current: &str, edit: &str) -> Result<String, JsValue> {
+    let level = serde_json::from_str(level)
+        .map_err(|e| JsValue::from_str(&format!("invalid level: {e}")))?;
+    let current: Vec<sim::placement::Placement> = serde_json::from_str(current)
+        .map_err(|e| JsValue::from_str(&format!("invalid placements: {e}")))?;
+    let edit = serde_json::from_str(edit)
+        .map_err(|e| JsValue::from_str(&format!("invalid placement edit: {e}")))?;
+    let state = sim::placement::edit_placements(&level, &current, edit)
+        .map_err(|e| JsValue::from_str(&e))?;
+    serde_json::to_string(&state).map_err(|e| JsValue::from_str(&e.to_string()))
+}

@@ -1,6 +1,6 @@
 # 14 — Editable setup and attempt loop
 
-Status: planned. Dependencies: 05,06,10,13.
+Status: core preparation implemented in isolation; setup UI planned. Dependencies: 05,06,10,13.
 
 ## Contract and seam
 
@@ -19,7 +19,7 @@ The accepted diagnostic fixtures select one sensory pathway for an entire attemp
 
 Changes to packed samples must regenerate the single Rust-owned layout and its TypeScript consumers together; no compatibility format survives in this unshipped app. Re-run the affected memory/performance gates before accepting mixed-tool attempts. Do this preparation in isolation from the sustained slice 05 benchmark so its build identity remains interpretable.
 
-Preparation passes 1–2 are implemented in isolation and verified through the core and generated record consumer; see [mixed-sensory evidence](../assets/evidence/14/mixed-sensory.md). Placement resolution and UI remain planned. Integration must rerun the affected browser memory/performance gates: a full 20-fly archive bound is now 80,104,384 bytes, still below 128 MiB. This does not close slice 14 or change its dependencies.
+Preparation passes 1–4 have core/API implementations in isolation, including local fans and placement resolution; see [mixed-sensory evidence](../assets/evidence/14/mixed-sensory.md) and [placement evidence](../assets/evidence/14/placement.md). Setup UI, campaign tuning and integrated release gates remain planned. Integration must rerun the affected browser memory/performance gates: a full 20-fly archive bound is now 80,104,384 bytes, still below 128 MiB. This does not close slice 14 or change its dependencies.
 
 ## Runnable review surface
 

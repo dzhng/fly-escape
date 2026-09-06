@@ -92,5 +92,6 @@ pub fn level(count: u32) -> Result<LevelDef, String> {
         initial_reserve: 1000.,
         duration_ticks: 6000,
         star_thresholds: [1, 10, 20],
+        placement_rules: Default::default(),
     })
 }

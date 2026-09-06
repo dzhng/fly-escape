@@ -51,22 +51,24 @@ impl AttemptSession {
             &request.attempt_id,
             seed,
             request.fly_count,
+            &request.placements,
         )?;
         let graph_bytes =
             u32::try_from(graph.storage_bytes()).map_err(|_| "graph byte count exceeds u32")?;
-        let mut info = AttemptInfo {
+        let level = request.level.clone();
+        let attempt = Attempt::new(graph.clone(), request.level, request.tuning, spec.clone())?;
+        let info = AttemptInfo {
             spec: spec.clone(),
-            level: request.level.clone(),
+            level,
+            resolved_setup: attempt.resolved_setup().clone(),
             groups: graph.manifest.groups.clone(),
             group_links: graph.manifest.group_links.clone(),
             record_layout: layout,
             archive_bytes,
             graph_bytes,
-            brain_state_bytes: 0,
+            brain_state_bytes: u32::try_from(attempt.brain_state_bytes())
+                .map_err(|_| "brain byte count exceeds u32")?,
         };
-        let attempt = Attempt::new(graph, request.level, request.tuning, spec)?;
-        info.brain_state_bytes = u32::try_from(attempt.brain_state_bytes())
-            .map_err(|_| "brain byte count exceeds u32")?;
         Ok(Self {
             attempt,
             info,
@@ -160,6 +162,7 @@ mod tests {
         let mut level = sim::swarm_lab::level(2).unwrap();
         level.duration_ticks = 12;
         StartAttempt {
+            placements: vec![],
             attempt_id: "test".into(),
             root_seed: "42".into(),
             fly_count: 2,
@@ -172,7 +175,7 @@ mod tests {
         let graph = graph();
         let request = request();
         let spec =
-            Attempt::describe(&graph, &request.level, &request.tuning, "test", 42, 2).unwrap();
+            Attempt::describe(&graph, &request.level, &request.tuning, "test", 42, 2, &[]).unwrap();
         let mut direct = Attempt::new(
             graph.clone(),
             request.level.clone(),
@@ -258,6 +261,7 @@ pub fn swarm_request(
         attempt_id: attempt_id.into(),
         root_seed: root_seed.into(),
         fly_count,
+        placements: vec![],
         level,
         tuning: sim::attempt::AttemptTuning {
             cues: vec![sim::attempt::CueInput {

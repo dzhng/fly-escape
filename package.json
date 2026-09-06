@@ -19,7 +19,8 @@
     "test:playback": "node tests/browser/playback.mjs",
     "test:playback-performance": "node tests/browser/playback-performance.mjs",
     "dev:assets": "bun run --cwd apps/asset-lab dev",
-    "test:renderer": "bun test packages/game-renderer/src"
+    "test:renderer": "bun test packages/game-renderer/src",
+    "test:placement": "node tests/browser/placement.mjs"
   },
   "type": "module",
   "workspaces": [

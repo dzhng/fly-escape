@@ -1,7 +1,7 @@
 // Generated from crates/sim; do not edit.
 
-export type StartAttempt = { attemptId: string, rootSeed: string, flyCount: number, level: LevelDef, tuning: AttemptTuning, };
-export type AttemptInfo = { spec: AttemptSpec, level: LevelDef, groups: Array<Group>, groupLinks: Array<GroupLink>, recordLayout: RecordLayout, archiveBytes: number, graphBytes: number, brainStateBytes: number, };
+export type StartAttempt = { attemptId: string, rootSeed: string, flyCount: number, level: LevelDef, tuning: AttemptTuning, placements: Array<Placement>, };
+export type AttemptInfo = { spec: AttemptSpec, level: LevelDef, resolvedSetup: ResolvedSetup, groups: Array<Group>, groupLinks: Array<GroupLink>, recordLayout: RecordLayout, archiveBytes: number, graphBytes: number, brainStateBytes: number, };
 export type AttemptStep = { tick: number, neuralSteps: number, bufferedTicks: number, complete: boolean, };
 export type ChunkHeader = { schemaVersion: number, attemptId: string, sequence: number, startTick: number, tickCount: number, flyCount: number, result: AttemptResult | null, };
 export type BodyPose = { position: Point, heading: number, };
@@ -28,14 +28,27 @@ export type FeedingEnd = "contactLost" | "satiated" | "boutLimit" | "terminal";
 export type BodyEventKind = { "type": "modeChanged", from: BodyMode, to: BodyMode, } | { "type": "feedingStarted" } | { "type": "feedingEnded", reason: FeedingEnd, } | { "type": "terminal", outcome: TerminalOutcome, };
 export type BodyEvent = { tick: number, kind: BodyEventKind, };
 export type OutcomeSummary = { escaped: number, starved: number, zapped: number, timedOut: number, score: number, };
-export type LevelDef = { id: string, geometry: Geometry, spawnPoses: Array<BodyPose>, exit: ExitOpening, exitCue: ExitCue | null, food: Array<ContactRegion>, zappers: Array<ContactRegion>, sources: Array<Source>, fieldConfig: FieldConfig, bodyConfig: BodyConfig, initialReserve: number, durationTicks: number, starThresholds: [number, number, number], };
+export type LevelDef = { id: string, geometry: Geometry, spawnPoses: Array<BodyPose>, exit: ExitOpening, exitCue: ExitCue | null, food: Array<ContactRegion>, zappers: Array<ContactRegion>, sources: Array<Source>, fieldConfig: FieldConfig, bodyConfig: BodyConfig, initialReserve: number, durationTicks: number, starThresholds: [number, number, number], placementRules: PlacementRules, };
+export type ToolKind = "fruit" | "crumbs" | "vinegar" | "lamp" | "shade" | "fan";
+export type ToolEffect = { "type": "source", kind: SourceKind, radius: number, rate: number, foodRadius: number | null, } | { "type": "fan", reach: number, halfWidth: number, speed: number, };
+export type ToolDef = { kind: ToolKind, footprintRadius: number, effect: ToolEffect, };
+export type ToolStock = { kind: ToolKind, count: number, };
+export type PlacementRules = { inventory: Array<ToolStock>,
+/**
+ * Solid prop interiors or authored reserved floor, in addition to spawn bodies and exit.
+ */
+reserved: Array<ContactRegion>, };
+export type Placement = { id: number, kind: ToolKind, position: Point, heading: number, };
+export type PlacementEdit = { "type": "place", placement: Placement, } | { "type": "move", id: number, position: Point, heading: number, } | { "type": "remove", id: number, };
+export type PlacementState = { placements: Array<Placement>, remaining: Array<ToolStock>, };
+export type ResolvedSetup = { state: PlacementState, sources: Array<Source>, food: Array<ContactRegion>, fieldConfig: FieldConfig, };
 export type CueInput = { pathway: CuePathway, gain: number, };
 export type AttemptTuning = { cues: Array<CueInput>, tasteGain: number,
 /**
  * Experimental ablation, fixed for the complete attempt and included in its identity.
  */
 silencedNeurons: Array<number>, };
-export type AttemptSpec = { schemaVersion: number, attemptId: string, graphHash: string, graphManifestHash: string, simulationBuildId: string, tuningHash: string, levelHash: string, levelId: string,
+export type AttemptSpec = { schemaVersion: number, attemptId: string, graphHash: string, graphManifestHash: string, simulationBuildId: string, tuningHash: string, placements: Array<Placement>, levelHash: string, levelId: string,
 /**
  * Decimal u64 wire value; JavaScript numbers cannot represent every seed.
  */

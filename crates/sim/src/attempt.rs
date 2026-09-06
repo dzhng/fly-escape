@@ -1,9 +1,10 @@
 //! Bounded native composition of the shared field, neural and body owners.
-//! Resolved immutable level content is the current input boundary; authored
-//! placements will be resolved into it by their future core owner.
+//! Immutable authored content and placements resolve through the placement owner
+//! before the shared field, neural and body state is allocated.
 use crate::{
     body::*,
     environment::*,
+    placement::{resolve_placements, Placement, PlacementRules, ResolvedSetup},
     record::RecordLayout,
     sensory::{cue_currents, motor_readout_indices, CuePathway},
     Brain, Graph, Group, GroupLink, LifParams, StepOutput,
@@ -21,12 +22,14 @@ pub struct StartAttempt {
     pub fly_count: u32,
     pub level: LevelDef,
     pub tuning: AttemptTuning,
+    pub placements: Vec<Placement>,
 }
 #[derive(Serialize, TS)]
 #[serde(rename_all = "camelCase")]
 pub struct AttemptInfo {
     pub spec: AttemptSpec,
     pub level: LevelDef,
+    pub resolved_setup: ResolvedSetup,
     pub groups: Vec<Group>,
     pub group_links: Vec<GroupLink>,
     pub record_layout: RecordLayout,
@@ -61,6 +64,7 @@ pub struct LevelDef {
     pub initial_reserve: f64,
     pub duration_ticks: u32,
     pub star_thresholds: [u32; 3],
+    pub placement_rules: PlacementRules,
 }
 #[derive(Clone, Debug, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
@@ -77,7 +81,7 @@ pub struct AttemptTuning {
     #[serde(default)]
     pub silenced_neurons: Vec<u32>,
 }
-#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 pub struct AttemptSpec {
     pub schema_version: u32,
@@ -86,6 +90,7 @@ pub struct AttemptSpec {
     pub graph_manifest_hash: String,
     pub simulation_build_id: String,
     pub tuning_hash: String,
+    pub placements: Vec<Placement>,
     pub level_hash: String,
     pub level_id: String,
     /// Decimal u64 wire value; JavaScript numbers cannot represent every seed.
@@ -131,6 +136,7 @@ pub struct Attempt {
     fields: FieldSet,
     flies: Vec<Fly>,
     taste_indices: Vec<u32>,
+    setup: ResolvedSetup,
     tick: u32,
     neural_steps: u32,
     result: Option<AttemptResult>,
@@ -146,8 +152,10 @@ impl Attempt {
         attempt_id: &str,
         root_seed: u64,
         fly_count: u32,
+        placements: &[Placement],
     ) -> Result<AttemptSpec, String> {
         validate_description(level, tuning, attempt_id, fly_count)?;
+        let resolved = resolve_placements(level, placements)?;
         if tuning.silenced_neurons.len() > graph.neuron_count()
             || tuning
                 .silenced_neurons
@@ -163,6 +171,7 @@ impl Attempt {
             graph_manifest_hash: canonical_hash(&graph.manifest)?,
             simulation_build_id: SIMULATION_BUILD_ID.into(),
             tuning_hash: canonical_hash(&(tuning, LifParams::default()))?,
+            placements: resolved.state.placements,
             level_hash: canonical_hash(level)?,
             level_id: level.id.clone(),
             root_seed: root_seed.to_string(),
@@ -187,14 +196,16 @@ impl Attempt {
             &spec.attempt_id,
             seed,
             spec.fly_count,
+            &spec.placements,
         )?;
         if spec != expected {
             return Err("attempt identity mismatch: graph, build, tuning, resolved level, seed or horizon differs".into());
         }
+        let resolved = resolve_placements(&level, &spec.placements)?;
         let fields = FieldSet::new(
             level.geometry.clone(),
-            level.field_config.clone(),
-            level.sources.clone(),
+            resolved.field_config.clone(),
+            resolved.sources.clone(),
             level.exit_cue.clone(),
         )?;
         let motor_readouts = motor_readout_indices(&graph);
@@ -249,6 +260,7 @@ impl Attempt {
             fields,
             flies,
             taste_indices,
+            setup: resolved,
             tick: 0,
             neural_steps: 0,
             result: None,
@@ -270,6 +282,9 @@ impl Attempt {
     }
     pub fn result(&self) -> Option<&AttemptResult> {
         self.result.as_ref()
+    }
+    pub fn resolved_setup(&self) -> &ResolvedSetup {
+        &self.setup
     }
     pub fn field_grid(&self) -> FieldGrid {
         self.fields.export_grid()
@@ -296,7 +311,7 @@ impl Attempt {
         self.tick += 1;
         let world = BodyWorld::new(
             self.fields.geometry(),
-            &self.level.food,
+            &self.setup.food,
             &self.level.zappers,
             self.level.exit,
             self.level.duration_ticks,

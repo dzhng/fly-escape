@@ -49,7 +49,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         taste_gain: 0.,
         ..Default::default()
     };
-    let spec = Attempt::describe(&graph, &level, &tuning, "native-throughput", 42, count)?;
+    let spec = Attempt::describe(&graph, &level, &tuning, "native-throughput", 42, count, &[])?;
     let start = Instant::now();
     let mut attempt = Attempt::new(graph.clone(), level.clone(), tuning.clone(), spec.clone())?;
     let construct_seconds = start.elapsed().as_secs_f64();

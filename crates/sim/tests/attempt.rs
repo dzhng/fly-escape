@@ -76,11 +76,12 @@ fn level(count: usize) -> LevelDef {
         initial_reserve: 10.,
         duration_ticks: 3,
         star_thresholds: [1, 2, 3],
+        placement_rules: Default::default(),
     }
 }
 fn attempt(graph: Arc<Graph>, level: LevelDef, seed: u64, count: u32) -> Attempt {
     let tuning = AttemptTuning::default();
-    let spec = Attempt::describe(&graph, &level, &tuning, "test", seed, count).unwrap();
+    let spec = Attempt::describe(&graph, &level, &tuning, "test", seed, count, &[]).unwrap();
     Attempt::new(graph, level, tuning, spec).unwrap()
 }
 #[test]
@@ -147,7 +148,8 @@ fn identities_reject_changed_content_and_preserve_full_width_seeds() {
     let graph = graph();
     let definition = level(1);
     let tuning = AttemptTuning::default();
-    let spec = Attempt::describe(&graph, &definition, &tuning, "identity", u64::MAX, 1).unwrap();
+    let spec =
+        Attempt::describe(&graph, &definition, &tuning, "identity", u64::MAX, 1, &[]).unwrap();
     assert_eq!(
         serde_json::to_value(&spec).unwrap()["rootSeed"],
         u64::MAX.to_string()
@@ -159,6 +161,7 @@ fn identities_reject_changed_content_and_preserve_full_width_seeds() {
         "identity",
         u64::MAX,
         1,
+        &[],
     )
     .unwrap();
     assert_eq!(spec, equivalent);
@@ -215,7 +218,7 @@ fn sensory_and_taste_currents_sum_without_direct_motor_injection() {
         taste_gain: 0.1,
         ..Default::default()
     };
-    let spec = Attempt::describe(&graph, &definition, &tuning, "currents", 11, 1).unwrap();
+    let spec = Attempt::describe(&graph, &definition, &tuning, "currents", 11, 1, &[]).unwrap();
     let mut attempt = Attempt::new(graph.clone(), definition, tuning, spec).unwrap();
     let frame = attempt.step().unwrap().unwrap();
     let cue = sim::sensory::cue_currents(
@@ -262,14 +265,15 @@ fn invalid_spawn_footprints_and_capacity_are_rejected_before_simulation() {
     ] {
         let mut definition = level(1);
         definition.spawn_poses[0].position = position;
-        let error = Attempt::describe(&graph, &definition, &tuning, "spawn", 0, 1).unwrap_err();
+        let error =
+            Attempt::describe(&graph, &definition, &tuning, "spawn", 0, 1, &[]).unwrap_err();
         assert!(error.contains("spawn body"), "{error}");
     }
-    assert!(Attempt::describe(&graph, &level(100), &tuning, "capacity", 0, 101).is_err());
-    assert!(Attempt::describe(&graph, &level(1), &tuning, "capacity", 0, 0).is_err());
+    assert!(Attempt::describe(&graph, &level(100), &tuning, "capacity", 0, 101, &[]).is_err());
+    assert!(Attempt::describe(&graph, &level(1), &tuning, "capacity", 0, 0, &[]).is_err());
     let mut definition = level(1);
     definition.duration_ticks = 6001;
-    assert!(Attempt::describe(&graph, &definition, &tuning, "horizon", 0, 1).is_err());
+    assert!(Attempt::describe(&graph, &definition, &tuning, "horizon", 0, 1, &[]).is_err());
     let mut allowed = attempt(graph, level(100), 0, 100);
     assert_eq!(allowed.step().unwrap().unwrap().neural_steps, 100);
 }
@@ -283,9 +287,17 @@ fn fixed_ablation_is_hashed_validated_and_clamps_neural_readouts() {
         silenced_neurons: vec![3],
         ..Default::default()
     };
-    let spec = Attempt::describe(&graph, &level, &tuning, "ablation", 1, 1).unwrap();
-    let control =
-        Attempt::describe(&graph, &level, &AttemptTuning::default(), "ablation", 1, 1).unwrap();
+    let spec = Attempt::describe(&graph, &level, &tuning, "ablation", 1, 1, &[]).unwrap();
+    let control = Attempt::describe(
+        &graph,
+        &level,
+        &AttemptTuning::default(),
+        "ablation",
+        1,
+        1,
+        &[],
+    )
+    .unwrap();
     assert_ne!(spec.tuning_hash, control.tuning_hash);
     let mut attempt = Attempt::new(graph.clone(), level.clone(), tuning, spec).unwrap();
     for _ in 0..5 {
@@ -304,7 +316,7 @@ fn fixed_ablation_is_hashed_validated_and_clamps_neural_readouts() {
         silenced_neurons: vec![graph.neuron_count() as u32],
         ..Default::default()
     };
-    assert!(Attempt::describe(&graph, &level, &invalid, "invalid", 1, 1).is_err());
+    assert!(Attempt::describe(&graph, &level, &invalid, "invalid", 1, 1, &[]).is_err());
 }
 
 #[test]
@@ -362,7 +374,8 @@ fn simultaneous_senses_sum_and_each_channel_can_be_ablated() {
                 };
                 let make = || {
                     let spec =
-                        Attempt::describe(&graph, &definition, &tuning, "mixed", seed, 1).unwrap();
+                        Attempt::describe(&graph, &definition, &tuning, "mixed", seed, 1, &[])
+                            .unwrap();
                     Attempt::new(graph.clone(), definition.clone(), tuning.clone(), spec).unwrap()
                 };
                 let mut attempt = make();
@@ -393,5 +406,73 @@ fn simultaneous_senses_sum_and_each_channel_can_be_ablated() {
                 }
             }
         }
+    }
+}
+
+#[test]
+fn resolved_placements_reach_taste_and_local_body_wind_and_replay() {
+    use sim::placement::*;
+    let graph = graph();
+    let mut definition = level(1);
+    definition.sources.clear();
+    definition.placement_rules.inventory = vec![
+        ToolStock {
+            kind: ToolKind::Fruit,
+            count: 1,
+        },
+        ToolStock {
+            kind: ToolKind::Fan,
+            count: 1,
+        },
+    ];
+    let placements = vec![
+        Placement {
+            id: 1,
+            kind: ToolKind::Fruit,
+            position: Point { x: 2., z: 1.55 },
+            heading: 0.,
+        },
+        Placement {
+            id: 2,
+            kind: ToolKind::Fan,
+            position: Point { x: 1., z: 2. },
+            heading: 0.,
+        },
+    ];
+    let tuning = AttemptTuning {
+        taste_gain: 0.1,
+        ..Default::default()
+    };
+    let make = |placements: &[Placement]| {
+        let spec =
+            Attempt::describe(&graph, &definition, &tuning, "placed", 11, 1, placements).unwrap();
+        assert_eq!(spec.placements, placements);
+        Attempt::new(graph.clone(), definition.clone(), tuning.clone(), spec).unwrap()
+    };
+    let mut attempt = make(&placements);
+    let mut replay = make(&placements);
+    let frame = attempt.step().unwrap().unwrap();
+    let mut reference = sim::Brain::new(graph.clone(), sim::Brain::seed_for_fly(11, 0));
+    reference.set_external_current(&[(2, 0.1)]).unwrap();
+    assert_eq!(
+        frame.flies[0].neural,
+        Some(reference.step()),
+        "resolved fruit supplies contact-driven taste"
+    );
+    assert!(frame.flies[0].sensory.unwrap().wind.x > 0.);
+    let mut reversed = placements.clone();
+    reversed[1].heading = std::f64::consts::PI;
+    let other = make(&reversed).step().unwrap().unwrap();
+    assert_eq!(other.flies[0].sensory.unwrap().wind, Point::default());
+    assert_eq!(frame.flies[0].neural, other.flies[0].neural);
+    assert_eq!(
+        frame.flies[0].body.pose.heading,
+        other.flies[0].body.pose.heading
+    );
+    let drift = frame.flies[0].body.pose.position.x - other.flies[0].body.pose.position.x;
+    assert!((drift - frame.flies[0].sensory.unwrap().wind.x * GAME_TICK_SECONDS).abs() < 1e-12);
+    assert_eq!(Some(frame), replay.step().unwrap());
+    for _ in 0..19 {
+        assert_eq!(attempt.step().unwrap(), replay.step().unwrap());
     }
 }

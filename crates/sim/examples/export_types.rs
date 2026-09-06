@@ -4,6 +4,7 @@ use sim::chamber::{BrainFrame, BrainInfo, Pose};
 use sim::environment::*;
 use sim::field_lab::{FieldLabFrame, FieldLabInfo, FieldScenario};
 use sim::lifecycle_lab::*;
+use sim::placement::*;
 use sim::record::*;
 use sim::sensory::CuePathway;
 use sim::{Group, GroupActivity, GroupLink, MotorOutput, StepOutput};
@@ -28,6 +29,15 @@ fn main() {
         BodyEvent::decl(),
         OutcomeSummary::decl(),
         LevelDef::decl(),
+        ToolKind::decl(),
+        ToolEffect::decl(),
+        ToolDef::decl(),
+        ToolStock::decl(),
+        PlacementRules::decl(),
+        Placement::decl(),
+        PlacementEdit::decl(),
+        PlacementState::decl(),
+        ResolvedSetup::decl(),
         CueInput::decl(),
         AttemptTuning::decl(),
         AttemptSpec::decl(),

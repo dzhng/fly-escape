@@ -17,3 +17,5 @@ pub mod lifecycle_lab;
 pub mod record;
 
 pub mod swarm_lab;
+
+pub mod placement;

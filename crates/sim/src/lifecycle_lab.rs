@@ -54,7 +54,7 @@ impl LifecycleLab {
                 .indices
                 .clone();
         }
-        let spec = Attempt::describe(&graph, &level, &tuning, "lifecycle-lab", seed, 1)?;
+        let spec = Attempt::describe(&graph, &level, &tuning, "lifecycle-lab", seed, 1, &[])?;
         Ok(Self {
             scenario,
             attempt: Attempt::new(graph, level, tuning, spec)?,
@@ -177,5 +177,6 @@ fn fixture(scenario: LifecycleScenario) -> LevelDef {
         initial_reserve: 8.,
         duration_ticks: 300,
         star_thresholds: [1, 2, 3],
+        placement_rules: Default::default(),
     }
 }
