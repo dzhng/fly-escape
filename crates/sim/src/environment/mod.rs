@@ -42,6 +42,17 @@ impl Geometry {
             .find(|r| p.x >= r.min.x && p.x <= r.max.x && p.z >= r.min.z && p.z <= r.max.z)
             .map(|r| r.id)
     }
+    /// A spawn must clear the same conservative wall footprint used by sweep.
+    pub fn contains_body(&self, p: Point, radius: f64) -> bool {
+        p.finite()
+            && radius.is_finite()
+            && radius >= 0.
+            && self.room_at(p).is_some()
+            && self.walls.iter().all(|wall| {
+                let (min, max) = wall_bounds(*wall, radius);
+                segment_box(p, p, min, max).is_none()
+            })
+    }
     pub fn line_of_sight(&self, a: Point, b: Point) -> bool {
         a.finite()
             && b.finite()
@@ -58,14 +69,7 @@ impl Geometry {
         }
         let mut t: f64 = 1.;
         for w in &self.walls {
-            let min = Point {
-                x: w.a.x.min(w.b.x) - radius,
-                z: w.a.z.min(w.b.z) - radius,
-            };
-            let max = Point {
-                x: w.a.x.max(w.b.x) + radius,
-                z: w.a.z.max(w.b.z) + radius,
-            };
+            let (min, max) = wall_bounds(*w, radius);
             if let Some(hit) = segment_box(from, to, min, max) {
                 t = t.min(hit);
             }
@@ -128,4 +132,17 @@ fn segment_box(a: Point, b: Point, min: Point, max: Point) -> Option<f64> {
         }
     }
     Some(near)
+}
+
+fn wall_bounds(wall: Wall, radius: f64) -> (Point, Point) {
+    (
+        Point {
+            x: wall.a.x.min(wall.b.x) - radius,
+            z: wall.a.z.min(wall.b.z) - radius,
+        },
+        Point {
+            x: wall.a.x.max(wall.b.x) + radius,
+            z: wall.a.z.max(wall.b.z) + radius,
+        },
+    )
 }
