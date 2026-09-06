@@ -1,5 +1,5 @@
 //! Paired content calibration through the real Graph + Attempt; no motion shortcuts.
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
 use sim::{attempt::*, placement::Placement, Graph};
@@ -75,12 +75,66 @@ fn topology(level: &LevelDef) -> Result<Value, String> {
         json!({"bodyRadius":radius,"roomLinks":links,"method":"sample shared boundaries and cross actual Geometry sweep; room IDs 1..4 main route, 5 pantry"}),
     )
 }
+#[derive(Default, Serialize)]
+#[serde(rename_all = "camelCase")]
+struct DetectorStats {
+    ticks: u32,
+    active_ticks: u32,
+    left_ticks: u32,
+    right_ticks: u32,
+    outside_floor_ticks: u32,
+    blocked_antenna_ticks: u32,
+    signed_turn_sum: f64,
+    absolute_turn_sum: f64,
+    positive_turn_ticks: u32,
+    negative_turn_ticks: u32,
+    longest_same_sign_run: u32,
+    #[serde(skip)]
+    run: u32,
+    #[serde(skip)]
+    previous_sign: i8,
+}
+impl DetectorStats {
+    fn observe(&mut self, active: bool, left: bool, outside: bool, blocked: bool, turn: f64) {
+        self.ticks += 1;
+        self.active_ticks += active as u32;
+        self.left_ticks += (active && left) as u32;
+        self.right_ticks += (active && !left) as u32;
+        self.outside_floor_ticks += outside as u32;
+        self.blocked_antenna_ticks += blocked as u32;
+        self.signed_turn_sum += turn;
+        self.absolute_turn_sum += turn.abs();
+        let sign = if turn > 1e-8 {
+            1
+        } else if turn < -1e-8 {
+            -1
+        } else {
+            0
+        };
+        self.positive_turn_ticks += (sign > 0) as u32;
+        self.negative_turn_ticks += (sign < 0) as u32;
+        self.run = if sign == 0 {
+            0
+        } else if sign == self.previous_sign {
+            self.run + 1
+        } else {
+            1
+        };
+        self.previous_sign = sign;
+        self.longest_same_sign_run = self.longest_same_sign_run.max(self.run);
+    }
+    fn break_run(&mut self) {
+        self.run = 0;
+        self.previous_sign = 0;
+    }
+}
 fn run(
     graph: &Arc<Graph>,
     content: &Content,
     seed: u64,
     label: &str,
     placements: &[Placement],
+    detector: bool,
 ) -> Result<Value, String> {
     let start = Instant::now();
     let spec = Attempt::describe(
@@ -103,6 +157,9 @@ fn run(
     let mut boundary_stalled = vec![0u32; 20];
     let mut samples = vec![];
     let mut wall_motor_samples = vec![];
+    let mut detector_samples = vec![];
+    let mut detector_free: Vec<DetectorStats> = (0..20).map(|_| DetectorStats::default()).collect();
+    let mut detector_wall: Vec<DetectorStats> = (0..20).map(|_| DetectorStats::default()).collect();
     let mut wall_sample_counts = [0u32; 20];
     let mut wall_abs_turn_sum = [0f64; 20];
     let mut wall_abs_turn_max = [0f64; 20];
@@ -116,6 +173,72 @@ fn run(
         for fly in &frame.flies {
             let a = fly.input_pose.position;
             let b = fly.body.pose.position;
+            if detector {
+                if let (Some(sample), Some(neural)) = (&fly.sensory, &fly.neural) {
+                    let cue = &content.tuning.cues[0];
+                    let currents =
+                        sim::sensory::cue_currents(graph, sample, cue.pathway, cue.gain)?;
+                    let active = currents.iter().any(|(_, v)| *v > 0.);
+                    let left = sample.left.attractive_odor + sample.left.exit_cue;
+                    let right = sample.right.attractive_odor + sample.right.exit_cue;
+                    let offset = content.level.field_config.antenna_offset;
+                    let dx = fly.input_pose.heading.sin() * offset;
+                    let dz = -fly.input_pose.heading.cos() * offset;
+                    let antennae = [
+                        sim::environment::Point {
+                            x: a.x + dx,
+                            z: a.z + dz,
+                        },
+                        sim::environment::Point {
+                            x: a.x - dx,
+                            z: a.z - dz,
+                        },
+                    ];
+                    let outside = antennae.map(|p| content.level.geometry.room_at(p).is_none());
+                    let blocked = antennae.map(|p| !content.level.geometry.contains_body(p, 0.));
+                    let wall = fly.body.outcome.is_none()
+                        && fly.body.mode != sim::body::BodyMode::Feeding
+                        && (a.x - b.x).hypot(a.z - b.z) < 1e-8
+                        && !content
+                            .level
+                            .geometry
+                            .contains_body(b, content.level.body_config.body_radius + 1e-5);
+                    let turn = if fly.body.mode == sim::body::BodyMode::Flying {
+                        neural.motor.flight_turn
+                    } else if fly.body.mode == sim::body::BodyMode::Walking {
+                        neural.motor.turn
+                    } else {
+                        0.
+                    };
+                    let id = fly.id as usize;
+                    if wall {
+                        detector_wall[id].observe(
+                            active,
+                            left > right,
+                            outside.contains(&true),
+                            blocked.contains(&true),
+                            turn,
+                        );
+                        detector_free[id].break_run();
+                    } else {
+                        detector_free[id].observe(
+                            active,
+                            left > right,
+                            outside.contains(&true),
+                            blocked.contains(&true),
+                            turn,
+                        );
+                        detector_wall[id].break_run();
+                    }
+                    if frame.tick % 50 == 0 || fly.body.outcome.is_some() {
+                        let delta = (fly.body.pose.heading - fly.input_pose.heading
+                            + std::f64::consts::PI)
+                            .rem_euclid(std::f64::consts::TAU)
+                            - std::f64::consts::PI;
+                        detector_samples.push(json!({"tick":frame.tick,"flyId":id,"sensory":sample,"left":left,"right":right,"absoluteContrast":(left-right).abs(),"relativeContrast":if left+right>0. {(left-right).abs()/(left+right)} else {0.},"active":active,"selectedSide":if !active {"none"} else if left>right {"left"} else {"right"},"antennae":antennae,"outsideFloor":outside,"blockedAntennae":blocked,"boundaryStalled":wall,"motor":neural.motor,"headingDelta":delta,"inputPose":fly.input_pose,"body":fly.body}));
+                    }
+                }
+            }
             if fly.body.outcome.is_none()
                 && fly.body.mode != sim::body::BodyMode::Feeding
                 && (a.x - b.x).hypot(a.z - b.z) < 1e-8
@@ -156,7 +279,7 @@ fn run(
         }
         if let Some(result) = frame.result {
             return Ok(
-                json!({"seed":seed,"condition":label,"spec":spec,"result":result,"constructSeconds":construct_seconds,"firstTickSeconds":first_tick_seconds,"wallSeconds":start.elapsed().as_secs_f64(),"wallMotor":{"samples":wall_motor_samples,"maxSamplesPerFly":8,"absTurnSum":wall_abs_turn_sum,"absTurnMax":wall_abs_turn_max,"absHeadingDeltaSum":wall_abs_heading_delta_sum},"stalledTicks":stalled,"boundaryStalledTicks":boundary_stalled,"stallDefinition":"nonterminal nonfeeding displacement below 1e-8; boundary subset fails Geometry occupancy with body radius enlarged by 1e-5","samples":samples}),
+                json!({"seed":seed,"condition":label,"spec":spec,"result":result,"constructSeconds":construct_seconds,"firstTickSeconds":first_tick_seconds,"wallSeconds":start.elapsed().as_secs_f64(),"detector":if detector {json!({"free":detector_free,"wall":detector_wall,"samples":detector_samples,"activationAuthority":"cue_currents on actual FlyFrame sensory; no duplicated detector threshold","occupancy":"antennae reconstructed from FieldSet.sample formula; room_at checks floor and contains_body(radius=0) checks obstacles"})} else {Value::Null},"wallMotor":{"samples":wall_motor_samples,"maxSamplesPerFly":8,"absTurnSum":wall_abs_turn_sum,"absTurnMax":wall_abs_turn_max,"absHeadingDeltaSum":wall_abs_heading_delta_sum},"stalledTicks":stalled,"boundaryStalledTicks":boundary_stalled,"stallDefinition":"nonterminal nonfeeding displacement below 1e-8; boundary subset fails Geometry occupancy with body radius enlarged by 1e-5","samples":samples}),
             );
         }
     }
@@ -168,14 +291,26 @@ fn median(mut values: Vec<f64>) -> f64 {
 }
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<_> = std::env::args().collect();
-    if !(6..=7).contains(&args.len()) || args.get(6).is_some_and(|v| v != "--empty-control") {
+    if !(6..=7).contains(&args.len())
+        || args
+            .get(6)
+            .is_some_and(|v| v != "--empty-control" && v != "--reference-empty")
+    {
         return Err(
-            "Usage: campaign_probe GRAPH_DIR CONTENT_JSON tuning|heldout COUNT OUTPUT_JSON [--empty-control]".into(),
+            "Usage: campaign_probe GRAPH_DIR CONTENT_JSON tuning|heldout COUNT OUTPUT_JSON [--empty-control|--reference-empty]".into(),
         );
     }
     let content_text = std::fs::read_to_string(&args[2])?;
     let content: Content = serde_json::from_str(&content_text)?;
     let count: usize = args[4].parse()?;
+    let detector = args.get(6).is_some_and(|v| v == "--reference-empty");
+    if detector
+        && (count > 3
+            || content.tuning.cues.len() != 1
+            || content.tuning.cues[0].pathway != sim::sensory::CuePathway::InhibitoryOdor)
+    {
+        return Err("reference-empty diagnostic requires at most three seeds and exactly one inhibitory odor cue".into());
+    }
     let topology = topology(&content.level)?;
     let thresholds = content.level.star_thresholds;
     if thresholds[0] == 0 || thresholds[2] > 20 || thresholds.windows(2).any(|v| v[0] >= v[1]) {
@@ -217,12 +352,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     for &seed in seeds.iter().take(count) {
         let mut conditions = vec![];
         let empty = vec![];
-        let mut arms = vec![("reference", &content.reference), ("poor", &content.poor)];
+        let mut arms = vec![("reference", &content.reference)];
+        if !detector {
+            arms.push(("poor", &content.poor));
+        }
         if args.len() == 7 {
             arms.push(("empty", &empty));
         }
         for (label, placements) in arms {
-            let row = run(&graph, &content, seed, label, placements)?;
+            let row = run(&graph, &content, seed, label, placements, detector)?;
             eprintln!(
                 "seed {seed} {label}: {} in {:.2}s; first tick {:.3}s",
                 row["result"],
