@@ -107,3 +107,13 @@ Each rendered frame contributes to a small histogram instead of an ever-growing 
 ### Detailed GPU accounting runs only on request (slice 05 diagnostics)
 
 Downloading a report estimates buffers, textures and render targets owned by the scene. Regular frame statistics remain cheap counts. The plan required memory evidence without specifying when to collect it; scanning all scene resources repeatedly would distort the performance being measured. Browser and driver overhead remain explicitly outside this estimate.
+
+## Sound — medium confidence (camera preparation)
+
+### Startup follows the first fly (slice 06)
+
+The playback view initially follows fly 1 at close distance. The user required a close default view and selection-driven follow but did not name an initial selection. Using the first roster entry makes that state explicit; Overview and another selection remain one click away. This provisional startup choice can change when the setup-to-run transition is integrated.
+
+### Cutaway hides only walls on the viewing ray (slice 06)
+
+The camera hides visual wall segments between itself and the followed fly's center. Collision remains unchanged. The plan allowed cutaway without choosing its method. A center ray is simple and bounded, but final room geometry must verify that a visible center also leaves enough of the fly unobscured.

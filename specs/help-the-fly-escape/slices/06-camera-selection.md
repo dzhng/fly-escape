@@ -1,6 +1,6 @@
 # 06 — Close framing and shared selection
 
-Status: planned. Dependencies: 05.
+Status: functional preparation verified; visual acceptance open ([review](../assets/evidence/06/review.md)). Dependencies: 05.
 
 ## Contract and seam
 
