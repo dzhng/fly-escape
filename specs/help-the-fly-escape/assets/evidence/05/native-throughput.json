@@ -1,0 +1,3102 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUtc": "2026-09-06T16:02:35.562396+00:00",
+  "purpose": "Native shared Attempt throughput and memory feasibility; not browser acceptance or campaign tuning.",
+  "runOrder": [
+    "20x200",
+    "100x200",
+    "20x6000",
+    "100x1000"
+  ],
+  "runs": [
+    {
+      "activeNeuralSteps": 4000,
+      "activeNeuralStepsPerSecond": 624.7242753055384,
+      "blocks": [
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 1,
+          "lastTick": 200,
+          "neuralStepsPerSecond": 624.734187024343,
+          "wallSeconds": 6.402723083
+        }
+      ],
+      "constructSeconds": 0.003261083,
+      "graphEdges": 798715,
+      "graphNeurons": 70000,
+      "level": {
+        "bodyConfig": {
+          "bodyRadius": 0.08,
+          "feedingRate": 3.0,
+          "flightSpeed": 2.0,
+          "flyingCost": 0.8,
+          "idleCost": 0.2,
+          "landingDwellSeconds": 1.0,
+          "landingThreshold": 0.2,
+          "maxBoutSeconds": 3.0,
+          "proboscisThreshold": 0.2,
+          "reserveCapacity": 1000.0,
+          "takeoffThreshold": 0.2,
+          "turnGain": 1.0,
+          "walkSpeed": 1.0,
+          "walkingCost": 0.4
+        },
+        "durationTicks": 6000,
+        "exit": {
+          "a": {
+            "x": 8.0,
+            "z": -0.5
+          },
+          "b": {
+            "x": 8.0,
+            "z": 0.5
+          },
+          "outward": {
+            "x": 1.0,
+            "z": 0.0
+          }
+        },
+        "exitCue": null,
+        "fieldConfig": {
+          "antennaOffset": 0.15,
+          "baselineBrightness": 1.0,
+          "cellSize": 0.25,
+          "decay": 0.1,
+          "diffusion": 0.2,
+          "wind": {
+            "x": 0.0,
+            "z": 0.0
+          }
+        },
+        "food": [],
+        "geometry": {
+          "rooms": [
+            {
+              "id": 0,
+              "max": {
+                "x": 6.0,
+                "z": 6.0
+              },
+              "min": {
+                "x": -6.0,
+                "z": -6.0
+              }
+            },
+            {
+              "id": 1,
+              "max": {
+                "x": 8.0,
+                "z": 1.0
+              },
+              "min": {
+                "x": 7.0,
+                "z": -1.0
+              }
+            }
+          ],
+          "walls": [
+            {
+              "a": {
+                "x": -6.0,
+                "z": -6.0
+              },
+              "b": {
+                "x": 6.0,
+                "z": -6.0
+              }
+            },
+            {
+              "a": {
+                "x": -6.0,
+                "z": -6.0
+              },
+              "b": {
+                "x": -6.0,
+                "z": 6.0
+              }
+            },
+            {
+              "a": {
+                "x": -6.0,
+                "z": 6.0
+              },
+              "b": {
+                "x": 6.0,
+                "z": 6.0
+              }
+            },
+            {
+              "a": {
+                "x": 7.0,
+                "z": -1.0
+              },
+              "b": {
+                "x": 8.0,
+                "z": -1.0
+              }
+            },
+            {
+              "a": {
+                "x": 7.0,
+                "z": -1.0
+              },
+              "b": {
+                "x": 7.0,
+                "z": 1.0
+              }
+            },
+            {
+              "a": {
+                "x": 7.0,
+                "z": 1.0
+              },
+              "b": {
+                "x": 8.0,
+                "z": 1.0
+              }
+            },
+            {
+              "a": {
+                "x": 6.0,
+                "z": -6.0
+              },
+              "b": {
+                "x": 6.0,
+                "z": 6.0
+              }
+            },
+            {
+              "a": {
+                "x": 8.0,
+                "z": -1.0
+              },
+              "b": {
+                "x": 8.0,
+                "z": -0.5
+              }
+            },
+            {
+              "a": {
+                "x": 8.0,
+                "z": 0.5
+              },
+              "b": {
+                "x": 8.0,
+                "z": 1.0
+              }
+            }
+          ]
+        },
+        "id": "active-native-benchmark",
+        "initialReserve": 1000.0,
+        "sources": [
+          {
+            "kind": "odor",
+            "position": {
+              "x": 0.0,
+              "z": 0.0
+            },
+            "radius": 1.0,
+            "rate": 1.0
+          }
+        ],
+        "spawnPoses": [
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": -1.6
+            }
+          }
+        ],
+        "starThresholds": [
+          1,
+          10,
+          20
+        ],
+        "zappers": []
+      },
+      "loadSeconds": 0.026770958,
+      "machine": {
+        "architecture": "arm64",
+        "compiler": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: aarch64-apple-darwin\nrelease: 1.94.1\nLLVM version: 21.1.8",
+        "cpu": "Apple M5 Pro",
+        "logicalCores": "18",
+        "memoryBytes": "51539607552",
+        "model": "Mac17,9",
+        "os": "Darwin 25.4.0 Darwin Kernel Version 25.4.0: Thu Mar 19 19:33:50 PDT 2026; root:xnu-12377.101.15~1/RELEASE_ARM64_T6050",
+        "physicalCores": "18"
+      },
+      "manifestFileHash": "ead5f7d258f83ee3909080797752c2f4bb749be939a2ff983f411095722efbf1",
+      "measuredTicks": 200,
+      "measurementScope": "Every counted neural step is confirmed by AttemptFrame.neural_steps delta and present neural output; no terminal no-op contributes. Wall time includes step calls, frame destruction and light telemetry; excludes graph loading, construction, RSS commands, serialization and I/O. Frames are dropped each tick, so this does not measure replay archive/Worker transfer/rendering. RSS includes allocator/runtime/manifest overhead; graph+brain byte counts are exact owner-reported array payload only, excluding field arrays and allocation headers. Disconnected exit annex and reserve1000 with unchanged positive default costs keep the neural workload active; benchmark content is not campaign tuning. Native feasibility is not browser acceptance.",
+      "minimumObservedReserve": 985.9599999999956,
+      "modeObservations": {
+        "feeding": 0,
+        "flying": 2552,
+        "walking": 1448
+      },
+      "payloadBytes": {
+        "allBrainArrays": 64400000,
+        "graphAndBrainArrays": 74264584,
+        "graphArrays": 9864584,
+        "perBrainArrays": 3220000
+      },
+      "probeSourceHash": "c8f7b658a6ef594fb926f1bd25c76a18d44d77e8dda8d5dd2bd887c5e9f2d146",
+      "productionGameSecondsPerWallSecond": 3.1236213765276917,
+      "profile": "cargo release; workspace opt-level3, thin LTO; single-threaded Attempt, graph shared by Arc",
+      "projection6000TicksWallSeconds": 192.08474001,
+      "projectionIsNotMeasurement": true,
+      "result": null,
+      "rssKiB": {
+        "afterStepping": 89968,
+        "attemptInitialized": 40816,
+        "graphLoadedAfterTemporaryBrainCalibration": 34912
+      },
+      "sharedField": {
+        "activeCells": 2336,
+        "dimensions": [
+          56,
+          48
+        ],
+        "evolutions": 200
+      },
+      "simulatedSeconds": 20.0,
+      "spec": {
+        "attemptId": "native-throughput",
+        "durationTicks": 6000,
+        "flyCount": 20,
+        "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+        "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+        "levelHash": "e7e882e1b48795bdb84951b0c0280d4e96bc5c65a4ad02d91f55d8812ca589f3",
+        "levelId": "active-native-benchmark",
+        "rootSeed": "42",
+        "schemaVersion": 1,
+        "simulationBuildId": "5ab5bb69bff00d4e14b756819a2b6d6d821f6d0bbc561dc90af6277a19bd29c2",
+        "tuningHash": "696115970a53825461292a3844c6c43701a29a8bc56f4763de8da347c93edc6a"
+      },
+      "stepCallLatencyMs": {
+        "max": 45.735625,
+        "p50": 32.744834,
+        "p95": 38.063584,
+        "p99": 43.771625
+      },
+      "terminalFliesAtLastTick": 0,
+      "tuning": {
+        "cue": {
+          "gain": 1.0,
+          "pathway": "excitatoryOdor"
+        },
+        "tasteGain": 0.0
+      },
+      "wallSeconds": 6.402824667,
+      "runKind": "pilot",
+      "processMeasurement": {
+        "command": "/usr/bin/time -l",
+        "realSeconds": 6.9,
+        "userSeconds": 6.33,
+        "systemSeconds": 0.07,
+        "maximumResidentSetBytes": 104185856,
+        "peakMemoryFootprintBytes": 103350728,
+        "rawLog": "20flies tick200/200: 624.7 neural steps/s\n        6.90 real         6.33 user         0.07 sys\n           104185856  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               11374  page reclaims\n                  11  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  22  voluntary context switches\n                7320  involuntary context switches\n         88998742050  instructions retired\n         26958510919  cycles elapsed\n           103350728  peak memory footprint\n"
+      }
+    },
+    {
+      "activeNeuralSteps": 20000,
+      "activeNeuralStepsPerSecond": 710.7090487880307,
+      "blocks": [
+        {
+          "activeNeuralSteps": 20000,
+          "firstTick": 1,
+          "lastTick": 200,
+          "neuralStepsPerSecond": 710.7110786939994,
+          "wallSeconds": 28.1408305
+        }
+      ],
+      "constructSeconds": 0.003675875,
+      "graphEdges": 798715,
+      "graphNeurons": 70000,
+      "level": {
+        "bodyConfig": {
+          "bodyRadius": 0.08,
+          "feedingRate": 3.0,
+          "flightSpeed": 2.0,
+          "flyingCost": 0.8,
+          "idleCost": 0.2,
+          "landingDwellSeconds": 1.0,
+          "landingThreshold": 0.2,
+          "maxBoutSeconds": 3.0,
+          "proboscisThreshold": 0.2,
+          "reserveCapacity": 1000.0,
+          "takeoffThreshold": 0.2,
+          "turnGain": 1.0,
+          "walkSpeed": 1.0,
+          "walkingCost": 0.4
+        },
+        "durationTicks": 6000,
+        "exit": {
+          "a": {
+            "x": 8.0,
+            "z": -0.5
+          },
+          "b": {
+            "x": 8.0,
+            "z": 0.5
+          },
+          "outward": {
+            "x": 1.0,
+            "z": 0.0
+          }
+        },
+        "exitCue": null,
+        "fieldConfig": {
+          "antennaOffset": 0.15,
+          "baselineBrightness": 1.0,
+          "cellSize": 0.25,
+          "decay": 0.1,
+          "diffusion": 0.2,
+          "wind": {
+            "x": 0.0,
+            "z": 0.0
+          }
+        },
+        "food": [],
+        "geometry": {
+          "rooms": [
+            {
+              "id": 0,
+              "max": {
+                "x": 6.0,
+                "z": 6.0
+              },
+              "min": {
+                "x": -6.0,
+                "z": -6.0
+              }
+            },
+            {
+              "id": 1,
+              "max": {
+                "x": 8.0,
+                "z": 1.0
+              },
+              "min": {
+                "x": 7.0,
+                "z": -1.0
+              }
+            }
+          ],
+          "walls": [
+            {
+              "a": {
+                "x": -6.0,
+                "z": -6.0
+              },
+              "b": {
+                "x": 6.0,
+                "z": -6.0
+              }
+            },
+            {
+              "a": {
+                "x": -6.0,
+                "z": -6.0
+              },
+              "b": {
+                "x": -6.0,
+                "z": 6.0
+              }
+            },
+            {
+              "a": {
+                "x": -6.0,
+                "z": 6.0
+              },
+              "b": {
+                "x": 6.0,
+                "z": 6.0
+              }
+            },
+            {
+              "a": {
+                "x": 7.0,
+                "z": -1.0
+              },
+              "b": {
+                "x": 8.0,
+                "z": -1.0
+              }
+            },
+            {
+              "a": {
+                "x": 7.0,
+                "z": -1.0
+              },
+              "b": {
+                "x": 7.0,
+                "z": 1.0
+              }
+            },
+            {
+              "a": {
+                "x": 7.0,
+                "z": 1.0
+              },
+              "b": {
+                "x": 8.0,
+                "z": 1.0
+              }
+            },
+            {
+              "a": {
+                "x": 6.0,
+                "z": -6.0
+              },
+              "b": {
+                "x": 6.0,
+                "z": 6.0
+              }
+            },
+            {
+              "a": {
+                "x": 8.0,
+                "z": -1.0
+              },
+              "b": {
+                "x": 8.0,
+                "z": -0.5
+              }
+            },
+            {
+              "a": {
+                "x": 8.0,
+                "z": 0.5
+              },
+              "b": {
+                "x": 8.0,
+                "z": 1.0
+              }
+            }
+          ]
+        },
+        "id": "active-native-benchmark",
+        "initialReserve": 1000.0,
+        "sources": [
+          {
+            "kind": "odor",
+            "position": {
+              "x": 0.0,
+              "z": 0.0
+            },
+            "radius": 1.0,
+            "rate": 1.0
+          }
+        ],
+        "spawnPoses": [
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": 1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": 1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": 1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": 1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": 1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": 1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": 1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": 1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": 1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": 1.6
+            }
+          }
+        ],
+        "starThresholds": [
+          1,
+          10,
+          20
+        ],
+        "zappers": []
+      },
+      "loadSeconds": 0.026408416,
+      "machine": {
+        "architecture": "arm64",
+        "compiler": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: aarch64-apple-darwin\nrelease: 1.94.1\nLLVM version: 21.1.8",
+        "cpu": "Apple M5 Pro",
+        "logicalCores": "18",
+        "memoryBytes": "51539607552",
+        "model": "Mac17,9",
+        "os": "Darwin 25.4.0 Darwin Kernel Version 25.4.0: Thu Mar 19 19:33:50 PDT 2026; root:xnu-12377.101.15~1/RELEASE_ARM64_T6050",
+        "physicalCores": "18"
+      },
+      "manifestFileHash": "ead5f7d258f83ee3909080797752c2f4bb749be939a2ff983f411095722efbf1",
+      "measuredTicks": 200,
+      "measurementScope": "Every counted neural step is confirmed by AttemptFrame.neural_steps delta and present neural output; no terminal no-op contributes. Wall time includes step calls, frame destruction and light telemetry; excludes graph loading, construction, RSS commands, serialization and I/O. Frames are dropped each tick, so this does not measure replay archive/Worker transfer/rendering. RSS includes allocator/runtime/manifest overhead; graph+brain byte counts are exact owner-reported array payload only, excluding field arrays and allocation headers. Disconnected exit annex and reserve1000 with unchanged positive default costs keep the neural workload active; benchmark content is not campaign tuning. Native feasibility is not browser acceptance.",
+      "minimumObservedReserve": 985.9599999999956,
+      "modeObservations": {
+        "feeding": 0,
+        "flying": 12355,
+        "walking": 7645
+      },
+      "payloadBytes": {
+        "allBrainArrays": 322000000,
+        "graphAndBrainArrays": 331864584,
+        "graphArrays": 9864584,
+        "perBrainArrays": 3220000
+      },
+      "probeSourceHash": "c8f7b658a6ef594fb926f1bd25c76a18d44d77e8dda8d5dd2bd887c5e9f2d146",
+      "productionGameSecondsPerWallSecond": 0.7107090487880308,
+      "profile": "cargo release; workspace opt-level3, thin LTO; single-threaded Attempt, graph shared by Arc",
+      "projection6000TicksWallSeconds": 844.22732625,
+      "projectionIsNotMeasurement": true,
+      "result": null,
+      "rssKiB": {
+        "afterStepping": 362896,
+        "attemptInitialized": 48448,
+        "graphLoadedAfterTemporaryBrainCalibration": 34896
+      },
+      "sharedField": {
+        "activeCells": 2336,
+        "dimensions": [
+          56,
+          48
+        ],
+        "evolutions": 200
+      },
+      "simulatedSeconds": 20.0,
+      "spec": {
+        "attemptId": "native-throughput",
+        "durationTicks": 6000,
+        "flyCount": 100,
+        "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+        "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+        "levelHash": "f4d8a986f2f4aa786c227dc0c56464fd51cf842f87a7e45baf64ac513aa2d1ac",
+        "levelId": "active-native-benchmark",
+        "rootSeed": "42",
+        "schemaVersion": 1,
+        "simulationBuildId": "5ab5bb69bff00d4e14b756819a2b6d6d821f6d0bbc561dc90af6277a19bd29c2",
+        "tuningHash": "696115970a53825461292a3844c6c43701a29a8bc56f4763de8da347c93edc6a"
+      },
+      "stepCallLatencyMs": {
+        "max": 208.94608300000002,
+        "p50": 139.017875,
+        "p95": 173.886708,
+        "p99": 193.810083
+      },
+      "terminalFliesAtLastTick": 0,
+      "tuning": {
+        "cue": {
+          "gain": 1.0,
+          "pathway": "excitatoryOdor"
+        },
+        "tasteGain": 0.0
+      },
+      "wallSeconds": 28.140910875,
+      "runKind": "pilot",
+      "processMeasurement": {
+        "command": "/usr/bin/time -l",
+        "realSeconds": 28.21,
+        "userSeconds": 27.93,
+        "systemSeconds": 0.17,
+        "maximumResidentSetBytes": 371720192,
+        "peakMemoryFootprintBytes": 371016352,
+        "rawLog": "100flies tick200/200: 710.7 neural steps/s\n       28.21 real        27.93 user         0.17 sys\n           371720192  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               27662  page reclaims\n                  47  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   3  voluntary context switches\n               11187  involuntary context switches\n        441719930541  instructions retired\n        120757167870  cycles elapsed\n           371016352  peak memory footprint\n"
+      }
+    },
+    {
+      "activeNeuralSteps": 120000,
+      "activeNeuralStepsPerSecond": 644.2574593126474,
+      "blocks": [
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 1,
+          "lastTick": 200,
+          "neuralStepsPerSecond": 686.0010977948658,
+          "wallSeconds": 5.830894459
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 201,
+          "lastTick": 400,
+          "neuralStepsPerSecond": 627.5891484501725,
+          "wallSeconds": 6.3735965
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 401,
+          "lastTick": 600,
+          "neuralStepsPerSecond": 694.2121917784276,
+          "wallSeconds": 5.761927041
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 601,
+          "lastTick": 800,
+          "neuralStepsPerSecond": 652.8999936877955,
+          "wallSeconds": 6.126512542
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 801,
+          "lastTick": 1000,
+          "neuralStepsPerSecond": 655.2607296760829,
+          "wallSeconds": 6.104440292
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 1001,
+          "lastTick": 1200,
+          "neuralStepsPerSecond": 671.863803838493,
+          "wallSeconds": 5.953587583
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 1201,
+          "lastTick": 1400,
+          "neuralStepsPerSecond": 690.8857879469799,
+          "wallSeconds": 5.789668958
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 1401,
+          "lastTick": 1600,
+          "neuralStepsPerSecond": 703.8938218403383,
+          "wallSeconds": 5.68267525
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 1601,
+          "lastTick": 1800,
+          "neuralStepsPerSecond": 646.3514152026389,
+          "wallSeconds": 6.188583959
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 1801,
+          "lastTick": 2000,
+          "neuralStepsPerSecond": 561.2198421941002,
+          "wallSeconds": 7.12733175
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 2001,
+          "lastTick": 2200,
+          "neuralStepsPerSecond": 691.0200214273527,
+          "wallSeconds": 5.788544291
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 2201,
+          "lastTick": 2400,
+          "neuralStepsPerSecond": 609.3468126828022,
+          "wallSeconds": 6.564406208
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 2401,
+          "lastTick": 2600,
+          "neuralStepsPerSecond": 631.5752992565293,
+          "wallSeconds": 6.333369916
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 2601,
+          "lastTick": 2800,
+          "neuralStepsPerSecond": 574.7918083664988,
+          "wallSeconds": 6.959041416
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 2801,
+          "lastTick": 3000,
+          "neuralStepsPerSecond": 551.8740415358626,
+          "wallSeconds": 7.248030708
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 3001,
+          "lastTick": 3200,
+          "neuralStepsPerSecond": 592.9507421319383,
+          "wallSeconds": 6.745922917
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 3201,
+          "lastTick": 3400,
+          "neuralStepsPerSecond": 686.3069510625033,
+          "wallSeconds": 5.828295916
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 3401,
+          "lastTick": 3600,
+          "neuralStepsPerSecond": 711.0892306742555,
+          "wallSeconds": 5.625173083
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 3601,
+          "lastTick": 3800,
+          "neuralStepsPerSecond": 675.2394599206772,
+          "wallSeconds": 5.923824417
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 3801,
+          "lastTick": 4000,
+          "neuralStepsPerSecond": 569.9489263694535,
+          "wallSeconds": 7.018172708
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 4001,
+          "lastTick": 4200,
+          "neuralStepsPerSecond": 547.2944998338183,
+          "wallSeconds": 7.308679333
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 4201,
+          "lastTick": 4400,
+          "neuralStepsPerSecond": 567.9798719701917,
+          "wallSeconds": 7.042503084
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 4401,
+          "lastTick": 4600,
+          "neuralStepsPerSecond": 661.8682322939079,
+          "wallSeconds": 6.043499
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 4601,
+          "lastTick": 4800,
+          "neuralStepsPerSecond": 684.9688145437391,
+          "wallSeconds": 5.839681917
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 4801,
+          "lastTick": 5000,
+          "neuralStepsPerSecond": 706.3391881569087,
+          "wallSeconds": 5.663001667
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 5001,
+          "lastTick": 5200,
+          "neuralStepsPerSecond": 704.0244530333964,
+          "wallSeconds": 5.681620834
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 5201,
+          "lastTick": 5400,
+          "neuralStepsPerSecond": 704.4568120643513,
+          "wallSeconds": 5.67813375
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 5401,
+          "lastTick": 5600,
+          "neuralStepsPerSecond": 678.6023585762122,
+          "wallSeconds": 5.894468166
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 5601,
+          "lastTick": 5800,
+          "neuralStepsPerSecond": 642.9868281335189,
+          "wallSeconds": 6.22096725
+        },
+        {
+          "activeNeuralSteps": 4000,
+          "firstTick": 5801,
+          "lastTick": 6000,
+          "neuralStepsPerSecond": 677.3244897702723,
+          "wallSeconds": 5.905588917
+        }
+      ],
+      "constructSeconds": 0.003168667,
+      "graphEdges": 798715,
+      "graphNeurons": 70000,
+      "level": {
+        "bodyConfig": {
+          "bodyRadius": 0.08,
+          "feedingRate": 3.0,
+          "flightSpeed": 2.0,
+          "flyingCost": 0.8,
+          "idleCost": 0.2,
+          "landingDwellSeconds": 1.0,
+          "landingThreshold": 0.2,
+          "maxBoutSeconds": 3.0,
+          "proboscisThreshold": 0.2,
+          "reserveCapacity": 1000.0,
+          "takeoffThreshold": 0.2,
+          "turnGain": 1.0,
+          "walkSpeed": 1.0,
+          "walkingCost": 0.4
+        },
+        "durationTicks": 6000,
+        "exit": {
+          "a": {
+            "x": 8.0,
+            "z": -0.5
+          },
+          "b": {
+            "x": 8.0,
+            "z": 0.5
+          },
+          "outward": {
+            "x": 1.0,
+            "z": 0.0
+          }
+        },
+        "exitCue": null,
+        "fieldConfig": {
+          "antennaOffset": 0.15,
+          "baselineBrightness": 1.0,
+          "cellSize": 0.25,
+          "decay": 0.1,
+          "diffusion": 0.2,
+          "wind": {
+            "x": 0.0,
+            "z": 0.0
+          }
+        },
+        "food": [],
+        "geometry": {
+          "rooms": [
+            {
+              "id": 0,
+              "max": {
+                "x": 6.0,
+                "z": 6.0
+              },
+              "min": {
+                "x": -6.0,
+                "z": -6.0
+              }
+            },
+            {
+              "id": 1,
+              "max": {
+                "x": 8.0,
+                "z": 1.0
+              },
+              "min": {
+                "x": 7.0,
+                "z": -1.0
+              }
+            }
+          ],
+          "walls": [
+            {
+              "a": {
+                "x": -6.0,
+                "z": -6.0
+              },
+              "b": {
+                "x": 6.0,
+                "z": -6.0
+              }
+            },
+            {
+              "a": {
+                "x": -6.0,
+                "z": -6.0
+              },
+              "b": {
+                "x": -6.0,
+                "z": 6.0
+              }
+            },
+            {
+              "a": {
+                "x": -6.0,
+                "z": 6.0
+              },
+              "b": {
+                "x": 6.0,
+                "z": 6.0
+              }
+            },
+            {
+              "a": {
+                "x": 7.0,
+                "z": -1.0
+              },
+              "b": {
+                "x": 8.0,
+                "z": -1.0
+              }
+            },
+            {
+              "a": {
+                "x": 7.0,
+                "z": -1.0
+              },
+              "b": {
+                "x": 7.0,
+                "z": 1.0
+              }
+            },
+            {
+              "a": {
+                "x": 7.0,
+                "z": 1.0
+              },
+              "b": {
+                "x": 8.0,
+                "z": 1.0
+              }
+            },
+            {
+              "a": {
+                "x": 6.0,
+                "z": -6.0
+              },
+              "b": {
+                "x": 6.0,
+                "z": 6.0
+              }
+            },
+            {
+              "a": {
+                "x": 8.0,
+                "z": -1.0
+              },
+              "b": {
+                "x": 8.0,
+                "z": -0.5
+              }
+            },
+            {
+              "a": {
+                "x": 8.0,
+                "z": 0.5
+              },
+              "b": {
+                "x": 8.0,
+                "z": 1.0
+              }
+            }
+          ]
+        },
+        "id": "active-native-benchmark",
+        "initialReserve": 1000.0,
+        "sources": [
+          {
+            "kind": "odor",
+            "position": {
+              "x": 0.0,
+              "z": 0.0
+            },
+            "radius": 1.0,
+            "rate": 1.0
+          }
+        ],
+        "spawnPoses": [
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": -1.6
+            }
+          }
+        ],
+        "starThresholds": [
+          1,
+          10,
+          20
+        ],
+        "zappers": []
+      },
+      "loadSeconds": 0.026265125,
+      "machine": {
+        "architecture": "arm64",
+        "compiler": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: aarch64-apple-darwin\nrelease: 1.94.1\nLLVM version: 21.1.8",
+        "cpu": "Apple M5 Pro",
+        "logicalCores": "18",
+        "memoryBytes": "51539607552",
+        "model": "Mac17,9",
+        "os": "Darwin 25.4.0 Darwin Kernel Version 25.4.0: Thu Mar 19 19:33:50 PDT 2026; root:xnu-12377.101.15~1/RELEASE_ARM64_T6050",
+        "physicalCores": "18"
+      },
+      "manifestFileHash": "ead5f7d258f83ee3909080797752c2f4bb749be939a2ff983f411095722efbf1",
+      "measuredTicks": 6000,
+      "measurementScope": "Every counted neural step is confirmed by AttemptFrame.neural_steps delta and present neural output; no terminal no-op contributes. Wall time includes step calls, frame destruction and light telemetry; excludes graph loading, construction, RSS commands, serialization and I/O. Frames are dropped each tick, so this does not measure replay archive/Worker transfer/rendering. RSS includes allocator/runtime/manifest overhead; graph+brain byte counts are exact owner-reported array payload only, excluding field arrays and allocation headers. Disconnected exit annex and reserve1000 with unchanged positive default costs keep the neural workload active; benchmark content is not campaign tuning. Native feasibility is not browser acceptance.",
+      "minimumObservedReserve": 628.6799999999645,
+      "modeObservations": {
+        "feeding": 0,
+        "flying": 62862,
+        "walking": 57138
+      },
+      "payloadBytes": {
+        "allBrainArrays": 64400000,
+        "graphAndBrainArrays": 74264584,
+        "graphArrays": 9864584,
+        "perBrainArrays": 3220000
+      },
+      "probeSourceHash": "c8f7b658a6ef594fb926f1bd25c76a18d44d77e8dda8d5dd2bd887c5e9f2d146",
+      "productionGameSecondsPerWallSecond": 3.221287296563237,
+      "profile": "cargo release; workspace opt-level3, thin LTO; single-threaded Attempt, graph shared by Arc",
+      "projection6000TicksWallSeconds": 186.260940041,
+      "projectionIsNotMeasurement": false,
+      "result": {
+        "attemptId": "native-throughput",
+        "completedTick": 6000,
+        "outcomes": {
+          "escaped": 0,
+          "score": 0,
+          "starved": 0,
+          "timedOut": 20,
+          "zapped": 0
+        },
+        "stars": 0
+      },
+      "rssKiB": {
+        "afterStepping": 76864,
+        "attemptInitialized": 40736,
+        "graphLoadedAfterTemporaryBrainCalibration": 34896
+      },
+      "sharedField": {
+        "activeCells": 2336,
+        "dimensions": [
+          56,
+          48
+        ],
+        "evolutions": 6000
+      },
+      "simulatedSeconds": 600.0,
+      "spec": {
+        "attemptId": "native-throughput",
+        "durationTicks": 6000,
+        "flyCount": 20,
+        "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+        "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+        "levelHash": "e7e882e1b48795bdb84951b0c0280d4e96bc5c65a4ad02d91f55d8812ca589f3",
+        "levelId": "active-native-benchmark",
+        "rootSeed": "42",
+        "schemaVersion": 1,
+        "simulationBuildId": "5ab5bb69bff00d4e14b756819a2b6d6d821f6d0bbc561dc90af6277a19bd29c2",
+        "tuningHash": "696115970a53825461292a3844c6c43701a29a8bc56f4763de8da347c93edc6a"
+      },
+      "stepCallLatencyMs": {
+        "max": 60.729417,
+        "p50": 29.496083,
+        "p95": 38.009750000000004,
+        "p99": 44.012667
+      },
+      "terminalFliesAtLastTick": 20,
+      "tuning": {
+        "cue": {
+          "gain": 1.0,
+          "pathway": "excitatoryOdor"
+        },
+        "tasteGain": 0.0
+      },
+      "wallSeconds": 186.260940041,
+      "runKind": "full-horizon",
+      "processMeasurement": {
+        "command": "/usr/bin/time -l",
+        "realSeconds": 186.35,
+        "userSeconds": 183.9,
+        "systemSeconds": 1.22,
+        "maximumResidentSetBytes": 104169472,
+        "peakMemoryFootprintBytes": 103334344,
+        "rawLog": "20flies tick200/6000: 686.0 neural steps/s\n20flies tick400/6000: 627.6 neural steps/s\n20flies tick600/6000: 694.2 neural steps/s\n20flies tick800/6000: 652.9 neural steps/s\n20flies tick1000/6000: 655.3 neural steps/s\n20flies tick1200/6000: 671.9 neural steps/s\n20flies tick1400/6000: 690.9 neural steps/s\n20flies tick1600/6000: 703.9 neural steps/s\n20flies tick1800/6000: 646.4 neural steps/s\n20flies tick2000/6000: 561.2 neural steps/s\n20flies tick2200/6000: 691.0 neural steps/s\n20flies tick2400/6000: 609.3 neural steps/s\n20flies tick2600/6000: 631.6 neural steps/s\n20flies tick2800/6000: 574.8 neural steps/s\n20flies tick3000/6000: 551.9 neural steps/s\n20flies tick3200/6000: 593.0 neural steps/s\n20flies tick3400/6000: 686.3 neural steps/s\n20flies tick3600/6000: 711.1 neural steps/s\n20flies tick3800/6000: 675.2 neural steps/s\n20flies tick4000/6000: 569.9 neural steps/s\n20flies tick4200/6000: 547.3 neural steps/s\n20flies tick4400/6000: 568.0 neural steps/s\n20flies tick4600/6000: 661.9 neural steps/s\n20flies tick4800/6000: 685.0 neural steps/s\n20flies tick5000/6000: 706.3 neural steps/s\n20flies tick5200/6000: 704.0 neural steps/s\n20flies tick5400/6000: 704.5 neural steps/s\n20flies tick5600/6000: 678.6 neural steps/s\n20flies tick5800/6000: 643.0 neural steps/s\n20flies tick6000/6000: 677.3 neural steps/s\n      186.35 real       183.90 user         1.22 sys\n           104169472  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               12030  page reclaims\n                  48  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   8  voluntary context switches\n              120392  involuntary context switches\n       2649643616176  instructions retired\n        790641301617  cycles elapsed\n           103334344  peak memory footprint\n"
+      }
+    },
+    {
+      "activeNeuralSteps": 100000,
+      "activeNeuralStepsPerSecond": 614.7089301656954,
+      "blocks": [
+        {
+          "activeNeuralSteps": 20000,
+          "firstTick": 1,
+          "lastTick": 200,
+          "neuralStepsPerSecond": 694.0706835495045,
+          "wallSeconds": 28.815508959
+        },
+        {
+          "activeNeuralSteps": 20000,
+          "firstTick": 201,
+          "lastTick": 400,
+          "neuralStepsPerSecond": 589.7594609403953,
+          "wallSeconds": 33.912130834
+        },
+        {
+          "activeNeuralSteps": 20000,
+          "firstTick": 401,
+          "lastTick": 600,
+          "neuralStepsPerSecond": 608.0165014929429,
+          "wallSeconds": 32.893844083
+        },
+        {
+          "activeNeuralSteps": 20000,
+          "firstTick": 601,
+          "lastTick": 800,
+          "neuralStepsPerSecond": 587.6085570179042,
+          "wallSeconds": 34.036264042
+        },
+        {
+          "activeNeuralSteps": 20000,
+          "firstTick": 801,
+          "lastTick": 1000,
+          "neuralStepsPerSecond": 605.7628170430971,
+          "wallSeconds": 33.016222583
+        }
+      ],
+      "constructSeconds": 0.003742,
+      "graphEdges": 798715,
+      "graphNeurons": 70000,
+      "level": {
+        "bodyConfig": {
+          "bodyRadius": 0.08,
+          "feedingRate": 3.0,
+          "flightSpeed": 2.0,
+          "flyingCost": 0.8,
+          "idleCost": 0.2,
+          "landingDwellSeconds": 1.0,
+          "landingThreshold": 0.2,
+          "maxBoutSeconds": 3.0,
+          "proboscisThreshold": 0.2,
+          "reserveCapacity": 1000.0,
+          "takeoffThreshold": 0.2,
+          "turnGain": 1.0,
+          "walkSpeed": 1.0,
+          "walkingCost": 0.4
+        },
+        "durationTicks": 6000,
+        "exit": {
+          "a": {
+            "x": 8.0,
+            "z": -0.5
+          },
+          "b": {
+            "x": 8.0,
+            "z": 0.5
+          },
+          "outward": {
+            "x": 1.0,
+            "z": 0.0
+          }
+        },
+        "exitCue": null,
+        "fieldConfig": {
+          "antennaOffset": 0.15,
+          "baselineBrightness": 1.0,
+          "cellSize": 0.25,
+          "decay": 0.1,
+          "diffusion": 0.2,
+          "wind": {
+            "x": 0.0,
+            "z": 0.0
+          }
+        },
+        "food": [],
+        "geometry": {
+          "rooms": [
+            {
+              "id": 0,
+              "max": {
+                "x": 6.0,
+                "z": 6.0
+              },
+              "min": {
+                "x": -6.0,
+                "z": -6.0
+              }
+            },
+            {
+              "id": 1,
+              "max": {
+                "x": 8.0,
+                "z": 1.0
+              },
+              "min": {
+                "x": 7.0,
+                "z": -1.0
+              }
+            }
+          ],
+          "walls": [
+            {
+              "a": {
+                "x": -6.0,
+                "z": -6.0
+              },
+              "b": {
+                "x": 6.0,
+                "z": -6.0
+              }
+            },
+            {
+              "a": {
+                "x": -6.0,
+                "z": -6.0
+              },
+              "b": {
+                "x": -6.0,
+                "z": 6.0
+              }
+            },
+            {
+              "a": {
+                "x": -6.0,
+                "z": 6.0
+              },
+              "b": {
+                "x": 6.0,
+                "z": 6.0
+              }
+            },
+            {
+              "a": {
+                "x": 7.0,
+                "z": -1.0
+              },
+              "b": {
+                "x": 8.0,
+                "z": -1.0
+              }
+            },
+            {
+              "a": {
+                "x": 7.0,
+                "z": -1.0
+              },
+              "b": {
+                "x": 7.0,
+                "z": 1.0
+              }
+            },
+            {
+              "a": {
+                "x": 7.0,
+                "z": 1.0
+              },
+              "b": {
+                "x": 8.0,
+                "z": 1.0
+              }
+            },
+            {
+              "a": {
+                "x": 6.0,
+                "z": -6.0
+              },
+              "b": {
+                "x": 6.0,
+                "z": 6.0
+              }
+            },
+            {
+              "a": {
+                "x": 8.0,
+                "z": -1.0
+              },
+              "b": {
+                "x": 8.0,
+                "z": -0.5
+              }
+            },
+            {
+              "a": {
+                "x": 8.0,
+                "z": 0.5
+              },
+              "b": {
+                "x": 8.0,
+                "z": 1.0
+              }
+            }
+          ]
+        },
+        "id": "active-native-benchmark",
+        "initialReserve": 1000.0,
+        "sources": [
+          {
+            "kind": "odor",
+            "position": {
+              "x": 0.0,
+              "z": 0.0
+            },
+            "radius": 1.0,
+            "rate": 1.0
+          }
+        ],
+        "spawnPoses": [
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": -2.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": -1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": -1.2
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": -0.7999999999999998
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": -0.3999999999999999
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": 0.0
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": 0.40000000000000036
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": 0.8000000000000003
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": 1.2000000000000002
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": 1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": 1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": 1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": 1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": 1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": 1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": 1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": 1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": 1.6
+            }
+          },
+          {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": 1.6
+            }
+          }
+        ],
+        "starThresholds": [
+          1,
+          10,
+          20
+        ],
+        "zappers": []
+      },
+      "loadSeconds": 0.027335209,
+      "machine": {
+        "architecture": "arm64",
+        "compiler": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: aarch64-apple-darwin\nrelease: 1.94.1\nLLVM version: 21.1.8",
+        "cpu": "Apple M5 Pro",
+        "logicalCores": "18",
+        "memoryBytes": "51539607552",
+        "model": "Mac17,9",
+        "os": "Darwin 25.4.0 Darwin Kernel Version 25.4.0: Thu Mar 19 19:33:50 PDT 2026; root:xnu-12377.101.15~1/RELEASE_ARM64_T6050",
+        "physicalCores": "18"
+      },
+      "manifestFileHash": "ead5f7d258f83ee3909080797752c2f4bb749be939a2ff983f411095722efbf1",
+      "measuredTicks": 1000,
+      "measurementScope": "Every counted neural step is confirmed by AttemptFrame.neural_steps delta and present neural output; no terminal no-op contributes. Wall time includes step calls, frame destruction and light telemetry; excludes graph loading, construction, RSS commands, serialization and I/O. Frames are dropped each tick, so this does not measure replay archive/Worker transfer/rendering. RSS includes allocator/runtime/manifest overhead; graph+brain byte counts are exact owner-reported array payload only, excluding field arrays and allocation headers. Disconnected exit annex and reserve1000 with unchanged positive default costs keep the neural workload active; benchmark content is not campaign tuning. Native feasibility is not browser acceptance.",
+      "minimumObservedReserve": 935.0799999999882,
+      "modeObservations": {
+        "feeding": 0,
+        "flying": 54217,
+        "walking": 45783
+      },
+      "payloadBytes": {
+        "allBrainArrays": 322000000,
+        "graphAndBrainArrays": 331864584,
+        "graphArrays": 9864584,
+        "perBrainArrays": 3220000
+      },
+      "probeSourceHash": "c8f7b658a6ef594fb926f1bd25c76a18d44d77e8dda8d5dd2bd887c5e9f2d146",
+      "productionGameSecondsPerWallSecond": 0.6147089301656954,
+      "profile": "cargo release; workspace opt-level3, thin LTO; single-threaded Attempt, graph shared by Arc",
+      "projection6000TicksWallSeconds": 976.0717155,
+      "projectionIsNotMeasurement": true,
+      "result": null,
+      "rssKiB": {
+        "afterStepping": 336784,
+        "attemptInitialized": 48368,
+        "graphLoadedAfterTemporaryBrainCalibration": 34880
+      },
+      "sharedField": {
+        "activeCells": 2336,
+        "dimensions": [
+          56,
+          48
+        ],
+        "evolutions": 1000
+      },
+      "simulatedSeconds": 100.0,
+      "spec": {
+        "attemptId": "native-throughput",
+        "durationTicks": 6000,
+        "flyCount": 100,
+        "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+        "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+        "levelHash": "f4d8a986f2f4aa786c227dc0c56464fd51cf842f87a7e45baf64ac513aa2d1ac",
+        "levelId": "active-native-benchmark",
+        "rootSeed": "42",
+        "schemaVersion": 1,
+        "simulationBuildId": "5ab5bb69bff00d4e14b756819a2b6d6d821f6d0bbc561dc90af6277a19bd29c2",
+        "tuningHash": "696115970a53825461292a3844c6c43701a29a8bc56f4763de8da347c93edc6a"
+      },
+      "stepCallLatencyMs": {
+        "max": 382.859583,
+        "p50": 158.858625,
+        "p95": 204.97970800000002,
+        "p99": 217.446042
+      },
+      "terminalFliesAtLastTick": 0,
+      "tuning": {
+        "cue": {
+          "gain": 1.0,
+          "pathway": "excitatoryOdor"
+        },
+        "tasteGain": 0.0
+      },
+      "wallSeconds": 162.67861925,
+      "runKind": "bounded-capacity",
+      "processMeasurement": {
+        "command": "/usr/bin/time -l",
+        "realSeconds": 162.83,
+        "userSeconds": 160.32,
+        "systemSeconds": 0.86,
+        "maximumResidentSetBytes": 371556352,
+        "peakMemoryFootprintBytes": 371131040,
+        "rawLog": "100flies tick200/1000: 694.1 neural steps/s\n100flies tick400/1000: 589.8 neural steps/s\n100flies tick600/1000: 608.0 neural steps/s\n100flies tick800/1000: 587.6 neural steps/s\n100flies tick1000/1000: 605.8 neural steps/s\n      162.83 real       160.32 user         0.86 sys\n           371556352  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               26847  page reclaims\n                1671  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   9  voluntary context switches\n               96819  involuntary context switches\n       2206684196321  instructions retired\n        664333081205  cycles elapsed\n           371131040  peak memory footprint\n"
+      }
+    }
+  ],
+  "sourceFilesSha256": {
+    "Cargo.toml": "e7d3ef6027025bb27aac181e85367990aa772d9ad4d00b9bb0afa35e86416049",
+    "Cargo.lock": "1b9b599c9d5914b084f72df9693af22c64d651e3342f4b9a5ae0c6e2059582f6",
+    "crates/sim/Cargo.toml": "5644135629336c859dfafb50752b642a26f3ed4107fe81d60ba58303b85e348a",
+    "crates/sim/build.rs": "6dbbc74680de3231a1a9de1b58d139d1dc29be3344a52f7753aeecb3d609fd08",
+    "crates/sim/src/attempt.rs": "4f23dd6af0c763d6f1e23013daf0c66adc9b5131379165522edf16f2f7990dc4",
+    "crates/sim/src/body.rs": "f1c0f271dea78fd573359d08dd8fdb4e4c192fdc11fb4068cf9b838b72291042",
+    "crates/sim/src/chamber.rs": "23350b200b78e97bf8c38026ddf95e8f1a3247c7a83d5973085e4633859d8c49",
+    "crates/sim/src/environment/fields.rs": "429434ac147d3bcd2db8941194c0b73f39fe3f09164e2ce95d537d7d8a1ebb69",
+    "crates/sim/src/environment/mod.rs": "ac33d4ae37d8f7de4d2589bc645bfb35c95e3406cb1562a1d865934e06228d22",
+    "crates/sim/src/field_lab.rs": "171aaf96264e0f7c491fa3272e5933dbd61cd5d75fcd84a54e21c3e16fbabadb",
+    "crates/sim/src/graph.rs": "379c05b56369f3009b1015ab50ce0a6e0ccaff9603f811eafe86dd85dcf63c2e",
+    "crates/sim/src/lib.rs": "025926587f73e3d4af527fd079d917d9e8f87eba8f2d6a309a8877b794dca6a2",
+    "crates/sim/src/lif.rs": "7394c44c26718bd00cf6c9c4ae191274b3b6bd60a12878bd752e27fdc9a258a1",
+    "crates/sim/src/sensory.rs": "700755c04921b7b473f7474ab8d768fb0e51e6895ab80c50da2f8d5692ebfe3a"
+  },
+  "probeSource": "//! Active-work native feasibility benchmark. This is neither campaign content nor browser acceptance.\nuse serde_json::json;\nuse sha2::{Digest, Sha256};\nuse sim::{attempt::*, body::*, environment::*, sensory::CuePathway, Brain, Graph};\nuse std::{process::Command, sync::Arc, time::Instant};\n\nfn command(program: &str, args: &[&str]) -> String {\n    let out = Command::new(program)\n        .args(args)\n        .output()\n        .expect(\"probe machine command\");\n    assert!(out.status.success(), \"machine command failed: {program}\");\n    String::from_utf8(out.stdout).unwrap().trim().to_string()\n}\nfn rss_kib() -> u64 {\n    command(\"ps\", &[\"-o\", \"rss=\", \"-p\", &std::process::id().to_string()])\n        .parse()\n        .unwrap()\n}\nfn point(x: f64, z: f64) -> Point {\n    Point { x, z }\n}\nfn level(count: u32) -> LevelDef {\n    // The occupied room is closed. A valid physical exit is in a disconnected annex,\n    // guaranteeing no early escape without disabling body motion or neural stepping.\n    let mut walls = vec![];\n    for (min, max) in [\n        (point(-6., -6.), point(6., 6.)),\n        (point(7., -1.), point(8., 1.)),\n    ] {\n        walls.extend([\n            Wall {\n                a: min,\n                b: point(max.x, min.z),\n            },\n            Wall {\n                a: min,\n                b: point(min.x, max.z),\n            },\n            Wall {\n                a: point(min.x, max.z),\n                b: max,\n            },\n        ]);\n    }\n    walls.push(Wall {\n        a: point(6., -6.),\n        b: point(6., 6.),\n    });\n    walls.extend([\n        Wall {\n            a: point(8., -1.),\n            b: point(8., -0.5),\n        },\n        Wall {\n            a: point(8., 0.5),\n            b: point(8., 1.),\n        },\n    ]);\n    LevelDef {\n        id: \"active-native-benchmark\".into(),\n        geometry: Geometry {\n            rooms: vec![\n                RectRoom {\n                    id: 0,\n                    min: point(-6., -6.),\n                    max: point(6., 6.),\n                },\n                RectRoom {\n                    id: 1,\n                    min: point(7., -1.),\n                    max: point(8., 1.),\n                },\n            ],\n            walls,\n        },\n        spawn_poses: (0..count)\n            .map(|id| BodyPose {\n                position: point(-2. + (id % 10) as f64 * 0.4, -2. + (id / 10) as f64 * 0.4),\n                heading: 0.,\n            })\n            .collect(),\n        exit: ExitOpening {\n            a: point(8., -0.5),\n            b: point(8., 0.5),\n            outward: point(1., 0.),\n        },\n        exit_cue: None,\n        food: vec![],\n        zappers: vec![],\n        sources: vec![Source {\n            position: point(0., 0.),\n            radius: 1.,\n            rate: 1.,\n            kind: SourceKind::Odor,\n        }],\n        field_config: FieldConfig {\n            wind: point(0., 0.),\n            ..FieldConfig::default()\n        },\n        body_config: BodyConfig {\n            reserve_capacity: 1000.,\n            ..BodyConfig::default()\n        },\n        initial_reserve: 1000.,\n        duration_ticks: 6000,\n        star_thresholds: [1, 10, 20],\n    }\n}\nfn main() -> Result<(), Box<dyn std::error::Error>> {\n    let args: Vec<_> = std::env::args().collect();\n    let path = args\n        .get(1)\n        .ok_or(\"Pass graph directory, fly count, measured ticks, output JSON\")?;\n    let count: u32 = args.get(2).ok_or(\"Pass fly count\")?.parse()?;\n    let ticks: u32 = args.get(3).ok_or(\"Pass measured ticks\")?.parse()?;\n    let output = args.get(4).ok_or(\"Pass output JSON\")?;\n    if !(1..=100).contains(&count) || !(1..=6000).contains(&ticks) {\n        return Err(\"count1..100, ticks1..6000\".into());\n    }\n    let machine = json!({\"os\":command(\"uname\", &[\"-srv\"]),\"architecture\":command(\"uname\", &[\"-m\"]),\"model\":command(\"sysctl\", &[\"-n\",\"hw.model\"]),\"cpu\":command(\"sysctl\", &[\"-n\",\"machdep.cpu.brand_string\"]),\"physicalCores\":command(\"sysctl\", &[\"-n\",\"hw.physicalcpu\"]),\"logicalCores\":command(\"sysctl\", &[\"-n\",\"hw.logicalcpu\"]),\"memoryBytes\":command(\"sysctl\", &[\"-n\",\"hw.memsize\"]),\"compiler\":command(\"rustc\", &[\"-Vv\"])});\n    let start = Instant::now();\n    let bytes = std::fs::read(format!(\"{path}/graph.bin\"))?;\n    let manifest = std::fs::read_to_string(format!(\"{path}/manifest.json\"))?;\n    let manifest_file_hash = format!(\"{:x}\", Sha256::digest(manifest.as_bytes()));\n    let graph = Arc::new(Graph::from_bytes(&bytes, &manifest)?);\n    drop(bytes);\n    drop(manifest);\n    let load_seconds = start.elapsed().as_secs_f64();\n    let graph_payload = graph.storage_bytes();\n    let brain_payload = Brain::new(graph.clone(), 0).state_storage_bytes();\n    let graph_rss = rss_kib();\n    let level = level(count);\n    let tuning = AttemptTuning {\n        cue: Some(CueInput {\n            pathway: CuePathway::ExcitatoryOdor,\n            gain: 1.,\n        }),\n        taste_gain: 0.,\n    };\n    let spec = Attempt::describe(&graph, &level, &tuning, \"native-throughput\", 42, count)?;\n    let start = Instant::now();\n    let mut attempt = Attempt::new(graph.clone(), level.clone(), tuning.clone(), spec.clone())?;\n    let construct_seconds = start.elapsed().as_secs_f64();\n    let initialized_rss = rss_kib();\n    let grid = attempt.field_grid();\n    let grid_dimensions = [grid.width, grid.height];\n    let grid_active_cells = grid.cells.iter().filter(|v| v.is_some()).count();\n    drop(grid);\n    let mut tick_seconds = Vec::with_capacity(ticks as usize);\n    let mut blocks = vec![];\n    let mut previous_steps = 0;\n    let mut terminal_count = 0;\n    let mut min_reserve = f64::INFINITY;\n    let mut modes = [0u64; 3];\n    let run_start = Instant::now();\n    let mut block_start = Instant::now();\n    let mut block_first = 1;\n    for tick in 1..=ticks {\n        let tick_start = Instant::now();\n        let frame = attempt\n            .step()?\n            .ok_or(\"attempt terminated before measurement finished\")?;\n        tick_seconds.push(tick_start.elapsed().as_secs_f64());\n        let active_this_tick = frame.neural_steps - previous_steps;\n        if active_this_tick != count || frame.flies.iter().any(|f| f.neural.is_none()) {\n            return Err(format!(\"inactive work at tick{tick}: {active_this_tick}/{count}\").into());\n        }\n        previous_steps = frame.neural_steps;\n        terminal_count = frame\n            .flies\n            .iter()\n            .filter(|f| f.body.outcome.is_some())\n            .count();\n        for fly in &frame.flies {\n            min_reserve = min_reserve.min(fly.body.reserve);\n            modes[match fly.body.mode {\n                BodyMode::Walking => 0,\n                BodyMode::Flying => 1,\n                BodyMode::Feeding => 2,\n            }] += 1;\n        }\n        std::hint::black_box(&frame);\n        drop(frame);\n        if tick % 200 == 0 || tick == ticks {\n            let elapsed = block_start.elapsed().as_secs_f64();\n            let steps = (tick - block_first + 1) * count;\n            blocks.push(json!({\"firstTick\":block_first,\"lastTick\":tick,\"activeNeuralSteps\":steps,\"wallSeconds\":elapsed,\"neuralStepsPerSecond\":steps as f64/elapsed}));\n            eprintln!(\n                \"{count}flies tick{tick}/{ticks}: {:.1} neural steps/s\",\n                steps as f64 / elapsed\n            );\n            block_first = tick + 1;\n            block_start = Instant::now();\n        }\n    }\n    let run_seconds = run_start.elapsed().as_secs_f64();\n    let final_rss = rss_kib();\n    tick_seconds.sort_by(f64::total_cmp);\n    let percentile =\n        |q: f64| tick_seconds[((tick_seconds.len() - 1) as f64 * q).ceil() as usize] * 1000.;\n    let full_completion = attempt.result().cloned();\n    if ticks == 6000 && (full_completion.is_none() || attempt.step()?.is_some()) {\n        return Err(\"full attempt did not complete once at its horizon\".into());\n    }\n    let neural_rate = previous_steps as f64 / run_seconds;\n    let evidence = json!({\"spec\":spec,\"machine\":machine,\"profile\":\"cargo release; workspace opt-level3, thin LTO; single-threaded Attempt, graph shared by Arc\",\"manifestFileHash\":manifest_file_hash,\"probeSourceHash\":format!(\"{:x}\",Sha256::digest(include_str!(\"attempt_probe.rs\").as_bytes())),\"level\":level,\"tuning\":tuning,\"graphNeurons\":graph.neuron_count(),\"graphEdges\":graph.edge_count(),\"loadSeconds\":load_seconds,\"constructSeconds\":construct_seconds,\"measuredTicks\":ticks,\"activeNeuralSteps\":previous_steps,\"wallSeconds\":run_seconds,\"activeNeuralStepsPerSecond\":neural_rate,\"simulatedSeconds\":ticks as f64*GAME_TICK_SECONDS,\"productionGameSecondsPerWallSecond\":ticks as f64*GAME_TICK_SECONDS/run_seconds,\"projection6000TicksWallSeconds\":6000.*count as f64/neural_rate,\"projectionIsNotMeasurement\":ticks!=6000,\"terminalFliesAtLastTick\":terminal_count,\"minimumObservedReserve\":min_reserve,\"modeObservations\":{\"walking\":modes[0],\"flying\":modes[1],\"feeding\":modes[2]},\"result\":full_completion,\"stepCallLatencyMs\":{\"p50\":percentile(0.5),\"p95\":percentile(0.95),\"p99\":percentile(0.99),\"max\":percentile(1.)},\"payloadBytes\":{\"graphArrays\":graph_payload,\"perBrainArrays\":brain_payload,\"allBrainArrays\":brain_payload*count as usize,\"graphAndBrainArrays\":graph_payload+brain_payload*count as usize},\"rssKiB\":{\"graphLoadedAfterTemporaryBrainCalibration\":graph_rss,\"attemptInitialized\":initialized_rss,\"afterStepping\":final_rss},\"sharedField\":{\"dimensions\":grid_dimensions,\"activeCells\":grid_active_cells,\"evolutions\":ticks},\"blocks\":blocks,\"measurementScope\":\"Every counted neural step is confirmed by AttemptFrame.neural_steps delta and present neural output; no terminal no-op contributes. Wall time includes step calls, frame destruction and light telemetry; excludes graph loading, construction, RSS commands, serialization and I/O. Frames are dropped each tick, so this does not measure replay archive/Worker transfer/rendering. RSS includes allocator/runtime/manifest overhead; graph+brain byte counts are exact owner-reported array payload only, excluding field arrays and allocation headers. Disconnected exit annex and reserve1000 with unchanged positive default costs keep the neural workload active; benchmark content is not campaign tuning. Native feasibility is not browser acceptance.\"});\n    std::fs::write(output, serde_json::to_string_pretty(&evidence)?)?;\n    Ok(())\n}\n",
+  "choicesAndLimits": [
+    "200-tick pilots precede longer runs; all runs sequential, one seed (42) and one shared interactive host, no CPU isolation or confidence interval claim.",
+    "20 flies measured through the complete 6000-tick horizon; 100 flies measured for 1000 ticks only, because pilot projection exceeded 14 minutes. The longer-run 100-fly full-horizon estimate is 976.07 seconds, not a completion measurement.",
+    "Reserve capacity and initial reserve raised to 1000 with default positive idle/walk/fly costs unchanged. Closed occupied room and disconnected valid exit keep all brains active; no food, wind or hazards. These are benchmark choices, not campaign content.",
+    "Single odor source and production excitatory sensory adapter remain active. Body defaults, neural graph, noise and neural cadence unchanged. Shared field evolves once per tick.",
+    "Exact owner array payload excludes allocator, manifest, body/field/frame and process overhead. OS maximum RSS includes these. Initialization RSS understates later resident memory due to lazy page commitment.",
+    "Frames are dropped each tick; no replay archive, serialization, Worker transfer, browser/WASM runtime, renderer or browser responsiveness measured.",
+    "Total step-loop timing includes light telemetry and 200-tick stderr progress writes. Output serialization and process RSS sampling are outside it; the program measurementScope phrase excluding I/O refers to result-file I/O.",
+    "Pilot and longer-run rates vary; faster 100-fly pilot per-neuron rate is not evidence of beneficial scaling."
+  ]
+}
