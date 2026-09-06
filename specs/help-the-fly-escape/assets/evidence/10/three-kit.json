@@ -1,0 +1,69 @@
+{
+  "three": "185",
+  "assets": {
+    "wall": {
+      "min": [
+        -0.5,
+        0,
+        -0.05999999865889549
+      ],
+      "max": [
+        0.5,
+        0.6000000238418579,
+        0.05999999865889549
+      ],
+      "triangles": 36,
+      "clips": 0,
+      "materials": 1,
+      "transforms": [
+        {
+          "extras": {
+            "coordinate_convention": "GLB +Y up, +Z forward",
+            "world_units_per_blender_unit": 1,
+            "ground_contact_description": "origin at wall-base midpoint",
+            "stretch_axes": "X",
+            "native_extent_xyz_gltf": [
+              1,
+              0.6,
+              0.12
+            ]
+          },
+          "mesh": 0,
+          "name": "WallPanel"
+        }
+      ]
+    },
+    "floor": {
+      "min": [
+        -0.5,
+        -0.25,
+        -0.5
+      ],
+      "max": [
+        0.5,
+        0,
+        0.5
+      ],
+      "triangles": 36,
+      "clips": 0,
+      "materials": 1,
+      "transforms": [
+        {
+          "extras": {
+            "coordinate_convention": "GLB +Y up, +Z forward",
+            "world_units_per_blender_unit": 1,
+            "ground_contact_description": "origin at floor-top center",
+            "stretch_axes": "X,Z",
+            "native_extent_xyz_gltf": [
+              1,
+              0.25,
+              1
+            ]
+          },
+          "mesh": 0,
+          "name": "FloorPanel"
+        }
+      ]
+    }
+  }
+}
