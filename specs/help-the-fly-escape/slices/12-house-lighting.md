@@ -1,6 +1,8 @@
 # 12 — Depth and exit lighting
 
-Status: planned. Dependencies: 11.
+Status: shadow artifact experiment active; acceptance pending 11 integration. Dependencies: 11.
+
+First experiment freezes the accepted cool palette, meshes, camera and light positions/intensities. Compare depth bias 0, -0.0001 and -0.001 to reduce diagonal self-shadow banding on wall faces, without lifting contact shadows. The smaller adjustment leaves visible stripes; -0.001 passes the narrow comparison and hardware frame profile in [the evidence](../assets/evidence/12/review.md). Keep the existing normal bias and shadow-map size fixed. This bounded experiment precedes any exit emphasis adjustment; food-contact composition follows the 14 authored food integration.
 
 ## Contract and seam
 

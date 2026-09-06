@@ -134,6 +134,7 @@ export class WorldView {
     sun.shadow.camera.near = 1;
     sun.shadow.camera.far = radius * 5;
     sun.shadow.normalBias = 0.025;
+    sun.shadow.bias = -0.001;
     this.scene.add(
       sun,
       sun.target,
