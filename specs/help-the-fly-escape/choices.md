@@ -129,3 +129,15 @@ The loader requires finite three-dimensional bounds, a footprint containing the 
 ### The view owns each accepted model (slice 07)
 
 A successful replacement transfers the model to the renderer. Fly instances share geometry and materials, while skeletons remain independently poseable. A superseded load disposes its candidate instead of replacing the current scene. The plan required disposal but left lifetime ownership open. One owner makes replacement and teardown release the same resource sets, including skeleton textures.
+
+## Sound — medium confidence (recorded motion)
+
+### Landing is a short transition before walking (slice 08)
+
+When a recorded fly switches from flying to walking, its model plays the authored landing clip before the walking loop. Feeding takes precedence if that is the recorded mode. The plan required the four clips but did not prescribe how to identify a landing without adding a new body state. This interpretation changes only visible pose; it cannot move the fly or decide whether it lands. Replacing the landing clip requires keeping its duration and the transition policy consistent.
+
+## Sound — high confidence (recorded motion)
+
+### Motion phases are reconstructed from packed records (slice 08)
+
+When playback advances, the archive remembers the latest mode change and terminal tick for each fly. Seeking backwards rebuilds those few values from the bounded packed history. The plan required repeatable animation without specifying retained transition state. This adds at most 800 bytes for 100 flies, rather than another decoded history. The renderer samples each clip at an absolute time, so pause and reverse seek return the same pose without changing simulation state.
