@@ -156,9 +156,55 @@ export class ChamberView {
   }
 
   get statistics() {
-    return { flyCount: this.flies.length, drawCalls: this.renderer.info.render.calls,
+    const attributes = new Set<THREE.BufferAttribute | THREE.InterleavedBuffer>();
+    const textures = new Set<THREE.Texture>();
+    let shadowFramebufferBytes = 0;
+    this.scene.traverse(object => {
+      if (object instanceof THREE.Mesh || object instanceof THREE.Line || object instanceof THREE.Sprite) {
+        const geometry = object.geometry;
+        for (const attribute of Object.values(geometry.attributes)) {
+          if (attribute instanceof THREE.InterleavedBufferAttribute) attributes.add(attribute.data);
+          else if (attribute instanceof THREE.BufferAttribute) attributes.add(attribute);
+        }
+        if (geometry.index) attributes.add(geometry.index);
+        for (const material of Array.isArray(object.material) ? object.material : [object.material]) {
+          for (const value of Object.values(material)) if (value instanceof THREE.Texture) textures.add(value);
+        }
+      }
+      if (object instanceof THREE.DirectionalLight && object.castShadow) {
+        // RGBA8 color plus a conservative four-byte depth attachment.
+        for (const target of [object.shadow.map, object.shadow.mapPass]) {
+          if (target) shadowFramebufferBytes += target.width * target.height * 8;
+        }
+      }
+    });
+    const geometryBytes = [...attributes].reduce((sum, attribute) => sum + attribute.array.byteLength, 0);
+    const materialTextures = [...textures].map(texture => {
+      const image = texture.image as { width?: number; height?: number } | undefined;
+      const width = Number(image?.width ?? 0), height = Number(image?.height ?? 0);
+      let w = width, h = height, pixels = w * h, mipLevels = 1;
+      while (texture.generateMipmaps && (w > 1 || h > 1)) {
+        w = Math.max(1, Math.floor(w / 2)); h = Math.max(1, Math.floor(h / 2));
+        pixels += w * h; mipLevels++;
+      }
+      const bytesPerPixel = texture.type === THREE.FloatType ? 16 : texture.type === THREE.HalfFloatType ? 8 : 4;
+      return { width, height, mipLevels, estimatedBytes: pixels * bytesPerPixel };
+    });
+    const textureBytes = materialTextures.reduce((sum, texture) => sum + texture.estimatedBytes, 0);
+    const size = this.renderer.getDrawingBufferSize(new THREE.Vector2());
+    const gl = this.renderer.getContext();
+    const samples = Number(gl.getParameter(gl.SAMPLES));
+    // Color/depth at each sample, plus a resolved color image when multisampled.
+    const defaultFramebufferBytes = size.x * size.y * (8 * Math.max(1, samples) + (samples > 1 ? 4 : 0));
+    return {
+      flyCount: this.flies.length, drawCalls: this.renderer.info.render.calls,
       triangles: this.renderer.info.render.triangles, geometries: this.renderer.info.memory.geometries,
-      textures: this.renderer.info.memory.textures };
+      textures: this.renderer.info.memory.textures,
+      gpu: { geometryBytes, materialTextures, textureBytes, shadowFramebufferBytes, defaultFramebufferBytes,
+        drawingBufferWidth: size.x, drawingBufferHeight: size.y, defaultSamples: samples,
+        estimatedBytes: geometryBytes + textureBytes + shadowFramebufferBytes + defaultFramebufferBytes,
+        note: "GPU estimate: live attributes/indices, RGBA textures including mipmaps, and conservative color/depth framebuffers; excludes driver and browser compositor overhead." },
+    };
   }
 
   /** Visual anchors for the recorded input pose, using the core's antenna offset. */
