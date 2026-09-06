@@ -155,7 +155,8 @@ export class ChamberView {
     });
   }
 
-  get statistics() {
+  /** Explicit detailed snapshot; never collected on the render/report hot path. */
+  estimateGpuMemory() {
     const attributes = new Set<THREE.BufferAttribute | THREE.InterleavedBuffer>();
     const textures = new Set<THREE.Texture>();
     const materials = new Set<THREE.Material>();
@@ -200,15 +201,16 @@ export class ChamberView {
     const samples = Number(gl.getParameter(gl.SAMPLES));
     // Color/depth at each sample, plus a resolved color image when multisampled.
     const defaultFramebufferBytes = size.x * size.y * (8 * Math.max(1, samples) + (samples > 1 ? 4 : 0));
-    return {
-      flyCount: this.flies.length, drawCalls: this.renderer.info.render.calls,
+    return { geometryBytes, materialTextures, textureBytes, shadowFramebufferBytes, defaultFramebufferBytes,
+      drawingBufferWidth: size.x, drawingBufferHeight: size.y, defaultSamples: samples,
+      estimatedBytes: geometryBytes + textureBytes + shadowFramebufferBytes + defaultFramebufferBytes,
+      note: "GPU estimate: live attributes/indices, RGBA textures including mipmaps, and conservative color/depth framebuffers; excludes driver and browser compositor overhead." };
+  }
+
+  get statistics() {
+    return { flyCount: this.flies.length, drawCalls: this.renderer.info.render.calls,
       triangles: this.renderer.info.render.triangles, geometries: this.renderer.info.memory.geometries,
-      textures: this.renderer.info.memory.textures,
-      gpu: { geometryBytes, materialTextures, textureBytes, shadowFramebufferBytes, defaultFramebufferBytes,
-        drawingBufferWidth: size.x, drawingBufferHeight: size.y, defaultSamples: samples,
-        estimatedBytes: geometryBytes + textureBytes + shadowFramebufferBytes + defaultFramebufferBytes,
-        note: "GPU estimate: live attributes/indices, RGBA textures including mipmaps, and conservative color/depth framebuffers; excludes driver and browser compositor overhead." },
-    };
+      textures: this.renderer.info.memory.textures };
   }
 
   /** Visual anchors for the recorded input pose, using the core's antenna offset. */
