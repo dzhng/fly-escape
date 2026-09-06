@@ -156,3 +156,34 @@ fn fly_streams_are_reproducible_and_independent() {
     }
     assert_ne!(a.voltage(), other.voltage());
 }
+
+#[test]
+fn silenced_neuron_rejects_external_noise_and_network_drive() {
+    let case = json!({"body_ids":["1","2","3"], "edges":[[0,1,10000.0],[1,2,10000.0]], "motor_groups":{"dn_left":[1],"dn_right":[2],"mn_left":[],"mn_right":[],"olf_dn_left":[],"olf_dn_right":[],"flight_dn_left":[],"flight_dn_right":[]}});
+    let (bytes, manifest) = artifact(&case);
+    let graph = Arc::new(Graph::from_bytes(&bytes, &manifest.to_string()).unwrap());
+    let mut brain = Brain::new(graph, 42);
+    brain
+        .set_state(sim::NeuralState {
+            voltage: vec![0.0, 0.9, 0.0],
+            spikes: vec![true, true, false],
+            refractory: vec![0; 3],
+        })
+        .unwrap();
+    brain.set_silenced_neurons(&[1]).unwrap();
+    assert_eq!(brain.voltage()[1], 0.0);
+    assert!(!brain.spikes()[1]);
+    for _ in 0..5 {
+        brain.set_external_current(&[(0, 3.0), (1, 100.0)]).unwrap();
+        brain.step_with_noise(&[0.0, 100.0, 0.0]).unwrap();
+        assert_eq!(brain.voltage()[1], 0.0);
+        assert!(!brain.spikes()[1]);
+        assert_eq!(brain.external_current()[1], 0.0);
+        assert_eq!(brain.diagnostics().synaptic_input[1], 0.0);
+        assert_eq!(brain.diagnostics().synaptic_input[2], 0.0);
+    }
+    brain.set_silenced_neurons(&[]).unwrap();
+    brain.set_external_current(&[(1, 100.0)]).unwrap();
+    brain.step_with_noise(&[0.0; 3]).unwrap();
+    assert!(brain.spikes()[1]);
+}

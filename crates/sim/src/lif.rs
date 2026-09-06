@@ -83,6 +83,7 @@ pub struct Brain {
     external: Vec<f64>,
     noise: Vec<f64>,
     rng: Rng,
+    silenced: Vec<bool>,
     diagnostics: Diagnostics,
 }
 impl Brain {
@@ -99,6 +100,7 @@ impl Brain {
             external: vec![0.0; n],
             noise: vec![0.0; n],
             rng: Rng(seed),
+            silenced: Vec::new(),
             diagnostics: Diagnostics {
                 synaptic_input: vec![0.0; n],
                 dv: vec![0.0; n],
@@ -141,7 +143,42 @@ impl Brain {
             return Err("Invalid neural state".into());
         }
         self.state = state;
+        self.enforce_silencing();
         Ok(())
+    }
+    /// Experimental neural ablation. Replaces the silence set; an empty set restores
+    /// normal dynamics. Silenced neurons hold zero voltage/current and cannot spike.
+    /// Random samples are still consumed, keeping paired probe streams aligned.
+    pub fn set_silenced_neurons(&mut self, indices: &[u32]) -> Result<(), String> {
+        if indices
+            .iter()
+            .any(|&i| i as usize >= self.state.voltage.len())
+        {
+            return Err("Invalid silenced neuron index".into());
+        }
+        if indices.is_empty() {
+            self.silenced.clear();
+        } else {
+            self.silenced = vec![false; self.state.voltage.len()];
+            for &i in indices {
+                self.silenced[i as usize] = true;
+            }
+        }
+        self.enforce_silencing();
+        Ok(())
+    }
+    fn enforce_silencing(&mut self) {
+        for (i, &silenced) in self.silenced.iter().enumerate() {
+            if silenced {
+                self.state.voltage[i] = 0.0;
+                self.state.spikes[i] = false;
+                self.state.refractory[i] = 0;
+                self.external[i] = 0.0;
+                self.diagnostics.synaptic_input[i] = 0.0;
+                self.diagnostics.dv[i] = 0.0;
+                self.diagnostics.can_spike[i] = false;
+            }
+        }
     }
     pub fn voltage(&self) -> &[f64] {
         &self.state.voltage
@@ -169,6 +206,7 @@ impl Brain {
         for &(i, v) in currents {
             self.external[i as usize] = v;
         }
+        self.enforce_silencing();
         Ok(())
     }
     pub fn set_external_by_body(&mut self, currents: &HashMap<String, f64>) -> Result<(), String> {
@@ -181,6 +219,7 @@ impl Brain {
                 self.external[i as usize] = v;
             }
         }
+        self.enforce_silencing();
         Ok(())
     }
     pub fn step(&mut self) -> StepOutput {
@@ -212,9 +251,16 @@ impl Brain {
                     input += self.graph.weights[j];
                 }
             }
-            self.diagnostics.synaptic_input[i] = input * p.input_scale;
+            self.diagnostics.synaptic_input[i] = if self.silenced.get(i) == Some(&true) {
+                0.0
+            } else {
+                input * p.input_scale
+            };
         }
         for i in 0..self.state.voltage.len() {
+            if self.silenced.get(i) == Some(&true) {
+                continue;
+            }
             let can = self.state.refractory[i] == 0;
             let dv = (-self.state.voltage[i] / p.tau
                 + self.diagnostics.synaptic_input[i]
@@ -314,6 +360,6 @@ impl Brain {
         }
     }
     pub fn state_storage_bytes(&self) -> usize {
-        self.state.voltage.len() * (8 * 5 + 4 + 2)
+        self.state.voltage.len() * (8 * 5 + 4 + 2) + self.silenced.len()
     }
 }
