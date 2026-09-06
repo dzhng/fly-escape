@@ -1,0 +1,11 @@
+# Graph/reference pass
+
+The actual MaleCNS sources were downloaded, checked against server MD5 and recorded with SHA-256/generation in [sources.json](sources.json). The prepared graph contains 70,000 neurons and 798,715 signed edges. Every selected body and signed edge matches the original extraction with MBON/tie ordering stabilized. All 16 required activity groups have members; [the report](report.json) records their counts, 2,360 unknown-transmitter fallbacks and 554 selected bodies without annotations. Those uncertainties remain visible; they are not biological guarantees.
+
+Two independent export directories produced byte-identical `graph.bin` and `manifest.json`. The 9.4 MiB binary round-trips all incoming weights exactly. The oracle comparison changed no MBON membership for these particular source files; deterministic ordering is still pinned by a synthetic truncation test.
+
+Five extraction/format tests and five actual-Python reference tests pass. Three deliberately broken extraction implementations were caught ([mutation evidence](extraction-mutations.json)); the reference agent additionally falsified eight neural semantics before restoring the oracle and rerunning green. Full-neuron biological success and browser throughput remain untested, as required for later slices.
+
+Review: ownership stays in one offline exporter, normal export imports no spike modules, and the existing JS significant-only downloader was removed with its root command. Independent review caught missing general motor memberships, incomplete provenance validation and missing normal-export MBON-change metadata; all were corrected. Additional tie-order and overlapping-group tests address its testing concern. CLI review was attempted by the reference agent but rejected its configured model due to an outdated installed CLI; independent read-only review covered both implementation areas instead. No dependency or model override was used to mask that failure.
+
+No screenshot acceptance is claimed: the HTML report is an inspectable numeric artifact. Browser visual validation begins in slice 02. Reference fixture use is documented under `scripts/reference/README.md`; the final cleanup can retire the Python oracle once its remaining consumers are replaced.

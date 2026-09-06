@@ -31,3 +31,7 @@ Thumbs.db
 
 # Terminal files
 terminals/
+
+# Incomplete source transfers and generated provenance for local raw files
+data/raw/*.part
+data/raw/sources.json

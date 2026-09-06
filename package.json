@@ -1,8 +1,10 @@
 {
   "name": "fly-escape",
   "private": true,
-  "description": "Help the Fly Escape — MaleCNS LIF tech demo",
+  "description": "Help the Fly Escape \u2014 local 3D browser game",
   "scripts": {
-    "download-neurons": "node scripts/download-neurons.js"
+    "data:prepare": ".venv/bin/python scripts/prepare-graph.py --download",
+    "test:graph": ".venv/bin/python -m unittest discover -s tests/connectome -v",
+    "test:reference": ".venv/bin/python -m unittest discover -s tests/reference -v"
   }
 }

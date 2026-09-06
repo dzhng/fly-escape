@@ -1,0 +1,38 @@
+{
+  "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+  "exporterHash": "89c0f830942d2faffe92612fabab37e60f159b778ec4d75ca195fe49b1a2582d",
+  "neuronCount": 70000,
+  "edgeCount": 798715,
+  "fallbackCount": 2360,
+  "missingAnnotations": 554,
+  "groups": {
+    "smellL": 10,
+    "smellR": 10,
+    "repelL": 6,
+    "repelR": 6,
+    "visionL": 122,
+    "visionR": 128,
+    "turnL": 25,
+    "turnR": 25,
+    "flightL": 9,
+    "flightR": 9,
+    "landingL": 2,
+    "landingR": 2,
+    "taste": 19,
+    "feeding": 10,
+    "proboscis": 4,
+    "loom": 126
+  },
+  "seconds": 3.33,
+  "reference": {
+    "allNeuronsEqual": true,
+    "allSignedEdgesEqual": true,
+    "mbonRemoved": [],
+    "mbonAdded": [],
+    "oracleSha256": "4ff5ad894630309f50ec00c2b08230f5f85e8e71df6085027aa1e4c1f001598e",
+    "corrections": [
+      "sort MBON body IDs before truncation",
+      "break equal neighbor weights by body ID"
+    ]
+  }
+}

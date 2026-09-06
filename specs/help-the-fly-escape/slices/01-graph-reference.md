@@ -1,6 +1,8 @@
 # 01 — Reproducible graph and reference
 
-Status: planned. Dependencies: none.
+Status: complete. Dependencies: none.
+
+Evidence: [slice review](../assets/evidence/01/review.md), real graph comparison and source hashes.
 
 ## Contract and seam
 

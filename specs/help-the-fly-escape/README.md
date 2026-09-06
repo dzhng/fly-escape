@@ -1,14 +1,16 @@
 # Help the Fly Escape — browser game
 
-Status: **spec ready; implementation not started**. Last updated: 2026-09-06.
+Status: **implementation active — slice 02 next**. Last updated: 2026-09-06.
 
 Build a local, fully 3D browser game in which the player places environmental tools and watches a real connectome-driven swarm attempt to escape. The [game contract](GAMEPLAY.md) owns user requirements; [architecture contracts](CONTRACTS.md) own runtime/data seams. This plan replaces the previous Python tech-demo scope.
 
 ## Next Agent Prompt
 
-You are implementing this browser game when the user requests implementation. Start at [01 — graph reference](slices/01-graph-reference.md), then deliver the real graph-driven 3D browser checkpoint in 02 before art or campaign work. Read GAMEPLAY.md, CONTRACTS.md and RESEARCH.md first. The plan itself is complete; no game implementation or benchmark has passed yet.
+You are implementing this browser game; implementation is authorized. Pick up [02 — neural browser](slices/02-neural-browser.md): port the LIF core against the committed synthetic oracle, reproduce Worker/WASM messaging, then show a real graph-driven fly in a 3D chamber. Read GAMEPLAY.md and CONTRACTS.md before choosing interfaces.
 
-Raw source data is missing locally. Resolve the downloader/loader mismatch and preserve deterministic Python reference evidence before replacing runtime code. Synthetic fixtures can unblock harness work, but cannot pass real-neural or release gates. Browser throughput and several claimed sensory behaviors are unverified. The user already authorized hard replacement: no backward compatibility or migrations are required, and no further cutover permission is needed.
+Slice 01 passed: real sources downloaded and verified; 70,000 neurons / 798,715 signed edges match the stabilized Python oracle; two exports match bytes; all 16 telemetry groups are populated. See [graph evidence](assets/evidence/01/review.md), [exporter usage](../../scripts/connectome/README.md) and [neural reference fixtures](../../scripts/reference/README.md). Prepared artifacts are in ignored `data/processed/brain`; reproduce them with the exporter if absent. No browser performance or game acceptance gate has passed yet.
+
+The user authorized replacing all spike code. Keep useful evidence/tooling, delete outdated code as consumers retire, and add no compatibility layer. CLI second-opinion review currently fails because the installed client cannot use its configured model; use an independent read-only agent review and record that limitation until the tool works.
 
 Use the slice dependency graph below. Keep each change bounded to its contract; update the spec before an unlisted material choice or widening a slice. Run focused verification, record evidence and decisions, and update this prompt, statuses and global checklist before ending every implementation pass. Do not call placeholders final art or old Python reports browser proof.
 
@@ -16,7 +18,7 @@ Use the slice dependency graph below. Keep each change bounded to its contract; 
 
 Open the [interactive roadmap](visualizations/roadmap.html) for dependency and milestone navigation.
 
-- [ ] [01 — Reproducible graph and reference](slices/01-graph-reference.md) — dependencies: none.
+- [x] [01 — Reproducible graph and reference](slices/01-graph-reference.md) — dependencies: none.
 - [ ] [02 — One real brain in the browser](slices/02-neural-browser.md) — dependencies: 01.
 - [ ] [03 — One sensory environment](slices/03-sensory-fields.md) — dependencies: 02.
 - [ ] [04 — Finite life and physical escape](slices/04-lifecycle-outcomes.md) — dependencies: 03.
