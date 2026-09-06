@@ -379,7 +379,7 @@ function createPlaceholderFly(): THREE.Group {
   return fly;
 }
 
-function createPointMarker(label: "L" | "R"): THREE.Group {
+function createPointMarker(label: "L" | "R" | "C"): THREE.Group {
   const group = new THREE.Group();
   const color = label === "L" ? "#174845" : "#742b20";
   const pin = new THREE.Mesh(
