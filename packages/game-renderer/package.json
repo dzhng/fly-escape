@@ -1,0 +1,13 @@
+{
+  "name": "@fly-escape/game-renderer",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "dependencies": {
+    "three": "^0.185.1"
+  },
+  "devDependencies": {
+    "@types/three": "^0.185.0"
+  }
+}
