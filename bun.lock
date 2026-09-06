@@ -10,6 +10,16 @@
         "typescript": "^6.0.3",
       },
     },
+    "apps/asset-lab": {
+      "name": "@fly-escape/asset-lab",
+      "dependencies": {
+        "@fly-escape/game-renderer": "workspace:*",
+      },
+      "devDependencies": {
+        "typescript": "^6.0.3",
+        "vite": "^8.0.16",
+      },
+    },
     "apps/web": {
       "name": "@fly-escape/web",
       "dependencies": {
@@ -42,6 +52,8 @@
   },
   "packages": {
     "@dimforge/rapier3d-compat": ["@dimforge/rapier3d-compat@0.12.0", "", {}, "sha512-uekIGetywIgopfD97oDL5PfeezkFpNhwlzlaEYNOA0N6ghdsOvh/HYjSMek5Q2O1PYvRSDFcqFVJl4r4ZBwOow=="],
+
+    "@fly-escape/asset-lab": ["@fly-escape/asset-lab@workspace:apps/asset-lab"],
 
     "@fly-escape/game-renderer": ["@fly-escape/game-renderer@workspace:packages/game-renderer"],
 

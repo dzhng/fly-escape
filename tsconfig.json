@@ -5,5 +5,5 @@
     "strict": true, "skipLibCheck": true, "noEmit": true, "allowImportingTsExtensions": true,
     "types": ["bun"]
   },
-  "include": ["apps/web/src", "apps/web/vite.config.ts", "packages/*/src", "scripts/*.ts"]
+  "include": ["apps/*/src", "apps/web/vite.config.ts", "packages/*/src", "scripts/*.ts"]
 }

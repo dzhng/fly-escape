@@ -1,6 +1,6 @@
 # 07 — Blender fly and replacement workbench
 
-Status: planned. Dependencies: 06.
+Status: browser loader/workbench and replacement checks verified; visual acceptance open ([review](../assets/evidence/07/browser-review.md)). Dependencies: 06.
 
 ## Contract and seam
 

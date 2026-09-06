@@ -117,3 +117,15 @@ The playback view initially follows fly 1 at close distance. The user required a
 ### Cutaway hides only walls on the viewing ray (slice 06)
 
 The camera hides visual wall segments between itself and the followed fly's center. Collision remains unchanged. The plan allowed cutaway without choosing its method. A center ray is simple and bounded, but final room geometry must verify that a visible center also leaves enough of the fly unobscured.
+
+## Sound — medium confidence (model replacement)
+
+### Invalid asset origins are reported instead of silently corrected (slice 07)
+
+The loader requires finite three-dimensional bounds, a footprint containing the origin, and ground height within five percent of model height. The plan specified ground contact and declared scale but left numerical tolerance open. This catches exports that would disappear from follow framing, while tolerating tiny floating-point export errors; the workbench does not resize or recenter a malformed replacement on the user's behalf.
+
+## Sound — high confidence (model ownership)
+
+### The view owns each accepted model (slice 07)
+
+A successful replacement transfers the model to the renderer. Fly instances share geometry and materials, while skeletons remain independently poseable. A superseded load disposes its candidate instead of replacing the current scene. The plan required disposal but left lifetime ownership open. One owner makes replacement and teardown release the same resource sets, including skeleton textures.

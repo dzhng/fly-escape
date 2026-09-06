@@ -1,9 +1,12 @@
 import { visibleResponse } from "./visible-response.mjs";
 import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
+import { pathToFileURL } from "node:url";
 import { chromium } from "playwright";
 const base = process.env.BRAIN_URL ?? "http://127.0.0.1:5184";
-const output = new URL("../../specs/help-the-fly-escape/assets/evidence/05/ui/", import.meta.url);
+const output = process.env.PLAYBACK_OUTPUT
+  ? pathToFileURL(process.env.PLAYBACK_OUTPUT + "/")
+  : new URL("../../specs/help-the-fly-escape/assets/evidence/05/ui/", import.meta.url);
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({
   headless: true,

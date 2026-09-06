@@ -21,6 +21,6 @@ Open the printed local URL with `/lab/brain`. Source preparation downloads about
 
 ## Ownership
 
-Browser applications live under `apps/`: `apps/web` is the game and `apps/asset-lab` is planned for asset iteration. `packages/` holds the client and renderer; `crates/` owns simulation and its thin WASM boundary. The browser requires no application backend.
+Browser applications live under `apps/`: `apps/web` is the game and [`apps/asset-lab`](apps/asset-lab/README.md) provides local model replacement and inspection. `packages/` holds the client and renderer; `crates/` owns simulation and its thin WASM boundary. The browser requires no application backend.
 
 Existing Python simulation code is disposable spike material. Retain useful evidence, adapt useful algorithms into their natural owner, and delete obsolete paths as their consumers retire. No compatibility or data migration is required. The [architecture contract](specs/help-the-fly-escape/CONTRACTS.md) defines the final shape and the [roadmap](specs/help-the-fly-escape/visualizations/roadmap.html) shows the remaining work.

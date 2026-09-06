@@ -1,0 +1,612 @@
+{
+  "browser": "152.0.7977.77",
+  "paused": {
+    "spec": {
+      "schemaVersion": 1,
+      "attemptId": "4c64daa1-8914-4d77-8cd8-4377054f8e3b",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+      "simulationBuildId": "209ce69af4d07193ce5b32b05c22ff37668ea34a0bcb9d28b630694933b609fe",
+      "tuningHash": "49a100fbaa5622a5b13b06a1d1cfb9105937b21e0484d931897d265378b690ec",
+      "levelHash": "394de32072afb17009140f3f6f0fbc0479996f4d3b9796d5d846f23086d42fc2",
+      "levelId": "active-native-benchmark",
+      "rootSeed": "42",
+      "flyCount": 20,
+      "durationTicks": 6000
+    },
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+    "viewport": [
+      1440,
+      1000
+    ],
+    "devicePixelRatio": 1,
+    "cursorTick": 11.165999999999999,
+    "sampleTick": 11,
+    "computedTick": 50,
+    "state": "paused",
+    "speed": 1,
+    "complete": false,
+    "initialWaitMs": 1317.8999999523162,
+    "warmWaitMs": 1112.1,
+    "productionMs": 1895.5000001192093,
+    "activeNeuralSteps": 1000,
+    "activeEquivalentProductionRate": 2.637826430854944,
+    "underruns": 0,
+    "frameIntervals": {
+      "count": 131,
+      "p95Ms": 17,
+      "p95Capped": false,
+      "maxMs": 50,
+      "histogramResolutionMs": 1
+    },
+    "interactions": {
+      "count": 1,
+      "p95Ms": 30,
+      "p95Capped": false,
+      "maxMs": 29.5,
+      "histogramResolutionMs": 1,
+      "measurement": "control callback to synchronous scene render completion; excludes browser paint"
+    },
+    "memory": {
+      "wasmBytes": 92471296,
+      "archiveOwnedChunkBytes": 445880,
+      "archiveBoundBytes": 78184384,
+      "graphBytes": 9864584,
+      "brainStateBytes": 64400000,
+      "observedJSHeapBytes": 23022075,
+      "note": "WASM includes graph and brain state; do not add those again. Download report includes an on-demand GPU memory estimate."
+    },
+    "renderer": {
+      "flyCount": 20,
+      "drawCalls": 1656,
+      "triangles": 207424,
+      "geometries": 51,
+      "textures": 764
+    },
+    "camera": {
+      "following": true,
+      "distance": 10.521746919043078,
+      "minDistance": 5.260873459521539,
+      "maxDistance": 38.04761024296951,
+      "closeDistance": 10.521746919043078,
+      "target": [
+        -0.8837546092159275,
+        0.8898342322876824,
+        -2.0006711434332547
+      ],
+      "width": 1075,
+      "height": 625,
+      "selectedFlyId": 0,
+      "flies": [
+        {
+          "id": 0,
+          "x": 537.5000000000001,
+          "y": 312.5000000000001,
+          "visible": true
+        },
+        {
+          "id": 1,
+          "x": 561.7663672242329,
+          "y": 331.8646037940761,
+          "visible": true
+        },
+        {
+          "id": 2,
+          "x": 585.1769985631521,
+          "y": 351.20091997781515,
+          "visible": true
+        },
+        {
+          "id": 3,
+          "x": 613.3072532390922,
+          "y": 372.81773489277094,
+          "visible": true
+        },
+        {
+          "id": 4,
+          "x": 639.3898549645252,
+          "y": 393.38243371444383,
+          "visible": true
+        },
+        {
+          "id": 5,
+          "x": 667.9907591186147,
+          "y": 415.52139180238515,
+          "visible": true
+        },
+        {
+          "id": 6,
+          "x": 700.134681129355,
+          "y": 439.7434871909674,
+          "visible": true
+        },
+        {
+          "id": 7,
+          "x": 727.9831017353329,
+          "y": 461.8185462611579,
+          "visible": true
+        },
+        {
+          "id": 8,
+          "x": 762.646497617783,
+          "y": 489.3839474504783,
+          "visible": true
+        },
+        {
+          "id": 9,
+          "x": 793.3618011617222,
+          "y": 514.056253370215,
+          "visible": true
+        },
+        {
+          "id": 10,
+          "x": 519.2861591022782,
+          "y": 336.2391929738711,
+          "visible": true
+        },
+        {
+          "id": 11,
+          "x": 537.2672015524377,
+          "y": 351.2684518329836,
+          "visible": true
+        },
+        {
+          "id": 12,
+          "x": 565.6083041777067,
+          "y": 375.4052991274846,
+          "visible": true
+        },
+        {
+          "id": 13,
+          "x": 588.3969892120538,
+          "y": 393.6138837914341,
+          "visible": true
+        },
+        {
+          "id": 14,
+          "x": 620.1680743425518,
+          "y": 419.71470052812947,
+          "visible": true
+        },
+        {
+          "id": 15,
+          "x": 650.0390227920899,
+          "y": 442.67961826794806,
+          "visible": true
+        },
+        {
+          "id": 16,
+          "x": 673.4609671918491,
+          "y": 463.609708090853,
+          "visible": true
+        },
+        {
+          "id": 17,
+          "x": 705.8145697203984,
+          "y": 489.85625381978593,
+          "visible": true
+        },
+        {
+          "id": 18,
+          "x": 739.877637278521,
+          "y": 516.2374554722845,
+          "visible": true
+        },
+        {
+          "id": 19,
+          "x": 771.9425174044313,
+          "y": 542.9938607934894,
+          "visible": true
+        }
+      ]
+    },
+    "result": null
+  },
+  "speed": {
+    "spec": {
+      "schemaVersion": 1,
+      "attemptId": "4c64daa1-8914-4d77-8cd8-4377054f8e3b",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+      "simulationBuildId": "209ce69af4d07193ce5b32b05c22ff37668ea34a0bcb9d28b630694933b609fe",
+      "tuningHash": "49a100fbaa5622a5b13b06a1d1cfb9105937b21e0484d931897d265378b690ec",
+      "levelHash": "394de32072afb17009140f3f6f0fbc0479996f4d3b9796d5d846f23086d42fc2",
+      "levelId": "active-native-benchmark",
+      "rootSeed": "42",
+      "flyCount": 20,
+      "durationTicks": 6000
+    },
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+    "viewport": [
+      1440,
+      1000
+    ],
+    "devicePixelRatio": 1,
+    "cursorTick": 1,
+    "sampleTick": 1,
+    "computedTick": 70,
+    "state": "playing",
+    "speed": 2,
+    "complete": false,
+    "initialWaitMs": 1317.8999999523162,
+    "warmWaitMs": 1112.1,
+    "productionMs": 2770.5000001192093,
+    "activeNeuralSteps": 1400,
+    "activeEquivalentProductionRate": 2.5266197436198534,
+    "underruns": 0,
+    "frameIntervals": {
+      "count": 165,
+      "p95Ms": 17,
+      "p95Capped": false,
+      "maxMs": 50,
+      "histogramResolutionMs": 1
+    },
+    "interactions": {
+      "count": 9,
+      "p95Ms": 30,
+      "p95Capped": false,
+      "maxMs": 29.5,
+      "histogramResolutionMs": 1,
+      "measurement": "control callback to synchronous scene render completion; excludes browser paint"
+    },
+    "memory": {
+      "wasmBytes": 92471296,
+      "archiveOwnedChunkBytes": 624768,
+      "archiveBoundBytes": 78184384,
+      "graphBytes": 9864584,
+      "brainStateBytes": 64400000,
+      "observedJSHeapBytes": 18023826,
+      "note": "WASM includes graph and brain state; do not add those again. Download report includes an on-demand GPU memory estimate."
+    },
+    "renderer": {
+      "flyCount": 20,
+      "drawCalls": 1656,
+      "triangles": 207424,
+      "geometries": 53,
+      "textures": 764
+    },
+    "camera": {
+      "following": true,
+      "distance": 10.521746919043078,
+      "minDistance": 5.260873459521539,
+      "maxDistance": 31.13176131494729,
+      "closeDistance": 10.521746919043078,
+      "target": [
+        1.605026960432854,
+        0.38983423228768255,
+        -1.6000016625479174
+      ],
+      "width": 1075,
+      "height": 625,
+      "selectedFlyId": 19,
+      "flies": [
+        {
+          "id": 0,
+          "x": 370.11970708934024,
+          "y": 147.97970109591034,
+          "visible": true
+        },
+        {
+          "id": 1,
+          "x": 388.926625399614,
+          "y": 162.29277935390766,
+          "visible": true
+        },
+        {
+          "id": 2,
+          "x": 408.2827513465264,
+          "y": 177.0240615415644,
+          "visible": true
+        },
+        {
+          "id": 3,
+          "x": 428.2180047272106,
+          "y": 192.19599713749798,
+          "visible": true
+        },
+        {
+          "id": 4,
+          "x": 448.75131155938334,
+          "y": 207.82265551438672,
+          "visible": true
+        },
+        {
+          "id": 5,
+          "x": 469.9168081354036,
+          "y": 223.93088451744248,
+          "visible": true
+        },
+        {
+          "id": 6,
+          "x": 491.7376158173879,
+          "y": 240.53772608684375,
+          "visible": true
+        },
+        {
+          "id": 7,
+          "x": 514.2555763877762,
+          "y": 257.67541000070423,
+          "visible": true
+        },
+        {
+          "id": 8,
+          "x": 537.4960696872753,
+          "y": 275.36240963885444,
+          "visible": true
+        },
+        {
+          "id": 9,
+          "x": 561.5000502581586,
+          "y": 293.6307158282193,
+          "visible": true
+        },
+        {
+          "id": 10,
+          "x": 346.47714068923267,
+          "y": 162.29261413639298,
+          "visible": true
+        },
+        {
+          "id": 11,
+          "x": 365.21396090041674,
+          "y": 177.025789294476,
+          "visible": true
+        },
+        {
+          "id": 12,
+          "x": 384.5081102938695,
+          "y": 192.19735879842352,
+          "visible": true
+        },
+        {
+          "id": 13,
+          "x": 404.3834670079692,
+          "y": 207.82617184461586,
+          "visible": true
+        },
+        {
+          "id": 14,
+          "x": 424.8665283648902,
+          "y": 223.93268190505592,
+          "visible": true
+        },
+        {
+          "id": 15,
+          "x": 445.9902687851004,
+          "y": 240.5426475884528,
+          "visible": true
+        },
+        {
+          "id": 16,
+          "x": 467.77850918124136,
+          "y": 257.67602022475114,
+          "visible": true
+        },
+        {
+          "id": 17,
+          "x": 490.27454710927094,
+          "y": 275.3652190394782,
+          "visible": true
+        },
+        {
+          "id": 18,
+          "x": 513.5022311285128,
+          "y": 293.6296721242097,
+          "visible": true
+        },
+        {
+          "id": 19,
+          "x": 537.5,
+          "y": 312.50000000000006,
+          "visible": true
+        }
+      ]
+    },
+    "result": null
+  },
+  "restarted": {
+    "spec": {
+      "schemaVersion": 1,
+      "attemptId": "b5399877-7fcd-461a-ae67-42beb5330dc6",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+      "simulationBuildId": "209ce69af4d07193ce5b32b05c22ff37668ea34a0bcb9d28b630694933b609fe",
+      "tuningHash": "49a100fbaa5622a5b13b06a1d1cfb9105937b21e0484d931897d265378b690ec",
+      "levelHash": "394de32072afb17009140f3f6f0fbc0479996f4d3b9796d5d846f23086d42fc2",
+      "levelId": "active-native-benchmark",
+      "rootSeed": "42",
+      "flyCount": 20,
+      "durationTicks": 6000
+    },
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+    "viewport": [
+      1440,
+      1000
+    ],
+    "devicePixelRatio": 1,
+    "cursorTick": 0,
+    "sampleTick": 0,
+    "computedTick": 30,
+    "state": "playing",
+    "speed": 1,
+    "complete": false,
+    "initialWaitMs": 1156.3999999999996,
+    "warmWaitMs": 1106.2999999761578,
+    "productionMs": 1084.3999999761581,
+    "activeNeuralSteps": 600,
+    "activeEquivalentProductionRate": 2.766506824110991,
+    "underruns": 0,
+    "frameIntervals": {
+      "count": 65,
+      "p95Ms": 17,
+      "p95Capped": false,
+      "maxMs": 33.29999999999973,
+      "histogramResolutionMs": 1
+    },
+    "interactions": {
+      "count": 0,
+      "p95Ms": null,
+      "p95Capped": false,
+      "maxMs": 0,
+      "histogramResolutionMs": 1,
+      "measurement": "control callback to synchronous scene render completion; excludes browser paint"
+    },
+    "memory": {
+      "wasmBytes": 92471296,
+      "archiveOwnedChunkBytes": 267592,
+      "archiveBoundBytes": 78184384,
+      "graphBytes": 9864584,
+      "brainStateBytes": 64400000,
+      "observedJSHeapBytes": 18676141,
+      "note": "WASM includes graph and brain state; do not add those again. Download report includes an on-demand GPU memory estimate."
+    },
+    "renderer": {
+      "flyCount": 20,
+      "drawCalls": 1656,
+      "triangles": 207424,
+      "geometries": 51,
+      "textures": 764
+    },
+    "camera": {
+      "following": true,
+      "distance": 10.521746919043078,
+      "minDistance": 5.260873459521539,
+      "maxDistance": 39.91107536466283,
+      "closeDistance": 10.521746919043078,
+      "target": [
+        -2,
+        0.38983423228768255,
+        -2
+      ],
+      "width": 1075,
+      "height": 625,
+      "selectedFlyId": 0,
+      "flies": [
+        {
+          "id": 0,
+          "x": 537.5,
+          "y": 312.50000000000006,
+          "visible": true
+        },
+        {
+          "id": 1,
+          "x": 562.3089542064482,
+          "y": 332.00811553852265,
+          "visible": true
+        },
+        {
+          "id": 2,
+          "x": 587.9702528337368,
+          "y": 352.1864581773898,
+          "visible": true
+        },
+        {
+          "id": 3,
+          "x": 614.5285887523423,
+          "y": 373.0701714246167,
+          "visible": true
+        },
+        {
+          "id": 4,
+          "x": 642.0318350589206,
+          "y": 394.6968995070813,
+          "visible": true
+        },
+        {
+          "id": 5,
+          "x": 670.531333070105,
+          "y": 417.1070138297388,
+          "visible": true
+        },
+        {
+          "id": 6,
+          "x": 700.0822121896291,
+          "y": 440.34386449790424,
+          "visible": true
+        },
+        {
+          "id": 7,
+          "x": 730.7437458415706,
+          "y": 464.45406019953936,
+          "visible": true
+        },
+        {
+          "id": 8,
+          "x": 762.5797483049236,
+          "y": 489.4877802496315,
+          "visible": true
+        },
+        {
+          "id": 9,
+          "x": 795.6590180400125,
+          "y": 515.4991231926703,
+          "visible": true
+        },
+        {
+          "id": 10,
+          "x": 512.6910457935519,
+          "y": 332.0081155385226,
+          "visible": true
+        },
+        {
+          "id": 11,
+          "x": 537.5,
+          "y": 352.18645817738974,
+          "visible": true
+        },
+        {
+          "id": 12,
+          "x": 563.1761962507809,
+          "y": 373.0701714246167,
+          "visible": true
+        },
+        {
+          "id": 13,
+          "x": 589.7659175294602,
+          "y": 394.6968995070813,
+          "visible": true
+        },
+        {
+          "id": 14,
+          "x": 617.318799842063,
+          "y": 417.1070138297388,
+          "visible": true
+        },
+        {
+          "id": 15,
+          "x": 645.8881414597528,
+          "y": 440.34386449790424,
+          "visible": true
+        },
+        {
+          "id": 16,
+          "x": 675.5312470296932,
+          "y": 464.45406019953936,
+          "visible": true
+        },
+        {
+          "id": 17,
+          "x": 706.3098112286926,
+          "y": 489.4877802496315,
+          "visible": true
+        },
+        {
+          "id": 18,
+          "x": 738.2903473644543,
+          "y": 515.4991231926701,
+          "visible": true
+        },
+        {
+          "id": 19,
+          "x": 771.544667190346,
+          "y": 542.5464970595989,
+          "visible": true
+        }
+      ]
+    },
+    "result": null
+  },
+  "repeatedNeuralReadout": true,
+  "pauseResponseMs": 61,
+  "errors": []
+}

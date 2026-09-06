@@ -8,16 +8,18 @@
     "test:reference": ".venv/bin/python -m unittest discover -s tests/reference -v",
     "dev": "bun run --cwd apps/web dev",
     "build:wasm": "wasm-pack build crates/game-wasm --target web --release --out-dir ../../packages/sim-client/src/wasm",
-    "build": "bun run types:generate && bun run assets:brain && bun run build:wasm && bun run --cwd apps/web build",
+    "build": "bun run types:generate && bun run assets:brain && bun run build:wasm && bun run --cwd apps/web build && bun run --cwd apps/asset-lab build",
     "typecheck": "tsc --noEmit",
-    "test": "bun run test:graph && bun run test:reference && cargo test && bun run test:client",
+    "test": "bun run test:graph && bun run test:reference && cargo test && bun run test:client && bun run test:renderer",
     "assets:brain": "bun scripts/copy-brain.ts",
     "types:generate": "cargo run -q -p sim --example export_types > packages/sim-client/src/generated/sim.ts",
     "test:browser": "node tests/browser/brain.mjs && node tests/browser/fields.mjs && node tests/browser/lifecycle.mjs",
     "test:client": "bun test packages/sim-client/src",
     "test:transport": "node tests/browser/attempt-transport.mjs",
     "test:playback": "node tests/browser/playback.mjs",
-    "test:playback-performance": "node tests/browser/playback-performance.mjs"
+    "test:playback-performance": "node tests/browser/playback-performance.mjs",
+    "dev:assets": "bun run --cwd apps/asset-lab dev",
+    "test:renderer": "bun test packages/game-renderer/src"
   },
   "type": "module",
   "workspaces": [

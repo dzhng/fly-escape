@@ -1,0 +1,8 @@
+{
+  "name": "@fly-escape/asset-lab",
+  "private": true,
+  "type": "module",
+  "scripts": { "dev": "vite --host 127.0.0.1 --port 5174 --strictPort", "build": "vite build" },
+  "dependencies": { "@fly-escape/game-renderer": "workspace:*" },
+  "devDependencies": { "vite": "^8.0.16", "typescript": "^6.0.3" }
+}

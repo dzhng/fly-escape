@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { WorldView, type FlyPose } from "@fly-escape/game-renderer";
+import { WorldView, loadFlyModel, type FlyPose } from "@fly-escape/game-renderer";
 import {
   AttemptClient,
   FrameArchive,
@@ -9,6 +9,7 @@ import {
 } from "@fly-escape/sim-client";
 import { NeuralExplanations } from "./neural-explanations";
 import "./playback.css";
+import flyModelUrl from "../../../assets/fly/fly.glb?url";
 
 const FLY_COUNT = 20;
 const DURATION_TICKS = 6000;
@@ -192,6 +193,25 @@ export function PlaybackLab() {
         scene.current.setPoses(sample(run.current));
         scene.current.enableSelection(selectFly);
         scene.current.selectFly(0);
+        const target = scene.current;
+        fetch(flyModelUrl)
+          .then((response) => {
+            if (!response.ok) throw new Error(`Fly model request failed (${response.status})`);
+            return response.arrayBuffer();
+          })
+          .then(loadFlyModel)
+          .then((model) => {
+            if (scene.current !== target) {
+              model.dispose();
+              return;
+            }
+            target.setFlyModel(model);
+          })
+          .catch((cause) => {
+            if (scene.current !== target) return;
+            observer.cancel();
+            fail(String(cause));
+          });
         setInfo(reply.info);
       } else if (reply.type === "frames") {
         const current = run.current;
@@ -349,6 +369,7 @@ export function PlaybackLab() {
       observer.dispose();
       run.current?.archive.clear();
       scene.current?.dispose();
+      scene.current = undefined;
     };
   }, []);
 
@@ -397,7 +418,7 @@ export function PlaybackLab() {
           <div className="canvas" ref={container} />
           <div className="world-note">
             20 independent brains · shared environment
-            <span>Seed 42 · 600 game seconds · fixed placeholder models</span>
+            <span>Seed 42 · 600 game seconds · 3D fly models</span>
           </div>
           <div className="playback-counters" aria-label="Outcomes at playback time">
             <b data-testid="active-count">{FLY_COUNT - terminalCount} active</b>
@@ -479,7 +500,15 @@ export function PlaybackLab() {
             >
               Replay
             </button>
-            <button disabled={!info || !!error} onClick={() => { interactionAt.current = performance.now(); scene.current?.overview(); }}>Overview</button>
+            <button
+              disabled={!info || !!error}
+              onClick={() => {
+                interactionAt.current = performance.now();
+                scene.current?.overview();
+              }}
+            >
+              Overview
+            </button>
             <button onClick={() => restart.current()}>New attempt</button>
             <button disabled={!info} onClick={save}>
               Download report
@@ -501,14 +530,28 @@ export function PlaybackLab() {
           <div className="fly-roster" aria-label="Fly roster">
             {Array.from({ length: FLY_COUNT }, (_, id) => {
               const body = display.frame?.flies[id].body;
-              return <button key={id} ref={element => { if (element) cards.current.set(id, element); else cards.current.delete(id); }}
-                className="fly-card" data-testid={`fly-card-${id}`} data-fly-id={id}
-                aria-label={`Select fly ${id + 1}`} aria-pressed={selected === id}
-                disabled={!info || !!error} onClick={() => selectFly(id)}>
-                <strong>Fly {String(id + 1).padStart(2, "0")}</strong>
-                <span>{body?.outcome ?? body?.mode ?? "Initial state"}</span>
-                <small>Reserve {(body?.reserve ?? info?.level.initialReserve ?? 0).toFixed(2)}</small>
-              </button>;
+              return (
+                <button
+                  key={id}
+                  ref={(element) => {
+                    if (element) cards.current.set(id, element);
+                    else cards.current.delete(id);
+                  }}
+                  className="fly-card"
+                  data-testid={`fly-card-${id}`}
+                  data-fly-id={id}
+                  aria-label={`Select fly ${id + 1}`}
+                  aria-pressed={selected === id}
+                  disabled={!info || !!error}
+                  onClick={() => selectFly(id)}
+                >
+                  <strong>Fly {String(id + 1).padStart(2, "0")}</strong>
+                  <span>{body?.outcome ?? body?.mode ?? "Initial state"}</span>
+                  <small>
+                    Reserve {(body?.reserve ?? info?.level.initialReserve ?? 0).toFixed(2)}
+                  </small>
+                </button>
+              );
             })}
           </div>
           <div
@@ -568,8 +611,8 @@ export function PlaybackLab() {
             <summary>Performance report</summary>
             <p>
               Active-work production: {display.rate.toFixed(2)} game seconds per wall second, before
-              the clock’s safety discount. Model placeholders and GPU memory remain separate
-              measurement work.
+              the clock’s safety discount. Detailed GPU estimates are collected when downloading a
+              report; browser/driver overhead remains outside these estimates.
             </p>
             <pre data-testid="playback-report">{display.report}</pre>
           </details>

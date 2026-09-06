@@ -1,4 +1,7 @@
 import * as THREE from "three";
+import { FlyModel } from "./fly-model";
+import { disposeObjectResources } from "./resources";
+export { loadFlyModel, FlyModel } from "./fly-model";
 import { WorldCamera } from "./camera";
 import { cameraInput } from "./camera-input";
 import type { Geometry, FieldGrid, ContactRegion, ExitOpening } from "@fly-escape/sim-client";
@@ -36,7 +39,9 @@ export class WorldView {
   private readonly raycaster = new THREE.Raycaster();
   private readonly walls = new THREE.Group();
   private readonly renderer: THREE.WebGLRenderer;
-  private readonly flies = [createPlaceholderFly()];
+  private readonly flies: THREE.Object3D[] = [createPlaceholderFly()];
+  private subjectCenterY = 0.35;
+  private modelKind: "placeholder" | "glb" = "placeholder";
   private readonly observer: ResizeObserver;
   private readonly sensorMarkers = [createPointMarker("L"), createPointMarker("R")];
   private readonly windArrow = new THREE.ArrowHelper(
@@ -56,7 +61,8 @@ export class WorldView {
     geometry: Geometry,
     flyCount = 1,
   ) {
-    if (!Number.isInteger(flyCount) || flyCount < 1 || flyCount > 100) throw new Error("Scene requires 1..100 flies");
+    if (!Number.isInteger(flyCount) || flyCount < 1 || flyCount > 100)
+      throw new Error("Scene requires 1..100 flies");
     while (this.flies.length < flyCount) this.flies.push(this.flies[0].clone(true));
     this.bounds = new THREE.Box3();
     for (const room of geometry.rooms) {
@@ -67,7 +73,15 @@ export class WorldView {
     const modelBounds = new THREE.Box3().setFromObject(this.flies[0]);
     const modelSize = modelBounds.getSize(new THREE.Vector3());
     const ringRadius = Math.max(modelSize.x, modelSize.z) * 0.6;
-    this.selectionRing = new THREE.Mesh(new THREE.RingGeometry(ringRadius, ringRadius + 0.055, 48), new THREE.MeshBasicMaterial({ color: "#f5cc35", transparent: true, side: THREE.DoubleSide, depthWrite: false }));
+    this.selectionRing = new THREE.Mesh(
+      new THREE.RingGeometry(ringRadius, ringRadius + 0.055, 48),
+      new THREE.MeshBasicMaterial({
+        color: "#f5cc35",
+        transparent: true,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+      }),
+    );
     this.navigation = new WorldCamera(this.bounds, modelBounds.getSize(new THREE.Vector3()).y);
     const center = this.bounds.getCenter(new THREE.Vector3());
     const radius = this.bounds.getSize(new THREE.Vector3()).length() / 2;
@@ -82,7 +96,12 @@ export class WorldView {
     canvas.style.width = "100%";
     canvas.style.height = "100%";
     canvas.setAttribute("role", "img");
-    canvas.setAttribute("aria-label", flyCount === 1 ? "Three-dimensional neural test chamber and fly" : `Three-dimensional observation chamber with ${flyCount} flies`);
+    canvas.setAttribute(
+      "aria-label",
+      flyCount === 1
+        ? "Three-dimensional neural test chamber and fly"
+        : `Three-dimensional observation chamber with ${flyCount} flies`,
+    );
     container.appendChild(canvas);
 
     this.scene.add(new THREE.HemisphereLight("#fff8e8", "#718d80", 2.5));
@@ -96,10 +115,19 @@ export class WorldView {
     sun.shadow.camera.near = 1;
     sun.shadow.camera.far = radius * 5;
     sun.shadow.normalBias = 0.025;
-    this.scene.add(sun, sun.target, createRoomGeometry(geometry, this.walls), ...this.flies, this.contactMarkers, this.selectionRing);
+    this.scene.add(
+      sun,
+      sun.target,
+      createRoomGeometry(geometry, this.walls),
+      ...this.flies,
+      this.contactMarkers,
+      this.selectionRing,
+    );
     this.selectionRing.rotation.x = -Math.PI / 2;
     this.selectionRing.visible = false;
-    this.flies.forEach((fly, id) => { fly.userData.flyId = id; });
+    this.flies.forEach((fly, id) => {
+      fly.userData.flyId = id;
+    });
     this.sensorMarkers.forEach((marker) => {
       marker.visible = false;
       this.scene.add(marker);
@@ -113,6 +141,29 @@ export class WorldView {
     this.observer.observe(container);
     this.resize();
     this.navigation.overview();
+  }
+
+  /** Takes ownership of the model and all its shared resources. */
+  setFlyModel(model: FlyModel): void {
+    const removed = new THREE.Group();
+    const replacements = this.flies.map((old, id) => {
+      const fly = id === 0 ? model.root : model.instantiate();
+      fly.position.copy(old.position);
+      fly.quaternion.copy(old.quaternion);
+      fly.userData.flyId = id;
+      removed.add(old);
+      this.scene.add(fly);
+      return fly;
+    });
+    this.flies.splice(0, this.flies.length, ...replacements);
+    disposeObjectResources(removed);
+    this.modelKind = "glb";
+    this.subjectCenterY = model.bounds.getCenter(new THREE.Vector3()).y;
+    const size = model.bounds.getSize(new THREE.Vector3());
+    this.navigation.setSubjectHeight(size.y);
+    const radius = Math.max(size.x, size.z) * 0.6;
+    this.selectionRing.geometry.dispose();
+    this.selectionRing.geometry = new THREE.RingGeometry(radius * 0.94, radius, 64);
   }
 
   setContactRegions(food: ContactRegion[], hazards: ContactRegion[], exit: ExitOpening): void {
@@ -160,10 +211,11 @@ export class WorldView {
     this.flies[0].rotation.y = Math.PI / 2 - pose.heading;
   }
 
-  /** Poses are sampled by the caller's one playback cursor. All placeholders
-   * share immutable geometry/materials; only their transforms differ. */
+  /** Poses are sampled by the caller's one playback cursor. Fly instances
+   * share geometry/materials while retaining independent transforms and skeletons. */
   setPoses(poses: readonly FlyPose[]): void {
-    if (poses.length !== this.flies.length) throw new Error("Pose count differs from scene population");
+    if (poses.length !== this.flies.length)
+      throw new Error("Pose count differs from scene population");
     poses.forEach((pose, index) => {
       const fly = this.flies[index];
       fly.position.set(pose.x, pose.y, pose.z);
@@ -177,15 +229,24 @@ export class WorldView {
     const textures = new Set<THREE.Texture>();
     const materials = new Set<THREE.Material>();
     let shadowFramebufferBytes = 0;
-    this.scene.traverse(object => {
-      if (object instanceof THREE.Mesh || object instanceof THREE.Line || object instanceof THREE.Sprite) {
+    this.scene.traverse((object) => {
+      if (object instanceof THREE.SkinnedMesh && object.skeleton.boneTexture) {
+        textures.add(object.skeleton.boneTexture);
+      }
+      if (
+        object instanceof THREE.Mesh ||
+        object instanceof THREE.Line ||
+        object instanceof THREE.Sprite
+      ) {
         const geometry = object.geometry;
         for (const attribute of Object.values(geometry.attributes)) {
           if (attribute instanceof THREE.InterleavedBufferAttribute) attributes.add(attribute.data);
           else if (attribute instanceof THREE.BufferAttribute) attributes.add(attribute);
         }
         if (geometry.index) attributes.add(geometry.index);
-        for (const material of Array.isArray(object.material) ? object.material : [object.material]) {
+        for (const material of Array.isArray(object.material)
+          ? object.material
+          : [object.material]) {
           materials.add(material);
         }
       }
@@ -197,18 +258,29 @@ export class WorldView {
       }
     });
     for (const material of materials) {
-      for (const value of Object.values(material)) if (value instanceof THREE.Texture) textures.add(value);
+      for (const value of Object.values(material))
+        if (value instanceof THREE.Texture) textures.add(value);
     }
-    const geometryBytes = [...attributes].reduce((sum, attribute) => sum + attribute.array.byteLength, 0);
-    const materialTextures = [...textures].map(texture => {
+    const geometryBytes = [...attributes].reduce(
+      (sum, attribute) => sum + attribute.array.byteLength,
+      0,
+    );
+    const materialTextures = [...textures].map((texture) => {
       const image = texture.image as { width?: number; height?: number } | undefined;
-      const width = Number(image?.width ?? 0), height = Number(image?.height ?? 0);
-      let w = width, h = height, pixels = w * h, mipLevels = 1;
+      const width = Number(image?.width ?? 0),
+        height = Number(image?.height ?? 0);
+      let w = width,
+        h = height,
+        pixels = w * h,
+        mipLevels = 1;
       while (texture.generateMipmaps && (w > 1 || h > 1)) {
-        w = Math.max(1, Math.floor(w / 2)); h = Math.max(1, Math.floor(h / 2));
-        pixels += w * h; mipLevels++;
+        w = Math.max(1, Math.floor(w / 2));
+        h = Math.max(1, Math.floor(h / 2));
+        pixels += w * h;
+        mipLevels++;
       }
-      const bytesPerPixel = texture.type === THREE.FloatType ? 16 : texture.type === THREE.HalfFloatType ? 8 : 4;
+      const bytesPerPixel =
+        texture.type === THREE.FloatType ? 16 : texture.type === THREE.HalfFloatType ? 8 : 4;
       return { width, height, mipLevels, estimatedBytes: pixels * bytesPerPixel };
     });
     const textureBytes = materialTextures.reduce((sum, texture) => sum + texture.estimatedBytes, 0);
@@ -216,17 +288,32 @@ export class WorldView {
     const gl = this.renderer.getContext();
     const samples = Number(gl.getParameter(gl.SAMPLES));
     // Color/depth at each sample, plus a resolved color image when multisampled.
-    const defaultFramebufferBytes = size.x * size.y * (8 * Math.max(1, samples) + (samples > 1 ? 4 : 0));
-    return { geometryBytes, materialTextures, textureBytes, shadowFramebufferBytes, defaultFramebufferBytes,
-      drawingBufferWidth: size.x, drawingBufferHeight: size.y, defaultSamples: samples,
-      estimatedBytes: geometryBytes + textureBytes + shadowFramebufferBytes + defaultFramebufferBytes,
-      note: "GPU estimate: live attributes/indices, RGBA textures including mipmaps, and conservative color/depth framebuffers; excludes driver and browser compositor overhead." };
+    const defaultFramebufferBytes =
+      size.x * size.y * (8 * Math.max(1, samples) + (samples > 1 ? 4 : 0));
+    return {
+      geometryBytes,
+      materialTextures,
+      textureBytes,
+      shadowFramebufferBytes,
+      defaultFramebufferBytes,
+      drawingBufferWidth: size.x,
+      drawingBufferHeight: size.y,
+      defaultSamples: samples,
+      estimatedBytes:
+        geometryBytes + textureBytes + shadowFramebufferBytes + defaultFramebufferBytes,
+      note: "GPU estimate: live attributes/indices, RGBA textures including mipmaps, and conservative color/depth framebuffers; excludes driver and browser compositor overhead.",
+    };
   }
 
   get statistics() {
-    return { flyCount: this.flies.length, drawCalls: this.renderer.info.render.calls,
-      triangles: this.renderer.info.render.triangles, geometries: this.renderer.info.memory.geometries,
-      textures: this.renderer.info.memory.textures };
+    return {
+      flyCount: this.flies.length,
+      modelKind: this.modelKind,
+      drawCalls: this.renderer.info.render.calls,
+      triangles: this.renderer.info.render.triangles,
+      geometries: this.renderer.info.memory.geometries,
+      textures: this.renderer.info.memory.textures,
+    };
   }
 
   /** Web owns selected ID. Model picks return through its same card action. */
@@ -235,7 +322,10 @@ export class WorldView {
     const canvas = this.renderer.domElement;
     this.controls = cameraInput(canvas, this.navigation, (x, y) => {
       this.scene.updateMatrixWorld(true);
-      this.raycaster.setFromCamera(new THREE.Vector2(x / canvas.clientWidth * 2 - 1, 1 - y / canvas.clientHeight * 2), this.navigation.camera);
+      this.raycaster.setFromCamera(
+        new THREE.Vector2((x / canvas.clientWidth) * 2 - 1, 1 - (y / canvas.clientHeight) * 2),
+        this.navigation.camera,
+      );
       const hit = this.raycaster.intersectObjects(this.flies, true)[0];
       if (!hit) return;
       let owner: THREE.Object3D | null = hit.object;
@@ -249,21 +339,38 @@ export class WorldView {
     if (!fly) throw new Error("Selected fly does not exist");
     this.selectedFly = id;
     this.selectionRing.visible = true;
-    this.navigation.follow(fly.position.clone().add(new THREE.Vector3(0, 0.35, 0)));
+    this.navigation.follow(fly.position.clone().add(new THREE.Vector3(0, this.subjectCenterY, 0)));
   }
 
-  overview(): void { this.navigation.overview(); }
+  zoomClose(): void {
+    this.navigation.zoomClose();
+  }
+
+  overview(): void {
+    this.navigation.overview();
+  }
 
   get cameraState() {
-    return { ...this.navigation.state, selectedFlyId: this.selectedFly,
-      flies: this.flies.map((fly, id) => ({ id, ...this.navigation.project(fly.position.clone().add(new THREE.Vector3(0, 0.35, 0))) })) };
+    return {
+      ...this.navigation.state,
+      selectedFlyId: this.selectedFly,
+      flies: this.flies.map((fly, id) => ({
+        id,
+        ...this.navigation.project(
+          fly.position.clone().add(new THREE.Vector3(0, this.subjectCenterY, 0)),
+        ),
+      })),
+    };
   }
 
   /** Visual anchors for the recorded input pose, using the core's antenna offset. */
   setSensoryMarkers(pose: FlyPose, antennaOffset: number): void {
     const dx = Math.sin(pose.heading) * antennaOffset;
     const dz = -Math.cos(pose.heading) * antennaOffset;
-    const cameraRight = new THREE.Vector3().setFromMatrixColumn(this.navigation.camera.matrixWorld, 0);
+    const cameraRight = new THREE.Vector3().setFromMatrixColumn(
+      this.navigation.camera.matrixWorld,
+      0,
+    );
     const leftOnScreenRight = dx * cameraRight.x + dz * cameraRight.z >= 0;
     this.sensorMarkers.forEach((marker, i) => {
       const side = i === 0 ? 1 : -1;
@@ -362,18 +469,24 @@ export class WorldView {
     this.controls?.update(performance.now());
     if (this.selectedFly !== null) {
       const fly = this.flies[this.selectedFly];
-      this.navigation.track(fly.position.clone().add(new THREE.Vector3(0, 0.35, 0)));
+      this.navigation.track(fly.position.clone().add(new THREE.Vector3(0, this.subjectCenterY, 0)));
       this.selectionRing.position.set(fly.position.x, 0.03, fly.position.z);
     }
     // Only visual occluders on the camera-to-subject ray cut away; floor/wall
     // collision geometry remains entirely owned by the simulation.
-    this.walls.children.forEach(wall => { wall.visible = true; });
+    this.walls.children.forEach((wall) => {
+      wall.visible = true;
+    });
     if (this.selectedFly !== null && this.navigation.state.following) {
-      const target = this.flies[this.selectedFly].position.clone().add(new THREE.Vector3(0, 0.35, 0));
+      const target = this.flies[this.selectedFly].position
+        .clone()
+        .add(new THREE.Vector3(0, this.subjectCenterY, 0));
       const direction = target.clone().sub(this.navigation.camera.position);
       this.raycaster.set(this.navigation.camera.position, direction.clone().normalize());
       this.raycaster.far = direction.length();
-      this.raycaster.intersectObjects(this.walls.children, false).forEach(hit => { hit.object.visible = false; });
+      this.raycaster.intersectObjects(this.walls.children, false).forEach((hit) => {
+        hit.object.visible = false;
+      });
       this.raycaster.far = Infinity;
     }
     this.renderer.render(this.scene, this.navigation.camera);
@@ -382,29 +495,7 @@ export class WorldView {
   dispose(): void {
     this.controls?.dispose();
     this.observer.disconnect();
-    const geometries = new Set<THREE.BufferGeometry>();
-    const materials = new Set<THREE.Material>();
-    const textures = new Set<THREE.Texture>();
-    this.scene.traverse((object) => {
-      if (
-        object instanceof THREE.Mesh ||
-        object instanceof THREE.Line ||
-        object instanceof THREE.Sprite
-      ) {
-        geometries.add(object.geometry);
-        for (const material of Array.isArray(object.material)
-          ? object.material
-          : [object.material]) {
-          materials.add(material);
-          if (material instanceof THREE.SpriteMaterial && material.map) textures.add(material.map);
-        }
-      }
-      if (object instanceof THREE.DirectionalLight) object.shadow.dispose();
-    });
-    geometries.forEach((geometry) => geometry.dispose());
-    materials.forEach((material) => material.dispose());
-    this.fieldTexture?.dispose();
-    textures.forEach((texture) => texture.dispose());
+    disposeObjectResources(this.scene);
     this.renderer.dispose();
     this.renderer.domElement.remove();
   }
