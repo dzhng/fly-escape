@@ -1,6 +1,6 @@
 # 10 — A readable 3D house
 
-Status: modular kit integrated; solid-prop contract and fixture pass native/browser/source/fresh visual checks; merged-view and human acceptance pending. Dependencies: 07.
+Status: complete. Dependencies: 07.
 
 ## Contract and seam
 
