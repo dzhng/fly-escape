@@ -7,3 +7,7 @@ Faithful LIF and graph-loader oracles now live under scripts/reference. Both sou
 Verification: five reference tests and five extraction/artifact tests pass. Full real-source preparation with --verify-reference reports all 70,000 neurons and all signed edges equal to the faithful loader. Its graph binary is byte-identical to the existing prepared graph. The exporter hash changes because its source now names the relocated oracle; it is provenance, not a neural behavior change. Browser code, renderer, gameplay, raw data and recorded evidence are untouched.
 
 This is slice 17 cleanup preparation. Release build, campaign dependencies, ten production attempts and platform coverage remain open. No Preview was opened.
+
+## Workbench readiness follow-up
+
+The initial house batch previously swallowed per-part failures and marked itself ready even when a primitive remained. Initial readiness now requires every authored role to load successfully; HTTP failure remains unready with a reload instruction. A later failed local replacement retains the already loaded kit and its ready status. A real-browser solid HTTP 503 regression failed on the old behavior, then passed after the correction; successful reload and invalid local replacement also pass. Typecheck and the workbench production build pass. This changes loading status, not rendering, assets or geometry.

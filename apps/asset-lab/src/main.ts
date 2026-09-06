@@ -129,13 +129,22 @@ if (house) {
     const label = app.querySelector<HTMLElement>("#house-status")!;
     try {
       const model = await loadHousePart(await bytes, part);
-      if (ticket !== houseGenerations[part]) { model.dispose(); return; }
+      if (ticket !== houseGenerations[part]) { model.dispose(); return false; }
       view.setHousePart(part, model.root);
       view.render();
       label.textContent = `${part} loaded · source files unchanged`;
-    } catch (error) { if (ticket === houseGenerations[part]) label.textContent = `Previous part retained. ${error instanceof Error ? error.message : error}`; }
+      return true;
+    } catch (error) { if (ticket === houseGenerations[part]) label.textContent = `Previous part retained. ${error instanceof Error ? error.message : error}`; return false; }
   }
-  void Promise.all([replacePart("wall", fetch(wallUrl).then(r => r.arrayBuffer())), replacePart("floor", fetch(floorUrl).then(r => r.arrayBuffer())), replacePart("solid", fetch(solidUrl).then(r => r.arrayBuffer()))]).then(() => { app.dataset.houseReady = "true"; });
+  app.dataset.houseReady = "false";
+  const parts: [HousePart, string][] = [["wall", wallUrl], ["floor", floorUrl], ["solid", solidUrl]];
+  void Promise.all(parts.map(([part, url]) => replacePart(part, fetch(url).then(response => {
+    if (!response.ok) throw new Error(`House ${part} request failed (${response.status})`);
+    return response.arrayBuffer();
+  })))).then(loaded => {
+    app.dataset.houseReady = String(loaded.every(Boolean));
+    if (!loaded.every(Boolean)) app.querySelector<HTMLElement>("#house-status")!.textContent = "House kit failed to load. Reload to retry.";
+  });
   app.querySelector<HTMLInputElement>("#house-file")!.addEventListener("change", event => {
     const file = (event.currentTarget as HTMLInputElement).files?.[0];
     if (file) void replacePart(app.querySelector<HTMLSelectElement>("#part")!.value as HousePart, file.arrayBuffer());
