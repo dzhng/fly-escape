@@ -142,3 +142,9 @@ pub fn edit_setup(level: &str, current: &str, edit: &str) -> Result<String, JsVa
         .map_err(|e| JsValue::from_str(&e))?;
     serde_json::to_string(&state).map_err(|e| JsValue::from_str(&e.to_string()))
 }
+
+#[wasm_bindgen]
+pub fn setup_fixture() -> Result<String, JsValue> {
+    serde_json::to_string(&sim::setup_fixture::fixture().map_err(|e| JsValue::from_str(&e))?)
+        .map_err(|e| JsValue::from_str(&e.to_string()))
+}

@@ -19,3 +19,5 @@ pub mod record;
 pub mod swarm_lab;
 
 pub mod placement;
+
+pub mod setup_fixture;

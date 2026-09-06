@@ -1,7 +1,14 @@
-import init, { AttemptSession, swarm_request, type InitOutput } from "./wasm/game_wasm";
+import init, {
+  AttemptSession,
+  swarm_request,
+  setup_fixture,
+  resolve_setup,
+  edit_setup,
+  type InitOutput,
+} from "./wasm/game_wasm";
 import type { AttemptInfo, AttemptStep } from "./generated/sim";
 import type { TransferChunk } from "./record";
-import type { AttemptRequest, AttemptReply } from "./attempt-protocol";
+import type { AttemptRequest, AttemptReply, SetupRequest } from "./attempt-protocol";
 
 let generation = 0;
 let currentAttemptId: string | undefined;
@@ -25,10 +32,16 @@ const send = (
   buffers: ArrayBuffer[] = [],
   clientGeneration = currentClientGeneration,
 ) => self.postMessage({ generation: clientGeneration, reply }, buffers);
+let wasmReady: ReturnType<typeof init> | undefined;
+const loadWasm = () =>
+  (wasmReady ??= init().catch((error) => {
+    wasmReady = undefined;
+    throw error;
+  }));
 let assets: Promise<[InitOutput, Uint8Array, string]> | undefined;
 const loadAssets = () =>
   (assets ??= Promise.all([
-    init(),
+    loadWasm(),
     fetch("/brain/graph.bin").then(async (response) => {
       if (!response.ok) throw new Error(`Graph download failed (${response.status})`);
       return new Uint8Array(await response.arrayBuffer());
@@ -115,8 +128,38 @@ async function pump() {
     if (active && active.credits > 0) void pump();
   }
 }
-self.onmessage = async (event: MessageEvent<AttemptRequest>) => {
+self.onmessage = async (event: MessageEvent<AttemptRequest | SetupRequest>) => {
   const message = event.data;
+  if (message.type === "setup") {
+    try {
+      if (active || currentAttemptId) throw new Error("Setup is frozen during an attempt");
+      await loadWasm();
+      if (active || currentAttemptId) throw new Error("Setup is frozen during an attempt");
+      const c = message.command;
+      const value =
+        c.type === "fixture"
+          ? setup_fixture()
+          : c.type === "resolve"
+            ? resolve_setup(JSON.stringify(c.level), JSON.stringify(c.placements))
+            : edit_setup(
+                JSON.stringify(c.level),
+                JSON.stringify(c.placements),
+                JSON.stringify(c.edit),
+              );
+      self.postMessage({
+        type: "setup",
+        requestId: message.requestId,
+        value: JSON.parse(value),
+      });
+    } catch (error) {
+      self.postMessage({
+        type: "setup",
+        requestId: message.requestId,
+        error: String(error),
+      });
+    }
+    return;
+  }
   if (message.type === "start" || message.type === "startLab") {
     const ticket = ++generation;
     release();

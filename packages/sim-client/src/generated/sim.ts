@@ -1,5 +1,6 @@
 // Generated from crates/sim; do not edit.
 
+export type SetupFixture = { level: LevelDef, tuning: AttemptTuning, catalog: Array<ToolDef>, };
 export type StartAttempt = { attemptId: string, rootSeed: string, flyCount: number, level: LevelDef, tuning: AttemptTuning, placements: Array<Placement>, };
 export type AttemptInfo = { spec: AttemptSpec, level: LevelDef, resolvedSetup: ResolvedSetup, groups: Array<Group>, groupLinks: Array<GroupLink>, recordLayout: RecordLayout, archiveBytes: number, graphBytes: number, brainStateBytes: number, };
 export type AttemptStep = { tick: number, neuralSteps: number, bufferedTicks: number, complete: boolean, };

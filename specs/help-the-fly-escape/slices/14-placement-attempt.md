@@ -42,3 +42,5 @@ Delegated: Control spacing/icons and error wording; retain no shop, no tutorial 
 Human feedback that changes this slice: Placement friction can change reversible controls; scoring/seed semantics remain fixed.
 
 Must stay green: all accepted dependency contracts and their focused fixtures; neural motor ownership, real-data provenance, bounded work and the [global invariants](../README.md#standing-gates-and-ownership). Do not broaden testing without a new failure or changed consumer. Record evidence under `assets/evidence/14/` and update the README handoff before ending the pass. Unlisted material decisions require a spec update.
+
+The functional setup/attempt pass and its evidence are documented in [setup review](../assets/evidence/14/setup/README.md). This closes the editor lifecycle seam; it does not claim campaign balance or decorative-art acceptance.

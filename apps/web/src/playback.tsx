@@ -14,6 +14,9 @@ import {
   type AttemptInfo,
   type AttemptFrame,
   type RecordedPose,
+  type StartAttempt,
+  type AttemptResult,
+  type ToolDef,
 } from "@fly-escape/sim-client";
 import { SciencePanel } from "./science-panel";
 import { NeuralExplanations } from "./neural-explanations";
@@ -124,6 +127,21 @@ function sample(run: Run): FlyPose[] {
 }
 
 export function PlaybackLab() {
+  return <AttemptPlayback />;
+}
+export function AttemptPlayback({
+  input,
+  client,
+  catalog = [],
+  onReturn,
+  onResult,
+}: {
+  input?: StartAttempt;
+  client?: AttemptClient;
+  catalog?: ToolDef[];
+  onReturn?: () => void;
+  onResult?: (result: AttemptResult) => void;
+}) {
   const container = useRef<HTMLDivElement>(null);
   const seekInput = useRef<HTMLInputElement>(null);
   const scene = useRef<WorldView | undefined>(undefined);
@@ -167,7 +185,8 @@ export function PlaybackLab() {
         report: JSON.stringify({ ...JSON.parse(previous.report), error: message }, null, 2),
       }));
     };
-    const observer = new AttemptClient((reply) => {
+    const observer = client ?? new AttemptClient(() => {});
+    observer.setReceiver((reply) => {
       if (reply.type === "ready") {
         const archive = new FrameArchive(
           reply.info.spec,
@@ -202,10 +221,11 @@ export function PlaybackLab() {
           reply.info.spec.flyCount,
         );
         scene.current.setContactRegions(
-          reply.info.level.food,
+          reply.info.resolvedSetup.food,
           reply.info.level.zappers,
           reply.info.level.exit,
         );
+        scene.current.setPlacements(reply.info.spec.placements, catalog);
         scene.current.setPoses(sample(run.current));
         scene.current.enableSelection(selectFly);
         scene.current.selectFly(0);
@@ -243,6 +263,8 @@ export function PlaybackLab() {
           });
           if (current.rateWindow.length > 20) current.rateWindow.shift();
         }
+      } else if (reply.type === "complete") {
+        onResult?.(reply.result);
       } else if (reply.type === "error") {
         fail(reply.message);
       }
@@ -265,7 +287,8 @@ export function PlaybackLab() {
       setSelected(0);
       lastFrameAt = null;
       requestedAt = performance.now();
-      observer.startLab(crypto.randomUUID(), "42", FLY_COUNT, DURATION_TICKS);
+      if (input) observer.start(input);
+      else observer.startLab(crypto.randomUUID(), "42", FLY_COUNT, DURATION_TICKS);
     };
     const visibility = () => {
       observer.setHidden(document.hidden);
@@ -392,7 +415,10 @@ export function PlaybackLab() {
     return () => {
       cancelAnimationFrame(raf);
       document.removeEventListener("visibilitychange", visibility);
-      observer.dispose();
+      if (client) {
+        observer.cancel();
+        observer.setReceiver(() => {});
+      } else observer.dispose();
       run.current?.archive.clear();
       scene.current?.dispose();
       scene.current = undefined;
@@ -407,7 +433,10 @@ export function PlaybackLab() {
   };
   const save = () => {
     const report = JSON.parse(display.report);
-    report.renderer = { ...report.renderer, gpu: scene.current?.estimateGpuMemory() };
+    report.renderer = {
+      ...report.renderer,
+      gpu: scene.current?.estimateGpuMemory(),
+    };
     const url = URL.createObjectURL(
       new Blob([JSON.stringify(report, null, 2)], { type: "application/json" }),
     );
@@ -433,8 +462,10 @@ export function PlaybackLab() {
     >
       <header>
         <div>
-          <span className="eyebrow">Fly escape · playback lab</span>
-          <h1>Twenty lives, one shared clock.</h1>
+          <span className="eyebrow">
+            {input ? "Fly escape · attempt" : "Fly escape · playback lab"}
+          </span>
+          <h1>{input ? "Watch your setup unfold." : "Twenty lives, one shared clock."}</h1>
         </div>
         <a href="/lab/lifecycle">Lifecycle lab</a>
       </header>
@@ -443,7 +474,10 @@ export function PlaybackLab() {
           <div className="canvas" ref={container} />
           <div className="world-note">
             20 independent brains · shared environment
-            <span>Seed 42 · 600 game seconds · 3D fly models</span>
+            <span>
+              Seed {input?.rootSeed ?? "42"} ·{" "}
+              {(input?.level.durationTicks ?? DURATION_TICKS) * TICK_SECONDS} game seconds
+            </span>
           </div>
           <div className="playback-counters" aria-label="Outcomes at playback time">
             <b data-testid="active-count">{FLY_COUNT - terminalCount} active</b>
@@ -471,7 +505,8 @@ export function PlaybackLab() {
                             : "Paused"}
               </strong>
               <span>
-                {(display.cursor * TICK_SECONDS).toFixed(1)} / 600.0 s ·{" "}
+                {(display.cursor * TICK_SECONDS).toFixed(1)} /{" "}
+                {((input?.level.durationTicks ?? DURATION_TICKS) * TICK_SECONDS).toFixed(1)} s ·{" "}
                 {(display.computed * TICK_SECONDS).toFixed(1)} s computed
               </span>
             </div>
@@ -480,7 +515,7 @@ export function PlaybackLab() {
               data-testid="playback-seek"
               type="range"
               min={0}
-              max={DURATION_TICKS}
+              max={input?.level.durationTicks ?? DURATION_TICKS}
               step={0.1}
               ref={seekInput}
               defaultValue={0}
@@ -514,7 +549,9 @@ export function PlaybackLab() {
               </button>
             ))}
             <button
-              disabled={display.computed === 0 || !!error}
+              disabled={
+                display.computed === 0 || !!error || (!!input && !run.current?.archive.complete)
+              }
               onClick={() => {
                 setRequested(true);
                 control((current) => {
@@ -534,7 +571,13 @@ export function PlaybackLab() {
             >
               Overview
             </button>
-            <button onClick={() => restart.current()}>New attempt</button>
+            {onReturn ? (
+              <button onClick={onReturn}>
+                {run.current?.archive.complete ? "Retry — edit setup" : "Cancel attempt"}
+              </button>
+            ) : (
+              <button onClick={() => restart.current()}>New attempt</button>
+            )}
             <button disabled={!info} onClick={save}>
               Download report
             </button>
@@ -547,6 +590,12 @@ export function PlaybackLab() {
             Each fly has its own neural state. Group voltage and firing are recorded during
             production and read back at the shared playback time.
           </p>
+          {input && display.state === "ended" && run.current?.archive.result && (
+            <p role="status" data-testid="attempt-result">
+              {run.current.archive.result.stars} stars ·{" "}
+              {run.current.archive.result.outcomes.escaped} escaped
+            </p>
+          )}
           {error && (
             <p role="alert" className="error">
               {error}

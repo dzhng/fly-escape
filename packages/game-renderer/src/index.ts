@@ -12,7 +12,7 @@ import { disposeObjectResources } from "./resources";
 export { loadFlyModel, FlyModel } from "./fly-model";
 import { WorldCamera } from "./camera";
 import { cameraInput } from "./camera-input";
-import type { Geometry, FieldGrid, ContactRegion, ExitOpening } from "@fly-escape/sim-client";
+import type { Geometry, FieldGrid, ContactRegion, ExitOpening, Placement, ToolDef, Point } from "@fly-escape/sim-client";
 
 export type FieldChannel = "attractiveOdor" | "repellentOdor" | "brightness" | "shade" | "exitCue";
 /** Fixed modeled cue value at half overlay strength; never normalized per frame. */
@@ -64,6 +64,7 @@ export class WorldView {
     "#244f88",
   );
   private readonly bounds: THREE.Box3;
+  private readonly placementMarkers = new THREE.Group();
   private readonly contactMarkers = new THREE.Group();
   private readonly contactCenter = createPointMarker("C");
   private fieldOverlay: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial> | null = null;
@@ -190,6 +191,76 @@ export class WorldView {
     const radius = Math.max(size.x, size.z) * 0.6;
     this.selectionRing.geometry.dispose();
     this.selectionRing.geometry = new THREE.RingGeometry(radius * 0.94, radius, 64);
+  }
+
+  floorPoint(clientX: number, clientY: number): Point | null {
+    const rect = this.renderer.domElement.getBoundingClientRect();
+    this.raycaster.setFromCamera(
+      new THREE.Vector2(
+        ((clientX - rect.left) / rect.width) * 2 - 1,
+        1 - ((clientY - rect.top) / rect.height) * 2,
+      ),
+      this.navigation.camera,
+    );
+    const hit = this.raycaster.ray.intersectPlane(
+      new THREE.Plane(new THREE.Vector3(0, 1, 0), 0),
+      new THREE.Vector3(),
+    );
+    return hit ? { x: hit.x, z: hit.z } : null;
+  }
+  setPlacements(
+    placements: Placement[],
+    catalog: ToolDef[],
+    ghost?: { placement: Placement; valid: boolean | null },
+  ): void {
+    disposeObjectResources(this.placementMarkers);
+    this.placementMarkers.clear();
+    if (!this.placementMarkers.parent) this.scene.add(this.placementMarkers);
+    const colors = {
+      fruit: "#ef9b45",
+      crumbs: "#f4d986",
+      vinegar: "#ba8ae2",
+      lamp: "#fff0b0",
+      shade: "#6aa4bc",
+      fan: "#8cd4d4",
+    };
+    for (const item of [
+      ...placements.map((placement) => ({ placement, valid: true, ghost: false })),
+      ...(ghost ? [{ ...ghost, ghost: true }] : []),
+    ]) {
+      const p = item.placement;
+      const tool = catalog.find((tool) => tool.kind === p.kind);
+      if (!tool) throw new Error(`Missing tool definition: ${p.kind}`);
+      const radius = tool.footprintRadius;
+      const color = item.ghost
+        ? item.valid === null
+          ? "#e5dbaf"
+          : item.valid
+            ? "#67e5ae"
+            : "#ff657f"
+        : colors[p.kind];
+      const mesh = new THREE.Mesh(
+        new THREE.CylinderGeometry(radius, radius, item.ghost ? 0.04 : 0.25, 24),
+        new THREE.MeshStandardMaterial({
+          color,
+          transparent: item.ghost,
+          opacity: item.ghost ? 0.7 : 1,
+        }),
+      );
+      mesh.position.set(p.position.x, item.ghost ? 0.06 : 0.13, p.position.z);
+      this.placementMarkers.add(mesh);
+      if (p.kind === "fan")
+        this.placementMarkers.add(
+          new THREE.ArrowHelper(
+            new THREE.Vector3(Math.cos(p.heading), 0, Math.sin(p.heading)),
+            new THREE.Vector3(p.position.x, 0.35, p.position.z),
+            0.85,
+            color,
+            0.25,
+            0.15,
+          ),
+        );
+    }
   }
 
   setContactRegions(food: ContactRegion[], hazards: ContactRegion[], exit: ExitOpening): void {
@@ -344,11 +415,15 @@ export class WorldView {
     };
   }
 
+  enableCamera(onPick: (x: number, y: number) => void = () => {}): void {
+    this.controls?.dispose();
+    this.controls = cameraInput(this.renderer.domElement, this.navigation, onPick);
+  }
+
   /** Web owns selected ID. Model picks return through its same card action. */
   enableSelection(onSelect: (id: number) => void): void {
-    this.controls?.dispose();
     const canvas = this.renderer.domElement;
-    this.controls = cameraInput(canvas, this.navigation, (x, y) => {
+    this.enableCamera((x, y) => {
       this.scene.updateMatrixWorld(true);
       this.raycaster.setFromCamera(
         new THREE.Vector2((x / canvas.clientWidth) * 2 - 1, 1 - (y / canvas.clientHeight) * 2),

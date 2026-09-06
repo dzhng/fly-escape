@@ -1,0 +1,159 @@
+.setup-game {
+  padding: 24px;
+  color: #e7f1f4;
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.setup-game header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.setup-game h1 {
+  margin: 5px 0;
+  font-size: 28px;
+}
+.setup-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 310px;
+  min-height: 0;
+  flex: 1;
+  gap: 20px;
+}
+.setup-world {
+  position: relative;
+  min-height: 420px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #263746;
+}
+.setup-canvas {
+  position: absolute;
+  inset: 0;
+}
+.setup-note,
+.placement-feedback {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  pointer-events: none;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: #14212be8;
+}
+.setup-note {
+  top: 18px;
+  font-weight: 600;
+}
+.setup-note span {
+  display: block;
+  font-weight: 400;
+  font-size: 12px;
+  margin-top: 5px;
+  color: #adc2cc;
+}
+.placement-feedback {
+  bottom: 18px;
+  border: 1px solid #71c4a3;
+}
+.placement-feedback.invalid {
+  border-color: #ff8195;
+  color: #ffc6cf;
+}
+.setup-layout aside {
+  overflow: auto;
+  padding-right: 8px;
+}
+.setup-layout h2 {
+  margin-top: 0;
+}
+.setup-layout p {
+  color: #b8cbd5;
+  line-height: 1.5;
+  font-size: 13px;
+}
+.tool-palette {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.tool-palette button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 9px;
+}
+.tool-palette span {
+  font-size: 11px;
+}
+.setup-game button {
+  color: #e7f1f4;
+  background: #273f4d;
+  border: 1px solid #567481;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 9px;
+}
+.setup-game button[aria-pressed="true"] {
+  border: 2px solid #f3d77b;
+  background: #3f5053;
+}
+.setup-game button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.placed-tools {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 18px;
+}
+.placed-tools > div {
+  display: flex;
+  gap: 6px;
+}
+.placed-tools > div button:first-child {
+  flex: 1;
+  text-align: left;
+}
+.setup-game label {
+  display: block;
+  font-size: 13px;
+}
+.setup-game .run-setup {
+  display: block;
+  width: 100%;
+  background: #c78742;
+  color: #111b21;
+  font-weight: 700;
+  padding: 15px;
+  margin-top: 20px;
+}
+.setup-game {
+  background: #16242e;
+}
+.setup-game header {
+  padding: 0 10px;
+}
+.setup-layout aside {
+  background: #1d303d;
+  border: 1px solid #3f5968;
+  border-radius: 14px;
+  padding: 20px;
+}
+.setup-game .eyebrow {
+  color: #a9c3cb;
+}
+.tool-palette button {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  min-height: 60px;
+  text-align: left;
+}
+.tool-palette span {
+  white-space: nowrap;
+}
+.setup-world canvas:focus { outline: none; }

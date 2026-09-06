@@ -1,3 +1,4 @@
+import { SetupGame } from "./setup";
 import { PlaybackLab } from "./playback";
 import { LifecycleLab } from "./lifecycle";
 import React, { useEffect, useRef, useState } from "react";
@@ -244,7 +245,9 @@ function BrainLab() {
 }
 
 createRoot(document.getElementById("root")!).render(
-  location.pathname === "/lab/playback" ? (
+  location.pathname === "/lab/setup" || location.pathname === "/" ? (
+    <SetupGame />
+  ) : location.pathname === "/lab/playback" ? (
     <PlaybackLab />
   ) : location.pathname === "/lab/lifecycle" ? (
     <LifecycleLab />

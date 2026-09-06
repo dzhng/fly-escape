@@ -12,6 +12,7 @@ use ts_rs::TS;
 fn main() {
     println!("// Generated from crates/sim; do not edit.\n");
     for declaration in [
+        sim::setup_fixture::SetupFixture::decl(),
         StartAttempt::decl(),
         AttemptInfo::decl(),
         AttemptStep::decl(),

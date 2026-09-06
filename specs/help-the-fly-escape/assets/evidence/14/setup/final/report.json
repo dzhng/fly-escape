@@ -1,0 +1,72 @@
+{
+  "first": {
+    "schemaVersion": 1,
+    "attemptId": "842d8ff8-6100-44d8-b112-1d027892dd40",
+    "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+    "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+    "simulationBuildId": "15031d6d36c5204a5024f5234713ac88e17aaa3d95d1bb0910eb310ceda27fce",
+    "tuningHash": "1d1314e91cdb31e32bbdfe4fa0f971f38eba16ffea56e25eff5bca7835a12657",
+    "placements": [
+      {
+        "id": 1,
+        "kind": "fruit",
+        "position": {
+          "x": 13.277584366757234,
+          "z": 2.649007101645191
+        },
+        "heading": 0
+      },
+      {
+        "id": 2,
+        "kind": "fan",
+        "position": {
+          "x": 6.641638127302402,
+          "z": 2.4611134294718227
+        },
+        "heading": 1.5707963267948966
+      }
+    ],
+    "levelHash": "55e33ac745f7fcd333ea88a47499c216e983b81c29346432dd52ae7bbc8461f0",
+    "levelId": "five-room-setup",
+    "rootSeed": "1515161548717673458",
+    "flyCount": 20,
+    "durationTicks": 600
+  },
+  "second": {
+    "schemaVersion": 1,
+    "attemptId": "079ec02c-1452-4eb0-8abd-edbab9c7aa72",
+    "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+    "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+    "simulationBuildId": "15031d6d36c5204a5024f5234713ac88e17aaa3d95d1bb0910eb310ceda27fce",
+    "tuningHash": "1d1314e91cdb31e32bbdfe4fa0f971f38eba16ffea56e25eff5bca7835a12657",
+    "placements": [
+      {
+        "id": 1,
+        "kind": "fruit",
+        "position": {
+          "x": 13.277584366757234,
+          "z": 2.649007101645191
+        },
+        "heading": 0
+      }
+    ],
+    "levelHash": "55e33ac745f7fcd333ea88a47499c216e983b81c29346432dd52ae7bbc8461f0",
+    "levelId": "five-room-setup",
+    "rootSeed": "10597702633823271167",
+    "flyCount": 20,
+    "durationTicks": 600
+  },
+  "result": {
+    "attemptId": "079ec02c-1452-4eb0-8abd-edbab9c7aa72",
+    "completedTick": 328,
+    "outcomes": {
+      "escaped": 0,
+      "starved": 20,
+      "zapped": 0,
+      "timedOut": 0,
+      "score": 0
+    },
+    "stars": 0
+  },
+  "errors": []
+}
