@@ -1,6 +1,6 @@
 # 10 — A readable 3D house
 
-Status: planned. Dependencies: 07.
+Status: modular kit and shared topology fixture prepared; renderer integration open. Dependencies: 07.
 
 ## Contract and seam
 
@@ -29,3 +29,7 @@ Delegated: Wall thickness, furniture silhouette and modular breakdown; decor can
 Human feedback that changes this slice: Door or room readability can alter dimensions before level tuning.
 
 Must stay green: all accepted dependency contracts and their focused fixtures; neural motor ownership, real-data provenance, bounded work and the [global invariants](../README.md#standing-gates-and-ownership). Do not broaden testing without a new failure or changed consumer. Record evidence under `assets/evidence/10/` and update the README handoff before ending the pass. Unlisted material decisions require a spec update.
+
+## Prepared assets and topology
+
+The [modular kit](../assets/evidence/10/kit.md) and [five-room collision fixture](../assets/evidence/10/topology.md) are prepared. The renderer must consume that same geometry payload; do not copy a second doorway/layout map into TypeScript. This fixture establishes room connectivity, not campaign balance.
