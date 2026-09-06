@@ -1,8 +1,7 @@
-import { loadFoodAssets } from "./food-assets";
+import { loadWorldAssets } from "./world-assets";
 import React, { useEffect, useRef, useState } from "react";
 import {
   WorldView,
-  loadFlyModel,
   flyAnimation,
   flyHeight,
   recordedTrails,
@@ -19,11 +18,9 @@ import {
   type AttemptResult,
   type ToolDef,
 } from "@fly-escape/sim-client";
-import { loadHouseAssets } from "./house-assets";
 import { SciencePanel } from "./science-panel";
 import { NeuralExplanations } from "./neural-explanations";
 import "./playback.css";
-import flyModelUrl from "../../../assets/fly/fly.glb?url";
 
 const FLY_COUNT = 20;
 const DURATION_TICKS = 6000;
@@ -56,6 +53,7 @@ class TimingSamples {
 type Run = {
   info: AttemptInfo;
   failed: boolean;
+  assetsReady: boolean;
   archive: FrameArchive;
   clock: PlaybackClock;
   requestedAt: number;
@@ -165,7 +163,7 @@ export function AttemptPlayback({
   };
   const [requested, setRequested] = useState(true);
   const [error, setError] = useState("");
-  const [houseReady, setHouseReady] = useState(false);
+  const [worldReady, setWorldReady] = useState(false);
 
   useEffect(() => {
     let raf = 0,
@@ -202,6 +200,7 @@ export function AttemptPlayback({
         run.current = {
           info: reply.info,
           failed: false,
+          assetsReady: false,
           archive,
           clock,
           requestedAt,
@@ -234,33 +233,13 @@ export function AttemptPlayback({
         scene.current.enableSelection(selectFly);
         scene.current.selectFly(0);
         const target = scene.current;
-        setHouseReady(false);
-        void loadHouseAssets(target, () => scene.current === target)
+        setWorldReady(false);
+        void loadWorldAssets(target, () => scene.current === target)
           .then(() => {
-            if (scene.current === target) setHouseReady(true);
-          })
-          .catch((cause) => {
-            if (scene.current !== target) return;
-            observer.cancel();
-            fail(String(cause));
-          });
-        void loadFoodAssets(target, () => scene.current === target).catch(cause => {
-          if (scene.current !== target) return;
-          observer.cancel();
-          fail(String(cause));
-        });
-        fetch(flyModelUrl)
-          .then((response) => {
-            if (!response.ok) throw new Error(`Fly model request failed (${response.status})`);
-            return response.arrayBuffer();
-          })
-          .then(loadFlyModel)
-          .then((model) => {
-            if (scene.current !== target) {
-              model.dispose();
-              return;
+            if (scene.current === target && run.current) {
+              run.current.assetsReady = true;
+              setWorldReady(true);
             }
-            target.setFlyModel(model);
           })
           .catch((cause) => {
             if (scene.current !== target) return;
@@ -325,11 +304,12 @@ export function AttemptPlayback({
       if (current && !current.failed) {
         try {
           const rate = productionRate(current);
-          current.clock.update(now, {
-            computedTick: current.archive.computedTick,
-            complete: current.archive.complete,
-            productionRate: rate,
-          });
+          if (current.assetsReady)
+            current.clock.update(now, {
+              computedTick: current.archive.computedTick,
+              complete: current.archive.complete,
+              productionRate: rate,
+            });
           // Preserve native keyboard increments between React publications.
           if (seekInput.current) seekInput.current.value = String(current.clock.cursorTick);
           if (current.clock.state === "playing" && current.firstPlayAt === null)
@@ -477,7 +457,7 @@ export function AttemptPlayback({
       data-cursor-tick={display.cursor}
       data-computed-tick={display.computed}
       data-playback-state={error ? "error" : display.state}
-      data-house-state={error ? "error" : houseReady ? "ready" : "loading"}
+      data-world-state={error ? "error" : worldReady ? "ready" : "loading"}
       data-fly-count={info?.spec.flyCount ?? 0}
     >
       <header>
@@ -512,8 +492,8 @@ export function AttemptPlayback({
               <strong>
                 {error
                   ? "Needs attention"
-                  : !houseReady && info
-                    ? "Loading house…"
+                  : !worldReady && info
+                    ? "Loading world assets…"
                     : display.state === "loading"
                       ? "Loading the connectome…"
                       : display.state === "buffering"

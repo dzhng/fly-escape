@@ -27,36 +27,36 @@ try {
     release = resolve;
   });
   await page.reload();
-  await page.getByText("Loading house…", { exact: true }).waitFor();
+  await page.getByText("Loading world assets…", { exact: true }).waitFor();
   assert.equal(await page.locator(".run-setup").isDisabled(), true);
   release();
   await page.waitForFunction(
-    () => document.querySelector('[data-testid="setup-game"]')?.dataset.houseState === "ready",
+    () => document.querySelector('[data-testid="setup-game"]')?.dataset.worldState === "ready",
   );
   gate = new Promise((resolve) => {
     release = resolve;
   });
   await page.locator(".run-setup").click();
-  await page.getByText("Loading house…", { exact: true }).waitFor();
+  await page.getByText("Loading world assets…", { exact: true }).waitFor();
   release();
   await page.waitForFunction(
-    () => document.querySelector('[data-testid="playback-lab"]')?.dataset.houseState === "ready",
+    () => document.querySelector('[data-testid="playback-lab"]')?.dataset.worldState === "ready",
   );
   assert.equal(loaded.length, 9);
   await page.getByRole("button", { name: /Cancel attempt|Retry — edit setup/ }).click();
   await page.waitForFunction(
-    () => document.querySelector('[data-testid="setup-game"]')?.dataset.houseState === "ready",
+    () => document.querySelector('[data-testid="setup-game"]')?.dataset.worldState === "ready",
   );
   assert.equal(loaded.length, 12);
   gate = new Promise((resolve) => {
     release = resolve;
   });
   await page.locator(".run-setup").click();
-  await page.getByText("Loading house…", { exact: true }).waitFor();
+  await page.getByText("Loading world assets…", { exact: true }).waitFor();
   await page.getByRole("button", { name: /Cancel attempt|Retry — edit setup/ }).click();
   release();
   await page.waitForFunction(
-    () => document.querySelector('[data-testid="setup-game"]')?.dataset.houseState === "ready",
+    () => document.querySelector('[data-testid="setup-game"]')?.dataset.worldState === "ready",
   );
   assert.deepEqual(errors, []);
   console.log(

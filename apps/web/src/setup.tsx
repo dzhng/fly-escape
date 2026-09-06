@@ -1,4 +1,4 @@
-import { loadFoodAssets } from "./food-assets";
+import { loadWorldAssets } from "./world-assets";
 import React, { useEffect, useRef, useState } from "react";
 import {
   AttemptClient,
@@ -10,12 +10,10 @@ import {
   type StartAttempt,
   type ToolKind,
 } from "@fly-escape/sim-client";
-import { WorldView, loadFlyModel } from "@fly-escape/game-renderer";
-import { loadHouseAssets } from "./house-assets";
+import { WorldView } from "@fly-escape/game-renderer";
 import { AttemptPlayback } from "./playback";
 import { loadProgress, saveProgress, awardResult, emptyProgress } from "./progress";
 import "./setup.css";
-import flyModelUrl from "../../../assets/fly/fly.glb?url";
 
 type Intent = { edit: PlacementEdit; placement?: Placement; commit: boolean };
 const names: Record<ToolKind, string> = {
@@ -50,7 +48,7 @@ export function SetupGame() {
   const [busy, setBusy] = useState(false);
   const [valid, setValid] = useState<boolean | null>(null);
   const [message, setMessage] = useState("Loading placement tools…");
-  const [houseState, setHouseState] = useState("loading");
+  const [worldState, setWorldState] = useState("loading");
   const [storageFailed, setStorageFailed] = useState(false);
   const world = useRef<WorldView | undefined>(undefined);
   const container = useRef<HTMLDivElement>(null);
@@ -107,27 +105,13 @@ export function SetupGame() {
     view.overview();
     view.enableCamera();
     let live = true;
-    setHouseState("loading");
-    void loadHouseAssets(view, () => live)
+    setWorldState("loading");
+    void loadWorldAssets(view, () => live)
       .then(() => {
-        if (live) setHouseState("ready");
+        if (live) setWorldState("ready");
       })
       .catch((error) => {
-        if (live) setHouseState(String(error));
-      });
-    void loadFoodAssets(view, () => live).catch(error => { if (live) setMessage(String(error)); });
-    void fetch(flyModelUrl)
-      .then((response) => {
-        if (!response.ok) throw new Error("Fly model could not load");
-        return response.arrayBuffer();
-      })
-      .then(loadFlyModel)
-      .then((model) => {
-        if (live) view.setFlyModel(model);
-        else model.dispose();
-      })
-      .catch((error) => {
-        if (live) setMessage(String(error));
+        if (live) setWorldState(String(error));
       });
     let raf = 0;
     const draw = () => {
@@ -249,7 +233,7 @@ export function SetupGame() {
       />
     );
   return (
-    <main className="setup-game" data-testid="setup-game" data-house-state={houseState}>
+    <main className="setup-game" data-testid="setup-game" data-world-state={worldState}>
       <header>
         <div>
           <span className="eyebrow">Fly escape · setup fixture</span>
@@ -257,9 +241,9 @@ export function SetupGame() {
         </div>
         <span>Best: {fixture ? (progress.bestStars[fixture.level.id] ?? 0) : 0} / 3 stars</span>
       </header>
-      {houseState !== "ready" && (
-        <p role={houseState === "loading" ? "status" : "alert"}>
-          {houseState === "loading" ? "Loading house…" : houseState}
+      {worldState !== "ready" && (
+        <p role={worldState === "loading" ? "status" : "alert"}>
+          {worldState === "loading" ? "Loading world assets…" : worldState}
         </p>
       )}
       <section className="setup-layout">
@@ -375,7 +359,7 @@ export function SetupGame() {
           </label>
           <button
             className="run-setup"
-            disabled={!fixture || !setup || houseState !== "ready" || busy || !!intent?.commit}
+            disabled={!fixture || !setup || worldState !== "ready" || busy || !!intent?.commit}
             onClick={() => {
               if (!fixture || !setup) return;
               setIntent(undefined);
