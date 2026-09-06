@@ -27,6 +27,11 @@ function require(condition: unknown, message: string): asserts condition {
  * supplied by attempt metadata; frame() only reads recorded ticks starting at 1. */
 export class FrameArchive {
   private chunks: TransferChunk[] = [];
+  private readonly spec: Pick<
+    AttemptSpec,
+    "attemptId" | "flyCount" | "durationTicks"
+  >;
+  private readonly layout: RecordLayout;
   private readonly valueOffsets: Record<string, number>;
   private readonly stateOffsets: Record<string, number>;
   private readonly eventOffsets: Record<string, number>;
@@ -37,11 +42,8 @@ export class FrameArchive {
   private finalResult: AttemptResult | null = null;
 
   constructor(
-    readonly spec: Pick<
-      AttemptSpec,
-      "attemptId" | "flyCount" | "durationTicks"
-    >,
-    readonly layout: RecordLayout,
+    spec: Pick<AttemptSpec, "attemptId" | "flyCount" | "durationTicks">,
+    layout: RecordLayout,
     readonly archiveByteBound: number,
   ) {
     require(integer(archiveByteBound) &&
@@ -55,6 +57,12 @@ export class FrameArchive {
       spec.durationTicks <= 6000, "Invalid attempt horizon");
     require(layout.schemaVersion === 1 &&
       layout.groupIds.length <= 16, "Unsupported record layout");
+    this.spec = {
+      attemptId: spec.attemptId,
+      flyCount: spec.flyCount,
+      durationTicks: spec.durationTicks,
+    };
+    this.layout = structuredClone(layout);
     const offsets = (names: string[]) =>
       Object.fromEntries(names.map((name, index) => [name, index]));
     this.valueOffsets = offsets(layout.valueFields);
@@ -117,7 +125,8 @@ export class FrameArchive {
   }
 
   /** Stale attempts are ignored before inspecting their payload. Invalid current
-   * chunks fail atomically so callers can report a fatal production error. */
+   * chunks fail atomically so callers can report a fatal production error.
+   * Successful append detaches every supplied numeric buffer. */
   append(chunk: TransferChunk): boolean {
     if (chunk.attemptId !== this.spec.attemptId) return false;
     require(!this.complete &&
@@ -189,16 +198,36 @@ export class FrameArchive {
         this.layout.maxEventsPerFlyTick, "Event budget exceeded");
       this.event(chunk, i);
     }
-    require(!chunk.result ||
-      (chunk.result.attemptId === this.spec.attemptId &&
-        chunk.result.completedTick ===
-          end), "Result identity or tick mismatch");
+    const result = chunk.result;
+    require(result === null ||
+      (typeof result === "object" &&
+        result !== null &&
+        result.attemptId === this.spec.attemptId &&
+        result.completedTick === end &&
+        integer(result.stars) &&
+        result.stars <= 3 &&
+        typeof result.outcomes === "object" &&
+        result.outcomes !== null &&
+        [
+          result.outcomes.escaped,
+          result.outcomes.starved,
+          result.outcomes.zapped,
+          result.outcomes.timedOut,
+          result.outcomes.score,
+        ].every(
+          (n) => integer(n) && n <= this.spec.flyCount,
+        )), "Invalid result identity, tick or summary");
     require(end < this.spec.durationTicks ||
-      chunk.result !== null, "Final authored tick requires a result");
-    this.chunks.push(chunk);
+      result !== null, "Final authored tick requires a result");
+    // Transfer detaches the caller's views without copying numeric history.
+    // Structured cloning also removes aliases to headers and the final result.
+    const owned = structuredClone(chunk, {
+      transfer: [...buffers] as ArrayBuffer[],
+    });
+    this.chunks.push(owned);
     this.bytes += bytes;
     this.lastTick = end;
-    this.finalResult = chunk.result;
+    this.finalResult = owned.result;
     return true;
   }
 

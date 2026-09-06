@@ -16,6 +16,7 @@ const fixture = JSON.parse(exported.stdout.toString()) as {
 };
 const transfer = (chunk: PackedChunk): TransferChunk => ({
   ...chunk,
+  result: structuredClone(chunk.result),
   values: new Float64Array(chunk.values),
   states: new Uint32Array(chunk.states),
   events: new Uint32Array(chunk.events),
@@ -148,7 +149,7 @@ test("archive limits count retained backing allocations, and reject unsupported 
   expect(
     () =>
       new FrameArchive(
-        record.spec,
+        { attemptId: "fixture", flyCount: 2, durationTicks: 4 },
         { ...fixture.layout, valueFields: [] },
         fixture.archiveByteBound,
       ),
@@ -156,9 +157,49 @@ test("archive limits count retained backing allocations, and reject unsupported 
   expect(
     () =>
       new FrameArchive(
-        record.spec,
+        { attemptId: "fixture", flyCount: 2, durationTicks: 4 },
         { ...fixture.layout, schemaVersion: 99 },
         fixture.archiveByteBound,
       ),
   ).toThrow("Unsupported");
+});
+
+test("accepting a chunk takes ownership and snapshots metadata and results", () => {
+  const spec = { attemptId: "fixture", flyCount: 2, durationTicks: 4 };
+  const layout = structuredClone(fixture.layout);
+  const record = new FrameArchive(spec, layout, fixture.archiveByteBound);
+  const first = transfer(fixture.chunks[0]);
+  record.append(first);
+  const bytes = record.ownedBytes;
+  spec.flyCount = 99;
+  layout.modes.reverse();
+  layout.groupIds.reverse();
+  first.startTick = 100;
+  first.values[0] = 999;
+  expect(record.frame(1)).toEqual(fixture.frames[0]);
+  expect(first.values.byteLength).toBe(0);
+  expect(record.ownedBytes).toBe(bytes);
+  const second = transfer(fixture.chunks[1]);
+  record.append(second);
+  second.result!.stars = 3;
+  expect(record.frame(4)).toEqual(fixture.frames[3]);
+});
+
+test("missing or malformed results cannot finish the archive", () => {
+  for (const badResult of [
+    undefined,
+    false,
+    0,
+    {},
+    { ...fixture.chunks[1].result, outcomes: null },
+  ]) {
+    const record = archive();
+    record.append(transfer(fixture.chunks[0]));
+    const bad = transfer(fixture.chunks[1]);
+    Object.assign(bad, { result: badResult });
+    expect(() => record.append(bad)).toThrow();
+    expect(record.complete).toBe(false);
+    expect(record.computedTick).toBe(2);
+    expect(bad.values.byteLength).toBeGreaterThan(0);
+  }
 });
