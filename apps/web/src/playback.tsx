@@ -32,6 +32,7 @@ class TimingSamples {
     return {
       count: this.count,
       p95Ms: this.count ? p95 : null,
+      p95Capped: this.count > 0 && p95 === this.bins.length - 1,
       maxMs: this.max,
       histogramResolutionMs: 1,
     };
@@ -129,7 +130,11 @@ export function PlaybackLab() {
   useEffect(() => {
     let raf = 0,
       lastFrameAt: number | null = null,
-      lastPublished = -Infinity;
+      lastPublished = -Infinity,
+      lastSampleTick = -1,
+      lastState = "",
+      lastSpeed = 0,
+      latestReport = "{}";
     let requestedAt = performance.now();
     const fail = (message: string) => {
       if (run.current) {
@@ -214,6 +219,11 @@ export function PlaybackLab() {
       scene.current = undefined;
       setInfo(undefined);
       setDisplay(initialDisplay);
+      latestReport = "{}";
+      lastPublished = -Infinity;
+      lastSampleTick = -1;
+      lastState = "";
+      lastSpeed = 0;
       setError("");
       setRequested(true);
       setSelected(0);
@@ -263,7 +273,9 @@ export function PlaybackLab() {
               interactionAt.current = null;
             }
           }
-          if (now - lastPublished >= 100) {
+          const progressDue = now - lastPublished >= 100;
+          const sampleTick = current.lower?.tick ?? 0;
+          if (progressDue) {
             const heap =
               (
                 performance as Performance & {
@@ -294,7 +306,11 @@ export function PlaybackLab() {
               activeEquivalentProductionRate: rate,
               underruns: current.underruns,
               frameIntervals: current.frameIntervals.report(),
-              interactions: current.interactions.report(),
+              interactions: {
+                ...current.interactions.report(),
+                measurement:
+                  "control callback to synchronous scene render completion; excludes browser paint",
+              },
               memory: {
                 wasmBytes: current.wasmBytes,
                 archiveOwnedChunkBytes: current.archive.ownedBytes,
@@ -307,6 +323,17 @@ export function PlaybackLab() {
               renderer: scene.current?.statistics,
               result: current.archive.result,
             };
+            latestReport = JSON.stringify(report, null, 2);
+            lastPublished = now;
+          }
+          // Neural samples/outcomes change with the integer cursor immediately;
+          // bulk progress and diagnostic serialization retain their 100 ms cadence.
+          if (
+            progressDue ||
+            sampleTick !== lastSampleTick ||
+            current.clock.state !== lastState ||
+            current.clock.speed !== lastSpeed
+          ) {
             setDisplay({
               cursor: current.clock.cursorTick,
               computed: current.archive.computedTick,
@@ -314,9 +341,11 @@ export function PlaybackLab() {
               speed: current.clock.speed,
               frame: current.lower,
               rate,
-              report: JSON.stringify(report, null, 2),
+              report: latestReport,
             });
-            lastPublished = now;
+            lastSampleTick = sampleTick;
+            lastState = current.clock.state;
+            lastSpeed = current.clock.speed;
           }
         } catch (cause) {
           observer.cancel();
