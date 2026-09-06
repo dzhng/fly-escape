@@ -35,7 +35,7 @@ def material(name, color, roughness, metallic=0):
 
 shell = material('Chitin', (0.035, 0.052, 0.055, 1), 0.39, 0.12)
 eye = material('CompoundEye', (0.30, 0.075, 0.055, 1), 0.32)
-wing = material('WingMembrane', (0.62, 0.78, 0.82, 0.38), 0.35)
+wing = material('WingMembrane', (0.32, 0.46, 0.50, 0.60), 0.35)
 wing.use_backface_culling = False
 
 
