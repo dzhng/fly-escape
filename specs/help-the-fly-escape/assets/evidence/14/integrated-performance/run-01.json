@@ -1,0 +1,219 @@
+{
+  "run": 1,
+  "visibleResponseMs": 33.5,
+  "browser": "152.0.7977.77",
+  "spec": {
+    "schemaVersion": 1,
+    "attemptId": "e68edbcf-2230-4d28-ae47-d9377fc32cb3",
+    "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+    "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+    "simulationBuildId": "634cbe60f53dc1b71b2fcd7792d2d5185363d507a903cdad63cef3ac8ceaecb7",
+    "tuningHash": "63d512072f819b59e5ecb03ed80c0200f5c390c317ffb16a3c1bb40b90266d8e",
+    "placements": [],
+    "levelHash": "0bb24dca5c17ad964438be9bd231d5ad52b692481b91097c9d5740bc983856f3",
+    "levelId": "active-native-benchmark",
+    "rootSeed": "42",
+    "flyCount": 20,
+    "durationTicks": 6000
+  },
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "devicePixelRatio": 1,
+  "cursorTick": 6000,
+  "sampleTick": 6000,
+  "computedTick": 6000,
+  "state": "ended",
+  "speed": 1,
+  "complete": true,
+  "initialWaitMs": 1451.8999999761581,
+  "warmWaitMs": 1213.1000000238419,
+  "productionMs": 285055.40000009537,
+  "activeNeuralSteps": 120000,
+  "activeEquivalentProductionRate": 2.104854003817501,
+  "underruns": 0,
+  "frameIntervals": {
+    "count": 36069,
+    "p95Ms": 17,
+    "p95Capped": false,
+    "maxMs": 66.70000000000005,
+    "histogramResolutionMs": 1
+  },
+  "interactions": {
+    "count": 1,
+    "p95Ms": 29,
+    "p95Capped": false,
+    "maxMs": 28.200000047683716,
+    "histogramResolutionMs": 1,
+    "measurement": "control callback to synchronous scene render completion; excludes browser paint"
+  },
+  "memory": {
+    "wasmBytes": 92602368,
+    "archiveOwnedChunkBytes": 55585700,
+    "archiveBoundBytes": 80104384,
+    "graphBytes": 9864584,
+    "brainStateBytes": 64400000,
+    "observedJSHeapBytes": 81332066,
+    "note": "WASM includes graph and brain state; do not add those again. Download report includes an on-demand GPU memory estimate."
+  },
+  "renderer": {
+    "flyCount": 20,
+    "modelKind": "glb",
+    "drawCalls": 1110,
+    "triangles": 140008,
+    "geometries": 44,
+    "textures": 764
+  },
+  "camera": {
+    "following": true,
+    "distance": 2.6304367297607696,
+    "minDistance": 1.3152183648803848,
+    "maxDistance": 57.20405932381071,
+    "closeDistance": 2.6304367297607696,
+    "target": [
+      -5.919999999055691,
+      0.5787085580719206,
+      -5.868581150885645
+    ],
+    "width": 1075,
+    "height": 625,
+    "selectedFlyId": 19,
+    "flies": [
+      {
+        "id": 0,
+        "x": -737.7172372862842,
+        "y": -1763.9313031196923,
+        "visible": false
+      },
+      {
+        "id": 1,
+        "x": -2440.236843025344,
+        "y": -1987.7583816213141,
+        "visible": false
+      },
+      {
+        "id": 2,
+        "x": -2428.7440336445115,
+        "y": -1979.0353212844702,
+        "visible": false
+      },
+      {
+        "id": 3,
+        "x": -2950.9670999304376,
+        "y": -2512.809296280862,
+        "visible": false
+      },
+      {
+        "id": 4,
+        "x": 478.2334306728111,
+        "y": 337.7141724957222,
+        "visible": true
+      },
+      {
+        "id": 5,
+        "x": 486.5270763809725,
+        "y": 445.24192180213413,
+        "visible": true
+      },
+      {
+        "id": 6,
+        "x": 241.570800679685,
+        "y": 527.4315074320278,
+        "visible": true
+      },
+      {
+        "id": 7,
+        "x": -3130.4636871077873,
+        "y": -2684.7146262277006,
+        "visible": false
+      },
+      {
+        "id": 8,
+        "x": -2495.708722671767,
+        "y": -2029.861624073762,
+        "visible": false
+      },
+      {
+        "id": 9,
+        "x": -3133.6254041367642,
+        "y": -2687.3632252600005,
+        "visible": false
+      },
+      {
+        "id": 10,
+        "x": 545.3154455861493,
+        "y": 399.5823077349288,
+        "visible": true
+      },
+      {
+        "id": 11,
+        "x": -714.0548476778906,
+        "y": -1787.8462096960989,
+        "visible": false
+      },
+      {
+        "id": 12,
+        "x": 473.26707070605937,
+        "y": 341.5498820047636,
+        "visible": true
+      },
+      {
+        "id": 13,
+        "x": -505.5327585938152,
+        "y": -1479.5809277718195,
+        "visible": false
+      },
+      {
+        "id": 14,
+        "x": 510.1466644285947,
+        "y": 313.06636319807194,
+        "visible": true
+      },
+      {
+        "id": 15,
+        "x": -691.3692368945451,
+        "y": -1704.477218118495,
+        "visible": false
+      },
+      {
+        "id": 16,
+        "x": -2451.489221747584,
+        "y": -1996.298954360766,
+        "visible": false
+      },
+      {
+        "id": 17,
+        "x": -3213.6242201851733,
+        "y": -2754.3789548548784,
+        "visible": false
+      },
+      {
+        "id": 18,
+        "x": -2455.618028981027,
+        "y": -1999.4327256364672,
+        "visible": false
+      },
+      {
+        "id": 19,
+        "x": 537.5000000000001,
+        "y": 312.5,
+        "visible": true
+      }
+    ]
+  },
+  "result": {
+    "attemptId": "e68edbcf-2230-4d28-ae47-d9377fc32cb3",
+    "completedTick": 6000,
+    "outcomes": {
+      "escaped": 0,
+      "starved": 0,
+      "zapped": 0,
+      "timedOut": 20,
+      "score": 0
+    },
+    "stars": 0
+  },
+  "errors": []
+}

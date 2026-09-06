@@ -8,9 +8,9 @@ Build a local, fully 3D browser game in which the player places environmental to
 
 You are implementing the full browser game. Current pickup: finish the merged solid-house and setup checks, and pair revised trails with the cool house palette. The native Level 1 calibration preparation runs independently; no campaign level is accepted yet. Keep actual build identity attached to performance evidence.
 
-Completed: 01–07 and 13. The [ten full 20-fly baseline runs](assets/evidence/05/full-playback/review.md) passed without underruns. A newer setup/core build is undergoing one full integration run before its matching memory probe; this is not a repeat of the ten-run baseline. The older integrated owned-memory estimate is 246 MiB; 100 flies remains a future scaling problem.
+Completed: 01–08 and 13. The [ten full 20-fly baseline runs](assets/evidence/05/full-playback/review.md) passed without underruns. A newer setup/core build also passes one full integration run and its matching 250 MiB memory probe; this is not a repeat of the ten-run baseline. 100 flies remains a future scaling problem.
 
-Priority order: verify the merged solid geometry and setup editor; resolve 08 animation review while keeping food art/contact in 15; finish 09 Overview trail visibility with 11 palette; finish 12 lighting; then 15–16 campaign validation and 17 clean release. Solid footprints, setup lifecycle and their bounded Workers are integrated. The setup committed-click race is fixed with a delayed actual-WASM regression; rerun it on the merged production build. Preserve all original dependency gates when accepting prepared slices.
+Priority order: verify the merged solid geometry and setup editor; finish the 14 food-art subpass for 15 composition; finish 09 Overview trail visibility with 11 palette; finish 12 lighting; then 15–16 campaign validation and 17 clean release. Solid footprints, setup lifecycle and their bounded Workers are integrated. The setup committed-click race is fixed with a delayed actual-WASM regression; rerun it on the merged production build. Preserve all original dependency gates when accepting prepared slices.
 
 Evidence: [08 context](assets/evidence/08/context/review.md) shows attached landing/feeding poses and exact pause/reverse sampling; interrupted feeding retains a small documented height cut. [09 first candidate](assets/evidence/09/browser/review.md) was rejected for body paint and faint Overview paths; camera-derived width and a head gap remove the broad body patch, with Overview contrast still open. [10 solids](assets/evidence/10/solid/review.md) has independent source/visual evidence awaiting merged checks. [14 setup](assets/evidence/14/setup/README.md) has real browser lifecycle and persistence proof; it is an integration fixture, not balanced Level 1.
 
@@ -31,7 +31,7 @@ Open the [interactive roadmap](visualizations/roadmap.html) for dependency and m
 - [x] [05 — Twenty flies with buffered replay](slices/05-swarm-playback.md) — dependencies: 04.
 - [x] [06 — Close framing and shared selection](slices/06-camera-selection.md) — dependencies: 05.
 - [x] [07 — Blender fly and replacement workbench](slices/07-fly-silhouette.md) — dependencies: 06.
-- [ ] [08 — Playback-driven fly animation](slices/08-fly-motion.md) — dependencies: 07.
+- [x] [08 — Playback-driven fly animation](slices/08-fly-motion.md) — dependencies: 07.
 - [ ] [09 — Readable white trails](slices/09-fly-trails.md) — dependencies: 08.
 - [ ] [10 — A readable 3D house](slices/10-house-geometry.md) — dependencies: 07.
 - [ ] [11 — House materials and color](slices/11-house-palette.md) — dependencies: 07,10.

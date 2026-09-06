@@ -29,3 +29,5 @@ Delegated: Layout dimensions, item counts, generous time limit and positive incr
 Human feedback that changes this slice: If the first puzzle is confusing or punishing, simplify its route/inventory rather than adding a tutorial.
 
 Must stay green: all accepted dependency contracts and their focused fixtures; neural motor ownership, real-data provenance, bounded work and the [global invariants](../README.md#standing-gates-and-ownership). Do not broaden testing without a new failure or changed consumer. Record evidence under `assets/evidence/15/` and update the README handoff before ending the pass. Unlisted material decisions require a spec update.
+
+Food composition gate: use the dedicated 14 food-art subpass to replace diagnostic green discs with recognizable edible surfaces. Inspect actual recorded eating at the contact boundary; do not disguise a visual mismatch by changing neural headings or motion. This owns the remaining food-context integration from 08, whose attached pose and landing descent are already verified.

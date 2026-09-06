@@ -1,6 +1,6 @@
 # 08 — Playback-driven fly animation
 
-Status: functional integration verified; authored motion sequence review passes; integrated context checks remain. Dependencies: 07.
+Status: complete for playback-driven animation; food-art composition remains in 14/15. Dependencies: 07.
 
 ## Contract and seam
 
@@ -46,4 +46,4 @@ The pure `flyHeight(motion, tickSeconds)` shares the recorded transition cursor 
 
 Takeoff retains the immediate recorded-mode lift to 0.6: there is no authored takeoff clip, and the latest-transition cache cannot reconstruct an interrupted landing's prior height. This deliberate cut avoids inventing independent blend state or changing neural motion. Smooth takeoff/interrupted-transition blending is not claimed. No x/z, physics, wire-format, generated build identity, or independent animation clock changes.
 
-The [recorded context evidence](../assets/evidence/08/context/review.md) exercises actual lifecycle landing and feeding, with before/after sequences and deterministic playback checks. The height integration is prepared; independent review and convincing mouth-to-food contact remain open. The fixture demonstrates grounded feeding, not a resolved feeding-contact visual.
+The [recorded context evidence](../assets/evidence/08/context/review.md) exercises actual lifecycle landing and feeding, with before/after sequences and deterministic playback checks. Independent source and visual reviews accept the height/pose integration, and the nonblocking human checkpoint is resolved. The fixture demonstrates grounded feeding; recognizable food art and mouth-to-food composition remain explicit 14/15 checks, separate from the animation variable.
