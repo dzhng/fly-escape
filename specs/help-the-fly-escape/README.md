@@ -10,13 +10,13 @@ You are implementing the full browser game. Current pickup: complete authored-ho
 
 The [production authored-house gate](assets/evidence/10/production/review.md) loads all three validated kit parts; independent source/visual review passed. Rerun its lifecycle checks after integration.
 
-Completed: 01–08 and 13. The [ten full 20-fly baseline runs](assets/evidence/05/full-playback/review.md) passed without underruns. A newer setup/core build also passes one full integration run and its matching 250 MiB memory probe; this is not a repeat of the ten-run baseline. 100 flies remains a future scaling problem.
+Completed: 01–09 and 13. The [ten full 20-fly baseline runs](assets/evidence/05/full-playback/review.md) passed without underruns. A newer setup/core build also passes one full integration run and its matching 250 MiB memory probe; this is not a repeat of the ten-run baseline. 100 flies remains a future scaling problem.
 
-Priority order: finish 10 production authored-house loading (the workbench alone was insufficient); complete 09/11 human review; finish 12 lighting and 14 food art; then 15–16 campaign validation and 17 clean release. Merged solid/core and setup committed-click checks are green. Preserve dependency gates and do not accept any campaign level from a three-seed diagnostic.
+Priority order: finish 10 production authored-house loading (the workbench alone was insufficient); resolve the 10/11 house integration review; finish 12 lighting and 14 food art; then 15–16 campaign validation and 17 clean release. Merged solid/core and setup committed-click checks are green. Preserve dependency gates and do not accept any campaign level from a three-seed diagnostic.
 
 Palette 11 is prepared with a shared runtime/Blender registry and [paired production evidence](assets/evidence/11/review.md). Integrate the current pixel-width trails and resolve final visual/dependency gates before acceptance.
 
-Evidence: [08 context](assets/evidence/08/context/review.md) shows attached landing/feeding poses and exact pause/reverse sampling; interrupted feeding retains a small documented height cut. [09 first candidate](assets/evidence/09/browser/review.md) was rejected for body paint and faint Overview paths; camera-derived width and a head gap remove the broad body patch, with Overview contrast still open. [10 solids](assets/evidence/10/solid/review.md) has independent source/visual evidence awaiting merged checks. [14 setup](assets/evidence/14/setup/README.md) has real browser lifecycle and persistence proof; it is an integration fixture, not balanced Level 1.
+Evidence: [08 context](assets/evidence/08/context/review.md) shows attached landing/feeding poses and exact pause/reverse sampling; interrupted feeding retains a small documented height cut. [09 first candidate](assets/evidence/09/browser/review.md) was rejected for body paint and faint Overview paths; camera-derived width, a head gap and the cool floor palette now pass close/Overview readability. [10 solids](assets/evidence/10/solid/review.md) has independent source/visual evidence awaiting merged checks. [14 setup](assets/evidence/14/setup/README.md) has real browser lifecycle and persistence proof; it is an integration fixture, not balanced Level 1.
 
 Browser applications are under `apps/`, including `apps/web`. Neuroscience descriptions explain neurons and circuit activity, not game rules; controls have separate help. Preserve Python-parity LIF updates and the real graph. Reproduce ignored graph artifacts with the [exporter](../../scripts/connectome/README.md).
 
@@ -36,7 +36,7 @@ Open the [interactive roadmap](visualizations/roadmap.html) for dependency and m
 - [x] [06 — Close framing and shared selection](slices/06-camera-selection.md) — dependencies: 05.
 - [x] [07 — Blender fly and replacement workbench](slices/07-fly-silhouette.md) — dependencies: 06.
 - [x] [08 — Playback-driven fly animation](slices/08-fly-motion.md) — dependencies: 07.
-- [ ] [09 — Readable white trails](slices/09-fly-trails.md) — dependencies: 08.
+- [x] [09 — Readable white trails](slices/09-fly-trails.md) — dependencies: 08.
 - [ ] [10 — A readable 3D house](slices/10-house-geometry.md) — dependencies: 07.
 - [ ] [11 — House materials and color](slices/11-house-palette.md) — dependencies: 07,10.
 - [ ] [12 — Depth and exit lighting](slices/12-house-lighting.md) — dependencies: 11.

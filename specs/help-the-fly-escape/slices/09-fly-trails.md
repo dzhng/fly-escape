@@ -1,6 +1,6 @@
 # 09 — Readable white trails
 
-Status: integrated functional and independent visual gates passed; human review pending. Dependencies: 08.
+Status: complete. Dependencies: 08.
 
 ## Contract and seam
 
