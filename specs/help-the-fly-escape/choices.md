@@ -86,3 +86,20 @@ If a caller restarts an attempt using the same ID, an old message can still be w
 ### Native and browser performance use one diagnostic level (slice 05 transport)
 
 The browser asks Rust for the same closed-room fixture used by the native benchmark. Its flies remain alive and active for the full horizon, so timing cannot look fast merely because flies stopped running their brains early. The plan required comparable active-work measurements without choosing the fixture’s owner. This keeps geometry and tuning in the simulation; the diagnostic helper is not campaign content.
+
+
+## Sound — medium confidence (playback diagnostics)
+
+### Recent slowdowns influence the buffer estimate (slice 05 UI)
+
+When production slows after playback begins, the client compares its whole-run speed with the last twenty chunks and uses the slower estimate before applying the clock’s safety margin. The plan delegated buffering safety but did not specify a measurement window. This can cause extra waiting after a slow start, but avoids assuming an early fast sample will last forever. The window remains subject to the sustained browser measurements.
+
+### Placeholder flies share mesh resources (slice 05 UI)
+
+Twenty placeholder flies reuse their geometry and materials while keeping separate positions. This avoids making twenty copies of GPU resources without introducing an instanced rendering path before measurement. The plan left batching open. The initial desktop frame measurements fit the target, but real assets and the 100-fly capacity probe still need profiling before keeping this approach for release.
+
+## Sound — high confidence (playback diagnostics)
+
+### Timing history has fixed memory (slice 05 UI)
+
+Each rendered frame contributes to a small histogram instead of an ever-growing list of timestamps. Durations above one second share an overflow bucket; the report flags a percentile that reaches that bucket and retains the exact maximum. The plan required bounded memory without specifying timing storage. This keeps the benchmark itself from accumulating a large history while clearly disclosing the precision limit.

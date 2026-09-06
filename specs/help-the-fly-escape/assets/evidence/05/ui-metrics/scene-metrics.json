@@ -1,0 +1,122 @@
+{
+  "kind": "screenshot-scene-metrics",
+  "generatedAt": "2026-09-06T16:56:19.760Z",
+  "note": "Absolute per-image telemetry, no reference involved. Low values locate flat, sparse, or empty captures; they never accept or reject an image on their own.",
+  "imageCount": 6,
+  "results": [
+    {
+      "id": "explanation-crop",
+      "image": "../fly-escape/specs/help-the-fly-escape/assets/evidence/05/ui/explanation-crop.png",
+      "dimensions": {
+        "width": 700,
+        "height": 1300
+      },
+      "sceneMetrics": {
+        "colorBuckets": 65,
+        "colorEntropyBits": 1.68352,
+        "edgeDensity": 0.34931,
+        "dominantColorShare": 0.79373,
+        "transparentShare": 0,
+        "luminanceMean": 234.59979,
+        "luminanceP5": 122.5234,
+        "luminanceP95": 248.5628,
+        "luminanceContrast": 126.0394
+      }
+    },
+    {
+      "id": "full-controls-crop",
+      "image": "../fly-escape/specs/help-the-fly-escape/assets/evidence/05/ui/full-controls-crop.png",
+      "dimensions": {
+        "width": 2090,
+        "height": 320
+      },
+      "sceneMetrics": {
+        "colorBuckets": 64,
+        "colorEntropyBits": 2.1879,
+        "edgeDensity": 0.14292,
+        "dominantColorShare": 0.49098,
+        "transparentShare": 0,
+        "luminanceMean": 238.9716,
+        "luminanceP5": 185,
+        "luminanceP95": 251.5588,
+        "luminanceContrast": 66.5588
+      }
+    },
+    {
+      "id": "neural-explanation",
+      "image": "../fly-escape/specs/help-the-fly-escape/assets/evidence/05/ui/neural-explanation.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sceneMetrics": {
+        "colorBuckets": 72,
+        "colorEntropyBits": 2.2057,
+        "edgeDensity": 0.12261,
+        "dominantColorShare": 0.41972,
+        "transparentShare": 0,
+        "luminanceMean": 238.11652,
+        "luminanceP5": 234.5038,
+        "luminanceP95": 252.473,
+        "luminanceContrast": 17.9692
+      }
+    },
+    {
+      "id": "paused-panel-crop",
+      "image": "../fly-escape/specs/help-the-fly-escape/assets/evidence/05/ui/paused-panel-crop.png",
+      "dimensions": {
+        "width": 700,
+        "height": 1240
+      },
+      "sceneMetrics": {
+        "colorBuckets": 44,
+        "colorEntropyBits": 1.7309,
+        "edgeDensity": 0.2519,
+        "dominantColorShare": 0.6886,
+        "transparentShare": 0,
+        "luminanceMean": 238.92846,
+        "luminanceP5": 191.6494,
+        "luminanceP95": 255,
+        "luminanceContrast": 63.3506
+      }
+    },
+    {
+      "id": "paused-seek",
+      "image": "../fly-escape/specs/help-the-fly-escape/assets/evidence/05/ui/paused-seek.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sceneMetrics": {
+        "colorBuckets": 70,
+        "colorEntropyBits": 2.39105,
+        "edgeDensity": 0.14607,
+        "dominantColorShare": 0.41889,
+        "transparentShare": 0,
+        "luminanceMean": 236.55284,
+        "luminanceP5": 210.1428,
+        "luminanceP95": 252.473,
+        "luminanceContrast": 42.3302
+      }
+    },
+    {
+      "id": "playing",
+      "image": "../fly-escape/specs/help-the-fly-escape/assets/evidence/05/ui/playing.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sceneMetrics": {
+        "colorBuckets": 71,
+        "colorEntropyBits": 2.34691,
+        "edgeDensity": 0.13907,
+        "dominantColorShare": 0.41903,
+        "transparentShare": 0,
+        "luminanceMean": 237.23468,
+        "luminanceP5": 231.211,
+        "luminanceP95": 252.473,
+        "luminanceContrast": 21.262
+      }
+    }
+  ]
+}

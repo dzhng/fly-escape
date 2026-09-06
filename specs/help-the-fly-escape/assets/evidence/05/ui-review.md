@@ -1,0 +1,15 @@
+# Playback review surface
+
+The functional and visual checkpoint passes; slice 05 remains open for sustained performance and capacity evidence.
+
+Production `/lab/playback` uses one 20-fly scene, one archive and one fractional playback clock. Native keyboard scrubbing, pause, 2×, replay, restart, repeated recorded neural values and keyboard-expanded explanations passed [browser checks](ui/checks.json). The pause test exposed an old report timestamp; report and display now publish together. Keyboard arrows exposed controlled-input resets; the native range preserves increments while the clock updates its position. These were observed failures before the fixes.
+
+The timeline spans the complete 600-second horizon and clamps seeking to computed time. A fresh critique of the initial view found its computed-only track misleading and its table too small. The current track and larger table are less wrong against the target: understandable elapsed/available time and readable recorded values. [Pixel/edge comparisons](ui-diff/visual-parity-diff.json) show a real production change; the paused neural crop's edge density rose from 0.226 to 0.252 and luminance contrast from 43.4 to 63.4. Computed counters vary with production timing, so numeric counter differences are not visual evidence.
+
+The last fresh reviewer inspected all three full captures and all three current crops. No blocking clipping, overlap or legibility defects remained. Minor observations: the computed boundary is numerical rather than shaded on the track; the source link retains browser-blue styling. Both are honest and usable at this diagnostic checkpoint. Scroll/keyboard expansion reaches the complete explanation. Dashes in the explanation capture reflect a pause before the first integer sample; fractional cursor time rounds to 0.1 s, while the record still has tick 0. No future neural samples are displayed.
+
+The accepted brain, fields and lifecycle browser suites also pass against this production build. A fresh reviewer inspected all sixteen regression captures without finding actionable visual defects. Independent code review found no further cursor, resource or fatal-error issues. Placeholder geometry/materials are shared and disposed once. Two decoded frames bound interpolation storage; report statistics use bounded histograms and disclose capped percentiles and callback-to-render measurement limits. The browser harness separately measures a visible DOM response through a paint opportunity.
+
+Human review: three shots opened in one Preview window at 16:54 UTC, 2026-09-06. The non-blocking review window is pending; continue independent work and close Preview after the window if no correction arrives.
+
+Baseline hardware: Apple M5 Pro, 48 GiB RAM, macOS 26.4.1; installed Chrome 152.0.7977.77. Early production starts were about 1.3 seconds with roughly 2.8× production; those short samples are not the ten-run gate. Full tests use 6000 ticks and require 120,000 active neural steps per run. Combined memory and 100-fly capacity remain open. No claim of final camera, fly art, all-fly science cards or campaign readiness is made here.

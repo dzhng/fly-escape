@@ -1,0 +1,201 @@
+{
+  "browser": "152.0.7977.77",
+  "paused": {
+    "spec": {
+      "schemaVersion": 1,
+      "attemptId": "dae5ecd2-14d2-4b3a-acdd-13e56411dd40",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+      "simulationBuildId": "209ce69af4d07193ce5b32b05c22ff37668ea34a0bcb9d28b630694933b609fe",
+      "tuningHash": "49a100fbaa5622a5b13b06a1d1cfb9105937b21e0484d931897d265378b690ec",
+      "levelHash": "394de32072afb17009140f3f6f0fbc0479996f4d3b9796d5d846f23086d42fc2",
+      "levelId": "active-native-benchmark",
+      "rootSeed": "42",
+      "flyCount": 20,
+      "durationTicks": 6000
+    },
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+    "viewport": [
+      1440,
+      1000
+    ],
+    "devicePixelRatio": 1,
+    "cursorTick": 11.333,
+    "sampleTick": 11,
+    "computedTick": 50,
+    "state": "paused",
+    "speed": 1,
+    "complete": false,
+    "initialWaitMs": 1292.9000000476838,
+    "warmWaitMs": 1085.2,
+    "productionMs": 1856.4999998807907,
+    "activeNeuralSteps": 1000,
+    "activeEquivalentProductionRate": 2.6932399678540584,
+    "underruns": 0,
+    "frameIntervals": {
+      "count": 132,
+      "p95Ms": 17,
+      "p95Capped": false,
+      "maxMs": 50,
+      "histogramResolutionMs": 1
+    },
+    "interactions": {
+      "count": 1,
+      "p95Ms": 32,
+      "p95Capped": false,
+      "maxMs": 31.90000009536743,
+      "histogramResolutionMs": 1,
+      "measurement": "control callback to synchronous scene render completion; excludes browser paint"
+    },
+    "memory": {
+      "wasmBytes": 92471296,
+      "archiveOwnedChunkBytes": 445880,
+      "archiveBoundBytes": 78184384,
+      "graphBytes": 9864584,
+      "brainStateBytes": 64400000,
+      "observedJSHeapBytes": 13562485,
+      "note": "WASM includes graph and brain state; do not add those again. GPU memory is not measured."
+    },
+    "renderer": {
+      "flyCount": 20,
+      "drawCalls": 541,
+      "triangles": 108412,
+      "geometries": 19,
+      "textures": 3
+    },
+    "result": null
+  },
+  "speed": {
+    "spec": {
+      "schemaVersion": 1,
+      "attemptId": "dae5ecd2-14d2-4b3a-acdd-13e56411dd40",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+      "simulationBuildId": "209ce69af4d07193ce5b32b05c22ff37668ea34a0bcb9d28b630694933b609fe",
+      "tuningHash": "49a100fbaa5622a5b13b06a1d1cfb9105937b21e0484d931897d265378b690ec",
+      "levelHash": "394de32072afb17009140f3f6f0fbc0479996f4d3b9796d5d846f23086d42fc2",
+      "levelId": "active-native-benchmark",
+      "rootSeed": "42",
+      "flyCount": 20,
+      "durationTicks": 6000
+    },
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+    "viewport": [
+      1440,
+      1000
+    ],
+    "devicePixelRatio": 1,
+    "cursorTick": 1,
+    "sampleTick": 1,
+    "computedTick": 70,
+    "state": "playing",
+    "speed": 2,
+    "complete": false,
+    "initialWaitMs": 1292.9000000476838,
+    "warmWaitMs": 1085.2,
+    "productionMs": 2696.0999999046326,
+    "activeNeuralSteps": 1400,
+    "activeEquivalentProductionRate": 2.59634286571255,
+    "underruns": 0,
+    "frameIntervals": {
+      "count": 162,
+      "p95Ms": 17,
+      "p95Capped": false,
+      "maxMs": 50,
+      "histogramResolutionMs": 1
+    },
+    "interactions": {
+      "count": 7,
+      "p95Ms": 32,
+      "p95Capped": false,
+      "maxMs": 31.90000009536743,
+      "histogramResolutionMs": 1,
+      "measurement": "control callback to synchronous scene render completion; excludes browser paint"
+    },
+    "memory": {
+      "wasmBytes": 92471296,
+      "archiveOwnedChunkBytes": 624768,
+      "archiveBoundBytes": 78184384,
+      "graphBytes": 9864584,
+      "brainStateBytes": 64400000,
+      "observedJSHeapBytes": 11428133,
+      "note": "WASM includes graph and brain state; do not add those again. GPU memory is not measured."
+    },
+    "renderer": {
+      "flyCount": 20,
+      "drawCalls": 541,
+      "triangles": 108412,
+      "geometries": 19,
+      "textures": 3
+    },
+    "result": null
+  },
+  "restarted": {
+    "spec": {
+      "schemaVersion": 1,
+      "attemptId": "a4ccd52c-6bb8-4bda-912f-2caa3bd04944",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+      "simulationBuildId": "209ce69af4d07193ce5b32b05c22ff37668ea34a0bcb9d28b630694933b609fe",
+      "tuningHash": "49a100fbaa5622a5b13b06a1d1cfb9105937b21e0484d931897d265378b690ec",
+      "levelHash": "394de32072afb17009140f3f6f0fbc0479996f4d3b9796d5d846f23086d42fc2",
+      "levelId": "active-native-benchmark",
+      "rootSeed": "42",
+      "flyCount": 20,
+      "durationTicks": 6000
+    },
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+    "viewport": [
+      1440,
+      1000
+    ],
+    "devicePixelRatio": 1,
+    "cursorTick": 0,
+    "sampleTick": 0,
+    "computedTick": 30,
+    "state": "playing",
+    "speed": 1,
+    "complete": false,
+    "initialWaitMs": 1111.7999999523163,
+    "warmWaitMs": 1050.6000000238419,
+    "productionMs": 1042.8999999761581,
+    "activeNeuralSteps": 600,
+    "activeEquivalentProductionRate": 2.8765941126364782,
+    "underruns": 0,
+    "frameIntervals": {
+      "count": 63,
+      "p95Ms": 17,
+      "p95Capped": false,
+      "maxMs": 16.800000000000182,
+      "histogramResolutionMs": 1
+    },
+    "interactions": {
+      "count": 0,
+      "p95Ms": null,
+      "p95Capped": false,
+      "maxMs": 0,
+      "histogramResolutionMs": 1,
+      "measurement": "control callback to synchronous scene render completion; excludes browser paint"
+    },
+    "memory": {
+      "wasmBytes": 92471296,
+      "archiveOwnedChunkBytes": 267592,
+      "archiveBoundBytes": 78184384,
+      "graphBytes": 9864584,
+      "brainStateBytes": 64400000,
+      "observedJSHeapBytes": 14510962,
+      "note": "WASM includes graph and brain state; do not add those again. GPU memory is not measured."
+    },
+    "renderer": {
+      "flyCount": 20,
+      "drawCalls": 541,
+      "triangles": 108412,
+      "geometries": 19,
+      "textures": 3
+    },
+    "result": null
+  },
+  "repeatedNeuralReadout": true,
+  "pauseResponseMs": 63.700000047683716,
+  "errors": []
+}

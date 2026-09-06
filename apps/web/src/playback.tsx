@@ -80,10 +80,7 @@ function productionRate(run: Run) {
   const recentMs = run.rateWindow.reduce((n, sample) => n + sample.ms, 0);
   const rate = (steps: number, ms: number) =>
     ms > 0 ? (steps * TICK_SECONDS * 1000) / (run.info.spec.flyCount * ms) : 0;
-  return Math.min(
-    rate(run.activeNeuralSteps, run.productionMs),
-    rate(recentSteps, recentMs),
-  );
+  return Math.min(rate(run.activeNeuralSteps, run.productionMs), rate(recentSteps, recentMs));
 }
 function sample(run: Run): FlyPose[] {
   const tick = Math.floor(run.clock.cursorTick);
@@ -92,31 +89,29 @@ function sample(run: Run): FlyPose[] {
     run.lower = tick > 0 ? run.archive.frame(tick) : undefined;
     run.upper = undefined;
   }
-  if (!run.upper && tick + 1 <= run.archive.computedTick)
-    run.upper = run.archive.frame(tick + 1);
+  if (!run.upper && tick + 1 <= run.archive.computedTick) run.upper = run.archive.frame(tick + 1);
   const fraction = run.clock.cursorTick - tick;
-  return run.info.level.spawnPoses
-    .slice(0, run.info.spec.flyCount)
-    .map((initial, id) => {
-      const a = run.lower?.flies[id].body;
-      const b = run.upper?.flies[id].body ?? a;
-      const from = a?.pose ?? initial,
-        to = b?.pose ?? from;
-      const angle = Math.atan2(
-        Math.sin(to.heading - from.heading),
-        Math.cos(to.heading - from.heading),
-      );
-      return {
-        x: from.position.x + (to.position.x - from.position.x) * fraction,
-        z: from.position.z + (to.position.z - from.position.z) * fraction,
-        heading: from.heading + angle * fraction,
-        y: a?.mode === "flying" ? 0.6 : 0.1,
-      };
-    });
+  return run.info.level.spawnPoses.slice(0, run.info.spec.flyCount).map((initial, id) => {
+    const a = run.lower?.flies[id].body;
+    const b = run.upper?.flies[id].body ?? a;
+    const from = a?.pose ?? initial,
+      to = b?.pose ?? from;
+    const angle = Math.atan2(
+      Math.sin(to.heading - from.heading),
+      Math.cos(to.heading - from.heading),
+    );
+    return {
+      x: from.position.x + (to.position.x - from.position.x) * fraction,
+      z: from.position.z + (to.position.z - from.position.z) * fraction,
+      heading: from.heading + angle * fraction,
+      y: a?.mode === "flying" ? 0.6 : 0.1,
+    };
+  });
 }
 
 export function PlaybackLab() {
   const container = useRef<HTMLDivElement>(null);
+  const seekInput = useRef<HTMLInputElement>(null);
   const scene = useRef<ChamberView | undefined>(undefined);
   const run = useRef<Run | undefined>(undefined);
   const restart = useRef<() => void>(() => {});
@@ -133,8 +128,7 @@ export function PlaybackLab() {
       lastPublished = -Infinity,
       lastSampleTick = -1,
       lastState = "",
-      lastSpeed = 0,
-      latestReport = "{}";
+      lastSpeed = 0;
     let requestedAt = performance.now();
     const fail = (message: string) => {
       if (run.current) {
@@ -146,11 +140,7 @@ export function PlaybackLab() {
       setDisplay((previous) => ({
         ...previous,
         state: "error",
-        report: JSON.stringify(
-          { ...JSON.parse(previous.report), error: message },
-          null,
-          2,
-        ),
+        report: JSON.stringify({ ...JSON.parse(previous.report), error: message }, null, 2),
       }));
     };
     const observer = new AttemptClient((reply) => {
@@ -219,7 +209,8 @@ export function PlaybackLab() {
       scene.current = undefined;
       setInfo(undefined);
       setDisplay(initialDisplay);
-      latestReport = "{}";
+      if (seekInput.current) seekInput.current.value = "0";
+
       lastPublished = -Infinity;
       lastSampleTick = -1;
       lastState = "";
@@ -252,30 +243,31 @@ export function PlaybackLab() {
             complete: current.archive.complete,
             productionRate: rate,
           });
+          // Preserve native keyboard increments between React publications.
+          if (seekInput.current) seekInput.current.value = String(current.clock.cursorTick);
           if (current.clock.state === "playing" && current.firstPlayAt === null)
             current.firstPlayAt = now;
-          if (
-            current.previousState === "playing" &&
-            current.clock.state === "buffering"
-          )
+          if (current.previousState === "playing" && current.clock.state === "buffering")
             current.underruns++;
           current.previousState = current.clock.state;
           scene.current?.setPoses(sample(current));
           if (!document.hidden) {
-            if (lastFrameAt !== null)
-              current.frameIntervals.add(now - lastFrameAt);
+            if (lastFrameAt !== null) current.frameIntervals.add(now - lastFrameAt);
             lastFrameAt = now;
             scene.current?.render();
             if (interactionAt.current !== null) {
-              current.interactions.add(
-                performance.now() - interactionAt.current,
-              );
+              current.interactions.add(performance.now() - interactionAt.current);
               interactionAt.current = null;
             }
           }
           const progressDue = now - lastPublished >= 100;
           const sampleTick = current.lower?.tick ?? 0;
-          if (progressDue) {
+          if (
+            progressDue ||
+            sampleTick !== lastSampleTick ||
+            current.clock.state !== lastState ||
+            current.clock.speed !== lastSpeed
+          ) {
             const heap =
               (
                 performance as Performance & {
@@ -294,13 +286,9 @@ export function PlaybackLab() {
               speed: current.clock.speed,
               complete: current.archive.complete,
               initialWaitMs:
-                current.firstPlayAt === null
-                  ? null
-                  : current.firstPlayAt - current.requestedAt,
+                current.firstPlayAt === null ? null : current.firstPlayAt - current.requestedAt,
               warmWaitMs:
-                current.firstPlayAt === null
-                  ? null
-                  : current.firstPlayAt - current.readyAt,
+                current.firstPlayAt === null ? null : current.firstPlayAt - current.readyAt,
               productionMs: current.productionMs,
               activeNeuralSteps: current.activeNeuralSteps,
               activeEquivalentProductionRate: rate,
@@ -323,17 +311,7 @@ export function PlaybackLab() {
               renderer: scene.current?.statistics,
               result: current.archive.result,
             };
-            latestReport = JSON.stringify(report, null, 2);
             lastPublished = now;
-          }
-          // Neural samples/outcomes change with the integer cursor immediately;
-          // bulk progress and diagnostic serialization retain their 100 ms cadence.
-          if (
-            progressDue ||
-            sampleTick !== lastSampleTick ||
-            current.clock.state !== lastState ||
-            current.clock.speed !== lastSpeed
-          ) {
             setDisplay({
               cursor: current.clock.cursorTick,
               computed: current.archive.computedTick,
@@ -341,7 +319,7 @@ export function PlaybackLab() {
               speed: current.clock.speed,
               frame: current.lower,
               rate,
-              report: latestReport,
+              report: JSON.stringify(report, null, 2),
             });
             lastSampleTick = sampleTick;
             lastState = current.clock.state;
@@ -371,9 +349,7 @@ export function PlaybackLab() {
     run.current.previousState = run.current.clock.state;
   };
   const save = () => {
-    const url = URL.createObjectURL(
-      new Blob([display.report], { type: "application/json" }),
-    );
+    const url = URL.createObjectURL(new Blob([display.report], { type: "application/json" }));
     const link = document.createElement("a");
     link.href = url;
     link.download = "playback-performance.json";
@@ -409,10 +385,7 @@ export function PlaybackLab() {
             20 independent brains · shared environment
             <span>Seed 42 · 600 game seconds · fixed placeholder models</span>
           </div>
-          <div
-            className="playback-counters"
-            aria-label="Outcomes at playback time"
-          >
+          <div className="playback-counters" aria-label="Outcomes at playback time">
             <b data-testid="active-count">{FLY_COUNT - terminalCount} active</b>
             {Object.entries(counts).map(([name, count]) => (
               <span key={name} data-testid={`outcome-${name}`}>
@@ -421,11 +394,7 @@ export function PlaybackLab() {
             ))}
           </div>
           <div className="controls playback-controls">
-            <div
-              className="playback-status"
-              role="status"
-              data-testid="playback-status"
-            >
+            <div className="playback-status" role="status" data-testid="playback-status">
               <strong>
                 {error
                   ? "Needs attention"
@@ -451,14 +420,15 @@ export function PlaybackLab() {
               data-testid="playback-seek"
               type="range"
               min={0}
-              max={display.computed}
+              max={DURATION_TICKS}
               step={0.1}
-              value={display.cursor}
+              ref={seekInput}
+              defaultValue={0}
               disabled={!info || !!error}
               onChange={(event) =>
                 control((current) =>
                   current.clock.seek(
-                    Number(event.target.value),
+                    Math.min(Number(event.target.value), current.archive.computedTick),
                     current.archive.computedTick,
                   ),
                 )
@@ -468,9 +438,7 @@ export function PlaybackLab() {
               disabled={!info || !!error}
               onClick={() => {
                 setRequested(!requested);
-                control((current) =>
-                  requested ? current.clock.pause() : current.clock.play(),
-                );
+                control((current) => (requested ? current.clock.pause() : current.clock.play()));
               }}
             >
               {requested ? "Pause" : "Play"}
@@ -480,9 +448,7 @@ export function PlaybackLab() {
                 key={speed}
                 aria-pressed={display.speed === speed}
                 disabled={!info || !!error}
-                onClick={() =>
-                  control((current) => current.clock.setSpeed(speed))
-                }
+                onClick={() => control((current) => current.clock.setSpeed(speed))}
               >
                 {speed}×
               </button>
@@ -509,9 +475,8 @@ export function PlaybackLab() {
           <span className="eyebrow">Recorded neural activity</span>
           <h2>Read any fly’s record</h2>
           <p className="intro">
-            Each fly has its own neural state. Group voltage and firing are
-            recorded during production and read back at the shared playback
-            time.
+            Each fly has its own neural state. Group voltage and firing are recorded during
+            production and read back at the shared playback time.
           </p>
           {error && (
             <p role="alert" className="error">
@@ -545,17 +510,12 @@ export function PlaybackLab() {
             <p>
               Reserve{" "}
               <output data-testid="selected-reserve">
-                {(fly?.body.reserve ?? info?.level.initialReserve ?? 0).toFixed(
-                  3,
-                )}
+                {(fly?.body.reserve ?? info?.level.initialReserve ?? 0).toFixed(3)}
               </output>
             </p>
             <p>
-              Sample tick{" "}
-              <output data-testid="selected-tick">
-                {display.frame?.tick ?? 0}
-              </output>{" "}
-              · {(display.cursor * TICK_SECONDS).toFixed(1)} s cursor
+              Sample tick <output data-testid="selected-tick">{display.frame?.tick ?? 0}</output> ·{" "}
+              {(display.cursor * TICK_SECONDS).toFixed(1)} s cursor
             </p>
             <p>
               {fly?.neural
@@ -572,17 +532,13 @@ export function PlaybackLab() {
           </div>
           <div className="groups">
             {info?.groups.map((group) => {
-              const activity = fly?.neural?.groups.find(
-                (g) => g.id === group.id,
-              );
+              const activity = fly?.neural?.groups.find((g) => g.id === group.id);
               return (
                 <div className="group" key={group.id}>
                   <span>{group.label}</span>
                   <output>{activity?.meanVoltage.toFixed(3) ?? "—"}</output>
                   <output>
-                    {activity
-                      ? `${(activity.spikeFraction * 100).toFixed(1)}%`
-                      : "—"}
+                    {activity ? `${(activity.spikeFraction * 100).toFixed(1)}%` : "—"}
                   </output>
                 </div>
               );
@@ -592,18 +548,17 @@ export function PlaybackLab() {
           <details>
             <summary>Playback controls</summary>
             <p>
-              Pause stops the shared playback cursor. Scrub within computed time
-              or replay the stored record. A speed increase may need more
-              buffering. A hidden tab freezes playback and stops new production
-              credits.
+              Pause stops the shared playback cursor. Scrub within computed time or replay the
+              stored record. A speed increase may need more buffering. A hidden tab freezes playback
+              and stops new production credits.
             </p>
           </details>
           <details>
             <summary>Performance report</summary>
             <p>
-              Active-work production: {display.rate.toFixed(2)} game seconds per
-              wall second, before the clock’s safety discount. Model
-              placeholders and GPU memory remain separate measurement work.
+              Active-work production: {display.rate.toFixed(2)} game seconds per wall second, before
+              the clock’s safety discount. Model placeholders and GPU memory remain separate
+              measurement work.
             </p>
             <pre data-testid="playback-report">{display.report}</pre>
           </details>

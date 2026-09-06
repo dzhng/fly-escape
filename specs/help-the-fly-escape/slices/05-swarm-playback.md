@@ -1,6 +1,6 @@
 # 05 — Twenty flies with buffered replay
 
-Status: native/WASM Attempt, packed archive/clock and bounded Worker transport verified; playback UI and sustained browser performance remain in progress. Dependencies: 04.
+Status: native/WASM Attempt, packed archive/clock and bounded Worker transport verified; playback UI verified; sustained browser performance and 100-fly capacity remain in progress. Dependencies: 04.
 
 ## Contract and seam
 
@@ -23,6 +23,8 @@ Use [compare-screenshots](../../../.agents/skills/compare-screenshots/SKILL.md) 
 Human checkpoint is non-blocking: open shots with [preview-shots](../../../.agents/skills/preview-shots/SKILL.md), allow about five minutes for feedback while continuing independent work, then decide from evidence if silent. Record the decision/rationale and close the opened shots. Silence is not approval for new scope.
 
 Transport checkpoint: [browser evidence](../assets/evidence/05/browser-transport.json) covers hidden credit draining, cancellation during load/run, exact repeated-seed records, exclusive buffer ownership and callback-triggered restart. The generation regression was observed failing with the filter removed. WASM session tests preserve one-tick backpressure and terminal records. These checks do not substitute for production rendering or ten full playback runs.
+
+[UI review](../assets/evidence/05/ui-review.md) records the production browser controls, real visual changes, independent reviews and measurement limits.
 
 ## Decision budget
 

@@ -15,9 +15,17 @@
   gap: 16px;
   font-size: 12px;
 }
-.playback-controls {
+.playback-world .playback-controls {
   max-width: none;
   gap: 8px;
+}
+.playback-lab .group,
+.playback-lab .group output {
+  font-size: 13px;
+}
+.playback-lab .group-heading {
+  font-size: 11px;
+  color: #425b48;
 }
 .playback-status {
   display: flex;
