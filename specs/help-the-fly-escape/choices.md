@@ -71,3 +71,18 @@ A fly can land, begin and end a meal, and reach a terminal outcome during the sa
 ### Replay retains the original numeric precision and absent samples (slice 05 preparation)
 
 A recorded neural voltage stays a 64-bit floating-point value, rather than being rounded for transfer. Once a fly is terminal, its absent neural/sensory samples remain absent through explicit presence flags; zeros would falsely look like measured inactivity. The plan required consistent replay without choosing the numeric encoding. The complete 20-fly horizon fits the archive limit with this precision, so compression does not need to change the observations.
+
+
+## Sound — high confidence (browser transport)
+
+### Archive acceptance transfers ownership (slice 05 transport)
+
+When the Worker delivers a record, the archive takes its buffers and detaches the caller’s references. Code handling the incoming message can no longer accidentally change an old voltage or pose after it was accepted. The plan required immutable replay but left the ownership mechanism open. This avoids copying the full history while making future consumers treat incoming records as consumed after append.
+
+### Transport generations are separate from attempt identity (slice 05 transport)
+
+If a caller restarts an attempt using the same ID, an old message can still be waiting in the browser’s queue. Each start now receives a fresh local generation number, and only messages carrying that number reach the consumer. The plan required stale-message rejection without specifying how to handle reused IDs. This preserves deterministic attempt identity while preventing an old error, record or credit from affecting the new run; callers need not retain an ever-growing set of forbidden IDs.
+
+### Native and browser performance use one diagnostic level (slice 05 transport)
+
+The browser asks Rust for the same closed-room fixture used by the native benchmark. Its flies remain alive and active for the full horizon, so timing cannot look fast merely because flies stopped running their brains early. The plan required comparable active-work measurements without choosing the fixture’s owner. This keeps geometry and tuning in the simulation; the diagnostic helper is not campaign content.

@@ -56,3 +56,8 @@ export class BrainClient {
     this.worker.terminate();
   }
 }
+
+export { AttemptClient } from "./attempt-client";
+export type { AttemptReply } from "./attempt-protocol";
+export { FrameArchive } from "./record";
+export { PlaybackClock } from "./playback";

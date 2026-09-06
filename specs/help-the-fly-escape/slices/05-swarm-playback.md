@@ -1,6 +1,6 @@
 # 05 — Twenty flies with buffered replay
 
-Status: native Attempt and packed record format implemented; Worker/archive/playback integration in progress. Dependencies: 04.
+Status: native/WASM Attempt, packed archive/clock and bounded Worker transport verified; playback UI and sustained browser performance remain in progress. Dependencies: 04.
 
 ## Contract and seam
 
@@ -21,6 +21,8 @@ Visual variable and crop: Playback-state legibility; crop timeline and selected 
 Use [compare-screenshots](../../../.agents/skills/compare-screenshots/SKILL.md) for the named reference/prior look, recording telemetry and a less-wrong verdict rather than exact pixel matching. Run an unprimed [screenshot-critique](../../../.agents/skills/screenshot-critique/SKILL.md) on all candidate captures and tight crops as the **last visual check before acceptance**. Fix actionable findings and repeat that final check.
 
 Human checkpoint is non-blocking: open shots with [preview-shots](../../../.agents/skills/preview-shots/SKILL.md), allow about five minutes for feedback while continuing independent work, then decide from evidence if silent. Record the decision/rationale and close the opened shots. Silence is not approval for new scope.
+
+Transport checkpoint: [browser evidence](../assets/evidence/05/browser-transport.json) covers hidden credit draining, cancellation during load/run, exact repeated-seed records, exclusive buffer ownership and callback-triggered restart. The generation regression was observed failing with the filter removed. WASM session tests preserve one-tick backpressure and terminal records. These checks do not substitute for production rendering or ten full playback runs.
 
 ## Decision budget
 

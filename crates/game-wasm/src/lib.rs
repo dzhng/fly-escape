@@ -1,3 +1,5 @@
+mod attempt_session;
+pub use attempt_session::*;
 use sim::{chamber::Chamber, Graph};
 use std::sync::Arc;
 use wasm_bindgen::prelude::*;

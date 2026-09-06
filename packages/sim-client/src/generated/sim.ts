@@ -1,5 +1,9 @@
 // Generated from crates/sim; do not edit.
 
+export type StartAttempt = { attemptId: string, rootSeed: string, flyCount: number, level: LevelDef, tuning: AttemptTuning, };
+export type AttemptInfo = { spec: AttemptSpec, level: LevelDef, groups: Array<Group>, groupLinks: Array<GroupLink>, recordLayout: RecordLayout, archiveBytes: number, graphBytes: number, brainStateBytes: number, };
+export type AttemptStep = { tick: number, neuralSteps: number, bufferedTicks: number, complete: boolean, };
+export type ChunkHeader = { schemaVersion: number, attemptId: string, sequence: number, startTick: number, tickCount: number, flyCount: number, result: AttemptResult | null, };
 export type BodyPose = { position: Point, heading: number, };
 export type BodyMode = "walking" | "flying" | "feeding";
 export type TerminalOutcome = "escaped" | "starved" | "zapped" | "timedOut";

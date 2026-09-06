@@ -6,11 +6,16 @@ use sim::field_lab::{FieldLabFrame, FieldLabInfo, FieldScenario};
 use sim::lifecycle_lab::*;
 use sim::record::*;
 use sim::sensory::CuePathway;
+use sim::swarm_lab::*;
 use sim::{Group, GroupActivity, GroupLink, MotorOutput, StepOutput};
 use ts_rs::TS;
 fn main() {
     println!("// Generated from crates/sim; do not edit.\n");
     for declaration in [
+        StartAttempt::decl(),
+        AttemptInfo::decl(),
+        AttemptStep::decl(),
+        ChunkHeader::decl(),
         BodyPose::decl(),
         BodyMode::decl(),
         TerminalOutcome::decl(),

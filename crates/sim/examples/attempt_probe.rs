@@ -1,7 +1,7 @@
 //! Active-work native feasibility benchmark. This is neither campaign content nor browser acceptance.
 use serde_json::json;
 use sha2::{Digest, Sha256};
-use sim::{attempt::*, body::*, environment::*, sensory::CuePathway, Brain, Graph};
+use sim::{attempt::*, body::BodyMode, sensory::CuePathway, swarm_lab, Brain, Graph};
 use std::{process::Command, sync::Arc, time::Instant};
 
 fn command(program: &str, args: &[&str]) -> String {
@@ -16,96 +16,6 @@ fn rss_kib() -> u64 {
     command("ps", &["-o", "rss=", "-p", &std::process::id().to_string()])
         .parse()
         .unwrap()
-}
-fn point(x: f64, z: f64) -> Point {
-    Point { x, z }
-}
-fn level(count: u32) -> LevelDef {
-    // The occupied room is closed. A valid physical exit is in a disconnected annex,
-    // guaranteeing no early escape without disabling body motion or neural stepping.
-    let mut walls = vec![];
-    for (min, max) in [
-        (point(-6., -6.), point(6., 6.)),
-        (point(7., -1.), point(8., 1.)),
-    ] {
-        walls.extend([
-            Wall {
-                a: min,
-                b: point(max.x, min.z),
-            },
-            Wall {
-                a: min,
-                b: point(min.x, max.z),
-            },
-            Wall {
-                a: point(min.x, max.z),
-                b: max,
-            },
-        ]);
-    }
-    walls.push(Wall {
-        a: point(6., -6.),
-        b: point(6., 6.),
-    });
-    walls.extend([
-        Wall {
-            a: point(8., -1.),
-            b: point(8., -0.5),
-        },
-        Wall {
-            a: point(8., 0.5),
-            b: point(8., 1.),
-        },
-    ]);
-    LevelDef {
-        id: "active-native-benchmark".into(),
-        geometry: Geometry {
-            rooms: vec![
-                RectRoom {
-                    id: 0,
-                    min: point(-6., -6.),
-                    max: point(6., 6.),
-                },
-                RectRoom {
-                    id: 1,
-                    min: point(7., -1.),
-                    max: point(8., 1.),
-                },
-            ],
-            walls,
-        },
-        spawn_poses: (0..count)
-            .map(|id| BodyPose {
-                position: point(-2. + (id % 10) as f64 * 0.4, -2. + (id / 10) as f64 * 0.4),
-                heading: 0.,
-            })
-            .collect(),
-        exit: ExitOpening {
-            a: point(8., -0.5),
-            b: point(8., 0.5),
-            outward: point(1., 0.),
-        },
-        exit_cue: None,
-        food: vec![],
-        zappers: vec![],
-        sources: vec![Source {
-            position: point(0., 0.),
-            radius: 1.,
-            rate: 1.,
-            kind: SourceKind::Odor,
-        }],
-        field_config: FieldConfig {
-            wind: point(0., 0.),
-            ..FieldConfig::default()
-        },
-        body_config: BodyConfig {
-            reserve_capacity: 1000.,
-            ..BodyConfig::default()
-        },
-        initial_reserve: 1000.,
-        duration_ticks: 6000,
-        star_thresholds: [1, 10, 20],
-    }
 }
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<_> = std::env::args().collect();
@@ -130,7 +40,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let graph_payload = graph.storage_bytes();
     let brain_payload = Brain::new(graph.clone(), 0).state_storage_bytes();
     let graph_rss = rss_kib();
-    let level = level(count);
+    let level = swarm_lab::level(count)?;
     let tuning = AttemptTuning {
         cue: Some(CueInput {
             pathway: CuePathway::ExcitatoryOdor,

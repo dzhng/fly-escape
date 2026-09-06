@@ -240,3 +240,32 @@ mod tests {
         assert!(layout.archive_bytes(100, 100).is_ok());
     }
 }
+
+/// Selects bounded diagnostic content; ordinary game starts supply resolved content.
+#[wasm_bindgen]
+pub fn swarm_request(
+    attempt_id: &str,
+    root_seed: &str,
+    fly_count: u32,
+    duration_ticks: u32,
+) -> Result<String, JsValue> {
+    if !(1..=6000).contains(&duration_ticks) {
+        return Err(JsValue::from_str("horizon must be 1..6000 ticks"));
+    }
+    let mut level = sim::swarm_lab::level(fly_count).map_err(|e| JsValue::from_str(&e))?;
+    level.duration_ticks = duration_ticks;
+    let request = sim::swarm_lab::StartAttempt {
+        attempt_id: attempt_id.into(),
+        root_seed: root_seed.into(),
+        fly_count,
+        level,
+        tuning: sim::attempt::AttemptTuning {
+            cue: Some(sim::attempt::CueInput {
+                pathway: sim::sensory::CuePathway::ExcitatoryOdor,
+                gain: 1.0,
+            }),
+            ..Default::default()
+        },
+    };
+    serde_json::to_string(&request).map_err(|e| JsValue::from_str(&e.to_string()))
+}
