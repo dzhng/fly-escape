@@ -50,7 +50,11 @@ pub struct BodyConfig {
     pub flight_speed: f64,
     pub turn_gain: f64,
     pub takeoff_threshold: f64,
+    /// Emitted spike fraction, averaged across the two landing groups.
     pub landing_threshold: f64,
+    /// Minimum ground time after neural landing; independent of neural cadence.
+    pub landing_dwell_seconds: f64,
+    /// Emitted proboscis spike fraction; a qualifying pulse starts a latched bout.
     pub proboscis_threshold: f64,
 }
 impl Default for BodyConfig {
@@ -68,7 +72,8 @@ impl Default for BodyConfig {
             turn_gain: 1.,
             takeoff_threshold: 0.2,
             landing_threshold: 0.2,
-            proboscis_threshold: 0.1,
+            proboscis_threshold: 0.2,
+            landing_dwell_seconds: 1.,
         }
     }
 }
@@ -95,7 +100,6 @@ pub struct BodyContacts {
 #[serde(rename_all = "camelCase")]
 pub enum FeedingEnd {
     ContactLost,
-    MotorInactive,
     Satiated,
     BoutLimit,
     Terminal,
@@ -205,6 +209,7 @@ pub struct Body {
     bout_seconds: f64,
     feeding_ready: bool,
     last_tick: Option<u32>,
+    ground_dwell_remaining: f64,
 }
 impl Body {
     pub fn new(pose: BodyPose, reserve: f64, config: BodyConfig) -> Result<Self, String> {
@@ -222,6 +227,7 @@ impl Body {
             config.takeoff_threshold,
             config.landing_threshold,
             config.proboscis_threshold,
+            config.landing_dwell_seconds,
         ];
         if values.iter().any(|v| !v.is_finite() || *v < 0.)
             || config.reserve_capacity == 0.
@@ -252,6 +258,7 @@ impl Body {
             bout_seconds: 0.,
             feeding_ready: true,
             last_tick: None,
+            ground_dwell_remaining: 0.,
         })
     }
     pub fn state(&self) -> &BodyState {
@@ -331,7 +338,11 @@ impl Body {
             .iter()
             .any(|v| !v.is_finite())
             || neural.groups.len() > 16
-            || neural.groups.iter().any(|g| !g.mean_voltage.is_finite())
+            || neural.groups.iter().any(|g| {
+                !g.mean_voltage.is_finite()
+                    || !g.spike_fraction.is_finite()
+                    || !(0. ..=1.).contains(&g.spike_fraction)
+            })
         {
             return Err("body step requires increasing positive ticks, dt in (0,1], finite wind/readouts and at most 16 groups".into());
         }
@@ -345,23 +356,28 @@ impl Body {
             self.terminal(TerminalOutcome::Zapped, tick, &mut events);
             return Ok(events);
         }
-        let proboscis = activity(neural, "proboscis");
+        // Avoid an extra dwell tick from decimal dt roundoff at the boundary.
+        self.ground_dwell_remaining = if self.ground_dwell_remaining <= dt + 1e-12 {
+            0.
+        } else {
+            self.ground_dwell_remaining - dt
+        };
+        let proboscis = spike_fraction(neural, "proboscis");
         let wants_food = proboscis > self.config.proboscis_threshold;
         let on_food = self.contacts(world).food;
-        if !wants_food || !on_food {
+        if self.state.mode != BodyMode::Feeding && !wants_food {
             self.feeding_ready = true;
         }
-        if self.state.mode == BodyMode::Feeding {
-            if !on_food {
-                self.end_feeding(FeedingEnd::ContactLost, tick, &mut events);
-            } else if !wants_food {
-                self.end_feeding(FeedingEnd::MotorInactive, tick, &mut events);
-            }
+        if self.state.mode == BodyMode::Feeding && !on_food {
+            self.end_feeding(FeedingEnd::ContactLost, tick, &mut events);
         }
-        let landing = (activity(neural, "landingL") + activity(neural, "landingR")) / 2.;
+        let landing =
+            (spike_fraction(neural, "landingL") + spike_fraction(neural, "landingR")) / 2.;
         if self.state.mode == BodyMode::Flying && landing > self.config.landing_threshold {
             self.mode(BodyMode::Walking, tick, &mut events);
+            self.ground_dwell_remaining = self.config.landing_dwell_seconds;
         } else if self.state.mode == BodyMode::Walking
+            && self.ground_dwell_remaining == 0.
             && neural.motor.flight_thrust > self.config.takeoff_threshold
             && landing <= self.config.landing_threshold
         {
@@ -468,12 +484,12 @@ impl Body {
         Ok(events)
     }
 }
-fn activity(neural: &StepOutput, id: &str) -> f64 {
+fn spike_fraction(neural: &StepOutput, id: &str) -> f64 {
     neural
         .groups
         .iter()
         .find(|g| g.id == id)
-        .map_or(0., |g| g.mean_voltage)
+        .map_or(0., |g| g.spike_fraction)
 }
 fn contact(p: Point, r: ContactRegion, radius: f64) -> bool {
     (p.x - r.center.x).hypot(p.z - r.center.z) <= r.radius + radius

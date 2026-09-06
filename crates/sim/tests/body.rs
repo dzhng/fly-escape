@@ -47,8 +47,8 @@ fn neural(thrust: f64, proboscis: f64) -> StepOutput {
         },
         groups: vec![GroupActivity {
             id: "proboscis".into(),
-            mean_voltage: proboscis,
-            spike_fraction: 0.,
+            mean_voltage: 0.,
+            spike_fraction: proboscis,
         }],
         spike_count: 0,
     }
@@ -205,13 +205,13 @@ fn takeoff_and_landing_require_their_neural_readouts_and_flight_cannot_feed() {
     command.groups.extend([
         GroupActivity {
             id: "landingL".into(),
-            mean_voltage: 0.5,
-            spike_fraction: 0.,
+            mean_voltage: 0.,
+            spike_fraction: 0.5,
         },
         GroupActivity {
             id: "landingR".into(),
-            mean_voltage: 0.5,
-            spike_fraction: 0.,
+            mean_voltage: 0.,
+            spike_fraction: 0.5,
         },
     ]);
     b.step(&command, &world, Point::default(), 0.1, 3).unwrap();
@@ -219,7 +219,7 @@ fn takeoff_and_landing_require_their_neural_readouts_and_flight_cannot_feed() {
     assert!(b.contacts(&world).food);
 }
 #[test]
-fn feeding_is_capped_and_cannot_restart_until_motor_or_contact_resets() {
+fn feeding_is_capped_and_cannot_restart_until_motor_resets() {
     let g = geometry();
     let foods = [ContactRegion {
         center: Point { x: 2., z: 2. },
@@ -329,4 +329,115 @@ fn feeding_does_not_exempt_a_body_from_net_energy_loss() {
         .unwrap();
     assert_eq!(b.state().outcome, Some(TerminalOutcome::Starved));
     assert_eq!(b.state().reserve, 0.);
+}
+#[test]
+fn a_proboscis_spike_starts_a_bout_that_stays_latched_between_pulses() {
+    let g = geometry();
+    let foods = [ContactRegion {
+        center: Point { x: 2., z: 2. },
+        radius: 0.5,
+    }];
+    let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
+    let mut b = body(2., 2., 1.);
+    let mut pulse = neural(0., 0.);
+    pulse.groups[0].spike_fraction = 0.25;
+    b.step(&pulse, &world, Point::default(), 0.1, 1).unwrap();
+    assert_eq!(b.state().mode, BodyMode::Feeding);
+    let after_start = b.state().reserve;
+    for tick in 2..=10 {
+        b.step(&neural(0., 0.), &world, Point::default(), 0.1, tick)
+            .unwrap();
+        assert_eq!(b.state().mode, BodyMode::Feeding);
+    }
+    assert!(b.state().reserve > after_start);
+}
+#[test]
+fn landing_spike_enforces_one_game_second_of_ground_dwell() {
+    for dt in [0.1, 0.25] {
+        let g = geometry();
+        let world = BodyWorld::new(&g, &[], &[], exit(), 100).unwrap();
+        let mut b = body(2., 2., 10.);
+        let mut flight = neural(0., 0.);
+        flight.motor.flight_thrust = 0.5;
+        b.step(&flight, &world, Point::default(), dt, 1).unwrap();
+        assert_eq!(
+            b.state().mode,
+            BodyMode::Flying,
+            "initial dwell must not block takeoff"
+        );
+        let mut landing = flight.clone();
+        landing.groups.push(GroupActivity {
+            id: "landingL".into(),
+            mean_voltage: 0.,
+            spike_fraction: 0.5,
+        });
+        b.step(&landing, &world, Point::default(), dt, 2).unwrap();
+        assert_eq!(b.state().mode, BodyMode::Walking);
+        let steps = (1.0 / dt).round() as u32;
+        for offset in 1..steps {
+            b.step(&flight, &world, Point::default(), dt, 2 + offset)
+                .unwrap();
+            assert_eq!(
+                b.state().mode,
+                BodyMode::Walking,
+                "takeoff before one second at dt={dt}"
+            );
+        }
+        b.step(&flight, &world, Point::default(), dt, 2 + steps)
+            .unwrap();
+        assert_eq!(b.state().mode, BodyMode::Flying);
+    }
+}
+#[test]
+fn a_new_bout_requires_motor_rearming_after_contact_loss() {
+    let g = geometry();
+    let foods = [ContactRegion {
+        center: Point { x: 2., z: 2. },
+        radius: 0.2,
+    }];
+    let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
+    let mut b = body(2., 2., 1.);
+    let pulse = neural(0., 0.25);
+    b.step(&pulse, &world, Point::default(), 0.1, 1).unwrap();
+    b.step(&pulse, &world, Point { x: 10., z: 0. }, 0.1, 2)
+        .unwrap();
+    assert_eq!(b.state().mode, BodyMode::Walking);
+    b.step(&pulse, &world, Point { x: -10., z: 0. }, 0.1, 3)
+        .unwrap();
+    b.step(&pulse, &world, Point::default(), 0.1, 4).unwrap();
+    assert_eq!(b.state().mode, BodyMode::Walking);
+    b.step(&neural(0., 0.), &world, Point::default(), 0.1, 5)
+        .unwrap();
+    b.step(&pulse, &world, Point::default(), 0.1, 6).unwrap();
+    assert_eq!(b.state().mode, BodyMode::Feeding);
+}
+#[test]
+fn tonic_voltage_without_spikes_does_not_initiate_feeding_or_landing() {
+    let g = geometry();
+    let foods = [ContactRegion {
+        center: Point { x: 2., z: 2. },
+        radius: 0.5,
+    }];
+    let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
+    let mut b = body(2., 2., 1.);
+    let mut quiet = neural(0., 0.);
+    quiet.groups[0].mean_voltage = 1.;
+    b.step(&quiet, &world, Point::default(), 0.1, 1).unwrap();
+    assert_eq!(b.state().mode, BodyMode::Walking);
+    quiet.motor.flight_thrust = 0.5;
+    quiet.groups.extend([
+        GroupActivity {
+            id: "landingL".into(),
+            mean_voltage: 1.,
+            spike_fraction: 0.,
+        },
+        GroupActivity {
+            id: "landingR".into(),
+            mean_voltage: 1.,
+            spike_fraction: 0.,
+        },
+    ]);
+    b.step(&quiet, &world, Point::default(), 0.1, 2).unwrap();
+    b.step(&quiet, &world, Point::default(), 0.1, 3).unwrap();
+    assert_eq!(b.state().mode, BodyMode::Flying);
 }

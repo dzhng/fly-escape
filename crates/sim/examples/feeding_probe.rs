@@ -5,6 +5,7 @@ use sha2::{Digest, Sha256};
 use sim::{
     body::{
         Body, BodyConfig, BodyEventKind, BodyMode, BodyPose, BodyWorld, ContactRegion, ExitOpening,
+        TerminalOutcome,
     },
     environment::{Geometry, Point, RectRoom, Wall},
     Brain, Graph, PRNG_ID,
@@ -37,6 +38,8 @@ struct SeedResult {
     mode_transitions: usize,
     feeding_starts: usize,
     final_reserve: f64,
+    terminal_outcome: Option<TerminalOutcome>,
+    terminal_tick: Option<usize>,
     trace: Vec<[f64; 7]>,
 }
 fn group_indices(graph: &Graph, id: &str) -> Vec<u32> {
@@ -130,6 +133,8 @@ fn run(
         mode_transitions: 0,
         feeding_starts: 0,
         final_reserve: 0.,
+        terminal_outcome: None,
+        terminal_tick: None,
         trace: vec![],
     };
     for tick in 1..=MEASURE {
@@ -152,11 +157,11 @@ fn run(
             result.maxima[i] = result.maxima[i].max(value);
         }
         result.proboscis_above_threshold_fraction +=
-            f64::from(values[0] > config.proboscis_threshold) / MEASURE as f64;
+            f64::from(values[1] > config.proboscis_threshold);
         result.landing_above_threshold_fraction +=
-            f64::from((values[2] + values[4]) / 2. > config.landing_threshold) / MEASURE as f64;
-        result.flight_above_threshold_fraction +=
-            f64::from(values[6] > config.takeoff_threshold) / MEASURE as f64;
+            f64::from((values[3] + values[5]) / 2. > config.landing_threshold);
+        result.flight_above_threshold_fraction += f64::from(values[6] > config.takeoff_threshold);
+        let body_active = body.state().outcome.is_none();
         let events = body.step(&out, &world, Point::default(), 0.1, tick as u32)?;
         result.mode_transitions += events
             .iter()
@@ -166,16 +171,25 @@ fn run(
             .iter()
             .filter(|e| e.kind == BodyEventKind::FeedingStarted)
             .count();
-        result.mode_ticks[match body.state().mode {
-            BodyMode::Walking => 0,
-            BodyMode::Flying => 1,
-            BodyMode::Feeding => 2,
-        }] += 1;
+        if body_active {
+            result.mode_ticks[match body.state().mode {
+                BodyMode::Walking => 0,
+                BodyMode::Flying => 1,
+                BodyMode::Feeding => 2,
+            }] += 1;
+            if body.state().outcome.is_some() {
+                result.terminal_tick = Some(tick);
+            }
+        }
         if seed == 0 {
             result.trace.push(values);
         }
     }
     result.final_reserve = body.state().reserve;
+    result.terminal_outcome = body.state().outcome;
+    result.proboscis_above_threshold_fraction /= MEASURE as f64;
+    result.landing_above_threshold_fraction /= MEASURE as f64;
+    result.flight_above_threshold_fraction /= MEASURE as f64;
     Ok(result)
 }
 fn stats(values: &[f64]) -> Value {
@@ -203,6 +217,11 @@ fn summary(results: &[SeedResult], baseline: Option<&[SeedResult]>) -> Value {
 }
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<_> = std::env::args().collect();
+    let gain_one_only = match args.get(3).map(String::as_str) {
+        None => false,
+        Some("--gain-one-only") => true,
+        _ => return Err("unknown probe option".into()),
+    };
     let path = args
         .get(1)
         .ok_or("Pass graph directory and evidence output JSON")?;
@@ -270,6 +289,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         ("taste", 0.3, &[][..], inputs.as_slice()),
         ("taste", 3., &[][..], inputs.as_slice()),
     ] {
+        if gain_one_only && rows.len() == 2 {
+            break;
+        }
         let estimated_arm = start.elapsed().as_secs_f64() / (rows.len() + 1) as f64;
         if start.elapsed().as_secs_f64() + estimated_arm > 230. {
             budget_stopped = true;
@@ -312,7 +334,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         )
     })
     .collect();
-    let evidence = json!({"graphHash":graph.manifest.graph_hash,"manifestHash":format!("{:x}",Sha256::digest(manifest.as_bytes())),"graphProvenance":graph.manifest.provenance,"sourceHashes":source_hashes,"prng":PRNG_ID,"rootSeeds":(0..N).collect::<Vec<_>>(),"flyId":0,"warmupTicks":WARMUP,"measurementTicks":MEASURE,"lifParams":sim::LifParams::default(),"bodyConfig":BodyConfig::default(),"metricOrder":METRICS,"modeOrder":["walking","flying","feeding"],"stimulatedIndices":inputs,"tasteIndices":taste,"excludedReadoutIndices":taste.iter().filter(|i|readouts.contains(i)).collect::<Vec<_>>(),"baseline":{"means":summary(&baseline,None),"seeds":baseline},"conditions":"All arms have matched noise streams and 60 unstimulated warmup ticks. Current/ablation begins afterward for 100 neural ticks. Taste group receives fixed positive input, excluding every locomotion/proboscis/landing readout. Ablation clamps neurons to zero including external/synaptic input. No field feedback. Body starts with reserve 5 on a large food disk; receives actual StepOutput at dt=.1, with zero wind. Contact does not choose current in this intervention; zero-current baseline has identical contact. Body mode/reserve observations are provisional decoder feasibility, not a feeding behavioral acceptance claim.","uncertainty":"Paired seed means, two-sided Student t(29) 95% interval. Descriptive sweep without multiple-comparison correction. Trace contains seed zero only; each seed retains mean/range and threshold fractions.","elapsedSeconds":start.elapsed().as_secs_f64(),"runtimeBudgetSeconds":240,"budgetStopped":budget_stopped,"results":rows});
+    let evidence = json!({"graphHash":graph.manifest.graph_hash,"manifestHash":format!("{:x}",Sha256::digest(manifest.as_bytes())),"graphProvenance":graph.manifest.provenance,"sourceHashes":source_hashes,"prng":PRNG_ID,"rootSeeds":(0..N).collect::<Vec<_>>(),"flyId":0,"warmupTicks":WARMUP,"measurementTicks":MEASURE,"lifParams":sim::LifParams::default(),"bodyConfig":BodyConfig::default(),"gainOneOnly":gain_one_only,"discreteReadout":"Emitted spike fraction for proboscis/landing; latched feeding; one-second minimum post-landing ground dwell","metricOrder":METRICS,"modeOrder":["walking","flying","feeding"],"stimulatedIndices":inputs,"tasteIndices":taste,"excludedReadoutIndices":taste.iter().filter(|i|readouts.contains(i)).collect::<Vec<_>>(),"baseline":{"means":summary(&baseline,None),"seeds":baseline},"conditions":"All arms have matched noise streams and 60 unstimulated warmup ticks. Current/ablation begins afterward for 100 neural ticks. Taste group receives fixed positive input, excluding every locomotion/proboscis/landing readout. Ablation clamps neurons to zero including external/synaptic input. No field feedback. Body starts with reserve 5 on a large food disk; receives actual StepOutput at dt=.1, with zero wind. Contact does not choose current in this intervention; zero-current baseline has identical contact. Body mode/reserve observations are provisional decoder feasibility, not a feeding behavioral acceptance claim. Neural measurement independently continues to its fixed 100-tick window; terminal body state is frozen and excluded from subsequent mode-tick counts.","uncertainty":"Paired seed means, two-sided Student t(29) 95% interval. Descriptive sweep without multiple-comparison correction. Trace contains seed zero only; each seed retains mean/range and threshold fractions.","elapsedSeconds":start.elapsed().as_secs_f64(),"runtimeBudgetSeconds":240,"budgetStopped":budget_stopped,"results":rows});
     std::fs::write(output, serde_json::to_string_pretty(&evidence)?)?;
     Ok(())
 }
