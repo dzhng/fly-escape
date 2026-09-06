@@ -1,0 +1,645 @@
+{
+  "provenance": "BrainClient LifecycleSession seed 6 mealThenStarvation, unchanged graph/WASM",
+  "pauseAndReverseCanvasIdentical": true,
+  "captures": [
+    {
+      "stem": "feed--0.1-before",
+      "tick": 49.9,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 44,
+        "cursorTick": 49.9,
+        "y": 0,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.5899999999999999
+        }
+      }
+    },
+    {
+      "stem": "feed--0.1-after",
+      "tick": 49.9,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 44,
+        "cursorTick": 49.9,
+        "y": 0.10232578125000018,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.5899999999999999
+        }
+      }
+    },
+    {
+      "stem": "feed-0-before",
+      "tick": 50,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 50,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0
+        }
+      }
+    },
+    {
+      "stem": "feed-0-after",
+      "tick": 50,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 50,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0
+        }
+      }
+    },
+    {
+      "stem": "feed-1-before",
+      "tick": 51,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 51,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.1
+        }
+      }
+    },
+    {
+      "stem": "feed-1-after",
+      "tick": 51,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 51,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.1
+        }
+      }
+    },
+    {
+      "stem": "feed-2-before",
+      "tick": 52,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 52,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.2
+        }
+      }
+    },
+    {
+      "stem": "feed-2-after",
+      "tick": 52,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 52,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.2
+        }
+      }
+    },
+    {
+      "stem": "feed-4-before",
+      "tick": 54,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 54,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.4
+        }
+      }
+    },
+    {
+      "stem": "feed-4-after",
+      "tick": 54,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 54,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.4
+        }
+      }
+    },
+    {
+      "stem": "feed-6-before",
+      "tick": 56,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 56,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "stem": "feed-6-after",
+      "tick": 56,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 56,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "stem": "feed-8-before",
+      "tick": 58,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 58,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.8
+        }
+      }
+    },
+    {
+      "stem": "feed-8-after",
+      "tick": 58,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 58,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.8
+        }
+      }
+    },
+    {
+      "stem": "land--0.1-before",
+      "tick": 65.9,
+      "state": {
+        "mode": "flying",
+        "previousMode": "walking",
+        "startedTick": 64,
+        "cursorTick": 65.9,
+        "y": 0.6,
+        "animation": {
+          "clip": "Fly",
+          "seconds": 0.19000000000000059
+        }
+      }
+    },
+    {
+      "stem": "land--0.1-after",
+      "tick": 65.9,
+      "state": {
+        "mode": "flying",
+        "previousMode": "walking",
+        "startedTick": 64,
+        "cursorTick": 65.9,
+        "y": 0.6,
+        "animation": {
+          "clip": "Fly",
+          "seconds": 0.19000000000000059
+        }
+      }
+    },
+    {
+      "stem": "land-0-before",
+      "tick": 66,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 66,
+        "cursorTick": 66,
+        "y": 0,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0
+        }
+      }
+    },
+    {
+      "stem": "land-0-after",
+      "tick": 66,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 66,
+        "cursorTick": 66,
+        "y": 0.6,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0
+        }
+      }
+    },
+    {
+      "stem": "land-1-before",
+      "tick": 67,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 66,
+        "cursorTick": 67,
+        "y": 0,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.1
+        }
+      }
+    },
+    {
+      "stem": "land-1-after",
+      "tick": 67,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 66,
+        "cursorTick": 67,
+        "y": 0.57421875,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.1
+        }
+      }
+    },
+    {
+      "stem": "land-2-before",
+      "tick": 68,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 66,
+        "cursorTick": 68,
+        "y": 0,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.2
+        }
+      }
+    },
+    {
+      "stem": "land-2-after",
+      "tick": 68,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 66,
+        "cursorTick": 68,
+        "y": 0.50625,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.2
+        }
+      }
+    },
+    {
+      "stem": "land-4-before",
+      "tick": 70,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 66,
+        "cursorTick": 70,
+        "y": 0,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.4
+        }
+      }
+    },
+    {
+      "stem": "land-4-after",
+      "tick": 70,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 66,
+        "cursorTick": 70,
+        "y": 0.3,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.4
+        }
+      }
+    },
+    {
+      "stem": "land-6-before",
+      "tick": 72,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 66,
+        "cursorTick": 72,
+        "y": 0,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "stem": "land-6-after",
+      "tick": 72,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 66,
+        "cursorTick": 72,
+        "y": 0.09374999999999986,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "stem": "land-8-before",
+      "tick": 74,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 66,
+        "cursorTick": 74,
+        "y": 0,
+        "animation": {
+          "clip": "Walk",
+          "seconds": 0
+        }
+      }
+    },
+    {
+      "stem": "land-8-after",
+      "tick": 74,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 66,
+        "cursorTick": 74,
+        "y": 0,
+        "animation": {
+          "clip": "Walk",
+          "seconds": 0
+        }
+      }
+    },
+    {
+      "stem": "interrupted-land--0.1-before",
+      "tick": 43.9,
+      "state": {
+        "mode": "flying",
+        "previousMode": "walking",
+        "startedTick": 3,
+        "cursorTick": 43.9,
+        "y": 0.6,
+        "animation": {
+          "clip": "Fly",
+          "seconds": 4.09
+        }
+      }
+    },
+    {
+      "stem": "interrupted-land--0.1-after",
+      "tick": 43.9,
+      "state": {
+        "mode": "flying",
+        "previousMode": "walking",
+        "startedTick": 3,
+        "cursorTick": 43.9,
+        "y": 0.6,
+        "animation": {
+          "clip": "Fly",
+          "seconds": 4.09
+        }
+      }
+    },
+    {
+      "stem": "interrupted-land-0-before",
+      "tick": 44,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 44,
+        "cursorTick": 44,
+        "y": 0,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0
+        }
+      }
+    },
+    {
+      "stem": "interrupted-land-0-after",
+      "tick": 44,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 44,
+        "cursorTick": 44,
+        "y": 0.6,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0
+        }
+      }
+    },
+    {
+      "stem": "interrupted-land-1-before",
+      "tick": 45,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 44,
+        "cursorTick": 45,
+        "y": 0,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.1
+        }
+      }
+    },
+    {
+      "stem": "interrupted-land-1-after",
+      "tick": 45,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 44,
+        "cursorTick": 45,
+        "y": 0.57421875,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.1
+        }
+      }
+    },
+    {
+      "stem": "interrupted-land-2-before",
+      "tick": 46,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 44,
+        "cursorTick": 46,
+        "y": 0,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.2
+        }
+      }
+    },
+    {
+      "stem": "interrupted-land-2-after",
+      "tick": 46,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 44,
+        "cursorTick": 46,
+        "y": 0.50625,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.2
+        }
+      }
+    },
+    {
+      "stem": "interrupted-land-4-before",
+      "tick": 48,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 44,
+        "cursorTick": 48,
+        "y": 0,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.4
+        }
+      }
+    },
+    {
+      "stem": "interrupted-land-4-after",
+      "tick": 48,
+      "state": {
+        "mode": "walking",
+        "previousMode": "flying",
+        "startedTick": 44,
+        "cursorTick": 48,
+        "y": 0.3,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.4
+        }
+      }
+    },
+    {
+      "stem": "interrupted-land-6-before",
+      "tick": 50,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 50,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0
+        }
+      }
+    },
+    {
+      "stem": "interrupted-land-6-after",
+      "tick": 50,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 50,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0
+        }
+      }
+    },
+    {
+      "stem": "interrupted-land-8-before",
+      "tick": 52,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 52,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.2
+        }
+      }
+    },
+    {
+      "stem": "interrupted-land-8-after",
+      "tick": 52,
+      "state": {
+        "mode": "feeding",
+        "previousMode": "walking",
+        "startedTick": 50,
+        "cursorTick": 52,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.2
+        }
+      }
+    }
+  ],
+  "landingTransitions": [
+    44,
+    66,
+    86,
+    105,
+    129,
+    151
+  ],
+  "errors": []
+}
