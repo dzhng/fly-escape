@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { housePalette } from "./house-materials";
 import { FlyTrails, type TrailPoint } from "./trails";
 export { recordedTrails } from "./trails";
 import { HouseGeometry, cutAwayOccluders, type HousePart } from "./house";
@@ -108,7 +109,7 @@ export class WorldView {
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFShadowMap;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-    this.scene.background = new THREE.Color("#e7ece6");
+    this.scene.background = new THREE.Color(housePalette.background);
     const canvas = this.renderer.domElement;
     canvas.style.display = "block";
     canvas.style.width = "100%";
@@ -295,7 +296,7 @@ export class WorldView {
     const length = Math.hypot(exit.b.x - exit.a.x, exit.b.z - exit.a.z);
     const doorway = new THREE.Mesh(
       new THREE.BoxGeometry(length, 0.025, 0.09),
-      new THREE.MeshBasicMaterial({ color: "#e9b843" }),
+      new THREE.MeshBasicMaterial(housePalette.exit),
     );
     doorway.position.set((exit.a.x + exit.b.x) / 2, 0.04, (exit.a.z + exit.b.z) / 2);
     doorway.rotation.y = -Math.atan2(exit.b.z - exit.a.z, exit.b.x - exit.a.x);

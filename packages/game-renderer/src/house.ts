@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { houseMaterial, applyHousePalette } from "./house-materials";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import type { Geometry } from "@fly-escape/sim-client";
 import { disposeObjectResources } from "./resources";
@@ -43,19 +44,19 @@ export class HouseGeometry {
   constructor(private readonly geometry: Geometry) {
     this.root.add(this.floors, this.walls, this.solids);
     const wall = new THREE.Group();
-    const wallMesh = new THREE.Mesh(new THREE.BoxGeometry(1, 0.6, 0.12), new THREE.MeshStandardMaterial({ color: "#8aab9d", roughness: 1 }));
+    const wallMesh = new THREE.Mesh(new THREE.BoxGeometry(1, 0.6, 0.12), houseMaterial("wall"));
     wallMesh.position.y = 0.3;
     wallMesh.castShadow = wallMesh.receiveShadow = true;
     wall.add(wallMesh);
     const floor = new THREE.Group();
-    const floorMesh = new THREE.Mesh(new THREE.BoxGeometry(1, 0.25, 1), new THREE.MeshStandardMaterial({ color: "#d9dfca", roughness: 1 }));
+    const floorMesh = new THREE.Mesh(new THREE.BoxGeometry(1, 0.25, 1), houseMaterial("floor"));
     floorMesh.position.y = -0.125;
     floorMesh.receiveShadow = true;
     floor.add(floorMesh);
     this.replace("wall", wall);
     this.replace("floor", floor);
     const solid = new THREE.Group();
-    const solidMesh = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshStandardMaterial({ color: "#8aab9d", roughness: 1 }));
+    const solidMesh = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), houseMaterial("solid"));
     solidMesh.position.y = 0.5;
     solidMesh.castShadow = solidMesh.receiveShadow = true;
     solid.add(solidMesh);
@@ -63,6 +64,7 @@ export class HouseGeometry {
   }
   /** Takes ownership of source resources. Clones share geometry/materials. */
   replace(part: HousePart, source: THREE.Group): void {
+    applyHousePalette(source, part);
     const owner = part === "wall" ? this.walls : part === "floor" ? this.floors : this.solids;
     disposeObjectResources(owner);
     owner.clear();

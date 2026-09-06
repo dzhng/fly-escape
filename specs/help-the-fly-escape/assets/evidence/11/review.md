@@ -1,0 +1,13 @@
+# Palette preparation
+
+The shared house palette makes the floor cool blue-grey, walls and solids darker, and the exit orange. The approved mock supplies the muted cool/warm direction; the production floor is deliberately darker because unchanged production lights clipped the previous pale albedo. No geometry, camera, animation, ring, trail or light changed.
+
+Six identical production/workbench states are saved under `before/` and `candidate/`; `draft-dark/` preserves the rejected darker first pass. Production uses the real Worker, seed 42, no placements, paused tick 100. All three GLB binary geometry hashes and the production camera match before/after. The authored and production surfaces consume the same JSON registry, including explicit sRGB-to-linear Blender conversion.
+
+`contrast/metrics.json` records full-image differences and room/fly/exit masks. Rendered floor RGB changes from 255/255/220 (clipped) to 129/153/159. Pure white/floor contrast improves from 1.02 to 3.00; sampled brightest trail/floor from 1.02 to 2.38; dark selected body/floor remains 3.06; yellow ring/floor improves to 1.94. Solid/floor contrast improves from 1.00 to 2.37. These are image telemetry, not a universal accessibility claim. The candidate is less wrong for white path and solid-footprint visibility while retaining a recognizable fly and warm exit.
+
+The capture freezes the earlier world-width trail implementation from root 9cd1b09. Revised pixel-width trails need a combined integration check; the palette alone does not close slice 09. Slice 12 lighting is outside this frozen-light comparison.
+
+Verification: typecheck, all 17 renderer tests (132 assertions), both app builds and six-state real-WASM browser capture passed with zero page errors. The baked-material parity test was first falsified using the original neutral floor GLB, then restored and passed. Geometry/cutaway tests remain green. Review found no separate color owner or old material literals remaining in house surfaces; palette JSON is the shared owner. Installed CLI second-opinion review remains unavailable with its configured model; parent source review and fresh house-agent visual critique cover the independent reviews.
+
+Human Preview opened 19:09 UTC for candidate production follow/setup, authored solid, and baseline follow. Parent controls closure at 19:14 and records feedback. Fresh visual verdict is pending; this is prepared work, not final integrated acceptance.

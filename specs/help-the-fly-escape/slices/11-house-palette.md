@@ -1,6 +1,8 @@
 # 11 — House materials and color
 
-Status: planned. Dependencies: 07,10.
+Status: prepared; integration and final review pending. Dependencies: 07,10.
+
+[Prepared palette evidence](../assets/evidence/11/review.md) covers production and authored assets under frozen lights.
 
 ## Contract and seam
 

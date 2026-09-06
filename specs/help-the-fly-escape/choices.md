@@ -265,3 +265,7 @@ Each fly's trail uses up to four seconds of recorded positions, with the oldest 
 | Stateless core crossing diagnostic through a coalesced worker | sound | high | Actual core sweep/LOS supplies the visible pose with no handwritten collision or fake neural steering. One in-flight plus latest pending query limits slider work. |
 | Apply existing low-base selected visibility to solids | sound | high | Full-height contact screenshot hid the fly. The generic owner-based rule preserves the footprint and collider, restores full height, and fixes the same issue across camera modes. |
 | Local mesh replacement validates bounds rather than arbitrary shape solidity | sound | medium | Appropriate bounded developer workbench contract; supplied mesh is explicitly collider-matched. A bounds check is not proof that any imported sculpted object fills its footprint. |
+
+## House palette — sound, high confidence
+
+A single sRGB JSON registry owns home surface roles for procedural production geometry, imported house replacements and Blender export. The task requested one palette reaching both routes without choosing the cross-language owner. Imported house meshes retain their geometry but receive canonical role color/roughness, preventing a local shape replacement from silently reverting the home palette. Blender converts that same sRGB input to linear values; a baked/runtime parity test catches stale exports. Food and fly materials remain separate semantic assets.

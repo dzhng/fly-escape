@@ -2,6 +2,7 @@
 from pathlib import Path
 import bpy
 import bmesh
+import runpy
 
 out = Path(__file__).resolve().parent
 scene = bpy.data.scenes.new('HouseSolid-Block')
@@ -17,12 +18,7 @@ bmesh.ops.bevel(bm, geom=edges, offset=0.015, segments=2, affect='EDGES')
 bm.normal_update()
 bm.to_mesh(mesh)
 bm.free()
-material = bpy.data.materials.new('NeutralSolid')
-material.use_nodes = True
-material.diffuse_color = (0.38, 0.38, 0.38, 1)
-shader = material.node_tree.nodes.get('Principled BSDF')
-shader.inputs['Base Color'].default_value = material.diffuse_color
-shader.inputs['Roughness'].default_value = 0.8
+material = runpy.run_path(str(out / 'materials.py'))['house_material']('solid')
 mesh.materials.append(material)
 obj = bpy.data.objects.new('SolidBlock', mesh)
 scene.collection.objects.link(obj)

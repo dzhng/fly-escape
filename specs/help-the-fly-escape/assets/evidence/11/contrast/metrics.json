@@ -1,0 +1,85 @@
+{
+  "target": "Cool muted rooms, distinguishable solid footprint, warm orange exit, dark fly and white/yellow markers readable under unchanged production lights.",
+  "images": {
+    "production-setup-overview": {
+      "changedPixelRatio": 0.6266520061728396,
+      "meanAbsoluteRGBDifference": 12.254264146090534
+    },
+    "production-follow": {
+      "changedPixelRatio": 0.4101898148148148,
+      "meanAbsoluteRGBDifference": 37.030368827160494
+    },
+    "production-overview": {
+      "changedPixelRatio": 0.43536265432098764,
+      "meanAbsoluteRGBDifference": 7.224816615226338
+    },
+    "authored-follow": {
+      "changedPixelRatio": 0.6854598765432098,
+      "meanAbsoluteRGBDifference": 34.96993441358025
+    },
+    "authored-overview": {
+      "changedPixelRatio": 0.6861373456790123,
+      "meanAbsoluteRGBDifference": 10.861020061728397
+    },
+    "authored-solid": {
+      "changedPixelRatio": 0.6841234567901234,
+      "meanAbsoluteRGBDifference": 38.200837448559675
+    }
+  },
+  "before": {
+    "floorRGB": [
+      255,
+      255,
+      220
+    ],
+    "floorLuminance": 0.9794730707365679,
+    "floorMaskPixels": 407095,
+    "floorAnyChannelClipped": true,
+    "whiteAgainstFloorContrast": 1.0199392580990445,
+    "selectedFlyBodyMedianLuminance": 0.06239203930604687,
+    "floorAgainstFlyContrast": 9.159661814955433,
+    "yellowRingMedianLuminance": 0.6285525010545949,
+    "yellowAgainstFloorContrast": 1.5171605279423153,
+    "brightestTrailLuminance": 0.9949540039747056,
+    "brightestTrailAgainstFloorContrast": 1.0150377252967497,
+    "exitRGBMedian": [
+      233.0,
+      184.0,
+      67.0
+    ],
+    "solidTopRGB": [
+      205,
+      198,
+      181
+    ],
+    "solidFloorContrast": 1.0
+  },
+  "candidate": {
+    "floorRGB": [
+      129,
+      153,
+      159
+    ],
+    "floorLuminance": 0.29952795864634146,
+    "floorMaskPixels": 403407,
+    "floorAnyChannelClipped": false,
+    "whiteAgainstFloorContrast": 3.0040515330060007,
+    "selectedFlyBodyMedianLuminance": 0.06417218531840384,
+    "floorAgainstFlyContrast": 3.061410777691401,
+    "yellowRingMedianLuminance": 0.6285525010545949,
+    "yellowAgainstFloorContrast": 1.9413396962077256,
+    "brightestTrailLuminance": 0.7821044395588239,
+    "brightestTrailAgainstFloorContrast": 2.3806520164550324,
+    "exitRGBMedian": [
+      239.0,
+      133.0,
+      59.0
+    ],
+    "solidTopRGB": [
+      68,
+      91,
+      106
+    ],
+    "solidFloorContrast": 2.369404466045745
+  }
+}

@@ -4,16 +4,12 @@ GLB +Y up, +Z forward. Wall stretches along X; floor stretches along X and Z.
 from pathlib import Path
 import bpy
 import bmesh
+import runpy
 
 OUT = Path(__file__).resolve().parent
 OUT.mkdir(parents=True, exist_ok=True)
 scenes = []
-mat = bpy.data.materials.new('NeutralHouse')
-mat.use_nodes = True
-mat.diffuse_color = (0.38, 0.38, 0.38, 1)
-shader = mat.node_tree.nodes.get('Principled BSDF')
-shader.inputs['Base Color'].default_value = mat.diffuse_color
-shader.inputs['Roughness'].default_value = 0.8
+house_material = runpy.run_path(str(OUT / 'materials.py'))['house_material']
 
 for name, dimensions, center in [
     ('wall', (1, 0.12, 0.6), (0, 0, 0.3)),
@@ -41,7 +37,7 @@ for name, dimensions, center in [
     bm.free()
     obj = bpy.data.objects.new(name.title()+'Panel', mesh)
     scene.collection.objects.link(obj)
-    mesh.materials.append(mat)
+    mesh.materials.append(house_material(name))
     obj['coordinate_convention'] = 'GLB +Y up, +Z forward'
     obj['world_units_per_blender_unit'] = 1.0
     obj['ground_contact_description'] = 'origin at floor-top center' if name=='floor' else 'origin at wall-base midpoint'
