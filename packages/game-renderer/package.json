@@ -5,6 +5,7 @@
   "type": "module",
   "exports": "./src/index.ts",
   "dependencies": {
+    "@fly-escape/sim-client": "workspace:*",
     "three": "^0.185.1"
   },
   "devDependencies": {
