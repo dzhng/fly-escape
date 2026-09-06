@@ -476,3 +476,50 @@ fn resolved_placements_reach_taste_and_local_body_wind_and_replay() {
         assert_eq!(attempt.step().unwrap(), replay.step().unwrap());
     }
 }
+
+#[test]
+fn canonical_placement_headings_can_start_and_resolve_repeatedly() {
+    use sim::placement::*;
+    let graph = graph();
+    let mut definition = level(1);
+    definition.placement_rules.inventory = vec![ToolStock {
+        kind: ToolKind::Fan,
+        count: 1,
+    }];
+    let tuning = AttemptTuning::default();
+    for heading in [
+        -1e-16,
+        -std::f64::consts::FRAC_PI_2,
+        -0.,
+        std::f64::consts::TAU,
+        1e20,
+    ] {
+        let placements = vec![Placement {
+            id: 1,
+            kind: ToolKind::Fan,
+            position: Point { x: 1., z: 2. },
+            heading,
+        }];
+        let spec = Attempt::describe(
+            &graph,
+            &definition,
+            &tuning,
+            "canonical",
+            42,
+            1,
+            &placements,
+        )
+        .unwrap();
+        let attempt = Attempt::new(
+            graph.clone(),
+            definition.clone(),
+            tuning.clone(),
+            spec.clone(),
+        )
+        .unwrap();
+        assert_eq!(attempt.resolved_setup().state.placements, spec.placements);
+        let again = resolve_placements(&definition, &spec.placements).unwrap();
+        assert_eq!(again.state.placements, spec.placements);
+        assert!((0. ..std::f64::consts::TAU).contains(&spec.placements[0].heading));
+    }
+}

@@ -196,3 +196,26 @@ fn canonical_resolution_binds_each_tool_without_mixing_food_and_odor() {
     assert_eq!(ablated.sources, resolved.sources);
     assert_eq!(ablated.food, resolved.food);
 }
+
+#[test]
+fn repeating_a_raw_heading_placement_is_idempotent() {
+    let level = level();
+    for heading in [-std::f64::consts::FRAC_PI_2, -1e-16, std::f64::consts::TAU] {
+        let mut placement = item(1, ToolKind::Fan, 1., 1.);
+        placement.heading = heading;
+        let edit = PlacementEdit::Place {
+            placement: placement.clone(),
+        };
+        let placed = edit_placements(&level, &[], edit.clone()).unwrap();
+        let repeated = edit_placements(&level, &placed.placements, edit).unwrap();
+        assert_eq!(repeated, placed);
+        assert_eq!(left(&repeated, ToolKind::Fan), 0);
+        placement.position.x = 3.;
+        assert!(edit_placements(
+            &level,
+            &placed.placements,
+            PlacementEdit::Place { placement }
+        )
+        .is_err());
+    }
+}

@@ -104,6 +104,21 @@ pub struct Placement {
     pub position: Point,
     pub heading: f64,
 }
+impl Placement {
+    fn canonicalize(&mut self) -> Result<(), String> {
+        if !self.position.finite() || !self.heading.is_finite() {
+            return Err("placement position and heading must be finite".into());
+        }
+        let heading = self.heading.rem_euclid(std::f64::consts::TAU);
+        // Floating-point remainder can round a tiny negative angle up to TAU.
+        self.heading = if heading >= std::f64::consts::TAU || heading == 0. {
+            0.
+        } else {
+            heading
+        };
+        Ok(())
+    }
+}
 #[derive(Clone, Debug, Serialize, Deserialize, TS)]
 #[serde(tag = "type", rename_all = "camelCase")]
 pub enum PlacementEdit {
@@ -164,13 +179,13 @@ pub fn resolve_placements(
     }
     let mut placements = placements.to_vec();
     placements.sort_by_key(|p| p.id);
+    for p in &mut placements {
+        p.canonicalize()?;
+    }
     for i in 0..placements.len() {
         let placement = &placements[i];
         if i > 0 && placements[i - 1].id == placement.id {
             return Err("placement IDs must be unique".into());
-        }
-        if !placement.position.finite() || !placement.heading.is_finite() {
-            return Err("placement position and heading must be finite".into());
         }
         let radius = tool_def(placement.kind).footprint_radius;
         // A tool's conservative square footprint must fit a room and clear walls.
@@ -221,9 +236,6 @@ pub fn resolve_placements(
         *count = count
             .checked_sub(1)
             .ok_or("no inventory remains for this tool")?;
-    }
-    for p in &mut placements {
-        p.heading = p.heading.rem_euclid(std::f64::consts::TAU);
     }
     let mut sources = level.sources.clone();
     let mut food = level.food.clone();
@@ -288,7 +300,8 @@ pub fn edit_placements(
 ) -> Result<PlacementState, String> {
     let mut candidate = resolve_placements(level, current)?.state.placements;
     match edit {
-        PlacementEdit::Place { placement } => {
+        PlacementEdit::Place { mut placement } => {
+            placement.canonicalize()?;
             if let Some(existing) = candidate.iter().find(|p| p.id == placement.id) {
                 if existing != &placement {
                     return Err("placement ID is already in use".into());

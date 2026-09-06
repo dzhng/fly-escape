@@ -29,16 +29,25 @@ try {
       { kind: "fan", count: 1 },
     ];
     const level = JSON.stringify(request.level);
+    const fruit = { id: 1, kind: "fruit", position: { x: -2, z: -2.45 }, heading: -Math.PI / 2 };
     let state = JSON.parse(
       wasm.edit_setup(
         level,
         "[]",
         JSON.stringify({
           type: "place",
-          placement: { id: 1, kind: "fruit", position: { x: -2, z: -2.45 }, heading: 0 },
+          placement: fruit,
         }),
       ),
     );
+    const repeated = JSON.parse(
+      wasm.edit_setup(
+        level,
+        JSON.stringify(state.placements),
+        JSON.stringify({ type: "place", placement: fruit }),
+      ),
+    );
+    const rawHeadingRepeat = JSON.stringify(repeated) === JSON.stringify(state);
     state = JSON.parse(
       wasm.edit_setup(
         level,
@@ -60,7 +69,8 @@ try {
       rejected = String(error);
     }
     const resolved = JSON.parse(wasm.resolve_setup(level, JSON.stringify(state.placements)));
-    request.placements = state.placements;
+    request.placements = structuredClone(state.placements);
+    request.placements[1].heading = -1e-16;
     request.tuning = {
       cues: [
         { pathway: "inhibitoryOdor", gain: 1 },
@@ -111,6 +121,7 @@ try {
       ),
     );
     return {
+      rawHeadingRepeat,
       catalog,
       state,
       rejected,
@@ -122,6 +133,7 @@ try {
       deterministic: JSON.stringify(first.frame) === JSON.stringify(replay.frame),
     };
   }, root);
+  assert.equal(report.rawHeadingRepeat, true);
   assert.match(report.rejected, /spawn/);
   assert.deepEqual(report.state.remaining, [
     { kind: "fruit", count: 0 },
