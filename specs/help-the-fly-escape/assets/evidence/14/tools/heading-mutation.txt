@@ -1,0 +1,33 @@
+bun test v1.3.14 (0d9b296a)
+
+packages/game-renderer/src/placement-models.test.ts:
+(pass) food assets fit catalog-scaled floor footprints and replacement preserves placement [10.08ms]
+(pass) fruit shared geometry survives edits and is released once when replaced [2.52ms]
+(pass) crumbs shared geometry survives edits and is released once when replaced [3.22ms]
+(pass) vinegar shared geometry survives edits and is released once when replaced [1.81ms]
+(pass) fan shared geometry survives edits and is released once when replaced [2.90ms]
+(pass) lamp shared geometry survives edits and is released once when replaced [1.33ms]
+(pass) shade shared geometry survives edits and is released once when replaced [0.62ms]
+(pass) vinegar is a finite static floor surface within its placement footprint [0.46ms]
+(pass) fan is a finite static floor surface within its placement footprint [0.63ms]
+(pass) lamp is a finite static floor surface within its placement footprint [0.63ms]
+(pass) shade is a finite static floor surface within its placement footprint [0.35ms]
+ 97 |   };
+ 98 |   const initial = direction(0);
+ 99 |   expect(initial.x).toBeGreaterThan(0.1);
+100 |   expect(Math.abs(initial.z)).toBeLessThan(1e-6);
+101 |   const turned = direction(Math.PI / 2);
+102 |   expect(turned.z).toBeGreaterThan(0.1);
+                         ^
+error: expect(received).toBeGreaterThan(expected)
+
+Expected: > 0.1
+Received: -0.1837500035762787
+
+      at <anonymous> (/private/tmp/fly-tool-art/packages/game-renderer/src/placement-models.test.ts:102:20)
+(fail) authored fan direction follows placement heading and restores after editing [0.99ms]
+
+ 11 pass
+ 1 fail
+ 43 expect() calls
+Ran 12 tests across 1 file. [54.00ms]

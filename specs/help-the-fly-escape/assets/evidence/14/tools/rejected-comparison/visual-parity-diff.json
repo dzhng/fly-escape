@@ -1,0 +1,269 @@
+{
+  "kind": "screenshot-parity-diff",
+  "generatedAt": "2026-09-06T19:39:08.910Z",
+  "note": "Lower parityDistance means the candidate is closer to the reference for this fixed pair. This is a distance metric, not an acceptance gate.",
+  "pairCount": 4,
+  "worstPair": "setup-placed-crop",
+  "results": [
+    {
+      "id": "setup-placed-crop",
+      "current": "../../../../tmp/fly-tool-art/specs/help-the-fly-escape/assets/evidence/14/tools/baseline/setup-placed-crop.png",
+      "candidate": "../../../../tmp/fly-tool-art/specs/help-the-fly-escape/assets/evidence/14/tools/candidate/setup-placed-crop.png",
+      "dimensions": {
+        "width": 650,
+        "height": 320
+      },
+      "parityDistance": 0.00754,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 63,
+          "colorEntropyBits": 1.84378,
+          "edgeDensity": 0.11494,
+          "dominantColorShare": 0.55526,
+          "transparentShare": 0,
+          "luminanceMean": 181.57508,
+          "luminanceP5": 70.2534,
+          "luminanceP95": 225.0224,
+          "luminanceContrast": 154.769
+        },
+        "candidate": {
+          "colorBuckets": 56,
+          "colorEntropyBits": 1.80631,
+          "edgeDensity": 0.11423,
+          "dominantColorShare": 0.55526,
+          "transparentShare": 0,
+          "luminanceMean": 181.2222,
+          "luminanceP5": 70.2534,
+          "luminanceP95": 225.0224,
+          "luminanceContrast": 154.769
+        }
+      },
+      "grayscale": {
+        "mae": 0.42163,
+        "rmse": 5.82534,
+        "diffRatio16": 0.00657,
+        "diffRatio32": 0.00563,
+        "diffRatio64": 0.00284,
+        "pixelmatchRatio": 0.00622
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.56271,
+        "terrainLikeRatioCandidate": 0.5637,
+        "avgLuminanceCurrent": 182.08842,
+        "avgLuminanceCandidate": 181.74054,
+        "avgLuminanceDelta": -0.34788,
+        "edgeEnergyCurrent": 0.04656,
+        "edgeEnergyCandidate": 0.04704,
+        "edgeEnergyRatio": 1.0105,
+        "edgeDiffRatio32": 0.00703
+      },
+      "artifacts": {
+        "sideBySide": "comparison/setup-placed-crop-side-by-side.png",
+        "currentGray": "comparison/setup-placed-crop-current-gray.png",
+        "candidateGray": "comparison/setup-placed-crop-candidate-gray.png",
+        "absDiff": "comparison/setup-placed-crop-absdiff.png",
+        "pixelmatch": "comparison/setup-placed-crop-pixelmatch.png",
+        "currentEdges": "comparison/setup-placed-crop-current-edges.png",
+        "candidateEdges": "comparison/setup-placed-crop-candidate-edges.png",
+        "edgeDiff": "comparison/setup-placed-crop-edge-diff.png"
+      }
+    },
+    {
+      "id": "playback-placed-crop",
+      "current": "../../../../tmp/fly-tool-art/specs/help-the-fly-escape/assets/evidence/14/tools/baseline/playback-placed-crop.png",
+      "candidate": "../../../../tmp/fly-tool-art/specs/help-the-fly-escape/assets/evidence/14/tools/candidate/playback-placed-crop.png",
+      "dimensions": {
+        "width": 650,
+        "height": 320
+      },
+      "parityDistance": 0.0031,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 57,
+          "colorEntropyBits": 1.16155,
+          "edgeDensity": 0.07128,
+          "dominantColorShare": 0.79059,
+          "transparentShare": 0,
+          "luminanceMean": 204.62465,
+          "luminanceP5": 91.5474,
+          "luminanceP95": 225.0224,
+          "luminanceContrast": 133.475
+        },
+        "candidate": {
+          "colorBuckets": 47,
+          "colorEntropyBits": 1.14115,
+          "edgeDensity": 0.06986,
+          "dominantColorShare": 0.79059,
+          "transparentShare": 0,
+          "luminanceMean": 204.47176,
+          "luminanceP5": 91.5474,
+          "luminanceP95": 225.0224,
+          "luminanceContrast": 133.475
+        }
+      },
+      "grayscale": {
+        "mae": 0.19151,
+        "rmse": 3.8395,
+        "diffRatio16": 0.00314,
+        "diffRatio32": 0.00261,
+        "diffRatio64": 0.00119,
+        "pixelmatchRatio": 0.00292
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.79438,
+        "terrainLikeRatioCandidate": 0.79493,
+        "avgLuminanceCurrent": 204.8842,
+        "avgLuminanceCandidate": 204.72556,
+        "avgLuminanceDelta": -0.15864,
+        "edgeEnergyCurrent": 0.03103,
+        "edgeEnergyCandidate": 0.03096,
+        "edgeEnergyRatio": 0.99787,
+        "edgeDiffRatio32": 0.00397
+      },
+      "artifacts": {
+        "sideBySide": "comparison/playback-placed-crop-side-by-side.png",
+        "currentGray": "comparison/playback-placed-crop-current-gray.png",
+        "candidateGray": "comparison/playback-placed-crop-candidate-gray.png",
+        "absDiff": "comparison/playback-placed-crop-absdiff.png",
+        "pixelmatch": "comparison/playback-placed-crop-pixelmatch.png",
+        "currentEdges": "comparison/playback-placed-crop-current-edges.png",
+        "candidateEdges": "comparison/playback-placed-crop-candidate-edges.png",
+        "edgeDiff": "comparison/playback-placed-crop-edge-diff.png"
+      }
+    },
+    {
+      "id": "setup-placed",
+      "current": "../../../../tmp/fly-tool-art/specs/help-the-fly-escape/assets/evidence/14/tools/baseline/setup-placed.png",
+      "candidate": "../../../../tmp/fly-tool-art/specs/help-the-fly-escape/assets/evidence/14/tools/candidate/setup-placed.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "parityDistance": 0.00111,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 71,
+          "colorEntropyBits": 2.57514,
+          "edgeDensity": 0.19348,
+          "dominantColorShare": 0.46021,
+          "transparentShare": 0,
+          "luminanceMean": 138.14446,
+          "luminanceP5": 33.7456,
+          "luminanceP95": 225.0224,
+          "luminanceContrast": 191.2768
+        },
+        "candidate": {
+          "colorBuckets": 69,
+          "colorEntropyBits": 2.56894,
+          "edgeDensity": 0.19299,
+          "dominantColorShare": 0.46021,
+          "transparentShare": 0,
+          "luminanceMean": 138.09058,
+          "luminanceP5": 33.7456,
+          "luminanceP95": 225.0224,
+          "luminanceContrast": 191.2768
+        }
+      },
+      "grayscale": {
+        "mae": 0.06767,
+        "rmse": 2.33373,
+        "diffRatio16": 0.00105,
+        "diffRatio32": 0.0009,
+        "diffRatio64": 0.00046,
+        "pixelmatchRatio": 0.001
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.47422,
+        "terrainLikeRatioCandidate": 0.47438,
+        "avgLuminanceCurrent": 137.54183,
+        "avgLuminanceCandidate": 137.486,
+        "avgLuminanceDelta": -0.05583,
+        "edgeEnergyCurrent": 0.06412,
+        "edgeEnergyCandidate": 0.0642,
+        "edgeEnergyRatio": 1.00122,
+        "edgeDiffRatio32": 0.00113
+      },
+      "artifacts": {
+        "sideBySide": "comparison/setup-placed-side-by-side.png",
+        "currentGray": "comparison/setup-placed-current-gray.png",
+        "candidateGray": "comparison/setup-placed-candidate-gray.png",
+        "absDiff": "comparison/setup-placed-absdiff.png",
+        "pixelmatch": "comparison/setup-placed-pixelmatch.png",
+        "currentEdges": "comparison/setup-placed-current-edges.png",
+        "candidateEdges": "comparison/setup-placed-candidate-edges.png",
+        "edgeDiff": "comparison/setup-placed-edge-diff.png"
+      }
+    },
+    {
+      "id": "playback-placed",
+      "current": "../../../../tmp/fly-tool-art/specs/help-the-fly-escape/assets/evidence/14/tools/baseline/playback-placed.png",
+      "candidate": "../../../../tmp/fly-tool-art/specs/help-the-fly-escape/assets/evidence/14/tools/candidate/playback-placed.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "parityDistance": 0.00046,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 85,
+          "colorEntropyBits": 2.27173,
+          "edgeDensity": 0.14416,
+          "dominantColorShare": 0.39035,
+          "transparentShare": 0,
+          "luminanceMean": 228.97382,
+          "luminanceP5": 148.3308,
+          "luminanceP95": 251.5588,
+          "luminanceContrast": 103.228
+        },
+        "candidate": {
+          "colorBuckets": 80,
+          "colorEntropyBits": 2.26928,
+          "edgeDensity": 0.14409,
+          "dominantColorShare": 0.39035,
+          "transparentShare": 0,
+          "luminanceMean": 228.94847,
+          "luminanceP5": 148.3308,
+          "luminanceP95": 251.5588,
+          "luminanceContrast": 103.228
+        }
+      },
+      "grayscale": {
+        "mae": 0.03074,
+        "rmse": 1.53817,
+        "diffRatio16": 0.0005,
+        "diffRatio32": 0.00042,
+        "diffRatio64": 0.00019,
+        "pixelmatchRatio": 0.00047
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0.00007,
+        "blackRatioCandidate": 0.00007,
+        "terrainLikeRatioCurrent": 0.94979,
+        "terrainLikeRatioCandidate": 0.94988,
+        "avgLuminanceCurrent": 229.41565,
+        "avgLuminanceCandidate": 229.39019,
+        "avgLuminanceDelta": -0.02546,
+        "edgeEnergyCurrent": 0.06346,
+        "edgeEnergyCandidate": 0.06345,
+        "edgeEnergyRatio": 0.99983,
+        "edgeDiffRatio32": 0.00064
+      },
+      "artifacts": {
+        "sideBySide": "comparison/playback-placed-side-by-side.png",
+        "currentGray": "comparison/playback-placed-current-gray.png",
+        "candidateGray": "comparison/playback-placed-candidate-gray.png",
+        "absDiff": "comparison/playback-placed-absdiff.png",
+        "pixelmatch": "comparison/playback-placed-pixelmatch.png",
+        "currentEdges": "comparison/playback-placed-current-edges.png",
+        "candidateEdges": "comparison/playback-placed-candidate-edges.png",
+        "edgeDiff": "comparison/playback-placed-edge-diff.png"
+      }
+    }
+  ]
+}
