@@ -105,7 +105,7 @@ function sample(run: Run): FlyPose[] {
       x: from.position.x + (to.position.x - from.position.x) * fraction,
       z: from.position.z + (to.position.z - from.position.z) * fraction,
       heading: from.heading + angle * fraction,
-      y: a?.mode === "flying" ? 0.6 : 0.1,
+      y: a?.mode === "flying" ? 0.6 : 0,
     };
   });
 }
