@@ -168,7 +168,7 @@ impl<'a> BodyWorld<'a> {
                 || !r.center.z.is_finite()
                 || !r.radius.is_finite()
                 || r.radius <= 0.
-                || geometry.room_at(r.center).is_none()
+                || !geometry.contains_body(r.center, 0.)
         }) {
             return Err("contact regions require finite floor positions and positive radii".into());
         }

@@ -1,6 +1,6 @@
 # 10 — A readable 3D house
 
-Status: modular kit integrated in the shared renderer and house workbench; final acceptance and solid-prop contract open. Dependencies: 07.
+Status: modular kit integrated; solid-prop contract and fixture pass native/browser/source/fresh visual checks; merged-view and human acceptance pending. Dependencies: 07.
 
 ## Contract and seam
 
@@ -38,7 +38,7 @@ The [modular kit](../assets/evidence/10/kit.md) and [five-room collision fixture
 
 [Workbench evidence](../assets/evidence/10/renderer.md) covers topology-driven modular placement, doorway diagnostic poses, recursive cutaway, local part replacement and disposal. The ordinary fly workbench remains the default route. The loaded asset must preserve the kit bounds/pivot; replacement never changes collision data.
 
-The remaining solid-prop requirement is a separate contract checkpoint: add core-owned prop footprints and export them through Geometry, pin swept collision and sensory visibility against a consumer fixture, then map authored meshes to those footprints and review local prop replacement. Do not add decorative obstacles before that seam exists. This pass leaves Rust/WASM unchanged while slice 05 measurement runs; it does not complete slice 10 or authorize palette, lighting, or campaign work.
+The solid-prop requirement was separated into the contract checkpoint below: add core-owned prop footprints and export them through Geometry, pin swept collision and sensory visibility against a consumer fixture, then map authored meshes to those footprints and review local prop replacement. Do not add decorative obstacles before that seam exists. This pass leaves Rust/WASM unchanged while slice 05 measurement runs; it does not complete slice 10 or authorize palette, lighting, or campaign work.
 
 ## Enclosure cue checkpoint
 
@@ -47,3 +47,13 @@ Fresh review found that removing both walls at a followed corner turns the room 
 The low-base review also exposed a notch where perpendicular wall segments end on the same point. Extend only those shared, noncollinear visual ends by half the kit thickness so the outside corner is filled. Lone ends, including door jambs, retain their exact segment extent. Derive joins from the supplied wall endpoints; keep the simulation topology unchanged. Pin corner coverage and unchanged opening clearance, then inspect identical corner and overview states with the current selection-ring code.
 
 Selected-fly visibility also applies in Overview: Overview releases camera follow, not selection. When the selected fly's projected center is inside the drawable viewport, reduce intervening wall segments to their low bases in any camera mode. Offscreen selections and unobstructed views restore full-height walls. Verify the actual corner Overview, an unobstructed same-position Overview before/after, and offscreen pan; do not replace the occluded-corner case with an easier pose.
+
+## Solid footprint checkpoint
+
+Extend Geometry with a required `solids` array of `SolidProp { id, min, max, height }`. Each prop has a finite positive axis-aligned floor rectangle, a positive presentation height, and a unique ID. It must fit one room, clear wall segments, and not overlap another solid. Collision remains planar: the entire footprint blocks all body modes, regardless of presentation height. The same rectangle blocks line of sight and field transport, excludes field cells and tool placement, and positions/scales one neutral authored solid mesh. No separate renderer obstacle map or visual-only prop is allowed. Empty fixtures supply `solids: []`; no compatibility default is needed.
+
+Add one solid to the shared five-room review fixture and expose a bounded core-owned diagnostic crossing around it through WASM. The workbench displays the core's stopped pose and line-of-sight result, never computes collision in TypeScript. Native tests pin swept contact, blocked visibility/field cells, open detour, invalid spawn/placement and unchanged doorway connectivity. Browser proof pairs the diagnostic stopped pose with the real GLB bounds and local solid replacement/disposal. Keep palette, lighting and campaign tuning outside this checkpoint.
+
+Solid meshes follow the existing selected-visibility rule: an occluding solid keeps a low base of at most the wall-base height, using its original footprint, while the core collider and sensory occlusion remain unchanged. This prevents a tall prop from hiding the diagnostic contact pose, without turning it into an invisible obstacle. Unobstructed props restore their authored height. Include full-height Overview and a close stopped-body view; neither alone proves both collision and silhouette.
+
+[Solid checkpoint evidence](../assets/evidence/10/solid/review.md) records the authored collider match, diagnostic browser paths, replacement proof and remaining acceptance gates.

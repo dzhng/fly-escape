@@ -1,6 +1,8 @@
 import { WorldView, loadFlyModel, loadHousePart, type HousePart, type FlyAnimation } from "@fly-escape/game-renderer";
 import modelUrl from "../../../assets/fly/fly.glb?url";
 import "./style.css";
+import { HouseProbeClient } from "@fly-escape/sim-client";
+import solidUrl from "../../../assets/house/solid.glb?url";
 import houseGeometry from "../../../assets/house/five-rooms.json";
 import wallUrl from "../../../assets/house/wall.glb?url";
 import floorUrl from "../../../assets/house/floor.glb?url";
@@ -16,12 +18,13 @@ const status = app.querySelector<HTMLParagraphElement>(".status")!;
 const view = new WorldView(world, house ? houseGeometry : {
   rooms: [{ id: 1, min: { x: -3, z: -3 }, max: { x: 3, z: 3 } }],
   walls: [],
+  solids: [],
 });
 view.enableSelection((id) => view.selectFly(id));
 app.querySelector("aside")!.insertAdjacentHTML("afterbegin", `<p><a href="${house ? "?" : "?fixture=house"}">${house ? "Fly workbench" : "Five-room house"}</a></p>`);
 if (house) {
   app.querySelector("h1")!.textContent = "Five-room house";
-  app.querySelector("aside")!.insertAdjacentHTML("afterbegin", `<h2>Geometry inspection</h2><p>Rooms 1–4 form the hall; room 5 is the one-door pantry. Paths below are diagnostic poses, not neural locomotion.</p><label>Room <select id="room">${houseGeometry.rooms.map(r => `<option value="${r.id}">Room ${r.id}${r.id === 5 ? " · pantry" : ""}</option>`).join("")}</select></label><button id="inspect-room">Inspect room</button><button id="cutaway">Follow at wall</button><label>Doorway <select id="doorway">${doorways.map((d, i) => `<option value="${i}">${d.label}</option>`).join("")}</select></label><label>Cross doorway <input id="crossing" type="range" min="-1" max="1" step="0.01" value="0"></label><label>Replace house part <select id="part"><option value="wall">Wall</option><option value="floor">Floor</option></select><input id="house-file" type="file" accept=".glb" aria-label="Replace house part"></label><p id="house-status" role="status">Loading modular kit…</p><p>Replacement must preserve the kit bounds and pivot. Walls: 1 × 0.6 × 0.12; floor: 1 × 0.25 × 1, top at Y=0. Solid props await a collision contract.</p>`);
+  app.querySelector("aside")!.insertAdjacentHTML("afterbegin", `<h2>Geometry inspection</h2><p>Rooms 1–4 form the hall; room 5 is the one-door pantry. Paths below are diagnostic poses, not neural locomotion.</p><label>Room <select id="room">${houseGeometry.rooms.map(r => `<option value="${r.id}">Room ${r.id}${r.id === 5 ? " · pantry" : ""}</option>`).join("")}</select></label><button id="inspect-room">Inspect room</button><button id="cutaway">Follow at wall</button><label>Doorway <select id="doorway">${doorways.map((d, i) => `<option value="${i}">${d.label}</option>`).join("")}</select></label><label>Cross doorway <input id="crossing" type="range" min="-1" max="1" step="0.01" value="0"></label><label>Replace house part <select id="part"><option value="wall">Wall</option><option value="floor">Floor</option><option value="solid">Solid</option></select><input id="house-file" type="file" accept=".glb" aria-label="Replace house part"></label><p id="house-status" role="status">Loading modular kit…</p><p>Replacement must preserve the kit bounds and pivot. Walls: 1 × 0.6 × 0.12; floor: 1 × 0.25 × 1, top at Y=0. Solid: 1 × 1 × 1, base at Y=0. All solid footprints block every body mode.</p><h3>Solid collision probe</h3><p>Diagnostic core sweep, not neural motion.</p><label>Path <select id="solid-path"><option value="blocked">Through solid</option><option value="detour">Beside solid</option></select></label><label>Approach <input id="solid-progress" type="range" min="0" max="1" step="0.01" value="0"></label><button id="probe-solid">Inspect solid</button><p id="solid-status" role="status">Choose Inspect solid to run the core query.</p>`);
 }
 const firstRoom = houseGeometry.rooms[0];
 let position = house ? { x: (firstRoom.min.x + firstRoom.max.x) / 2, z: (firstRoom.min.z + firstRoom.max.z) / 2 } : { x: 0, z: 0 };
@@ -31,6 +34,17 @@ let playing = false;
 const clipControl = app.querySelector<HTMLSelectElement>("#clip")!;
 const timeControl = app.querySelector<HTMLInputElement>("#time")!;
 const playControl = app.querySelector<HTMLButtonElement>("#play")!;
+const probeClient = house ? new HouseProbeClient(reply => {
+  const label = app.querySelector<HTMLElement>("#solid-status")!;
+  if ("error" in reply) { label.textContent = reply.error; return; }
+  const probe = reply.probe;
+  position = probe.stopped;
+  heading = 0;
+  clipControl.value = "Static";
+  pose(); view.selectFly(0);
+  label.textContent = `${probe.stopped.x < probe.requested.x - 1e-6 ? "Stopped before solid" : "Path clear"} · sight ${probe.lineOfSight ? "clear" : "blocked"} · body radius ${probe.radius}`;
+  app.dataset.solidProbe = JSON.stringify(probe);
+}) : undefined;
 function pose() {
   const clip = clipControl.value;
   view.setPose({
@@ -58,7 +72,7 @@ playControl.addEventListener("click", () => {
 });
 view.setPose({ x: 0, y: 0, z: 0, heading });
 let generation = 0;
-const houseGenerations = { wall: 0, floor: 0 };
+const houseGenerations = { wall: 0, floor: 0, solid: 0 };
 async function replace(source: Promise<ArrayBuffer>) {
   const ticket = ++generation;
   status.textContent = "Loading fly…";
@@ -119,22 +133,25 @@ if (house) {
       label.textContent = `${part} loaded · source files unchanged`;
     } catch (error) { if (ticket === houseGenerations[part]) label.textContent = `Previous part retained. ${error instanceof Error ? error.message : error}`; }
   }
-  void Promise.all([replacePart("wall", fetch(wallUrl).then(r => r.arrayBuffer())), replacePart("floor", fetch(floorUrl).then(r => r.arrayBuffer()))]).then(() => { app.dataset.houseReady = "true"; });
+  void Promise.all([replacePart("wall", fetch(wallUrl).then(r => r.arrayBuffer())), replacePart("floor", fetch(floorUrl).then(r => r.arrayBuffer())), replacePart("solid", fetch(solidUrl).then(r => r.arrayBuffer()))]).then(() => { app.dataset.houseReady = "true"; });
   app.querySelector<HTMLInputElement>("#house-file")!.addEventListener("change", event => {
     const file = (event.currentTarget as HTMLInputElement).files?.[0];
     if (file) void replacePart(app.querySelector<HTMLSelectElement>("#part")!.value as HousePart, file.arrayBuffer());
   });
   app.querySelector<HTMLButtonElement>("#inspect-room")!.addEventListener("click", () => {
+    probeClient?.cancel();
     const room = houseGeometry.rooms.find(r => r.id === Number(app.querySelector<HTMLSelectElement>("#room")!.value))!;
     position = { x: (room.min.x + room.max.x) / 2, z: (room.min.z + room.max.z) / 2 };
     clipControl.value = "Static"; pose(); view.selectFly(0);
   });
   app.querySelector("#cutaway")!.addEventListener("click", () => {
+    probeClient?.cancel();
     const room = houseGeometry.rooms.find(r => r.id === Number(app.querySelector<HTMLSelectElement>("#room")!.value))!;
     position = { x: room.max.x - 0.15, z: room.max.z - 0.15 };
     clipControl.value = "Static"; pose(); view.selectFly(0);
   });
   const cross = () => {
+    probeClient?.cancel();
     const door = doorways[Number(app.querySelector<HTMLSelectElement>("#doorway")!.value)];
     const t = Number(app.querySelector<HTMLInputElement>("#crossing")!.value);
     position = { x: door.x + door.dx * t, z: door.z + door.dz * t };
@@ -142,6 +159,10 @@ if (house) {
     clipControl.value = "Fly"; pose(); view.selectFly(0);
     app.dataset.crossing = JSON.stringify({ ...position, t, door: door.label });
   };
+  const querySolid = () => probeClient!.request(Number(app.querySelector<HTMLInputElement>("#solid-progress")!.value), app.querySelector<HTMLSelectElement>("#solid-path")!.value === "detour");
+  app.querySelector("#solid-progress")!.addEventListener("input", querySolid);
+  app.querySelector("#solid-path")!.addEventListener("change", querySolid);
+  app.querySelector("#probe-solid")!.addEventListener("click", querySolid);
   app.querySelector("#crossing")!.addEventListener("input", cross);
   app.querySelector("#doorway")!.addEventListener("change", cross);
 }
@@ -168,6 +189,8 @@ window.addEventListener("pagehide", (event) => {
   ++generation;
   ++houseGenerations.wall;
   ++houseGenerations.floor;
+  ++houseGenerations.solid;
   cancelAnimationFrame(raf);
+  probeClient?.dispose();
   view.dispose();
 });

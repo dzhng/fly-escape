@@ -29,11 +29,19 @@ pub struct Wall {
     pub a: Point,
     pub b: Point,
 }
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
+pub struct SolidProp {
+    pub id: u32,
+    pub min: Point,
+    pub max: Point,
+    pub height: f64,
+}
 /// Openings are absent wall intervals, never a second doorway collision map.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
 pub struct Geometry {
     pub rooms: Vec<RectRoom>,
     pub walls: Vec<Wall>,
+    pub solids: Vec<SolidProp>,
 }
 impl Geometry {
     pub fn room_at(&self, p: Point) -> Option<u32> {
@@ -42,34 +50,31 @@ impl Geometry {
             .find(|r| p.x >= r.min.x && p.x <= r.max.x && p.z >= r.min.z && p.z <= r.max.z)
             .map(|r| r.id)
     }
-    /// A spawn must clear the same conservative wall footprint used by sweep.
+    /// A spawn must clear the same conservative obstacle footprint used by sweep.
     pub fn contains_body(&self, p: Point, radius: f64) -> bool {
         p.finite()
             && radius.is_finite()
             && radius >= 0.
             && self.room_at(p).is_some()
-            && self.walls.iter().all(|wall| {
-                let (min, max) = wall_bounds(*wall, radius);
-                segment_box(p, p, min, max).is_none()
-            })
+            && self
+                .blocking_bounds(radius)
+                .all(|(min, max)| segment_box(p, p, min, max).is_none())
     }
     pub fn line_of_sight(&self, a: Point, b: Point) -> bool {
         a.finite()
             && b.finite()
             && !self
-                .walls
-                .iter()
-                .any(|w| segment_box(a, b, w.a, w.b).is_some())
+                .blocking_bounds(0.)
+                .any(|(min, max)| segment_box(a, b, min, max).is_some())
     }
-    /// Continuous conservative circle sweep: each axis-aligned wall is expanded
+    /// Continuous conservative circle sweep: each wall or solid is expanded
     /// by radius, including square end caps. Stops before first contact; no slide.
     pub fn sweep(&self, from: Point, to: Point, radius: f64) -> Point {
         if !from.finite() || !to.finite() || !radius.is_finite() || radius < 0. {
             return from;
         }
         let mut t: f64 = 1.;
-        for w in &self.walls {
-            let (min, max) = wall_bounds(*w, radius);
+        for (min, max) in self.blocking_bounds(radius) {
             if let Some(hit) = segment_box(from, to, min, max) {
                 t = t.min(hit);
             }
@@ -82,9 +87,25 @@ impl Geometry {
             z: from.z + (to.z - from.z) * t,
         }
     }
+    fn blocking_bounds(&self, radius: f64) -> impl Iterator<Item = (Point, Point)> + '_ {
+        self.walls
+            .iter()
+            .map(move |w| expanded_bounds(w.a, w.b, radius))
+            .chain(
+                self.solids
+                    .iter()
+                    .map(move |p| expanded_bounds(p.min, p.max, radius)),
+            )
+    }
     pub(crate) fn validate(&self) -> Result<(), String> {
-        if self.rooms.is_empty() || self.rooms.len() > 256 || self.walls.len() > 4096 {
-            return Err("geometry requires 1..256 rooms and at most 4096 walls".into());
+        if self.rooms.is_empty()
+            || self.rooms.len() > 256
+            || self.walls.len() > 4096
+            || self.solids.len() > 256
+        {
+            return Err(
+                "geometry requires 1..256 rooms and at most 4096 walls and 256 solids".into(),
+            );
         }
         for (i, r) in self.rooms.iter().enumerate() {
             if !r.min.finite() || !r.max.finite() || r.min.x >= r.max.x || r.min.z >= r.max.z {
@@ -105,6 +126,34 @@ impl Geometry {
             !w.a.finite() || !w.b.finite() || w.a == w.b || (w.a.x != w.b.x && w.a.z != w.b.z)
         }) {
             return Err("walls must be finite nonzero axis-aligned segments".into());
+        }
+        for (i, p) in self.solids.iter().enumerate() {
+            if !p.min.finite()
+                || !p.max.finite()
+                || p.min.x >= p.max.x
+                || p.min.z >= p.max.z
+                || !p.height.is_finite()
+                || p.height <= 0.
+                || !self.rooms.iter().any(|r| {
+                    p.min.x >= r.min.x
+                        && p.max.x <= r.max.x
+                        && p.min.z >= r.min.z
+                        && p.max.z <= r.max.z
+                })
+                || self
+                    .walls
+                    .iter()
+                    .any(|w| segment_box(w.a, w.b, p.min, p.max).is_some())
+                || self.solids[..i].iter().any(|q| {
+                    q.id == p.id
+                        || (p.min.x < q.max.x
+                            && p.max.x > q.min.x
+                            && p.min.z < q.max.z
+                            && p.max.z > q.min.z)
+                })
+            {
+                return Err("solids require unique IDs, positive finite bounds/height, open floor in one room, and nonoverlapping footprints".into());
+            }
         }
         Ok(())
     }
@@ -134,15 +183,15 @@ fn segment_box(a: Point, b: Point, min: Point, max: Point) -> Option<f64> {
     Some(near)
 }
 
-fn wall_bounds(wall: Wall, radius: f64) -> (Point, Point) {
+fn expanded_bounds(a: Point, b: Point, radius: f64) -> (Point, Point) {
     (
         Point {
-            x: wall.a.x.min(wall.b.x) - radius,
-            z: wall.a.z.min(wall.b.z) - radius,
+            x: a.x.min(b.x) - radius,
+            z: a.z.min(b.z) - radius,
         },
         Point {
-            x: wall.a.x.max(wall.b.x) + radius,
-            z: wall.a.z.max(wall.b.z) + radius,
+            x: a.x.max(b.x) + radius,
+            z: a.z.max(b.z) + radius,
         },
     )
 }

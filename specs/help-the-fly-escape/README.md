@@ -56,6 +56,8 @@ Before closing a substantive pass, review ownership with [refactor-clean](../../
 
 ## Evidence and remaining uncertainty
 
+- [Prepared solid geometry](assets/evidence/10/solid/review.md) shares core collision, field visibility, placement and authored mesh footprints; native/browser/fresh visual checks pass, with integrated acceptance pending.
+
 - [Science panel preparation](assets/evidence/13/review.md): all-card diagrams, bounded packed traces and neuron explanations pass integrated browser and dependency checks.
 
 - [Research and reproduction](RESEARCH.md): actual source defects, reference architecture, primary external documentation and reproduction spikes.

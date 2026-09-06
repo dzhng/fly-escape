@@ -26,6 +26,7 @@ fn chambers(open: bool) -> Geometry {
         walls.push(wall(4., 0., 4., 4.));
     }
     Geometry {
+        solids: vec![],
         rooms: vec![room(1, 0., 0., 4., 4.), room(2, 4., 0., 8., 4.)],
         walls,
     }
@@ -111,6 +112,7 @@ fn odor_crosses_open_doorway_but_not_solid_wall_at_two_resolutions() {
 }
 fn arena() -> Geometry {
     Geometry {
+        solids: vec![],
         rooms: vec![room(1, 0., 0., 12., 12.)],
         walls: vec![
             wall(0., 0., 12., 0.),

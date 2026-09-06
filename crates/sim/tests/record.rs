@@ -179,6 +179,7 @@ fn malformed_transport_buffers_are_errors_not_panics_or_partial_replays() {
 #[test]
 fn dense_real_body_transitions_fit_and_replay_in_order() {
     let geometry = Geometry {
+        solids: vec![],
         rooms: vec![RectRoom {
             id: 1,
             min: Point { x: 0., z: 0. },

@@ -1,0 +1,75 @@
+{
+  "blocked": {
+    "solid": {
+      "id": 1,
+      "min": {
+        "x": 6.75,
+        "z": 5.25
+      },
+      "max": {
+        "x": 7.55,
+        "z": 6.25
+      },
+      "height": 0.8
+    },
+    "from": {
+      "x": 6.43,
+      "z": 5.75
+    },
+    "requested": {
+      "x": 7.79,
+      "z": 5.75
+    },
+    "stopped": {
+      "x": 6.669999999,
+      "z": 5.75
+    },
+    "radius": 0.08,
+    "lineOfSight": false
+  },
+  "detour": {
+    "solid": {
+      "id": 1,
+      "min": {
+        "x": 6.75,
+        "z": 5.25
+      },
+      "max": {
+        "x": 7.55,
+        "z": 6.25
+      },
+      "height": 0.8
+    },
+    "from": {
+      "x": 6.43,
+      "z": 5.01
+    },
+    "requested": {
+      "x": 7.79,
+      "z": 5.01
+    },
+    "stopped": {
+      "x": 7.79,
+      "z": 5.01
+    },
+    "radius": 0.08,
+    "lineOfSight": true
+  },
+  "before": {
+    "flyCount": 1,
+    "modelKind": "glb",
+    "drawCalls": 117,
+    "triangles": 11778,
+    "geometries": 44,
+    "textures": 4
+  },
+  "after": {
+    "flyCount": 1,
+    "modelKind": "glb",
+    "drawCalls": 117,
+    "triangles": 11778,
+    "geometries": 44,
+    "textures": 4
+  },
+  "errors": []
+}

@@ -47,6 +47,7 @@ pub fn level(count: u32) -> Result<LevelDef, String> {
     Ok(LevelDef {
         id: "active-native-benchmark".into(),
         geometry: Geometry {
+            solids: vec![],
             rooms: vec![
                 RectRoom {
                     id: 0,

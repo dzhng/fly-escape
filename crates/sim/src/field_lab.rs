@@ -73,6 +73,7 @@ impl FieldLab {
 pub fn fixture(scenario: FieldScenario, mirror: f64) -> Result<(FieldSet, CuePathway), String> {
     let p = |x, z| Point { x, z };
     let geometry = Geometry {
+        solids: vec![],
         rooms: vec![
             RectRoom {
                 id: 0,

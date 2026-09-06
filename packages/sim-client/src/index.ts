@@ -63,3 +63,4 @@ export { FrameArchive } from "./record";
 export { PlaybackClock } from "./playback";
 
 export type { RecordedMotion, RecordedPose } from "./record";
+export { HouseProbeClient } from "./house-probe";

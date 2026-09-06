@@ -444,7 +444,9 @@ fn validate_description(
             .geometry
             .contains_body(pose.position, level.body_config.body_radius)
         {
-            return Err("spawn body must lie on a room floor and clear every solid wall".into());
+            return Err(
+                "spawn body must lie on a room floor and clear walls and solid props".into(),
+            );
         }
     }
     Ok(())

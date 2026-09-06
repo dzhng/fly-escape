@@ -188,7 +188,7 @@ pub fn resolve_placements(
             return Err("placement IDs must be unique".into());
         }
         let radius = tool_def(placement.kind).footprint_radius;
-        // A tool's conservative square footprint must fit a room and clear walls.
+        // A tool's conservative square footprint must fit a room and clear walls and solids.
         if !level.geometry.rooms.iter().any(|r| {
             placement.position.x - radius >= r.min.x
                 && placement.position.x + radius <= r.max.x
@@ -196,7 +196,9 @@ pub fn resolve_placements(
                 && placement.position.z + radius <= r.max.z
         }) || !level.geometry.contains_body(placement.position, radius)
         {
-            return Err("tool footprint must fit open floor in one room and clear walls".into());
+            return Err(
+                "tool footprint must fit open floor in one room and clear walls and solids".into(),
+            );
         }
         if rules
             .reserved

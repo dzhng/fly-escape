@@ -57,6 +57,8 @@ fn main() {
         RectRoom::decl(),
         Wall::decl(),
         Geometry::decl(),
+        SolidProp::decl(),
+        sim::house_lab::HouseProbe::decl(),
         FieldConfig::decl(),
         FanField::decl(),
         SourceKind::decl(),

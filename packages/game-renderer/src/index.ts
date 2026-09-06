@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { FlyTrails, type TrailPoint } from "./trails";
 export { recordedTrails } from "./trails";
-import { HouseGeometry, cutAwayWalls, type HousePart } from "./house";
+import { HouseGeometry, cutAwayOccluders, type HousePart } from "./house";
 export { loadHousePart } from "./house";
 export type { HousePart } from "./house";
 import { FlyMotion, type FlyAnimation } from "./fly-motion";
@@ -162,7 +162,7 @@ export class WorldView {
   }
 
   get houseVisibility() {
-    return { segments: this.house.walls.children.length, cutaway: this.house.walls.children.filter(wall => wall.scale.y < 1).length };
+    return { segments: this.house.walls.children.length, cutaway: this.house.walls.children.filter(wall => wall.scale.y < 1).length, solids: this.house.solids.children.length, solidsCutaway: this.house.solids.children.filter(prop => prop.scale.y < 1).length };
   }
 
   setHousePart(part: HousePart, source: THREE.Group): void {
@@ -613,10 +613,12 @@ export class WorldView {
       const direction = selectedTarget.clone().sub(this.navigation.camera.position);
       this.raycaster.set(this.navigation.camera.position, direction.clone().normalize());
       this.raycaster.far = direction.length();
-      cutAwayWalls(this.house.walls, this.raycaster);
+      cutAwayOccluders(this.house.walls, this.raycaster);
+      cutAwayOccluders(this.house.solids, this.raycaster);
       this.raycaster.far = Infinity;
     } else {
-      cutAwayWalls(this.house.walls);
+      cutAwayOccluders(this.house.walls);
+      cutAwayOccluders(this.house.solids);
     }
     if (this.trailSample) this.trails.sample(this.trailSample.paths, this.trailSample.cursorTick,
       this.selectionRing.geometry.parameters.outerRadius);

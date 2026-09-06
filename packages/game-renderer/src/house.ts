@@ -3,10 +3,11 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import type { Geometry } from "@fly-escape/sim-client";
 import { disposeObjectResources } from "./resources";
 
-export type HousePart = "wall" | "floor";
+export type HousePart = "wall" | "floor" | "solid";
 const PART_BOUNDS = {
   wall: [-0.5, 0, -0.06, 0.5, 0.6, 0.06],
   floor: [-0.5, -0.25, -0.5, 0.5, 0, 0.5],
+  solid: [-0.5, 0, -0.5, 0.5, 1, 0.5],
 };
 
 /** Replacement bounds keep the native pivot and declared world scale. */
@@ -22,7 +23,7 @@ export async function loadHousePart(bytes: ArrayBuffer, part: HousePart) {
       if (!(object instanceof THREE.Mesh)) return;
       if (object instanceof THREE.SkinnedMesh) throw new Error("House parts must be static meshes.");
       triangles += (object.geometry.index?.count ?? object.geometry.attributes.position?.count ?? 0) / 3;
-      object.castShadow = part === "wall";
+      object.castShadow = part !== "floor";
       object.receiveShadow = true;
     });
     if (triangles <= 0 || triangles > 20_000) throw new Error("House part must contain 1–20,000 triangles.");
@@ -38,8 +39,9 @@ export class HouseGeometry {
   readonly root = new THREE.Group();
   readonly walls = new THREE.Group();
   readonly floors = new THREE.Group();
+  readonly solids = new THREE.Group();
   constructor(private readonly geometry: Geometry) {
-    this.root.add(this.floors, this.walls);
+    this.root.add(this.floors, this.walls, this.solids);
     const wall = new THREE.Group();
     const wallMesh = new THREE.Mesh(new THREE.BoxGeometry(1, 0.6, 0.12), new THREE.MeshStandardMaterial({ color: "#8aab9d", roughness: 1 }));
     wallMesh.position.y = 0.3;
@@ -52,10 +54,16 @@ export class HouseGeometry {
     floor.add(floorMesh);
     this.replace("wall", wall);
     this.replace("floor", floor);
+    const solid = new THREE.Group();
+    const solidMesh = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshStandardMaterial({ color: "#8aab9d", roughness: 1 }));
+    solidMesh.position.y = 0.5;
+    solidMesh.castShadow = solidMesh.receiveShadow = true;
+    solid.add(solidMesh);
+    this.replace("solid", solid);
   }
   /** Takes ownership of source resources. Clones share geometry/materials. */
   replace(part: HousePart, source: THREE.Group): void {
-    const owner = part === "wall" ? this.walls : this.floors;
+    const owner = part === "wall" ? this.walls : part === "floor" ? this.floors : this.solids;
     disposeObjectResources(owner);
     owner.clear();
     if (part === "wall") {
@@ -88,7 +96,7 @@ export class HouseGeometry {
         placement.rotation.y = -Math.atan2(dz, dx);
         owner.add(placement);
       }
-    } else {
+    } else if (part === "floor") {
       for (const room of this.geometry.rooms) {
         const placement = new THREE.Group();
         placement.add(source.clone(true));
@@ -97,19 +105,31 @@ export class HouseGeometry {
         owner.add(placement);
       }
     }
+    if (part === "solid") {
+      for (const prop of this.geometry.solids) {
+        const placement = new THREE.Group();
+        const instance = source.clone(true);
+        instance.scale.y *= prop.height;
+        placement.add(instance);
+        placement.userData.cutawayScale = Math.min(1, 0.06 / prop.height);
+        placement.scale.set(prop.max.x - prop.min.x, 1, prop.max.z - prop.min.z);
+        placement.position.set((prop.min.x + prop.max.x) / 2, 0, (prop.min.z + prop.max.z) / 2);
+        owner.add(placement);
+      }
+    }
     if (!owner.children.length) disposeObjectResources(source);
   }
 }
 
-/** Keep the physical boundary legible while exposing a followed fly above a low base. */
-export function cutAwayWalls(walls: THREE.Group, raycaster?: THREE.Raycaster): void {
-  for (const wall of walls.children) wall.scale.y = 1;
+/** Keep the physical boundary legible while exposing a selected fly above a low base. */
+export function cutAwayOccluders(occluders: THREE.Group, raycaster?: THREE.Raycaster): void {
+  for (const part of occluders.children) part.scale.y = 1;
   // Ray queries must see the restored mesh, not the previous frame's reduced base.
-  walls.updateMatrixWorld(true);
+  occluders.updateMatrixWorld(true);
   if (!raycaster) return;
-  for (const hit of raycaster.intersectObjects(walls.children, true)) {
+  for (const hit of raycaster.intersectObjects(occluders.children, true)) {
     let owner = hit.object;
-    while (owner.parent && owner.parent !== walls) owner = owner.parent;
-    if (owner.parent === walls) owner.scale.y = 0.1;
+    while (owner.parent && owner.parent !== occluders) owner = owner.parent;
+    if (owner.parent === occluders) owner.scale.y = owner.userData.cutawayScale ?? 0.1;
   }
 }

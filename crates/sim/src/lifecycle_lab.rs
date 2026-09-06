@@ -131,6 +131,7 @@ fn fixture(scenario: LifecycleScenario) -> LevelDef {
         }
         .into(),
         geometry: Geometry {
+            solids: vec![],
             rooms: vec![RectRoom {
                 id: 0,
                 min: p(-3., -2.),

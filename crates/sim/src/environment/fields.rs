@@ -102,7 +102,7 @@ pub struct SensorySample {
     pub right: FieldSample,
     pub wind: Point,
 }
-/// Row-major z then x; entries outside the room floors are None. Values are
+/// Row-major z then x; entries outside open floor (including solids) are None. Values are
 /// exactly sample_point at each cell center, including the local exit gate.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
@@ -167,7 +167,7 @@ impl FieldSet {
         }
         for fan in &config.fans {
             if !fan.position.finite()
-                || geometry.room_at(fan.position).is_none()
+                || !geometry.contains_body(fan.position, 0.)
                 || !fan.heading.is_finite()
                 || !fan.reach.is_finite()
                 || fan.reach <= 0.
@@ -184,7 +184,7 @@ impl FieldSet {
         }
         for s in &sources {
             if !s.position.finite()
-                || geometry.room_at(s.position).is_none()
+                || !geometry.contains_body(s.position, 0.)
                 || !s.radius.is_finite()
                 || s.radius <= 0.
                 || !s.rate.is_finite()
@@ -239,7 +239,7 @@ impl FieldSet {
             .ok_or("field grid limit 65536 cells exceeded (or empty grid)")?;
         // Visibility is evaluated once during construction, not per solver step.
         let work = count
-            .saturating_mul(geometry.rooms.len() + geometry.walls.len())
+            .saturating_mul(geometry.rooms.len() + geometry.walls.len() + geometry.solids.len())
             .saturating_mul(sources.len() + config.fans.len() + 3);
         if work > MAX_WORK {
             return Err(format!("field topology work limit {MAX_WORK} exceeded: {work} checks; coarsen grid or simplify geometry/sources"));
@@ -262,7 +262,7 @@ impl FieldSet {
             shade: vec![0.; count],
         };
         for i in 0..count {
-            set.active[i] = set.geometry.room_at(set.center(i)).is_some();
+            set.active[i] = set.geometry.contains_body(set.center(i), 0.);
             if set.active[i] {
                 let mut wind = set.config.wind;
                 for fan in &set.config.fans {

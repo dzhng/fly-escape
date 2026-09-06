@@ -44,3 +44,138 @@ fn five_room_review_house_has_a_route_and_one_door_pantry() {
         outside
     );
 }
+
+#[test]
+fn solid_footprint_stops_sweeps_and_visibility_while_detour_stays_open() {
+    let geometry: Geometry =
+        serde_json::from_str(include_str!("../../../assets/house/five-rooms.json")).unwrap();
+    let prop = &geometry.solids[0];
+    let z = (prop.min.z + prop.max.z) / 2.;
+    let from = Point {
+        x: prop.min.x - 0.5,
+        z,
+    };
+    let to = Point {
+        x: prop.max.x + 0.3,
+        z,
+    };
+    let stopped = geometry.sweep(from, to, 0.1);
+    assert!((stopped.x - (prop.min.x - 0.1)).abs() < 1e-7);
+    assert!(!geometry.line_of_sight(from, to));
+    assert!(!geometry.contains_body(
+        Point {
+            x: (prop.min.x + prop.max.x) / 2.,
+            z
+        },
+        0.1
+    ));
+    let around = prop.min.z - 0.2;
+    let from = Point {
+        x: from.x,
+        z: around,
+    };
+    let to = Point { x: to.x, z: around };
+    assert_eq!(geometry.sweep(from, to, 0.1), to);
+    assert!(geometry.line_of_sight(from, to));
+}
+
+#[test]
+fn solids_exclude_field_cells_and_tool_placement() {
+    use sim::environment::{Source, SourceKind};
+    use sim::placement::{resolve_placements, Placement, PlacementRules, ToolKind, ToolStock};
+    let geometry: Geometry =
+        serde_json::from_str(include_str!("../../../assets/house/five-rooms.json")).unwrap();
+    let prop = &geometry.solids[0];
+    let center = Point {
+        x: (prop.min.x + prop.max.x) / 2.,
+        z: (prop.min.z + prop.max.z) / 2.,
+    };
+    let mut fields = FieldSet::new(
+        geometry.clone(),
+        FieldConfig::default(),
+        vec![Source {
+            kind: SourceKind::AttractiveOdor,
+            position: Point {
+                x: prop.min.x - 0.3,
+                z: center.z,
+            },
+            radius: 2.,
+            rate: 1.,
+        }],
+        None,
+    )
+    .unwrap();
+    fields.advance(1.).unwrap();
+    let grid = fields.export_grid();
+    for (i, cell) in grid.cells.iter().enumerate() {
+        let p = Point {
+            x: grid.origin.x
+                + (i % grid.width as usize) as f64 * grid.cell_size
+                + grid.cell_size / 2.,
+            z: grid.origin.z
+                + (i / grid.width as usize) as f64 * grid.cell_size
+                + grid.cell_size / 2.,
+        };
+        if p.x >= prop.min.x && p.x <= prop.max.x && p.z >= prop.min.z && p.z <= prop.max.z {
+            assert!(cell.is_none());
+        }
+    }
+    assert_eq!(fields.sample_point(center).attractive_odor, 0.);
+    let mut level = sim::swarm_lab::level(1).unwrap();
+    level.geometry = geometry;
+    level.spawn_poses.clear();
+    level.placement_rules = PlacementRules {
+        inventory: vec![ToolStock {
+            kind: ToolKind::Fruit,
+            count: 1,
+        }],
+        reserved: vec![],
+    };
+    let error = resolve_placements(
+        &level,
+        &[Placement {
+            id: 1,
+            kind: ToolKind::Fruit,
+            position: center,
+            heading: 0.,
+        }],
+    )
+    .unwrap_err();
+    assert!(error.contains("solid"));
+}
+
+#[test]
+fn invalid_solid_bounds_overlap_and_wall_intersections_are_rejected() {
+    let geometry: Geometry =
+        serde_json::from_str(include_str!("../../../assets/house/five-rooms.json")).unwrap();
+    let mut cases = Vec::new();
+    let mut invalid = geometry.clone();
+    invalid.solids[0].height = 0.;
+    cases.push(invalid);
+    let mut invalid = geometry.clone();
+    invalid.solids[0].max.x = invalid.solids[0].min.x;
+    cases.push(invalid);
+    let mut invalid = geometry.clone();
+    invalid.solids[0].min.x = f64::NAN;
+    cases.push(invalid);
+    let mut invalid = geometry.clone();
+    invalid.solids[0].max.x = 9.;
+    cases.push(invalid);
+    let mut invalid = geometry.clone();
+    invalid.solids[0].min.z = 4.;
+    cases.push(invalid);
+    let mut invalid = geometry.clone();
+    invalid.solids.push(invalid.solids[0].clone());
+    cases.push(invalid);
+    let mut invalid = geometry.clone();
+    let mut overlap = invalid.solids[0].clone();
+    overlap.id += 1;
+    invalid.solids.push(overlap);
+    cases.push(invalid);
+    for invalid in cases {
+        assert!(FieldSet::new(invalid, FieldConfig::default(), vec![], None)
+            .err()
+            .unwrap()
+            .contains("solids"));
+    }
+}

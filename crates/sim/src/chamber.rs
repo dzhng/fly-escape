@@ -9,6 +9,7 @@ use ts_rs::TS;
 pub fn chamber_geometry() -> Geometry {
     let p = |x, z| Point { x, z };
     Geometry {
+        solids: vec![],
         rooms: vec![RectRoom {
             id: 0,
             min: p(-6., -6.),

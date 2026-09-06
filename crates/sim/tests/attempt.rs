@@ -22,6 +22,7 @@ fn level(count: usize) -> LevelDef {
     LevelDef {
         id: "fixture".into(),
         geometry: Geometry {
+            solids: vec![],
             rooms: vec![RectRoom {
                 id: 1,
                 min: Point { x: 0., z: 0. },
@@ -276,6 +277,31 @@ fn invalid_spawn_footprints_and_capacity_are_rejected_before_simulation() {
     assert!(Attempt::describe(&graph, &definition, &tuning, "horizon", 0, 1, &[]).is_err());
     let mut allowed = attempt(graph, level(100), 0, 100);
     assert_eq!(allowed.step().unwrap().unwrap().neural_steps, 100);
+}
+
+#[test]
+fn solid_footprints_reject_spawns_before_simulation() {
+    let mut definition = level(1);
+    definition.geometry =
+        serde_json::from_str(include_str!("../../../assets/house/five-rooms.json")).unwrap();
+    definition.exit.a.x = 16.;
+    definition.exit.b.x = 16.;
+    let prop = &definition.geometry.solids[0];
+    definition.spawn_poses[0].position = Point {
+        x: (prop.min.x + prop.max.x) / 2.,
+        z: (prop.min.z + prop.max.z) / 2.,
+    };
+    let error = Attempt::describe(
+        &graph(),
+        &definition,
+        &AttemptTuning::default(),
+        "solid-spawn",
+        0,
+        1,
+        &[],
+    )
+    .unwrap_err();
+    assert!(error.contains("spawn body"), "{error}");
 }
 
 #[test]

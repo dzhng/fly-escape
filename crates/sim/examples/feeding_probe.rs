@@ -54,6 +54,7 @@ fn group_indices(graph: &Graph, id: &str) -> Vec<u32> {
 }
 fn arena() -> Geometry {
     Geometry {
+        solids: vec![],
         rooms: vec![RectRoom {
             id: 1,
             min: Point { x: 0., z: 0. },
