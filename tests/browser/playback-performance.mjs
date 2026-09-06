@@ -30,7 +30,7 @@ try {
     );
     const visibleResponseMs = await visibleResponse(
       page,
-      "change",
+      "click",
       '[data-testid="selected-fly"][data-fly-id="19"]',
       () => page.getByRole("button", { name: "Select fly 20", exact: true }).click(),
     );
