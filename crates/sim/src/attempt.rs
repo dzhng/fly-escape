@@ -224,6 +224,13 @@ impl Attempt {
             failure: None,
         })
     }
+    /// Allocated numeric neural state for every fly, including fixed ablation masks.
+    pub fn brain_state_bytes(&self) -> usize {
+        self.flies
+            .iter()
+            .map(|fly| fly.brain.state_storage_bytes())
+            .sum()
+    }
     pub fn spec(&self) -> &AttemptSpec {
         &self.spec
     }
