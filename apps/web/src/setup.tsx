@@ -287,7 +287,7 @@ export function SetupGame() {
               <button
                 key={stock.kind}
                 aria-pressed={tool === stock.kind && selected === undefined}
-                disabled={stock.count === 0}
+                disabled={stock.count === 0 || !!intent?.commit}
                 title={descriptions[stock.kind]}
                 onClick={() => {
                   setTool(stock.kind);
@@ -304,7 +304,9 @@ export function SetupGame() {
           <button
             onClick={rotate}
             disabled={
-              busy || (setup?.placements.find((p) => p.id === selected)?.kind ?? tool) !== "fan"
+              busy ||
+              !!intent?.commit ||
+              (setup?.placements.find((p) => p.id === selected)?.kind ?? tool) !== "fan"
             }
           >
             Rotate fan 90°
@@ -315,6 +317,7 @@ export function SetupGame() {
               <div key={p.id}>
                 <button
                   aria-pressed={selected === p.id}
+                  disabled={!!intent?.commit}
                   onClick={() => {
                     setSelected(p.id);
                     setTool(p.kind);
@@ -326,7 +329,7 @@ export function SetupGame() {
                   {names[p.kind]} #{p.id}
                 </button>
                 <button
-                  disabled={busy}
+                  disabled={busy || !!intent?.commit}
                   aria-label={`Remove ${names[p.kind]} ${p.id}`}
                   onClick={() =>
                     setIntent({
@@ -372,7 +375,7 @@ export function SetupGame() {
             Run · release flies
           </button>
           <button
-            disabled={!fixture || busy}
+            disabled={!fixture || busy || !!intent?.commit}
             onClick={() => {
               if (!fixture) return;
               setBusy(true);

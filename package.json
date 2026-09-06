@@ -21,7 +21,7 @@
     "dev:assets": "bun run --cwd apps/asset-lab dev",
     "test:renderer": "bun test packages/game-renderer/src",
     "test:placement": "node tests/browser/placement.mjs",
-    "test:setup": "bun test apps/web/src/progress.test.ts && node tests/browser/setup.mjs"
+    "test:setup": "bun test apps/web/src/progress.test.ts && node tests/browser/setup.mjs && node tests/browser/setup-commit.mjs"
   },
   "type": "module",
   "workspaces": [
