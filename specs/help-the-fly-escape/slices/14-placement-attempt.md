@@ -8,6 +8,16 @@ Players can place a fixed inventory, run, inspect results and retry with their s
 
 web attempt state machine + sim placement validation/AttemptSpec → Worker; result → local progress store.
 
+## Preparation passes
+
+The accepted diagnostic fixtures select one sensory pathway for an entire attempt. That cannot represent simultaneous fruit, repellent and light tools. Before placement integration, prepare these independently verifiable core passes; final slice acceptance retains the dependencies above.
+
+1. Separate attractive and repellent odor concentrations in the existing wall-aware solver. Both reuse its transport and geometry; neither becomes a direct steering vector. Export and record both antenna samples. Preserve the single-cue probe results and update the archive bound for the extra recorded values.
+2. Allow simultaneous sensory currents from the relevant odor and vision pathways. Map each odor channel using measured circuit responses, not the biological words “excitatory” and “inhibitory.” Verify each source alone, mixed sources, per-channel ablation and deterministic replay. This source-to-input mapping is an explicit modeling assumption in the science panel.
+3. Resolve tool placements into these core sources and physical contact/wind regions, then build the setup UI against the validated placement seam. Food replenishment remains separate from food odor, so feeding ablation can preserve the cue.
+
+Changes to packed samples must regenerate the single Rust-owned layout and its TypeScript consumers together; no compatibility format survives in this unshipped app. Re-run the affected memory/performance gates before accepting mixed-tool attempts. Do this preparation in isolation from the sustained slice 05 benchmark so its build identity remains interpretable.
+
 ## Runnable review surface
 
 A five-room integration fixture with palette, valid/invalid placement, fan rotation, Run, cancel, result, replay and Retry.
