@@ -158,6 +158,7 @@ export class ChamberView {
   get statistics() {
     const attributes = new Set<THREE.BufferAttribute | THREE.InterleavedBuffer>();
     const textures = new Set<THREE.Texture>();
+    const materials = new Set<THREE.Material>();
     let shadowFramebufferBytes = 0;
     this.scene.traverse(object => {
       if (object instanceof THREE.Mesh || object instanceof THREE.Line || object instanceof THREE.Sprite) {
@@ -168,7 +169,7 @@ export class ChamberView {
         }
         if (geometry.index) attributes.add(geometry.index);
         for (const material of Array.isArray(object.material) ? object.material : [object.material]) {
-          for (const value of Object.values(material)) if (value instanceof THREE.Texture) textures.add(value);
+          materials.add(material);
         }
       }
       if (object instanceof THREE.DirectionalLight && object.castShadow) {
@@ -178,6 +179,9 @@ export class ChamberView {
         }
       }
     });
+    for (const material of materials) {
+      for (const value of Object.values(material)) if (value instanceof THREE.Texture) textures.add(value);
+    }
     const geometryBytes = [...attributes].reduce((sum, attribute) => sum + attribute.array.byteLength, 0);
     const materialTextures = [...textures].map(texture => {
       const image = texture.image as { width?: number; height?: number } | undefined;
