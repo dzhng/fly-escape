@@ -3,13 +3,24 @@ import type { RecordedMotion } from "@fly-escape/sim-client";
 
 export type FlyAnimation = { clip: "Walk" | "Fly" | "Land" | "Feed"; seconds: number };
 
-/** The recorded mode owns presentation; no animation changes position or physics. */
+const LAND_SECONDS = 0.8;
+
+/** The recorded mode owns clip phase; animation never changes simulation. */
 export function flyAnimation(motion: RecordedMotion, tickSeconds: number): FlyAnimation {
   const seconds = (motion.cursorTick - motion.startedTick) * tickSeconds;
   if (motion.mode === "flying") return { clip: "Fly", seconds };
   if (motion.mode === "feeding") return { clip: "Feed", seconds };
-  if (motion.previousMode === "flying" && seconds < 0.8) return { clip: "Land", seconds };
-  return { clip: "Walk", seconds: motion.previousMode === "flying" ? seconds - 0.8 : seconds };
+  if (motion.previousMode === "flying" && seconds < LAND_SECONDS) return { clip: "Land", seconds };
+  return { clip: "Walk", seconds: motion.previousMode === "flying" ? seconds - LAND_SECONDS : seconds };
+}
+
+/** Display-only height sampled from the same cursor as the authored clips.
+ * Feeding contact stays grounded; takeoff follows the recorded mode immediately. */
+export function flyHeight(motion: RecordedMotion, tickSeconds: number): number {
+  if (motion.mode === "flying") return 0.6;
+  if (motion.mode === "feeding" || motion.previousMode !== "flying") return 0;
+  const phase = Math.min(1, Math.max(0, (motion.cursorTick - motion.startedTick) * tickSeconds / LAND_SECONDS));
+  return 0.6 * (1 - phase * phase * (3 - 2 * phase));
 }
 
 /** Absolute sampling restores bindings when clips change; pause and backwards seeks

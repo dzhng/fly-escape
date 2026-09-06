@@ -3,7 +3,7 @@ import { HouseGeometry, cutAwayWalls, type HousePart } from "./house";
 export { loadHousePart } from "./house";
 export type { HousePart } from "./house";
 import { FlyMotion, type FlyAnimation } from "./fly-motion";
-export { flyAnimation } from "./fly-motion";
+export { flyAnimation, flyHeight } from "./fly-motion";
 export type { FlyAnimation } from "./fly-motion";
 import { FlyModel } from "./fly-model";
 import { disposeObjectResources } from "./resources";
