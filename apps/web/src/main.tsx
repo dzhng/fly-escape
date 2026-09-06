@@ -1,3 +1,4 @@
+import { PlaybackLab } from "./playback";
 import { LifecycleLab } from "./lifecycle";
 import React, { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
@@ -243,7 +244,9 @@ function BrainLab() {
 }
 
 createRoot(document.getElementById("root")!).render(
-  location.pathname === "/lab/lifecycle" ? (
+  location.pathname === "/lab/playback" ? (
+    <PlaybackLab />
+  ) : location.pathname === "/lab/lifecycle" ? (
     <LifecycleLab />
   ) : location.pathname === "/lab/fields" ? (
     <FieldsLab />

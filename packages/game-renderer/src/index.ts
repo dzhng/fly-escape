@@ -29,7 +29,7 @@ export class ChamberView {
   private readonly scene = new THREE.Scene();
   private readonly camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
   private readonly renderer: THREE.WebGLRenderer;
-  private readonly fly = createPlaceholderFly();
+  private readonly flies = [createPlaceholderFly()];
   private readonly observer: ResizeObserver;
   private readonly sensorMarkers = [createPointMarker("L"), createPointMarker("R")];
   private readonly windArrow = new THREE.ArrowHelper(
@@ -47,7 +47,10 @@ export class ChamberView {
   constructor(
     private readonly container: HTMLElement,
     geometry: Geometry,
+    flyCount = 1,
   ) {
+    if (!Number.isInteger(flyCount) || flyCount < 1 || flyCount > 100) throw new Error("Scene requires 1..100 flies");
+    while (this.flies.length < flyCount) this.flies.push(this.flies[0].clone(true));
     this.bounds = new THREE.Box3();
     for (const room of geometry.rooms) {
       this.bounds.expandByPoint(new THREE.Vector3(room.min.x, 0, room.min.z));
@@ -67,7 +70,7 @@ export class ChamberView {
     canvas.style.width = "100%";
     canvas.style.height = "100%";
     canvas.setAttribute("role", "img");
-    canvas.setAttribute("aria-label", "Three-dimensional neural test chamber and fly");
+    canvas.setAttribute("aria-label", flyCount === 1 ? "Three-dimensional neural test chamber and fly" : `Three-dimensional observation chamber with ${flyCount} flies`);
     container.appendChild(canvas);
 
     this.scene.add(new THREE.HemisphereLight("#fff8e8", "#718d80", 2.5));
@@ -81,7 +84,7 @@ export class ChamberView {
     sun.shadow.camera.near = 1;
     sun.shadow.camera.far = radius * 5;
     sun.shadow.normalBias = 0.025;
-    this.scene.add(sun, sun.target, createRoomGeometry(geometry), this.fly, this.contactMarkers);
+    this.scene.add(sun, sun.target, createRoomGeometry(geometry), ...this.flies, this.contactMarkers);
     this.sensorMarkers.forEach((marker) => {
       marker.visible = false;
       this.scene.add(marker);
@@ -135,10 +138,27 @@ export class ChamberView {
   }
 
   setPose(pose: FlyPose): void {
-    this.fly.position.set(pose.x, pose.y, pose.z);
+    this.flies[0].position.set(pose.x, pose.y, pose.z);
     this.contactCenter.position.set(pose.x, 0, pose.z);
     // The replaceable model is +Y up, +Z forward, with its pivot at foot contact.
-    this.fly.rotation.y = Math.PI / 2 - pose.heading;
+    this.flies[0].rotation.y = Math.PI / 2 - pose.heading;
+  }
+
+  /** Poses are sampled by the caller's one playback cursor. All placeholders
+   * share immutable geometry/materials; only their transforms differ. */
+  setPoses(poses: readonly FlyPose[]): void {
+    if (poses.length !== this.flies.length) throw new Error("Pose count differs from scene population");
+    poses.forEach((pose, index) => {
+      const fly = this.flies[index];
+      fly.position.set(pose.x, pose.y, pose.z);
+      fly.rotation.y = Math.PI / 2 - pose.heading;
+    });
+  }
+
+  get statistics() {
+    return { flyCount: this.flies.length, drawCalls: this.renderer.info.render.calls,
+      triangles: this.renderer.info.render.triangles, geometries: this.renderer.info.memory.geometries,
+      textures: this.renderer.info.memory.textures };
   }
 
   /** Visual anchors for the recorded input pose, using the core's antenna offset. */
