@@ -4,6 +4,18 @@ use crate::{attempt::*, body::*, environment::*, GroupActivity, MotorOutput, Ste
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 
+#[derive(Serialize, TS)]
+#[serde(rename_all = "camelCase")]
+pub struct ChunkHeader {
+    pub schema_version: u32,
+    pub attempt_id: String,
+    pub sequence: u32,
+    pub start_tick: u32,
+    pub tick_count: u32,
+    pub fly_count: u32,
+    pub result: Option<AttemptResult>,
+}
+
 pub const RECORD_SCHEMA_VERSION: u32 = 1;
 pub const MAX_CHUNK_TICKS: u32 = 10;
 pub const ARCHIVE_CAP_BYTES: u64 = 128 * 1024 * 1024;

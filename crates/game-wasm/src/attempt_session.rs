@@ -1,5 +1,5 @@
 //! One-tick WASM adapter; the worker owns scheduling and cancellation.
-use sim::{attempt::*, record::*, swarm_lab::*, Graph};
+use sim::{attempt::*, record::*, Graph};
 use std::sync::Arc;
 use wasm_bindgen::prelude::*;
 
@@ -254,7 +254,7 @@ pub fn swarm_request(
     }
     let mut level = sim::swarm_lab::level(fly_count).map_err(|e| JsValue::from_str(&e))?;
     level.duration_ticks = duration_ticks;
-    let request = sim::swarm_lab::StartAttempt {
+    let request = StartAttempt {
         attempt_id: attempt_id.into(),
         root_seed: root_seed.into(),
         fly_count,

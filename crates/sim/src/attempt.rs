@@ -4,13 +4,44 @@
 use crate::{
     body::*,
     environment::*,
+    record::RecordLayout,
     sensory::{cue_currents, motor_readout_indices, CuePathway},
-    Brain, Graph, LifParams, StepOutput,
+    Brain, Graph, Group, GroupLink, LifParams, StepOutput,
 };
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::{collections::BTreeMap, sync::Arc};
 use ts_rs::TS;
+
+#[derive(Deserialize, Serialize, TS)]
+#[serde(rename_all = "camelCase")]
+pub struct StartAttempt {
+    pub attempt_id: String,
+    pub root_seed: String,
+    pub fly_count: u32,
+    pub level: LevelDef,
+    pub tuning: AttemptTuning,
+}
+#[derive(Serialize, TS)]
+#[serde(rename_all = "camelCase")]
+pub struct AttemptInfo {
+    pub spec: AttemptSpec,
+    pub level: LevelDef,
+    pub groups: Vec<Group>,
+    pub group_links: Vec<GroupLink>,
+    pub record_layout: RecordLayout,
+    pub archive_bytes: u32,
+    pub graph_bytes: u32,
+    pub brain_state_bytes: u32,
+}
+#[derive(Serialize, TS)]
+#[serde(rename_all = "camelCase")]
+pub struct AttemptStep {
+    pub tick: u32,
+    pub neural_steps: u32,
+    pub buffered_ticks: u32,
+    pub complete: bool,
+}
 
 pub const GAME_TICK_SECONDS: f64 = 0.1;
 pub const SIMULATION_BUILD_ID: &str = env!("SIM_BUILD_ID");

@@ -1,48 +1,6 @@
 //! Shared active-work diagnostic content for native and browser throughput probes.
-use crate::{attempt::*, body::*, environment::*, record::RecordLayout, Group, GroupLink};
-use serde::{Deserialize, Serialize};
-use ts_rs::TS;
+use crate::{attempt::*, body::*, environment::*};
 
-#[derive(Deserialize, Serialize, TS)]
-#[serde(rename_all = "camelCase")]
-pub struct StartAttempt {
-    pub attempt_id: String,
-    pub root_seed: String,
-    pub fly_count: u32,
-    pub level: LevelDef,
-    pub tuning: AttemptTuning,
-}
-#[derive(Serialize, TS)]
-#[serde(rename_all = "camelCase")]
-pub struct AttemptInfo {
-    pub spec: AttemptSpec,
-    pub level: LevelDef,
-    pub groups: Vec<Group>,
-    pub group_links: Vec<GroupLink>,
-    pub record_layout: RecordLayout,
-    pub archive_bytes: u32,
-    pub graph_bytes: u32,
-    pub brain_state_bytes: u32,
-}
-#[derive(Serialize, TS)]
-#[serde(rename_all = "camelCase")]
-pub struct AttemptStep {
-    pub tick: u32,
-    pub neural_steps: u32,
-    pub buffered_ticks: u32,
-    pub complete: bool,
-}
-#[derive(Serialize, TS)]
-#[serde(rename_all = "camelCase")]
-pub struct ChunkHeader {
-    pub schema_version: u32,
-    pub attempt_id: String,
-    pub sequence: u32,
-    pub start_tick: u32,
-    pub tick_count: u32,
-    pub fly_count: u32,
-    pub result: Option<AttemptResult>,
-}
 fn point(x: f64, z: f64) -> Point {
     Point { x, z }
 }
