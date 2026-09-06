@@ -1,0 +1,4825 @@
+{
+  "browser": "152.0.7977.77",
+  "snapshot": {
+    "spec": {
+      "schemaVersion": 1,
+      "attemptId": "dab05ff7-1e7a-4ed8-93c2-9385079fe0b1",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+      "simulationBuildId": "209ce69af4d07193ce5b32b05c22ff37668ea34a0bcb9d28b630694933b609fe",
+      "tuningHash": "49a100fbaa5622a5b13b06a1d1cfb9105937b21e0484d931897d265378b690ec",
+      "levelHash": "394de32072afb17009140f3f6f0fbc0479996f4d3b9796d5d846f23086d42fc2",
+      "levelId": "active-native-benchmark",
+      "rootSeed": "42",
+      "flyCount": 20,
+      "durationTicks": 6000
+    },
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+    "viewport": [
+      1440,
+      1000
+    ],
+    "devicePixelRatio": 1,
+    "cursorTick": 0.6670000000000004,
+    "sampleTick": 0,
+    "computedTick": 30,
+    "state": "paused",
+    "speed": 1,
+    "complete": false,
+    "initialWaitMs": 1304.1999999284744,
+    "warmWaitMs": 1101.6000000238419,
+    "productionMs": 1080.6000000238419,
+    "activeNeuralSteps": 600,
+    "activeEquivalentProductionRate": 2.7762354247027665,
+    "underruns": 0,
+    "frameIntervals": {
+      "count": 68,
+      "p95Ms": 17,
+      "p95Capped": false,
+      "maxMs": 33.39999999999998,
+      "histogramResolutionMs": 1
+    },
+    "interactions": {
+      "count": 1,
+      "p95Ms": 31,
+      "p95Capped": false,
+      "maxMs": 30.700000047683716,
+      "histogramResolutionMs": 1,
+      "measurement": "control callback to synchronous scene render completion; excludes browser paint"
+    },
+    "memory": {
+      "wasmBytes": 92471296,
+      "archiveOwnedChunkBytes": 267592,
+      "archiveBoundBytes": 78184384,
+      "graphBytes": 9864584,
+      "brainStateBytes": 64400000,
+      "observedJSHeapBytes": 19628817,
+      "note": "WASM includes graph and brain state; do not add those again. Download report includes an on-demand GPU memory estimate."
+    },
+    "renderer": {
+      "flyCount": 20,
+      "modelKind": "glb",
+      "drawCalls": 1102,
+      "triangles": 138808,
+      "geometries": 51,
+      "textures": 764,
+      "gpu": {
+        "geometryBytes": 303018,
+        "materialTextures": [
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 12,
+            "height": 12,
+            "mipLevels": 1,
+            "estimatedBytes": 2304
+          },
+          {
+            "width": 64,
+            "height": 64,
+            "mipLevels": 7,
+            "estimatedBytes": 21844
+          },
+          {
+            "width": 64,
+            "height": 64,
+            "mipLevels": 7,
+            "estimatedBytes": 21844
+          },
+          {
+            "width": 64,
+            "height": 64,
+            "mipLevels": 7,
+            "estimatedBytes": 21844
+          }
+        ],
+        "textureBytes": 1818876,
+        "shadowFramebufferBytes": 8388608,
+        "defaultFramebufferBytes": 24187500,
+        "drawingBufferWidth": 1075,
+        "drawingBufferHeight": 625,
+        "defaultSamples": 4,
+        "estimatedBytes": 34698002,
+        "note": "GPU estimate: live attributes/indices, RGBA textures including mipmaps, and conservative color/depth framebuffers; excludes driver and browser compositor overhead."
+      }
+    },
+    "camera": {
+      "following": true,
+      "distance": 2.6304367297607696,
+      "minDistance": 1.3152183648803848,
+      "maxDistance": 39.53439463382463,
+      "closeDistance": 2.6304367297607696,
+      "target": [
+        -1.9966777750583067,
+        0.07245855807192063,
+        -1.9999998621899715
+      ],
+      "width": 1075,
+      "height": 625,
+      "selectedFlyId": 0,
+      "flies": [
+        {
+          "id": 0,
+          "x": 537.5000000000001,
+          "y": 312.5000000000001,
+          "visible": true
+        },
+        {
+          "id": 1,
+          "x": 642.03466027805,
+          "y": 394.69903776005225,
+          "visible": true
+        },
+        {
+          "id": 2,
+          "x": 762.5767451732717,
+          "y": 489.48605807900543,
+          "visible": true
+        },
+        {
+          "id": 3,
+          "x": 903.1352260720786,
+          "y": 600.0123776667045,
+          "visible": true
+        },
+        {
+          "id": 4,
+          "x": 1069.1031170981705,
+          "y": 730.517269975563,
+          "visible": false
+        },
+        {
+          "id": 5,
+          "x": 1268.1037303675735,
+          "y": 886.9986636845271,
+          "visible": false
+        },
+        {
+          "id": 6,
+          "x": 1511.0338414478615,
+          "y": 1078.0228317393373,
+          "visible": false
+        },
+        {
+          "id": 7,
+          "x": 1814.3552415785375,
+          "y": 1316.5361771457526,
+          "visible": false
+        },
+        {
+          "id": 8,
+          "x": 2203.6694063820264,
+          "y": 1622.6654309056348,
+          "visible": false
+        },
+        {
+          "id": 9,
+          "x": 2721.6866749839623,
+          "y": 2029.9995602111073,
+          "visible": false
+        },
+        {
+          "id": 10,
+          "x": 432.9691152994351,
+          "y": 394.698369501236,
+          "visible": true
+        },
+        {
+          "id": 11,
+          "x": 537.5070377777226,
+          "y": 489.49392573114636,
+          "visible": true
+        },
+        {
+          "id": 12,
+          "x": 659.3907927488316,
+          "y": 600.0194381759514,
+          "visible": true
+        },
+        {
+          "id": 13,
+          "x": 803.321409566577,
+          "y": 730.5383107689682,
+          "visible": false
+        },
+        {
+          "id": 14,
+          "x": 975.8740005051505,
+          "y": 887.0112750017706,
+          "visible": false
+        },
+        {
+          "id": 15,
+          "x": 1186.5619947451432,
+          "y": 1078.0641167747024,
+          "visible": false
+        },
+        {
+          "id": 16,
+          "x": 1449.5435700377357,
+          "y": 1316.5424464139192,
+          "visible": false
+        },
+        {
+          "id": 17,
+          "x": 1787.1660259578553,
+          "y": 1622.7018777241672,
+          "visible": false
+        },
+        {
+          "id": 18,
+          "x": 2236.301253175606,
+          "y": 2029.9817627424834,
+          "visible": false
+        },
+        {
+          "id": 19,
+          "x": 2863.175168918085,
+          "y": 2598.4398108167275,
+          "visible": false
+        }
+      ]
+    },
+    "result": null
+  },
+  "mainHeap": {
+    "usedSize": 20489396,
+    "totalSize": 40239104,
+    "embedderHeapUsedSize": 6758896,
+    "backingStorageSize": 3458561
+  },
+  "workerHeap": {
+    "usedSize": 516364,
+    "totalSize": 2097152,
+    "embedderHeapUsedSize": 737664,
+    "backingStorageSize": 10521569
+  },
+  "components": {
+    "mainHeapAndBackingBytes": 30706853,
+    "workerHeapAndBackingBytes": 11775597,
+    "wasmHighWaterBytes": 92471296,
+    "fullArchiveBoundBytes": 78184384,
+    "rawGraphAllowanceBytes": 9864584,
+    "gpuEstimatedBytes": 34698002
+  },
+  "conservativeOwnedBytes": 257700716,
+  "note": "Conservative app-owned estimate, not process RSS. Intentionally counts potentially overlapping WASM/backing storage, graph/backing storage and archive/backing storage twice; the full archive allowance includes per-chunk overhead. Uses full-run WASM high water plus live main/Worker heaps and renderer-owned GPU estimates. Browser compositor, executable code and driver overhead are excluded."
+}

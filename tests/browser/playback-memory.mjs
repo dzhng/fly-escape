@@ -1,8 +1,12 @@
 import assert from "node:assert/strict";
 import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { chromium } from "playwright";
+import { pathToFileURL } from "node:url";
 const base = process.env.BRAIN_URL ?? "http://127.0.0.1:5184";
-const output = new URL("../../specs/help-the-fly-escape/assets/evidence/05/", import.meta.url);
+const baseline = new URL("../../specs/help-the-fly-escape/assets/evidence/05/", import.meta.url);
+const output = process.env.MEMORY_OUTPUT
+  ? pathToFileURL(process.env.MEMORY_OUTPUT + "/")
+  : baseline;
 const browser = await chromium.launch({
   headless: true,
   channel: process.env.BROWSER_CHANNEL ?? "chrome",
@@ -60,7 +64,9 @@ try {
       .catch(reject);
   });
   await targets.send("Target.detachFromTarget", { sessionId });
-  const fullRun = JSON.parse(await readFile(new URL("full-playback/run-01.json", output), "utf8"));
+  const fullRun = JSON.parse(
+    await readFile(new URL("full-playback/run-01.json", baseline), "utf8"),
+  );
   assert.equal(fullRun.spec.simulationBuildId, snapshot.spec.simulationBuildId);
   const heapBytes = (heap) => heap.usedSize + heap.embedderHeapUsedSize + heap.backingStorageSize;
   const components = {

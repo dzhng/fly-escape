@@ -1,6 +1,6 @@
 # 06 — Close framing and shared selection
 
-Status: functional preparation and grounded overview marker verified ([marker review](../assets/evidence/06/marker-review.md)); airborne association and dependency acceptance remain open. Dependencies: 05.
+Status: camera, overview stroke and airborne association verified; human review resolved; dependency acceptance remains open. Dependencies: 05.
 
 ## Contract and seam
 
