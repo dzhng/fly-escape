@@ -1,6 +1,6 @@
 # 05 — Twenty flies with buffered replay
 
-Status: native/WASM Attempt, packed archive/clock and bounded Worker transport verified; playback UI verified; sustained browser performance and 100-fly capacity remain in progress. Dependencies: 04.
+Status: native/WASM Attempt, packed archive/clock and bounded Worker transport verified; playback UI verified; memory and 100-fly capacity measured; ten full browser runs remain in progress. Dependencies: 04.
 
 ## Contract and seam
 
@@ -25,6 +25,12 @@ Human checkpoint is non-blocking: open shots with [preview-shots](../../../.agen
 Transport checkpoint: [browser evidence](../assets/evidence/05/browser-transport.json) covers hidden credit draining, cancellation during load/run, exact repeated-seed records, exclusive buffer ownership and callback-triggered restart. The generation regression was observed failing with the filter removed. WASM session tests preserve one-tick backpressure and terminal records. These checks do not substitute for production rendering or ten full playback runs.
 
 [UI review](../assets/evidence/05/ui-review.md) records the production browser controls, real visual changes, independent reviews and measurement limits.
+
+## Memory and capacity evidence
+
+The [memory probe](../assets/evidence/05/browser-memory.json) measures live main/Worker heaps and adds the full-run WASM high water, complete archive allowance, raw graph allowance and renderer-owned GPU estimate. Its conservative total is about 231 MiB on Chrome 152 / Apple M5 Pro, below the 512 MiB owned-memory target. Some backing stores may be counted twice; browser process, compositor and driver overhead are excluded. This is an application-owned estimate, not process RSS. GPU traversal runs only when downloading a report, so continuous timing does not pay its cost.
+
+The [100-fly probe](../assets/evidence/05/browser-capacity.json) completed 100,000 active neural steps at about 0.495× real time. A full 100-fly horizon is rejected before allocating brains because its bounded record requires about 349 MiB against the 128 MiB archive cap. This proves bounded capacity behavior, not a supported 100-fly game configuration; future scaling needs both compute optimization and a revised record policy.
 
 ## Decision budget
 

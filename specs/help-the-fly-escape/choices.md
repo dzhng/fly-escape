@@ -103,3 +103,7 @@ Twenty placeholder flies reuse their geometry and materials while keeping separa
 ### Timing history has fixed memory (slice 05 UI)
 
 Each rendered frame contributes to a small histogram instead of an ever-growing list of timestamps. Durations above one second share an overflow bucket; the report flags a percentile that reaches that bucket and retains the exact maximum. The plan required bounded memory without specifying timing storage. This keeps the benchmark itself from accumulating a large history while clearly disclosing the precision limit.
+
+### Detailed GPU accounting runs only on request (slice 05 diagnostics)
+
+Downloading a report estimates buffers, textures and render targets owned by the scene. Regular frame statistics remain cheap counts. The plan required memory evidence without specifying when to collect it; scanning all scene resources repeatedly would distort the performance being measured. Browser and driver overhead remain explicitly outside this estimate.

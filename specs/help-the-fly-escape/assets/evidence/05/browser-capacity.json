@@ -1,0 +1,41 @@
+{
+  "browser": "152.0.7977.77",
+  "fullHorizonError": "record archive requires 366184384 bytes, exceeding 134217728",
+  "shortHorizon": {
+    "spec": {
+      "schemaVersion": 1,
+      "attemptId": "capacity-short-horizon",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+      "simulationBuildId": "209ce69af4d07193ce5b32b05c22ff37668ea34a0bcb9d28b630694933b609fe",
+      "tuningHash": "49a100fbaa5622a5b13b06a1d1cfb9105937b21e0484d931897d265378b690ec",
+      "levelHash": "53d8d2452ddbdc0c362c146104a542fadafa477b63e2aebf4da7d7dfe351b956",
+      "levelId": "active-native-benchmark",
+      "rootSeed": "42",
+      "flyCount": 100,
+      "durationTicks": 1000
+    },
+    "activeNeuralSteps": 100000,
+    "productionMs": 202135.2000004053,
+    "elapsedMs": 202422.5,
+    "activeEquivalentRate": 0.49471838650467354,
+    "wasmBytes": 350027776,
+    "archiveOwnedBytes": 44291260,
+    "archiveBoundBytes": 61044384,
+    "graphBytes": 9864584,
+    "brainStateBytes": 322000000,
+    "observedJSHeapBytes": 45414196,
+    "result": {
+      "attemptId": "capacity-short-horizon",
+      "completedTick": 1000,
+      "outcomes": {
+        "escaped": 0,
+        "starved": 0,
+        "zapped": 0,
+        "timedOut": 100,
+        "score": 0
+      },
+      "stars": 0
+    }
+  }
+}

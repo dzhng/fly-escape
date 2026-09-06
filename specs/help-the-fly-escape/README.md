@@ -1,12 +1,12 @@
 # Help the Fly Escape — browser game
 
-Status: **implementation active — slice 05 buffered replay**. Last updated: 2026-09-06.
+Status: **implementation active — slice 05 buffered replay**. Last updated: 2026-09-07.
 
 Build a local, fully 3D browser game in which the player places environmental tools and watches a real connectome-driven swarm attempt to escape. The [game contract](GAMEPLAY.md) owns user requirements; [architecture contracts](CONTRACTS.md) own runtime/data seams. This plan replaces the previous Python tech-demo scope.
 
 ## Next Agent Prompt
 
-You are implementing the full browser game. Current pickup is [05 — buffered swarm replay](slices/05-swarm-playback.md): the playback review surface and transport are verified; finish ten smooth full 1× runs plus owned-memory and 100-fly capacity evidence. Native throughput is about 3.2× for a full active 20-fly horizon; 100-fly native production is below 1× and remains capacity-only evidence.
+You are implementing the full browser game. Current pickup is [05 — buffered swarm replay](slices/05-swarm-playback.md): the playback review surface and transport are verified; finish ten smooth full 1× runs. Owned-memory and 100-fly capacity measurements are recorded in slice 05; the latter remains below real-time and exceeds the archive cap at full duration. Native throughput is about 3.2× for a full active 20-fly horizon; 100-fly native production is below 1× and remains capacity-only evidence.
 
 Completed evidence: [01 graph](assets/evidence/01/review.md), [02 neural browser](assets/evidence/02/review.md), [03 sensory environment](assets/evidence/03/review.md), [04 lifecycle](assets/evidence/04/review.md). Categorical local sensing resolves odor closest-approach effects and opposite early lamp/shade orientation; ablation removes them. Visual-cue closest-distance results remain partly unresolved. The selected lifecycle seed demonstrates neural eating and later starvation, not population foraging. Campaign gates remain open; loom/threat is unavailable.
 

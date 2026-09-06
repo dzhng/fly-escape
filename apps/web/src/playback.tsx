@@ -306,7 +306,7 @@ export function PlaybackLab() {
                 graphBytes: current.info.graphBytes,
                 brainStateBytes: current.info.brainStateBytes,
                 observedJSHeapBytes: heap,
-                note: "WASM includes graph and brain state; do not add those again. GPU memory is not measured.",
+                note: "WASM includes graph and brain state; do not add those again. Download report includes an on-demand GPU memory estimate.",
               },
               renderer: scene.current?.statistics,
               result: current.archive.result,
@@ -349,7 +349,11 @@ export function PlaybackLab() {
     run.current.previousState = run.current.clock.state;
   };
   const save = () => {
-    const url = URL.createObjectURL(new Blob([display.report], { type: "application/json" }));
+    const report = JSON.parse(display.report);
+    report.renderer = { ...report.renderer, gpu: scene.current?.estimateGpuMemory() };
+    const url = URL.createObjectURL(
+      new Blob([JSON.stringify(report, null, 2)], { type: "application/json" }),
+    );
     const link = document.createElement("a");
     link.href = url;
     link.download = "playback-performance.json";
