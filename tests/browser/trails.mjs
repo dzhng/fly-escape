@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 const output=process.env.TRAILS_EVIDENCE ?? 'specs/help-the-fly-escape/assets/evidence/09/browser/candidate';
+const ticks=(process.env.TRAILS_TICKS ?? '10.3,30.5,60.5,100.5').split(',').map(Number);
 await mkdir(output,{recursive:true});
 const browser=await chromium.launch({channel:'chrome',headless:true});
 try {
@@ -14,7 +15,7 @@ try {
   });
   await page.goto(`${process.env.BRAIN_URL ?? 'http://127.0.0.1:5208'}/`);
   await page.getByRole('button',{name:'Run · release flies',exact:true}).click();
-  await page.waitForFunction(()=>Number(document.querySelector('[data-testid="playback-lab"]')?.dataset.computedTick)>=102,null,{timeout:120000});
+  await page.waitForFunction(target=>Number(document.querySelector('[data-testid="playback-lab"]')?.dataset.computedTick)>=target,Math.ceil(Math.max(...ticks))+1,{timeout:120000});
   await page.waitForFunction(()=>JSON.parse(document.querySelector('[data-testid="playback-report"]').textContent).renderer?.modelKind==='glb');
   await page.getByRole('button',{name:'Pause',exact:true}).click();
   const report=async()=>JSON.parse(await page.getByTestId('playback-report').textContent());
@@ -32,7 +33,7 @@ try {
   const canvas=page.locator('.playback-world canvas');
   const box=await canvas.boundingBox();
   const captures=[];
-  for(const tick of [10.3,30.5,60.5,100.5]) {
+  for(const tick of ticks) {
     await seek(tick);
     for(const view of ['close','overview']){
       if(view==='close'){

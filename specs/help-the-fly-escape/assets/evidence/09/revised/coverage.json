@@ -1,0 +1,269 @@
+{
+  "definition": "Maximum RGB channel delta. Dark baseline pixels (<140 luminance) are a rough body/detail proxy, not an exact fly mask.",
+  "metrics": [
+    {
+      "name": "close-10.3",
+      "world": {
+        "bounds": {
+          "x": 0,
+          "y": 205,
+          "width": 1075,
+          "height": 525
+        },
+        "pixels": 564375,
+        "changedPixels": 0,
+        "changedRatio": 0,
+        "deltaAbove16": 0,
+        "deltaAbove16Ratio": 0,
+        "baselineDarkPixels": 48434,
+        "darkPixelsChangedAbove16": 0
+      },
+      "busy": {
+        "bounds": {
+          "x": 375,
+          "y": 330,
+          "width": 320,
+          "height": 300
+        },
+        "pixels": 96000,
+        "changedPixels": 0,
+        "changedRatio": 0,
+        "deltaAbove16": 0,
+        "deltaAbove16Ratio": 0,
+        "baselineDarkPixels": 17159,
+        "darkPixelsChangedAbove16": 0
+      }
+    },
+    {
+      "name": "overview-10.3",
+      "world": {
+        "bounds": {
+          "x": 0,
+          "y": 205,
+          "width": 1075,
+          "height": 525
+        },
+        "pixels": 564375,
+        "changedPixels": 0,
+        "changedRatio": 0,
+        "deltaAbove16": 0,
+        "deltaAbove16Ratio": 0,
+        "baselineDarkPixels": 242,
+        "darkPixelsChangedAbove16": 0
+      },
+      "busy": {
+        "bounds": {
+          "x": 420,
+          "y": 310,
+          "width": 130,
+          "height": 110
+        },
+        "pixels": 14300,
+        "changedPixels": 0,
+        "changedRatio": 0,
+        "deltaAbove16": 0,
+        "deltaAbove16Ratio": 0,
+        "baselineDarkPixels": 192,
+        "darkPixelsChangedAbove16": 0
+      }
+    },
+    {
+      "name": "close-30.5",
+      "world": {
+        "bounds": {
+          "x": 0,
+          "y": 205,
+          "width": 1075,
+          "height": 525
+        },
+        "pixels": 564375,
+        "changedPixels": 7097,
+        "changedRatio": 0.012574972314507198,
+        "deltaAbove16": 1415,
+        "deltaAbove16Ratio": 0.0025071982281284605,
+        "baselineDarkPixels": 55573,
+        "darkPixelsChangedAbove16": 2
+      },
+      "busy": {
+        "bounds": {
+          "x": 375,
+          "y": 330,
+          "width": 320,
+          "height": 300
+        },
+        "pixels": 96000,
+        "changedPixels": 1599,
+        "changedRatio": 0.01665625,
+        "deltaAbove16": 343,
+        "deltaAbove16Ratio": 0.0035729166666666665,
+        "baselineDarkPixels": 23733,
+        "darkPixelsChangedAbove16": 1
+      }
+    },
+    {
+      "name": "overview-30.5",
+      "world": {
+        "bounds": {
+          "x": 0,
+          "y": 205,
+          "width": 1075,
+          "height": 525
+        },
+        "pixels": 564375,
+        "changedPixels": 530,
+        "changedRatio": 0.0009390919158361019,
+        "deltaAbove16": 123,
+        "deltaAbove16Ratio": 0.00021794019933554817,
+        "baselineDarkPixels": 233,
+        "darkPixelsChangedAbove16": 2
+      },
+      "busy": {
+        "bounds": {
+          "x": 420,
+          "y": 310,
+          "width": 130,
+          "height": 110
+        },
+        "pixels": 14300,
+        "changedPixels": 530,
+        "changedRatio": 0.03706293706293706,
+        "deltaAbove16": 123,
+        "deltaAbove16Ratio": 0.0086013986013986,
+        "baselineDarkPixels": 183,
+        "darkPixelsChangedAbove16": 2
+      }
+    },
+    {
+      "name": "close-60.5",
+      "world": {
+        "bounds": {
+          "x": 0,
+          "y": 205,
+          "width": 1075,
+          "height": 525
+        },
+        "pixels": 564375,
+        "changedPixels": 10571,
+        "changedRatio": 0.01873045404208195,
+        "deltaAbove16": 2156,
+        "deltaAbove16Ratio": 0.00382015503875969,
+        "baselineDarkPixels": 61640,
+        "darkPixelsChangedAbove16": 866
+      },
+      "busy": {
+        "bounds": {
+          "x": 375,
+          "y": 330,
+          "width": 320,
+          "height": 300
+        },
+        "pixels": 96000,
+        "changedPixels": 3499,
+        "changedRatio": 0.03644791666666667,
+        "deltaAbove16": 1232,
+        "deltaAbove16Ratio": 0.012833333333333334,
+        "baselineDarkPixels": 23972,
+        "darkPixelsChangedAbove16": 437
+      }
+    },
+    {
+      "name": "overview-60.5",
+      "world": {
+        "bounds": {
+          "x": 0,
+          "y": 205,
+          "width": 1075,
+          "height": 525
+        },
+        "pixels": 564375,
+        "changedPixels": 491,
+        "changedRatio": 0.0008699889258028793,
+        "deltaAbove16": 122,
+        "deltaAbove16Ratio": 0.00021616832779623477,
+        "baselineDarkPixels": 225,
+        "darkPixelsChangedAbove16": 27
+      },
+      "busy": {
+        "bounds": {
+          "x": 420,
+          "y": 310,
+          "width": 130,
+          "height": 110
+        },
+        "pixels": 14300,
+        "changedPixels": 491,
+        "changedRatio": 0.03433566433566434,
+        "deltaAbove16": 122,
+        "deltaAbove16Ratio": 0.008531468531468531,
+        "baselineDarkPixels": 175,
+        "darkPixelsChangedAbove16": 27
+      }
+    },
+    {
+      "name": "close-100.5",
+      "world": {
+        "bounds": {
+          "x": 0,
+          "y": 205,
+          "width": 1075,
+          "height": 525
+        },
+        "pixels": 564375,
+        "changedPixels": 5284,
+        "changedRatio": 0.009362569213732004,
+        "deltaAbove16": 568,
+        "deltaAbove16Ratio": 0.001006423034330011,
+        "baselineDarkPixels": 58754,
+        "darkPixelsChangedAbove16": 1
+      },
+      "busy": {
+        "bounds": {
+          "x": 375,
+          "y": 330,
+          "width": 320,
+          "height": 300
+        },
+        "pixels": 96000,
+        "changedPixels": 1127,
+        "changedRatio": 0.011739583333333333,
+        "deltaAbove16": 89,
+        "deltaAbove16Ratio": 0.0009270833333333334,
+        "baselineDarkPixels": 8723,
+        "darkPixelsChangedAbove16": 1
+      }
+    },
+    {
+      "name": "overview-100.5",
+      "world": {
+        "bounds": {
+          "x": 0,
+          "y": 205,
+          "width": 1075,
+          "height": 525
+        },
+        "pixels": 564375,
+        "changedPixels": 468,
+        "changedRatio": 0.0008292358803986711,
+        "deltaAbove16": 139,
+        "deltaAbove16Ratio": 0.0002462901439645626,
+        "baselineDarkPixels": 257,
+        "darkPixelsChangedAbove16": 26
+      },
+      "busy": {
+        "bounds": {
+          "x": 420,
+          "y": 310,
+          "width": 130,
+          "height": 110
+        },
+        "pixels": 14300,
+        "changedPixels": 468,
+        "changedRatio": 0.03272727272727273,
+        "deltaAbove16": 139,
+        "deltaAbove16Ratio": 0.00972027972027972,
+        "baselineDarkPixels": 207,
+        "darkPixelsChangedAbove16": 26
+      }
+    }
+  ]
+}
