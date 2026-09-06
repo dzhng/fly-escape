@@ -7,3 +7,5 @@ Visual acceptance remains open. All five full captures and three enlarged select
 The next visual checkpoint needs separated models at close framing, while retaining the dense fixture as a functional regression. Model silhouette and scale belong to the real-asset/workbench pass; neither the complete 20-fly benchmark nor physical spawn positions should be quietly weakened to make this screenshot pass. The candidate has no black/blue model focus outline, but marker clarity is not yet accepted. Absolute metrics are under `metrics/`; no historical same-state pixel comparison has been claimed.
 
 Independent CLI code review remains unavailable because the installed client rejects its configured model. Root inspected the camera, input and consumer changes. Camera constants are delegated by the spec; startup follows fly 0 provisionally to satisfy close default framing. Slice 05 sustained performance remains a dependency gate.
+
+The [07 scale correction](../07/scale-review.md) resolves close/follow body overlap with unchanged physical spawns. Fresh review still cannot identify the selected fly at whole-room overview; retain that camera marker gate before completing 06.

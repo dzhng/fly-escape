@@ -110,6 +110,8 @@ meshes=[o for o in scene.objects if o.type=='MESH']
 minimum=min((o.matrix_world@v.co).z for o in meshes for v in o.data.vertices)
 for obj in meshes:
     obj.location.z-=minimum
+# Authored world size matches the simulation body; camera framing uses exported bounds.
+root.scale = (0.25, 0.25, 0.25)
 bpy.context.view_layer.update()
 bpy.ops.object.select_all(action='DESELECT')
 root.select_set(True)

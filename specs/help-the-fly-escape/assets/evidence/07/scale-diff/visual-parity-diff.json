@@ -1,0 +1,334 @@
+{
+  "kind": "screenshot-parity-diff",
+  "generatedAt": "2026-09-06T18:00:56.798Z",
+  "note": "Lower parityDistance means the candidate is closer to the reference for this fixed pair. This is a distance metric, not an acceptance gate.",
+  "pairCount": 5,
+  "worstPair": "default-follow",
+  "results": [
+    {
+      "id": "default-follow",
+      "current": "../fly-escape/specs/help-the-fly-escape/assets/evidence/07/game-camera/default-follow.png",
+      "candidate": "../fly-escape/specs/help-the-fly-escape/assets/evidence/07/scaled-camera/default-follow.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "parityDistance": 0.08625,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 107,
+          "colorEntropyBits": 2.89571,
+          "edgeDensity": 0.18055,
+          "dominantColorShare": 0.29146,
+          "transparentShare": 0,
+          "luminanceMean": 234.89685,
+          "luminanceP5": 150.9574,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 101.5156
+        },
+        "candidate": {
+          "colorBuckets": 100,
+          "colorEntropyBits": 2.38211,
+          "edgeDensity": 0.14692,
+          "dominantColorShare": 0.39979,
+          "transparentShare": 0,
+          "luminanceMean": 241.39532,
+          "luminanceP5": 206.6518,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 45.8212
+        }
+      },
+      "grayscale": {
+        "mae": 9.87357,
+        "rmse": 30.19583,
+        "diffRatio16": 0.19051,
+        "diffRatio32": 0.0812,
+        "diffRatio64": 0.05946,
+        "pixelmatchRatio": 0.08732
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.98696,
+        "terrainLikeRatioCandidate": 0.98381,
+        "avgLuminanceCurrent": 235.19207,
+        "avgLuminanceCandidate": 241.66874,
+        "avgLuminanceDelta": 6.47667,
+        "edgeEnergyCurrent": 0.08106,
+        "edgeEnergyCandidate": 0.07211,
+        "edgeEnergyRatio": 0.88958,
+        "edgeDiffRatio32": 0.04272
+      },
+      "artifacts": {
+        "sideBySide": "scale-diff/default-follow-side-by-side.png",
+        "currentGray": "scale-diff/default-follow-current-gray.png",
+        "candidateGray": "scale-diff/default-follow-candidate-gray.png",
+        "absDiff": "scale-diff/default-follow-absdiff.png",
+        "pixelmatch": "scale-diff/default-follow-pixelmatch.png",
+        "currentEdges": "scale-diff/default-follow-current-edges.png",
+        "candidateEdges": "scale-diff/default-follow-candidate-edges.png",
+        "edgeDiff": "scale-diff/default-follow-edge-diff.png"
+      }
+    },
+    {
+      "id": "extra-close",
+      "current": "../fly-escape/specs/help-the-fly-escape/assets/evidence/07/game-camera/extra-close.png",
+      "candidate": "../fly-escape/specs/help-the-fly-escape/assets/evidence/07/scaled-camera/extra-close.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "parityDistance": 0.07574,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 127,
+          "colorEntropyBits": 2.66638,
+          "edgeDensity": 0.17872,
+          "dominantColorShare": 0.35521,
+          "transparentShare": 0,
+          "luminanceMean": 236.63022,
+          "luminanceP5": 136.9382,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 115.5348
+        },
+        "candidate": {
+          "colorBuckets": 102,
+          "colorEntropyBits": 2.572,
+          "edgeDensity": 0.17066,
+          "dominantColorShare": 0.37361,
+          "transparentShare": 0,
+          "luminanceMean": 238.94818,
+          "luminanceP5": 185.5808,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 66.8922
+        }
+      },
+      "grayscale": {
+        "mae": 7.37627,
+        "rmse": 29.74549,
+        "diffRatio16": 0.08016,
+        "diffRatio32": 0.06877,
+        "diffRatio64": 0.04763,
+        "pixelmatchRatio": 0.07676
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.98173,
+        "terrainLikeRatioCandidate": 0.97805,
+        "avgLuminanceCurrent": 237.11503,
+        "avgLuminanceCandidate": 239.53661,
+        "avgLuminanceDelta": 2.42157,
+        "edgeEnergyCurrent": 0.0785,
+        "edgeEnergyCandidate": 0.07117,
+        "edgeEnergyRatio": 0.90664,
+        "edgeDiffRatio32": 0.04507
+      },
+      "artifacts": {
+        "sideBySide": "scale-diff/extra-close-side-by-side.png",
+        "currentGray": "scale-diff/extra-close-current-gray.png",
+        "candidateGray": "scale-diff/extra-close-candidate-gray.png",
+        "absDiff": "scale-diff/extra-close-absdiff.png",
+        "pixelmatch": "scale-diff/extra-close-pixelmatch.png",
+        "currentEdges": "scale-diff/extra-close-current-edges.png",
+        "candidateEdges": "scale-diff/extra-close-candidate-edges.png",
+        "edgeDiff": "scale-diff/extra-close-edge-diff.png"
+      }
+    },
+    {
+      "id": "last-card-follow",
+      "current": "../fly-escape/specs/help-the-fly-escape/assets/evidence/07/game-camera/last-card-follow.png",
+      "candidate": "../fly-escape/specs/help-the-fly-escape/assets/evidence/07/scaled-camera/last-card-follow.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "parityDistance": 0.0626,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 112,
+          "colorEntropyBits": 2.7153,
+          "edgeDensity": 0.16218,
+          "dominantColorShare": 0.3084,
+          "transparentShare": 0,
+          "luminanceMean": 237.7555,
+          "luminanceP5": 150.9574,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 101.5156
+        },
+        "candidate": {
+          "colorBuckets": 92,
+          "colorEntropyBits": 2.33182,
+          "edgeDensity": 0.14437,
+          "dominantColorShare": 0.40368,
+          "transparentShare": 0,
+          "luminanceMean": 241.79695,
+          "luminanceP5": 211.5452,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 40.9278
+        }
+      },
+      "grayscale": {
+        "mae": 7.40689,
+        "rmse": 26.3772,
+        "diffRatio16": 0.13526,
+        "diffRatio32": 0.06516,
+        "diffRatio64": 0.04076,
+        "pixelmatchRatio": 0.07034
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.98783,
+        "terrainLikeRatioCandidate": 0.98498,
+        "avgLuminanceCurrent": 238.25121,
+        "avgLuminanceCandidate": 242.33097,
+        "avgLuminanceDelta": 4.07976,
+        "edgeEnergyCurrent": 0.07118,
+        "edgeEnergyCandidate": 0.06737,
+        "edgeEnergyRatio": 0.94643,
+        "edgeDiffRatio32": 0.04118
+      },
+      "artifacts": {
+        "sideBySide": "scale-diff/last-card-follow-side-by-side.png",
+        "currentGray": "scale-diff/last-card-follow-current-gray.png",
+        "candidateGray": "scale-diff/last-card-follow-candidate-gray.png",
+        "absDiff": "scale-diff/last-card-follow-absdiff.png",
+        "pixelmatch": "scale-diff/last-card-follow-pixelmatch.png",
+        "currentEdges": "scale-diff/last-card-follow-current-edges.png",
+        "candidateEdges": "scale-diff/last-card-follow-candidate-edges.png",
+        "edgeDiff": "scale-diff/last-card-follow-edge-diff.png"
+      }
+    },
+    {
+      "id": "keyboard-card",
+      "current": "../fly-escape/specs/help-the-fly-escape/assets/evidence/07/game-camera/keyboard-card.png",
+      "candidate": "../fly-escape/specs/help-the-fly-escape/assets/evidence/07/scaled-camera/keyboard-card.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "parityDistance": 0.06258,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 113,
+          "colorEntropyBits": 2.71828,
+          "edgeDensity": 0.16232,
+          "dominantColorShare": 0.3084,
+          "transparentShare": 0,
+          "luminanceMean": 237.71215,
+          "luminanceP5": 150.9574,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 101.5156
+        },
+        "candidate": {
+          "colorBuckets": 93,
+          "colorEntropyBits": 2.33483,
+          "edgeDensity": 0.14451,
+          "dominantColorShare": 0.40368,
+          "transparentShare": 0,
+          "luminanceMean": 241.75361,
+          "luminanceP5": 210.367,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 42.106
+        }
+      },
+      "grayscale": {
+        "mae": 7.40973,
+        "rmse": 26.38265,
+        "diffRatio16": 0.13529,
+        "diffRatio32": 0.06519,
+        "diffRatio64": 0.04078,
+        "pixelmatchRatio": 0.07037
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.98723,
+        "terrainLikeRatioCandidate": 0.98438,
+        "avgLuminanceCurrent": 238.18663,
+        "avgLuminanceCandidate": 242.26657,
+        "avgLuminanceDelta": 4.07993,
+        "edgeEnergyCurrent": 0.0717,
+        "edgeEnergyCandidate": 0.06787,
+        "edgeEnergyRatio": 0.94664,
+        "edgeDiffRatio32": 0.04122
+      },
+      "artifacts": {
+        "sideBySide": "scale-diff/keyboard-card-side-by-side.png",
+        "currentGray": "scale-diff/keyboard-card-current-gray.png",
+        "candidateGray": "scale-diff/keyboard-card-candidate-gray.png",
+        "absDiff": "scale-diff/keyboard-card-absdiff.png",
+        "pixelmatch": "scale-diff/keyboard-card-pixelmatch.png",
+        "currentEdges": "scale-diff/keyboard-card-current-edges.png",
+        "candidateEdges": "scale-diff/keyboard-card-candidate-edges.png",
+        "edgeDiff": "scale-diff/keyboard-card-edge-diff.png"
+      }
+    },
+    {
+      "id": "overview",
+      "current": "../fly-escape/specs/help-the-fly-escape/assets/evidence/07/game-camera/overview.png",
+      "candidate": "../fly-escape/specs/help-the-fly-escape/assets/evidence/07/scaled-camera/overview.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "parityDistance": 0.00599,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 66,
+          "colorEntropyBits": 2.34131,
+          "edgeDensity": 0.13526,
+          "dominantColorShare": 0.37646,
+          "transparentShare": 0,
+          "luminanceMean": 236.56465,
+          "luminanceP5": 231.211,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 21.262
+        },
+        "candidate": {
+          "colorBuckets": 57,
+          "colorEntropyBits": 2.32503,
+          "edgeDensity": 0.13236,
+          "dominantColorShare": 0.37646,
+          "transparentShare": 0,
+          "luminanceMean": 236.76859,
+          "luminanceP5": 233.4942,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 18.9788
+        }
+      },
+      "grayscale": {
+        "mae": 0.22252,
+        "rmse": 5.07335,
+        "diffRatio16": 0.00245,
+        "diffRatio32": 0.00221,
+        "diffRatio64": 0.00148,
+        "pixelmatchRatio": 0.00239
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.9899,
+        "terrainLikeRatioCandidate": 0.98998,
+        "avgLuminanceCurrent": 237.03765,
+        "avgLuminanceCandidate": 237.24465,
+        "avgLuminanceDelta": 0.20701,
+        "edgeEnergyCurrent": 0.06171,
+        "edgeEnergyCandidate": 0.06059,
+        "edgeEnergyRatio": 0.98188,
+        "edgeDiffRatio32": 0.00264
+      },
+      "artifacts": {
+        "sideBySide": "scale-diff/overview-side-by-side.png",
+        "currentGray": "scale-diff/overview-current-gray.png",
+        "candidateGray": "scale-diff/overview-candidate-gray.png",
+        "absDiff": "scale-diff/overview-absdiff.png",
+        "pixelmatch": "scale-diff/overview-pixelmatch.png",
+        "currentEdges": "scale-diff/overview-current-edges.png",
+        "candidateEdges": "scale-diff/overview-candidate-edges.png",
+        "edgeDiff": "scale-diff/overview-edge-diff.png"
+      }
+    }
+  ]
+}

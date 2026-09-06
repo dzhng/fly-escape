@@ -1,6 +1,6 @@
 # 07 — Blender fly and replacement workbench
 
-Status: browser loader/workbench and replacement checks verified; visual acceptance open ([review](../assets/evidence/07/browser-review.md)). Dependencies: 06.
+Status: authored scale, close silhouette and replacement checks verified; dependency/human acceptance open ([review](../assets/evidence/07/scale-review.md)). Dependencies: 06.
 
 ## Contract and seam
 

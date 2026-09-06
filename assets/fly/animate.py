@@ -5,6 +5,7 @@ All curves are deterministic; FlyRoot never receives animation or movement.
 """
 import bpy
 import math
+import re
 from pathlib import Path
 from mathutils import Vector, Quaternion
 
@@ -15,7 +16,7 @@ scene = target.scenes[0]
 scene.name = 'FlyMotion'
 # Blender suffixes appended datablocks when another fly scene is already open.
 def named(prefix):
-    return next(o for o in scene.objects if o.name == prefix or o.name.startswith(prefix+'.00'))
+    return next(o for o in scene.objects if o.name == prefix or re.fullmatch(re.escape(prefix) + r'\.\d+', o.name))
 root = named('FlyRoot')
 meshes = [o for o in scene.objects if o.type == 'MESH']
 rig = bpy.data.objects.new('FlyRig', bpy.data.armatures.new('FlySkeleton'))
@@ -49,7 +50,7 @@ with bpy.context.temp_override(scene=scene, view_layer=scene.view_layers[0],
     bpy.ops.object.mode_set(mode='OBJECT')
 for obj in meshes:
     name=obj.name
-    canonical=name[:-4] if name[-4:].startswith('.00') else name
+    canonical=re.sub(r'\.\d+$', '', name)
     if canonical.startswith('Leg'): target=canonical
     elif canonical.startswith('Wing'): target='Wing.'+canonical.split('.')[1]
     elif canonical=='Proboscis': target='Proboscis'
