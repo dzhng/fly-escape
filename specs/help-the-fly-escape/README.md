@@ -1,18 +1,18 @@
 # Help the Fly Escape — browser game
 
-Status: **implementation active — slice 05 buffered replay**. Last updated: 2026-09-07.
+Status: **implementation active — motion context and house/setup integration**. Last updated: 2026-09-07.
 
 Build a local, fully 3D browser game in which the player places environmental tools and watches a real connectome-driven swarm attempt to escape. The [game contract](GAMEPLAY.md) owns user requirements; [architecture contracts](CONTRACTS.md) own runtime/data seams. This plan replaces the previous Python tech-demo scope.
 
 ## Next Agent Prompt
 
-You are implementing the full browser game. Current pickup is [05 — buffered swarm replay](slices/05-swarm-playback.md): finish the ten uninterrupted full 1× runs before changing the simulation build. Memory and 100-fly capacity measurements are recorded; 100 flies remains below real-time and exceeds the full-duration archive cap. Keep the complete active-work fixture rather than counting terminal no-ops as production throughput.
+You are implementing the full browser game. Current pickup: integrate the prepared mixed-cue, local-fan and placement core, then the modular house renderer. The ten uninterrupted full 1× baseline runs passed with zero underruns; simulation builds may now change. Keep affected integration and performance measurements tied to their actual build identity.
 
-Completed: [01 graph](assets/evidence/01/review.md), [02 neural browser](assets/evidence/02/review.md), [03 sensory environment](assets/evidence/03/review.md), [04 lifecycle](assets/evidence/04/review.md). The selected lifecycle seed demonstrates neural eating and starvation, not population foraging. Visual-cue closest-distance and campaign robustness remain empirical gates; loom/threat is unavailable.
+Completed: 01–07 and 13. [05 sustained playback](assets/evidence/05/full-playback/review.md), [06 camera](assets/evidence/06/review.md), [07 authored model](assets/evidence/07/scale-review.md), and [13 science panel](assets/evidence/13/review.md) have resolved functional, visual, human and dependency gates. The integrated owned-memory estimate is 246 MiB; 100 flies remains below real time and exceeds the full-duration archive cap.
 
-Priority order: complete 05 sustained performance; finish 06 integrated marker checks (overview stroke and aerial association pass; merged camera checks pass); finish 07 human/dependency acceptance after the [source-scale correction](assets/evidence/07/scale-review.md); check 08 refined motion in integrated playback. In parallel, 13 science cards are integrated and their merged browser checks pass. Core mixed cues, local fans and placement metadata are isolated pending baseline completion and the heading-normalization fixes exposed by independent review. House modular assets and shared topology fixture are prepared, but 10 renderer integration is still open. Nothing beyond 04 is a completed slice.
+Priority order: integrate prepared core and house work; finish 08 actual touchdown/feeding context; implement 09 bounded white trails; complete 10 solid-prop geometry, then 11 palette and 12 lighting. The isolated 14 setup UI work proceeds in parallel. Preserve original dependencies when accepting the prepared work. Campaign neural foraging and visual-cue robustness remain empirical gates in 15–16; loom/threat is unavailable.
 
-Evidence: [05 UI](assets/evidence/05/ui-review.md) and transport pass; [06 camera](assets/evidence/06/review.md) has readable overview stroke and corrected aerial association; [07 workbench](assets/evidence/07/scale-review.md) has real-asset scale and stable replacement checks; [08 motion](assets/evidence/08/motion-review.md) is integrated, with functional sampling passes; refined in-place sequences pass independent review; integrated context remains. Runtime archive/time ownership is unchanged. Preserve one owner per concept and original gate dependencies when integrating prepared work.
+Evidence: [08 refined motion](assets/evidence/08/integration-review.md) passes authored sequence review and exact integrated pause/reverse sampling. Its in-place human review is resolved, but actual food-contact/touchdown remains open. Runtime archive/time ownership is unchanged. House work must retain shared simulation geometry and selected-fly visibility in Overview. Do not call prepared or partial slices complete.
 
 Browser applications are under `apps/`, including `apps/web`. Neuroscience descriptions explain neurons and circuit activity, not game rules; controls have separate help. Preserve Python-parity LIF updates and the real graph. Reproduce ignored graph artifacts with the [exporter](../../scripts/connectome/README.md).
 
@@ -28,15 +28,15 @@ Open the [interactive roadmap](visualizations/roadmap.html) for dependency and m
 - [x] [02 — One real brain in the browser](slices/02-neural-browser.md) — dependencies: 01.
 - [x] [03 — One sensory environment](slices/03-sensory-fields.md) — dependencies: 02.
 - [x] [04 — Finite life and physical escape](slices/04-lifecycle-outcomes.md) — dependencies: 03.
-- [ ] [05 — Twenty flies with buffered replay](slices/05-swarm-playback.md) — dependencies: 04.
-- [ ] [06 — Close framing and shared selection](slices/06-camera-selection.md) — dependencies: 05.
-- [ ] [07 — Blender fly and replacement workbench](slices/07-fly-silhouette.md) — dependencies: 06.
+- [x] [05 — Twenty flies with buffered replay](slices/05-swarm-playback.md) — dependencies: 04.
+- [x] [06 — Close framing and shared selection](slices/06-camera-selection.md) — dependencies: 05.
+- [x] [07 — Blender fly and replacement workbench](slices/07-fly-silhouette.md) — dependencies: 06.
 - [ ] [08 — Playback-driven fly animation](slices/08-fly-motion.md) — dependencies: 07.
 - [ ] [09 — Readable white trails](slices/09-fly-trails.md) — dependencies: 08.
 - [ ] [10 — A readable 3D house](slices/10-house-geometry.md) — dependencies: 07.
 - [ ] [11 — House materials and color](slices/11-house-palette.md) — dependencies: 07,10.
 - [ ] [12 — Depth and exit lighting](slices/12-house-lighting.md) — dependencies: 11.
-- [ ] [13 — All-fly science and explanations](slices/13-science-panel.md) — dependencies: 05,06.
+- [x] [13 — All-fly science and explanations](slices/13-science-panel.md) — dependencies: 05,06.
 - [ ] [14 — Editable setup and attempt loop](slices/14-placement-attempt.md) — dependencies: 05,06,10,13.
 - [ ] [15 — Level 1 is the tutorial](slices/15-first-level.md) — dependencies: 03,04,09,12,14.
 - [ ] [16 — Four more authored puzzles](slices/16-campaign.md) — dependencies: 15.
@@ -56,7 +56,7 @@ Before closing a substantive pass, review ownership with [refactor-clean](../../
 
 ## Evidence and remaining uncertainty
 
-- [Science panel preparation](assets/evidence/13/review.md): all-card diagrams and bounded packed traces are prepared; integration and dependency acceptance remain open.
+- [Science panel preparation](assets/evidence/13/review.md): all-card diagrams, bounded packed traces and neuron explanations pass integrated browser and dependency checks.
 
 - [Research and reproduction](RESEARCH.md): actual source defects, reference architecture, primary external documentation and reproduction spikes.
 - [Draft synthesis](assets/planning/synthesis.md): three independent approaches, tradeoffs and scrollback audit.

@@ -1,6 +1,6 @@
 # 06 — Close framing and shared selection
 
-Status: camera, overview stroke and airborne association verified; human review resolved; dependency acceptance remains open. Dependencies: 05.
+Status: complete; functional, visual and dependency gates verified. Dependencies: 05.
 
 ## Contract and seam
 

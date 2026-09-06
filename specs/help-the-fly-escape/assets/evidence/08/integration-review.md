@@ -9,3 +9,7 @@ Two fresh image-only reviews found attached limbs/wings and readable controls. F
 The old flight ring also conflicted with height cues. [The shared selection correction](../06/airborne-review.md) resolves its body association in gameplay; the workbench needs the next rebuild to show that correction. Diffuse overlapping shadows remain a12 lighting issue. The new art pass must keep simulation time/position authoritative and preserve exact pause/seek checks.
 
 Shape/diff/docs review keeps motion state in the packed archive and mixers in the renderer. This integration adds no runtime owner, wire change or dependency. The changes here are harness sampling, review evidence and the placement of existing workbench controls. Current evidence does not declare animation or final game visuals accepted.
+
+## Refined asset integration
+
+The refined authored asset is now integrated. `refined-workbench/report.json` confirms exact pause and reverse-seek canvas bytes for all five clips, and `refined-playback/report.json` confirms the same in actual recorded playback. The complete authored sequences passed independent review in `authored-motion/review.md`; those sequence strips were open for human review from 18:27 to 18:35 UTC on September 6. No feedback arrived, so the stronger attached walking/feeding/landing poses are retained on that evidence and Preview is closed. This resolves the in-place motion review, not the still-open food-contact/touchdown context gate.

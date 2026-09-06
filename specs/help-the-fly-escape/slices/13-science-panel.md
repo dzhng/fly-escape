@@ -1,6 +1,6 @@
 # 13 — All-fly science and explanations
 
-Status: integrated and browser checks pass; dependency acceptance remains open. Dependencies: 05,06.
+Status: complete; functional, visual and dependency gates verified. Dependencies: 05,06.
 
 See [preparation evidence and review](../assets/evidence/13/review.md). Every card retains all group activity nodes and both traces for its chosen group; the explicitly labeled link view shows connections touching that group.
 

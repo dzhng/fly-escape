@@ -1,6 +1,6 @@
 # 05 — Twenty flies with buffered replay
 
-Status: native/WASM Attempt, packed archive/clock and bounded Worker transport verified; playback UI verified; memory and 100-fly capacity measured; ten full browser runs remain in progress. Dependencies: 04.
+Status: complete; functional, visual and dependency gates verified. Dependencies: 04.
 
 ## Contract and seam
 
@@ -39,3 +39,5 @@ Delegated: Chunk size and safety discount within cancellation/backpressure bound
 Human feedback that changes this slice: Acceptable initial wait can be revisited with actual measurements; never reduce the fixed 20 flies or use terminal no-op ticks as throughput.
 
 Must stay green: all accepted dependency contracts and their focused fixtures; neural motor ownership, real-data provenance, bounded work and the [global invariants](../README.md#standing-gates-and-ownership). Do not broaden testing without a new failure or changed consumer. Record evidence under `assets/evidence/05/` and update the README handoff before ending the pass. Unlisted material decisions require a spec update.
+
+[Sustained browser evidence](../assets/evidence/05/full-playback/review.md) completes the ten-run baseline gate. Later simulation builds retain their own affected integration/performance checks.

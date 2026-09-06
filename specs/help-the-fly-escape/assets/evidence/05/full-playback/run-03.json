@@ -1,0 +1,80 @@
+{
+  "run": 3,
+  "visibleResponseMs": 26.899999976158142,
+  "browser": "152.0.7977.77",
+  "spec": {
+    "schemaVersion": 1,
+    "attemptId": "ccf1f5b0-3be1-4709-b3d0-5a14ff9c9e2a",
+    "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+    "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+    "simulationBuildId": "209ce69af4d07193ce5b32b05c22ff37668ea34a0bcb9d28b630694933b609fe",
+    "tuningHash": "49a100fbaa5622a5b13b06a1d1cfb9105937b21e0484d931897d265378b690ec",
+    "levelHash": "394de32072afb17009140f3f6f0fbc0479996f4d3b9796d5d846f23086d42fc2",
+    "levelId": "active-native-benchmark",
+    "rootSeed": "42",
+    "flyCount": 20,
+    "durationTicks": 6000
+  },
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "devicePixelRatio": 1,
+  "cursorTick": 6000,
+  "sampleTick": 6000,
+  "computedTick": 6000,
+  "state": "ended",
+  "speed": 1,
+  "complete": true,
+  "initialWaitMs": 1175.6000000238419,
+  "warmWaitMs": 1117.7000000476837,
+  "productionMs": 275115.5,
+  "activeNeuralSteps": 120000,
+  "activeEquivalentProductionRate": 2.0573803376615265,
+  "underruns": 0,
+  "frameIntervals": {
+    "count": 36068,
+    "p95Ms": 17,
+    "p95Capped": false,
+    "maxMs": 33.39999999990687,
+    "histogramResolutionMs": 1
+  },
+  "interactions": {
+    "count": 1,
+    "p95Ms": 11,
+    "p95Capped": false,
+    "maxMs": 10.099999904632568,
+    "histogramResolutionMs": 1,
+    "measurement": "control callback to synchronous scene render completion; excludes browser paint"
+  },
+  "memory": {
+    "wasmBytes": 92471296,
+    "archiveOwnedChunkBytes": 53665700,
+    "archiveBoundBytes": 78184384,
+    "graphBytes": 9864584,
+    "brainStateBytes": 64400000,
+    "observedJSHeapBytes": 83061844,
+    "note": "WASM includes graph and brain state; do not add those again. GPU memory is not measured."
+  },
+  "renderer": {
+    "flyCount": 20,
+    "drawCalls": 541,
+    "triangles": 108412,
+    "geometries": 19,
+    "textures": 3
+  },
+  "result": {
+    "attemptId": "ccf1f5b0-3be1-4709-b3d0-5a14ff9c9e2a",
+    "completedTick": 6000,
+    "outcomes": {
+      "escaped": 0,
+      "starved": 0,
+      "zapped": 0,
+      "timedOut": 20,
+      "score": 0
+    },
+    "stars": 0
+  },
+  "errors": []
+}
