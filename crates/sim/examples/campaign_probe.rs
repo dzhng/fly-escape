@@ -83,6 +83,9 @@ struct DetectorStats {
     left_ticks: u32,
     right_ticks: u32,
     outside_floor_ticks: u32,
+    on_floor_ticks: u32,
+    on_floor_active_ticks: u32,
+    on_floor_relative_contrast_sum: f64,
     blocked_antenna_ticks: u32,
     signed_turn_sum: f64,
     absolute_turn_sum: f64,
@@ -95,12 +98,25 @@ struct DetectorStats {
     previous_sign: i8,
 }
 impl DetectorStats {
-    fn observe(&mut self, active: bool, left: bool, outside: bool, blocked: bool, turn: f64) {
+    fn observe(
+        &mut self,
+        active: bool,
+        left: bool,
+        outside: bool,
+        blocked: bool,
+        relative_contrast: f64,
+        turn: f64,
+    ) {
         self.ticks += 1;
         self.active_ticks += active as u32;
         self.left_ticks += (active && left) as u32;
         self.right_ticks += (active && !left) as u32;
         self.outside_floor_ticks += outside as u32;
+        if !outside {
+            self.on_floor_ticks += 1;
+            self.on_floor_active_ticks += active as u32;
+            self.on_floor_relative_contrast_sum += relative_contrast;
+        }
         self.blocked_antenna_ticks += blocked as u32;
         self.signed_turn_sum += turn;
         self.absolute_turn_sum += turn.abs();
@@ -217,6 +233,11 @@ fn run(
                             left > right,
                             outside.contains(&true),
                             blocked.contains(&true),
+                            if left + right > 0. {
+                                (left - right).abs() / (left + right)
+                            } else {
+                                0.
+                            },
                             turn,
                         );
                         detector_free[id].break_run();
@@ -226,6 +247,11 @@ fn run(
                             left > right,
                             outside.contains(&true),
                             blocked.contains(&true),
+                            if left + right > 0. {
+                                (left - right).abs() / (left + right)
+                            } else {
+                                0.
+                            },
                             turn,
                         );
                         detector_wall[id].break_run();
@@ -292,18 +318,19 @@ fn median(mut values: Vec<f64>) -> f64 {
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<_> = std::env::args().collect();
     if !(6..=7).contains(&args.len())
-        || args
-            .get(6)
-            .is_some_and(|v| v != "--empty-control" && v != "--reference-empty")
+        || args.get(6).is_some_and(|v| {
+            v != "--empty-control" && v != "--reference-empty" && v != "--detector-controls"
+        })
     {
         return Err(
-            "Usage: campaign_probe GRAPH_DIR CONTENT_JSON tuning|heldout COUNT OUTPUT_JSON [--empty-control|--reference-empty]".into(),
+            "Usage: campaign_probe GRAPH_DIR CONTENT_JSON tuning|heldout COUNT OUTPUT_JSON [--empty-control|--reference-empty|--detector-controls]".into(),
         );
     }
     let content_text = std::fs::read_to_string(&args[2])?;
     let content: Content = serde_json::from_str(&content_text)?;
     let count: usize = args[4].parse()?;
-    let detector = args.get(6).is_some_and(|v| v == "--reference-empty");
+    let reference_empty = args.get(6).is_some_and(|v| v == "--reference-empty");
+    let detector = reference_empty || args.get(6).is_some_and(|v| v == "--detector-controls");
     if detector
         && (count > 3
             || content.tuning.cues.len() != 1
@@ -353,7 +380,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let mut conditions = vec![];
         let empty = vec![];
         let mut arms = vec![("reference", &content.reference)];
-        if !detector {
+        if !reference_empty {
             arms.push(("poor", &content.poor));
         }
         if args.len() == 7 {

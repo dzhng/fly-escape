@@ -18,9 +18,9 @@ The native probe runs the real Graph and Attempt with 20 independent flies. It v
 | Heading 0.25 | 11/9/12 | 12/12/11 | 11/10/8 | Median gain −1; easier baseline |
 | Heading 0.325 | 7/7/8 | 10/8/8 | 6/7/5 | Median gain −1 |
 | Motor diagnostic baseline | 7 | 4 | 3 | Reproduces compact 0.4/gain 2 |
-| Turn gain 8 (current JSON) | 5/5/4 | 7/5/6 | 6/8/6 | Median gain −2 versus both controls |
+| Turn gain 8 | 5/5/4 | 7/5/6 | 6/8/6 | Median gain −2 versus both controls |
 
-The current gain-8 candidate reaches one star on 3/3 tuning seeds, but that small sample does not establish 27/30 reliability. Empty controls demonstrate some placement benefit without relying solely on a deliberately poor arrangement. The best three-seed gain remains below the required +4. Stalled and boundary-stalled counters plus actual sampled poses expose persistent wall trapping. SVG traces connect sparse samples and must not be interpreted as exact collision paths.
+The gain-8 three-seed candidate reaches one star on 3/3 tuning seeds, but that small sample does not establish 27/30 reliability. Empty controls demonstrate some placement benefit without relying solely on a deliberately poor arrangement. The best three-seed gain remains below the required +4. Stalled and boundary-stalled counters plus actual sampled poses expose persistent wall trapping. SVG traces connect sparse samples and must not be interpreted as exact collision paths.
 
 Native first-tick latency was roughly 0.03–0.05 seconds with graph loading measured separately. This is diagnostic evidence, not the browser MVP performance gate; runs overlapped other local work. Browser integration, final visuals, route comprehension and human review remain open.
 
@@ -34,7 +34,7 @@ The heading bracket held geometry and both placement sets fixed. Reducing headin
 
 The motor diagnostic records actual neural readouts, input/output poses and wrapped heading delta at stalled boundaries (at most eight detailed samples per fly), alongside aggregate turn magnitudes and sparse regular samples. At gain 2, seed 1000 reference mean absolute turn was 0.07908 and maximum 0.36207, below the body clamp of 2. Mean absolute heading change was 0.01582 radians per tick. Gain 8 raised that to 0.05842 and reduced reference boundary-stalled ticks from 9442 to 7984, demonstrating stronger expression of existing neural asymmetry. It nevertheless worsened placement effect; changing gain alone does not solve navigation. No steering, reflection, noise or neuron changes were added.
 
-Current JSON retains the rejected gain-8 candidate with heading 0.4 so its exact last experiment is inspectable. Do not promote it into the app. Pause blind parameter search. The next diagnostic should measure actual left/right sensory contrast and timing, informed by the accepted ahead-cue fixture, before choosing sparse source placement or proposing settled pre-release fields. Any field-settling behavior requires a documented seam and separate evidence; none is implemented here. No held-out seeds may inform tuning. Only a credible pilot signal justifies freezing content and running both complete 30-seed sets.
+The gain-8 six-source candidate is preserved in its report; current JSON retains the subsequent rejected sparse candidate with heading 0.4. Do not promote it into the app. Pause blind parameter search. The next diagnostic should measure actual left/right sensory contrast and timing, informed by the accepted ahead-cue fixture, before choosing sparse source placement or proposing settled pre-release fields. Any field-settling behavior requires a documented seam and separate evidence; none is implemented here. No held-out seeds may inform tuning. Only a credible pilot signal justifies freezing content and running both complete 30-seed sets.
 
 ## Actual cue availability diagnostic
 
@@ -45,3 +45,11 @@ Reference adapter activity occurs on 1509/6268 non-boundary-stalled ticks (24.1%
 The sparse 50-tick plus terminal samples clarify where contrast occurs. With both antennae on floor, 13/117 non-boundary samples and 22/85 boundary samples activate; median relative contrast is 0.01896 and 0.02395 respectively, below the adapter's 0.05 criterion. With an antenna outside floor, all 16 non-boundary and 69 boundary samples activate and have relative contrast 1. These are sample counts, not all-tick cross-tab estimates. Strong absolute scent can coexist with low interior relative contrast.
 
 The next justified experiment is source sparsity/spacing with the same body and geometry, measuring actual interior cue contrast before expanding seeds. Another agent's separate startup diagnostic reported that joint field settling plus stationary neural warmup worsened both arms; its provenance is separate, and no warmup is included here. No further blind heading/gain or held-out search is justified by this checkpoint.
+
+## Sparse-source pilot
+
+Current JSON retains only the exit-side fruit and early crumb; the poor arm uses the same one-fruit/one-crumb count in the pantry/wrong route. Body, geometry, all sensory parameters and unused inventory remain fixed. Seed 1000 gives reference 3, poor 5, empty 6, so the authorized conditional three-seed expansion did not run. No threshold changed.
+
+`sparse-detector-one.json` uses `--detector-controls` to include all three arms with the same bounded diagnostic. Exact reference on-floor activation is 1250/4854 non-boundary ticks (25.8%) and 1511/5333 boundary ticks (28.3%); mean relative contrast is 0.0451 and 0.0395. Poor activation is higher: 44.7% and 54.8%, mean contrast 0.0813 and 0.0896. Empty remains zero. The on-floor counters describe authored room occupancy; obstacle overlap is separately annotated.
+
+For a comparable sparse-sampling view, reference has 17/92 active on-floor non-boundary samples with median contrast 0.02359, and 30/101 active on-floor boundary samples with median contrast 0.01276. The earlier dense layout had 13/117 and 22/85 active samples. Reduced overlap changes cue availability but does not produce useful placement effect in this one seed. Do not interpret this as evidence to silently lower the detector threshold. Any sensitivity-contract experiment must be explicitly resliced against the measured contrast mismatch and preserve the established cue-direction controls.
