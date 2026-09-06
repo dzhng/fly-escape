@@ -1,12 +1,16 @@
 # 06 — Close framing and shared selection
 
-Status: functional preparation verified; visual acceptance open ([review](../assets/evidence/06/review.md)). Dependencies: 05.
+Status: functional preparation and grounded overview marker verified ([marker review](../assets/evidence/06/marker-review.md)); airborne association and dependency acceptance remain open. Dependencies: 05.
 
 ## Contract and seam
 
 Model/card selection enters close follow; zoom preserves follow and only the yellow world ring marks pointer selection.
 
 One web selectedFlyId → renderer camera controller and card scroll action.
+
+## Marker readability decision
+
+Keep the yellow depth-tested ground ring and its bounds-derived outer footprint. Preserve the existing 6% radial stroke at close range; at smaller projected sizes thicken inward toward 1.5 CSS pixels, capped at 45% of the radius to retain a central hole. Derive thickness from the live world-camera projection around the ring, so viewport, zoom and ground foreshortening govern readability without changing camera or physical/model scale. Reuse the ring geometry; no per-frame GPU resource allocation, outline, badge, arrow or fixture-specific correction.
 
 ## Runnable review surface
 

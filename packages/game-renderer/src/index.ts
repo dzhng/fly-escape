@@ -79,7 +79,7 @@ export class WorldView {
     const modelSize = modelBounds.getSize(new THREE.Vector3());
     const ringRadius = Math.max(modelSize.x, modelSize.z) * 0.6;
     this.selectionRing = new THREE.Mesh(
-      new THREE.RingGeometry(ringRadius, ringRadius + 0.055, 48),
+      new THREE.RingGeometry(ringRadius * 0.94, ringRadius, 64),
       new THREE.MeshBasicMaterial({
         color: "#f5cc35",
         transparent: true,
@@ -467,6 +467,30 @@ export class WorldView {
     this.fieldOverlay.visible = true;
   }
 
+  private updateSelectionRing(): void {
+    const { geometry, position } = this.selectionRing;
+    const vertices = geometry.attributes.position;
+    const rimStart = geometry.parameters.thetaSegments + 1;
+    const center = this.navigation.project(position);
+    const point = new THREE.Vector3();
+    let projectedRadius = Infinity;
+    // Sample the fixed outer rim through the shared camera, including ground foreshortening.
+    for (let i = rimStart; i < vertices.count; i++) {
+      point.set(position.x + vertices.getX(i), position.y, position.z - vertices.getY(i));
+      const rim = this.navigation.project(point);
+      projectedRadius = Math.min(projectedRadius, Math.hypot(rim.x - center.x, rim.y - center.y));
+    }
+    const innerRatio = 1 - THREE.MathUtils.clamp(1.5 / projectedRadius, 0.06, 0.45);
+    for (let i = 0; i < rimStart; i++) {
+      vertices.setXY(
+        i,
+        vertices.getX(i + rimStart) * innerRatio,
+        vertices.getY(i + rimStart) * innerRatio,
+      );
+    }
+    vertices.needsUpdate = true;
+  }
+
   resize(): void {
     const width = Math.max(1, this.container.clientWidth);
     const height = Math.max(1, this.container.clientHeight);
@@ -480,6 +504,7 @@ export class WorldView {
       const fly = this.flies[this.selectedFly];
       this.navigation.track(fly.position.clone().add(new THREE.Vector3(0, this.subjectCenterY, 0)));
       this.selectionRing.position.set(fly.position.x, 0.03, fly.position.z);
+      this.updateSelectionRing();
     }
     // Only visual occluders on the camera-to-subject ray cut away; floor/wall
     // collision geometry remains entirely owned by the simulation.

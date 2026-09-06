@@ -141,6 +141,14 @@ try {
   await follow(19);
   assert.equal(await lastCard.evaluate((node) => node.matches(":focus-visible")), true);
   await page.screenshot({ path: `${output}/keyboard-card.png` });
+  // An interior subject proves the overview marker does not swallow neighboring bodies.
+  await page.getByRole("button", { name: "Select fly 5", exact: true }).click();
+  await follow(4);
+  await page.getByRole("button", { name: "Overview", exact: true }).click();
+  await released();
+  const denseOverview = await report();
+  assert.equal(denseOverview.camera.selectedFlyId, 4);
+  await page.screenshot({ path: `${output}/dense-overview.png` });
   assert.deepEqual(errors, []);
   await writeFile(
     `${output}/checks.json`,
@@ -150,6 +158,7 @@ try {
         selected: selected.camera,
         close: close.camera,
         overview: overview.camera,
+        denseOverview: denseOverview.camera,
         errors,
       },
       null,
