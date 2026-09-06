@@ -117,7 +117,6 @@ if (house) {
       view.setHousePart(part, model.root);
       view.render();
       label.textContent = `${part} loaded · source files unchanged`;
-      app.dataset.houseResources = JSON.stringify(view.statistics);
     } catch (error) { if (ticket === houseGenerations[part]) label.textContent = `Previous part retained. ${error instanceof Error ? error.message : error}`; }
   }
   void Promise.all([replacePart("wall", fetch(wallUrl).then(r => r.arrayBuffer())), replacePart("floor", fetch(floorUrl).then(r => r.arrayBuffer()))]).then(() => { app.dataset.houseReady = "true"; });
@@ -157,6 +156,7 @@ function draw(now: number) {
   pose();
   view.render();
   if (house) {
+    app.dataset.houseResources = JSON.stringify(view.statistics);
     app.dataset.houseVisibility = JSON.stringify(view.houseVisibility);
     app.dataset.houseCamera = JSON.stringify(view.cameraState);
   }

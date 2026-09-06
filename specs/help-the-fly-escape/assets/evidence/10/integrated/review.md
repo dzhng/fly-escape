@@ -1,0 +1,7 @@
+# Merged house checkpoint
+
+The merged production asset workbench passes all room/corner/doorway, offscreen restoration, replacement and rejection checks. Geometry ownership and join math were reviewed at integration: only shared noncollinear endpoints extend; lone doorway ends retain their bounds; each ray query starts from full-height matrices. Fly presentation height and selection stay shared with playback.
+
+The first merged browser run exposed a stale measurement: houseResources was captured before the independently loaded fly, reporting 9 geometries; replacing a house part later reported the complete scene's 43. The workbench now publishes cheap renderer counters alongside its other frame diagnostics. The unchanged replacement gate then passes with 43 geometries and 4 textures before and after six replacements. This changes telemetry timing, not disposal behavior, and avoids accepting a misleading baseline. No resource traversal or new owner was added. The harness accepts an evidence output path to preserve the reviewed candidate.
+
+The selected-visibility candidate's independent critique remains applicable; root inspected the merged corner frame and found its fly/ring and continuous low boundary preserved. These are geometry checkpoint results, not palette/lighting or solid-prop acceptance. Three integrated captures opened in Preview at 18:40 UTC on September 6; the nonblocking human window is ongoing.
