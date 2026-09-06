@@ -1,0 +1,97 @@
+{
+  "blender": "5.2.1 LTS",
+  "mesh_count": 40,
+  "triangles": 5166,
+  "materials": 3,
+  "textures": 0,
+  "animation_clips": 0,
+  "glb_bytes": 209372,
+  "roundtrip_blender_bounds": {
+    "min": [
+      -0.621120035648346,
+      -0.48000001907348633,
+      -9.313225746154785e-10
+    ],
+    "max": [
+      0.621120035648346,
+      0.574999988079071,
+      0.5796684622764587
+    ]
+  },
+  "gltf_nodes": {
+    "AbdomenTip": {
+      "mesh": 2,
+      "name": "AbdomenTip",
+      "translation": [
+        0,
+        0.3176395893096924,
+        -0.4350000023841858
+      ]
+    },
+    "Head": {
+      "mesh": 9,
+      "name": "Head",
+      "translation": [
+        0,
+        0.4126395881175995,
+        0.24500000476837158
+      ]
+    },
+    "FlyRoot": {
+      "children": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39
+      ],
+      "extras": {
+        "up": "+Y (glTF)",
+        "forward": "+Z (glTF)",
+        "world_units_per_blender_unit": 1.0,
+        "pivot": "ground contact, centered beneath thorax"
+      },
+      "name": "FlyRoot"
+    }
+  },
+  "material_alpha_modes": {
+    "Chitin": "OPAQUE",
+    "CompoundEye": "OPAQUE",
+    "WingMembrane": "BLEND"
+  }
+}
