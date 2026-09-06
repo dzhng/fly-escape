@@ -14,6 +14,7 @@ with bpy.data.libraries.load(str(OUT/'fly.blend'), link=False) as (source, targe
     target.scenes = source.scenes
 scene = target.scenes[0]
 scene.name = 'FlyMotion'
+bpy.context.window.scene = scene
 # Blender suffixes appended datablocks when another fly scene is already open.
 def named(prefix):
     return next(o for o in scene.objects if o.name == prefix or re.fullmatch(re.escape(prefix) + r'\.\d+', o.name))
@@ -72,26 +73,27 @@ for clip,last_frame in clips.items():
         def rotate(name,axis,angle):
             local=rig.data.bones[name].matrix_local.to_3x3().inverted()@Vector(axis)
             rotations[name]=Quaternion(local,angle)@rotations[name]
+        envelope=1 if clip=='Fly' else max(0, 1-t/0.72)**0.6
+        reach=(1-math.cos(t*math.tau))/2 if clip=='Feed' else 0
         for sign,side in [(-1,'L'),(1,'R')]:
             if clip in ('Fly','Land'):
-                envelope=1 if clip=='Fly' else (1-t)**2
                 rotate('Wing.'+side,(0,1,0),-sign*.5*(1-math.cos(t*math.tau*2))*envelope)
             for index in range(1,4):
                 upper=f'Leg{index}Upper.{side}'
                 if clip=='Walk':
                     phase=t*math.tau+(math.pi if (index+(side=='R'))%2 else 0)
-                    rotate(upper,(0,0,1),.15*math.sin(phase))
-                    rotate(upper,(0,1,0),-sign*.28*max(0,math.sin(phase)))
+                    rotate(upper,(0,0,1),.42*math.sin(phase))
+                    rotate(upper,(0,1,0),-sign*.52*max(0,math.sin(phase)))
                 elif clip in ('Fly','Land'):
-                    folded=1 if clip=='Fly' else (1-t)**2
-                    rotate(upper,(0,1,0),-sign*.65*folded)
+                    rotate(upper,(0,1,0),-sign*.65*envelope)
         if clip=='Feed':
-            rotate('Head',(1,0,0),.13*(1-math.cos(t*math.tau)))
-            rotate('Proboscis',(1,0,0),.28*(1-math.cos(t*math.tau*2)))
+            # Extend toward the contact surface as the head bows, then retract.
+            rotate('Head',(1,0,0),.40*reach)
+            rotate('Proboscis',(1,0,0),-.20*reach)
         for name,quaternion in rotations.items():
             pose=rig.pose.bones[name]; pose.rotation_mode='QUATERNION'; pose.rotation_quaternion=quaternion
             pose.keyframe_insert('rotation_quaternion',frame=frame,group=name)
-            pose.scale=(1, 1+2*(1-math.cos(t*math.tau))/2 if clip=='Feed' and name=='Proboscis' else 1, 1)
+            pose.scale=(1, 1+3.2*reach if name=='Proboscis' else 1, 1)
             pose.keyframe_insert('scale',frame=frame,group=name)
     # NLA track names give stable glTF clip names without baking a combined timeline.
     track=rig.animation_data.nla_tracks.new(); track.name=clip

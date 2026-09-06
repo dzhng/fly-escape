@@ -1,6 +1,6 @@
 # 08 — Playback-driven fly animation
 
-Status: functional integration verified; authored motion readability is being refined. Dependencies: 07.
+Status: functional integration verified; authored motion sequence review passes; integrated context checks remain. Dependencies: 07.
 
 ## Contract and seam
 
@@ -38,4 +38,4 @@ The packed archive owns a fixed-size transition cache: current mode, prior mode,
 
 Walking and flying loop their authored clips; feeding takes precedence on a recorded feeding mode. A flying-to-walking transition shows the authored 0.8-second landing clip before walking resumes. Terminal outcomes freeze clip time at the first terminal tick. Presentation changes no root position or collision height. No animation crossfade state or independent renderer clock is retained.
 
-The [integration review](../assets/evidence/08/integration-review.md) records passing current-asset timing tests and rejected pose clarity. Strengthen walking/feeding recognition and inspect a complete motion sequence before acceptance.
+The [integration review](../assets/evidence/08/integration-review.md) records the initial rejected pose clarity. The [authored-motion refinement](../assets/evidence/08/authored-motion/review.md) now passes independent complete-sequence review for alternating walking, conspicuous mouthpart reach and landing limb deployment, with unchanged static geometry. Actual food-contact and touchdown context remain integrated presentation checks.
