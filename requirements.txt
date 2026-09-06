@@ -1,0 +1,18 @@
+# Fly Maze - MaleCNS LIF Simulation
+# Core data handling
+pyarrow>=14.0.0
+pandas>=2.0.0
+
+# Numerics and sparse matrices
+numpy>=1.24.0
+scipy>=1.11.0
+
+# Visualization
+matplotlib>=3.7.0
+pillow>=10.0.0
+
+# Progress and utilities
+tqdm>=4.65.0
+
+# For downloading connectome data
+requests>=2.31.0

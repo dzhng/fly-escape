@@ -1,0 +1,55 @@
+name,code_path,default,range_min,range_max,effect,lever_class,purity,subsystem
+max_speed,FlightParams.max_speed,4.0,1.0,10.0,Maximum flight velocity; higher = faster traversal,physics,pure,flight
+max_angular_speed,FlightParams.max_angular_speed,0.25,0.1,0.5,Max turn rate (rad/step); higher = tighter turns,physics,pure,flight
+drag,FlightParams.drag,0.03,0.01,0.2,Velocity decay per step; higher = slower movement,physics,pure,flight
+angular_drag,FlightParams.angular_drag,0.1,0.05,0.3,Angular velocity decay; higher = turns damp faster,physics,pure,flight
+thrust_gain,FlightParams.thrust_gain,0.15,0.05,0.5,DN activity → acceleration conversion,motor_readout,pure,flight
+turn_gain,FlightParams.turn_gain,0.08,0.02,0.2,L/R asymmetry → yaw rate; main chemotaxis responsiveness,motor_readout,pure,flight
+dt_flight,FlightParams.dt,1.0,0.1,2.0,Physics timestep,physics,pure,flight
+min_speed,FlightParams.min_speed,0.5,0.0,1.0,Minimum speed when thrusting,physics,pure,flight
+tau,LIFParams.tau,20.0,5.0,50.0,Membrane time constant; higher = slower integration,neural_inject,pure,lif
+threshold,LIFParams.threshold,1.0,0.5,2.0,Spike threshold; lower = more active network,neural_inject,pure,lif
+reset,LIFParams.reset,0.0,-0.5,0.0,Post-spike membrane reset value,neural_inject,pure,lif
+dt_lif,LIFParams.dt,1.0,0.1,2.0,LIF timestep,neural_inject,pure,lif
+refractory,LIFParams.refractory,2,1,5,Refractory period in steps,neural_inject,pure,lif
+noise_std,LIFParams.noise_std,0.015,0.0,0.1,Membrane noise; higher = more random behavior,neural_inject,pure,lif
+input_scale,LIFParams.input_scale,0.0002,0.0001,0.001,Synaptic input scaling factor,neural_inject,pure,lif
+baseline_drive,LIFParams.baseline_drive,0.05,0.0,0.2,Tonic background drive to network,neural_inject,pure,lif
+antenna_offset,ANTENNA_OFFSET,20.0,5.0,50.0,Bilateral antenna separation for L/R gradient,neural_inject,pure,olfaction
+lh_motor_multiplier,hardcoded,8.0,2.0,20.0,Injection strength to excitatory LH neurons,neural_inject,pure,olfaction
+stimulus_intensity,Stimulus.intensity,1.0,0.1,3.0,Odor strength per stimulus,level_design,pure,olfaction
+stimulus_sigma,Stimulus.sigma,50.0,20.0,150.0,Odor spread (Gaussian sigma),level_design,pure,olfaction
+fruit_radius,LandingFeedingParams.fruit_radius,20.0,10.0,50.0,Visual size of fruit for loom calculation,neural_inject,pure,landing
+loom_threshold,LandingFeedingParams.loom_threshold,0.02,0.005,0.1,Min loom rate to trigger landing,neural_inject,pure,landing
+loom_gain,LandingFeedingParams.loom_gain,15.0,5.0,50.0,Loom→landing DN injection current,neural_inject,pure,landing
+landing_thrust_reduction,LandingFeedingParams.landing_thrust_reduction,0.85,0.5,1.0,Thrust multiplier during landing,motor_readout,pure,landing
+landing_settle_time,LandingFeedingParams.landing_settle_time,20,10,50,Steps to fully land,physics,pure,landing
+contact_radius,LandingFeedingParams.contact_radius,30.0,15.0,60.0,Distance for tarsal contact with fruit,physics,soft_cheat,feeding
+feeding_time,LandingFeedingParams.feeding_time,40,20,100,Steps for one feeding bout,economy,pure,feeding
+sugar_gain,LandingFeedingParams.sugar_gain,12.0,5.0,30.0,Sugar→GRN injection current,neural_inject,pure,feeding
+hunger_level,HungerState.level,1.0,0.0,1.0,Hunger intensity (1.0 = max hunger),economy,pure,feeding
+base_feeding_gain,HungerState.base_feeding_gain,2.0,1.0,8.0,Hungry feeding multiplier (sugar→proboscis),economy,pure,feeding
+base_olfactory_gain,HungerState.base_olfactory_gain,1.0,0.5,4.0,Hungry olfactory multiplier (approach motivation),economy,soft_cheat,feeding
+feed_satiation,hardcoded,0.3,0.1,0.5,Hunger reduction per feed bout,economy,pure,feeding
+starve_time_steps,LandingFeedingParams.starve_time_steps,3000,300,10000,Steps until death without feeding,economy,pure,starvation
+step_to_seconds,LandingFeedingParams.step_to_seconds,0.1,0.05,0.5,Mapping of sim steps to wall-clock seconds,debug,pure,starvation
+maze_width,Maze.width,500.0,300.0,1000.0,Arena width,level_design,pure,maze
+maze_height,Maze.height,400.0,200.0,800.0,Arena height,level_design,pure,maze
+time_limit,Maze.time_limit,3000,1000,10000,Max steps before timeout,level_design,pure,maze
+fly_start_x,Maze.fly_start_x,varies,0,maze_width,Fly spawn x position,level_design,pure,maze
+fly_start_y,Maze.fly_start_y,varies,0,maze_height,Fly spawn y position,level_design,pure,maze
+fly_start_theta,Maze.fly_start_theta,0.0,-3.14,3.14,Fly spawn heading (radians),level_design,pure,maze
+boundary_border,hardcoded,5.0,2.0,20.0,Arena edge collision margin,physics,pure,maze
+jar_radius,Jar.radius,35.0,20.0,80.0,Jar size,level_design,pure,jar
+jar_opening_direction,Jar.opening_direction,3.14,-3.14,3.14,Which way jar opening faces (radians),level_design,pure,jar
+jar_opening_width,Jar.opening_width,0.6,0.3,0.9,Fraction of circumference open,level_design,pure,jar
+jar_has_bait,Jar.has_bait,true,false,true,Whether jar has attractant,level_design,pure,jar
+jar_bait_intensity,Jar.bait_intensity,0.5,0.1,1.5,Bait odor strength,level_design,pure,jar
+seed,--seed,42,0,999999,Random seed for reproducibility,debug,pure,simulation
+odor_base_current,FeedingMazeSimulator.odor_current,5.0,1.0,20.0,Base current for odor injection,neural_inject,pure,olfaction
+weight_threshold,extract_motor1hop,3,1,10,Min synapse weight for subgraph edges,neural_inject,pure,subgraph
+wind_direction,Stimulus.direction,0.0,-3.14,3.14,Wind flow direction (radians) for WIND type,level_design,pure,wind
+wind_intensity,Stimulus.intensity,1.0,0.1,3.0,Wind strength (affects push + advection),level_design,pure,wind
+wind_sigma,Stimulus.sigma,50.0,20.0,150.0,Wind zone size,level_design,pure,wind
+advection_strength,get_total_odor_at,0.5,0.0,1.0,How much wind stretches odor plumes,level_design,pure,wind
+use_advection,get_total_odor_at,true,false,true,Whether wind advects odor fields,level_design,pure,wind

@@ -1,0 +1,72 @@
+{
+  "conflict": [
+    {
+      "seed": 42,
+      "steps": 500,
+      "mean_x": 182.39151559220196,
+      "final_x": 312.6839655041957,
+      "final_y": 116.17821971546518,
+      "shadow_time": 88,
+      "light_time": 115,
+      "fruit_dist_min": 11.46072284510909,
+      "fed_count": 1
+    },
+    {
+      "seed": 123,
+      "steps": 500,
+      "mean_x": 243.87051297608465,
+      "final_x": 330.2389192596134,
+      "final_y": 113.77646906501747,
+      "shadow_time": 73,
+      "light_time": 193,
+      "fruit_dist_min": 11.887176785290274,
+      "fed_count": 2
+    },
+    {
+      "seed": 456,
+      "steps": 500,
+      "mean_x": 305.60801786261595,
+      "final_x": 308.944065564049,
+      "final_y": 102.54192995095121,
+      "shadow_time": 0,
+      "light_time": 474,
+      "fruit_dist_min": 14.020702881608154,
+      "fed_count": 10
+    }
+  ],
+  "shadow_both": [
+    {
+      "seed": 42,
+      "steps": 500,
+      "mean_x": 193.89543539858303,
+      "final_x": 126.1866115522141,
+      "final_y": 90.8202136662645,
+      "shadow_time": 112,
+      "light_time": 0,
+      "fruit_dist_min": Infinity,
+      "fed_count": 0
+    },
+    {
+      "seed": 123,
+      "steps": 500,
+      "mean_x": 221.03691269930198,
+      "final_x": 380.72224016509495,
+      "final_y": 142.2240662796388,
+      "shadow_time": 98,
+      "light_time": 0,
+      "fruit_dist_min": Infinity,
+      "fed_count": 0
+    },
+    {
+      "seed": 456,
+      "steps": 500,
+      "mean_x": 202.60188195889964,
+      "final_x": 138.85952111176692,
+      "final_y": 41.059637393426634,
+      "shadow_time": 115,
+      "light_time": 0,
+      "fruit_dist_min": Infinity,
+      "fed_count": 0
+    }
+  ]
+}

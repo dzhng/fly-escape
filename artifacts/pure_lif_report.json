@@ -1,0 +1,27 @@
+{
+  "method": "PURE_GRAPH_LIF",
+  "external_turn_bias": false,
+  "bilateral_injection": true,
+  "seed": 42,
+  "steps": 1500,
+  "odor_base_current": 5.0,
+  "baseline_metrics": {
+    "mean_distance": 144.57013739082262,
+    "final_distance": 42.71120205777026,
+    "min_distance": 28.073377955302313,
+    "mean_heading_alignment": 0.1925014421555625,
+    "path_length": 1039.2150765362062
+  },
+  "fruit_metrics": {
+    "mean_distance": 124.4920591139118,
+    "final_distance": 170.5007540731427,
+    "min_distance": 0.685820424447985,
+    "mean_heading_alignment": 0.07157962402040256,
+    "path_length": 1038.0971327666914
+  },
+  "improvement": {
+    "mean_distance": 20.07807827691083,
+    "heading_alignment": -0.12092181813515994
+  },
+  "assessment": "STRONG"
+}

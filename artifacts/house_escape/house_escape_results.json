@@ -1,0 +1,56 @@
+{
+  "level": "minimal_house_escape",
+  "n_flies": 5,
+  "max_steps": 1500,
+  "escaped": 1,
+  "starved": 0,
+  "escape_rate": 0.2,
+  "stars": 0,
+  "results": [
+    {
+      "seed": 42,
+      "escaped": true,
+      "starved": false,
+      "total_steps": 186,
+      "total_takeoffs": 1,
+      "min_dist_to_exit": 410.6253068354426,
+      "first_takeoff_step": 0
+    },
+    {
+      "seed": 43,
+      "escaped": false,
+      "starved": false,
+      "total_steps": 1500,
+      "total_takeoffs": 1,
+      "min_dist_to_exit": 550.3069320976682,
+      "first_takeoff_step": 0
+    },
+    {
+      "seed": 44,
+      "escaped": false,
+      "starved": false,
+      "total_steps": 1500,
+      "total_takeoffs": 1,
+      "min_dist_to_exit": 550.9141755812369,
+      "first_takeoff_step": 0
+    },
+    {
+      "seed": 45,
+      "escaped": false,
+      "starved": false,
+      "total_steps": 1500,
+      "total_takeoffs": 1,
+      "min_dist_to_exit": 712.007687126565,
+      "first_takeoff_step": 0
+    },
+    {
+      "seed": 46,
+      "escaped": false,
+      "starved": false,
+      "total_steps": 1500,
+      "total_takeoffs": 1,
+      "min_dist_to_exit": 705.1812953520928,
+      "first_takeoff_step": 0
+    }
+  ]
+}

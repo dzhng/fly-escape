@@ -1,0 +1,173 @@
+{
+  "by_feeding_gain": {
+    "1.0": {
+      "n_trials": 9,
+      "survival_rate": 1.0,
+      "n_survived": 9,
+      "n_landed": 9,
+      "n_fed": 9,
+      "mean_land_time": 38.25555555555556,
+      "std_land_time": 33.62932288977421,
+      "mean_feed_time": 42.35555555555556,
+      "std_feed_time": 33.62932288977421
+    },
+    "2.0": {
+      "n_trials": 9,
+      "survival_rate": 1.0,
+      "n_survived": 9,
+      "n_landed": 9,
+      "n_fed": 9,
+      "mean_land_time": 42.82222222222222,
+      "std_land_time": 42.805601341096,
+      "mean_feed_time": 46.922222222222224,
+      "std_feed_time": 42.80560134109601
+    },
+    "4.0": {
+      "n_trials": 9,
+      "survival_rate": 1.0,
+      "n_survived": 9,
+      "n_landed": 9,
+      "n_fed": 9,
+      "mean_land_time": 45.65555555555555,
+      "std_land_time": 41.4582550715807,
+      "mean_feed_time": 49.75555555555556,
+      "std_feed_time": 41.45825507158071
+    }
+  },
+  "by_olfactory_gain": {
+    "1.0": {
+      "n_trials": 9,
+      "survival_rate": 1.0,
+      "n_survived": 9,
+      "n_landed": 9,
+      "n_fed": 9,
+      "mean_land_time": 35.15555555555555,
+      "std_land_time": 27.05008158176694,
+      "mean_feed_time": 39.25555555555556,
+      "std_feed_time": 27.050081581766943
+    },
+    "2.0": {
+      "n_trials": 9,
+      "survival_rate": 1.0,
+      "n_survived": 9,
+      "n_landed": 9,
+      "n_fed": 9,
+      "mean_land_time": 42.27777777777778,
+      "std_land_time": 41.11798140791603,
+      "mean_feed_time": 46.37777777777779,
+      "std_feed_time": 41.117981407916034
+    },
+    "4.0": {
+      "n_trials": 9,
+      "survival_rate": 1.0,
+      "n_survived": 9,
+      "n_landed": 9,
+      "n_fed": 9,
+      "mean_land_time": 49.3,
+      "std_land_time": 46.77059855174925,
+      "mean_feed_time": 53.400000000000006,
+      "std_feed_time": 46.77059855174925
+    }
+  },
+  "by_both": {
+    "fg1.0_og1.0": {
+      "n_trials": 3,
+      "survival_rate": 1.0,
+      "n_survived": 3,
+      "n_landed": 3,
+      "n_fed": 3,
+      "mean_land_time": 26.36666666666667,
+      "std_land_time": 18.0037650383345,
+      "mean_feed_time": 30.46666666666667,
+      "std_feed_time": 18.0037650383345
+    },
+    "fg1.0_og2.0": {
+      "n_trials": 3,
+      "survival_rate": 1.0,
+      "n_survived": 3,
+      "n_landed": 3,
+      "n_fed": 3,
+      "mean_land_time": 53.93333333333334,
+      "std_land_time": 45.75298411640006,
+      "mean_feed_time": 58.03333333333334,
+      "std_feed_time": 45.75298411640006
+    },
+    "fg1.0_og4.0": {
+      "n_trials": 3,
+      "survival_rate": 1.0,
+      "n_survived": 3,
+      "n_landed": 3,
+      "n_fed": 3,
+      "mean_land_time": 34.46666666666667,
+      "std_land_time": 23.95472581535612,
+      "mean_feed_time": 38.56666666666667,
+      "std_feed_time": 23.95472581535612
+    },
+    "fg2.0_og1.0": {
+      "n_trials": 3,
+      "survival_rate": 1.0,
+      "n_survived": 3,
+      "n_landed": 3,
+      "n_fed": 3,
+      "mean_land_time": 40.0,
+      "std_land_time": 28.749376804839905,
+      "mean_feed_time": 44.1,
+      "std_feed_time": 28.74937680483991
+    },
+    "fg2.0_og2.0": {
+      "n_trials": 3,
+      "survival_rate": 1.0,
+      "n_survived": 3,
+      "n_landed": 3,
+      "n_fed": 3,
+      "mean_land_time": 27.233333333333334,
+      "std_land_time": 16.916724137833413,
+      "mean_feed_time": 31.333333333333332,
+      "std_feed_time": 16.91672413783341
+    },
+    "fg2.0_og4.0": {
+      "n_trials": 3,
+      "survival_rate": 1.0,
+      "n_survived": 3,
+      "n_landed": 3,
+      "n_fed": 3,
+      "mean_land_time": 61.23333333333334,
+      "std_land_time": 61.5979617267397,
+      "mean_feed_time": 65.33333333333333,
+      "std_feed_time": 61.597961726739705
+    },
+    "fg4.0_og1.0": {
+      "n_trials": 3,
+      "survival_rate": 1.0,
+      "n_survived": 3,
+      "n_landed": 3,
+      "n_fed": 3,
+      "mean_land_time": 39.1,
+      "std_land_time": 30.466156086166606,
+      "mean_feed_time": 43.20000000000001,
+      "std_feed_time": 30.46615608616661
+    },
+    "fg4.0_og2.0": {
+      "n_trials": 3,
+      "survival_rate": 1.0,
+      "n_survived": 3,
+      "n_landed": 3,
+      "n_fed": 3,
+      "mean_land_time": 45.666666666666664,
+      "std_land_time": 48.15477361822213,
+      "mean_feed_time": 49.76666666666667,
+      "std_feed_time": 48.15477361822213
+    },
+    "fg4.0_og4.0": {
+      "n_trials": 3,
+      "survival_rate": 1.0,
+      "n_survived": 3,
+      "n_landed": 3,
+      "n_fed": 3,
+      "mean_land_time": 52.199999999999996,
+      "std_land_time": 42.70230282627234,
+      "mean_feed_time": 56.300000000000004,
+      "std_feed_time": 42.702302826272344
+    }
+  }
+}

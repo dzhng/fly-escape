@@ -1,0 +1,22 @@
+{
+  "level": "Flight Herding",
+  "mode": "FLIGHT",
+  "method": "PURE_GRAPH_LIF",
+  "external_turn_bias": false,
+  "seed": 42,
+  "retries": 5,
+  "final_state": "won",
+  "metrics": {
+    "total_steps": 172,
+    "final_state": "won",
+    "path_length": 615.5237598877856,
+    "mode": "FLIGHT",
+    "mean_distance_to_jar": 320.9521499277027,
+    "min_distance_to_jar": 44.37572317466272,
+    "final_distance_to_jar": 44.37572317466272,
+    "win_step": 172,
+    "mean_speed": 3.5579408085999167,
+    "max_speed": 4.000000000000027
+  },
+  "flight_dns_used": true
+}

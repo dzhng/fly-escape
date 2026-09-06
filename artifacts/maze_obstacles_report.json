@@ -1,0 +1,16 @@
+{
+  "level": "Obstacle Course",
+  "method": "PURE_GRAPH_LIF",
+  "external_turn_bias": false,
+  "seed": 42,
+  "retries": 5,
+  "final_state": "timeout",
+  "metrics": {
+    "total_steps": 2500,
+    "final_state": "timeout",
+    "path_length": 1730.8161303035386,
+    "mean_distance_to_jar": 302.7171675560402,
+    "min_distance_to_jar": 58.89663516423198,
+    "final_distance_to_jar": 76.4977164609186
+  }
+}

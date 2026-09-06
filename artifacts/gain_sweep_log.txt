@@ -1,0 +1,38 @@
+============================================================
+GAIN SWEEP EXPERIMENT: Landing + Feeding
+============================================================
+
+Sweep parameters:
+  Seeds: [42, 123, 456]
+  Feeding gains: [1.0, 2.0, 4.0]
+  Olfactory gains: [1.0, 2.0, 4.0]
+  Level: easy
+  Total trials: 27
+
+Loading MaleCNS connectome...
+Loading MaleCNS v1.0 connectome...
+  Loading annotations from body-annotations.feather...
+    211,577 bodies
+  Loading neurotransmitters from body-neurotransmitters.feather...
+    1,835,518 rows
+  Loading connectome weights from connectome-weights.feather...
+    151,856,684 edges
+
+Extracting motor1hop subgraph with olfactory pathways...
+  Found 1,342 DN, 354 MN
+  Olfactory: 469 ORNs, 33 PNs, 2028 LH, 97 MBONs
+  Seed neurons: 4,323
+  Filtering edges with weight >= 5...
+    7,622,864 strong edges
+  Found 692,938 edges touching seed neurons
+  Selected 65,000 neurons for subgraph
+  Building NT sign map...
+  Building signed adjacency matrix...
+  Processing edges:   0%|          | 0/692938 [00:00<?, ?it/s]  Processing edges:  15%|█▍        | 101005/692938 [00:00<00:00, 1010002.80it/s]  Processing edges:  30%|███       | 210413/692938 [00:00<00:00, 1059429.90it/s]  Processing edges:  47%|████▋     | 323339/692938 [00:00<00:00, 1091301.20it/s]  Processing edges:  62%|██████▏   | 432470/692938 [00:00<00:00, 1079687.51it/s]  Processing edges:  81%|████████  | 561546/692938 [00:00<00:00, 1155270.15it/s]  Processing edges: 100%|██████████| 692938/692938 [00:00<00:00, 1161398.44it/s]
+  Adjacency: 65,000 neurons, 598,944 signed edges
+    Excitatory edges: 400,985
+    Inhibitory edges: 197,959
+
+Running sweep...
+  [1/27] fg=1.0x, og=1.0x, seed=42... ✓ land=4.3s
+  [2/27] fg=1.0x, og=1.0x, seed=123...

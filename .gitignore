@@ -1,0 +1,33 @@
+# Data files (too large for git)
+# Keep .gitkeep files to preserve directory structure
+data/*.feather
+data/raw/*.feather
+data/processed/
+
+# But keep the raw directory structure
+!data/raw/.gitkeep
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Node
+node_modules/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Artifacts (optional - can be large)
+# artifacts/
+
+# Terminal files
+terminals/

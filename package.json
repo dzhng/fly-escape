@@ -1,0 +1,8 @@
+{
+  "name": "fly-escape",
+  "private": true,
+  "description": "Help the Fly Escape — MaleCNS LIF tech demo",
+  "scripts": {
+    "download-neurons": "node scripts/download-neurons.js"
+  }
+}

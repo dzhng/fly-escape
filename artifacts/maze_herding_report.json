@@ -1,0 +1,17 @@
+{
+  "level": "Fruit Trail Herding",
+  "method": "PURE_GRAPH_LIF",
+  "external_turn_bias": false,
+  "seed": 42,
+  "retries": 5,
+  "final_state": "won",
+  "metrics": {
+    "total_steps": 1044,
+    "final_state": "won",
+    "path_length": 721.5802261551494,
+    "mean_distance_to_jar": 215.50437527805906,
+    "min_distance_to_jar": 39.93707770287542,
+    "final_distance_to_jar": 39.93707770287542,
+    "win_step": 1044
+  }
+}

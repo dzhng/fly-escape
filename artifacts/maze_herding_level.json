@@ -1,0 +1,80 @@
+{
+  "name": "Fruit Trail Herding",
+  "width": 600,
+  "height": 300,
+  "time_limit": 2000,
+  "fly_start": {
+    "x": 50,
+    "y": 150,
+    "theta": 0
+  },
+  "walls": [
+    {
+      "x": 0,
+      "y": 250,
+      "width": 200,
+      "height": 50
+    },
+    {
+      "x": 250,
+      "y": 250,
+      "width": 350,
+      "height": 50
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "width": 200,
+      "height": 50
+    },
+    {
+      "x": 250,
+      "y": 0,
+      "width": 350,
+      "height": 50
+    }
+  ],
+  "stimuli": [
+    {
+      "type": "fruit",
+      "x": 120,
+      "y": 150,
+      "intensity": 0.8,
+      "sigma": 60,
+      "direction": 0.0
+    },
+    {
+      "type": "fruit",
+      "x": 220,
+      "y": 150,
+      "intensity": 0.9,
+      "sigma": 50,
+      "direction": 0.0
+    },
+    {
+      "type": "fruit",
+      "x": 320,
+      "y": 150,
+      "intensity": 1.0,
+      "sigma": 50,
+      "direction": 0.0
+    },
+    {
+      "type": "fruit",
+      "x": 420,
+      "y": 150,
+      "intensity": 1.2,
+      "sigma": 60,
+      "direction": 0.0
+    }
+  ],
+  "jar": {
+    "x": 530,
+    "y": 150,
+    "radius": 40,
+    "opening_direction": 3.141592653589793,
+    "opening_width": 0.7,
+    "has_bait": true,
+    "bait_intensity": 0.8
+  }
+}

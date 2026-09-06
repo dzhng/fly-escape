@@ -1,0 +1,106 @@
+{
+  "name": "Obstacle Course",
+  "width": 600,
+  "height": 400,
+  "time_limit": 2500,
+  "fly_start": {
+    "x": 50,
+    "y": 200,
+    "theta": 0
+  },
+  "walls": [
+    {
+      "x": 150,
+      "y": 150,
+      "width": 20,
+      "height": 250
+    },
+    {
+      "x": 300,
+      "y": 0,
+      "width": 20,
+      "height": 250
+    },
+    {
+      "x": 450,
+      "y": 150,
+      "width": 20,
+      "height": 250
+    }
+  ],
+  "stimuli": [
+    {
+      "type": "fruit",
+      "x": 100,
+      "y": 200,
+      "intensity": 0.7,
+      "sigma": 50,
+      "direction": 0.0
+    },
+    {
+      "type": "fruit",
+      "x": 150,
+      "y": 80,
+      "intensity": 0.8,
+      "sigma": 40,
+      "direction": 0.0
+    },
+    {
+      "type": "fruit",
+      "x": 230,
+      "y": 100,
+      "intensity": 0.9,
+      "sigma": 50,
+      "direction": 0.0
+    },
+    {
+      "type": "fruit",
+      "x": 310,
+      "y": 320,
+      "intensity": 0.9,
+      "sigma": 50,
+      "direction": 0.0
+    },
+    {
+      "type": "fruit",
+      "x": 400,
+      "y": 300,
+      "intensity": 1.0,
+      "sigma": 50,
+      "direction": 0.0
+    },
+    {
+      "type": "fruit",
+      "x": 450,
+      "y": 80,
+      "intensity": 1.0,
+      "sigma": 40,
+      "direction": 0.0
+    },
+    {
+      "type": "vinegar",
+      "x": 150,
+      "y": 300,
+      "intensity": 0.6,
+      "sigma": 40,
+      "direction": 0.0
+    },
+    {
+      "type": "vinegar",
+      "x": 300,
+      "y": 80,
+      "intensity": 0.6,
+      "sigma": 40,
+      "direction": 0.0
+    }
+  ],
+  "jar": {
+    "x": 550,
+    "y": 100,
+    "radius": 40,
+    "opening_direction": 3.141592653589793,
+    "opening_width": 0.6,
+    "has_bait": true,
+    "bait_intensity": 0.7
+  }
+}
