@@ -48,13 +48,38 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .get(1)
         .ok_or("Pass graph directory and output JSON path")?;
     let output = args.get(2).ok_or("Pass output JSON path")?;
+    let exclude_readouts = match args.get(3).map(String::as_str) {
+        None => false,
+        Some("--confirm-excitatory-without-readouts") => true,
+        _ => return Err("Unknown probe mode".into()),
+    };
     let bytes = std::fs::read(format!("{path}/graph.bin"))?;
     let manifest = std::fs::read_to_string(format!("{path}/manifest.json"))?;
     let graph = Arc::new(Graph::from_bytes(&bytes, &manifest)?);
     let start = Instant::now();
     let baseline: Vec<_> = SEEDS.map(|s| run(&graph, s, &[], 0.0, &[])).collect();
     let mut results = Vec::new();
-    for pathway in ["EXCITATORY_LH_MOTOR", "INHIBITORY_LH_MOTOR", "AOTU"] {
+    let pathways: &[&str] = if exclude_readouts {
+        &["EXCITATORY_LH_MOTOR"]
+    } else {
+        &["EXCITATORY_LH_MOTOR", "INHIBITORY_LH_MOTOR", "AOTU"]
+    };
+    let motor = &graph.manifest.motor;
+    let readout_indices: std::collections::HashSet<_> = [
+        motor.dn_left.as_slice(),
+        motor.dn_right.as_slice(),
+        motor.mn_left.as_slice(),
+        motor.mn_right.as_slice(),
+        graph.pathway("OLFACTORY_DN_LEFT"),
+        graph.pathway("OLFACTORY_DN_RIGHT"),
+        graph.pathway("FLIGHT_DN_LEFT"),
+        graph.pathway("FLIGHT_DN_RIGHT"),
+    ]
+    .into_iter()
+    .flatten()
+    .copied()
+    .collect();
+    for &pathway in pathways {
         let (left, right) = if pathway == "AOTU" {
             (graph.pathway("AOTU_LEFT"), graph.pathway("AOTU_RIGHT"))
         } else {
@@ -64,22 +89,43 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             }
         };
         let silence: Vec<_> = left.iter().chain(right).copied().collect();
+        // Keep the original bilateral ablation set so only stimulus membership changes.
+        let excluded: Vec<_> = silence
+            .iter()
+            .copied()
+            .filter(|i| exclude_readouts && readout_indices.contains(i))
+            .collect();
+        let left: Vec<_> = left
+            .iter()
+            .copied()
+            .filter(|i| !exclude_readouts || !readout_indices.contains(i))
+            .collect();
+        let right: Vec<_> = right
+            .iter()
+            .copied()
+            .filter(|i| !exclude_readouts || !readout_indices.contains(i))
+            .collect();
         let ablated_baseline: Vec<_> = SEEDS.map(|s| run(&graph, s, &[], 0.0, &silence)).collect();
-        for gain in [0.1, 0.3, 1.0, 3.0] {
-            let l: Vec<_> = SEEDS.map(|s| run(&graph, s, left, gain, &[])).collect();
-            let r: Vec<_> = SEEDS.map(|s| run(&graph, s, right, gain, &[])).collect();
+        let gains: &[f64] = if exclude_readouts {
+            &[1.0]
+        } else {
+            &[0.1, 0.3, 1.0, 3.0]
+        };
+        for &gain in gains {
+            let l: Vec<_> = SEEDS.map(|s| run(&graph, s, &left, gain, &[])).collect();
+            let r: Vec<_> = SEEDS.map(|s| run(&graph, s, &right, gain, &[])).collect();
             let al: Vec<_> = SEEDS
-                .map(|s| run(&graph, s, left, gain, &silence))
+                .map(|s| run(&graph, s, &left, gain, &silence))
                 .collect();
             let ar: Vec<_> = SEEDS
-                .map(|s| run(&graph, s, right, gain, &silence))
+                .map(|s| run(&graph, s, &right, gain, &silence))
                 .collect();
             let dl = difference(&l, &baseline);
             let dr = difference(&r, &baseline);
             let dal = difference(&al, &ablated_baseline);
             let dar = difference(&ar, &ablated_baseline);
             let mirrored = difference(&l, &r);
-            let row = json!({"pathway":pathway,"gain":gain,"leftCount":left.len(),"rightCount":right.len(),"leftMinusBaseline":summary(&dl),"rightMinusBaseline":summary(&dr),"leftMinusRight":summary(&mirrored),"ablatedLeftMinusAblatedBaseline":summary(&dal),"ablatedRightMinusAblatedBaseline":summary(&dar),"ablatedBaselineMinusBaseline":summary(&difference(&ablated_baseline,&baseline)),"seedMeans":{"baseline":baseline,"left":l,"right":r,"ablatedBaseline":ablated_baseline,"ablatedLeft":al,"ablatedRight":ar}});
+            let row = json!({"pathway":pathway,"gain":gain,"excludedReadoutIndices":excluded,"stimulatedLeftIndices":left,"stimulatedRightIndices":right,"silencedIndices":silence,"leftCount":left.len(),"rightCount":right.len(),"leftMinusBaseline":summary(&dl),"rightMinusBaseline":summary(&dr),"leftMinusRight":summary(&mirrored),"ablatedLeftMinusAblatedBaseline":summary(&dal),"ablatedRightMinusAblatedBaseline":summary(&dar),"ablatedBaselineMinusBaseline":summary(&difference(&ablated_baseline,&baseline)),"seedMeans":{"baseline":baseline,"left":l,"right":r,"ablatedBaseline":ablated_baseline,"ablatedLeft":al,"ablatedRight":ar}});
             eprintln!(
                 "{pathway} gain={gain} after {:.1}s: {}",
                 start.elapsed().as_secs_f64(),
@@ -101,7 +147,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         )
     })
     .collect();
-    let evidence = json!({"graphHash":graph.manifest.graph_hash,"graphProvenance":graph.manifest.provenance,"manifestHash":format!("{:x}",Sha256::digest(manifest.as_bytes())),"sourceHashes":source_hashes,"prng":PRNG_ID,"rootSeeds":SEEDS.collect::<Vec<_>>(),"flyId":0,"params":sim::LifParams::default(),"warmupTicks":WARMUP,"measurementTicks":MEASURE,"conditions":"Every arm starts from the same seed and 60 unstimulated ticks. At tick 60 apply constant current to one annotated side, then average the next 100 motor outputs. Ablation silences both sides of the named pathway starting at tick 60, including voltage/spikes/external/incoming current; ablated comparisons use separately measured ablated no-current baseline. No fields, body feedback, taste or other sensory currents.","uncertainty":"Paired seed means; two-sided Student t(29) 95% confidence interval. Descriptive parameter sweep, not multiplicity-adjusted hypothesis tests.","interpretation":"Positive turn is positive heading (+Z/right at heading zero) when decoded without a sign inversion. Current-response signs alone do not demonstrate attraction, aversion, light avoidance, or shadow preference in a moving body. Identical light/shadow currents yield identical neural trajectories.","elapsedSeconds":start.elapsed().as_secs_f64(),"results":results});
+    let evidence = json!({"graphHash":graph.manifest.graph_hash,"graphProvenance":graph.manifest.provenance,"manifestHash":format!("{:x}",Sha256::digest(manifest.as_bytes())),"sourceHashes":source_hashes,"excludeReadoutsFromStimulus":exclude_readouts,"prng":PRNG_ID,"rootSeeds":SEEDS.collect::<Vec<_>>(),"flyId":0,"params":sim::LifParams::default(),"warmupTicks":WARMUP,"measurementTicks":MEASURE,"conditions":"Every arm starts from the same seed and 60 unstimulated ticks. At tick 60 apply constant current to one annotated side, then average the next 100 motor outputs. Ablation silences both sides of the named pathway starting at tick 60, including voltage/spikes/external/incoming current; ablated comparisons use separately measured ablated no-current baseline. No fields, body feedback, taste or other sensory currents.","uncertainty":"Paired seed means; two-sided Student t(29) 95% confidence interval. Descriptive parameter sweep, not multiplicity-adjusted hypothesis tests.","interpretation":"Positive turn is positive heading (+Z/right at heading zero) when decoded without a sign inversion. Current-response signs alone do not demonstrate attraction, aversion, light avoidance, or shadow preference in a moving body. Identical light/shadow currents yield identical neural trajectories.","elapsedSeconds":start.elapsed().as_secs_f64(),"results":results});
     std::fs::write(output, serde_json::to_string_pretty(&evidence)?)?;
     Ok(())
 }
