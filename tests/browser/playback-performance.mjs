@@ -4,7 +4,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { chromium } from "playwright";
 const base = process.env.BRAIN_URL ?? "http://127.0.0.1:5184";
 const output = new URL(
-  "../../specs/help-the-fly-escape/assets/evidence/05/full-playback/",
+  process.env.PERFORMANCE_OUTPUT ?? "../../specs/help-the-fly-escape/assets/evidence/05/full-playback/",
   import.meta.url,
 );
 await mkdir(output, { recursive: true });
@@ -16,9 +16,11 @@ const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
 const errors = [];
 page.on("pageerror", (error) => errors.push(error.message));
 const report = async () => JSON.parse(await page.getByTestId("playback-report").textContent());
+const runs = Number(process.env.PERFORMANCE_RUNS ?? 10);
+assert.ok(Number.isInteger(runs) && runs > 0 && runs <= 10);
 try {
   await page.goto(`${base}/lab/playback`);
-  for (let run = 1; run <= 10; run++) {
+  for (let run = 1; run <= runs; run++) {
     if (run > 1) await page.getByRole("button", { name: "New attempt", exact: true }).click();
     await page.waitForFunction(
       () =>

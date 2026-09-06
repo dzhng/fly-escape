@@ -65,7 +65,7 @@ try {
   });
   await targets.send("Target.detachFromTarget", { sessionId });
   const fullRun = JSON.parse(
-    await readFile(new URL("full-playback/run-01.json", baseline), "utf8"),
+    await readFile(process.env.FULL_RUN_REPORT ?? new URL("full-playback/run-01.json", baseline), "utf8"),
   );
   assert.equal(fullRun.spec.simulationBuildId, snapshot.spec.simulationBuildId);
   const heapBytes = (heap) => heap.usedSize + heap.embedderHeapUsedSize + heap.backingStorageSize;
