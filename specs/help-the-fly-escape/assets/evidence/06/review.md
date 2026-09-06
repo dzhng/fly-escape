@@ -9,3 +9,5 @@ The next visual checkpoint needs separated models at close framing, while retain
 Independent CLI code review remains unavailable because the installed client rejects its configured model. Root inspected the camera, input and consumer changes. Camera constants are delegated by the spec; startup follows fly 0 provisionally to satisfy close default framing. Slice 05 sustained performance remains a dependency gate.
 
 The [07 scale correction](../07/scale-review.md) resolves close/follow body overlap with unchanged physical spawns. Fresh review still cannot identify the selected fly at whole-room overview; retain that camera marker gate before completing 06.
+
+Current corrections: [overview stroke](marker-review.md) passes independent review, and [airborne association](airborne-review.md) now keeps the circle attached to its selected body. Full dependency acceptance still waits for05 and the integrated checkpoint.

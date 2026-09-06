@@ -503,7 +503,7 @@ export class WorldView {
     if (this.selectedFly !== null) {
       const fly = this.flies[this.selectedFly];
       this.navigation.track(fly.position.clone().add(new THREE.Vector3(0, this.subjectCenterY, 0)));
-      this.selectionRing.position.set(fly.position.x, 0.03, fly.position.z);
+      this.selectionRing.position.set(fly.position.x, fly.position.y + 0.03, fly.position.z);
       this.updateSelectionRing();
     }
     // Only visual occluders on the camera-to-subject ray cut away; floor/wall

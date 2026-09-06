@@ -1,0 +1,74 @@
+{
+  "kind": "screenshot-parity-diff",
+  "generatedAt": "2026-09-06T18:16:01.667Z",
+  "note": "Lower parityDistance means the candidate is closer to the reference for this fixed pair. This is a distance metric, not an acceptance gate.",
+  "pairCount": 1,
+  "worstPair": "reverse-seek",
+  "results": [
+    {
+      "id": "reverse-seek",
+      "current": "../fly-escape/specs/help-the-fly-escape/assets/evidence/08/scaled-playback/reverse-seek.png",
+      "candidate": "../fly-escape/specs/help-the-fly-escape/assets/evidence/06/airborne-marker/reverse-seek.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "parityDistance": 0.03046,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 90,
+          "colorEntropyBits": 2.40672,
+          "edgeDensity": 0.15476,
+          "dominantColorShare": 0.39431,
+          "transparentShare": 0,
+          "luminanceMean": 241.14745,
+          "luminanceP5": 201.9022,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 50.5708
+        },
+        "candidate": {
+          "colorBuckets": 99,
+          "colorEntropyBits": 2.34635,
+          "edgeDensity": 0.1455,
+          "dominantColorShare": 0.39389,
+          "transparentShare": 0,
+          "luminanceMean": 241.9528,
+          "luminanceP5": 201.9366,
+          "luminanceP95": 252.473,
+          "luminanceContrast": 50.5364
+        }
+      },
+      "grayscale": {
+        "mae": 3.34931,
+        "rmse": 17.34576,
+        "diffRatio16": 0.05395,
+        "diffRatio32": 0.02367,
+        "diffRatio64": 0.01587,
+        "pixelmatchRatio": 0.02599
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0.00007,
+        "terrainLikeRatioCurrent": 0.98306,
+        "terrainLikeRatioCandidate": 0.98564,
+        "avgLuminanceCurrent": 241.60126,
+        "avgLuminanceCandidate": 242.37819,
+        "avgLuminanceDelta": 0.77694,
+        "edgeEnergyCurrent": 0.0698,
+        "edgeEnergyCandidate": 0.07036,
+        "edgeEnergyRatio": 1.00802,
+        "edgeDiffRatio32": 0.05579
+      },
+      "artifacts": {
+        "sideBySide": "airborne-diff/reverse-seek-side-by-side.png",
+        "currentGray": "airborne-diff/reverse-seek-current-gray.png",
+        "candidateGray": "airborne-diff/reverse-seek-candidate-gray.png",
+        "absDiff": "airborne-diff/reverse-seek-absdiff.png",
+        "pixelmatch": "airborne-diff/reverse-seek-pixelmatch.png",
+        "currentEdges": "airborne-diff/reverse-seek-current-edges.png",
+        "candidateEdges": "airborne-diff/reverse-seek-candidate-edges.png",
+        "edgeDiff": "airborne-diff/reverse-seek-edge-diff.png"
+      }
+    }
+  ]
+}

@@ -10,7 +10,7 @@ One web selectedFlyId → renderer camera controller and card scroll action.
 
 ## Marker readability decision
 
-Keep the yellow depth-tested ground ring and its bounds-derived outer footprint. Preserve the existing 6% radial stroke at close range; at smaller projected sizes thicken inward toward 1.5 CSS pixels, capped at 45% of the radius to retain a central hole. Derive thickness from the live world-camera projection around the ring, so viewport, zoom and ground foreshortening govern readability without changing camera or physical/model scale. Reuse the ring geometry; no per-frame GPU resource allocation, outline, badge, arrow or fixture-specific correction.
+Keep the yellow depth-tested horizontal ring and its bounds-derived outer footprint. Preserve the existing 6% radial stroke at close range; at smaller projected sizes thicken inward toward 1.5 CSS pixels, capped at 45% of the radius to retain a central hole. Derive thickness from the live world-camera projection around the ring, so viewport, zoom and ground foreshortening govern readability without changing camera or physical/model scale. Reuse the ring geometry; no per-frame GPU resource allocation, outline, badge, arrow or fixture-specific correction.
 
 ## Runnable review surface
 
@@ -33,3 +33,7 @@ Delegated: Easing and precise angle within CONTRACTS.md; input bindings use whee
 Human feedback that changes this slice: User may change close distance or pan-release behavior; do not reintroduce camera rotation.
 
 Must stay green: all accepted dependency contracts and their focused fixtures; neural motor ownership, real-data provenance, bounded work and the [global invariants](../README.md#standing-gates-and-ownership). Do not broaden testing without a new failure or changed consumer. Record evidence under `assets/evidence/06/` and update the README handoff before ending the pass. Unlisted material decisions require a spec update.
+
+## Airborne selection correction
+
+The user requested a yellow selection circle, while the initial plan chose a ground ring. Actual flight captures show that choice can visually surround another fly. Keep the same horizontal ring and bounds-derived radius at the selected fly’s presentation height, including ground level when walking. This changes no physical height, shadow, model scale or camera behavior. Recheck the actual airborne playback capture and preserve grounded camera fixtures.
