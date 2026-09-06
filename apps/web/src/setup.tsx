@@ -1,3 +1,4 @@
+import { loadFoodAssets } from "./food-assets";
 import React, { useEffect, useRef, useState } from "react";
 import {
   AttemptClient,
@@ -114,6 +115,7 @@ export function SetupGame() {
       .catch((error) => {
         if (live) setHouseState(String(error));
       });
+    void loadFoodAssets(view, () => live).catch(error => { if (live) setMessage(String(error)); });
     void fetch(flyModelUrl)
       .then((response) => {
         if (!response.ok) throw new Error("Fly model could not load");

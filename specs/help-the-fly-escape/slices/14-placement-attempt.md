@@ -44,3 +44,11 @@ Human feedback that changes this slice: Placement friction can change reversible
 Must stay green: all accepted dependency contracts and their focused fixtures; neural motor ownership, real-data provenance, bounded work and the [global invariants](../README.md#standing-gates-and-ownership). Do not broaden testing without a new failure or changed consumer. Record evidence under `assets/evidence/14/` and update the README handoff before ending the pass. Unlisted material decisions require a spec update.
 
 The functional setup/attempt pass and its evidence are documented in [setup review](../assets/evidence/14/setup/README.md). This closes the editor lifecycle seam; it does not claim campaign balance or decorative-art acceptance.
+
+## Bounded Level 1 tool-art preparation
+
+Fruit and scent crumbs need recognizable Blender-authored shapes in setup and recorded playback; the colored cylinders are diagnostic placement markers, not final tool art. This subpass owns only these two silhouettes, their replaceable GLBs/.blend sources and their placement/food-context verification. Fruit remains an edible, non-solid floor contact surface; crumbs retain odor-only semantics. Later vinegar, lamp, shade and fan shapes are separate future art subpasses, not implicit work in this checkpoint.
+
+The authoritative catalog owns placement radius and food contact radius. Art is anchored to placement centre/heading and scaled from its footprint, without changing geometry, collision, neural movement, feeding heading, materials for rooms, or lighting. Near-flush relief at or below 0.005 world units preserves the existing ground-plane presentation rather than introducing a second surface-height simulation. Capture and document native asset bounds, the relief/foot-contact approximation and any boundary feeding mismatch: the core can register body-circle contact outside the visual footprint, which is not proof of mouth contact.
+
+Verification is separate from functional editor acceptance: preserved separate Blender source scenes and GLB round-trip; finite static bounds and replacement/disposal checks; same-state setup/playback before/after; actual recorded feeding context where available; fresh visual critique for shape readability, floor contact and body clearance. This prepared pass does not close 14, dependency 10, campaign 15 or the later tool-art breadth.

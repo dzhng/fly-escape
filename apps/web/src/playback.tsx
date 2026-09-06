@@ -1,3 +1,4 @@
+import { loadFoodAssets } from "./food-assets";
 import React, { useEffect, useRef, useState } from "react";
 import {
   WorldView,
@@ -226,6 +227,7 @@ export function AttemptPlayback({
           reply.info.resolvedSetup.food,
           reply.info.level.zappers,
           reply.info.level.exit,
+          false,
         );
         scene.current.setPlacements(reply.info.spec.placements, catalog);
         scene.current.setPoses(sample(run.current));
@@ -242,6 +244,11 @@ export function AttemptPlayback({
             observer.cancel();
             fail(String(cause));
           });
+        void loadFoodAssets(target, () => scene.current === target).catch(cause => {
+          if (scene.current !== target) return;
+          observer.cancel();
+          fail(String(cause));
+        });
         fetch(flyModelUrl)
           .then((response) => {
             if (!response.ok) throw new Error(`Fly model request failed (${response.status})`);

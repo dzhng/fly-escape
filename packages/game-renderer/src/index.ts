@@ -1,5 +1,8 @@
 import * as THREE from "three";
 import { housePalette } from "./house-materials";
+import { FoodModels, isFoodKind, type FoodKind } from "./food";
+export { loadFoodModel } from "./food";
+export type { FoodKind } from "./food";
 import { FlyTrails, type TrailPoint } from "./trails";
 export { recordedTrails } from "./trails";
 import { HouseGeometry, cutAwayOccluders, type HousePart } from "./house";
@@ -44,6 +47,7 @@ export interface FlyPose {
 /** A presentation-only fixture. The caller owns pose sampling and frame scheduling. */
 export class WorldView {
   private readonly scene = new THREE.Scene();
+  private readonly foodModels = new FoodModels();
   private readonly trails: FlyTrails;
   private trailSample?: { paths: readonly (readonly TrailPoint[])[]; cursorTick: number };
   private readonly navigation: WorldCamera;
@@ -211,17 +215,21 @@ export class WorldView {
     );
     return hit ? { x: hit.x, z: hit.z } : null;
   }
+  setFoodModel(kind: FoodKind, root: THREE.Group): void {
+    this.foodModels.replace(kind, root);
+    this.scene.add(this.foodModels.root);
+  }
+
   setPlacements(
     placements: Placement[],
     catalog: ToolDef[],
     ghost?: { placement: Placement; valid: boolean | null },
   ): void {
+    this.foodModels.setPlacements(placements, catalog, ghost);
     disposeObjectResources(this.placementMarkers);
     this.placementMarkers.clear();
     if (!this.placementMarkers.parent) this.scene.add(this.placementMarkers);
     const colors = {
-      fruit: "#ef9b45",
-      crumbs: "#f4d986",
       vinegar: "#ba8ae2",
       lamp: "#fff0b0",
       shade: "#6aa4bc",
@@ -232,6 +240,7 @@ export class WorldView {
       ...(ghost ? [{ ...ghost, ghost: true }] : []),
     ]) {
       const p = item.placement;
+      if (isFoodKind(p.kind)) continue;
       const tool = catalog.find((tool) => tool.kind === p.kind);
       if (!tool) throw new Error(`Missing tool definition: ${p.kind}`);
       const radius = tool.footprintRadius;
@@ -266,8 +275,8 @@ export class WorldView {
     }
   }
 
-  setContactRegions(food: ContactRegion[], hazards: ContactRegion[], exit: ExitOpening): void {
-    this.contactCenter.visible = food.length > 0;
+  setContactRegions(food: ContactRegion[], hazards: ContactRegion[], exit: ExitOpening, showFoodBounds = true): void {
+    this.contactCenter.visible = showFoodBounds && food.length > 0;
     for (const child of [...this.contactMarkers.children]) {
       if (child instanceof THREE.Mesh) {
         child.geometry.dispose();
@@ -276,7 +285,7 @@ export class WorldView {
       this.contactMarkers.remove(child);
     }
     for (const [regions, color] of [
-      [food, "#6b9d52"],
+      [showFoodBounds ? food : [], "#6b9d52"],
       [hazards, "#bd5349"],
     ] as const) {
       for (const region of regions) {
@@ -628,6 +637,8 @@ export class WorldView {
   }
 
   dispose(): void {
+    this.scene.remove(this.foodModels.root);
+    this.foodModels.dispose();
     this.motions.forEach((motion) => motion.dispose());
     this.controls?.dispose();
     this.observer.disconnect();

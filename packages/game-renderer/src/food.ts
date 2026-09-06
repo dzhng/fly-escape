@@ -1,0 +1,125 @@
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import type { Placement, ToolDef } from "@fly-escape/sim-client";
+import { disposeObjectResources } from "./resources";
+export type FoodKind = "fruit" | "crumbs";
+export const isFoodKind = (kind: Placement["kind"]): kind is FoodKind =>
+  kind === "fruit" || kind === "crumbs";
+
+/** Native radius-one assets scale only in X/Z; relief stays at the ground plane. */
+export async function loadFoodModel(bytes: ArrayBuffer) {
+  const { scene: root, animations } = await new GLTFLoader().parseAsync(
+    bytes,
+    "",
+  );
+  try {
+    root.updateMatrixWorld(true);
+    let triangles = 0;
+    root.traverse((object) => {
+      if (object instanceof THREE.Light || object instanceof THREE.Camera)
+        throw new Error("Food cannot add lights or cameras.");
+      if (!(object instanceof THREE.Mesh)) return;
+      if (object instanceof THREE.SkinnedMesh)
+        throw new Error("Food must be static.");
+      triangles +=
+        (object.geometry.index?.count ??
+          object.geometry.attributes.position.count) / 3;
+      const positions = object.geometry.attributes.position;
+      for (let i = 0; i < positions.count; i++) {
+        const p = new THREE.Vector3()
+          .fromBufferAttribute(positions, i)
+          .applyMatrix4(object.matrixWorld);
+        if (
+          ![p.x, p.y, p.z].every(Number.isFinite) ||
+          Math.hypot(p.x, p.z) > 1.000001 ||
+          p.y < -0.000001 ||
+          p.y > 0.005001
+        )
+          throw new Error(
+            "Food must fit radius one and Y=0…0.005 without an offset pivot.",
+          );
+      }
+      object.receiveShadow = true;
+    });
+    if (animations.length || triangles < 1 || triangles > 5000)
+      throw new Error("Food must contain 1–5000 static triangles.");
+    return {
+      root,
+      triangles,
+      bounds: new THREE.Box3().setFromObject(root),
+      dispose: () => disposeObjectResources(root),
+    };
+  } catch (error) {
+    disposeObjectResources(root);
+    throw error;
+  }
+}
+
+type Ghost = { placement: Placement; valid: boolean | null };
+/** Templates own shared resources; placed clones own transforms only. */
+export class FoodModels {
+  readonly root = new THREE.Group();
+  private sources = new Map<FoodKind, THREE.Group>();
+  private placements: Placement[] = [];
+  private catalog: ToolDef[] = [];
+  private ghost?: Ghost;
+  private ghostMaterial = new THREE.MeshStandardMaterial({
+    transparent: true,
+    opacity: 0.7,
+    depthWrite: false,
+  });
+  replace(kind: FoodKind, source: THREE.Group): void {
+    const old = this.sources.get(kind);
+    this.sources.set(kind, source);
+    this.rebuild();
+    if (old) disposeObjectResources(old);
+  }
+  setPlacements(
+    placements: Placement[],
+    catalog: ToolDef[],
+    ghost?: Ghost,
+  ): void {
+    this.placements = placements;
+    this.catalog = catalog;
+    this.ghost = ghost;
+    this.rebuild();
+  }
+  private rebuild(): void {
+    this.root.clear();
+    for (const item of [
+      ...this.placements.map((placement) => ({
+        placement,
+        ghost: false,
+        valid: true,
+      })),
+      ...(this.ghost ? [{ ...this.ghost, ghost: true }] : []),
+    ]) {
+      const p = item.placement;
+      if (!isFoodKind(p.kind)) continue;
+      const source = this.sources.get(p.kind);
+      if (!source) continue;
+      const tool = this.catalog.find((tool) => tool.kind === p.kind);
+      if (!tool) throw new Error(`Missing tool definition: ${p.kind}`);
+      const instance = source.clone(true);
+      instance.position.set(p.position.x, 0, p.position.z);
+      instance.rotation.y = -p.heading;
+      instance.scale.set(tool.footprintRadius, 1, tool.footprintRadius);
+      if (item.ghost) {
+        this.ghostMaterial.color.set(
+          item.valid === null ? "#e5dbaf" : item.valid ? "#67e5ae" : "#ff657f",
+        );
+        instance.position.y = 0.008;
+        instance.traverse((o) => {
+          if (o instanceof THREE.Mesh) o.material = this.ghostMaterial;
+        });
+      }
+      this.root.add(instance);
+    }
+  }
+  dispose(): void {
+    this.root.clear();
+    for (const source of this.sources.values()) disposeObjectResources(source);
+    this.sources.clear();
+    this.ghostMaterial.dispose();
+  }
+}
