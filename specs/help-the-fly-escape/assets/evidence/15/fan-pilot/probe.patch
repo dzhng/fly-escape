@@ -1,0 +1,17 @@
+diff --git a/crates/sim/examples/campaign_probe.rs b/crates/sim/examples/campaign_probe.rs
+index f9541fc..fb0317d 100644
+--- a/crates/sim/examples/campaign_probe.rs
++++ b/crates/sim/examples/campaign_probe.rs
+@@ -216,10 +216,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
+     let mut pairs = vec![];
+     for &seed in seeds.iter().take(count) {
+         let mut conditions = vec![];
+-        let empty = vec![];
++        let empty: Vec<_> = content.reference.iter().filter(|p| p.kind != sim::placement::ToolKind::Fan).cloned().collect();
+         let mut arms = vec![("reference", &content.reference), ("poor", &content.poor)];
+         if args.len() == 7 {
+-            arms.push(("empty", &empty));
++            arms.push(("no-fans", &empty));
+         }
+         for (label, placements) in arms {
+             let row = run(&graph, &content, seed, label, placements)?;
