@@ -1,10 +1,10 @@
 {
-  "sha256": "7faca4c5548a69b6990627fbd75216f40b162fc59ce2167e9fc99f64c2ea3af2",
+  "sha256": "288ef5253fc98e43de6fd0ef732f4ec65abe6b48c0406c6212138605cb8f27cf",
   "triangles": 5166,
   "materials": 3,
   "meshes": 40,
   "joints": 23,
-  "glb_bytes": 385448,
+  "glb_bytes": 385472,
   "clips": {
     "Walk": {
       "seconds": 1.0,
@@ -30,5 +30,11 @@
       "maximum_endpoint_component_difference": 0.0,
       "root_targeted": false
     }
+  },
+  "three_loader": {
+    "revision": "185",
+    "finite_initial_bounds": true,
+    "finite_clip_samples": 16,
+    "metadata_note": "Descriptive pivot key renamed ground_contact_description; extras.pivot is interpreted as a numeric vector by GLTFLoader."
   }
 }

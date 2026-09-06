@@ -16,7 +16,7 @@ scene.collection.objects.link(root)
 root['up'] = '+Y (glTF)'
 root['forward'] = '+Z (glTF)'
 root['world_units_per_blender_unit'] = 1.0
-root['pivot'] = 'ground contact, centered beneath thorax'
+root['ground_contact_description'] = 'ground contact, centered beneath thorax'
 
 
 def material(name, color, roughness, metallic=0):
