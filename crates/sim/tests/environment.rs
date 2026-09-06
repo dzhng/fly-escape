@@ -1,0 +1,347 @@
+use sim::environment::*;
+
+fn room(id: u32, x0: f64, z0: f64, x1: f64, z1: f64) -> RectRoom {
+    RectRoom {
+        id,
+        min: Point { x: x0, z: z0 },
+        max: Point { x: x1, z: z1 },
+    }
+}
+fn wall(x0: f64, z0: f64, x1: f64, z1: f64) -> Wall {
+    Wall {
+        a: Point { x: x0, z: z0 },
+        b: Point { x: x1, z: z1 },
+    }
+}
+fn chambers(open: bool) -> Geometry {
+    let mut walls = vec![
+        wall(0., 0., 8., 0.),
+        wall(0., 4., 8., 4.),
+        wall(0., 0., 0., 4.),
+        wall(8., 0., 8., 4.),
+    ];
+    if open {
+        walls.extend([wall(4., 0., 4., 1.), wall(4., 3., 4., 4.)]);
+    } else {
+        walls.push(wall(4., 0., 4., 4.));
+    }
+    Geometry {
+        rooms: vec![room(1, 0., 0., 4., 4.), room(2, 4., 0., 8., 4.)],
+        walls,
+    }
+}
+#[test]
+fn walls_block_visibility_and_fast_motion_but_doorways_admit_both() {
+    let a = Point { x: 2., z: 2. };
+    let b = Point { x: 6., z: 2. };
+    assert!(!chambers(false).line_of_sight(a, b));
+    assert!(chambers(true).line_of_sight(a, b));
+    assert!(chambers(false).sweep(a, b, 0.1).x < 3.91);
+    assert_eq!(chambers(true).sweep(a, b, 0.1), b);
+    assert!(
+        chambers(true)
+            .sweep(Point { x: 2., z: 0.5 }, Point { x: 6., z: 0.5 }, 0.1)
+            .x
+            < 4.
+    );
+}
+#[test]
+fn exit_cue_requires_same_room_radius_and_clear_sight() {
+    let mut geometry = chambers(true);
+    geometry.walls.push(wall(6., 0., 6., 1.5));
+    let fields = FieldSet::new(
+        geometry,
+        FieldConfig::default(),
+        vec![],
+        Some(ExitCue {
+            position: Point { x: 7., z: 1. },
+            room_id: 2,
+            radius: 4.,
+            strength: 2.,
+        }),
+    )
+    .unwrap();
+    assert!(fields.sample_point(Point { x: 6.5, z: 1. }).exit_cue > 0.);
+    assert_eq!(fields.sample_point(Point { x: 5., z: 1. }).exit_cue, 0.);
+    assert_eq!(fields.sample_point(Point { x: 3., z: 2. }).exit_cue, 0.);
+    assert_eq!(fields.sample_point(Point { x: 4.1, z: 3.9 }).exit_cue, 0.);
+}
+fn odor(chambers: Geometry, h: f64, wind: Point) -> FieldSet {
+    FieldSet::new(
+        chambers,
+        FieldConfig {
+            cell_size: h,
+            wind,
+            ..FieldConfig::default()
+        },
+        vec![Source {
+            position: Point { x: 2., z: 2. },
+            radius: 0.7,
+            rate: 1.,
+            kind: SourceKind::Odor,
+        }],
+        None,
+    )
+    .unwrap()
+}
+fn run(fields: &mut FieldSet, seconds: usize) {
+    for _ in 0..seconds * 10 {
+        fields.advance(0.1).unwrap();
+    }
+}
+fn mass_right(f: &FieldSet) -> f64 {
+    let g = f.export_grid();
+    g.cells
+        .iter()
+        .enumerate()
+        .filter(|(i, _)| g.origin.x + (*i % g.width as usize) as f64 * g.cell_size >= 4.)
+        .map(|(_, v)| v.map_or(0., |s| s.odor) * g.cell_size * g.cell_size)
+        .sum()
+}
+#[test]
+fn odor_crosses_open_doorway_but_not_solid_wall_at_two_resolutions() {
+    for h in [0.25, 0.125] {
+        let mut closed = odor(chambers(false), h, Point::default());
+        let mut open = odor(chambers(true), h, Point::default());
+        run(&mut closed, 12);
+        run(&mut open, 12);
+        assert_eq!(mass_right(&closed), 0.);
+        assert!(mass_right(&open) > 0.1);
+    }
+}
+fn arena() -> Geometry {
+    Geometry {
+        rooms: vec![room(1, 0., 0., 12., 12.)],
+        walls: vec![
+            wall(0., 0., 12., 0.),
+            wall(0., 12., 12., 12.),
+            wall(0., 0., 0., 12.),
+            wall(12., 0., 12., 12.),
+        ],
+    }
+}
+fn plume(h: f64, wind: Point, source: Point) -> FieldSet {
+    FieldSet::new(
+        arena(),
+        FieldConfig {
+            cell_size: h,
+            wind,
+            ..FieldConfig::default()
+        },
+        vec![Source {
+            position: source,
+            radius: 0.8,
+            rate: 1.,
+            kind: SourceKind::Odor,
+        }],
+        None,
+    )
+    .unwrap()
+}
+fn centroid(f: &FieldSet) -> Point {
+    let g = f.export_grid();
+    let mut mass = 0.;
+    let mut p = Point::default();
+    for (i, v) in g.cells.iter().enumerate() {
+        if let Some(v) = v {
+            mass += v.odor;
+            p.x += v.odor
+                * (g.origin.x + (i % g.width as usize) as f64 * g.cell_size + g.cell_size / 2.);
+            p.z += v.odor
+                * (g.origin.z + (i / g.width as usize) as f64 * g.cell_size + g.cell_size / 2.);
+        }
+    }
+    Point {
+        x: p.x / mass,
+        z: p.z / mass,
+    }
+}
+#[test]
+fn wind_moves_plume_downwind_and_rotates_in_world_space() {
+    let mut calm = plume(0.25, Point::default(), Point { x: 6., z: 6. });
+    let mut east = plume(0.25, Point { x: 0.8, z: 0. }, Point { x: 6., z: 6. });
+    let mut south = plume(0.25, Point { x: 0., z: 0.8 }, Point { x: 6., z: 6. });
+    run(&mut calm, 3);
+    run(&mut east, 3);
+    run(&mut south, 3);
+    assert!(centroid(&east).x - centroid(&calm).x > 0.8);
+    assert!((centroid(&east).x - centroid(&south).z).abs() < 1e-10);
+    assert!((centroid(&east).z - centroid(&south).x).abs() < 1e-10);
+    for heading in [0., 1., 2.] {
+        assert_eq!(
+            south.sample(Point { x: 6., z: 6. }, heading, 0).wind,
+            Point { x: 0., z: 0.8 }
+        );
+    }
+}
+#[test]
+fn doorway_transport_converges_with_grid_refinement() {
+    // Isolate diffusion: competing advection truncation error can cancel it on a coarse grid.
+    let mut masses = vec![];
+    for h in [0.5, 0.25, 0.125, 0.0625] {
+        let mut f = odor(chambers(true), h, Point::default());
+        run(&mut f, 12);
+        masses.push(mass_right(&f));
+    }
+    let errors: Vec<_> = masses[..3].iter().map(|m| (m - masses[3]).abs()).collect();
+    assert!(errors[2] < errors[1] && errors[1] < errors[0]);
+    assert!(
+        errors[2] / masses[3] < 0.1,
+        "finest comparison must agree within 10%: {masses:?}"
+    );
+}
+#[test]
+fn mirrored_fields_swap_antennae_and_export_exact_sampled_values() {
+    let mut pair = vec![];
+    for z in [5., 7.] {
+        let sources = vec![
+            Source {
+                position: Point { x: 6., z },
+                radius: 2.,
+                rate: 3.,
+                kind: SourceKind::Lamp,
+            },
+            Source {
+                position: Point { x: 6., z },
+                radius: 0.8,
+                rate: 1.,
+                kind: SourceKind::Odor,
+            },
+        ];
+        let mut f = FieldSet::new(arena(), FieldConfig::default(), sources, None).unwrap();
+        run(&mut f, 2);
+        pair.push(f);
+    }
+    let a = pair[0].sample(Point { x: 6., z: 6. }, 0., 20);
+    let b = pair[1].sample(Point { x: 6., z: 6. }, 0., 20);
+    assert!(a.left.brightness > a.right.brightness && a.left.odor > a.right.odor);
+    assert!((a.left.brightness - b.right.brightness).abs() < 1e-12);
+    assert!((a.left.odor - b.right.odor).abs() < 1e-12);
+    assert!((a.right.odor - b.left.odor).abs() < 1e-12);
+    let turned = pair[0].sample(Point { x: 6., z: 6. }, std::f64::consts::PI, 20);
+    assert!(turned.left.odor < turned.right.odor);
+    let g = pair[0].export_grid();
+    for (i, cell) in g.cells.iter().enumerate() {
+        let p = Point {
+            x: g.origin.x + (i % g.width as usize) as f64 * g.cell_size + g.cell_size / 2.,
+            z: g.origin.z + (i / g.width as usize) as f64 * g.cell_size + g.cell_size / 2.,
+        };
+        assert_eq!(*cell, Some(pair[0].sample_point(p)));
+    }
+}
+#[test]
+fn lamps_add_shade_subtracts_and_darkness_never_goes_negative() {
+    let source = |kind, rate| Source {
+        position: Point { x: 2.125, z: 2.125 },
+        radius: 1.,
+        rate,
+        kind,
+    };
+    let make =
+        |sources| FieldSet::new(chambers(false), FieldConfig::default(), sources, None).unwrap();
+    let p = Point { x: 2.125, z: 2.125 };
+    assert_eq!(
+        make(vec![source(SourceKind::Lamp, 3.)])
+            .sample_point(p)
+            .brightness,
+        4.
+    );
+    assert_eq!(
+        make(vec![source(SourceKind::Shade, 3.)])
+            .sample_point(p)
+            .brightness,
+        0.
+    );
+    let combined = make(vec![
+        source(SourceKind::Lamp, 3.),
+        source(SourceKind::Shade, 2.),
+    ])
+    .sample_point(p);
+    assert_eq!(combined.brightness, 2.);
+    assert_eq!(combined.shade, 2.);
+}
+#[test]
+fn bounded_solver_preserves_mass_positivity_and_state_on_rejection() {
+    let config = FieldConfig {
+        wind: Point { x: 5., z: 3. },
+        decay: 0.,
+        ..FieldConfig::default()
+    };
+    let mut f = FieldSet::new(
+        chambers(false),
+        config,
+        vec![Source {
+            position: Point { x: 2., z: 2. },
+            radius: 0.7,
+            rate: 2.,
+            kind: SourceKind::Odor,
+        }],
+        None,
+    )
+    .unwrap();
+    run(&mut f, 5);
+    let grid = f.export_grid();
+    let mass: f64 = grid
+        .cells
+        .iter()
+        .flatten()
+        .map(|v| {
+            assert!(v.odor.is_finite() && v.odor >= 0.);
+            v.odor * grid.cell_size.powi(2)
+        })
+        .sum();
+    assert!(
+        (mass - 10.).abs() < 1e-10,
+        "solid walls must retain all emitted mass: {mass}"
+    );
+    assert!(f.advance(1e9).unwrap_err().contains("work limit"));
+    assert_eq!(f.export_grid(), grid);
+    f.advance(0.1).unwrap();
+    assert_ne!(f.export_grid(), grid);
+}
+#[test]
+fn decay_reduces_total_concentration_at_the_declared_rate() {
+    let mut f = odor(chambers(false), 0.25, Point::default());
+    run(&mut f, 10);
+    let grid = f.export_grid();
+    let mass: f64 = grid
+        .cells
+        .iter()
+        .flatten()
+        .map(|v| v.odor * grid.cell_size.powi(2))
+        .sum();
+    let continuous = (1. - (-0.1_f64 * 10.).exp()) / 0.1;
+    assert!((mass - continuous).abs() / continuous < 0.01);
+}
+#[test]
+fn dead_end_branch_has_one_physical_connection_and_no_remote_exit_cue() {
+    let mut g = chambers(true);
+    g.rooms.push(room(3, 4., 4., 6., 7.));
+    g.walls.retain(|w| *w != wall(0., 4., 8., 4.));
+    g.walls.extend([
+        wall(0., 4., 4., 4.),
+        wall(6., 4., 8., 4.),
+        wall(4., 4., 4., 7.),
+        wall(6., 4., 6., 7.),
+        wall(4., 7., 6., 7.),
+    ]);
+    let branch = Point { x: 5., z: 6. };
+    let main = Point { x: 5., z: 2. };
+    assert_eq!(g.room_at(branch), Some(3));
+    assert_eq!(g.sweep(branch, main, 0.1), main);
+    assert!(g.sweep(branch, Point { x: 7., z: 6. }, 0.1).x < 6.);
+    let f = FieldSet::new(
+        g,
+        FieldConfig::default(),
+        vec![],
+        Some(ExitCue {
+            position: main,
+            room_id: 2,
+            radius: 8.,
+            strength: 1.,
+        }),
+    )
+    .unwrap();
+    assert!(f.geometry().line_of_sight(branch, main));
+    assert_eq!(f.sample_point(branch).exit_cue, 0.);
+}
