@@ -43,12 +43,13 @@ elif KIND=='fan':
     # Blender +X stays glTF +X, the core heading-zero wind direction.
     plate('ForwardChevron',[(.70,-.18),(.92,0),(.70,.18),(.70,.075),(.55,.075),(.55,-.075),(.70,-.075)],.005,arrow)
 elif KIND=='lamp':
-    rim=material('lamp.trim',(.34,.23,.085)); lens=material('lamp.lens',(.83,.67,.30)); rib=material('lamp.radial',(.98,.91,.62)); centre=material('lamp.centre',(.98,.95,.80))
-    disk('RecessedTrim',.96,.002,rim); disk('WarmLens',.84,.003,lens)
-    for i in range(12):
-        a=i*math.tau/12
-        plate('LensRib%d'%i,[(r*math.cos(a+t),r*math.sin(a+t)) for r,t in [(.32,-.025),(.77,-.045),(.77,.045),(.32,.025)]],.004,rib)
-    disk('LightCentre',.31,.005,centre,40)
+    housing=material('lamp.housing',(.14,.19,.21)); trim=material('lamp.trim',(.45,.51,.50)); lens=material('lamp.lens',(.85,.89,.82)); screw=material('lamp.fastener',(.065,.09,.10))
+    rect('SquareHousing',-.67,-.67,.67,.67,.002,housing)
+    rect('MetalBezel',-.59,-.59,.59,.59,.003,trim)
+    rect('PaleLens',-.46,-.46,.46,.46,.004,lens)
+    for i,(x,y) in enumerate([(-.54,-.54),(-.54,.54),(.54,-.54),(.54,.54)]):
+        rect('Fastener%d'%i,x-.035,y-.035,x+.035,y+.035,.0045,screw)
+        rect('ScrewSlot%d'%i,x-.026,y-.006,x+.026,y+.006,.005,trim)
 elif KIND=='shade':
     frame=material('shade.frame',(.04,.065,.085)); dark=material('shade.slats',(.075,.12,.17)); light=material('shade.slatsAlternate',(.18,.25,.30)); rail=material('shade.rail',(.37,.44,.43))
     rect('ShadeFrame',-.67,-.67,.67,.67,.002,frame)

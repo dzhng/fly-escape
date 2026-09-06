@@ -38,26 +38,34 @@ test("food assets fit catalog-scaled floor footprints and replacement preserves 
   food.dispose();
 });
 
-test("shared food geometry survives edits and is released once when replaced", async () => {
-  const food = new PlacementModels();
-  const load = () =>
-    Bun.file(new URL("../../../assets/food/fruit.glb", import.meta.url))
-      .arrayBuffer()
-      .then(loadPlacementModel);
-  const first = await load();
-  let released = 0;
-  first.root.traverse((object) => {
-    if (object instanceof THREE.Mesh) object.geometry.addEventListener("dispose", () => released++);
+for (const kind of ["fruit", "crumbs", "vinegar", "fan", "lamp", "shade"] as const)
+  test(`${kind} shared geometry survives edits and is released once when replaced`, async () => {
+    const food = new PlacementModels();
+    const load = () =>
+      Bun.file(
+        new URL(
+          `../../../assets/${kind === "fruit" || kind === "crumbs" ? "food" : "tools"}/${kind}.glb`,
+          import.meta.url,
+        ),
+      )
+        .arrayBuffer()
+        .then(loadPlacementModel);
+    const first = await load();
+    let released = 0;
+    const geometries = new Set<THREE.BufferGeometry>();
+    first.root.traverse((object) => {
+      if (object instanceof THREE.Mesh) geometries.add(object.geometry);
+    });
+    for (const geometry of geometries) geometry.addEventListener("dispose", () => released++);
+    const meshes = geometries.size;
+    food.replace(kind, first.root);
+    food.setPlacements([], []);
+    expect(released).toBe(0);
+    food.replace(kind, (await load()).root);
+    expect(released).toBe(meshes);
+    food.dispose();
+    expect(released).toBe(meshes);
   });
-  const meshes = first.root.children.length;
-  food.replace("fruit", first.root);
-  food.setPlacements([], []);
-  expect(released).toBe(0);
-  food.replace("fruit", (await load()).root);
-  expect(released).toBe(meshes);
-  food.dispose();
-  expect(released).toBe(meshes);
-});
 
 for (const kind of ["vinegar", "fan", "lamp", "shade"])
   test(`${kind} is a finite static floor surface within its placement footprint`, async () => {

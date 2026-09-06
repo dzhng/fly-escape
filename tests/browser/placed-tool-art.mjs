@@ -28,9 +28,13 @@ try {
     for (const [x, y] of [
       [680, 520],
       [760, 600],
-      [600, 600],
+      [850, 580],
       [820, 500],
-      [500, 500],
+      [570, 400],
+      [600, 450],
+      [540, 450],
+      [660, 480],
+      [740, 460],
       [550, 600],
       [850, 580],
       [740, 460],
@@ -50,6 +54,7 @@ try {
   }
   await page.mouse.move(1430, 20);
   await page.screenshot({ path: output + "/setup-placed.png" });
+  await page.screenshot({path:output+"/setup-placed-crop.png",clip:{x:300,y:340,width:650,height:390}});
   await page.getByRole("button", { name: "Run · release flies", exact: true }).click();
   await page.waitForFunction(
     () =>
@@ -69,6 +74,7 @@ try {
   );
   await page.mouse.move(1430, 20);
   await page.screenshot({ path: output + "/playback-placed.png" });
+  await page.screenshot({path:output+"/playback-placed-crop.png",clip:{x:300,y:340,width:650,height:390}});
   const canvas = page.locator("canvas");
   const paused = await canvas.screenshot();
   await page.waitForTimeout(300);
