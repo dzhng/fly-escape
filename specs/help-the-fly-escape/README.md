@@ -71,3 +71,7 @@ Before closing a substantive pass, review ownership with [refactor-clean](../../
 - [Planning validation](assets/planning/review.md): review results for this specification, not game acceptance.
 
 The open empirical questions are explicit: source availability/extraction group coverage (01), correct neural port and observed movement (02), effective cue mappings (03), graph-driven feeding (04), sustainable 20-fly production (05), close asset readability (07–12), and puzzle robustness (15–16). Their slices name the experiment and verdict. Ordinary tuning is delegated there; these unknowns are not reasons to invent extra architecture up front.
+
+## Native Level 1 preparation handoff
+
+[Slice 15 exploratory calibration](assets/evidence/15/README.md) adds authorable content and a real Graph/Attempt paired-seed probe. Current unfrozen content fails the placement-effect pilot (+2 median versus required +4). No campaign promotion or 30+30 acceptance run. Continue the bounded heading experiment documented there; browser integration and performance remain separate gates.

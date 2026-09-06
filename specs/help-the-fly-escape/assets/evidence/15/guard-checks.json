@@ -1,0 +1,37 @@
+[
+  {
+    "case": "zero-threshold",
+    "exitCode": 1,
+    "error": "Error: \"star thresholds must be positive, strictly increasing and at most 20\""
+  },
+  {
+    "case": "unordered-thresholds",
+    "exitCode": 1,
+    "error": "Error: \"star thresholds must be positive, strictly increasing and at most 20\""
+  },
+  {
+    "case": "threshold-above-flies",
+    "exitCode": 1,
+    "error": "Error: \"star thresholds must be positive, strictly increasing and at most 20\""
+  },
+  {
+    "case": "duplicate-tuning-seed",
+    "exitCode": 1,
+    "error": "Error: \"requires two disjoint 30-seed sets\""
+  },
+  {
+    "case": "overlapping-seed-sets",
+    "exitCode": 1,
+    "error": "Error: \"requires two disjoint 30-seed sets\""
+  },
+  {
+    "case": "unfrozen-holdout",
+    "exitCode": 1,
+    "error": "Error: \"heldout requires frozen content; set must be tuning or heldout\""
+  },
+  {
+    "case": "sealed-route",
+    "exitCode": 1,
+    "error": "Error: \"Open Window must retain four-room route plus one-door pantry; actual {(2, 3), (2, 5), (3, 4)}\""
+  }
+]
