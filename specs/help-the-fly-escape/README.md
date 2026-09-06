@@ -8,6 +8,8 @@ Build a local, fully 3D browser game in which the player places environmental to
 
 You are implementing the full browser game. Current pickup: complete authored-house loading in production, review the integrated trails, and finish lighting/food art. The native Level 1 calibration preparation runs independently; no campaign level is accepted yet. Keep actual build identity attached to performance evidence.
 
+The [production authored-house gate](assets/evidence/10/production/review.md) loads all three validated kit parts; independent source/visual review passed. Rerun its lifecycle checks after integration.
+
 Completed: 01–08 and 13. The [ten full 20-fly baseline runs](assets/evidence/05/full-playback/review.md) passed without underruns. A newer setup/core build also passes one full integration run and its matching 250 MiB memory probe; this is not a repeat of the ten-run baseline. 100 flies remains a future scaling problem.
 
 Priority order: finish 10 production authored-house loading (the workbench alone was insufficient); complete 09/11 human review; finish 12 lighting and 14 food art; then 15–16 campaign validation and 17 clean release. Merged solid/core and setup committed-click checks are green. Preserve dependency gates and do not accept any campaign level from a three-seed diagnostic.

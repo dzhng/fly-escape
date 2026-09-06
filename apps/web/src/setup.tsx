@@ -10,6 +10,7 @@ import {
   type ToolKind,
 } from "@fly-escape/sim-client";
 import { WorldView, loadFlyModel } from "@fly-escape/game-renderer";
+import { loadHouseAssets } from "./house-assets";
 import { AttemptPlayback } from "./playback";
 import { loadProgress, saveProgress, awardResult, emptyProgress } from "./progress";
 import "./setup.css";
@@ -48,6 +49,7 @@ export function SetupGame() {
   const [busy, setBusy] = useState(false);
   const [valid, setValid] = useState<boolean | null>(null);
   const [message, setMessage] = useState("Loading placement tools…");
+  const [houseState, setHouseState] = useState("loading");
   const [storageFailed, setStorageFailed] = useState(false);
   const world = useRef<WorldView | undefined>(undefined);
   const container = useRef<HTMLDivElement>(null);
@@ -104,6 +106,14 @@ export function SetupGame() {
     view.overview();
     view.enableCamera();
     let live = true;
+    setHouseState("loading");
+    void loadHouseAssets(view, () => live)
+      .then(() => {
+        if (live) setHouseState("ready");
+      })
+      .catch((error) => {
+        if (live) setHouseState(String(error));
+      });
     void fetch(flyModelUrl)
       .then((response) => {
         if (!response.ok) throw new Error("Fly model could not load");
@@ -237,7 +247,7 @@ export function SetupGame() {
       />
     );
   return (
-    <main className="setup-game" data-testid="setup-game">
+    <main className="setup-game" data-testid="setup-game" data-house-state={houseState}>
       <header>
         <div>
           <span className="eyebrow">Fly escape · setup fixture</span>
@@ -245,6 +255,11 @@ export function SetupGame() {
         </div>
         <span>Best: {fixture ? (progress.bestStars[fixture.level.id] ?? 0) : 0} / 3 stars</span>
       </header>
+      {houseState !== "ready" && (
+        <p role={houseState === "loading" ? "status" : "alert"}>
+          {houseState === "loading" ? "Loading house…" : houseState}
+        </p>
+      )}
       <section className="setup-layout">
         <div className="setup-world">
           <div
@@ -358,7 +373,7 @@ export function SetupGame() {
           </label>
           <button
             className="run-setup"
-            disabled={!fixture || !setup || busy || !!intent?.commit}
+            disabled={!fixture || !setup || houseState !== "ready" || busy || !!intent?.commit}
             onClick={() => {
               if (!fixture || !setup) return;
               setIntent(undefined);

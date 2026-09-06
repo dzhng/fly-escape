@@ -18,6 +18,7 @@ import {
   type AttemptResult,
   type ToolDef,
 } from "@fly-escape/sim-client";
+import { loadHouseAssets } from "./house-assets";
 import { SciencePanel } from "./science-panel";
 import { NeuralExplanations } from "./neural-explanations";
 import "./playback.css";
@@ -163,6 +164,7 @@ export function AttemptPlayback({
   };
   const [requested, setRequested] = useState(true);
   const [error, setError] = useState("");
+  const [houseReady, setHouseReady] = useState(false);
 
   useEffect(() => {
     let raf = 0,
@@ -230,6 +232,16 @@ export function AttemptPlayback({
         scene.current.enableSelection(selectFly);
         scene.current.selectFly(0);
         const target = scene.current;
+        setHouseReady(false);
+        void loadHouseAssets(target, () => scene.current === target)
+          .then(() => {
+            if (scene.current === target) setHouseReady(true);
+          })
+          .catch((cause) => {
+            if (scene.current !== target) return;
+            observer.cancel();
+            fail(String(cause));
+          });
         fetch(flyModelUrl)
           .then((response) => {
             if (!response.ok) throw new Error(`Fly model request failed (${response.status})`);
@@ -458,6 +470,7 @@ export function AttemptPlayback({
       data-cursor-tick={display.cursor}
       data-computed-tick={display.computed}
       data-playback-state={error ? "error" : display.state}
+      data-house-state={error ? "error" : houseReady ? "ready" : "loading"}
       data-fly-count={info?.spec.flyCount ?? 0}
     >
       <header>
@@ -492,17 +505,19 @@ export function AttemptPlayback({
               <strong>
                 {error
                   ? "Needs attention"
-                  : display.state === "loading"
-                    ? "Loading the connectome…"
-                    : display.state === "buffering"
-                      ? "Buffering — building enough lead"
-                      : display.state === "ended"
-                        ? "Playback complete"
-                        : display.state === "hidden"
-                          ? "Hidden tab — playback frozen"
-                          : requested
-                            ? `Playing at ${display.speed}×`
-                            : "Paused"}
+                  : !houseReady && info
+                    ? "Loading house…"
+                    : display.state === "loading"
+                      ? "Loading the connectome…"
+                      : display.state === "buffering"
+                        ? "Buffering — building enough lead"
+                        : display.state === "ended"
+                          ? "Playback complete"
+                          : display.state === "hidden"
+                            ? "Hidden tab — playback frozen"
+                            : requested
+                              ? `Playing at ${display.speed}×`
+                              : "Paused"}
               </strong>
               <span>
                 {(display.cursor * TICK_SECONDS).toFixed(1)} /{" "}

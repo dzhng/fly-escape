@@ -1,0 +1,231 @@
+{
+  "geometryBuffers": {
+    "floor": "f4c2cf132a2a200917ab1242a8c32d6fe7596710e8832b3b23a64b96e424470c",
+    "wall": "2960676cf77e6884d4f53fdb746d662f80a25ae3b3ac31a259af95b98a4f17af",
+    "solid": "d313f6aa395f3fdb618408670d6249a05803e49fb36d7beef82db3f70f675f65"
+  },
+  "production": {
+    "spec": {
+      "schemaVersion": 1,
+      "attemptId": "757d31cb-cfa3-4413-bda8-873dc139580d",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "tuningHash": "1d1314e91cdb31e32bbdfe4fa0f971f38eba16ffea56e25eff5bca7835a12657",
+      "placements": [],
+      "levelHash": "1339a4500bb7a09e06fdb3454883fa85bdcdce66dacdeb04fe7995e6c2f5e882",
+      "levelId": "five-room-setup",
+      "rootSeed": "42",
+      "flyCount": 20,
+      "durationTicks": 600
+    },
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+    "viewport": [
+      1440,
+      900
+    ],
+    "devicePixelRatio": 1,
+    "cursorTick": 100,
+    "sampleTick": 100,
+    "computedTick": 323,
+    "state": "paused",
+    "speed": 1,
+    "complete": true,
+    "initialWaitMs": null,
+    "warmWaitMs": null,
+    "productionMs": 14364.600000143051,
+    "activeNeuralSteps": 6210,
+    "activeEquivalentProductionRate": 2.073806842971078,
+    "underruns": 0,
+    "frameIntervals": {
+      "count": 866,
+      "p95Ms": 17,
+      "p95Capped": false,
+      "maxMs": 50,
+      "histogramResolutionMs": 1
+    },
+    "interactions": {
+      "count": 2,
+      "p95Ms": 18,
+      "p95Capped": false,
+      "maxMs": 17.09999990463257,
+      "histogramResolutionMs": 1,
+      "measurement": "control callback to synchronous scene render completion; excludes browser paint"
+    },
+    "memory": {
+      "wasmBytes": 92340224,
+      "archiveOwnedChunkBytes": 2990984,
+      "archiveBoundBytes": 8025184,
+      "graphBytes": 9864584,
+      "brainStateBytes": 64400000,
+      "observedJSHeapBytes": 119274151,
+      "note": "WASM includes graph and brain state; do not add those again. Download report includes an on-demand GPU memory estimate."
+    },
+    "renderer": {
+      "flyCount": 20,
+      "modelKind": "glb",
+      "drawCalls": 1457,
+      "triangles": 182064,
+      "geometries": 45,
+      "textures": 764
+    },
+    "camera": {
+      "following": true,
+      "distance": 2.2095668529990466,
+      "minDistance": 1.1047834264995233,
+      "maxDistance": 42.007428881478475,
+      "closeDistance": 2.2095668529990466,
+      "target": [
+        3.091861324566453,
+        0.37245855807192063,
+        1.9425796824523387
+      ],
+      "width": 1075,
+      "height": 525,
+      "selectedFlyId": 0,
+      "flies": [
+        {
+          "id": 0,
+          "x": 537.5,
+          "y": 262.49999999999983,
+          "visible": true
+        },
+        {
+          "id": 1,
+          "x": 886.072037199839,
+          "y": 51.79236293810666,
+          "visible": true
+        },
+        {
+          "id": 2,
+          "x": 702.0387075464954,
+          "y": 108.43375773677766,
+          "visible": true
+        },
+        {
+          "id": 3,
+          "x": 1028.8443595852675,
+          "y": 147.5484820912677,
+          "visible": true
+        },
+        {
+          "id": 4,
+          "x": 645.5192263857336,
+          "y": 640.2091789867113,
+          "visible": false
+        },
+        {
+          "id": 5,
+          "x": 610.2059884737404,
+          "y": 92.07289148787623,
+          "visible": true
+        },
+        {
+          "id": 6,
+          "x": 855.0652233925958,
+          "y": -84.57014114183555,
+          "visible": false
+        },
+        {
+          "id": 7,
+          "x": 743.9797258768076,
+          "y": 138.84068890295106,
+          "visible": true
+        },
+        {
+          "id": 8,
+          "x": 898.4246597450839,
+          "y": 161.35301144640204,
+          "visible": true
+        },
+        {
+          "id": 9,
+          "x": 955.9115558685637,
+          "y": 229.96648081389205,
+          "visible": true
+        },
+        {
+          "id": 10,
+          "x": 508.41954995030346,
+          "y": -43.96542178928195,
+          "visible": false
+        },
+        {
+          "id": 11,
+          "x": 686.8663982907336,
+          "y": 81.022793082314,
+          "visible": true
+        },
+        {
+          "id": 12,
+          "x": 841.3987776609899,
+          "y": 67.52493079584586,
+          "visible": true
+        },
+        {
+          "id": 13,
+          "x": 751.7710559850597,
+          "y": 371.22032341959596,
+          "visible": true
+        },
+        {
+          "id": 14,
+          "x": 886.2048631382463,
+          "y": 663.622193731932,
+          "visible": false
+        },
+        {
+          "id": 15,
+          "x": 759.4683748652056,
+          "y": 44.13503555929981,
+          "visible": true
+        },
+        {
+          "id": 16,
+          "x": 453.5397597626369,
+          "y": 109.60615461963819,
+          "visible": true
+        },
+        {
+          "id": 17,
+          "x": 643.0846544462898,
+          "y": 275.9714836478692,
+          "visible": true
+        },
+        {
+          "id": 18,
+          "x": 840.1328080109779,
+          "y": 69.27487380254013,
+          "visible": true
+        },
+        {
+          "id": 19,
+          "x": 1035.8101678945027,
+          "y": 880.6366968161065,
+          "visible": false
+        }
+      ]
+    },
+    "result": {
+      "attemptId": "757d31cb-cfa3-4413-bda8-873dc139580d",
+      "completedTick": 323,
+      "outcomes": {
+        "escaped": 0,
+        "starved": 20,
+        "zapped": 0,
+        "timedOut": 0,
+        "score": 0
+      },
+      "stars": 0
+    }
+  },
+  "authored": {
+    "flyCount": 1,
+    "modelKind": "glb",
+    "drawCalls": 127,
+    "triangles": 12066,
+    "geometries": 45,
+    "textures": 4
+  },
+  "errors": []
+}

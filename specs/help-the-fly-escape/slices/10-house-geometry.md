@@ -57,3 +57,7 @@ Add one solid to the shared five-room review fixture and expose a bounded core-o
 Solid meshes follow the existing selected-visibility rule: an occluding solid keeps a low base of at most the wall-base height, using its original footprint, while the core collider and sensory occlusion remain unchanged. This prevents a tall prop from hiding the diagnostic contact pose, without turning it into an invisible obstacle. Unobstructed props restore their authored height. Include full-height Overview and a close stopped-body view; neither alone proves both collision and silhouette.
 
 [Solid checkpoint evidence](../assets/evidence/10/solid/review.md) records the authored collider match, diagnostic browser paths, replacement proof and remaining acceptance gates.
+
+## Production authored-asset gate
+
+The earlier workbench proved the authored kit, but production setup and playback still instantiated primitive templates. This missing consumer gate is now explicit: both production views must load the same wall/floor/solid GLBs through the existing validated loader and replace the temporary templates through the same ownership seam. Preserve Geometry topology, palette, camera and lighting. Loading and failures must be visible; a stale asynchronous reply must dispose its assets rather than attach to a retired view. Verify real production network loads, bounded replacement/disposal, failure and retry, then compare identical setup/follow/overview captures.

@@ -269,3 +269,7 @@ Each fly's trail uses up to four seconds of recorded positions, with the oldest 
 ## House palette — sound, high confidence
 
 A single sRGB JSON registry owns home surface roles for procedural production geometry, imported house replacements and Blender export. The task requested one palette reaching both routes without choosing the cross-language owner. Imported house meshes retain their geometry but receive canonical role color/roughness, preventing a local shape replacement from silently reverting the home palette. Blender converts that same sRGB input to linear values; a baked/runtime parity test catches stale exports. Food and fly materials remain separate semantic assets.
+
+## Production house loading — sound, high confidence
+
+Load the three house roles as one settled batch per view, then transfer them through the existing replacement owner. The task requested shared authored production assets without choosing partial loading semantics. Waiting for all three prevents a failed kit from leaving a mixed accepted house; every successful sibling is disposed on error or stale view. Temporary primitive geometry remains visible only while explicitly loading and is disposed by replacement. No permanent asset cache or second scene owner is introduced.

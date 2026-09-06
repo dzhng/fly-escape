@@ -1,0 +1,11 @@
+# Production authored-house integration
+
+Production setup and playback now load the same validated wall, floor and solid GLBs as the house workbench. One fixed three-part batch replaces the temporary procedural templates through the existing resource owner; those old templates are disposed. A failed batch releases every successful sibling, and a reply to a retired view releases all loaded parts. No Geometry, palette, lights, camera or animation changed.
+
+Setup displays loading or the request failure and enables Run only after the house is ready. Playback reports loading and uses its existing failure/cancel surface if a house asset fails. Cancel/Retry retains the existing view lifetime and playback owner. The placeholder is transient while loading, never the accepted ready house.
+
+The real browser lifecycle test intercepted actual GLB responses: solid HTTP 503 displays an error and blocks Run; delayed recovery becomes ready; Run loads another three-part kit; Retry loads the editor kit; Cancel during a delayed playback batch safely returns to a fresh editor. Eighteen asset requests across six views completed with zero page errors. The initial harness incorrectly intercepted Vite import modules as assets and timed out; the final matcher targets actual GLB requests only. This failed harness is not acceptance evidence.
+
+Paired production setup, tick-100 follow and Overview full frames plus tight crops are saved under before/after. Seed 42, camera and asset binary geometry hashes match. The authored bevel is visible in production while all doorway/room footprints remain unchanged. The existing source/palette tests cover matching kit bounds and stale material exports; renderer disposal/cutaway tests remain green. Typecheck, all 18 renderer tests and production build passed. Build retains the existing large-chunk warning.
+
+Fresh visual/source review pending. Parent owns Preview scheduling; this agent opened no window. This closes the missing production consumer wiring, subject to integration review; it does not claim final lighting or campaign acceptance.
