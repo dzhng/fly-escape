@@ -32,3 +32,38 @@ test("authored GLB has finite grounded bounds and independently poseable clones"
   owner.add(model.root, instance);
   disposeObjectResources(owner);
 });
+
+test("authored clips restore identical skinned mesh phase after reverse seek without root motion", async () => {
+  const { FlyMotion } = await import("./fly-motion");
+  const model = await loadFlyModel(
+    await Bun.file(new URL("../../../assets/fly/fly.glb", import.meta.url)).arrayBuffer(),
+  );
+  const motion = new FlyMotion(model.root, model.clips);
+  const pose = () => {
+    model.root.updateMatrixWorld(true);
+    const values: number[] = [];
+    model.root.traverse((node) => {
+      if (!(node instanceof THREE.SkinnedMesh)) return;
+      node.skeleton.update();
+      for (let i = 0; i < node.geometry.attributes.position.count; i++)
+        values.push(...node.getVertexPosition(i, new THREE.Vector3()));
+    });
+    return values;
+  };
+  for (const clip of ["Walk", "Fly", "Land", "Feed"] as const) {
+    motion.sample({ clip, seconds: 0.05 });
+    const first = pose();
+    motion.sample({ clip, seconds: 0.3 });
+    expect(Math.max(...pose().map((value, i) => Math.abs(value - first[i])))).toBeGreaterThan(1e-5);
+    motion.sample({ clip, seconds: 0.05 });
+    expect(pose()).toEqual(first);
+    motion.sample({ clip, seconds: 100.05 });
+    expect(model.root.position.toArray()).toEqual([0, 0, 0]);
+    if (clip !== "Land") {
+      const looped = pose();
+      expect(Math.max(...looped.map((value, i) => Math.abs(value - first[i])))).toBeLessThan(1e-10);
+    }
+  }
+  motion.dispose();
+  model.dispose();
+});

@@ -77,3 +77,25 @@ input {
 canvas:focus {
   outline: none;
 }
+aside label {
+  display: block;
+  margin: 10px 0;
+}
+aside select {
+  font: inherit;
+  margin-left: 8px;
+}
+#time {
+  display: block;
+  width: 100%;
+  max-width: none;
+}
+#phase {
+  display: block;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 12px;
+}
+select:focus-visible {
+  outline: 3px solid #9b6810;
+  outline-offset: 3px;
+}

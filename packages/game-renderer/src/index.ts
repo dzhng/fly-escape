@@ -1,4 +1,7 @@
 import * as THREE from "three";
+import { FlyMotion, type FlyAnimation } from "./fly-motion";
+export { flyAnimation } from "./fly-motion";
+export type { FlyAnimation } from "./fly-motion";
 import { FlyModel } from "./fly-model";
 import { disposeObjectResources } from "./resources";
 export { loadFlyModel, FlyModel } from "./fly-model";
@@ -27,6 +30,7 @@ export interface FlyPose {
   z: number;
   /** Radians on the x/z floor: zero points +X, positive turns toward +Z. */
   heading: number;
+  animation?: FlyAnimation;
 }
 
 /** A presentation-only fixture. The caller owns pose sampling and frame scheduling. */
@@ -40,6 +44,7 @@ export class WorldView {
   private readonly walls = new THREE.Group();
   private readonly renderer: THREE.WebGLRenderer;
   private readonly flies: THREE.Object3D[] = [createPlaceholderFly()];
+  private motions: FlyMotion[] = [];
   private subjectCenterY = 0.35;
   private modelKind: "placeholder" | "glb" = "placeholder";
   private readonly observer: ResizeObserver;
@@ -145,6 +150,7 @@ export class WorldView {
 
   /** Takes ownership of the model and all its shared resources. */
   setFlyModel(model: FlyModel): void {
+    this.motions.forEach((motion) => motion.dispose());
     const removed = new THREE.Group();
     const replacements = this.flies.map((old, id) => {
       const fly = id === 0 ? model.root : model.instantiate();
@@ -156,6 +162,7 @@ export class WorldView {
       return fly;
     });
     this.flies.splice(0, this.flies.length, ...replacements);
+    this.motions = replacements.map((fly) => new FlyMotion(fly, model.clips));
     disposeObjectResources(removed);
     this.modelKind = "glb";
     this.subjectCenterY = model.bounds.getCenter(new THREE.Vector3()).y;
@@ -205,6 +212,7 @@ export class WorldView {
   }
 
   setPose(pose: FlyPose): void {
+    this.motions[0]?.sample(pose.animation);
     this.flies[0].position.set(pose.x, pose.y, pose.z);
     this.contactCenter.position.set(pose.x, 0, pose.z);
     // The replaceable model is +Y up, +Z forward, with its pivot at foot contact.
@@ -218,6 +226,7 @@ export class WorldView {
       throw new Error("Pose count differs from scene population");
     poses.forEach((pose, index) => {
       const fly = this.flies[index];
+      this.motions[index]?.sample(pose.animation);
       fly.position.set(pose.x, pose.y, pose.z);
       fly.rotation.y = Math.PI / 2 - pose.heading;
     });
@@ -493,6 +502,7 @@ export class WorldView {
   }
 
   dispose(): void {
+    this.motions.forEach((motion) => motion.dispose());
     this.controls?.dispose();
     this.observer.disconnect();
     disposeObjectResources(this.scene);

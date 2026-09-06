@@ -203,3 +203,52 @@ test("missing or malformed results cannot finish the archive", () => {
     expect(bad.values.byteLength).toBeGreaterThan(0);
   }
 });
+
+test("motion phase freezes at terminal and reverse seek restores the prior phase", () => {
+  const record = archive();
+  for (const chunk of fixture.chunks) record.append(transfer(chunk));
+  expect(record.motion(2.5)[0]).toEqual({
+    mode: "walking",
+    previousMode: "walking",
+    startedTick: 0,
+    cursorTick: 2.5,
+  });
+  expect(record.motion(4)[0].cursorTick).toBe(3);
+  expect(record.motion(1.25)[0].cursorTick).toBe(1.25);
+  expect(record.motion(3.75)[0].cursorTick).toBe(3);
+});
+
+test("motion follows packed mode transitions across chunk boundaries and resets on clear", () => {
+  const record = archive();
+  for (const source of fixture.chunks) {
+    const chunk = transfer(source);
+    for (let t = 0; t < chunk.tickCount; t++) {
+      const tick = chunk.startTick + t;
+      const offset = t * 2 * fixture.layout.stateFields.length;
+      chunk.states[offset + fixture.layout.stateFields.indexOf("mode")] =
+        fixture.layout.modes.indexOf(tick < 3 ? "flying" : "walking");
+    }
+    record.append(chunk);
+  }
+  expect(record.motion(2.5)[0]).toEqual({
+    mode: "flying",
+    previousMode: "walking",
+    startedTick: 1,
+    cursorTick: 2.5,
+  });
+  expect(record.motion(4)[0]).toEqual({
+    mode: "walking",
+    previousMode: "flying",
+    startedTick: 3,
+    cursorTick: 3,
+  });
+  expect(record.motion(1)[0].startedTick).toBe(1);
+  expect(record.motion(4)[0].cursorTick).toBe(3);
+  record.clear();
+  expect(record.motion(0)[0]).toEqual({
+    mode: "walking",
+    previousMode: "walking",
+    startedTick: 0,
+    cursorTick: 0,
+  });
+});

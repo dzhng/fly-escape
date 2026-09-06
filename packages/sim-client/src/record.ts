@@ -1,5 +1,6 @@
 import type {
   AttemptFrame,
+  BodyMode,
   AttemptResult,
   AttemptSpec,
   BodyEventKind,
@@ -16,6 +17,12 @@ export type TransferChunk = Omit<
   states: Uint32Array;
   events: Uint32Array;
   tickNeuralSteps: Uint32Array;
+};
+export type RecordedMotion = {
+  mode: BodyMode;
+  previousMode: BodyMode;
+  startedTick: number;
+  cursorTick: number;
 };
 const ARCHIVE_CAP = 128 * 1024 * 1024;
 const integer = (n: number) => Number.isSafeInteger(n) && n >= 0;
@@ -39,6 +46,8 @@ export class FrameArchive {
   private readonly valueStride: number;
   private bytes = 0;
   private lastTick = 0;
+  private motionTick = 0;
+  private motionCache = new Uint16Array(0);
   private finalResult: AttemptResult | null = null;
 
   constructor(
@@ -122,6 +131,8 @@ export class FrameArchive {
     this.bytes = 0;
     this.lastTick = 0;
     this.finalResult = null;
+    this.motionTick = 0;
+    this.motionCache = new Uint16Array(0);
   }
 
   /** Stale attempts are ignored before inspecting their payload. Invalid current
@@ -229,6 +240,62 @@ export class FrameArchive {
     this.lastTick = end;
     this.finalResult = owned.result;
     return true;
+  }
+
+  /** O(population) retained transition state, no decoded history. Sequential
+   * playback scans each packed state once; reverse seeks rebuild at most the
+   * authored 6000 ticks. Four u16 values per fly (at most 800 bytes) fit the existing 16 KiB
+   * metadata allowance; returned samples are transient, like decoded frames. */
+  motion(cursorTick: number): RecordedMotion[] {
+    require(Number.isFinite(cursorTick) &&
+      cursorTick >= 0 &&
+      cursorTick <= this.lastTick, "Motion cursor has not been recorded");
+    const tick = Math.floor(cursorTick);
+    if (tick < this.motionTick || this.motionCache.length === 0) {
+      this.motionTick = 0;
+      this.motionCache = new Uint16Array(this.spec.flyCount * 4);
+      const walking = this.layout.modes.indexOf("walking");
+      for (let id = 0; id < this.spec.flyCount; id++) {
+        this.motionCache[id * 4] = this.motionCache[id * 4 + 1] = walking;
+      }
+    }
+    if (tick > this.motionTick) {
+      let low = 0,
+        high = this.chunks.length - 1;
+      while (low < high) {
+        const mid = Math.floor((low + high + 1) / 2);
+        if (this.chunks[mid].startTick <= this.motionTick + 1) low = mid;
+        else high = mid - 1;
+      }
+      for (let index = low; index < this.chunks.length; index++) {
+        const chunk = this.chunks[index];
+        const end = Math.min(tick, chunk.startTick + chunk.tickCount - 1);
+        for (let t = Math.max(this.motionTick + 1, chunk.startTick); t <= end; t++) {
+          for (let id = 0; id < this.spec.flyCount; id++) {
+            const offset =
+              ((t - chunk.startTick) * chunk.flyCount + id) * this.layout.stateFields.length;
+            const mode = chunk.states[offset + this.stateOffsets.mode];
+            const base = id * 4;
+            if (this.motionCache[base + 3] !== 0) continue;
+            if (mode !== this.motionCache[base]) {
+              this.motionCache[base + 1] = this.motionCache[base];
+              this.motionCache[base] = mode;
+              this.motionCache[base + 2] = t;
+            }
+            if (this.layout.outcomes[chunk.states[offset + this.stateOffsets.outcome]] !== null)
+              this.motionCache[base + 3] = t;
+          }
+        }
+        if (end === tick) break;
+      }
+      this.motionTick = tick;
+    }
+    return Array.from({ length: this.spec.flyCount }, (_, id) => ({
+      mode: this.layout.modes[this.motionCache[id * 4]],
+      previousMode: this.layout.modes[this.motionCache[id * 4 + 1]],
+      startedTick: this.motionCache[id * 4 + 2],
+      cursorTick: this.motionCache[id * 4 + 3] || cursorTick,
+    }));
   }
 
   frame(tick: number): AttemptFrame {

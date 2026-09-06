@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { WorldView, loadFlyModel, type FlyPose } from "@fly-escape/game-renderer";
+import { WorldView, loadFlyModel, flyAnimation, type FlyPose } from "@fly-escape/game-renderer";
 import {
   AttemptClient,
   FrameArchive,
@@ -92,6 +92,7 @@ function sample(run: Run): FlyPose[] {
   }
   if (!run.upper && tick + 1 <= run.archive.computedTick) run.upper = run.archive.frame(tick + 1);
   const fraction = run.clock.cursorTick - tick;
+  const motions = run.archive.motion(run.clock.cursorTick);
   return run.info.level.spawnPoses.slice(0, run.info.spec.flyCount).map((initial, id) => {
     const a = run.lower?.flies[id].body;
     const b = run.upper?.flies[id].body ?? a;
@@ -106,6 +107,7 @@ function sample(run: Run): FlyPose[] {
       z: from.position.z + (to.position.z - from.position.z) * fraction,
       heading: from.heading + angle * fraction,
       y: a?.mode === "flying" ? 0.6 : 0,
+      animation: flyAnimation(motions[id], TICK_SECONDS),
     };
   });
 }
