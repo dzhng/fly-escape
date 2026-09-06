@@ -53,7 +53,7 @@ test("authored clips restore identical skinned mesh phase after reverse seek wit
   for (const clip of ["Walk", "Fly", "Land", "Feed"] as const) {
     motion.sample({ clip, seconds: 0.05 });
     const first = pose();
-    motion.sample({ clip, seconds: 0.3 });
+    motion.sample({ clip, seconds: clip === "Feed" ? 0.5 : 0.125 });
     expect(Math.max(...pose().map((value, i) => Math.abs(value - first[i])))).toBeGreaterThan(1e-5);
     motion.sample({ clip, seconds: 0.05 });
     expect(pose()).toEqual(first);

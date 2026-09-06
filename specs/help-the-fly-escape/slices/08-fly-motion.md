@@ -1,6 +1,6 @@
 # 08 — Playback-driven fly animation
 
-Status: planned. Dependencies: 07.
+Status: functional integration verified; authored motion readability is being refined. Dependencies: 07.
 
 ## Contract and seam
 
@@ -37,3 +37,5 @@ Absolute clip sampling and the clip workbench are implemented; [motion evidence]
 The packed archive owns a fixed-size transition cache: current mode, prior mode, latest mode-change tick and first terminal tick. Recorded resulting body state is authoritative; mode-change/feeding/terminal events already describe that same change and are not replayed as a second mutable animation state machine. Ordinary playback scans newly crossed ticks; reverse seeks rebuild directly from at most 6000 packed ticks. Retained scratch is 8 bytes per fly, within the existing metadata allowance. No wire format, neural cadence, physics or build identity changes.
 
 Walking and flying loop their authored clips; feeding takes precedence on a recorded feeding mode. A flying-to-walking transition shows the authored 0.8-second landing clip before walking resumes. Terminal outcomes freeze clip time at the first terminal tick. Presentation changes no root position or collision height. No animation crossfade state or independent renderer clock is retained.
+
+The [integration review](../assets/evidence/08/integration-review.md) records passing current-asset timing tests and rejected pose clarity. Strengthen walking/feeding recognition and inspect a complete motion sequence before acceptance.

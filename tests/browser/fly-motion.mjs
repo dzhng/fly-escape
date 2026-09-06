@@ -31,7 +31,8 @@ try {
   const snapshots = [];
   for (const clip of ["Static", "Walk", "Fly", "Land", "Feed"]) {
     await page.locator("#clip").selectOption(clip);
-    for (const seconds of [0.05, 0.3]) {
+    const laterTime = clip === "Feed" ? 0.5 : 0.125;
+    for (const seconds of [0.05, laterTime]) {
       await phase(seconds);
       const name = `${clip.toLowerCase()}-${seconds}.png`;
       await page.screenshot({ path: `${destination}/${name}` });
@@ -40,7 +41,7 @@ try {
     const later = await page.locator("canvas").screenshot();
     await phase(0.05);
     const earlier = await page.locator("canvas").screenshot();
-    await phase(0.3);
+    await phase(laterTime);
     assert.deepEqual(
       await page.locator("canvas").screenshot(),
       later,
