@@ -34,23 +34,23 @@ const VALUE_FIELDS: [&str; 21] = [
     "windZ",
 ];
 
-#[derive(Clone, Debug, Serialize, Deserialize, TS)]
+#[derive(Clone, Debug, Serialize, TS)]
 #[serde(rename_all = "camelCase")]
 pub struct RecordLayout {
-    pub schema_version: u32,
-    pub value_fields: Vec<String>,
-    pub state_fields: Vec<String>,
-    pub event_fields: Vec<String>,
-    pub group_ids: Vec<String>,
-    pub group_fields: Vec<String>,
-    pub modes: Vec<BodyMode>,
-    pub outcomes: Vec<Option<TerminalOutcome>>,
-    pub feeding_ends: Vec<FeedingEnd>,
-    pub event_kinds: Vec<String>,
-    pub sensory_present_mask: u32,
-    pub neural_present_mask: u32,
-    pub max_chunk_ticks: u32,
-    pub max_events_per_fly_tick: u32,
+    schema_version: u32,
+    value_fields: Vec<String>,
+    state_fields: Vec<String>,
+    event_fields: Vec<String>,
+    group_ids: Vec<String>,
+    group_fields: Vec<String>,
+    modes: Vec<BodyMode>,
+    outcomes: Vec<Option<TerminalOutcome>>,
+    feeding_ends: Vec<FeedingEnd>,
+    event_kinds: Vec<String>,
+    sensory_present_mask: u32,
+    neural_present_mask: u32,
+    max_chunk_ticks: u32,
+    max_events_per_fly_tick: u32,
 }
 impl RecordLayout {
     pub fn new(group_ids: Vec<String>) -> Result<Self, String> {
@@ -249,7 +249,7 @@ impl PackedChunk {
                 chunk.states.extend([
                     code(&layout.modes, &b.mode)?,
                     code(&layout.outcomes, &b.outcome)?,
-                    u32::from(fly.sensory.is_some()) | u32::from(fly.neural.is_some()) * 2,
+                    u32::from(fly.sensory.is_some()) | (u32::from(fly.neural.is_some()) * 2),
                     fly.neural.as_ref().map_or(0, |n| n.spike_count),
                 ]);
                 for event in &fly.events {
@@ -301,7 +301,7 @@ impl PackedChunk {
         if self.values.len() != records * layout.value_stride()
             || self.states.len() != records * 4
             || self.tick_neural_steps.len() != self.tick_count as usize
-            || self.events.len() % 5 != 0
+            || !self.events.len().is_multiple_of(5)
             || self.events.len() > records * MAX_EVENTS_PER_FLY_TICK * 5
             || self.values.iter().any(|v| !v.is_finite())
         {

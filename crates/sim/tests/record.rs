@@ -103,8 +103,10 @@ fn replay_preserves_precision_optional_measurements_events_and_result() {
     let chunk = PackedChunk::encode("a", 7, &layout, &frames).unwrap();
     assert_eq!(chunk.decode(&layout).unwrap(), frames);
     // Consumer locates fields from exported names, never a handwritten TS offset.
-    let reserve = layout
-        .value_fields
+    let metadata = serde_json::to_value(&layout).unwrap();
+    let reserve = metadata["valueFields"]
+        .as_array()
+        .unwrap()
         .iter()
         .position(|v| v == "reserve")
         .unwrap();
@@ -147,23 +149,23 @@ fn horizon_and_event_budget_fail_explicitly_before_encoding() {
 fn malformed_transport_buffers_are_errors_not_panics_or_partial_replays() {
     let layout = RecordLayout::new(vec!["left".into(), "right".into()]).unwrap();
     let good = PackedChunk::encode("a", 0, &layout, &[frame(1)]).unwrap();
-    let mutations: Vec<Box<dyn Fn(&mut PackedChunk)>> = vec![
-        Box::new(|c| {
+    let mutations: [fn(&mut PackedChunk); 12] = [
+        |c| {
             c.values.pop();
-        }),
-        Box::new(|c| {
+        },
+        |c| {
             c.states.pop();
-        }),
-        Box::new(|c| c.states[0] = u32::MAX),
-        Box::new(|c| c.states[2] = 4),
-        Box::new(|c| c.tick_count = u32::MAX),
-        Box::new(|c| c.fly_count = u32::MAX),
-        Box::new(|c| c.start_tick = u32::MAX),
-        Box::new(|c| c.values[0] = f64::NAN),
-        Box::new(|c| c.events = vec![1]),
-        Box::new(|c| c.events = vec![0, 0, 1, 0, 0]),
-        Box::new(|c| c.events = vec![1, 1, 1, 0, 0]),
-        Box::new(|c| c.events = vec![1, 0, 3, 0, 0]),
+        },
+        |c| c.states[0] = u32::MAX,
+        |c| c.states[2] = 4,
+        |c| c.tick_count = u32::MAX,
+        |c| c.fly_count = u32::MAX,
+        |c| c.start_tick = u32::MAX,
+        |c| c.values[0] = f64::NAN,
+        |c| c.events = vec![1],
+        |c| c.events = vec![0, 0, 1, 0, 0],
+        |c| c.events = vec![1, 1, 1, 0, 0],
+        |c| c.events = vec![1, 0, 3, 0, 0],
     ];
     for mutate in mutations {
         let mut bad = good.clone();
@@ -309,15 +311,17 @@ fn records_remain_tick_major_and_fly_major_across_a_full_chunk() {
     }
     let chunk = PackedChunk::encode("a", 1, &layout, &frames).unwrap();
     assert_eq!(chunk.decode(&layout).unwrap(), frames);
-    let reserve = layout
-        .value_fields
+    let metadata = serde_json::to_value(&layout).unwrap();
+    let reserve = metadata["valueFields"]
+        .as_array()
+        .unwrap()
         .iter()
         .position(|v| v == "reserve")
         .unwrap();
-    for tick in 0..10 {
+    for (tick, frame) in frames.iter().enumerate() {
         assert_eq!(
             chunk.values[(tick * 2 + 1) * layout.value_stride() + reserve],
-            frames[tick].flies[1].body.reserve
+            frame.flies[1].body.reserve
         );
     }
 }
