@@ -6,11 +6,11 @@ Build a local, fully 3D browser game in which the player places environmental to
 
 ## Current pickup
 
-Validate slice 15's frozen fan-assisted first level on its held-out seeds, then verify the same content in the browser. Its complete 30-seed tuning set passes; the separate held-out evaluation is running. The [frozen candidate and tuning evidence](assets/evidence/15/fan-pilot/review.md) record exact identities and gates. No campaign level is accepted yet. Campaign UI and the next level's greybox can be prepared independently, with unvalidated content kept out of the release registry.
+Validate slice 15's frozen fan-assisted first level on its held-out seeds, then integrate it into the campaign UI and complete route review. Its complete 30-seed tuning set passes; the separate held-out evaluation is running. The [frozen candidate and tuning evidence](assets/evidence/15/fan-pilot/review.md) record exact identities and gates. The bounded WASM transfer check passes all nine paired outcomes. No campaign level is accepted yet. Campaign UI and the six-room second-level greybox are prepared independently; unvalidated content stays out of the release registry.
 
 Then author and accept each remaining level with progression in [16](slices/16-campaign.md), followed by final production/platform gates in [17](slices/17-static-release.md). [The remaining-work audit](assets/planning/maintenance-2026-09-07.md) distinguishes missing implementation from verification. Update this pickup, checklist and owning slice status together; completed experiments belong in evidence, not new pickup paragraphs.
 
-Slices 01–14 are accepted. Existing performance evidence is build-specific and does not replace final release measurements. Preserve actual graph provenance, neural motor ownership and the established campaign criteria; no steering, reduced graph or silent sensitivity change. Reproduce ignored graph artifacts with the [exporter](../../scripts/connectome/README.md). A committed pass is a checkpoint, not completion.
+Slices 01–14 are accepted. Existing performance evidence is build-specific and does not replace final release measurements. The [retry investigation](assets/evidence/17/retry-resources/review.md) found renderer retention in Three.js; its isolated dependency fix must pass lifetime and unchanged-render checks before release. Preserve actual graph provenance, neural motor ownership and the established campaign criteria; no steering, reduced graph or silent sensitivity change. Reproduce ignored graph artifacts with the [exporter](../../scripts/connectome/README.md). A committed pass is a checkpoint, not completion.
 
 ## Global checklist and review map
 

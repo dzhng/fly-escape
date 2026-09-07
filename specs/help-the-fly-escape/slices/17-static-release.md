@@ -1,6 +1,6 @@
 # 17 — Browser release and clean cutover
 
-Status: cleanup preparation; release verification remains pending. Dependencies: 16.
+Status: cleanup/About preparation integrated; measured renderer retention under repair; final release verification pending. Dependencies: 16.
 
 ## Contract and seam
 
@@ -29,3 +29,7 @@ Delegated: Packaging/compression and measured resource optimization with fidelit
 Human feedback that changes this slice: Unexpected wait or platform failure requires evidence-led reslicing, not reducing graph/fly count.
 
 Must stay green: all accepted dependency contracts and their focused fixtures; neural motor ownership, real-data provenance, bounded work and the [global invariants](../README.md#standing-gates-and-ownership). Do not broaden testing without a new failure or changed consumer. Record evidence under `assets/evidence/17/` and update the README handoff before ending the pass. Unlisted material decisions require a spec update.
+
+## Measured retry lifetime issue
+
+[Repeated actual attempts](../assets/evidence/17/retry-resources/review.md) preserve a single Worker and stable WASM allocation but retain old renderers through a Three.js shared lighting texture. Repair the dependency ownership, then verify repeated disposal and two simultaneously live views before accepting memory lifetime. The patch must keep the current library version and lighting appearance; final production metrics remain a separate gate.

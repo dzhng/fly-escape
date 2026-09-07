@@ -1,6 +1,6 @@
 # 15 — Level 1 is the tutorial
 
-Status: fan-assisted candidate selected for frozen full validation; campaign acceptance and browser promotion pending. Dependencies: 03,04,09,12,14.
+Status: frozen tuning and bounded WASM transfer pass; held-out evaluation, campaign UI and route acceptance pending. Dependencies: 03,04,09,12,14.
 
 ## Contract and seam
 
@@ -32,9 +32,11 @@ Must stay green: all accepted dependency contracts and their focused fixtures; n
 
 ## Frozen candidate validation
 
-Use the exact [fan-pilot candidate](../assets/evidence/15/fan-pilot/candidate.json), not the rejected exploratory `assets/levels/OpenWindow.json`. The [pilot review](../assets/evidence/15/fan-pilot/review.md) records reference escapes 8/10/12, reversed-fan poor controls 0/0/2 and identical scents without fans 5/5/4. This supports full validation, not acceptance. Physical wind and odor advection already belong to the shared field/body contract; this is combined tool benefit, not isolated neural-foraging proof.
+Use the exact [frozen fan candidate](../assets/evidence/15/fan-pilot/frozen-candidate.json), not the rejected exploratory `assets/levels/OpenWindow.json`. The [pilot review](../assets/evidence/15/fan-pilot/review.md) records reference escapes 8/10/12, reversed-fan poor controls 0/0/2 and identical scents without fans 5/5/4. This supports full validation, not acceptance. Physical wind and odor advection already belong to the shared field/body contract; this is combined tool benefit, not isolated neural-foraging proof.
 
-Freeze the candidate content, placements, three positive increasing star thresholds and disjoint seed sets before the complete paired tuning and held-out evaluations. Record immutable content/build hashes and both full reports. At this maintenance base the pilot file still has `frozen: false`; root's validation pass owns the explicit frozen artifact. Do not mutate a frozen candidate between sets. Apply the unchanged GAMEPLAY.md reliability and paired-benefit criteria to both sets; retain the no-fan control as supporting evidence. A partial or single-set report cannot accept Level 1.
+Content, placements, three positive increasing star thresholds and disjoint seed sets are frozen. The full tuning set passes: all 30 reference attempts earn at least one star, median paired escape benefit is +8.5 versus reversed fans and +5 versus the same scents without fans. The held-out set is still running against the identical content and executable. Do not mutate the candidate between sets. A partial or single-set report cannot accept Level 1.
+
+The [WASM transfer check](../assets/evidence/15/fan-pilot/wasm/review.md) matches all nine native outcomes on the first three tuning seeds with the actual browser Worker and identical level, tuning and placement identities. Native and WASM build IDs remain distinct because the target participates in their identity. This check does not replace the production UI or performance gates.
 
 On statistical success, promote one authoritative LevelDef/AttemptTuning source into the browser setup/attempt flow, retaining the diagnostic fixture separately. Verify the actual five-room route, one-door pantry, tool inventory, fresh-seed Run, recorded replay, results, retry and saved setup on this content. Complete the human route/inventory review and integrated visual/performance gates. Existing art acceptance does not establish puzzle comprehension or difficulty.
 
