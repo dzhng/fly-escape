@@ -88,6 +88,9 @@ async function pump() {
       try {
         chunk = {
           ...JSON.parse(packed.header()),
+          motionOffsets: packed.take_motion_offsets(),
+          motionValues: packed.take_motion_values(),
+          motionStates: packed.take_motion_states(),
           values: packed.take_values(),
           states: packed.take_states(),
           events: packed.take_events(),
@@ -105,6 +108,9 @@ async function pump() {
       send(
         { type: "frames", attemptId: run.id, chunk, metrics },
         [
+          chunk.motionOffsets.buffer as ArrayBuffer,
+          chunk.motionValues.buffer as ArrayBuffer,
+          chunk.motionStates.buffer as ArrayBuffer,
           chunk.values.buffer as ArrayBuffer,
           chunk.states.buffer as ArrayBuffer,
           chunk.events.buffer as ArrayBuffer,

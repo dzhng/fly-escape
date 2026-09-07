@@ -588,3 +588,9 @@ exact initial contact and browser performance must be established before adoptio
 ### Native household shape inspection
 
 **Sound; medium-high confidence.** Give the existing asset workbench a disposable appearance-only slot for reviewing native household models before their physical placement rules are accepted. This does not register new gameplay obstacles or lights. A named lower mounting view exposes hardware hidden by the RTS angle; leaving that view restores the ordinary game camera. Remove the dedicated inspection composition once accepted physical placement can supply the same review fixture. Diagnostic mounting positions are reversible review assumptions.
+
+### Shared numerical replay ownership
+
+**Sound; high confidence.** Return the completed movement alongside each body step's events, rather than storing another mutable last-step buffer. Pack that path in the existing archive and sample it through the same Rust routine on the playback thread, using the existing WASM module without another brain or world. Only the requested tick is copied for sampling. This prevents replay from cutting a different route through food.
+
+**Sound; medium confidence, capacity acceptance pending.** Use the existing128MiB cap as a cumulative quota for variable-length movement records, rejecting overflow explicitly on both producer and consumer. Store all retained knots initially, including endpoints, to keep one transparent representation; measure actual campaign storage before accepting this format for release. Internal layout changes replace both ends together, with no compatibility reader.

@@ -18,7 +18,7 @@ Keep the yellow depth-tested horizontal ring and its bounds-derived outer footpr
 
 ## Verification
 
-Browser tests select through each surface, scroll a low card fully into view, zoom while moving and release follow with pan/Overview. Pointer selection has no black/blue focus outline; Tab focus remains visible on cards. Verify fly centres in drawable area excluding HUD, zoom bounds and wall cutaway visibility. Compare to approved framing and negative selection reference.
+Browser tests select through each surface, scroll a low card fully into view, zoom while moving and release follow with panning. Pointer selection has no black/blue focus outline; Tab focus remains visible on cards. Verify fly centres in drawable area excluding HUD, zoom bounds and wall cutaway visibility. Compare to approved framing and negative selection reference.
 
 Visual variable and crop: Framing/selection visibility; full drawable world plus tight selected-fly crop at user screenshot framing. Asset quality, trails and palette are out of scope.
 
@@ -28,7 +28,7 @@ Human checkpoint is non-blocking: open shots with [preview-shots](../../../.agen
 
 ## Decision budget
 
-Delegated: Easing and precise angle within CONTRACTS.md; input bindings use wheel, drag, WASD/edge pan and Overview, with panel input excluded.
+Delegated: Easing and precise angle within CONTRACTS.md; input bindings use wheel, drag and WASD/edge pan, with panel input excluded. The user removed the Overview button: zoom out with the wheel and navigate the house by panning.
 
 Human feedback that changes this slice: User may change close distance or pan-release behavior; do not reintroduce camera rotation.
 
@@ -37,3 +37,5 @@ Must stay green: all accepted dependency contracts and their focused fixtures; n
 ## Airborne selection correction
 
 The user requested a yellow selection circle, while the initial plan chose a ground ring. Actual flight captures show that choice can visually surround another fly. Keep the same horizontal ring and bounds-derived radius at the selected fly’s presentation height, including ground level when walking. This changes no physical height, shadow, model scale or camera behavior. Recheck the actual airborne playback capture and preserve grounded camera fixtures.
+
+The user-requested [RTS control update](../assets/evidence/06/rts-controls/README.md) removes the game Overview button and verifies wheel zoom and edge panning through the browser.

@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   WorldView,
   flyAnimation,
-  interpolateRotation,
   recordedTrails,
   type FlyPose,
 } from "@fly-escape/game-renderer";
@@ -11,6 +10,8 @@ import {
   AttemptClient,
   FrameArchive,
   PlaybackClock,
+  loadMotionSampler,
+  type MotionSampler,
   type AttemptInfo,
   type AttemptFrame,
   type RecordedPose,
@@ -54,6 +55,7 @@ type Run = {
   info: AttemptInfo;
   failed: boolean;
   assetsReady: boolean;
+  motionSampler?: MotionSampler;
   archive: FrameArchive;
   clock: PlaybackClock;
   requestedAt: number;
@@ -67,7 +69,6 @@ type Run = {
   previousState: string;
   cachedTick: number;
   lower?: AttemptFrame;
-  upper?: AttemptFrame;
   trailHistory?: RecordedPose[][];
   frameIntervals: TimingSamples;
   interactions: TimingSamples;
@@ -101,31 +102,21 @@ function sample(run: Run): FlyPose[] {
   if (tick !== run.cachedTick) {
     run.cachedTick = tick;
     run.lower = run.archive.frame(tick);
-    run.upper = undefined;
     run.trailHistory = run.archive.poseHistory(tick);
   }
-  if (!run.upper && tick + 1 <= run.archive.computedTick) run.upper = run.archive.frame(tick + 1);
-  const fraction = run.clock.cursorTick - tick;
   const motions = run.archive.motion(run.clock.cursorTick);
-  return run.info.initialBodies.map((initial, id) => {
-    const a = run.lower?.flies[id].body ?? initial;
-    const b = run.upper?.flies[id].body ?? a;
-    const from = a.pose,
-      to = b.pose;
-    const angle = Math.atan2(
-      Math.sin(to.heading - from.heading),
-      Math.cos(to.heading - from.heading),
-    );
-    return {
-      x: from.position.x + (to.position.x - from.position.x) * fraction,
-      z: from.position.z + (to.position.z - from.position.z) * fraction,
-      heading: from.heading + angle * fraction,
-      y: a.height + (b.height - a.height) * fraction,
-      // This blends recorded orientations; curved position paths still require core sampling.
-      rotation: interpolateRotation(a.rotation, b.rotation, fraction),
-      animation: flyAnimation(motions[id], TICK_SECONDS),
-    };
-  });
+  // Initial poses are available while the independent WASM initialization runs.
+  const poses = run.motionSampler
+    ? run.archive.sampleMotion(run.clock.cursorTick, run.motionSampler)
+    : run.info.initialBodies.map(body => ({
+        x: body.pose.position.x, z: body.pose.position.z, heading: body.pose.heading,
+        height: body.height, rotation: body.rotation,
+      }));
+  return poses.map((pose, id) => ({
+    x: pose.x, z: pose.z, heading: pose.heading, y: pose.height,
+    rotation: pose.rotation,
+    animation: flyAnimation(motions[id], TICK_SECONDS),
+  }));
 }
 
 export function PlaybackLab() {
@@ -237,13 +228,16 @@ export function AttemptPlayback({
         scene.current.selectFly(0);
         const target = scene.current;
         setWorldReady(false);
-        void loadWorldAssets(target, () => scene.current === target)
-          .then(() => {
-            if (scene.current === target && run.current) {
-              run.current.assetsReady = true;
-              setWorldReady(true);
-            }
-          })
+        void Promise.all([
+          loadWorldAssets(target, () => scene.current === target),
+          loadMotionSampler(),
+        ]).then(([, sampler]) => {
+          if (scene.current === target && run.current) {
+            run.current.motionSampler = sampler;
+            run.current.assetsReady = true;
+            setWorldReady(true);
+          }
+        })
           .catch((cause) => {
             if (scene.current !== target) return;
             observer.cancel();
@@ -566,15 +560,6 @@ export function AttemptPlayback({
               }}
             >
               Replay
-            </button>
-            <button
-              disabled={!info || !!error}
-              onClick={() => {
-                interactionAt.current = performance.now();
-                scene.current?.overview();
-              }}
-            >
-              Overview
             </button>
             {onReturn ? (
               <button onClick={onReturn}>

@@ -3,6 +3,8 @@
 use crate::{attempt::*, body::*, environment::*, GroupActivity, MotorOutput, StepOutput};
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
+mod motion;
+pub use motion::sample_motion;
 
 #[derive(Serialize, TS)]
 #[serde(rename_all = "camelCase")]
@@ -16,7 +18,7 @@ pub struct ChunkHeader {
     pub result: Option<AttemptResult>,
 }
 
-pub const RECORD_SCHEMA_VERSION: u32 = 3;
+pub const RECORD_SCHEMA_VERSION: u32 = 4;
 pub const MAX_CHUNK_TICKS: u32 = 10;
 pub const ARCHIVE_CAP_BYTES: u64 = 128 * 1024 * 1024;
 // Landing, starting/ending feeding and termination emit at most six events.
@@ -61,6 +63,10 @@ pub struct RecordLayout {
     schema_version: u32,
     no_support: u32,
     value_fields: Vec<String>,
+    motion_value_fields: Vec<String>,
+    motion_state_fields: Vec<String>,
+    motion_sample_fields: Vec<String>,
+    max_motion_points: u32,
     state_fields: Vec<String>,
     event_fields: Vec<String>,
     group_ids: Vec<String>,
@@ -90,6 +96,10 @@ impl RecordLayout {
             schema_version: RECORD_SCHEMA_VERSION,
             no_support: NO_SUPPORT,
             value_fields: VALUE_FIELDS.map(String::from).to_vec(),
+            motion_value_fields: motion::VALUE_FIELDS.map(String::from).to_vec(),
+            motion_state_fields: motion::STATE_FIELDS.map(String::from).to_vec(),
+            motion_sample_fields: motion::SAMPLE_FIELDS.map(String::from).to_vec(),
+            max_motion_points: MAX_MOTION_POINTS as u32,
             state_fields: ["mode", "outcome", "presence", "spikeCount", "support"]
                 .map(String::from)
                 .to_vec(),
@@ -129,7 +139,9 @@ impl RecordLayout {
     pub fn value_stride(&self) -> usize {
         VALUE_FIELDS.len() + self.group_ids.len() * 2
     }
-    /// Includes worst-case events and a 1 KiB envelope allowance per chunk,
+    /// Reserves fixed records plus bounded motion storage, capped at the archive quota.
+    /// The producer and consumer enforce cumulative bytes; a variable-motion overflow
+    /// is explicit, never history truncation. Includes worst-case events and a 1 KiB envelope allowance per chunk,
     /// even if the producer sends one tick per chunk, plus 16 KiB record-layout/result metadata. Graph metadata is shared
     /// with the graph and accounted separately in total runtime memory.
     pub fn archive_bytes(&self, fly_count: u32, ticks: u32) -> Result<u64, String> {
@@ -154,7 +166,11 @@ impl RecordLayout {
                 "record archive requires {bytes} bytes, exceeding {ARCHIVE_CAP_BYTES}"
             ));
         }
-        Ok(bytes)
+        let motion = u64::from(ticks)
+            * u64::from(fly_count)
+            * (MAX_MOTION_POINTS as u64 * motion::POINT_BYTES + 4)
+            + u64::from(ticks) * 4;
+        Ok((bytes + motion).min(ARCHIVE_CAP_BYTES))
     }
 }
 
@@ -167,6 +183,9 @@ pub struct PackedChunk {
     pub start_tick: u32,
     pub tick_count: u32,
     pub fly_count: u32,
+    pub motion_offsets: Vec<u32>,
+    pub motion_values: Vec<f64>,
+    pub motion_states: Vec<u32>,
     pub values: Vec<f64>,
     pub states: Vec<u32>,
     pub events: Vec<u32>,
@@ -201,6 +220,9 @@ impl PackedChunk {
             start_tick: first.tick,
             tick_count: count as u32,
             fly_count: first.flies.len() as u32,
+            motion_offsets: vec![0],
+            motion_values: vec![],
+            motion_states: vec![],
             values: Vec::with_capacity(count * first.flies.len() * layout.value_stride()),
             states: Vec::with_capacity(count * first.flies.len() * STATE_STRIDE),
             events: vec![],
@@ -219,8 +241,24 @@ impl PackedChunk {
                 if fly.id != id as u32 || fly.events.len() > MAX_EVENTS_PER_FLY_TICK {
                     return Err("invalid fly ordering or event budget".into());
                 }
+                motion::encode(
+                    &fly.motion,
+                    &mut chunk.motion_values,
+                    &mut chunk.motion_states,
+                )?;
+                chunk
+                    .motion_offsets
+                    .push((chunk.motion_values.len() / motion::VALUE_FIELDS.len()) as u32);
                 let p = fly.input_pose;
                 let b = &fly.body;
+                let end = fly.motion.last().ok_or("missing motion endpoint")?;
+                if end.pose != b.pose
+                    || end.height != b.height
+                    || end.rotation != b.rotation
+                    || end.support != b.support
+                {
+                    return Err("motion endpoint differs from recorded body".into());
+                }
                 validate_support(b.support, b.rotation, b.mode)?;
                 chunk.values.extend([
                     p.position.x,
@@ -344,6 +382,12 @@ impl PackedChunk {
         {
             return Err("invalid numeric buffer lengths or values".into());
         }
+        motion::validate_offsets(
+            &self.motion_offsets,
+            &self.motion_values,
+            &self.motion_states,
+            records,
+        )?;
         let mut frames = Vec::with_capacity(self.tick_count as usize);
         for tick in 0..self.tick_count as usize {
             let mut flies = Vec::with_capacity(self.fly_count as usize);
@@ -401,6 +445,14 @@ impl PackedChunk {
                             })
                             .collect(),
                     }),
+                    motion: motion::decode(
+                        &self.motion_values[self.motion_offsets[index] as usize
+                            * motion::VALUE_FIELDS.len()
+                            ..self.motion_offsets[index + 1] as usize * motion::VALUE_FIELDS.len()],
+                        &self.motion_states[self.motion_offsets[index] as usize
+                            * motion::STATE_FIELDS.len()
+                            ..self.motion_offsets[index + 1] as usize * motion::STATE_FIELDS.len()],
+                    )?,
                     events: vec![],
                 });
             }
@@ -410,6 +462,16 @@ impl PackedChunk {
                 flies,
                 result: None,
             });
+        }
+        for fly in frames.iter().flat_map(|frame| &frame.flies) {
+            let end = fly.motion.last().ok_or("missing motion endpoint")?;
+            if end.pose != fly.body.pose
+                || end.height != fly.body.height
+                || end.rotation != fly.body.rotation
+                || end.support != fly.body.support
+            {
+                return Err("motion endpoint differs from recorded body".into());
+            }
         }
         for e in self.events.chunks_exact(5) {
             let tick = e[0]

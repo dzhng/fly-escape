@@ -1,3 +1,4 @@
+import { zoomOut } from "./zoom-out.mjs";
 import { equalPixels } from "./equal-pixels.mjs";
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -43,7 +44,7 @@ try {
         await page.mouse.wheel(0,-100000);
         await page.waitForFunction(()=>{const c=JSON.parse(document.querySelector('[data-testid="playback-report"]').textContent).camera;return c.distance===c.minDistance});
       }else{
-        await page.getByRole('button',{name:'Overview',exact:true}).click();
+        await zoomOut(page);
         await page.waitForFunction(()=>!JSON.parse(document.querySelector('[data-testid="playback-report"]').textContent).camera.following);
       }
       await page.mouse.move(1430,20);await settle();

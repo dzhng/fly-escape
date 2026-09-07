@@ -99,8 +99,13 @@ fn main() {
                     ],
                     spike_count: 17,
                 }),
+                motion: vec![],
                 events,
             });
+        }
+        for fly in &mut flies {
+            fly.motion = MotionTrace::stationary(&fly.body).points;
+            fly.motion[0].pose = fly.input_pose;
         }
         frames.push(AttemptFrame {
             tick,

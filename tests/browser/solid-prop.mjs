@@ -1,3 +1,4 @@
+import { zoomOut } from "./zoom-out.mjs";
 import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
 import { chromium } from "playwright";
@@ -12,7 +13,7 @@ try {
  await page.goto(`${base}/?fixture=house`);
  await page.locator('.status').filter({hasText:/triangles/}).waitFor();
  await page.waitForFunction(()=>document.querySelector('#app').dataset.houseReady === 'true');
- await page.getByRole('button',{name:'Overview',exact:true}).click(); await shot('overview');
+ await zoomOut(page); await shot('overview');
  const visibility=()=>page.locator('#app').getAttribute('data-house-visibility').then(JSON.parse);
  assert.equal((await visibility()).solidsCutaway,0);
  await page.locator('aside').evaluate(el=>el.scrollTop=0); await shot('controls');

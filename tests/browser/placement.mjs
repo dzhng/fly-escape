@@ -99,6 +99,9 @@ try {
           const record = new FrameArchive(info.spec, info.recordLayout, info.archiveBytes, info.initialBodies);
           record.append({
             ...JSON.parse(chunk.header()),
+            motionValues: chunk.take_motion_values(),
+            motionStates: chunk.take_motion_states(),
+            motionOffsets: chunk.take_motion_offsets(),
             values: chunk.take_values(),
             states: chunk.take_states(),
             events: chunk.take_events(),

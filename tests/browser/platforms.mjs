@@ -1,3 +1,4 @@
+import { zoomOut } from "./zoom-out.mjs";
 import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
 import { chromium, firefox, webkit } from "playwright";
@@ -26,7 +27,7 @@ for (const name of (process.env.SMOKE_ENGINES ?? "chromium,firefox,webkit").spli
     assert.equal(paused.spec.flyCount, 20);
     await page.waitForTimeout(200);
     assert.equal((await report()).cursorTick, paused.cursorTick);
-    await page.getByRole("button", { name: "Overview", exact: true }).click();
+    await zoomOut(page);
     await page.screenshot({ path: `${output}/${name}-overview.png` });
     await page.getByRole("button", { name: "Select fly 20", exact: true }).click();
     await page.waitForFunction(() => document.querySelector('[data-testid="selected-fly"]')?.dataset.flyId === "19");

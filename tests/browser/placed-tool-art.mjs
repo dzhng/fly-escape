@@ -1,3 +1,4 @@
+import { zoomOut } from "./zoom-out.mjs";
 import { equalPixels } from "./equal-pixels.mjs";
 import { chromium } from "playwright";
 import { mkdir, writeFile, realpath } from "node:fs/promises";
@@ -64,7 +65,7 @@ try {
     { timeout: 90000 },
   );
   await page.getByRole("button", { name: "Pause", exact: true }).click();
-  await page.getByRole("button", { name: "Overview", exact: true }).click();
+  await zoomOut(page);
   await page.getByLabel("Playback time", { exact: true }).evaluate((el) => {
     Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value").set.call(el, "50");
     el.dispatchEvent(new Event("input", { bubbles: true }));

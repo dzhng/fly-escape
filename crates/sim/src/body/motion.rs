@@ -3,7 +3,7 @@
 use super::*;
 use parry3d_f64::math::{Rotation, Vector};
 
-const MAX_POINTS: usize = 129;
+pub const MAX_MOTION_POINTS: usize = 129;
 const SURFACE_STEP: f64 = 0.001;
 const MOTION_ERROR: f64 = 3e-6;
 const MAX_QUERIES: usize = 512;
@@ -11,7 +11,7 @@ const MAX_STEP_SECONDS: f64 = 0.02;
 const TILT_SPEED: f64 = 4.;
 const CONTACT_PRECISION: f64 = 1e-8;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct MotionPoint {
     pub fraction: f64,
     pub pose: BodyPose,
@@ -145,7 +145,7 @@ pub(super) fn advance(
     let mut descending = state.mode == BodyMode::Landing;
     while elapsed < dt - 1e-12 {
         iterations += 1;
-        if iterations >= MAX_POINTS {
+        if iterations >= MAX_MOTION_POINTS {
             return Err("supported movement exceeds its bounded substep budget".into());
         }
         let step =
@@ -375,7 +375,7 @@ pub(super) fn advance(
 
 fn append_point(points: &mut Vec<MotionPoint>, point: MotionPoint) -> Result<(), String> {
     // Reserve space for an event split and a stationary terminal tail.
-    if points.len() >= MAX_POINTS - 2 {
+    if points.len() >= MAX_MOTION_POINTS - 2 {
         return Err("numerical motion unresolved: total knot budget".into());
     }
     points.push(point);

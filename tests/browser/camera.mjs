@@ -1,3 +1,4 @@
+import { zoomOut } from "./zoom-out.mjs";
 import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
 import { chromium } from "playwright";
@@ -46,6 +47,7 @@ try {
   await page.getByRole("slider", {name:"Playback time"}).press("Home");
   await page.waitForFunction(() => JSON.parse(document.querySelector('[data-testid="playback-report"]').textContent).cursorTick === 0);
   await follow(0);
+  assert.equal(await page.getByRole("button", {name:"Overview", exact:true}).count(), 0);
   const initial = await report();
   centered(initial.camera);
   await page.screenshot({ path: `${output}/default-follow.png` });
@@ -83,8 +85,7 @@ try {
   const zoomedFollow = await report();
   assert.equal(zoomedFollow.camera.following, true);
   centered(zoomedFollow.camera);
-  await page.getByRole("button", { name: "Overview", exact: true }).click();
-  await released();
+  await zoomOut(page);
   const overview = await report();
   assert.equal(overview.camera.distance, overview.camera.maxDistance);
   assert.ok(overview.camera.displayScale > 1, "Overview compensates fly size");
@@ -104,15 +105,13 @@ try {
       .getAttribute("aria-pressed"),
     "true",
   );
-  await page.getByRole("button", { name: "Overview", exact: true }).click();
-  await released();
+  await zoomOut(page);
   const firstTarget = (await report()).camera.flies[0];
   await page.mouse.click(box.x + firstTarget.x, box.y + firstTarget.y);
-  await page.waitForFunction(
-    () =>
-      JSON.parse(document.querySelector('[data-testid="playback-report"]').textContent).camera
-        ?.following,
-  );
+  await page.waitForFunction((prior) => {
+    const camera = JSON.parse(document.querySelector('[data-testid="playback-report"]').textContent).camera;
+    return camera?.following && camera.selectedFlyId !== prior;
+  }, picked);
   const otherPicked = (await report()).camera.selectedFlyId;
   assert.notEqual(otherPicked, picked, "Distinct visible models select distinct IDs");
   assert.equal(
@@ -151,8 +150,7 @@ try {
   // An interior subject proves the overview marker does not swallow neighboring bodies.
   await page.getByRole("button", { name: "Select fly 5", exact: true }).click();
   await follow(4);
-  await page.getByRole("button", { name: "Overview", exact: true }).click();
-  await released();
+  await zoomOut(page);
   const denseOverview = await report();
   assert.equal(denseOverview.camera.selectedFlyId, 4);
   await page.screenshot({ path: `${output}/dense-overview.png` });

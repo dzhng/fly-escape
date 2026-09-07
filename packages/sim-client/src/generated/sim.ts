@@ -11,19 +11,19 @@ export type SpawnMode = "walking" | "flying";
 export type BodyPose = { position: Point, heading: number, };
 export type BodyMode = "walking" | "flying" | "landing" | "feeding";
 export type TerminalOutcome = "escaped" | "starved" | "zapped" | "timedOut";
-export type BodyState = {
+export type BodyState = { pose: BodyPose,
+/**
+ * Native support-pivot height in metres, owned by physical movement.
+ */
+height: number,
 /**
  * Core orientation; local +Y points away from the support.
  */
 rotation: [number, number, number, number],
 /**
- * Edible surface supporting this body, when acquired by physical movement.
+ * Food support identity; None is floor for grounded modes, air otherwise.
  */
-support: number | null, pose: BodyPose,
-/**
- * Native support-pivot height in metres, owned by physical movement.
- */
-height: number, mode: BodyMode, reserve: number, outcome: TerminalOutcome | null, };
+support: number | null, mode: BodyMode, reserve: number, outcome: TerminalOutcome | null, };
 export type BodyConfig = { reserveCapacity: number, idleCost: number, walkingCost: number, flyingCost: number, feedingRate: number, maxBoutSeconds: number, bodyRadius: number, walkSpeed: number, flightSpeed: number, turnGain: number, takeoffThreshold: number,
 /**
  * Emitted spike fraction, averaged across the two landing groups.
@@ -80,8 +80,8 @@ export type AttemptFrame = { tick: number, neuralSteps: number, flies: Array<Fly
 export type LifecycleScenario = "mealThenStarvation" | "proboscisSilenced" | "openExit" | "blockedExit";
 export type LifecycleInfo = { scenario: LifecycleScenario, spec: AttemptSpec, level: LevelDef, food: Array<ContactSurface>, initialGrid: FieldGrid, initialBodies: Array<BodyState>, };
 export type LifecycleEvent = { flyId: number, event: BodyEvent, };
-export type RecordLayout = { schemaVersion: number, noSupport: number, valueFields: Array<string>, stateFields: Array<string>, eventFields: Array<string>, groupIds: Array<string>, groupFields: Array<string>, modes: Array<BodyMode>, outcomes: Array<TerminalOutcome | null>, feedingEnds: Array<FeedingEnd>, eventKinds: Array<string>, sensoryPresentMask: number, neuralPresentMask: number, maxChunkTicks: number, maxEventsPerFlyTick: number, };
-export type PackedChunk = { schemaVersion: number, attemptId: string, sequence: number, startTick: number, tickCount: number, flyCount: number, values: Array<number>, states: Array<number>, events: Array<number>, tickNeuralSteps: Array<number>, result: AttemptResult | null, };
+export type RecordLayout = { schemaVersion: number, noSupport: number, valueFields: Array<string>, motionValueFields: Array<string>, motionStateFields: Array<string>, motionSampleFields: Array<string>, maxMotionPoints: number, stateFields: Array<string>, eventFields: Array<string>, groupIds: Array<string>, groupFields: Array<string>, modes: Array<BodyMode>, outcomes: Array<TerminalOutcome | null>, feedingEnds: Array<FeedingEnd>, eventKinds: Array<string>, sensoryPresentMask: number, neuralPresentMask: number, maxChunkTicks: number, maxEventsPerFlyTick: number, };
+export type PackedChunk = { schemaVersion: number, attemptId: string, sequence: number, startTick: number, tickCount: number, flyCount: number, motionOffsets: Array<number>, motionValues: Array<number>, motionStates: Array<number>, values: Array<number>, states: Array<number>, events: Array<number>, tickNeuralSteps: Array<number>, result: AttemptResult | null, };
 export type FieldScenario = "excitatoryOdor" | "inhibitoryOdor" | "lamp" | "shade" | "wind" | "exit";
 export type FieldLabInfo = { brain: BrainInfo, scenario: FieldScenario, grids: [FieldGrid, FieldGrid], };
 export type FieldLabFrame = { tick: number, flies: [BrainFrame, BrainFrame], grids: [FieldGrid, FieldGrid], };

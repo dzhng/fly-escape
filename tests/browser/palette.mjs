@@ -1,3 +1,4 @@
+import { zoomOut } from "./zoom-out.mjs";
 import assert from "node:assert/strict";
 import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
@@ -57,13 +58,13 @@ try {
   );
   await shot("production-follow");
   report.production = JSON.parse(await page.getByTestId("playback-report").textContent());
-  await page.getByRole("button", { name: "Overview", exact: true }).click();
+  await zoomOut(page);
   await shot("production-overview");
   await page.goto(`${process.env.ASSET_LAB_URL ?? "http://127.0.0.1:5174"}/?fixture=house`);
   await page.waitForFunction(() => document.querySelector("#app").dataset.houseReady === "true");
   await page.locator(".status").filter({ hasText: "Model loaded" }).waitFor();
   await shot("authored-follow");
-  await page.getByRole("button", { name: "Overview", exact: true }).click();
+  await zoomOut(page);
   await shot("authored-overview");
   report.authored = JSON.parse(await page.locator("#app").getAttribute("data-house-resources"));
   if (await page.locator("#probe-solid").count()) {

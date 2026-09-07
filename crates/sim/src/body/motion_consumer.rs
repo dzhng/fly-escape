@@ -30,7 +30,6 @@ fn numerical_producer_handles_actual_requests() {
     )
     .unwrap();
     world.hull = Box::leak(Box::new(ContactHull::from_boundary(boundary).unwrap()));
-    let mut rows = vec![];
     for (name, heading, thrust, turn, aligned) in [
         ("upright-seam-turn", 0.70408, 0., 0.0002, false),
         ("upright-ordinary-turn", 0.70408, 0., 0.2, false),
@@ -71,16 +70,9 @@ fn numerical_producer_handles_actual_requests() {
             groups: Vec::<GroupActivity>::new(),
             spike_count: 0,
         };
-        let started = std::time::Instant::now();
         let result = body.step(&neural, &world, Point::default(), 0.1, 1);
         assert!(result.is_ok(), "{name}: {result:?}");
-        rows.push(serde_json::json!({"name":name,"result":result.as_ref().map(|_|()).map_err(|e|e.as_str()),"knots":result.as_ref().map(|s|s.motion.points.len()).ok(),"elapsedMs":started.elapsed().as_secs_f64()*1000.,"state":body.state()}));
     }
-    std::fs::write(
-        "/tmp/fly-numerical-body-results.json",
-        serde_json::to_vec_pretty(&rows).unwrap(),
-    )
-    .unwrap();
 }
 
 #[test]

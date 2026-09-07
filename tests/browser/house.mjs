@@ -1,3 +1,4 @@
+import { zoomOut } from "./zoom-out.mjs";
 import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
 import { chromium } from "playwright";
@@ -13,17 +14,17 @@ try {
   await page.goto(`${process.env.ASSET_LAB_URL ?? "http://127.0.0.1:5192"}/?fixture=house`);
   await page.locator(".status").filter({ hasText: /triangles/ }).waitFor();
   await page.waitForFunction(() => document.querySelector("#app").dataset.houseReady === "true");
-  await page.getByRole("button", { name: "Overview", exact: true }).click();
+  await zoomOut(page);
   await shot("overview");
   await page.locator("#room").selectOption("5");
   await page.locator("#inspect-room").click();
   await shot("pantry-follow");
-  await page.getByRole("button", { name: "Overview", exact: true }).click();
+  await zoomOut(page);
   await shot("pantry-overview-before");
   await page.locator("#cutaway").click();
   await page.waitForFunction(() => JSON.parse(document.querySelector("#app").dataset.houseVisibility).cutaway > 0);
   await shot("pantry-cutaway");
-  await page.getByRole("button", { name: "Overview", exact: true }).click();
+  await zoomOut(page);
   await page.waitForFunction(() => JSON.parse(document.querySelector("#app").dataset.houseVisibility).cutaway > 0);
   await shot("corner-overview");
   const cornerCamera = JSON.parse(await page.locator("#app").getAttribute("data-house-camera"));
@@ -40,7 +41,7 @@ try {
   await page.waitForFunction(() => !JSON.parse(document.querySelector("#app").dataset.houseCamera).flies[0].visible);
   await page.waitForFunction(() => JSON.parse(document.querySelector("#app").dataset.houseVisibility).cutaway === 0);
   await page.locator("#inspect-room").click();
-  await page.getByRole("button", { name: "Overview", exact: true }).click();
+  await zoomOut(page);
   await page.waitForFunction(() => JSON.parse(document.querySelector("#app").dataset.houseVisibility).cutaway === 0);
   await shot("restored-overview");
   for (const [value, name] of [["-1", "before"], ["0", "threshold"], ["1", "after"]]) {

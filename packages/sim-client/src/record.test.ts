@@ -21,6 +21,9 @@ const transfer = (chunk: PackedChunk): TransferChunk => ({
   states: new Uint32Array(chunk.states),
   events: new Uint32Array(chunk.events),
   tickNeuralSteps: new Uint32Array(chunk.tickNeuralSteps),
+  motionOffsets: new Uint32Array(chunk.motionOffsets),
+  motionValues: new Float64Array(chunk.motionValues),
+  motionStates: new Uint32Array(chunk.motionStates),
 });
 const initialBodies = [0, 1].map((id) => ({
   pose: { position: { x: id, z: 0 }, heading: 0 },
@@ -186,6 +189,9 @@ test("accepting a chunk takes ownership and snapshots metadata and results", () 
   first.values[0] = 999;
   expect(record.frame(1)).toEqual(fixture.frames[0]);
   expect(first.values.byteLength).toBe(0);
+  expect(first.motionOffsets.byteLength).toBe(0);
+  expect(first.motionValues.byteLength).toBe(0);
+  expect(first.motionStates.byteLength).toBe(0);
   expect(record.ownedBytes).toBe(bytes);
   const second = transfer(fixture.chunks[1]);
   record.append(second);
@@ -234,7 +240,13 @@ test("motion follows packed mode transitions across chunk boundaries and resets 
       const offset = t * 2 * fixture.layout.stateFields.length;
       chunk.states[offset + fixture.layout.stateFields.indexOf("mode")] =
         fixture.layout.modes.indexOf(tick < 3 ? "flying" : "walking");
-      if (tick < 3) chunk.states[offset + fixture.layout.stateFields.indexOf("support")] = fixture.layout.noSupport;
+      if (tick < 3) {
+        chunk.states[offset + fixture.layout.stateFields.indexOf("support")] = fixture.layout.noSupport;
+        for (let point = chunk.motionOffsets[t * 2]; point < chunk.motionOffsets[t * 2 + 1]; point++) {
+          chunk.motionStates[point * 2] = fixture.layout.noSupport;
+          chunk.motionStates[point * 2 + 1] = 0;
+        }
+      }
     }
     record.append(chunk);
   }
@@ -350,4 +362,78 @@ test("support identity and quaternion corruption fail before archive mutation", 
   const bad = structuredClone(initialBodies);
   bad[0].rotation = [0, 0, 0, 0];
   expect(() => new FrameArchive({attemptId: "fixture", flyCount: 2, durationTicks: 4}, fixture.layout, fixture.archiveByteBound, bad)).toThrow("initial bodies");
+});
+
+test("malformed motion fails atomically before any buffer is detached", () => {
+  const mutations: ((chunk: TransferChunk) => void)[] = [
+    c => { c.motionOffsets[0] = 1; },
+    c => { c.motionOffsets[1] = c.motionOffsets[0] + 1; },
+    c => { c.motionOffsets[c.motionOffsets.length - 1] += 1; },
+    c => { c.motionValues[0] = 0.1; },
+    c => { c.motionValues[9] = 0; },
+    c => { c.motionValues[5] = NaN; },
+    c => { c.motionValues[8] = 2; },
+    c => { c.motionStates[1] = 2; },
+    c => { c.motionStates[0] = 7; c.motionStates[1] = 0; },
+    c => { c.motionValues[(c.motionOffsets[1] - 1) * 9 + 1] += 1; },
+  ];
+  for (const mutate of mutations) {
+    const record = archive();
+    const chunk = transfer(fixture.chunks[0]);
+    mutate(chunk);
+    expect(() => record.append(chunk)).toThrow();
+    expect(record.computedTick).toBe(0);
+    expect(record.ownedBytes).toBe(0);
+    expect(chunk.values.byteLength).toBeGreaterThan(0);
+    expect(chunk.motionValues.byteLength).toBeGreaterThan(0);
+  }
+});
+
+test("motion backing allocations count against the same archive capacity", () => {
+  const chunk = transfer(fixture.chunks[0]);
+  chunk.motionValues = new Float64Array(new ArrayBuffer(fixture.archiveByteBound * 2), 0, chunk.motionValues.length);
+  const record = archive();
+  expect(() => record.append(chunk)).toThrow("capacity");
+  expect(record.ownedBytes).toBe(0);
+  expect(chunk.motionOffsets.byteLength).toBeGreaterThan(0);
+});
+
+test("the core sampler replays interior knots, seeks across chunks, and releases history", async () => {
+  const core = await import("./wasm/game_wasm");
+  core.initSync({module: await Bun.file(new URL("./wasm/game_wasm_bg.wasm", import.meta.url)).arrayBuffer()});
+  const { loadMotionSampler } = await import("./motion-sampler");
+  const sampler = await loadMotionSampler();
+  const record = archive();
+  const first = transfer(fixture.chunks[0]);
+  // A transport fixture with an interior height change catches endpoint-only playback.
+  const waypoint = Array.from(first.motionValues.subarray(0, 9));
+  waypoint[0] = 0.25;
+  waypoint[4] += 0.01;
+  first.motionValues = new Float64Array([
+    ...first.motionValues.subarray(0, 9), ...waypoint, ...first.motionValues.subarray(9),
+  ]);
+  first.motionStates = new Uint32Array([
+    ...first.motionStates.subarray(0, 2), ...first.motionStates.subarray(0, 2), ...first.motionStates.subarray(2),
+  ]);
+  for (let i = 1; i < first.motionOffsets.length; i++) first.motionOffsets[i]++;
+  record.append(first);
+  record.append(transfer(fixture.chunks[1]));
+  const interior = record.sampleMotion(0.25, sampler);
+  expect(interior[0].height).toBe(waypoint[4]);
+  for (const tick of [1, 4, 2, 3, 1]) {
+    const poses = record.sampleMotion(tick, sampler);
+    for (const [id, fly] of fixture.frames[tick - 1].flies.entries()) {
+      expect(poses[id]).toEqual({
+        x: fly.body.pose.position.x, z: fly.body.pose.position.z,
+        heading: fly.body.pose.heading, height: fly.body.height,
+        rotation: fly.body.rotation,
+      });
+    }
+  }
+  interior[0].rotation[0] = 100;
+  expect(record.sampleMotion(0.25, sampler)[0].rotation[0]).not.toBe(100);
+  expect(() => record.sampleMotion(4.1, sampler)).toThrow("not been recorded");
+  record.clear();
+  expect(() => record.sampleMotion(0.25, sampler)).toThrow("not been recorded");
+  expect(record.sampleMotion(0, sampler)[0].height).toBe(initialBodies[0].height);
 });

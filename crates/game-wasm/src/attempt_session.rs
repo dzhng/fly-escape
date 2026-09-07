@@ -11,6 +11,7 @@ pub struct AttemptSession {
     sequence: u32,
     tick: u32,
     neural_steps: u32,
+    archive_bytes: u64,
 }
 #[wasm_bindgen]
 impl AttemptSession {
@@ -41,7 +42,8 @@ impl AttemptSession {
         }
         let layout =
             RecordLayout::new(graph.manifest.groups.iter().map(|g| g.id.clone()).collect())?;
-        // Reject the full requested archive before allocating any per-fly brains.
+        // Reject an oversized fixed record before allocating brains; variable motion
+        // remains subject to the cumulative archive quota during production.
         let archive_bytes =
             layout.archive_bytes(request.fly_count, request.level.duration_ticks)? as u32;
         let spec = Attempt::describe(
@@ -78,6 +80,7 @@ impl AttemptSession {
             sequence: 0,
             tick: 0,
             neural_steps: 0,
+            archive_bytes: 16384,
         })
     }
     fn advance(&mut self) -> Result<AttemptStep, String> {
@@ -106,6 +109,18 @@ impl AttemptSession {
             &self.info.record_layout,
             &self.frames,
         )?;
+        let bytes = 1024
+            + (chunk.values.len() + chunk.motion_values.len()) as u64 * 8
+            + (chunk.states.len()
+                + chunk.events.len()
+                + chunk.tick_neural_steps.len()
+                + chunk.motion_offsets.len()
+                + chunk.motion_states.len()) as u64
+                * 4;
+        if self.archive_bytes + bytes > u64::from(self.info.archive_bytes) {
+            return Err("record archive capacity exceeded".into());
+        }
+        self.archive_bytes += bytes;
         self.frames.clear();
         self.sequence += 1;
         Ok(Some(AttemptChunk { chunk }))
@@ -132,6 +147,15 @@ impl AttemptChunk {
     }
     // wasm-bindgen copies returned Vec data into owned JS typed arrays before
     // freeing its WASM allocation. These methods drain each buffer exactly once.
+    pub fn take_motion_values(&mut self) -> Vec<f64> {
+        std::mem::take(&mut self.chunk.motion_values)
+    }
+    pub fn take_motion_states(&mut self) -> Vec<u32> {
+        std::mem::take(&mut self.chunk.motion_states)
+    }
+    pub fn take_motion_offsets(&mut self) -> Vec<u32> {
+        std::mem::take(&mut self.chunk.motion_offsets)
+    }
     pub fn take_values(&mut self) -> Vec<f64> {
         std::mem::take(&mut self.chunk.values)
     }
@@ -171,6 +195,16 @@ mod tests {
             level,
             tuning: AttemptTuning::default(),
         }
+    }
+    #[test]
+    fn motion_archive_overflow_keeps_chunk_pending_and_fails_explicitly() {
+        let mut session = AttemptSession::build(graph(), request()).unwrap();
+        session.advance().unwrap();
+        session.info.archive_bytes = 16384;
+        assert!(session.flush().err().unwrap().contains("capacity exceeded"));
+        assert_eq!(session.frames.len(), 1);
+        assert_eq!(session.sequence, 0);
+        assert_eq!(session.archive_bytes, 16384);
     }
     #[test]
     fn one_tick_backpressure_flush_and_terminal_result_preserve_frames() {

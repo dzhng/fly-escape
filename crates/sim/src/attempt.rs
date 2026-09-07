@@ -110,6 +110,9 @@ pub struct FlyFrame {
     pub neural: Option<StepOutput>,
     pub body: BodyState,
     pub events: Vec<BodyEvent>,
+    #[serde(skip)]
+    #[ts(skip)]
+    pub motion: Vec<MotionPoint>,
 }
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
@@ -346,8 +349,13 @@ impl Attempt {
         let mut frames = Vec::with_capacity(self.flies.len());
         for (id, fly) in self.flies.iter_mut().enumerate() {
             let input_pose = fly.body.state().pose;
-            let (sensory, neural, events) = if fly.body.state().outcome.is_some() {
-                (None, None, vec![])
+            let (sensory, neural, events, motion) = if fly.body.state().outcome.is_some() {
+                (
+                    None,
+                    None,
+                    vec![],
+                    MotionTrace::stationary(fly.body.state()).points,
+                )
             } else {
                 let sample = self
                     .fields
@@ -368,11 +376,10 @@ impl Attempt {
                     .set_external_current(&currents.into_iter().collect::<Vec<_>>())?;
                 let output = fly.brain.step();
                 self.neural_steps += 1;
-                let events = fly
-                    .body
-                    .step(&output, world, sample.wind, GAME_TICK_SECONDS, self.tick)?
-                    .events;
-                (Some(sample), Some(output), events)
+                let step =
+                    fly.body
+                        .step(&output, world, sample.wind, GAME_TICK_SECONDS, self.tick)?;
+                (Some(sample), Some(output), step.events, step.motion.points)
             };
             frames.push(FlyFrame {
                 id: id as u32,
@@ -381,6 +388,7 @@ impl Attempt {
                 neural,
                 body: fly.body.state().clone(),
                 events,
+                motion,
             });
         }
         if self

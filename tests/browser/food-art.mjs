@@ -1,3 +1,4 @@
+import { zoomOut } from "./zoom-out.mjs";
 import { chromium } from "playwright";
 import { mkdir, writeFile, realpath } from "node:fs/promises";
 import assert from "node:assert/strict";
@@ -59,7 +60,7 @@ try {
     { timeout: 90000 },
   );
   await page.getByRole("button", { name: "Pause", exact: true }).click();
-  await page.getByRole("button", { name: "Overview", exact: true }).click();
+  await zoomOut(page);
   await page.getByLabel("Playback time", { exact: true }).evaluate((el) => {
     Object.getOwnPropertyDescriptor(
       HTMLInputElement.prototype,

@@ -155,3 +155,15 @@ pub fn house_probe(progress: f64, detour: bool) -> Result<String, JsValue> {
     let probe = sim::house_lab::probe(progress, detour).map_err(|e| JsValue::from_str(&e))?;
     serde_json::to_string(&probe).map_err(|e| JsValue::from_str(&e.to_string()))
 }
+
+#[wasm_bindgen]
+pub fn sample_motion(
+    values: &[f64],
+    states: &[u32],
+    offsets: &[u32],
+    fraction: f64,
+) -> Result<Box<[f64]>, JsValue> {
+    sim::record::sample_motion(values, states, offsets, fraction)
+        .map(Vec::into_boxed_slice)
+        .map_err(|e| JsValue::from_str(&e))
+}

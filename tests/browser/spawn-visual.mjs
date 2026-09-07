@@ -1,3 +1,4 @@
+import { zoomOut } from "./zoom-out.mjs";
 import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
 import { chromium } from "playwright";
@@ -49,7 +50,7 @@ try {
   };
   await zero();
   await shot("release-follow");
-  await page.getByRole("button", { name: "Overview", exact: true }).click();
+  await zoomOut(page);
   await shot("release-overview");
   await page.getByRole("button", { name: "Select fly 1", exact: true }).click();
   await page.getByRole("button", { name: "Play", exact: true }).click();

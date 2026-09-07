@@ -9,7 +9,7 @@ use serde::{Deserialize, Serialize};
 use std::sync::OnceLock;
 use ts_rs::TS;
 mod motion;
-pub use motion::{MotionPoint, MotionTrace};
+pub use motion::{MotionPoint, MotionTrace, MAX_MOTION_POINTS};
 #[derive(Debug)]
 pub struct BodyStep {
     pub events: Vec<BodyEvent>,

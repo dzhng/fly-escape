@@ -12,12 +12,15 @@ import type {
 
 export type TransferChunk = Omit<
   PackedChunk,
-  "values" | "states" | "events" | "tickNeuralSteps"
+  "values" | "states" | "events" | "tickNeuralSteps" | "motionOffsets" | "motionValues" | "motionStates"
 > & {
   values: Float64Array;
   states: Uint32Array;
   events: Uint32Array;
   tickNeuralSteps: Uint32Array;
+  motionOffsets: Uint32Array;
+  motionValues: Float64Array;
+  motionStates: Uint32Array;
 };
 export type RecordedPose = {
   tick: number;
@@ -34,6 +37,17 @@ export type RecordedMotion = {
   startedTick: number;
   cursorTick: number;
 };
+export type MotionSampler = (values: Float64Array, states: Uint32Array, offsets: Uint32Array, fraction: number) => Float64Array;
+export type RecordedTransform = {
+  x: number;
+  z: number;
+  heading: number;
+  height: number;
+  rotation: [number, number, number, number];
+};
+const MOTION_VALUES = ["fraction", "x", "z", "heading", "height", "rotationX", "rotationY", "rotationZ", "rotationW"];
+const MOTION_STATES = ["support", "grounded"];
+const MOTION_SAMPLE = MOTION_VALUES.slice(1);
 const ARCHIVE_CAP = 128 * 1024 * 1024;
 const integer = (n: number) => Number.isSafeInteger(n) && n >= 0;
 function require(condition: unknown, message: string): asserts condition {
@@ -73,8 +87,13 @@ export class FrameArchive {
       integer(spec.durationTicks) &&
       spec.durationTicks >= 1 &&
       spec.durationTicks <= 6000, "Invalid attempt horizon");
-    require(layout.schemaVersion === 3 && integer(layout.noSupport) && layout.noSupport <= 0xffffffff &&
+    require(layout.schemaVersion === 4 && integer(layout.noSupport) && layout.noSupport <= 0xffffffff &&
       layout.groupIds.length <= 16, "Unsupported record layout");
+    // The core sampler consumes this version's canonical wire order directly.
+    require(layout.maxMotionPoints === 129 &&
+      JSON.stringify(layout.motionValueFields) === JSON.stringify(MOTION_VALUES) &&
+      JSON.stringify(layout.motionStateFields) === JSON.stringify(MOTION_STATES) &&
+      JSON.stringify(layout.motionSampleFields) === JSON.stringify(MOTION_SAMPLE), "Unsupported motion layout");
     require(initialBodies.length === spec.flyCount &&
       initialBodies.every(
         (b) =>
@@ -177,7 +196,10 @@ export class FrameArchive {
     require(chunk.values instanceof Float64Array &&
       chunk.states instanceof Uint32Array &&
       chunk.events instanceof Uint32Array &&
-      chunk.tickNeuralSteps instanceof Uint32Array, "Chunk requires transferred typed buffers");
+      chunk.tickNeuralSteps instanceof Uint32Array &&
+      chunk.motionOffsets instanceof Uint32Array &&
+      chunk.motionValues instanceof Float64Array &&
+      chunk.motionStates instanceof Uint32Array, "Chunk requires transferred typed buffers");
     require(chunk.values.length === count * this.valueStride &&
       chunk.states.length === count * this.layout.stateFields.length &&
       chunk.tickNeuralSteps.length === chunk.tickCount &&
@@ -187,6 +209,9 @@ export class FrameArchive {
           this.layout.maxEventsPerFlyTick *
           this.layout.eventFields.length, "Invalid chunk buffer lengths");
     const buffers = new Set([
+      chunk.motionOffsets.buffer,
+      chunk.motionValues.buffer,
+      chunk.motionStates.buffer,
       chunk.values.buffer,
       chunk.states.buffer,
       chunk.events.buffer,
@@ -214,6 +239,7 @@ export class FrameArchive {
         ["rotationX", "rotationY", "rotationZ", "rotationW"].map(name => chunk.values[v + this.valueOffsets[name]]),
         this.layout.modes[chunk.states[s + this.stateOffsets.mode]], this.layout.noSupport), "Invalid recorded support or rotation");
     }
+    this.validateMotion(chunk, count);
     const eventCounts = new Uint8Array(count);
     for (let i = 0; i < chunk.events.length; i += this.layout.eventFields.length) {
       const tick = chunk.events[i + this.eventOffsets.tick];
@@ -256,6 +282,85 @@ export class FrameArchive {
     this.lastTick = end;
     this.finalResult = owned.result;
     return true;
+  }
+
+  private validateMotion(chunk: TransferChunk, count: number) {
+    const width = this.layout.motionValueFields.length;
+    const stateWidth = this.layout.motionStateFields.length;
+    const offsets = chunk.motionOffsets;
+    require(offsets.length === count + 1 && offsets[0] === 0 &&
+      chunk.motionValues.length === offsets[count] * width &&
+      chunk.motionStates.length === offsets[count] * stateWidth, "Invalid motion buffer lengths");
+    require(chunk.motionValues.every(Number.isFinite), "Nonfinite motion value");
+    for (let record = 0; record < count; record++) {
+      const start = offsets[record], end = offsets[record + 1];
+      require(end >= start + 2 && end - start <= this.layout.maxMotionPoints, "Invalid motion point count");
+      let prior = -1;
+      for (let point = start; point < end; point++) {
+        const base = point * width;
+        const fraction = chunk.motionValues[base];
+        require(fraction >= 0 && fraction <= 1 && fraction > prior &&
+          (point !== start || fraction === 0) &&
+          (point !== end - 1 || fraction === 1), "Invalid motion fractions");
+        prior = fraction;
+        const support = chunk.motionStates[point * stateWidth];
+        const grounded = chunk.motionStates[point * stateWidth + 1];
+        require(grounded <= 1 && (support === this.layout.noSupport || grounded === 1) &&
+          validSupport(support === this.layout.noSupport ? null : support,
+            Array.from(chunk.motionValues.subarray(base + 5, base + 9)),
+            grounded ? "walking" : "flying", this.layout.noSupport), "Invalid motion support or rotation");
+      }
+      // The finalized trace and the tick record must describe the same endpoint.
+      const endpoint = (end - 1) * width;
+      const value = record * this.valueStride;
+      for (const field of MOTION_SAMPLE) {
+        require(chunk.motionValues[endpoint + this.layout.motionValueFields.indexOf(field)] ===
+          chunk.values[value + this.valueOffsets[field]], "Motion endpoint differs from recorded body");
+      }
+      require(chunk.motionStates[(end - 1) * stateWidth] ===
+        chunk.states[record * this.layout.stateFields.length + this.stateOffsets.support], "Motion endpoint support differs from recorded body");
+    }
+  }
+
+  /** Samples only the selected tick through the core's pure sampler. Numeric
+   * subviews remain archive-owned; the trusted WASM binding copies them into
+   * bounded scratch memory and returns fresh poses, never retaining history. */
+  sampleMotion(cursorTick: number, sampler: MotionSampler): RecordedTransform[] {
+    require(Number.isFinite(cursorTick) && cursorTick >= 0 && cursorTick <= this.lastTick,
+      "Motion cursor has not been recorded");
+    if (cursorTick === 0) return this.initialBodies.map(body => ({
+      x: body.pose.position.x, z: body.pose.position.z, heading: body.pose.heading,
+      height: body.height, rotation: [...body.rotation],
+    }));
+    const tick = Math.ceil(cursorTick);
+    const chunk = this.chunkAt(tick);
+    const first = (tick - chunk.startTick) * chunk.flyCount;
+    const start = chunk.motionOffsets[first];
+    const end = chunk.motionOffsets[first + chunk.flyCount];
+    const offsets = chunk.motionOffsets.slice(first, first + chunk.flyCount + 1);
+    for (let i = 0; i < offsets.length; i++) offsets[i] -= start;
+    const output = sampler(
+      chunk.motionValues.subarray(start * this.layout.motionValueFields.length, end * this.layout.motionValueFields.length),
+      chunk.motionStates.subarray(start * this.layout.motionStateFields.length, end * this.layout.motionStateFields.length),
+      offsets, cursorTick - tick + 1,
+    );
+    const fields = this.layout.motionSampleFields;
+    require(output.length === chunk.flyCount * fields.length && output.every(Number.isFinite), "Invalid core motion sample");
+    return Array.from({length: chunk.flyCount}, (_, id) => {
+      const value = (field: string) => output[id * fields.length + fields.indexOf(field)];
+      return { x: value("x"), z: value("z"), heading: value("heading"), height: value("height"),
+        rotation: [value("rotationX"), value("rotationY"), value("rotationZ"), value("rotationW")] };
+    });
+  }
+
+  private chunkAt(tick: number): TransferChunk {
+    let low = 0, high = this.chunks.length - 1;
+    while (low < high) {
+      const mid = Math.floor((low + high + 1) / 2);
+      if (this.chunks[mid].startTick <= tick) low = mid;
+      else high = mid - 1;
+    }
+    return this.chunks[low];
   }
 
   /** O(population) retained transition state, no decoded history. Sequential
@@ -404,14 +509,7 @@ export class FrameArchive {
         })),
       };
     require(integer(tick) && tick >= 1 && tick <= this.lastTick, "Tick has not been recorded");
-    let low = 0,
-      high = this.chunks.length - 1;
-    while (low < high) {
-      const mid = Math.floor((low + high + 1) / 2);
-      if (this.chunks[mid].startTick <= tick) low = mid;
-      else high = mid - 1;
-    }
-    const chunk = this.chunks[low];
+    const chunk = this.chunkAt(tick);
     const tickIndex = tick - chunk.startTick;
     const flies = Array.from({ length: chunk.flyCount }, (_, id) => {
       const record = tickIndex * chunk.flyCount + id;

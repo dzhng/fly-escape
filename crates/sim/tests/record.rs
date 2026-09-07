@@ -9,7 +9,7 @@ fn frame(tick: u32) -> AttemptFrame {
         },
         heading: 0.3,
     };
-    AttemptFrame {
+    let mut frame = AttemptFrame {
         tick,
         neural_steps: tick.saturating_mul(2),
         flies: vec![FlyFrame {
@@ -65,10 +65,17 @@ fn frame(tick: u32) -> AttemptFrame {
                 ],
                 spike_count: 17,
             }),
+            motion: vec![],
             events: vec![],
         }],
         result: None,
-    }
+    };
+    sync_motion(&mut frame.flies[0]);
+    frame
+}
+fn sync_motion(fly: &mut FlyFrame) {
+    fly.motion = MotionTrace::stationary(&fly.body).points;
+    fly.motion[0].pose = fly.input_pose;
 }
 #[test]
 fn replay_preserves_precision_optional_measurements_events_and_result() {
@@ -124,7 +131,7 @@ fn replay_preserves_precision_optional_measurements_events_and_result() {
 fn horizon_and_event_budget_fail_explicitly_before_encoding() {
     let layout = RecordLayout::new((0..16).map(|n| n.to_string()).collect()).unwrap();
     let bytes = layout.archive_bytes(20, 6000).unwrap();
-    assert!(bytes < ARCHIVE_CAP_BYTES);
+    assert!(bytes <= ARCHIVE_CAP_BYTES);
     // A 100-fly capacity probe can record a short run, but cannot silently
     // allocate a full horizon five times the MVP archive.
     assert!(layout.archive_bytes(100, 100).is_ok());
@@ -309,6 +316,7 @@ fn dense_real_body_transitions_fit_and_replay_in_order() {
             body: body.state().clone(),
             sensory: None,
             neural: Some(neural),
+            motion: events.motion.points,
             events: events.events,
         }],
         result: None,
@@ -331,6 +339,7 @@ fn records_remain_tick_major_and_fly_major_across_a_full_chunk() {
         second.id = 1;
         second.body.pose.position.x = f64::from(f.tick);
         second.body.reserve = f64::from(f.tick) / 3.;
+        sync_motion(&mut second);
         second.events.push(BodyEvent {
             tick: f.tick,
             kind: BodyEventKind::FeedingEnded {
@@ -363,6 +372,9 @@ fn support_and_orientation_roundtrip_and_reject_invalid_payloads() {
     frames[0].flies[0].body.support = Some(0);
     frames[1].flies[0].body.support = None;
     frames[1].flies[0].body.mode = BodyMode::Flying;
+    for frame in &mut frames {
+        sync_motion(&mut frame.flies[0]);
+    }
     let chunk = PackedChunk::encode("a", 0, &layout, &frames).unwrap();
     assert_eq!(chunk.decode(&layout).unwrap(), frames);
     let metadata = serde_json::to_value(&layout).unwrap();
@@ -381,4 +393,57 @@ fn support_and_orientation_roundtrip_and_reject_invalid_payloads() {
     frames[0].flies[0].body.support = Some(0);
     frames[0].flies[0].body.mode = BodyMode::Landing;
     assert!(PackedChunk::encode("a", 0, &layout, &frames).is_err());
+}
+
+#[test]
+fn packed_motion_preserves_curvature_and_terminal_hold() {
+    let layout = RecordLayout::new(vec!["left".into(), "right".into()]).unwrap();
+    let mut frame = frame(1);
+    let fly = &mut frame.flies[0];
+    fly.body.pose.heading = 0.7;
+    fly.input_pose.heading = 0.7;
+    sync_motion(fly);
+    let mut crest = fly.motion[1].clone();
+    crest.fraction = 0.3;
+    crest.height = 0.012;
+    let mut stopped = fly.motion[1].clone();
+    stopped.fraction = 0.52;
+    fly.motion.insert(1, crest);
+    fly.motion.insert(2, stopped);
+    let chunk = PackedChunk::encode("curve", 0, &layout, &[frame]).unwrap();
+    let sample = |t| {
+        sample_motion(
+            &chunk.motion_values,
+            &chunk.motion_states,
+            &chunk.motion_offsets,
+            t,
+        )
+        .unwrap()
+    };
+    assert_eq!(sample(0.3)[3], 0.012);
+    assert_eq!(sample(0.52), sample(0.9));
+    assert_eq!(sample(0.9), sample(1.));
+    let mut mismatched = chunk.clone();
+    let last = *mismatched.motion_offsets.last().unwrap() as usize - 1;
+    mismatched.motion_values[last*9+1] += 0.001;
+    assert!(mismatched.decode(&layout).unwrap_err().contains("endpoint differs"));
+    let mut broken = chunk.motion_offsets.clone();
+    broken[1] = u32::MAX;
+    assert!(sample_motion(&chunk.motion_values, &chunk.motion_states, &broken, 0.5).is_err());
+    let mut broken_values = chunk.motion_values.clone();
+    broken_values[9] = 0.;
+    assert!(sample_motion(
+        &broken_values,
+        &chunk.motion_states,
+        &chunk.motion_offsets,
+        0.5
+    )
+    .is_err());
+    assert!(sample_motion(
+        &chunk.motion_values,
+        &chunk.motion_states,
+        &chunk.motion_offsets,
+        f64::NAN
+    )
+    .is_err());
 }

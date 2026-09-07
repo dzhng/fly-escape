@@ -64,3 +64,6 @@ export { PlaybackClock } from "./playback";
 
 export type { RecordedMotion, RecordedPose } from "./record";
 export { HouseProbeClient } from "./house-probe";
+
+export { loadMotionSampler } from "./motion-sampler";
+export type { MotionSampler, RecordedTransform } from "./record";
