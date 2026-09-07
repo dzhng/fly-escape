@@ -1,6 +1,6 @@
 # 21 — Recognizable household shapes
 
-Status: in progress. Native furnishing, fruit, window and sconce integration is implemented; final shape and furnished composition acceptance remain open. Dependencies: 19,20.
+Status: **current appearance accepted for MVP by the user, 2026-09-08**. Further visual refinement below is deferred under the [current visual acceptance](../GAMEPLAY.md#visual-target-a-warm-lived-in-house). Existing camera, asset ownership, collision and performance contracts remain required; final integrated functionality/resource checks belong to17.
 
 ## Contract, seam and review surface
 

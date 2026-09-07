@@ -1,6 +1,6 @@
 # 22 — Natural authored materials
 
-Status: in progress. Authored materials and the meadow are integrated; close surface realism and final visual/cost acceptance remain open. Dependencies: 21.
+Status: **current appearance accepted for MVP by the user, 2026-09-08**. Further visual refinement below is deferred under the [current visual acceptance](../GAMEPLAY.md#visual-target-a-warm-lived-in-house). Existing camera, asset ownership, collision and performance contracts remain required; final integrated functionality/resource checks belong to17.
 
 ## Contract, seam and review surface
 

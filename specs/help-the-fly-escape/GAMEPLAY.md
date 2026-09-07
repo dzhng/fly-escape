@@ -34,6 +34,8 @@ Randomness is derived from the attempt seed, so replay and paired experiments pr
 
 ## Visual target: a warm, lived-in house
 
+**MVP acceptance, 2026-09-08:** the user accepts the current visuals as good enough and prioritizes playable mechanics. Further shape, material, lighting and cosmetic contact refinements are deferred beyond this MVP. Keep the existing appearance; do not spend implementation time pursuing the earlier final-art target below. Camera functionality, physical interaction and browser performance remain required.
+
 The user explicitly requests photorealistic rooms and selected a warm, lived-in house. Final presentation needs realistic natural colors and materials, daylight and household lighting, furniture, plants, and recognizable three-dimensional food such as apples and bananas. Empty blue-grey rooms, generic block furniture and nearly flat source markers are intermediate foundations, not the final art target.
 
 Rooms must have believable domestic proportions and circulation space around native-sized furniture. A sofa must not fill an entire room. Use distinct living, kitchen, hallway and side-room spaces; small domestic doorways with frames and wall above them connect rooms, rather than wide missing wall sections. Sims-inspired cutaway visibility does not change the physical room or doorway dimensions.

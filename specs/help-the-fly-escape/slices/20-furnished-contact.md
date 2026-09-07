@@ -1,6 +1,6 @@
 # 20 — Authoritative furnishing and food contact
 
-Status: **in progress**. Native contact, body integration, recorded curved motion and a controlled actual-graph banana meal are implemented. Remaining gates are close-contact visual accuracy, recorded revisit, sustained twenty-fly contact cost and the complete transition/camera review. Dependencies: 19,25,26 and the physical-adapter verdict.
+Status: **in progress**. Native contact, body integration, recorded curved motion and a controlled actual-graph banana meal are implemented. Remaining gameplay gates are recorded revisit, robust contact and sustained twenty-fly cost. Cosmetic contact refinement is deferred by the user’s MVP visual acceptance; functional transition/replay checks remain required. Dependencies: 19,25,26 and the physical-adapter verdict.
 
 ## Contract
 
@@ -33,10 +33,10 @@ The renderer currently uses a planar selection circle aligned with body orientat
 
 ## Remaining reviewable gates
 
-1. **Contact accuracy and presentation.** Preserve query regression precision. The provisional numerical ceiling is 3 µm additional trajectory/replay error relative to the chosen hull, targeting zero penetration; reject measured excursions above it. Independently verify at most 0.25 CSS-pixel visible contact error at actual maximum-close depth, including hull/model alignment and the model's projected dimensions. Use dense temporal checks and halved-step convergence as empirical evidence, not a proof at every instant. Resolve visible ring clipping and contact readability without adding renderer physics.
+1. **Contact accuracy; presentation refinement deferred.** Preserve query regression precision. The provisional numerical ceiling is 3 µm additional trajectory/replay error relative to the chosen hull, targeting zero penetration; reject measured excursions above it. The earlier maximum-close 0.25 CSS-pixel appearance target is deferred under the user’s current visual acceptance. Use dense temporal checks and halved-step convergence as empirical evidence, not a proof at every instant. Further cosmetic ring/contact refinement is deferred; preserve the existing visible marker.
 2. **Complete recorded lifecycle.** Extend the curved-fruit production playback evidence through a legitimate revisit. Existing native tests force motor outputs and therefore do not alone satisfy this recorded actual-behavior gate. Preserve pause, reverse seek, support acquisition/loss, departure and terminal freezes on the same sampler. Keep the matched replenishment control and twenty independent streams.
 3. **Sustained work and archive cost.** Measure representative twenty-brain contact production, archive use and playback cost against existing budgets. Demonstrate forward progress and bounded failure handling. The favorable selected meal and seed 42 run are baselines, not worst-case workload proof.
-4. **Complete visual review.** Capture full frames and tight fly/food crops at default, close follow, further zoom and widest wheel zoom, including contact transitions. There is no Overview button. Use the actual renderer/player; Blender renders are authoring evidence only. Preserve all captured states for independent review rather than selecting the best ones.
+4. **Visual review accepted for MVP; future refinement deferred.** The user accepts current appearance. The following earlier capture plan is retained for future art work, not as a blocker to playable levels: Capture full frames and tight fly/food crops at default, close follow, further zoom and widest wheel zoom, including contact transitions. There is no Overview button. Use the actual renderer/player; Blender renders are authoring evidence only. Preserve all captured states for independent review rather than selecting the best ones.
 
 These gates complete this slice's original scope; they do not replace campaign attraction, two-level balance or final release acceptance. One meal is progress, not permission to close the remaining gates.
 
