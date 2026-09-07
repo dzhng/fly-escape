@@ -109,6 +109,65 @@ on supported segments, and an accepted replay trajectory. Retain its behavior
 regressions while replacing endpoint projection with the accepted path owner;
 its passing landing test alone is not permission to ship the movement.
 
+## Retained rotating feature: cheap evaluation, incomplete domain owner
+
+A triangle-face / hull-vertex contact admits a direct root-height formula. With
+triangle normal `n`, a triangle point `a`, rotated native vertex `q*v`, and chosen
+root `x,z`, height is `(n·(a-q*v)-n.x*x-n.z*z)/n.y`. Its local domain requires the
+contact point to stay inside the triangle and the vertex to remain the hull's
+minimum projection along `n`. Triangle barycentrics and adjacent-vertex projection
+comparisons test those conditions without scanning all hull vertices.
+
+The retained feature at the upright traverse's starting point is apple triangle
+201 / reconstructed hull vertex 1423, which has four neighbors. Short turn,
+tilt and combined paths retain that feature and match 1,001 reference support
+queries per path within 2.08e-15 m. Wider paths leave the vertex cone; keeping the
+stale vertex then produces errors up to 0.868 mm. The cone test identifies those
+sampled failures. [Retained-feature results](feature-results.json.gz) include
+validity outcomes and timings. These are sampled domain checks, not a continuous
+interval certificate.
+
+The [adjacency experiment](climb-results.json.gz) instead follows the minimum
+projection through the native hull graph. Each fixed-orientation search strictly
+decreases `(projection, vertex ID)`, giving a finite bound of the hull's vertex
+count. The tested 1,001-sample paths visit at most two or three vertices per
+sample and compare at most 46 neighboring projections. Equal-height boundaries
+between selected vertices agree to 4.27e-17 m after bisection. Some coarse sample
+intervals contain multiple neighbor changes; their endpoint bisection does not
+prove the intermediate feature order. The pure-turn path's 25 sampled handoffs
+are all adjacent.
+
+| Native evaluation scope | 20 evaluations | 100 evaluations |
+| --- | ---: | ---: |
+| Retained vertex, local cone and barycentric checks | about 0.70 μs | about 3.52 μs |
+| Adjacency updates, height and barycentric computation | about 2.5 μs | about 12.8 μs |
+
+These averages cover 10,000 native release batches. The adjacency timing includes
+path wraparound and averages about 1.08 visited vertices per evaluation. They
+exclude preparation, global competing-feature checks, reference queries and
+WASM overhead. The adjacency timing computes barycentric coordinates; it is not
+a complete global validity check. Fast local arithmetic does not establish the
+20/100-fly replay gate.
+
+Two actual boundary cases identify the next missing ownership:
+
+- At heading 0.7155 rad, the turn reaches triangle 201's edge `[122,82]`, with
+  hull edge `[1084,1312]`. The exact SAT oracle resolves this
+  [edge/edge contact](transition-turn.json.gz); retaining only a triangle face
+  cannot describe it.
+- At up-vector x component 0.4823, triangle 200 / hull vertex 46 overtakes the
+  retained triangle 201 / vertex 119. The previous contact still lies inside
+  triangle 201, so its local domain passes while another part of the hull touches
+  the neighboring face first. The resulting error is 2.26e-7 m, exceeding the
+  established numerical tolerance. The [competing-face result](transition-tilt.json.gz)
+  proves local triangle validity alone is insufficient.
+
+Apple indices refer to the baked contact mesh. Hull indices refer to Parry's
+reconstructed convex-hull point ordering, not the JSON input vertex order.
+Scratch implementations are `feature.rs`, `climb.rs` and `identify.rs` under the
+same temporary probe crate. No runtime feature schema or performance contract
+is adopted by this evidence.
+
 ## Remaining gates
 
 - Retain an active feature and its exact domain; cross its boundary without
@@ -126,6 +185,7 @@ its passing landing test alone is not permission to ship the movement.
 - Preserve the native geometry and established numerical tolerance. Neither
   clearance padding nor a more permissive penetration threshold is adopted here.
 
-The next bounded experiment is active-domain traversal or reuse of these SAT
-planes, measured against the retained exact oracle. A cheaper single-plane
-height formula is promising only if its domain and transition costs also pass.
+The next bounded experiment is a local competing-feature set covering the
+identified triangle-face and edge/edge transitions, checked against the retained
+exact SAT oracle. A cheap single-feature evaluator needs that global validity
+and transition owner before it can drive replay.
