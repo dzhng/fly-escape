@@ -1,0 +1,95 @@
+{
+  "comparison": "banana-refined vs banana-terminal; original three views/crops matched, reverse view is additional diagnostic",
+  "pairs": [
+    {
+      "id": "end-crop",
+      "dimensions": {
+        "width": 1180,
+        "height": 710
+      },
+      "grayscale": {
+        "mae": 0.70536,
+        "rmse": 3.25097,
+        "diffRatio16": 0.00905,
+        "diffRatio32": 0.00279,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0.00676
+      }
+    },
+    {
+      "id": "top-crop",
+      "dimensions": {
+        "width": 1640,
+        "height": 680
+      },
+      "grayscale": {
+        "mae": 0.92705,
+        "rmse": 3.5731,
+        "diffRatio16": 0.00834,
+        "diffRatio32": 0.00272,
+        "diffRatio64": 0.00042,
+        "pixelmatchRatio": 0.00579
+      }
+    },
+    {
+      "id": "three-quarter-crop",
+      "dimensions": {
+        "width": 1450,
+        "height": 780
+      },
+      "grayscale": {
+        "mae": 0.63541,
+        "rmse": 2.95441,
+        "diffRatio16": 0.00707,
+        "diffRatio32": 0.00214,
+        "diffRatio64": 2e-05,
+        "pixelmatchRatio": 0.00504
+      }
+    },
+    {
+      "id": "three-quarter",
+      "dimensions": {
+        "width": 1200,
+        "height": 900
+      },
+      "grayscale": {
+        "mae": 0.19228,
+        "rmse": 1.53568,
+        "diffRatio16": 0.00185,
+        "diffRatio32": 0.00056,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0.00132
+      }
+    },
+    {
+      "id": "end",
+      "dimensions": {
+        "width": 1200,
+        "height": 900
+      },
+      "grayscale": {
+        "mae": 0.16259,
+        "rmse": 1.46543,
+        "diffRatio16": 0.00176,
+        "diffRatio32": 0.00054,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0.00131
+      }
+    },
+    {
+      "id": "top",
+      "dimensions": {
+        "width": 1200,
+        "height": 900
+      },
+      "grayscale": {
+        "mae": 0.27858,
+        "rmse": 1.84295,
+        "diffRatio16": 0.00216,
+        "diffRatio32": 0.0007,
+        "diffRatio64": 0.00011,
+        "pixelmatchRatio": 0.0015
+      }
+    }
+  ]
+}
