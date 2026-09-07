@@ -16,6 +16,7 @@ import { FlyModel } from "./fly-model";
 import { disposeObjectResources } from "./resources";
 export { disposeObjectResources } from "./resources";
 export { loadFlyModel, FlyModel } from "./fly-model";
+import { ExteriorGrass } from "./exterior-grass";
 import { WorldCamera } from "./camera";
 import { cameraInput } from "./camera-input";
 import type { Geometry, FieldGrid, ContactRegion, ContactSurface, ExitOpening, Placement, ToolDef, Point } from "@fly-escape/sim-client";
@@ -65,6 +66,7 @@ export class WorldView {
   private readonly selectionRing: THREE.Mesh<THREE.RingGeometry, THREE.MeshBasicMaterial>;
   private readonly raycaster = new THREE.Raycaster();
   private readonly house: HouseGeometry;
+  private readonly exterior: ExteriorGrass;
   private readonly renderer: THREE.WebGLRenderer;
   private readonly flies: THREE.Object3D[] = [createPlaceholderFly()];
   private motions: FlyMotion[] = [];
@@ -97,6 +99,8 @@ export class WorldView {
       throw new Error("Scene requires 1..100 flies");
     while (this.flies.length < flyCount) this.flies.push(this.flies[0].clone(true));
     this.house = new HouseGeometry(geometry);
+    this.exterior = new ExteriorGrass(geometry);
+    this.scene.add(this.exterior.root);
     this.bounds = new THREE.Box3();
     for (const room of geometry.rooms) {
       this.bounds.expandByPoint(new THREE.Vector3(room.min.x, 0, room.min.z));
@@ -182,6 +186,8 @@ export class WorldView {
   get houseVisibility() {
     return { segments: this.house.walls.children.length, cutaway: this.house.walls.children.filter(wall => wall.scale.y < 1).length, solids: this.house.solids.children.length, solidsCutaway: this.house.solids.children.filter(prop => prop.scale.y < 1).length };
   }
+
+  get exteriorStats() { return { ...this.exterior.stats }; }
 
   get houseAssetKeys(): HouseAsset[] { return this.house.assetKeys; }
 
@@ -718,6 +724,7 @@ export class WorldView {
     }
     if (this.trailSample) this.trails.sample(this.trailSample.paths, this.trailSample.cursorTick,
       this.selectionRing.geometry.parameters.outerRadius * this.displayScale);
+    this.exterior.update(this.navigation.exteriorGroundCircle());
     this.renderer.render(this.scene, this.navigation.camera);
   }
 

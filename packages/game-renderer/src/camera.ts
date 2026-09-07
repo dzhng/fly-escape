@@ -15,6 +15,8 @@ export class WorldCamera {
   private closeDistance = 1;
   private followed = false;
   private overviewMode = true;
+  private mounting = false;
+  private grassCoverage?: { key: string; circle: { x: number; z: number; radius: number } };
   constructor(
     private readonly bounds: THREE.Box3,
     private subjectHeight: number,
@@ -30,7 +32,7 @@ export class WorldCamera {
     this.height = Math.max(1, height);
     this.camera.aspect = this.width / this.height;
     const vertical = Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2));
-    const fit = this.requiredFit(this.target);
+    const fit = this.maximumDistance();
     const priorClose = this.closeDistance;
     this.fitDistance = fit;
     this.closeDistance = Math.min(fit, (this.height * this.subjectHeight) / (2 * vertical * 50));
@@ -43,6 +45,7 @@ export class WorldCamera {
     this.apply();
   }
   overview() {
+    this.mounting = false;
     this.backward.set(1, 1.8, 1).normalize();
     this.overviewMode = true;
     this.followed = false;
@@ -51,6 +54,7 @@ export class WorldCamera {
     this.apply();
   }
   follow(position: THREE.Vector3) {
+    this.mounting = false;
     this.backward.set(1, 1.8, 1).normalize();
     this.overviewMode = false;
     this.followed = true;
@@ -60,6 +64,7 @@ export class WorldCamera {
   }
   /** Named diagnostic views only; ordinary navigation restores the game elevation. */
   inspect(position: THREE.Vector3, distance: number, viewpoint: "rts" | "mounting" = "rts") {
+    this.mounting = viewpoint === "mounting";
     this.backward.set(1, viewpoint === "mounting" ? 0.35 : 1.8, 1).normalize();
     this.overviewMode = false;
     this.followed = false;
@@ -102,6 +107,36 @@ export class WorldCamera {
     const unitsPerPixel = 2 * this.distance * Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2)) / this.height;
     return Math.max(1, 24 * unitsPerPixel / nativeSpan);
   }
+  /** Conservative normal-RTS ground coverage across the existing target/zoom limits.
+   * Grass is deliberately excluded from the bounds used to fit the house. */
+  exteriorGroundCircle() {
+    const backward = new THREE.Vector3(1, 1.8, 1).normalize();
+    const up = new THREE.Vector3().crossVectors(backward, this.right);
+    const vertical = Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2));
+    const center = this.bounds.getCenter(new THREE.Vector3());
+    const targets = this.bounds.clone();
+    // A tracked terminal/body centre can extend just beyond the room boundary.
+    if (this.followed) targets.expandByPoint(this.target);
+    const key = [...targets.min.toArray(), ...targets.max.toArray(), this.camera.aspect].join(",");
+    if (this.grassCoverage?.key === key) return this.grassCoverage.circle;
+    const distance = this.requiredFit(center, backward);
+    let radius = 0;
+    for (const nx of [-1, 1]) for (const ny of [-1, 1]) {
+      const ray = backward.clone().negate().addScaledVector(this.right, nx * vertical * this.camera.aspect).addScaledVector(up, ny * vertical);
+      for (const x of [targets.min.x, targets.max.x])
+        for (const y of [targets.min.y, targets.max.y])
+          for (const z of [targets.min.z, targets.max.z])
+            for (const d of [0, distance]) {
+              const height = y + d * backward.y;
+              radius = Math.max(radius, Math.hypot(x + d * backward.x - height * ray.x / ray.y - center.x,
+                z + d * backward.z - height * ray.z / ray.y - center.z));
+            }
+    }
+    const circle = { x: center.x, z: center.z, radius };
+    this.grassCoverage = { key, circle };
+    return circle;
+  }
+
   project(position: { x: number; y: number; z: number }) {
     const p = new THREE.Vector3(position.x, position.y, position.z).project(this.camera);
     return {
@@ -132,10 +167,10 @@ export class WorldCamera {
       height: this.height,
     };
   }
-  private requiredFit(target: THREE.Vector3) {
+  private requiredFit(target: THREE.Vector3, backward = this.backward) {
     const vertical = Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2));
     const horizontal = vertical * this.camera.aspect;
-    const up = new THREE.Vector3().crossVectors(this.backward, this.right);
+    const up = new THREE.Vector3().crossVectors(backward, this.right);
     let fit = 0;
     for (const x of [this.bounds.min.x, this.bounds.max.x])
       for (const y of [this.bounds.min.y, this.bounds.max.y])
@@ -143,7 +178,7 @@ export class WorldCamera {
           const corner = new THREE.Vector3(x, y, z).sub(target);
           fit = Math.max(
             fit,
-            corner.dot(this.backward) +
+            corner.dot(backward) +
               Math.max(
                 Math.abs(corner.dot(this.right)) / (horizontal * 0.92),
                 Math.abs(corner.dot(up)) / (vertical * 0.92),
@@ -152,9 +187,12 @@ export class WorldCamera {
         }
     return fit;
   }
+  private maximumDistance() {
+    return this.requiredFit(this.mounting ? this.target : this.bounds.getCenter(new THREE.Vector3()));
+  }
   private apply() {
     const atMinimumZoom = this.distance === this.fitDistance;
-    this.fitDistance = this.requiredFit(this.target);
+    this.fitDistance = this.maximumDistance();
     this.distance = atMinimumZoom ? this.fitDistance : Math.min(this.distance, this.fitDistance);
     this.camera.near = Math.min(0.1, this.distance / 20);
     this.camera.position.copy(this.backward).multiplyScalar(this.distance).add(this.target);

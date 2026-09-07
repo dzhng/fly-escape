@@ -1,0 +1,64 @@
+$ bun test packages/game-renderer/src
+bun test v1.3.14 (0d9b296a)
+
+packages/game-renderer/src/house.test.ts:
+(pass) nested GLB cutaway retains a low segment base and restores full walls without an occluder query [5.40ms]
+(pass) authored meshes leave every geometry doorway open and release replaced resources [3.62ms]
+(pass) shared wall endpoints close the outside corner without filling doorway ends [0.44ms]
+(pass) solid GLB matches core bounds, retains its footprint during cutaway, and restores [1.08ms]
+(pass) native furnishings match core footprints through rotation and independent replacement [4.21ms]
+(pass) prepared household shapes retain native envelopes and reject mismatched replacements [3.00ms]
+
+packages/game-renderer/src/camera.test.ts:
+(pass) follow keeps a moving and terminal target centered while zoom preserves it [0.60ms]
+(pass) overview fits every room corner and pan releases follow without rotating [0.18ms]
+(pass) maximum zoom keeps an edge fly centered; Overview restores the whole house [0.11ms]
+(pass) millimetre subjects stay in the frustum at follow and extra-close household framing [0.09ms]
+(pass) zoom compensation grows continuously at wide views and retains native close size [0.43ms]
+(pass) inspection focus preserves fixed camera orientation and ignores fly tracking [0.06ms]
+(pass) diagnostic mounting elevation never leaks into follow or Overview [0.06ms]
+(pass) circular exterior contains every ground ray across normal camera limits [1.18ms]
+
+packages/game-renderer/src/fly-model.test.ts:
+(pass) replacement with geometry far from its pivot is rejected instead of disappearing from follow [0.36ms]
+(pass) authored GLB has finite grounded bounds and independently poseable clones [6.21ms]
+(pass) authored clips restore identical skinned mesh phase after reverse seek without root motion [26.62ms]
+(pass) cloned flies preserve shared bone textures and independent animation [21.19ms]
+
+packages/game-renderer/src/placement-models.test.ts:
+(pass) edible assets preserve native metres while floor cues retain catalog scaling [2.04ms]
+(pass) fruit shared geometry survives edits and is released once when replaced [1.23ms]
+(pass) crumbs shared geometry survives edits and is released once when replaced [0.75ms]
+(pass) vinegar shared geometry survives edits and is released once when replaced [1.40ms]
+(pass) fan shared geometry survives edits and is released once when replaced [0.92ms]
+(pass) lamp shared geometry survives edits and is released once when replaced [0.55ms]
+(pass) shade shared geometry survives edits and is released once when replaced [0.55ms]
+(pass) vinegar is a finite static floor surface within its placement footprint [0.52ms]
+(pass) fan is a finite static floor surface within its placement footprint [0.37ms]
+(pass) lamp is a finite static floor surface within its placement footprint [0.22ms]
+(pass) shade is a finite static floor surface within its placement footprint [0.16ms]
+(pass) authored fan direction follows placement heading and restores after editing [0.60ms]
+
+packages/game-renderer/src/house-materials.test.ts:
+(pass) authored house surfaces match the materials used by production geometry [0.31ms]
+
+packages/game-renderer/src/trails.test.ts:
+(pass) trail geometry is bounded, fades by playback time and restores exact seek state [0.89ms]
+(pass) discontinuities stop paths and fresh attempts contain no old vertices [0.09ms]
+(pass) recorded trails preserve physical height, detect input discontinuity and stop at terminal [0.09ms]
+(pass) trail width follows shared projection and the head gap excludes the fly footprint [0.26ms]
+(pass) vertical trails retain recorded centres and pixel width at both perspective depths [0.21ms]
+
+packages/game-renderer/src/fly-motion.test.ts:
+(pass) recorded airborne landing plays Land, touchdown immediately plays Walk [0.06ms]
+(pass) recorded orientation sampling is absolute, normalized and takes the short arc [0.15ms]
+
+packages/game-renderer/src/exterior-grass.test.ts:
+(pass) grass masks actual rooms and joined wall thickness, retaining concave exterior [0.10ms]
+(pass) packed field is repeatable, bounded, uniformly covers circle and respects blade clearance [195.14ms]
+(pass) resizing replaces the owned batches and releases shared resources once [13.23ms]
+
+ 41 pass
+ 0 fail
+ 1642979 expect() calls
+Ran 41 tests across 8 files. [356.00ms]

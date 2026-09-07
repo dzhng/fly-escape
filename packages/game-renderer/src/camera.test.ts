@@ -43,11 +43,17 @@ test("overview fits every room corner and pan releases follow without rotating",
   for (const x of [-5, 8]) for (const y of [0, 1]) for (const z of [-4, 9]) expect(rig.project(new THREE.Vector3(x,y,z)).visible).toBe(true);
 });
 
-test("maximum zoom-out still fits the house while following an edge fly", () => {
+test("maximum zoom keeps an edge fly centered; Overview restores the whole house", () => {
   const rig = new WorldCamera(bounds, 1);
   rig.resize(1000, 500);
-  rig.follow(new THREE.Vector3(-5, 0.5, -4));
-  rig.zoom(100000);
+  const overviewDistance = rig.state.maxDistance;
+  const target = new THREE.Vector3(-5, 0.5, -4);
+  rig.follow(target); rig.zoom(100000);
+  expect(rig.state.distance).toBe(overviewDistance);
+  expect(rig.project(target).x).toBeCloseTo(500);
+  expect(rig.project(target).y).toBeCloseTo(250);
+  expect(rig.state.following).toBe(true);
+  rig.overview();
   for (const x of [-5, 8]) for (const y of [0, 1]) for (const z of [-4, 9]) expect(rig.project(new THREE.Vector3(x,y,z)).visible).toBe(true);
 });
 
@@ -119,4 +125,25 @@ test("diagnostic mounting elevation never leaks into follow or Overview", () => 
   camera.inspect(subject, 0.864, "mounting");
   camera.inspect(subject, 0.864);
   expect(camera.camera.quaternion.angleTo(ordinary)).toBeLessThan(1e-7);
+});
+
+test("circular exterior contains every ground ray across normal camera limits", () => {
+  for (const [width,height] of [[720,900],[1120,794],[1600,900],[2560,720]]) {
+    const rig=new WorldCamera(bounds,0.003); rig.resize(width,height);
+    for(const x of [bounds.min.x,1.5,bounds.max.x]) for(const z of [bounds.min.z,2.5,bounds.max.z]) {
+      rig.follow(new THREE.Vector3(x,0.6,z));
+      for(const zoom of [-100000,100000]) {
+        rig.zoom(zoom); const circle=rig.exteriorGroundCircle();
+        for(const nx of [-1,1]) for(const ny of [-1,1]) {
+          const ray=new THREE.Raycaster(); ray.setFromCamera(new THREE.Vector2(nx,ny),rig.camera);
+          const point=ray.ray.intersectPlane(new THREE.Plane(new THREE.Vector3(0,1,0),0),new THREE.Vector3());
+          expect(point).not.toBeNull();
+          expect(point!.clone().project(rig.camera).z).toBeLessThanOrEqual(1 + 1e-8);
+          expect(Math.hypot(point!.x-circle.x,point!.z-circle.z)).toBeLessThanOrEqual(circle.radius+1e-8);
+        }
+      }
+    }
+    const normal=rig.exteriorGroundCircle(); rig.inspect(new THREE.Vector3(1,2,1),0.5,"mounting");
+    expect(rig.exteriorGroundCircle()).toEqual(normal);
+  }
 });

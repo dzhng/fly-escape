@@ -51,6 +51,27 @@ export async function loadStaticHouseModel(bytes: ArrayBuffer, contract: {
   }
 }
 
+/** Rendered wall rectangles, including shared-corner extensions, in world metres. */
+export function wallFootprints(walls: Geometry["walls"]) {
+  const joins = new Map<string, { x: number; z: number }[]>();
+  const key = (p: { x: number; z: number }) => `${p.x},${p.z}`;
+  for (const segment of walls) {
+    const direction = { x: segment.b.x - segment.a.x, z: segment.b.z - segment.a.z };
+    for (const point of [segment.a, segment.b]) {
+      const directions = joins.get(key(point)) ?? [];
+      directions.push(direction); joins.set(key(point), directions);
+    }
+  }
+  return walls.map(segment => {
+    const dx = segment.b.x - segment.a.x, dz = segment.b.z - segment.a.z;
+    const length = Math.hypot(dx, dz);
+    const extension = (point: { x: number; z: number }) =>
+      joins.get(key(point))!.some(d => Math.abs(d.x * dz - d.z * dx) > 1e-8) ? PART_BOUNDS.wall[5] : 0;
+    const start = extension(segment.a), end = extension(segment.b);
+    return { segment, dx, dz, length, start, end, halfDepth: PART_BOUNDS.wall[5] };
+  });
+}
+
 /** Owns all room instances and their shared resources; topology belongs to Geometry. */
 export class HouseGeometry {
   readonly root = new THREE.Group();
@@ -114,26 +135,9 @@ export class HouseGeometry {
     disposeObjectResources(owner);
     owner.clear();
     if (part === "wall") {
-      const joins = new Map<string, { x: number; z: number }[]>();
-      const key = (p: { x: number; z: number }) => `${p.x},${p.z}`;
-      for (const segment of this.geometry.walls) {
-        const direction = { x: segment.b.x - segment.a.x, z: segment.b.z - segment.a.z };
-        for (const point of [segment.a, segment.b]) {
-          const directions = joins.get(key(point)) ?? [];
-          directions.push(direction);
-          joins.set(key(point), directions);
-        }
-      }
-      for (const segment of this.geometry.walls) {
-        const dx = segment.b.x - segment.a.x;
-        const dz = segment.b.z - segment.a.z;
+      for (const { segment, dx, dz, length, start, end } of wallFootprints(this.geometry.walls)) {
         const placement = new THREE.Group();
         placement.add(source.clone(true));
-        const length = Math.hypot(dx, dz);
-        const extension = (point: { x: number; z: number }) =>
-          joins.get(key(point))!.some(d => Math.abs(d.x * dz - d.z * dx) > 1e-8) ? PART_BOUNDS.wall[5] : 0;
-        const start = extension(segment.a);
-        const end = extension(segment.b);
         placement.scale.x = length + start + end;
         placement.position.set(
           (segment.a.x + segment.b.x) / 2 + (end - start) * dx / (2 * length),
