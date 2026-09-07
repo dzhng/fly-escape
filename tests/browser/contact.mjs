@@ -26,10 +26,8 @@ try {
     assert.ok(Math.abs(f.y - r.camera.height / 2) < 1);
     const pose = fixture.cases[r.sample][r.attachment];
     assert.deepEqual(r.position, pose.root, 'rendered origin must use the supported body root, not its surface witness');
-    assert.deepEqual(
-      r.rotation,
-      pose.rotation,
-    );
+    assert.ok(r.rotation.every((value, i) => value === pose.rotation[i]),
+      'rendered orientation must equal the core rotation');
     rows.push({ name, ...r });
     await page.screenshot({ path: `${out}/${name}.png` });
     const b = await page.locator('canvas').boundingBox();
