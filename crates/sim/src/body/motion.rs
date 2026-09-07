@@ -160,15 +160,12 @@ pub(super) fn advance(
     dt: f64,
     radius: f64,
 ) -> Result<MotionTrace, String> {
-    let destination = world
-        .geometry
-        .sweep(state.pose.position, desired.position, radius);
-    let velocity = Point {
-        x: (destination.x - state.pose.position.x) / dt,
-        z: (destination.z - state.pose.position.z) / dt,
+    let mut velocity = Point {
+        x: (desired.position.x - state.pose.position.x) / dt,
+        z: (desired.position.z - state.pose.position.z) / dt,
     };
-    let speed = velocity.x.hypot(velocity.z);
     let mut origin = state.pose.position;
+    let mut origin_time = 0.;
     let grounded = matches!(state.mode, BodyMode::Walking | BodyMode::Feeding);
     let mut point = MotionPoint {
         fraction: 0.,
@@ -191,6 +188,7 @@ pub(super) fn advance(
         if iterations >= MAX_MOTION_POINTS {
             return Err("supported movement exceeds its bounded substep budget".into());
         }
+        let speed = velocity.x.hypot(velocity.z);
         let step =
             (dt - elapsed)
                 .min(MAX_STEP_SECONDS)
@@ -199,11 +197,33 @@ pub(super) fn advance(
                 } else {
                     dt
                 });
+        // Split at wall impact before projecting velocity, so replay preserves
+        // the approach time and the bend rather than cutting across the corner.
+        let requested = Point {
+            x: origin.x + velocity.x * (elapsed + step - origin_time),
+            z: origin.z + velocity.z * (elapsed + step - origin_time),
+        };
+        let (contact_fraction, blocked) =
+            world
+                .geometry
+                .motion_contact(point.pose.position, requested, radius);
+        let step = step * contact_fraction;
+        if step == 0. {
+            origin = point.pose.position;
+            origin_time = elapsed;
+            if blocked[0] {
+                velocity.x = 0.;
+            }
+            if blocked[1] {
+                velocity.z = 0.;
+            }
+            continue;
+        }
         let fraction = ((elapsed + step) / dt).min(1.);
         let heading = angle(state.pose.heading, desired.heading, fraction);
         let target = Point {
-            x: origin.x + velocity.x * (fraction * dt),
-            z: origin.z + velocity.z * (fraction * dt),
+            x: origin.x + velocity.x * (elapsed + step - origin_time),
+            z: origin.z + velocity.z * (elapsed + step - origin_time),
         };
         let current_up = up(point.rotation);
         let previous_support = point.support;
@@ -237,10 +257,14 @@ pub(super) fn advance(
                 supported_knots(world, &point, endpoint, &mut trace.points, &mut work)?;
                 point = trace.end().clone();
                 elapsed += step;
-                origin = Point {
-                    x: point.pose.position.x - velocity.x * elapsed,
-                    z: point.pose.position.z - velocity.z * elapsed,
-                };
+                origin = point.pose.position;
+                origin_time = elapsed;
+                if blocked[0] {
+                    velocity.x = 0.;
+                }
+                if blocked[1] {
+                    velocity.z = 0.;
+                }
                 continue;
             }
             // Test a constrained horizontal departure before beginning descent.
@@ -297,6 +321,16 @@ pub(super) fn advance(
                 return Err("numerical departure unresolved: unilateral contact remains".into());
             }
             elapsed += step;
+            if blocked.iter().any(|v| *v) {
+                origin = point.pose.position;
+                origin_time = elapsed;
+            }
+            if blocked[0] {
+                velocity.x = 0.;
+            }
+            if blocked[1] {
+                velocity.z = 0.;
+            }
             descending = true;
             continue;
         }
@@ -412,6 +446,16 @@ pub(super) fn advance(
             grounded: point.grounded,
         };
         elapsed += step;
+        if blocked.iter().any(|v| *v) {
+            origin = point.pose.position;
+            origin_time = elapsed;
+        }
+        if blocked[0] {
+            velocity.x = 0.;
+        }
+        if blocked[1] {
+            velocity.z = 0.;
+        }
         append_point(&mut trace.points, point.clone())?;
     }
     if trace.end().fraction < 1. {

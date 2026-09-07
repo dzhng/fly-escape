@@ -836,3 +836,34 @@ fn takeoff_from_tilted_apple_makes_progress() {
         "legitimate revisit can feed"
     );
 }
+
+#[test]
+fn oblique_wind_slides_at_actual_contact_time_and_a_corner_stops_both_axes() {
+    let g = geometry();
+    let world = BodyWorld::new(&g, &[], &[], exit(), 100).unwrap();
+    let mut b = body(0.2, 2., 3.);
+    let radius = BodyConfig::default().body_radius;
+    let step = b
+        .step(&neural(0., 0.), &world, Point { x: -1., z: 1. }, 0.5, 1)
+        .unwrap();
+    assert!((b.state().pose.position.x - radius).abs() < 2e-9);
+    assert!((b.state().pose.position.z - 2.5).abs() < 2e-9);
+    let early = step.motion.at(0.1).unwrap().pose.position;
+    assert!((early.x - 0.15).abs() < 1e-9);
+    assert!((early.z - 2.05).abs() < 1e-9);
+    for i in 0..=100 {
+        let p = step.motion.at(i as f64 / 100.).unwrap().pose.position;
+        assert!(g.contains_body(p, radius));
+    }
+    // The next wall must be swept after sliding, never joined by a corner-cutting chord.
+    let mut b = body(0.2, 3.6, 3.);
+    let step = b
+        .step(&neural(0., 0.), &world, Point { x: -1., z: 1. }, 0.5, 1)
+        .unwrap();
+    assert!((b.state().pose.position.x - radius).abs() < 2e-9);
+    assert!((b.state().pose.position.z - (4. - radius)).abs() < 2e-9);
+    for i in 0..=100 {
+        let p = step.motion.at(i as f64 / 100.).unwrap().pose.position;
+        assert!(g.contains_body(p, radius));
+    }
+}

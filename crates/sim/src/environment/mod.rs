@@ -131,6 +131,27 @@ impl Geometry {
             z: from.z + (to.z - from.z) * t,
         }
     }
+    /// First timed contact for body motion. The caller may remove only the
+    /// blocked velocity components and sweep the remaining time along the wall.
+    pub(crate) fn motion_contact(&self, from: Point, to: Point, radius: f64) -> (f64, [bool; 2]) {
+        let mut fraction = 1.;
+        let mut blocked = [false; 2];
+        for (min, max) in self.blocking_bounds(radius) {
+            if let Some((hit, axes)) = segment_box_contact(from, to, min, max) {
+                if hit < fraction {
+                    fraction = hit;
+                    blocked = axes;
+                } else if hit == fraction {
+                    blocked[0] |= axes[0];
+                    blocked[1] |= axes[1];
+                }
+            }
+        }
+        if blocked.iter().any(|v| *v) {
+            fraction = (fraction - 1e-9 / from.distance(to).max(1e-9)).max(0.);
+        }
+        (fraction, blocked)
+    }
     fn blocking_bounds(&self, radius: f64) -> impl Iterator<Item = (Point, Point)> + '_ {
         self.walls
             .iter()
@@ -214,12 +235,19 @@ impl Geometry {
     }
 }
 fn segment_box(a: Point, b: Point, min: Point, max: Point) -> Option<f64> {
+    segment_box_contact(a, b, min, max).map(|hit| hit.0)
+}
+fn segment_box_contact(a: Point, b: Point, min: Point, max: Point) -> Option<(f64, [bool; 2])> {
     let mut near: f64 = 0.;
     let mut far: f64 = 1.;
-    for (start, end, lo, hi) in [
+    let mut axes = [false; 2];
+    for (axis, (start, end, lo, hi)) in [
         (a.x, b.x, min.x.min(max.x), min.x.max(max.x)),
         (a.z, b.z, min.z.min(max.z), min.z.max(max.z)),
-    ] {
+    ]
+    .into_iter()
+    .enumerate()
+    {
         let delta = end - start;
         if delta == 0. {
             if start < lo || start > hi {
@@ -228,14 +256,21 @@ fn segment_box(a: Point, b: Point, min: Point, max: Point) -> Option<f64> {
         } else {
             let t0 = (lo - start) / delta;
             let t1 = (hi - start) / delta;
-            near = near.max(t0.min(t1));
+            let entry = t0.min(t1);
+            if entry > near {
+                near = entry;
+                axes = [false; 2];
+                axes[axis] = true;
+            } else if entry == near {
+                axes[axis] = true;
+            }
             far = far.min(t0.max(t1));
             if near > far {
                 return None;
             }
         }
     }
-    Some(near)
+    Some((near, axes))
 }
 
 fn expanded_bounds(a: Point, b: Point, radius: f64) -> (Point, Point) {
