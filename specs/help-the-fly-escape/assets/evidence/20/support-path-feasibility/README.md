@@ -168,6 +168,43 @@ Scratch implementations are `feature.rs`, `climb.rs` and `identify.rs` under the
 same temporary probe crate. No runtime feature schema or performance contract
 is adopted by this evidence.
 
+## Complete local feature coverage through the failing paths
+
+The [coverage probe](coverage-results.json.gz) evaluates all SAT feature types
+for every apple triangle whose projected bounds intersect the native hull's
+conservative footprint. The radius is derived from the hull, not a food/contact
+radius. Candidate discovery uses geometry rather than a preferred winner or a
+fixed ring around triangle 201. It finds 33 candidate triangles at this fixed
+root XZ and automatically selects winners across triangles 200–203.
+
+Each of the three wide turn/tilt paths is checked at 1,001 poses against both
+`support_at` and a static native-hull/whole-apple contact query. The maximum height
+disagreement is 4.66e-12 m; the deepest reported contact is -9.54e-17 m. No sampled
+pose fails the established 1e-8 m tolerance. This crosses the previously failing
+vertex, edge and neighboring-triangle cases without choosing their IDs manually.
+It proves sampled pose progress; it does not certify the continuous intervals
+between samples or physical acquisition/loss.
+
+The candidate feature set includes triangle-face/hull-vertex,
+hull-face/triangle-vertex and edge/edge planes. The reconstructed hull contains
+1,832 vertices, 3,416 faces and 5,490 edges; reconstruction merges two of the
+1,834 input points. Before normal-cone culling, the per-triangle axis bound is
+`2 + hull faces + 6 * hull edges`. The largest retained set in these runs contains
+127,566 planes. The search is bounded by mesh/hull sizes but does not yet have a
+production work budget.
+
+Mean native evaluation costs are 5.33–5.38 ms, excluding reference/static checks
+and initial hull construction. That is a substantial improvement over rebuilding
+Minkowski hulls, and still unsuitable as an accepted per-frame swarm evaluator.
+No 20/100-fly browser timing is inferred from the cheap single-feature results.
+New neighbors can be discovered with the same conservative footprint query as
+root position changes; these runs keep root XZ fixed and do not validate moving
+footprint updates, BVH integration or retained-set invalidation.
+
+The source remains `/tmp/fly-rotation-probe/src/bin/coverage.rs`. This complete
+local-set implementation is a correctness oracle for reducing competing-feature
+work, not a proposed production replay function.
+
 ## Remaining gates
 
 - Retain an active feature and its exact domain; cross its boundary without
@@ -185,7 +222,6 @@ is adopted by this evidence.
 - Preserve the native geometry and established numerical tolerance. Neither
   clearance padding nor a more permissive penetration threshold is adopted here.
 
-The next bounded experiment is a local competing-feature set covering the
-identified triangle-face and edge/edge transitions, checked against the retained
-exact SAT oracle. A cheap single-feature evaluator needs that global validity
-and transition owner before it can drive replay.
+The next bounded experiment is reducing the complete local competitor set while
+preserving its results across feature changes and moving footprint boundaries.
+Continuous interval validity and browser work bounds remain separate gates.
