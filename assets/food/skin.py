@@ -1,6 +1,6 @@
-"""Deterministic vertex skin colours; geometry stays owned by each fruit author."""
+"""Offline fruit skin materials; geometry stays owned by each fruit author."""
 import bpy
-from math import sin, atan2
+from math import sin, atan2, pi, cos
 
 def apply_skin(mesh, kind):
     material=bpy.data.materials.new(kind.title()+'-Skin')
@@ -32,3 +32,68 @@ def apply_skin(mesh, kind):
         colour.data[v.index].color=(*rgb,1)
     mesh.materials.clear();mesh.materials.append(material)
     return material
+
+
+def author_banana_detail(banana, side_rings, segments):
+    """Author a periodic peel-detail image; broad colour remains vertex-owned.
+
+    A 32 mm tile keeps fly-scale spots resolved without a full-peel 4K atlas.
+    Periodic distances make its borders continuous. Only ordinary glTF image,
+    UV and vertex-colour multiplication ships; no procedural shader is exported.
+    """
+    import numpy as np
+    mesh = banana.data
+    uv = mesh.uv_layers.new(name='SkinUV')
+    side_vertices = side_rings * segments
+    for polygon in mesh.polygons:
+        ids = [mesh.loops[i].vertex_index for i in polygon.loop_indices]
+        seam = any(i % segments == 0 for i in ids) and any(i % segments == segments - 1 for i in ids)
+        for loop_index, vertex in zip(polygon.loop_indices, ids):
+            if vertex < side_vertices:
+                around = vertex % segments
+                if seam and around == 0: around = segments
+                uv.data[loop_index].uv = (7 * (vertex // segments) / (side_rings - 1), 2 * around / segments)
+            else:
+                point = mesh.vertices[vertex].co
+                uv.data[loop_index].uv = (point.y / .032, point.z / .032)
+    size = 1024
+    y, x = np.mgrid[0:size, 0:size].astype(np.float32) / size
+    rng = np.random.default_rng(731)
+    pigment = np.zeros((size, size), dtype=np.float32)
+    for _ in range(260):
+        cx, cy = rng.random(2)
+        rx = rng.uniform(.002, .0105)
+        ry = rx * rng.uniform(.55, 1.6)
+        dx, dy = (x-cx+.5)%1-.5, (y-cy+.5)%1-.5
+        angle = rng.uniform(0, 2*pi)
+        a, b = dx*cos(angle)+dy*sin(angle), -dx*sin(angle)+dy*cos(angle)
+        distance = np.sqrt((a/rx)**2+(b/ry)**2)
+        irregular = .07*np.sin(2*pi*(x*61+y*37)) + .04*np.sin(2*pi*(x*113-y*83))
+        edge = np.clip((1.15-distance+irregular)/.55, 0, 1)
+        spot = edge * (.35 + .65*np.exp(-distance*distance*1.8)) * rng.uniform(.35, .9)
+        pigment = np.maximum(pigment, spot)
+    grain = np.full((size, size), .975, dtype=np.float32)
+    for _ in range(32):
+        fx, fy = rng.integers(-180, 181, 2)
+        grain += .0015*np.sin(2*pi*(x*fx+y*fy)+rng.uniform(0, 2*pi))
+    pixels = np.ones((size, size, 4), dtype=np.float32)
+    for channel, brown in enumerate((.23, .15, .45)):
+        pixels[:,:,channel] = grain * (1-pigment*(1-brown))
+    image = bpy.data.images.new('Banana-Peel-Detail', width=size, height=size, alpha=False)
+    image.pixels.foreach_set(pixels.ravel())
+    image.update()
+    image.pack()
+    material = mesh.materials[0]
+    nodes, links = material.node_tree.nodes, material.node_tree.links
+    bsdf = nodes.get('Principled BSDF')
+    attribute = next(node for node in nodes if node.type == 'VERTEX_COLOR')
+    texture = nodes.new('ShaderNodeTexImage')
+    texture.image = image
+    texture.extension = 'REPEAT'
+    mixed = nodes.new('ShaderNodeMix')
+    mixed.data_type = 'RGBA'
+    mixed.blend_type = 'MULTIPLY'
+    mixed.inputs[0].default_value = 1
+    links.new(texture.outputs['Color'], mixed.inputs[6])
+    links.new(attribute.outputs['Color'], mixed.inputs[7])
+    links.new(mixed.outputs[2], bsdf.inputs['Base Color'])

@@ -2,11 +2,11 @@
 from pathlib import Path
 from runpy import run_path
 from math import sin, cos, pi, sqrt
-import bpy, bmesh, json
+import bpy, bmesh, json, os
 
 OUT = Path(__file__).resolve().parent
 shared = run_path(str(OUT.parents[1] / 'house/authoring.py'))
-EVIDENCE = OUT.parents[2] / 'specs/help-the-fly-escape/assets/evidence/21/banana-terminal'
+EVIDENCE = Path(os.environ.get('BANANA_EVIDENCE', OUT.parents[2] / 'specs/help-the-fly-escape/assets/evidence/21/banana-terminal'))
 EVIDENCE.mkdir(parents=True, exist_ok=True)
 scene = bpy.data.scenes.new('Banana-Metres')
 scene.unit_settings.system = 'METRIC'
@@ -101,9 +101,11 @@ assert volume>0
 bm.to_mesh(mesh)
 bm.free()
 for polygon in mesh.polygons: polygon.use_smooth=polygon.index not in cap_faces
-run_path(str(OUT.parent/'skin.py'))['apply_skin'](mesh,'banana')
+skin = run_path(str(OUT.parent/'skin.py'))
+skin['apply_skin'](mesh,'banana')
 banana=bpy.data.objects.new('Banana',mesh)
 scene.collection.objects.link(banana)
+skin['author_banana_detail'](banana, len(samples), segments)
 banana['authorship']='Original procedural Blender geometry; no downloaded assets'
 size=[maxs[0]-mins[0],maxs[2]-mins[2],maxs[1]-mins[1]]
 bounds=shared['export_static'](scene,OUT/'banana.glb',size)
