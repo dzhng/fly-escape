@@ -8,6 +8,12 @@ This establishes warmup as a useful candidate at current sampling, not the sole 
 
 The next gate is a paired pilot with the actual20-fly campaign owner, cold versus warm initialization, and predeclared valid apple/vinegar placements. Keep all results, including errors and negative effects. Do not ship a warmup or simplified controller based on Chamber evidence alone.
 
+## Separate Python warmup sweep
+
+User-provided [PR #1](https://github.com/dzhng/fly-escape/pull/1), inspected at `00a775cbeca8f5bf5f32c2a01aafa0180ed83417`, supplies useful negative evidence against assuming that more warmup always helps. Root checked its script and all240 unique condition/seed observations and recomputed the mean-distance differences. Fruit-minus-control is +22.668, +20.408, +22.497 and +10.380 pixels for warmups0/30/60/120; vinegar-minus-control is -2.200, -0.290, +8.009 and -3.657. These conditions show no monotonic improvement. The analysis table's control standard deviations do not match its raw JSON; use the raw observations.
+
+This is an older Python motor1hop model with continuous bilateral odor injection, opposite fruit/vinegar pathway bindings from current Rust, and a separately implemented inertial movement loop in a rectangular arena. It does not measure campaign escape counts, feeding or current physical contact. Its distance result establishes where flies spent time, not whether they actively steered away rather than changed speed or passed the source. The experiment also does not directly measure neural stabilization. Retain it as scoped evidence; do not import its scratch implementation or treat its warmup60 recommendation as browser-game calibration.
+
 `odor_response_spike.rs` is the preserved temporary example; compile in the workspace using its lockfile and pass the prepared brain directory plus an output JSON path. `evidence.json` contains source hashes, exact conditions and per-seed results; `summary-table.txt` is secondary presentation.
 
 ## Historical audit triage
