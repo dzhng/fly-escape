@@ -1,10 +1,12 @@
 import * as THREE from "three";
 import { houseMaterial, applyHousePalette } from "./house-materials";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import type { Geometry } from "@fly-escape/sim-client";
+import type { Geometry, FurnitureModel } from "@fly-escape/sim-client";
 import { disposeObjectResources } from "./resources";
+import catalog from "../../../assets/house/catalog.json";
 
 export type HousePart = "wall" | "floor" | "solid";
+export type HouseAsset = HousePart | FurnitureModel;
 const PART_BOUNDS = {
   wall: [-0.5, 0, -0.06, 0.5, 0.6, 0.06],
   floor: [-0.5, -0.25, -0.5, 0.5, 0, 0.5],
@@ -12,12 +14,17 @@ const PART_BOUNDS = {
 };
 
 /** Replacement bounds keep the native pivot and declared world scale. */
-export async function loadHousePart(bytes: ArrayBuffer, part: HousePart) {
+export async function loadHousePart(bytes: ArrayBuffer, part: HouseAsset) {
   const gltf = await new GLTFLoader().parseAsync(bytes, "");
   try {
     const box = new THREE.Box3().setFromObject(gltf.scene);
     const bounds = [...box.min, ...box.max];
-    if (gltf.animations.length || bounds.some((v, i) => !Number.isFinite(v) || Math.abs(v - PART_BOUNDS[part][i]) > 0.001))
+    const expected = part in PART_BOUNDS ? PART_BOUNDS[part as HousePart] : (() => {
+      const [x, y, z] = catalog[part as FurnitureModel];
+      return [-x / 2, 0, -z / 2, x / 2, y, z / 2];
+    })();
+    const tolerance = part in PART_BOUNDS ? 0.001 : 1e-6;
+    if (gltf.animations.length || bounds.some((v, i) => !Number.isFinite(v) || Math.abs(v - expected[i]) > tolerance))
       throw new Error(`${part} must be static and preserve its kit bounds and pivot.`);
     let triangles = 0;
     gltf.scene.traverse((object) => {
@@ -41,6 +48,7 @@ export class HouseGeometry {
   readonly walls = new THREE.Group();
   readonly floors = new THREE.Group();
   readonly solids = new THREE.Group();
+  private readonly solidSources = new Map<"solid" | FurnitureModel, { source: THREE.Group; native: boolean }>();
   constructor(private readonly geometry: Geometry) {
     this.root.add(this.floors, this.walls, this.solids);
     const wall = new THREE.Group();
@@ -55,17 +63,45 @@ export class HouseGeometry {
     floor.add(floorMesh);
     this.replace("wall", wall);
     this.replace("floor", floor);
-    const solid = new THREE.Group();
-    const solidMesh = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), houseMaterial("solid"));
-    solidMesh.position.y = 0.5;
-    solidMesh.castShadow = solidMesh.receiveShadow = true;
-    solid.add(solidMesh);
-    this.replace("solid", solid);
+    for (const key of new Set(geometry.solids.map(prop => prop.furnishing?.model ?? "solid"))) {
+      const source = new THREE.Group();
+      const mesh = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), houseMaterial("solid"));
+      mesh.position.y = 0.5;
+      mesh.castShadow = mesh.receiveShadow = true;
+      source.add(mesh);
+      this.solidSources.set(key, { source, native: false });
+    }
+    this.rebuildSolids();
   }
+  get assetKeys(): HouseAsset[] { return ["wall", "floor", ...this.solidSources.keys()]; }
+  private rebuildSolids(): void {
+    // Templates own resources; rebuilding placements must not dispose shared meshes.
+    this.solids.clear();
+    for (const prop of this.geometry.solids) {
+      const template = this.solidSources.get(prop.furnishing?.model ?? "solid")!;
+      const placement = new THREE.Group();
+      const instance = template.source.clone(true);
+      if (template.native) placement.rotation.y = prop.furnishing!.quarterTurns * Math.PI / 2;
+      else instance.scale.multiply(new THREE.Vector3(prop.max.x - prop.min.x, prop.height, prop.max.z - prop.min.z));
+      placement.add(instance);
+      placement.userData.cutawayScale = Math.min(1, 0.06 / prop.height);
+      placement.position.set((prop.min.x + prop.max.x) / 2, 0, (prop.min.z + prop.max.z) / 2);
+      this.solids.add(placement);
+    }
+  }
+
   /** Takes ownership of source resources. Clones share geometry/materials. */
-  replace(part: HousePart, source: THREE.Group): void {
-    applyHousePalette(source, part);
-    const owner = part === "wall" ? this.walls : part === "floor" ? this.floors : this.solids;
+  replace(part: HouseAsset, source: THREE.Group): void {
+    applyHousePalette(source, part === "wall" || part === "floor" ? part : "solid");
+    if (part !== "wall" && part !== "floor") {
+      const old = this.solidSources.get(part);
+      if (!old) { disposeObjectResources(source); return; }
+      this.solidSources.set(part, { source, native: part !== "solid" });
+      this.rebuildSolids();
+      disposeObjectResources(old.source);
+      return;
+    }
+    const owner = part === "wall" ? this.walls : this.floors;
     disposeObjectResources(owner);
     owner.clear();
     if (part === "wall") {
@@ -104,18 +140,6 @@ export class HouseGeometry {
         placement.add(source.clone(true));
         placement.scale.set(room.max.x - room.min.x, 1, room.max.z - room.min.z);
         placement.position.set((room.min.x + room.max.x) / 2, 0, (room.min.z + room.max.z) / 2);
-        owner.add(placement);
-      }
-    }
-    if (part === "solid") {
-      for (const prop of this.geometry.solids) {
-        const placement = new THREE.Group();
-        const instance = source.clone(true);
-        instance.scale.y *= prop.height;
-        placement.add(instance);
-        placement.userData.cutawayScale = Math.min(1, 0.06 / prop.height);
-        placement.scale.set(prop.max.x - prop.min.x, 1, prop.max.z - prop.min.z);
-        placement.position.set((prop.min.x + prop.max.x) / 2, 0, (prop.min.z + prop.max.z) / 2);
         owner.add(placement);
       }
     }

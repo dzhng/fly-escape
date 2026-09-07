@@ -1,0 +1,77 @@
+$ bun run types:generate && bun run assets:brain && bun run build:wasm && bun run --cwd apps/web build && bun run --cwd apps/asset-lab build
+$ cargo run -q -p sim --example export_types > packages/sim-client/src/generated/sim.ts
+$ bun scripts/copy-brain.ts
+Prepared 70,000 mapped neurons for static browser loading.
+$ wasm-pack build crates/game-wasm --target web --release --out-dir ../../packages/sim-client/src/wasm
+[INFO]: 🎯  Checking for the Wasm target...
+[INFO]: 🌀  Compiling to Wasm...
+   Compiling sim v0.1.0 (/Users/david/dev/fly-escape/crates/sim)
+   Compiling game-wasm v0.1.0 (/Users/david/dev/fly-escape/crates/game-wasm)
+    Finished `release` profile [optimized] target(s) in 2.76s
+[INFO]: ⬇️  Installing wasm-bindgen...
+[WARN  wasm_pack::install] could not download pre-built `wasm-bindgen`: no prebuilt wasm-bindgen binaries are available for this platform: Unrecognized target!. Falling back to `cargo install`.
+[INFO]: Optimizing wasm binaries with `wasm-opt`...
+[INFO]: Optional fields missing from Cargo.toml: 'description', 'repository', and 'license'. These are not necessary, but recommended
+[INFO]: ✨   Done in 3.44s
+[INFO]: 📦   Your wasm pkg is ready to publish at packages/sim-client/src/wasm.
+$ vite build
+vite v8.2.2 building client environment for production...
+transforming...
+✓ 66 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                 0.37 kB │ gzip:   0.28 kB
+dist/assets/house-probe-worker-BV7ur3Ud.js      8.70 kB
+dist/assets/worker-B7kPpFwi.js                 10.05 kB
+dist/assets/shade-ByQD8-3_.glb                 10.96 kB
+dist/assets/attempt-worker-Dh0nNuvY.js         12.57 kB
+dist/assets/lamp-D7bX1F7V.glb                  13.13 kB
+dist/assets/crumbs-DsKjrqwK.glb                19.77 kB
+dist/assets/apple-uIs8Dsyk.glb                 28.54 kB
+dist/assets/fan-8LOGIoN5.glb                   37.66 kB
+dist/assets/vinegar-D57OE6yz.glb               66.98 kB
+dist/assets/cabinet-C7GYYEPJ.glb               91.02 kB
+dist/assets/sofa-0dHRj2ai.glb                 210.84 kB
+dist/assets/fly-DfinqL-W.glb                  386.20 kB
+dist/assets/game_wasm_bg-CZono2tY.wasm        844.94 kB │ gzip: 300.27 kB
+dist/assets/index-Dw7ZzV50.css                 11.67 kB │ gzip:   3.31 kB
+dist/assets/index-CBrCyJmq.js               1,008.00 kB │ gzip: 273.68 kB
+
+✓ built in 180ms
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+$ vite build
+vite v8.2.2 building client environment for production...
+transforming...
+✓ 51 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                  0.43 kB │ gzip:   0.28 kB
+dist/assets/house-probe-worker-1LzfFlQR.js       8.71 kB
+dist/assets/worker-D48hM89Q.js                  10.05 kB
+dist/assets/shade-ByQD8-3_.glb                  10.96 kB
+dist/assets/attempt-worker-BclP1IwD.js          12.56 kB
+dist/assets/lamp-D7bX1F7V.glb                   13.13 kB
+dist/assets/crumbs-DsKjrqwK.glb                 19.77 kB
+dist/assets/apple-uIs8Dsyk.glb                  28.54 kB
+dist/assets/fan-8LOGIoN5.glb                    37.66 kB
+dist/assets/neutral-floor-fKR96qEU.glb          51.67 kB
+dist/assets/vinegar-D57OE6yz.glb                66.98 kB
+dist/assets/cabinet-C7GYYEPJ.glb                91.02 kB
+dist/assets/sofa-0dHRj2ai.glb                  210.84 kB
+dist/assets/fly-DfinqL-W.glb                   386.20 kB
+dist/assets/game_wasm_bg-CZono2tY.wasm         844.94 kB │ gzip: 300.27 kB
+dist/assets/index-Cya575l3.css                   1.16 kB │ gzip:   0.60 kB
+dist/assets/proportions-workbench-B6I-5A1N.js   18.49 kB │ gzip:   6.91 kB
+dist/assets/contact-workbench-DGj6bgSv.js       74.69 kB │ gzip:  16.81 kB
+dist/assets/index-DnShcMph.js                  762.45 kB │ gzip: 196.29 kB
+
+✓ built in 169ms
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.

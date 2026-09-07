@@ -1,0 +1,54 @@
+$ bun test packages/game-renderer/src
+bun test v1.3.14 (0d9b296a)
+
+packages/game-renderer/src/house.test.ts:
+(pass) nested GLB cutaway retains a low segment base and restores full walls without an occluder query [5.85ms]
+(pass) authored meshes leave every geometry doorway open and release replaced resources [4.91ms]
+(pass) shared wall endpoints close the outside corner without filling doorway ends [0.48ms]
+(pass) solid GLB matches core bounds, retains its footprint during cutaway, and restores [1.30ms]
+(pass) native furnishings match core footprints through rotation and independent replacement [5.17ms]
+
+packages/game-renderer/src/camera.test.ts:
+(pass) follow keeps a moving and terminal target centered while zoom preserves it [0.63ms]
+(pass) overview fits every room corner and pan releases follow without rotating [0.20ms]
+(pass) maximum zoom-out still fits the house while following an edge fly [0.09ms]
+(pass) millimetre subjects stay in the frustum at follow and extra-close household framing [0.11ms]
+(pass) zoom compensation grows continuously at wide views and retains native close size [0.54ms]
+
+packages/game-renderer/src/fly-model.test.ts:
+(pass) replacement with geometry far from its pivot is rejected instead of disappearing from follow [0.34ms]
+(pass) authored GLB has finite grounded bounds and independently poseable clones [7.64ms]
+(pass) authored clips restore identical skinned mesh phase after reverse seek without root motion [28.72ms]
+
+packages/game-renderer/src/placement-models.test.ts:
+(pass) edible assets preserve native metres while floor cues retain catalog scaling [2.54ms]
+(pass) fruit shared geometry survives edits and is released once when replaced [1.42ms]
+(pass) crumbs shared geometry survives edits and is released once when replaced [0.85ms]
+(pass) vinegar shared geometry survives edits and is released once when replaced [1.16ms]
+(pass) fan shared geometry survives edits and is released once when replaced [1.17ms]
+(pass) lamp shared geometry survives edits and is released once when replaced [0.86ms]
+(pass) shade shared geometry survives edits and is released once when replaced [0.81ms]
+(pass) vinegar is a finite static floor surface within its placement footprint [0.64ms]
+(pass) fan is a finite static floor surface within its placement footprint [0.34ms]
+(pass) lamp is a finite static floor surface within its placement footprint [0.31ms]
+(pass) shade is a finite static floor surface within its placement footprint [0.20ms]
+(pass) authored fan direction follows placement heading and restores after editing [0.63ms]
+
+packages/game-renderer/src/house-materials.test.ts:
+(pass) authored house surfaces match the materials used by production geometry [0.36ms]
+
+packages/game-renderer/src/trails.test.ts:
+(pass) trail geometry is bounded, fades by playback time and restores exact seek state [0.93ms]
+(pass) discontinuities stop paths and fresh attempts contain no old vertices [0.10ms]
+(pass) recorded trails preserve physical height, detect input discontinuity and stop at terminal [0.09ms]
+(pass) trail width follows shared projection and the head gap excludes the fly footprint [0.28ms]
+(pass) vertical trails retain recorded centres and pixel width at both perspective depths [0.23ms]
+
+packages/game-renderer/src/fly-motion.test.ts:
+(pass) recorded airborne landing plays Land, touchdown immediately plays Walk [0.06ms]
+(pass) recorded orientation sampling is absolute, normalized and takes the short arc [0.23ms]
+
+ 33 pass
+ 0 fail
+ 424 expect() calls
+Ran 33 tests across 7 files. [164.00ms]

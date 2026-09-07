@@ -1,17 +1,18 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { WorldView, loadFlyModel, flyAnimation } from "@fly-escape/game-renderer";
-import { AttemptClient, FrameArchive, type AttemptInfo } from "@fly-escape/sim-client";
+import { WorldView, loadFlyModel, flyAnimation, loadHouseAssets } from "@fly-escape/game-renderer";
+import { AttemptClient, FrameArchive, type AttemptInfo, type Geometry } from "@fly-escape/sim-client";
 import spec from "../../../assets/proportions/scale.json";
 import flyUrl from "../../../assets/fly/fly.glb?url";
 import floorUrl from "../../../assets/proportions/neutral-floor.glb?url";
 
-/** Deliberately separate from production kit/tool loaders: this composite is a scale probe. */
+/** Scale diagnostic using native furnishings with a neutral room composite. */
 export async function proportionsWorkbench() {
   const app = document.querySelector<HTMLDivElement>("#app")!;
-  app.innerHTML = `<header><div><p>Diagnostic · proportions only</p><h1>A fly in a human room</h1></div><a href="?">Fly workbench</a></header><main><div class="world"></div><aside><h2>1 world unit = 1 metre</h2><p>Neutral proxies, not finished house art. Furniture envelopes are core solids. Fruit and window are visual-only: feeding/contact is unvalidated.</p><label>Recorded subject <select id="subject">${Array.from({ length: 20 }, (_, i) => `<option value="${i}"${i === 5 ? " selected" : ""}>Fly ${i + 1}${i === 5 ? " · clear floor" : i === 0 ? " · beside apple" : ""}</option>`).join("")}</select></label><nav><button data-view="context">Context</button><button data-view="follow">Follow</button><button data-view="close">Extra close</button><button data-view="overview">Overview</button></nav><p role="status" id="proportion-status">Loading physical-size fly and recording 20 real neural bodies…</p><label>Recorded tick <input id="recorded-tick" type="range" min="0" max="40" value="0" step="1"></label><p id="scale-sheet"></p><p id="camera-measures"></p><p>Room 4 × 4 × 2.6 m; doorway 0.9 × 2.1 m; cabinet 1.2 × 0.45 × 0.85 m; seat envelope 1.9 × 0.85 × 0.85 m; pot envelope 0.3 × 0.3 × 0.4 m. Apple Ø80 mm; banana 180 mm.</p><p><strong>Physical dimensions:</strong> native 3 mm model and measured collision/sensory dimensions. Food surface contact remains unvalidated. Fields are planar; the measurements expose their horizontal sample positions.</p></aside></main>`;
+  app.innerHTML = `<header><div><p>Diagnostic · proportions only</p><h1>A fly in a human room</h1></div><a href="?">Fly workbench</a></header><main><div class="world"></div><aside><h2>1 world unit = 1 metre</h2><p>Neutral geometry; house materials and composition are unfinished. Furniture envelopes are core solids. Fruit and window are visual-only: feeding/contact is unvalidated.</p><label>Recorded subject <select id="subject">${Array.from({ length: 20 }, (_, i) => `<option value="${i}"${i === 5 ? " selected" : ""}>Fly ${i + 1}${i === 5 ? " · clear floor" : i === 0 ? " · beside apple" : ""}</option>`).join("")}</select></label><nav><button data-view="context">Context</button><button data-view="follow">Follow</button><button data-view="close">Extra close</button><button data-view="overview">Overview</button></nav><p role="status" id="proportion-status">Loading physical-size fly and recording 20 real neural bodies…</p><label>Recorded tick <input id="recorded-tick" type="range" min="0" max="40" value="0" step="1"></label><p id="scale-sheet"></p><p id="camera-measures"></p><p>Room 4 × 4 × 2.6 m; doorway 0.9 × 2.1 m; cabinet 1.2 × 0.45 × 0.85 m; seat envelope 1.9 × 0.85 × 0.85 m; pot envelope 0.3 × 0.3 × 0.4 m. Apple Ø80 mm; banana 180 mm.</p><p><strong>Physical dimensions:</strong> native 3 mm model and measured collision/sensory dimensions. Food surface contact remains unvalidated. Fields are planar; the measurements expose their horizontal sample positions.</p></aside></main>`;
   const world = app.querySelector<HTMLElement>(".world")!;
-  const view = new WorldView(world, spec.geometry, 20);
+  const view = new WorldView(world, spec.geometry as Geometry, 20);
+  await loadHouseAssets(view, () => true, ["cabinet", "sofa"]);
   let selected = 5;
   view.enableSelection(id => { selected = id; app.querySelector<HTMLSelectElement>("#subject")!.value = String(id); view.selectFly(id); });
   // This one-room composition uses the existing scene owner, without relaxing any GLB kit bounds.

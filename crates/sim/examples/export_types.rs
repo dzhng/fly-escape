@@ -66,6 +66,8 @@ fn main() {
         Wall::decl(),
         Geometry::decl(),
         SolidProp::decl(),
+        FurnitureModel::decl(),
+        Furnishing::decl(),
         sim::house_lab::HouseProbe::decl(),
         FieldConfig::decl(),
         FanField::decl(),

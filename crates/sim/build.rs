@@ -26,6 +26,7 @@ fn main() {
         root.join("../../Cargo.toml"),
         root.join("../../assets/food/apple/contact.json"),
         root.join("../../assets/fly/contact-hull.json"),
+        root.join("../../assets/house/catalog.json"),
     ]);
     files.sort();
     println!("cargo:rerun-if-changed=src");

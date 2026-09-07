@@ -29,9 +29,41 @@ pub struct Wall {
     pub a: Point,
     pub b: Point,
 }
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+pub enum FurnitureModel {
+    Cabinet,
+    Sofa,
+}
+impl FurnitureModel {
+    pub fn dimensions(self) -> [f64; 3] {
+        #[derive(Deserialize)]
+        struct Catalog {
+            cabinet: [f64; 3],
+            sofa: [f64; 3],
+        }
+        static CATALOG: std::sync::OnceLock<Catalog> = std::sync::OnceLock::new();
+        let catalog = CATALOG.get_or_init(|| {
+            serde_json::from_str(include_str!("../../../../assets/house/catalog.json"))
+                .expect("authored furniture catalog must be valid")
+        });
+        match self {
+            Self::Cabinet => catalog.cabinet,
+            Self::Sofa => catalog.sofa,
+        }
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+pub struct Furnishing {
+    pub model: FurnitureModel,
+    /// Quarter turns around +Y; native front is +Z.
+    pub quarter_turns: u8,
+}
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
 pub struct SolidProp {
     pub id: u32,
+    pub furnishing: Option<Furnishing>,
     pub min: Point,
     pub max: Point,
     pub height: f64,
@@ -128,7 +160,18 @@ impl Geometry {
             return Err("walls must be finite nonzero axis-aligned segments".into());
         }
         for (i, p) in self.solids.iter().enumerate() {
-            if !p.min.finite()
+            if p.furnishing.is_some_and(|f| {
+                let [width, height, depth] = f.model.dimensions();
+                let (x, z) = if f.quarter_turns % 2 == 0 {
+                    (width, depth)
+                } else {
+                    (depth, width)
+                };
+                f.quarter_turns > 3
+                    || (p.max.x - p.min.x - x).abs() > 1e-9
+                    || (p.max.z - p.min.z - z).abs() > 1e-9
+                    || (p.height - height).abs() > 1e-9
+            }) || !p.min.finite()
                 || !p.max.finite()
                 || p.min.x >= p.max.x
                 || p.min.z >= p.max.z
@@ -152,7 +195,7 @@ impl Geometry {
                             && p.max.z > q.min.z)
                 })
             {
-                return Err("solids require unique IDs, positive finite bounds/height, open floor in one room, and nonoverlapping footprints".into());
+                return Err("solids require unique IDs, positive finite bounds/height, native furnishing dimensions with quarter turns in 0..3, open floor in one room, and nonoverlapping footprints".into());
             }
         }
         Ok(())

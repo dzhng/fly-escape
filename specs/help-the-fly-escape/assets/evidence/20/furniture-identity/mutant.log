@@ -1,0 +1,22 @@
+
+running 1 test
+test furnished_props_keep_native_dimensions_and_the_existing_collision_owner ... FAILED
+
+failures:
+
+---- furnished_props_keep_native_dimensions_and_the_existing_collision_owner stdout ----
+
+thread 'furnished_props_keep_native_dimensions_and_the_existing_collision_owner' (28976549) panicked at crates/sim/tests/house_geometry.rs:211:5:
+turning the model alone cannot silently change its physical footprint
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    furnished_props_keep_native_dimensions_and_the_existing_collision_owner
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.00s
+
+   Compiling sim v0.1.0 (/Users/david/dev/fly-escape/crates/sim)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.59s
+     Running tests/house_geometry.rs (target/debug/deps/house_geometry-e774b924f2f6e2b8)
+error: test failed, to rerun pass `-p sim --test house_geometry`

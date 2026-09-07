@@ -625,6 +625,7 @@ fn cluster_rejects_hazards_and_exhaustion_and_reserves_unsampled_area() {
         .geometry
         .solids
         .push(sim::environment::SolidProp {
+            furnishing: None,
             id: 4,
             min: Point { x: 1., z: 1. },
             max: Point { x: 1.4, z: 1.4 },

@@ -5,9 +5,10 @@ export { loadPlacementModel } from "./placement-models";
 export type { PlacementKind } from "./placement-models";
 import { FlyTrails, type TrailPoint } from "./trails";
 export { recordedTrails } from "./trails";
-import { HouseGeometry, cutAwayOccluders, type HousePart } from "./house";
+import { HouseGeometry, cutAwayOccluders, type HouseAsset } from "./house";
 export { loadHousePart } from "./house";
-export type { HousePart } from "./house";
+export { loadHouseAssets } from "./house-assets";
+export type { HousePart, HouseAsset } from "./house";
 import { FlyMotion, type FlyAnimation } from "./fly-motion";
 export { flyAnimation, interpolateRotation } from "./fly-motion";
 export type { FlyAnimation } from "./fly-motion";
@@ -180,7 +181,9 @@ export class WorldView {
     return { segments: this.house.walls.children.length, cutaway: this.house.walls.children.filter(wall => wall.scale.y < 1).length, solids: this.house.solids.children.length, solidsCutaway: this.house.solids.children.filter(prop => prop.scale.y < 1).length };
   }
 
-  setHousePart(part: HousePart, source: THREE.Group): void {
+  get houseAssetKeys(): HouseAsset[] { return this.house.assetKeys; }
+
+  setHousePart(part: HouseAsset, source: THREE.Group): void {
     this.house.replace(part, source);
     cutAwayOccluders(this.house.walls);
     cutAwayOccluders(this.house.solids);

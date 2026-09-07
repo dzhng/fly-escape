@@ -1,7 +1,6 @@
-import { loadFlyModel, type WorldView } from "@fly-escape/game-renderer";
+import { loadFlyModel, loadHouseAssets, type WorldView } from "@fly-escape/game-renderer";
 import flyModelUrl from "../../../assets/fly/fly.glb?url";
 import { loadPlacementAssets } from "./placement-assets";
-import { loadHouseAssets } from "./house-assets";
 
 /** Required presentation resources share one gate; each loader releases stale results. */
 export async function loadWorldAssets(view: WorldView, isCurrent: () => boolean): Promise<void> {

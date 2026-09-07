@@ -83,3 +83,40 @@ test("solid GLB matches core bounds, retains its footprint during cutaway, and r
   house.replace("solid", (await loadHousePart(bytes, "solid")).root);
   expect(disposed).toBe(resources.size);
 });
+
+test("native furnishings match core footprints through rotation and independent replacement", async () => {
+  const { default: scale } = await import("../../../assets/proportions/scale.json");
+  const core = scale.geometry as import("@fly-escape/sim-client").Geometry;
+  const house = new HouseGeometry(core);
+  const cabinetBytes = await Bun.file(new URL("../../../assets/house/cabinet/cabinet.glb", import.meta.url)).arrayBuffer();
+  const sofaBytes = await Bun.file(new URL("../../../assets/house/sofa/sofa.glb", import.meta.url)).arrayBuffer();
+  const cabinet = await loadHousePart(cabinetBytes, "cabinet");
+  const sofa = await loadHousePart(sofaBytes, "sofa");
+  let cabinetDisposals = 0, sofaDisposals = 0;
+  const cabinetMesh = cabinet.root.getObjectByProperty("type", "Mesh") as THREE.Mesh;
+  const sofaMesh = sofa.root.getObjectByProperty("type", "Mesh") as THREE.Mesh;
+  cabinetMesh.geometry.addEventListener("dispose", () => cabinetDisposals++);
+  sofaMesh.geometry.addEventListener("dispose", () => sofaDisposals++);
+  house.replace("cabinet", cabinet.root);
+  house.replace("sofa", sofa.root);
+  const checkBounds = () => {
+    for (let i = 0; i < 2; i++) {
+      const prop = core.solids[i], box = new THREE.Box3().setFromObject(house.solids.children[i]);
+      const expected = [prop.min.x, 0, prop.min.z, prop.max.x, prop.height, prop.max.z];
+      [...box.min, ...box.max].forEach((v, j) => expect(Math.abs(v - expected[j])).toBeLessThan(1e-6));
+    }
+    const sofaFront = new THREE.Vector3(0, 0, 1).transformDirection(house.solids.children[1].matrixWorld);
+    expect(sofaFront.z).toBeCloseTo(-1);
+  };
+  checkBounds();
+  const solid = await loadHousePart(await Bun.file(new URL("../../../assets/house/solid.glb", import.meta.url)).arrayBuffer(), "solid");
+  house.replace("solid", solid.root);
+  checkBounds();
+  expect(cabinetDisposals).toBe(0);
+  expect(sofaDisposals).toBe(0);
+  house.replace("cabinet", (await loadHousePart(cabinetBytes, "cabinet")).root);
+  expect(cabinetDisposals).toBe(1);
+  expect(sofaDisposals).toBe(0);
+  checkBounds();
+  await expect(loadHousePart(sofaBytes, "cabinet")).rejects.toThrow("bounds");
+});

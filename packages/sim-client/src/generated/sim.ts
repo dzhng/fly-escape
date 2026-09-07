@@ -89,7 +89,13 @@ export type Point = { x: number, z: number, };
 export type RectRoom = { id: number, min: Point, max: Point, };
 export type Wall = { a: Point, b: Point, };
 export type Geometry = { rooms: Array<RectRoom>, walls: Array<Wall>, solids: Array<SolidProp>, };
-export type SolidProp = { id: number, min: Point, max: Point, height: number, };
+export type SolidProp = { id: number, furnishing: Furnishing | null, min: Point, max: Point, height: number, };
+export type FurnitureModel = "cabinet" | "sofa";
+export type Furnishing = { model: FurnitureModel,
+/**
+ * Quarter turns around +Y; native front is +Z.
+ */
+quarterTurns: number, };
 export type HouseProbe = { solid: SolidProp, from: Point, requested: Point, stopped: Point, radius: number, lineOfSight: boolean, };
 export type FieldConfig = { cellSize: number,
 /**

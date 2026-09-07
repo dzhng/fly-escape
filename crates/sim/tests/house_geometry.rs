@@ -179,3 +179,51 @@ fn invalid_solid_bounds_overlap_and_wall_intersections_are_rejected() {
             .contains("solids"));
     }
 }
+
+#[test]
+fn furnished_props_keep_native_dimensions_and_the_existing_collision_owner() {
+    use sim::environment::{FurnitureModel, Point};
+    let value: serde_json::Value =
+        serde_json::from_str(include_str!("../../../assets/proportions/scale.json")).unwrap();
+    let geometry: sim::environment::Geometry =
+        serde_json::from_value(value["geometry"].clone()).unwrap();
+    let prepare = |g: &Geometry| FieldSet::new(g.clone(), FieldConfig::default(), vec![], None);
+    prepare(&geometry).unwrap();
+    let cabinet = &geometry.solids[0];
+    assert_eq!(cabinet.furnishing.unwrap().model, FurnitureModel::Cabinet);
+    let approach = Point { x: 0.9, z: 1. };
+    let inside = Point { x: 0.9, z: 0.3 };
+    let mut plain = geometry.clone();
+    plain.solids[0].furnishing = None;
+    assert_eq!(
+        geometry.sweep(approach, inside, 0.002),
+        plain.sweep(approach, inside, 0.002)
+    );
+    assert_eq!(
+        geometry.line_of_sight(approach, inside),
+        plain.line_of_sight(approach, inside)
+    );
+    assert!(!geometry.contains_body(inside, 0.002));
+
+    let mut turned = geometry.clone();
+    let cabinet = &mut turned.solids[0];
+    cabinet.furnishing.as_mut().unwrap().quarter_turns = 1;
+    assert!(
+        prepare(&turned).is_err(),
+        "turning the model alone cannot silently change its physical footprint"
+    );
+    let cabinet = &mut turned.solids[0];
+    cabinet.min = Point { x: 0.3, z: 0.1 };
+    cabinet.max = Point { x: 0.75, z: 1.3 };
+    prepare(&turned).unwrap();
+    turned.solids[0].height *= 2.;
+    assert!(
+        prepare(&turned).is_err(),
+        "native furniture cannot be stretched to fit another solid"
+    );
+    let encoded = serde_json::to_value(&geometry).unwrap();
+    assert_eq!(
+        encoded["solids"][0]["furnishing"],
+        serde_json::json!({"model":"cabinet","quarterTurns":0})
+    );
+}

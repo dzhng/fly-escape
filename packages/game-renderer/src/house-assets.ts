@@ -1,18 +1,18 @@
-import { loadHousePart, type WorldView, type HousePart } from "@fly-escape/game-renderer";
+import { loadHousePart, type HouseAsset } from "./house";
+import type { WorldView } from "./index";
 import wallUrl from "../../../assets/house/wall.glb?url";
 import floorUrl from "../../../assets/house/floor.glb?url";
 import solidUrl from "../../../assets/house/solid.glb?url";
+import cabinetUrl from "../../../assets/house/cabinet/cabinet.glb?url";
+import sofaUrl from "../../../assets/house/sofa/sofa.glb?url";
+
+const urls: Record<HouseAsset, string> = { wall: wallUrl, floor: floorUrl, solid: solidUrl, cabinet: cabinetUrl, sofa: sofaUrl };
 
 /** Load one kit per view. Replacement owns resources; retired views release late replies. */
-export async function loadHouseAssets(view: WorldView, isCurrent: () => boolean) {
-  const parts: [HousePart, string][] = [
-    ["wall", wallUrl],
-    ["floor", floorUrl],
-    ["solid", solidUrl],
-  ];
+export async function loadHouseAssets(view: WorldView, isCurrent: () => boolean, parts: readonly HouseAsset[] = view.houseAssetKeys) {
   const results = await Promise.allSettled(
-    parts.map(async ([part, url]) => {
-      const response = await fetch(url);
+    parts.map(async (part) => {
+      const response = await fetch(urls[part]);
       if (!response.ok) throw new Error(`House ${part} request failed (${response.status})`);
       return { part, model: await loadHousePart(await response.arrayBuffer(), part) };
     }),

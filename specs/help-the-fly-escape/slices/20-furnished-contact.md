@@ -42,6 +42,10 @@ Production comparison exposed a pre-existing native-scale trail defect: the1mm m
 
 The [authored apple preparation](../assets/evidence/20/authored-apple/README.md) replaces the contact workbench sphere with the Blender GLB and its exact baked triangles. Resolve these through the placement/attempt owner next. Its top indentation clips a normal-aligned planar selection ring; supported replay must conform the ring to the visible surface rather than treating orientation alone as sufficient.
 
+## Furnishing identity component
+
+[Native furnishing identity evidence](../assets/evidence/20/furniture-identity/README.md) verifies shared catalogue dimensions, quarter-turn placement, production renderer loading and resource ownership. Appearance identity belongs to the existing solid; cabinet/sofa placement cannot silently stretch or change collision footprints. This component is accepted independently of curved food motion. Shape/material/light/visibility21–24 remain open, including the recorded dark-sofa and foreground-wall failures.
+
 ## Remaining reviewable passes
 
 1. **Food geometry and identity — component verified.** Move edible geometry onto the existing `ContactSurface` boundary in authored metre units. One immutable prepared contact scene per attempt must serve every fly; do not rebuild mesh acceleration structures per tick. Visible neutral food and collision queries consume the same authored triangles and stable IDs. Replace the planar food-overlap implementation rather than retaining an alternate controller. Controlled floor-food probes remain flat surfaces in this same query path; zapper/reserved-region circles remain their separate existing concepts. Verify a flat food surface and one curved apple through the real placement/attempt owner before accepting this pass.

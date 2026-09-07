@@ -1,0 +1,168 @@
+   Compiling sim v0.1.0 (/Users/david/dev/fly-escape/crates/sim)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.37s
+     Running unittests src/lib.rs (target/debug/deps/sim-8a0e59084a05a3e9)
+
+running 4 tests
+test environment::fields::reconstruction_tests::constants_survive_domain_edges_and_invalid_points_return_zero ... ok
+test environment::fields::reconstruction_tests::visible_support_is_bounded_and_does_not_leak_through_walls_or_solids ... ok
+test sensory::tests::mirrored_senses_swap_currents_without_stimulating_motor_readouts ... ok
+test environment::fields::reconstruction_tests::linear_fields_are_exact_through_centres_and_former_cell_boundaries ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/attempt.rs (target/debug/deps/attempt-40027e660fda24d4)
+
+running 14 tests
+test solid_footprints_reject_spawns_before_simulation ... ok
+test placement_reserves_the_whole_cluster_before_seed_resolution ... ok
+test only_physical_escape_contributes_to_attempt_score_and_stars ... ok
+test fixed_ablation_is_hashed_validated_and_clamps_neural_readouts ... ok
+test cluster_rejects_hazards_and_exhaustion_and_reserves_unsampled_area ... ok
+test terminal_flies_stop_updates_while_other_flies_finish_and_timeout_scores_zero ... ok
+test sensory_and_taste_currents_sum_without_direct_motor_injection ... ok
+test identities_reject_changed_content_and_preserve_full_width_seeds ... ok
+test invalid_spawn_footprints_and_capacity_are_rejected_before_simulation ... ok
+test twenty_flies_share_one_field_evolution_and_keep_independent_seed_streams ... ok
+test canonical_placement_headings_can_start_and_resolve_repeatedly ... ok
+test seeded_cluster_is_legal_reproducible_and_does_not_consume_neural_noise ... ok
+test resolved_placements_preserve_surface_only_taste_local_wind_and_replay ... ok
+test simultaneous_senses_sum_and_each_channel_can_be_ablated ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests/body.rs (target/debug/deps/body-77a79b14beb55ca5)
+
+running 15 tests
+test wind_is_world_space_without_a_hidden_turn_and_inward_crossing_is_not_escape ... ok
+test recorded_orientation_tracks_turns_and_freezes_with_terminal_pose ... ok
+test swept_outward_exit_counts_once_and_adjacent_or_covering_wall_never_escapes ... ok
+test swept_zapper_or_earlier_starvation_preempts_exit ... ok
+test landing_spike_enforces_one_game_second_of_ground_dwell ... ok
+test airborne_landing_is_latched_and_terminal_height_freezes_at_the_actual_time ... ok
+test meal_plus_timeout_scores_zero_and_terminal_body_is_frozen ... ok
+test tonic_voltage_without_spikes_does_not_initiate_feeding_or_landing ... ok
+test food_contact_without_proboscis_motor_activity_never_starts_feeding ... ok
+test feeding_does_not_exempt_a_body_from_net_energy_loss ... ok
+test feeding_is_capped_and_cannot_restart_until_motor_resets ... ok
+test a_proboscis_spike_starts_a_bout_that_stays_latched_between_pulses ... ok
+test a_new_bout_requires_motor_rearming_after_contact_loss ... ok
+test takeoff_and_landing_require_their_neural_readouts_and_flight_cannot_feed ... ok
+test feeding_replenishes_within_capacity_then_contact_loss_allows_later_starvation ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/environment.rs (target/debug/deps/environment-a7e2899ae2828fab)
+
+running 14 tests
+test walls_block_visibility_and_fast_motion_but_doorways_admit_both ... ok
+test exit_cue_requires_same_room_radius_and_clear_sight ... ok
+test forward_and_lateral_sample_points_rotate_with_the_body ... ok
+test dead_end_branch_has_one_physical_connection_and_no_remote_exit_cue ... ok
+test lamps_add_shade_subtracts_and_darkness_never_goes_negative ... ok
+test fan_wind_is_local_directional_and_blocked_by_walls ... ok
+test local_fans_advect_odor_conservatively_without_global_drift ... ok
+test decay_reduces_total_concentration_at_the_declared_rate ... ok
+test bounded_solver_preserves_mass_positivity_and_state_on_rejection ... ok
+test mirrored_fields_swap_antennae_and_export_exact_sampled_values ... ok
+test wind_moves_plume_downwind_and_rotates_in_world_space ... ok
+test mixed_odors_transport_independently_through_the_same_doorway ... ok
+test odor_crosses_open_doorway_but_not_solid_wall_at_two_resolutions ... ok
+test doorway_transport_converges_with_grid_refinement ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.80s
+
+     Running tests/fly_contact_asset.rs (target/debug/deps/fly_contact_asset-9bdf88f214dc828f)
+
+running 1 test
+test native_contact_hull_matches_source_and_constructs_at_metre_scale ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests/food.rs (target/debug/deps/food-25ffcdccaf33ffd8)
+
+running 2 tests
+test floor_patches_share_the_surface_query_and_stable_contact_identity ... ok
+test edible_contact_uses_actual_transformed_surface_not_a_planar_or_solid_volume ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/house_geometry.rs (target/debug/deps/house_geometry-e774b924f2f6e2b8)
+
+running 5 tests
+test solid_footprint_stops_sweeps_and_visibility_while_detour_stays_open ... ok
+test invalid_solid_bounds_overlap_and_wall_intersections_are_rejected ... ok
+test furnished_props_keep_native_dimensions_and_the_existing_collision_owner ... ok
+test five_room_review_house_has_a_route_and_one_door_pantry ... ok
+test solids_exclude_field_cells_and_tool_placement ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/level2_prepared.rs (target/debug/deps/level2_prepared-9ce9cbd6e9d90d91)
+
+running 1 test
+test prepared_corner_has_real_fork_and_fan_crossing ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/lifecycle_lab.rs (target/debug/deps/lifecycle_lab-bf8fa11986177daf)
+
+running 2 tests
+test actual_graph_lifecycle_probe ... ignored, requires BRAIN_ARTIFACT_DIR containing the real graph
+test wind_exit_pair_scores_only_the_opening_and_records_terminal_once ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/placement.rs (target/debug/deps/placement-330320cdb3ff7417)
+
+running 4 tests
+test placement_rejects_walls_spawn_props_exit_and_overlap ... ok
+test repeating_a_raw_heading_placement_is_idempotent ... ok
+test invalid_edits_do_not_spend_inventory_and_removal_refunds_it ... ok
+test canonical_resolution_binds_each_tool_without_mixing_food_and_odor ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/record.rs (target/debug/deps/record-eb79a97446b5a3c3)
+
+running 6 tests
+test horizon_and_event_budget_fail_explicitly_before_encoding ... ok
+test malformed_transport_buffers_are_errors_not_panics_or_partial_replays ... ok
+test replay_preserves_precision_optional_measurements_events_and_result ... ok
+test support_and_orientation_roundtrip_and_reject_invalid_payloads ... ok
+test records_remain_tick_major_and_fly_major_across_a_full_chunk ... ok
+test dense_real_body_transitions_fit_and_replay_in_order ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/reference.rs (target/debug/deps/reference-2aa91e7d5020dd1c)
+
+running 4 tests
+test silenced_neuron_rejects_external_noise_and_network_drive ... ok
+test fly_streams_are_reproducible_and_independent ... ok
+test injected_noise_matches_python_intermediates_and_readouts ... ok
+test malformed_artifacts_fail_without_panicking ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/surface.rs (target/debug/deps/surface-257f98343d7192ac)
+
+running 11 tests
+test support_sampling_uses_surface_bounds_and_rejects_invalid_pose_inputs ... ok
+test first_contact_keeps_world_identity_and_native_support_pivot ... ok
+test malformed_contact_inputs_fail_before_querying ... ok
+test support_sampling_preserves_the_root_instead_of_snapping_to_the_witness ... ok
+test tangent_motion_still_hits_another_face_in_the_same_mesh ... ok
+test supported_translation_is_not_tied_to_horizontal_world_axes ... ok
+test native_hull_fragment_can_slide_tangent_to_a_surface ... ok
+test surface_normal_orients_the_native_pivot_without_an_added_height_offset ... ok
+test exported_float_vertices_survive_the_core_json_boundary_exactly ... ok
+test curved_contact_allows_departure_and_does_not_tunnel_at_fly_scale ... ok
+test authored_apple_has_closed_outward_geometry_and_queryable_metres ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+   Doc-tests sim
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

@@ -621,6 +621,7 @@ mod reconstruction_tests {
             let mut f = fixture();
             if solid {
                 f.geometry.solids.push(SolidProp {
+                    furnishing: None,
                     id: 1,
                     min: Point { x: 1.1, z: 0. },
                     max: Point { x: 1.2, z: 4. },

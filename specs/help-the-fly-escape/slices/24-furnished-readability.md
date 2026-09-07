@@ -23,3 +23,7 @@ The slice19 3 mm fly/80 mm apple diagnostic places the macro Follow camera insid
 The user explicitly permits zoom-dependent model enlargement to keep flies visible. Slice28 now owns the wide-view model/ring/click/trail adjustment; preserve native physical dimensions and verify that furnished-room occlusion remains readable with this display behavior.
 
 Slice28 now supplies zoom-dependent model/ring sizing and verifies unchanged native close views. Preserve it during furnished occlusion work. Its close trail captures expose faint older paths against the neutral floor; reassess white-trail contrast with final materials, alongside the existing fruit-adjacent occlusion case.
+
+## Furnishing integration regressions
+
+The [native furnishing review](../assets/evidence/20/furniture-identity/README.md) preserves actual recorded sofa-adjacent subjects: subject11 loses body/leg contrast on upholstery at all near zooms; standard and subject12 overview hide the sofa behind the foreground wall while subject11 overview exposes it. Carry these full frames into the composed visibility gate alongside the unchanged fruit-adjacent disappearance. Materials22 and illumination23 own low contrast and weak contact shadows before24 judges the combined result.

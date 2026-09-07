@@ -1,0 +1,31 @@
+$ bun test packages/sim-client/src
+bun test v1.3.14 (0d9b296a)
+
+packages/sim-client/src/record.test.ts:
+(pass) Rust packed records decode exactly across flies, chunks, events and terminal absence [1.42ms]
+(pass) metadata field order determines the consumer offsets [0.22ms]
+(pass) stale attempts are ignored and invalid current chunks fail without changing history [0.57ms]
+(pass) archive limits count retained backing allocations, and reject unsupported metadata [0.18ms]
+(pass) accepting a chunk takes ownership and snapshots metadata and results [0.36ms]
+(pass) missing or malformed results cannot finish the archive [0.35ms]
+(pass) motion phase freezes at terminal and reverse seek restores the prior phase [0.24ms]
+(pass) motion follows packed mode transitions across chunk boundaries and resets on clear [0.17ms]
+(pass) bounded neural traces match recorded frames across seek and terminal gaps [0.23ms]
+(pass) pose-only windows preserve recorded positions and terminal states across chunks and seeks [0.27ms]
+(pass) tick zero and rewind preserve immutable core initial poses and mixed modes [0.13ms]
+(pass) support identity and quaternion corruption fail before archive mutation [0.10ms]
+
+packages/sim-client/src/attempt-client.test.ts:
+(pass) reusing an attempt ID cannot deliver a queued failure to the new run [0.21ms]
+
+packages/sim-client/src/playback.test.ts:
+(pass) initial lead covers sustained underproduction rather than a short buffer [0.09ms]
+(pass) pause, hidden time, speed changes and seeking preserve one cursor without catch-up [0.07ms]
+(pass) depleted buffers freeze and rebuild a substantial lead before resuming [0.04ms]
+(pass) a worse production estimate and 2× consumption require renewed buffering [0.02ms]
+(pass) completed records can replay at zero production rate and stop at early terminal time [0.02ms]
+
+ 18 pass
+ 0 fail
+ 151 expect() calls
+Ran 18 tests across 3 files. [985.00ms]

@@ -406,3 +406,21 @@ spin the long way around. The plan required smooth recorded orientation but did
 not choose the interpolation rule. This rule only describes orientation: it does
 not prove that a straight root path remains outside curved fruit. Supported replay
 must carry an accepted continuous path before its contact can be approved.
+
+## Native furniture identity — 2026-09-07
+
+### Sound — medium confidence: quarter turns retain the existing solid geometry
+
+When a cabinet faces another wall, its appearance records one of four right-angle orientations. Turning it ninety degrees also requires swapping its physical width and depth; otherwise placement is rejected. The plan required appearance identity on existing solids but left orientation encoding open. Arbitrary angles would require a different collision representation. Quarter turns support the current axis-aligned rooms without silently adding that larger physics scope. Unfurnished solids retain a plain appearance through an absent furnishing identity.
+
+### Sound — medium confidence: explicit precision tolerances for native envelopes
+
+A cabinet exported from Blender can differ microscopically from its intended size because the GLB stores lower-precision numbers. Browser loading permits one millionth of a metre of envelope error; core placement permits one billionth when comparing decimal footprint dimensions. The plan did not choose these tolerances. They admit numerical rounding while rejecting a visibly stretched or wrongly oriented furnishing. These bounds apply to furniture dimensions only, not food penetration or contact replay.
+
+### Sound — high confidence: one shared native catalogue
+
+If an artist changes a sofa's intended size, Blender, the simulation and browser read the same catalogue. An outdated exported model fails validation instead of being stretched into the new footprint. The plan required native dimensions but did not choose their storage owner. Keeping this small shared asset contract avoids separately maintained dimensions in three languages; the catalogue also participates in simulation build identity.
+
+### Sound — high confidence: templates own furniture resources by model
+
+When a cabinet model is replaced, all its placements use the new shared mesh, and the old cabinet resources are released. Sofa meshes remain alive. The plan left resource ownership unspecified. One template per required model supports repeated furniture without loading a copy per placement, while one shared loader serves both browser applications. Temporary loading boxes use the same existing solid footprint; they do not become alternate authored assets or collision owners.
