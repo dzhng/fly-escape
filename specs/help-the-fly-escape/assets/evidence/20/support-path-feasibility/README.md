@@ -270,6 +270,10 @@ The [feature-pair pruning probe](feature-pruning.md) applies the interval bound
 to all native feature types. It reduces short intervals substantially but exposes
 a large candidate set for 6 mm translation.
 
+The [outward native envelope comparison](native-envelope/README.md) tests smaller
+conservative representations before expanding event machinery. Its heading sweep
+shows why the favorable original contact poses cannot select a hull alone.
+
 ## Remaining gates
 
 - Retain an active feature and its exact domain; cross its boundary without
