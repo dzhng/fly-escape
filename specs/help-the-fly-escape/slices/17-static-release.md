@@ -1,6 +1,6 @@
 # 17 — Browser release and clean cutover
 
-Status: cleanup/About preparation integrated; measured renderer retention under repair; final release verification pending. Dependencies: 16.
+Status: cleanup/About preparation integrated; measured renderer retainer repaired; final release verification pending. Dependencies: 16.
 
 ## Contract and seam
 
@@ -36,4 +36,6 @@ Must stay green: all accepted dependency contracts and their focused fixtures; n
 
 ## Measured retry lifetime issue
 
-[Repeated actual attempts](../assets/evidence/17/retry-resources/review.md) preserve a single Worker and stable WASM allocation but retain old renderers through a Three.js shared lighting texture. Repair the dependency ownership, then verify repeated disposal and two simultaneously live views before accepting memory lifetime. The patch must keep the current library version and lighting appearance; final production metrics remain a separate gate.
+[Repeated actual attempts](../assets/evidence/17/retry-resources/review.md) preserve a single Worker and stable WASM allocation but retain old renderers through a Three.js shared lighting texture. The dependency ownership repair and repeated-disposal/two-live-view checks are recorded above; remaining heap and final release coverage remain open. The patch must keep the current library version and lighting appearance; final production metrics remain a separate gate.
+
+[Shared skeleton ownership](../assets/evidence/17/skeleton-sharing/README.md) removes duplicate bone textures within each cloned fly while retaining independent animation between flies. This closes a bounded resource amplification defect, not the final twenty-fly performance gate.

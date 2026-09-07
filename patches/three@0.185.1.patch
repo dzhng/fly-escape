@@ -70,6 +70,47 @@ index ad13abf7d128bee607a7672646ca543327e258d3..356c9589f514d67bdd7337c41bd494f3
  
  			}
  
+diff --git a/examples/jsm/utils/SkeletonUtils.js b/examples/jsm/utils/SkeletonUtils.js
+index 836c2e2bf2be3c5c5fd6b65ed260f84b3d589258..b8bacc02d3f38046aa6f081b748158fb60486f83 100644
+--- a/examples/jsm/utils/SkeletonUtils.js
++++ b/examples/jsm/utils/SkeletonUtils.js
+@@ -393,6 +393,7 @@ function clone( source ) {
+ 
+ 	const sourceLookup = new Map();
+ 	const cloneLookup = new Map();
++	const skeletonLookup = new Map();
+ 
+ 	const clone = source.clone();
+ 
+@@ -409,16 +410,22 @@ function clone( source ) {
+ 
+ 		const clonedMesh = node;
+ 		const sourceMesh = sourceLookup.get( node );
+-		const sourceBones = sourceMesh.skeleton.bones;
++		let skeleton = skeletonLookup.get( sourceMesh.skeleton );
+ 
+-		clonedMesh.skeleton = sourceMesh.skeleton.clone();
+-		clonedMesh.bindMatrix.copy( sourceMesh.bindMatrix );
++		if ( skeleton === undefined ) {
++
++			skeleton = sourceMesh.skeleton.clone();
++			skeleton.bones = sourceMesh.skeleton.bones.map( function ( bone ) {
+ 
+-		clonedMesh.skeleton.bones = sourceBones.map( function ( bone ) {
++				return cloneLookup.get( bone );
+ 
+-			return cloneLookup.get( bone );
++			} );
++			skeletonLookup.set( sourceMesh.skeleton, skeleton );
+ 
+-		} );
++		}
++
++		clonedMesh.skeleton = skeleton;
++		clonedMesh.bindMatrix.copy( sourceMesh.bindMatrix );
+ 
+ 		clonedMesh.bind( clonedMesh.skeleton, clonedMesh.bindMatrix );
+ 
 diff --git a/src/renderers/WebGLRenderer.js b/src/renderers/WebGLRenderer.js
 index cc2f156939863f3ce3d524ea92bf206a740a6cdb..b6de027122d51527eea5bbc27386ed1ccd9dfc82 100644
 --- a/src/renderers/WebGLRenderer.js

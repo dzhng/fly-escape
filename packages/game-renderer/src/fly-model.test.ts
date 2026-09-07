@@ -39,17 +39,7 @@ test("authored clips restore identical skinned mesh phase after reverse seek wit
     await Bun.file(new URL("../../../assets/fly/fly.glb", import.meta.url)).arrayBuffer(),
   );
   const motion = new FlyMotion(model.root, model.clips);
-  const pose = () => {
-    model.root.updateMatrixWorld(true);
-    const values: number[] = [];
-    model.root.traverse((node) => {
-      if (!(node instanceof THREE.SkinnedMesh)) return;
-      node.skeleton.update();
-      for (let i = 0; i < node.geometry.attributes.position.count; i++)
-        values.push(...node.getVertexPosition(i, new THREE.Vector3()));
-    });
-    return values;
-  };
+  const pose = () => skinnedVertices(model.root);
   for (const clip of ["Walk", "Fly", "Land", "Feed"] as const) {
     motion.sample({ clip, seconds: 0.05 });
     const first = pose();
@@ -67,3 +57,55 @@ test("authored clips restore identical skinned mesh phase after reverse seek wit
   motion.dispose();
   model.dispose();
 });
+
+test("cloned flies preserve shared bone textures and independent animation", async () => {
+  const { FlyMotion } = await import("./fly-motion");
+  const model = await loadFlyModel(await Bun.file(new URL("../../../assets/fly/fly.glb", import.meta.url)).arrayBuffer());
+  const instance = model.instantiate();
+  const motion = new FlyMotion(model.root, model.clips);
+  const cloneMotion = new FlyMotion(instance, model.clips);
+  const textures = (root: THREE.Object3D) => {
+    const result = new Set<THREE.DataTexture>();
+    root.traverse(node => {
+      if (!(node instanceof THREE.SkinnedMesh)) return;
+      if (!node.skeleton.boneTexture) node.skeleton.computeBoneTexture();
+      result.add(node.skeleton.boneTexture!);
+    });
+    return result;
+  };
+  const owner = new THREE.Group();
+  owner.add(model.root, instance);
+  try {
+    const sourceTextures = textures(model.root);
+    const cloneTextures = textures(instance);
+    expect(cloneTextures.size).toBe(sourceTextures.size);
+    for (const texture of cloneTextures) expect(sourceTextures.has(texture)).toBe(false);
+    for (const clip of ["Walk", "Fly", "Land", "Feed"] as const) {
+      motion.sample({ clip, seconds: 0.05 });
+      cloneMotion.sample({ clip, seconds: 0.05 });
+      const source = skinnedVertices(model.root);
+      expect(skinnedVertices(instance)).toEqual(source);
+      cloneMotion.sample({ clip, seconds: 0.125 });
+      expect(skinnedVertices(model.root)).toEqual(source);
+      expect(skinnedVertices(instance)).not.toEqual(source);
+      cloneMotion.sample({ clip, seconds: 0.05 });
+      expect(skinnedVertices(instance)).toEqual(source);
+    }
+  } finally {
+    motion.dispose();
+    cloneMotion.dispose();
+    disposeObjectResources(owner);
+  }
+});
+
+function skinnedVertices(root: THREE.Object3D): number[] {
+  root.updateMatrixWorld(true);
+  const result: number[] = [];
+  root.traverse(node => {
+    if (!(node instanceof THREE.SkinnedMesh)) return;
+    node.skeleton.update();
+    for (let i = 0; i < node.geometry.attributes.position.count; i++)
+      result.push(...node.getVertexPosition(i, new THREE.Vector3()));
+  });
+  return result;
+}
