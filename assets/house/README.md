@@ -10,3 +10,5 @@ The [potted plant study](plant/README.md) is a prepared appearance proposal with
 
 The [closed window study](window/README.md) preserves the room-scale fixture's
 native dimensions; wall installation, glass and daylight remain separate gates.
+
+The [wall sconce](sconce/README.md) is a prepared household fixture, separate from the gameplay floor-light cue.

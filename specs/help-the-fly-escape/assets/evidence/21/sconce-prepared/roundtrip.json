@@ -1,0 +1,95 @@
+{
+  "sizeMetres": [
+    0.22,
+    0.32,
+    0.16
+  ],
+  "bounds": [
+    -0.10999999940395355,
+    0.0,
+    -0.07999999821186066,
+    0.10999999940395355,
+    0.3199999928474426,
+    0.07999999821186066
+  ],
+  "parts": [
+    {
+      "part": "MountingBackplate",
+      "vertices": 56,
+      "faces": 54,
+      "closedManifold": true,
+      "signedVolumeM3": 0.00020073597558129143
+    },
+    {
+      "part": "CurvedSupportArm",
+      "vertices": 456,
+      "faces": 434,
+      "closedManifold": true,
+      "signedVolumeM3": 1.5709313950302782e-05
+    },
+    {
+      "part": "BulbSocket",
+      "vertices": 48,
+      "faces": 26,
+      "closedManifold": true,
+      "signedVolumeM3": 1.2522698706727336e-05
+    },
+    {
+      "part": "BackplateLowerFastener",
+      "vertices": 48,
+      "faces": 26,
+      "closedManifold": true,
+      "signedVolumeM3": 3.47852805155722e-07
+    },
+    {
+      "part": "BackplateUpperFastener",
+      "vertices": 48,
+      "faces": 26,
+      "closedManifold": true,
+      "signedVolumeM3": 3.478529919284228e-07
+    },
+    {
+      "part": "SmallSwitch",
+      "vertices": 48,
+      "faces": 26,
+      "closedManifold": true,
+      "signedVolumeM3": 6.988116565219298e-07
+    },
+    {
+      "part": "BoundEdgeShade",
+      "vertices": 640,
+      "faces": 640,
+      "closedManifold": true,
+      "signedVolumeM3": 0.00032085424032383194
+    },
+    {
+      "part": "ShadeSupport1",
+      "vertices": 48,
+      "faces": 26,
+      "closedManifold": true,
+      "signedVolumeM3": 1.5934106133529992e-06
+    },
+    {
+      "part": "ShadeSupport2",
+      "vertices": 48,
+      "faces": 26,
+      "closedManifold": true,
+      "signedVolumeM3": 1.2041975483850265e-06
+    },
+    {
+      "part": "ShadeSupport3",
+      "vertices": 48,
+      "faces": 26,
+      "closedManifold": true,
+      "signedVolumeM3": 1.1374017739118505e-06
+    },
+    {
+      "part": "UnlitBulb",
+      "vertices": 610,
+      "faces": 640,
+      "closedManifold": true,
+      "signedVolumeM3": 8.100536034058829e-05
+    }
+  ],
+  "runtimeAdoption": false
+}

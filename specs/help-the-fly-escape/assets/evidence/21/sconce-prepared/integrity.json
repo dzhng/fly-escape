@@ -1,0 +1,128 @@
+{
+  "inspectionWeldMetres": 1e-08,
+  "parts": [
+    {
+      "name": "BackplateLowerFastener.006",
+      "vertices": 48,
+      "triangles": 92,
+      "nonmanifoldEdges": 0,
+      "inconsistentEdges": 0,
+      "degenerateFaces": 0,
+      "selfOverlaps": 0,
+      "volume": 3.478528051557218e-07
+    },
+    {
+      "name": "BackplateUpperFastener.006",
+      "vertices": 48,
+      "triangles": 92,
+      "nonmanifoldEdges": 0,
+      "inconsistentEdges": 0,
+      "degenerateFaces": 0,
+      "selfOverlaps": 0,
+      "volume": 3.4785299192842353e-07
+    },
+    {
+      "name": "BoundEdgeShade.006",
+      "vertices": 640,
+      "triangles": 1280,
+      "nonmanifoldEdges": 0,
+      "inconsistentEdges": 0,
+      "degenerateFaces": 0,
+      "selfOverlaps": 0,
+      "volume": 0.0003208542403238337
+    },
+    {
+      "name": "BulbSocket.006",
+      "vertices": 48,
+      "triangles": 92,
+      "nonmanifoldEdges": 0,
+      "inconsistentEdges": 0,
+      "degenerateFaces": 0,
+      "selfOverlaps": 0,
+      "volume": 1.252269870672735e-05
+    },
+    {
+      "name": "CurvedSupportArm.006",
+      "vertices": 456,
+      "triangles": 908,
+      "nonmanifoldEdges": 0,
+      "inconsistentEdges": 0,
+      "degenerateFaces": 0,
+      "selfOverlaps": 0,
+      "volume": 1.570931395030278e-05
+    },
+    {
+      "name": "MountingBackplate.006",
+      "vertices": 56,
+      "triangles": 108,
+      "nonmanifoldEdges": 0,
+      "inconsistentEdges": 0,
+      "degenerateFaces": 0,
+      "selfOverlaps": 0,
+      "volume": 0.0002007359755812914
+    },
+    {
+      "name": "ShadeSupport1.003",
+      "vertices": 48,
+      "triangles": 92,
+      "nonmanifoldEdges": 0,
+      "inconsistentEdges": 0,
+      "degenerateFaces": 0,
+      "selfOverlaps": 0,
+      "volume": 1.593410613352975e-06
+    },
+    {
+      "name": "ShadeSupport2.003",
+      "vertices": 48,
+      "triangles": 92,
+      "nonmanifoldEdges": 0,
+      "inconsistentEdges": 0,
+      "degenerateFaces": 0,
+      "selfOverlaps": 0,
+      "volume": 1.2041975483850735e-06
+    },
+    {
+      "name": "ShadeSupport3.003",
+      "vertices": 48,
+      "triangles": 92,
+      "nonmanifoldEdges": 0,
+      "inconsistentEdges": 0,
+      "degenerateFaces": 0,
+      "selfOverlaps": 0,
+      "volume": 1.1374017707977256e-06
+    },
+    {
+      "name": "SmallSwitch.006",
+      "vertices": 48,
+      "triangles": 92,
+      "nonmanifoldEdges": 0,
+      "inconsistentEdges": 0,
+      "degenerateFaces": 0,
+      "selfOverlaps": 0,
+      "volume": 6.988116565219298e-07
+    },
+    {
+      "name": "UnlitBulb.003",
+      "vertices": 610,
+      "triangles": 1216,
+      "nonmanifoldEdges": 0,
+      "inconsistentEdges": 0,
+      "degenerateFaces": 0,
+      "selfOverlaps": 0,
+      "volume": 8.10053603405041e-05
+    }
+  ],
+  "nativeScenes": [
+    "Sconce-Neutral-AuthoringStage.002",
+    "Sconce-Metres.005"
+  ],
+  "nativeParts": 11,
+  "nativeVertices": 2098,
+  "importedVertices": 2098,
+  "transformsBaked": true,
+  "authoredShadeSupportShellTriangleIntersections": [
+    24,
+    26,
+    24
+  ]
+}

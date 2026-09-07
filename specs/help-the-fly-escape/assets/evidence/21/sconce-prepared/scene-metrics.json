@@ -1,0 +1,160 @@
+{
+  "kind": "screenshot-scene-metrics",
+  "generatedAt": "2026-09-07T12:03:30.229Z",
+  "note": "Absolute per-image telemetry, no reference involved. Low values locate flat, sparse, or empty captures; they never accept or reject an image on their own.",
+  "imageCount": 8,
+  "results": [
+    {
+      "id": "front-crop",
+      "image": "front-crop.png",
+      "dimensions": {
+        "width": 1000,
+        "height": 1020
+      },
+      "sceneMetrics": {
+        "colorBuckets": 29,
+        "colorEntropyBits": 2.4098,
+        "edgeDensity": 0.05208,
+        "dominantColorShare": 0.26991,
+        "transparentShare": 0,
+        "luminanceMean": 152.40549,
+        "luminanceP5": 122.7152,
+        "luminanceP95": 188.7152,
+        "luminanceContrast": 66
+      }
+    },
+    {
+      "id": "front",
+      "image": "front.png",
+      "dimensions": {
+        "width": 1200,
+        "height": 900
+      },
+      "sceneMetrics": {
+        "colorBuckets": 29,
+        "colorEntropyBits": 2.65769,
+        "edgeDensity": 0.04382,
+        "dominantColorShare": 0.18233,
+        "transparentShare": 0,
+        "luminanceMean": 145.06165,
+        "luminanceP5": 106,
+        "luminanceP95": 188,
+        "luminanceContrast": 82
+      }
+    },
+    {
+      "id": "rear-crop",
+      "image": "rear-crop.png",
+      "dimensions": {
+        "width": 1000,
+        "height": 1020
+      },
+      "sceneMetrics": {
+        "colorBuckets": 27,
+        "colorEntropyBits": 1.87713,
+        "edgeDensity": 0.05155,
+        "dominantColorShare": 0.52004,
+        "transparentShare": 0,
+        "luminanceMean": 145.72514,
+        "luminanceP5": 92,
+        "luminanceP95": 180,
+        "luminanceContrast": 88
+      }
+    },
+    {
+      "id": "rear",
+      "image": "rear.png",
+      "dimensions": {
+        "width": 1200,
+        "height": 900
+      },
+      "sceneMetrics": {
+        "colorBuckets": 22,
+        "colorEntropyBits": 1.38742,
+        "edgeDensity": 0.05017,
+        "dominantColorShare": 0.74191,
+        "transparentShare": 0,
+        "luminanceMean": 162.66132,
+        "luminanceP5": 101,
+        "luminanceP95": 182,
+        "luminanceContrast": 81
+      }
+    },
+    {
+      "id": "three-quarter-crop",
+      "image": "three-quarter-crop.png",
+      "dimensions": {
+        "width": 1000,
+        "height": 1020
+      },
+      "sceneMetrics": {
+        "colorBuckets": 33,
+        "colorEntropyBits": 2.27269,
+        "edgeDensity": 0.05395,
+        "dominantColorShare": 0.36531,
+        "transparentShare": 0,
+        "luminanceMean": 162.83977,
+        "luminanceP5": 109,
+        "luminanceP95": 186,
+        "luminanceContrast": 77
+      }
+    },
+    {
+      "id": "three-quarter",
+      "image": "three-quarter.png",
+      "dimensions": {
+        "width": 1200,
+        "height": 900
+      },
+      "sceneMetrics": {
+        "colorBuckets": 25,
+        "colorEntropyBits": 1.74672,
+        "edgeDensity": 0.05135,
+        "dominantColorShare": 0.57173,
+        "transparentShare": 0,
+        "luminanceMean": 167.16492,
+        "luminanceP5": 121,
+        "luminanceP95": 183,
+        "luminanceContrast": 62
+      }
+    },
+    {
+      "id": "underside-crop",
+      "image": "underside-crop.png",
+      "dimensions": {
+        "width": 1000,
+        "height": 1020
+      },
+      "sceneMetrics": {
+        "colorBuckets": 32,
+        "colorEntropyBits": 2.82372,
+        "edgeDensity": 0.07346,
+        "dominantColorShare": 0.30094,
+        "transparentShare": 0,
+        "luminanceMean": 117.19839,
+        "luminanceP5": 63,
+        "luminanceP95": 185,
+        "luminanceContrast": 122
+      }
+    },
+    {
+      "id": "underside",
+      "image": "underside.png",
+      "dimensions": {
+        "width": 1200,
+        "height": 900
+      },
+      "sceneMetrics": {
+        "colorBuckets": 28,
+        "colorEntropyBits": 1.38182,
+        "edgeDensity": 0.04759,
+        "dominantColorShare": 0.77947,
+        "transparentShare": 0,
+        "luminanceMean": 110.62321,
+        "luminanceP5": 69,
+        "luminanceP95": 175,
+        "luminanceContrast": 106
+      }
+    }
+  ]
+}
