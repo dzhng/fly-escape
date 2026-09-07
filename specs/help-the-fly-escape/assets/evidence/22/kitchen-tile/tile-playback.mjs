@@ -11,7 +11,12 @@ for(const level of [1,2]){
  await p.waitForFunction(()=>{const e=document.querySelector('[data-testid="playback-lab"]');return e?.dataset.worldState==='ready'&&e.dataset.playbackState==='playing'&&Number(e.dataset.cursorTick)>=10},undefined,{timeout:90000});
  await p.getByRole('button',{name:'Pause',exact:true}).click();
  const r=JSON.parse(await p.getByTestId('playback-report').textContent());samples.push({level,run,renderer:r.renderer,spec:r.spec});assert.equal(r.spec.flyCount,20);
- if(run===0)await p.screenshot({path:`/tmp/kitchen-tile-shots/playback-${level}.png`});
+ if(run===0){
+  await p.mouse.move(500,500);await p.mouse.wheel(0,7000);await p.waitForTimeout(250);
+  await p.mouse.down();await p.mouse.move(510,500,{steps:2});await p.mouse.up();
+  await p.mouse.move(1400,50);await p.waitForTimeout(250);
+  await p.screenshot({path:`/tmp/kitchen-tile-shots/playback-${level}.png`});
+ }
  await p.getByRole('button',{name:/Cancel attempt|Retry — edit setup/}).click();await p.waitForFunction(()=>document.querySelector('.run-setup')?.disabled===false);
  }
 }

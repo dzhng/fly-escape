@@ -1,0 +1,81 @@
+{
+  "server": "http://127.0.0.1:5322/",
+  "sourceCommit": "2b3d777",
+  "checks": [
+    "52 renderer tests",
+    "2 asset tests",
+    "TypeScript",
+    "production web build",
+    "production asset-lab build",
+    "both static houses setup and two playback/cancel cycles each"
+  ],
+  "pixels": [
+    {
+      "image": "after-1-whole.png",
+      "canvasBox": [
+        24,
+        138,
+        1086,
+        980
+      ],
+      "changedFromReviewed": 463189,
+      "changedFromWood": 563967
+    },
+    {
+      "image": "after-1-kitchen.png",
+      "canvasBox": [
+        24,
+        138,
+        1086,
+        980
+      ],
+      "changedFromReviewed": 307008,
+      "changedFromWood": 527882
+    },
+    {
+      "image": "after-1-threshold.png",
+      "canvasBox": [
+        24,
+        138,
+        1086,
+        980
+      ],
+      "changedFromReviewed": 3996,
+      "changedFromWood": 428452
+    },
+    {
+      "image": "after-2-whole.png",
+      "canvasBox": [
+        24,
+        138,
+        1086,
+        980
+      ],
+      "changedFromReviewed": 549659,
+      "changedFromWood": 582803
+    },
+    {
+      "image": "after-2-kitchen.png",
+      "canvasBox": [
+        24,
+        138,
+        1086,
+        980
+      ],
+      "changedFromReviewed": 340415,
+      "changedFromWood": 528274
+    },
+    {
+      "image": "after-2-threshold.png",
+      "canvasBox": [
+        24,
+        138,
+        1086,
+        980
+      ],
+      "changedFromReviewed": 588,
+      "changedFromWood": 357811
+    }
+  ],
+  "note": "Whole-canvas counts include animated exterior and input-timing differences; no pixel-equivalence claim. Setup capture waits for enabled Release, which includes world asset readiness."
+}
