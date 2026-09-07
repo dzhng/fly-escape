@@ -9,8 +9,10 @@ Native geometry, material appearance and visibility have separate acceptance gat
 The [potted plant study](plant/README.md) is a prepared appearance proposal with unresolved foliage contact ownership; it is not a catalogue entry.
 
 The [closed window study](window/README.md) preserves the room-scale fixture's
-native dimensions; wall installation, glass and daylight remain separate gates.
+native dimensions; installed materials and closed panes remain separate from final glass/daylight acceptance.
 
-The [wall sconce](sconce/README.md) is a prepared household fixture, separate from the gameplay floor-light cue.
+The [wall sconce](sconce/README.md) is installed as household decoration, separate from the gameplay floor-light cue.
 
 The [material finishing pass](finish-materials.py) applies production surfaces after shape authoring and saves the exported GLBs and individual blend files. Imported materials remain authoritative in the browser; semantic colors only serve temporary geometry while assets load. Floor UVs use a physical texture scale and are expanded with room dimensions, while textures remain shared. [Oak texture provenance](textures/wood-floor/source.json) records the local Poly Haven CC0 inputs. Fabric detail, plant/fruit surfaces and final lighting remain in progress.
+
+The [open doorway](doorway/README.md) frames an ordinary clear passage beneath a lintel. Its posts sit outside the core wall gap, so dressing does not narrow traversal. The [wall-mounted plant](wall-plant/README.md) adds greenery above floor circulation space.

@@ -1,0 +1,11 @@
+# Domestic room proportions and doorways
+
+The user requested realistically proportioned rooms and ordinary doorways, pointing out that the sofa filled its room. The sofa retains its native 1.9 m width. Both living rooms now measure 4.8 × 4.5 m, with separate kitchens, 1.5 m wide halls and side rooms. The first house has five rooms; the second has six and a larger footprint. Furniture remains at native dimensions. Side rooms include dead ends, and the first escape route is short rather than requiring traversal of every room.
+
+Core wall gaps are 0.9 m wide. Blender-authored posts sit outside those gaps, with a 2.05 m clear height and lintel rising to the 2.5 m wall height. Interior surrounds fade with the cutaway presentation, keeping door shapes visible without hiding the floor. The smaller Start marker reduces obstruction.
+
+[Before](before.png), [first house](level-1.png), [second house](level-2.png). Their byte hashes differ. Both actual campaign scenes load, release 20 mixed flies, produce recorded playback and return to setup without browser errors. TypeScript, 41 renderer checks and the web production build pass. The browser smoke uses an explicit first-star fixture to open level two; it does not claim earned progression. Native topology validation and complete 20-brain attempts pass on each new layout.
+
+The one-seed diagnostic reports here give first-level 4 reference escapes versus 3 empty, and second-level 0 versus 0. These prove simulation completion, not puzzle acceptance. Previous narrow-map calibration is superseded; useful placement effects, reliable solutions and food dependence still need work on the new layouts. No neural tuning or fan strength change was adopted.
+
+Fresh critique finds no obvious disconnected doorposts, floating frames or furniture clipping. It confirms readable Start markers and preserved floor visibility. Remaining findings: sparse furniture weakens room identity, several doorframes still overlap in projection, and the exit is a marked opening rather than a recognizable open window. The last issue needs an actual window/escape presentation; final furniture and illumination work remain open. Proper physical room and door dimensions are accepted, not final composed realism.

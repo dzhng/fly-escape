@@ -25,6 +25,16 @@ export class RoomDetails {
   private readonly attachments: { model: THREE.Group; inward: THREE.Vector3 }[] = [];
   constructor(details: readonly RoomDetail[], sources: ReadonlyMap<RoomDetail["kind"], THREE.Group>) {
     this.root.name = "AuthoredRoomDetails";
+    // Interior door surrounds remain legible without blocking the cutaway rooms behind them.
+    sources.get("doorway")?.traverse(object => {
+      if (!(object instanceof THREE.Mesh)) return;
+      object.castShadow = false;
+      for (const material of Array.isArray(object.material) ? object.material : [object.material]) {
+        material.transparent = true;
+        material.opacity = 0.28;
+        material.depthWrite = false;
+      }
+    });
     for (const detail of details) {
       const mount = new THREE.Group();
       mount.position.fromArray(detail.position);

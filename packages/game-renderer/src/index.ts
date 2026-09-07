@@ -374,16 +374,16 @@ export class WorldView {
       new THREE.LineBasicMaterial({ color: "#b8d2d7" }),
     );
     const canvas = document.createElement("canvas");
-    canvas.width = 256;
+    canvas.width = 160;
     canvas.height = 64;
     const context = canvas.getContext("2d")!;
     context.fillStyle = "#203944";
-    context.fillRect(0, 0, 256, 64);
+    context.fillRect(0, 0, 160, 64);
     context.fillStyle = "#f4f7f5";
     context.font = "bold 28px sans-serif";
     context.textAlign = "center";
     context.textBaseline = "middle";
-    context.fillText("Flies start here", 128, 32);
+    context.fillText("Start", 80, 32);
     const texture = new THREE.CanvasTexture(canvas);
     texture.colorSpace = THREE.SRGBColorSpace;
     const label = new THREE.Sprite(
@@ -396,7 +396,7 @@ export class WorldView {
     );
     label.center.set(0.5, 0);
     label.position.set((min.x + max.x) / 2, 0.08, min.z);
-    label.scale.set(0.13, 0.0325, 1);
+    label.scale.set(0.05, 0.02, 1);
     label.renderOrder = 10;
     this.spawnArea.add(label);
     this.scene.add(this.spawnArea);

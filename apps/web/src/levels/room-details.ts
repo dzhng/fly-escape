@@ -1,19 +1,26 @@
 import type { RoomDetail } from "@fly-escape/game-renderer";
 
-// Back faces meet the 12cm wall kit. Windows are closed wall attachments, separate from each level's escape opening.
-const corridor: readonly RoomDetail[] = [
-  { kind: "window", position: [0.8, 1.05, 0.10], quarterTurns: 0 },
-  { kind: "sconce", position: [2.4, 1.45, 0.14], quarterTurns: 0 },
-  { kind: "window", position: [4.0, 1.05, 0.10], quarterTurns: 0 },
-  { kind: "sconce", position: [5.6, 1.45, 0.14], quarterTurns: 0 },
+// Wall attachments preserve native dimensions and leave furniture and doors clear.
+const shared: readonly RoomDetail[] = [
+  { kind: "window", position: [2.2, 1.0, 0.10], quarterTurns: 0 },
+  { kind: "window", position: [6.6, 1.0, 0.10], quarterTurns: 0 },
+  { kind: "sconce", position: [3.8, 1.45, 0.14], quarterTurns: 0 },
+  { kind: "sconce", position: [5.2, 1.45, 0.14], quarterTurns: 0 },
+  { kind: "plant", position: [0.25, 1.05, 3.4], quarterTurns: 1 },
+];
+const sharedDoors: readonly RoomDetail[] = [
+  { kind: "doorway", position: [4.8, 0, 2.55], quarterTurns: 1 },
+  { kind: "doorway", position: [2.25, 0, 4.5], quarterTurns: 0 },
+  { kind: "doorway", position: [6.45, 0, 4.5], quarterTurns: 0 },
+  { kind: "doorway", position: [1.65, 0, 6], quarterTurns: 0 },
 ];
 export const openWindowDetails: readonly RoomDetail[] = [
-  ...corridor,
-  { kind: "plant", position: [0.25, 1.05, 2.45], quarterTurns: 1 },
+  ...shared, ...sharedDoors,
+  { kind: "doorway", position: [6.45, 0, 6], quarterTurns: 0 },
 ];
 export const turnTheCornerDetails: readonly RoomDetail[] = [
-  ...corridor,
-  { kind: "plant", position: [0.25, 1.05, 2.45], quarterTurns: 1 },
-  { kind: "plant", position: [3.45, 1.05, 5.45], quarterTurns: 1 },
-  { kind: "sconce", position: [3.34, 1.45, 4.5], quarterTurns: 1 },
+  ...shared, ...sharedDoors,
+  { kind: "doorway", position: [4.8, 0, 6], quarterTurns: 0 },
+  { kind: "doorway", position: [7.35, 0, 6], quarterTurns: 0 },
+  { kind: "sconce", position: [0.14, 1.45, 7.1], quarterTurns: 1 },
 ];
