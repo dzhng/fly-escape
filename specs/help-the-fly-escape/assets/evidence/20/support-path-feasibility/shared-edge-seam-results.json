@@ -1,0 +1,279 @@
+{
+  "scope": "Singleton interval signs on declared rounded-mm geometry; floating SAT identifies candidate features, not a continuous edge acceptance. Witness tie listing uses1e-8mm only for diagnostics, never separation/ownership tolerance.",
+  "scratchSource": "/tmp/fly-rotation-probe/src/bin/chart_boundary.rs",
+  "scratchSourceSha256": "27ec622b811db225903dcc319bebdc42c25ea4406375cf8a477c2766ce2fcb69",
+  "sharedMeshEdge": [
+    122,
+    82
+  ],
+  "incomingFeature": {
+    "triangle": 201,
+    "vertex": 26
+  },
+  "outgoingFeature": {
+    "hullEdge": 20,
+    "vertices": [
+      16,
+      26
+    ],
+    "planes": [
+      3,
+      86
+    ],
+    "triangles": [
+      201,
+      202
+    ]
+  },
+  "cases": [
+    {
+      "heading": 0.704,
+      "bestAxis": {
+        "axis": "plane-edge:24:0",
+        "separationLowerMm": 5.88657740378207e-06,
+        "separationUpperMm": 5.886579973131161e-06
+      },
+      "triangle201SharedEdgeMargin": [
+        0.018226276552070427,
+        0.01822627655533893
+      ],
+      "triangle202MinimumFaceMargin": -23.388453531380634,
+      "satUpperFeatures": [
+        {
+          "triangle": 201,
+          "upperMm": 75.34525434759946,
+          "feature": "triangle:1",
+          "bodyWitnessIdsDiagnostic": [
+            26
+          ],
+          "normalY": 0.8730502233702256
+        },
+        {
+          "triangle": 202,
+          "upperMm": 75.3452475944816,
+          "feature": "edge:24:0:-1",
+          "bodyWitnessIdsDiagnostic": [
+            24,
+            26
+          ],
+          "normalY": 0.8716830977158543
+        }
+      ],
+      "coreMinusChartMm": -1.4210854715202004e-14
+    },
+    {
+      "heading": 0.7040894008,
+      "bestAxis": {
+        "axis": "plane-edge:24:0",
+        "separationLowerMm": 8.260885612185596e-12,
+        "separationUpperMm": 1.0891675701816116e-11
+      },
+      "triangle201SharedEdgeMargin": [
+        2.959457390261377e-08,
+        2.959791345347185e-08
+      ],
+      "triangle202MinimumFaceMargin": -23.36511139819518,
+      "satUpperFeatures": [
+        {
+          "triangle": 201,
+          "upperMm": 75.3452504947215,
+          "feature": "triangle:1",
+          "bodyWitnessIdsDiagnostic": [
+            26
+          ],
+          "normalY": 0.8730502233702256
+        },
+        {
+          "triangle": 202,
+          "upperMm": 75.34525049471051,
+          "feature": "edge:24:0:-1",
+          "bodyWitnessIdsDiagnostic": [
+            24,
+            26
+          ],
+          "normalY": 0.8716807535009852
+        }
+      ],
+      "coreMinusChartMm": 1.8047785488306545e-12
+    },
+    {
+      "heading": 0.7040894009,
+      "bestAxis": {
+        "axis": "plane-edge:24:0",
+        "separationLowerMm": 1.7095017314103203e-12,
+        "separationUpperMm": 4.289109134496616e-12
+      },
+      "triangle201SharedEdgeMargin": [
+        9.207568041347257e-09,
+        9.210836537931756e-09
+      ],
+      "triangle202MinimumFaceMargin": -23.365111372085632,
+      "satUpperFeatures": [
+        {
+          "triangle": 201,
+          "upperMm": 75.34525049471718,
+          "feature": "triangle:1",
+          "bodyWitnessIdsDiagnostic": [
+            26
+          ],
+          "normalY": 0.8730502233702256
+        },
+        {
+          "triangle": 202,
+          "upperMm": 75.34525049471375,
+          "feature": "edge:24:0:-1",
+          "bodyWitnessIdsDiagnostic": [
+            24,
+            26
+          ],
+          "normalY": 0.8716807534983618
+        }
+      ],
+      "coreMinusChartMm": 7.958078640513122e-13
+    },
+    {
+      "heading": 0.704089401,
+      "bestAxis": {
+        "axis": "plane-edge:20:0",
+        "separationLowerMm": 1.850126935149873e-12,
+        "separationUpperMm": 4.486557817738511e-12
+      },
+      "triangle201SharedEdgeMargin": [
+        -1.117949466333812e-08,
+        -1.117614090162533e-08
+      ],
+      "triangle202MinimumFaceMargin": -23.365111345976086,
+      "satUpperFeatures": [
+        {
+          "triangle": 201,
+          "upperMm": 75.34525049470925,
+          "feature": "edge:20:1:1",
+          "bodyWitnessIdsDiagnostic": [
+            16,
+            26
+          ],
+          "normalY": 0.8732735664833604
+        },
+        {
+          "triangle": 202,
+          "upperMm": 75.34525049470925,
+          "feature": "edge:20:0:-1",
+          "bodyWitnessIdsDiagnostic": [
+            16,
+            26
+          ],
+          "normalY": 0.8732735664833604
+        }
+      ],
+      "coreMinusChartMm": 4.831690603168681e-12
+    },
+    {
+      "heading": 0.7040895,
+      "bestAxis": {
+        "axis": "plane-edge:20:0",
+        "separationLowerMm": 5.716857532435467e-09,
+        "separationUpperMm": 5.719551779781427e-09
+      },
+      "triangle201SharedEdgeMargin": [
+        -2.019434305111645e-05,
+        -2.019433959787875e-05
+      ],
+      "triangle202MinimumFaceMargin": -23.365085497540477,
+      "satUpperFeatures": [
+        {
+          "triangle": 201,
+          "upperMm": 75.34525048389388,
+          "feature": "edge:20:1:1",
+          "bodyWitnessIdsDiagnostic": [
+            16,
+            26
+          ],
+          "normalY": 0.8732735668303697
+        },
+        {
+          "triangle": 202,
+          "upperMm": 75.34525048389388,
+          "feature": "edge:20:0:-1",
+          "bodyWitnessIdsDiagnostic": [
+            16,
+            26
+          ],
+          "normalY": 0.8732735668303697
+        }
+      ],
+      "coreMinusChartMm": -6.283187303779414e-09
+    },
+    {
+      "heading": 0.705,
+      "bestAxis": {
+        "axis": "plane-edge:20:0",
+        "separationLowerMm": 5.184281723735405e-05,
+        "separationUpperMm": 5.184281982750295e-05
+      },
+      "triangle201SharedEdgeMargin": [
+        -0.18563627742469183,
+        -0.18563627742142327
+      ],
+      "triangle202MinimumFaceMargin": -23.127358612278837,
+      "satUpperFeatures": [
+        {
+          "triangle": 201,
+          "upperMm": 75.3451514291932,
+          "feature": "edge:20:1:1",
+          "bodyWitnessIdsDiagnostic": [
+            16,
+            26
+          ],
+          "normalY": 0.8732766722709614
+        },
+        {
+          "triangle": 202,
+          "upperMm": 75.3451514291932,
+          "feature": "edge:20:0:-1",
+          "bodyWitnessIdsDiagnostic": [
+            16,
+            26
+          ],
+          "normalY": 0.8732766722709614
+        }
+      ],
+      "coreMinusChartMm": -5.9365857552506895e-05
+    },
+    {
+      "heading": 0.71,
+      "bestAxis": {
+        "axis": "plane-edge:20:0",
+        "separationLowerMm": 0.00031071112060459334,
+        "separationUpperMm": 0.00031071112318305027
+      },
+      "triangle201SharedEdgeMargin": [
+        -1.2046587002272704,
+        -1.2046587002238878
+      ],
+      "triangle202MinimumFaceMargin": -21.8219059360788,
+      "satUpperFeatures": [
+        {
+          "triangle": 201,
+          "upperMm": 75.34462222151184,
+          "feature": "edge:20:1:1",
+          "bodyWitnessIdsDiagnostic": [
+            16,
+            26
+          ],
+          "normalY": 0.8732906611332366
+        },
+        {
+          "triangle": 202,
+          "upperMm": 75.34462222151184,
+          "feature": "edge:20:0:-1",
+          "bodyWitnessIdsDiagnostic": [
+            16,
+            26
+          ],
+          "normalY": 0.8732906611332366
+        }
+      ],
+      "coreMinusChartMm": -0.000355793478263422
+    }
+  ]
+}

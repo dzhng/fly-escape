@@ -1,0 +1,284 @@
+{
+  "scope": "Fixed XZ=(20,-3)mm, pinned triangle201 face/vertex26 and hull-edge20/mesh-edge[82,122] group. Height=min(face,edge), branch-conditioned witness domains and both owning-triangle separation. Rounded-mm geometry and declared normalized axis-angle path; endpoint conversion and exact caller-root preservation not certified. Finite fixture denominators remain positive; near-zero denominator inputs can assert and are not supported. GJK only proposes axes; interval projections own other-triangle exclusion.",
+  "cases": [
+    {
+      "aabbPruned": 6643,
+      "acceptedIntervals": 4,
+      "activeVertices": [
+        26
+      ],
+      "axes": 3824,
+      "certifiedPrefix": 1.0,
+      "closestPointProposals": 35,
+      "diagnosticSamples": 101,
+      "dominatedDomainTests": 0,
+      "endpointEdgeData": [
+        {
+          "edgeDenominator": [
+            0.8764040078983059,
+            0.8764040078984106
+          ],
+          "edgeMinusFaceMm": [
+            6.215273486986915e-07,
+            6.215460786052064e-07
+          ],
+          "hullSegmentParameter": [
+            1.000105210628334,
+            1.0001052106285202
+          ],
+          "meshSegmentParameter": [
+            0.013255504743776216,
+            0.013255504743788601
+          ]
+        },
+        {
+          "edgeDenominator": [
+            0.8764043042500884,
+            0.8764043042501837
+          ],
+          "edgeMinusFaceMm": [
+            -7.005454421005198e-07,
+            -7.005283606531519e-07
+          ],
+          "hullSegmentParameter": [
+            0.9998813808836479,
+            0.9998813808838168
+          ],
+          "meshSegmentParameter": [
+            0.013256218184857015,
+            0.013256218184867493
+          ]
+        }
+      ],
+      "faceDenominatorInterval": [
+        15.843102840743484,
+        15.843102840743503
+      ],
+      "initialRootResidualMm": 0.0,
+      "maxSlerpRotationResidualMm": 2.8435583831733384e-15,
+      "maxSupportErrorMm": 6.642338234996714e-09,
+      "name": "seam-short",
+      "nodes": 7,
+      "oracleNone": 0,
+      "peakStack": 3,
+      "projections": 980377,
+      "reason": "",
+      "status": "complete-conditional-chart",
+      "theta": 1.9999999999798228e-05,
+      "triangle": 201,
+      "triangleVisits": 6678,
+      "unacceptedBeyondPrefixDiagnostics": [],
+      "unresolvedInterval": null,
+      "vertex": 26,
+      "runs": 20,
+      "meanCertificateMs": 5.8204062500000004,
+      "minCertificateMs": 5.692625,
+      "maxCertificateMs": 6.121666
+    },
+    {
+      "aabbPruned": 17897,
+      "acceptedIntervals": 10,
+      "activeVertices": [
+        26
+      ],
+      "axes": 19532,
+      "certifiedPrefix": 0.0390625,
+      "closestPointProposals": 110,
+      "diagnosticSamples": 101,
+      "dominatedDomainTests": 0,
+      "endpointEdgeData": [
+        {
+          "edgeDenominator": [
+            0.8764028189855773,
+            0.8764028189856818
+          ],
+          "edgeMinusFaceMm": [
+            5.917822150536266e-06,
+            5.917840880442783e-06
+          ],
+          "hullSegmentParameter": [
+            1.0010005352734277,
+            1.001000535273614
+          ],
+          "meshSegmentParameter": [
+            0.013252649674865936,
+            0.01325264967487833
+          ]
+        },
+        {
+          "edgeDenominator": [
+            0.8764172772469809,
+            0.8764172772470762
+          ],
+          "edgeMinusFaceMm": [
+            -5.936586607901973e-05,
+            -5.9365849011783205e-05
+          ],
+          "hullSegmentParameter": [
+            0.9898096257357172,
+            0.989809625735885
+          ],
+          "meshSegmentParameter": [
+            0.01328818802023949,
+            0.013288188020249881
+          ]
+        }
+      ],
+      "faceDenominatorInterval": [
+        15.843102840743484,
+        15.843102840743503
+      ],
+      "initialRootResidualMm": 1.4210854715202004e-14,
+      "maxSlerpRotationResidualMm": 2.8457249041605285e-15,
+      "maxSupportErrorMm": 6.252776074688882e-13,
+      "name": "seam-wide",
+      "nodes": 26,
+      "oracleNone": 0,
+      "peakStack": 9,
+      "projections": 4999931,
+      "reason": "work-budget",
+      "status": "unresolved",
+      "theta": 0.000999999999999997,
+      "triangle": 201,
+      "triangleVisits": 18007,
+      "unacceptedBeyondPrefixDiagnostics": [
+        {
+          "fraction": 0.0390625,
+          "queryMinusChartMm": 2.842170943040401e-14
+        },
+        {
+          "fraction": 0.03906251,
+          "queryMinusChartMm": 0.0
+        },
+        {
+          "fraction": 0.0390635,
+          "queryMinusChartMm": 4.263256414560601e-14
+        },
+        {
+          "fraction": 0.0391625,
+          "queryMinusChartMm": 2.8421709430404007e-13
+        },
+        {
+          "fraction": 0.0400625,
+          "queryMinusChartMm": 2.7000623958883807e-13
+        }
+      ],
+      "unresolvedInterval": [
+        0.0390625,
+        0.046875
+      ],
+      "vertex": 26,
+      "runs": 20,
+      "meanCertificateMs": 27.99057705,
+      "minCertificateMs": 27.682333,
+      "maxCertificateMs": 28.373834000000002
+    },
+    {
+      "aabbPruned": 14717,
+      "acceptedIntervals": 8,
+      "activeVertices": [
+        26
+      ],
+      "axes": 19538,
+      "certifiedPrefix": 0.0078125,
+      "closestPointProposals": 92,
+      "diagnosticSamples": 101,
+      "dominatedDomainTests": 0,
+      "endpointEdgeData": [
+        {
+          "edgeDenominator": [
+            0.8764172772469754,
+            0.8764172772470807
+          ],
+          "edgeMinusFaceMm": [
+            -5.936586694588187e-05,
+            -5.936584813071021e-05
+          ],
+          "hullSegmentParameter": [
+            0.9898096257357073,
+            0.9898096257358938
+          ],
+          "meshSegmentParameter": [
+            0.013288188020238241,
+            0.01328818802025052
+          ]
+        },
+        {
+          "edgeDenominator": [
+            0.876476422037425,
+            0.876476422037522
+          ],
+          "edgeMinusFaceMm": [
+            -0.00035579348701730856,
+            -0.00035579346963743314
+          ],
+          "hullSegmentParameter": [
+            0.9338755613676929,
+            0.9338755613678581
+          ],
+          "meshSegmentParameter": [
+            0.013460990440998993,
+            0.01346099044100909
+          ]
+        }
+      ],
+      "faceDenominatorInterval": [
+        15.843102840743484,
+        15.843102840743503
+      ],
+      "initialRootResidualMm": 1.4210854715202004e-14,
+      "maxSlerpRotationResidualMm": 2.817430187029739e-15,
+      "maxSupportErrorMm": 5.059064278611913e-12,
+      "name": "edge-after",
+      "nodes": 24,
+      "oracleNone": 0,
+      "peakStack": 11,
+      "projections": 4999959,
+      "reason": "work-budget",
+      "status": "unresolved",
+      "theta": 0.0049999999999999455,
+      "triangle": 201,
+      "triangleVisits": 14809,
+      "unacceptedBeyondPrefixDiagnostics": [
+        {
+          "fraction": 0.0078125,
+          "queryMinusChartMm": 2.842170943040401e-14
+        },
+        {
+          "fraction": 0.00781251,
+          "queryMinusChartMm": 1.4210854715202004e-14
+        },
+        {
+          "fraction": 0.0078135,
+          "queryMinusChartMm": 1.4210854715202004e-14
+        },
+        {
+          "fraction": 0.0079125,
+          "queryMinusChartMm": 0.0
+        },
+        {
+          "fraction": 0.008812500000000001,
+          "queryMinusChartMm": 0.0
+        }
+      ],
+      "unresolvedInterval": [
+        0.0078125,
+        0.01171875
+      ],
+      "vertex": 26,
+      "runs": 20,
+      "meanCertificateMs": 27.65520835,
+      "minCertificateMs": 27.389833,
+      "maxCertificateMs": 28.084625
+    }
+  ],
+  "scratchSource": "/tmp/fly-rotation-probe/src/bin/chart_face_edge.rs",
+  "scratchSourceSha256": "eac833f34fa7325211e86874b2a63f4fa0c1890b535046d0466a89ba4eed7bb7",
+  "budgets": {
+    "nodes": 2048,
+    "depth": 32,
+    "projections": 5000000,
+    "closestPointProposals": 8192
+  },
+  "timingScope": "20 native release repetitions of certification; excludes immutable preparation, initial feature selection and diagnostic samples. No browser measurement."
+}
