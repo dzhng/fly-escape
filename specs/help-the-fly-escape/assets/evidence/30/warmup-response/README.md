@@ -9,3 +9,9 @@ This establishes warmup as a useful candidate at current sampling, not the sole 
 The next gate is a paired pilot with the actual20-fly campaign owner, cold versus warm initialization, and predeclared valid apple/vinegar placements. Keep all results, including errors and negative effects. Do not ship a warmup or simplified controller based on Chamber evidence alone.
 
 `odor_response_spike.rs` is the preserved temporary example; compile in the workspace using its lockfile and pass the prepared brain directory plus an output JSON path. `evidence.json` contains source hashes, exact conditions and per-seed results; `summary-table.txt` is secondary presentation.
+
+## Historical audit triage
+
+The [Claude audit](claude-history-audit.md) is an independent proposal, not an accepted causal account. Root reproduced its direct graph-weight table: excitatory input groups have3263 signed positive weight into turning readouts, inhibitory groups470 absolute negative weight. That structural imbalance does not prove why behavior changes. Warmup mediation is supported by the matched experiment here; attributing it to the wiring ratio remains speculative.
+
+Rejected leads: a claimed noisy anatomical detector was contradicted by the calibrated slice27 evidence; larger spatial contrast does not imply larger injected current under the categorical adapter; the existing time-resolved DM1 analysis already includes a negative directional spike-pattern comparison. Current campaign levels have no exit cue, and normal campaign starts pass their own complete input rather than the diagnostic `swarm_request` helper, so neither explains these campaign runs. The audit's recommendation to repeat warmup is satisfied by this experiment. Actual campaign effects remain the next test.
