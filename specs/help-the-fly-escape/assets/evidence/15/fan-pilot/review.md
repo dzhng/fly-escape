@@ -21,3 +21,7 @@ The temporary example was restored exactly before commit. Core source hashes and
 ## Frozen validation in progress
 
 The positive pilot met both median comparisons. Parent authorized freezing this exact candidate and all 30 tuning pairs before any held-out run. frozen-candidate.json differs only by frozen=true. The explicit gate requires 30 complete tuning pairs, at least 27 one-star reference attempts, and median reference benefit of at least four escapes against both reversed fans and no fans. No further content tuning is allowed during either batch.
+
+## Full tuning gate passed
+
+All 30 tuning seeds (1000–1029) completed all three arms. Reference earned at least one star in 30/30 attempts, with median 10 escapes. Median paired benefit is +8.5 over reversed fans and +5 over identical scents without fans. Both four-escape comparisons and the 27/30 reliability gate pass. Exact frozen content, runtime build and probe identities are retained in tuning-gate.json and the full tuning report. The disjoint held-out batch may now run without changing content or executable. This is tuning acceptance only, not campaign or release acceptance.
