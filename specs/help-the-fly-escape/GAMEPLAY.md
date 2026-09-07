@@ -22,6 +22,14 @@ All placement tuning, exact layouts, tool counts, time budgets and star numbers 
 
 Progress uses localStorage: best stars per level, preferences and last editable placements. Unlocks derive from best stars. Store completed results once per attempt; failures to persist do not destroy the current playable session. No accounts, migration, cross-device saves or persistent replay library. Reset progress is an explicit player action. Reloading ends an unfinished attempt.
 
+## Visual target: a warm, lived-in house
+
+The user explicitly requests photorealistic rooms and selected a warm, lived-in house. Final presentation needs realistic natural colors and materials, daylight and household lighting, furniture, plants, and recognizable three-dimensional food such as apples and bananas. Empty blue-grey rooms, generic block furniture and nearly flat source markers are intermediate foundations, not the final art target.
+
+Establish the look in one furnished room using Blender-authored assets and the actual browser renderer before expanding it through the campaign. Judge realism at the default close/follow camera and further zoom, as well as room readability at Overview. Keep the selected fly, its yellow ring and white trail readable; do not regain contrast by stripping rooms of their real colors and furnishings.
+
+Furniture that occupies traversable floor must agree with authoritative collision and sensory geometry. Wall-mounted decoration and background detail must not create false solid passageways. Proper food models require a coherent visible contact surface and feeding presentation; the earlier near-flush food contract must be revisited rather than stretching a flat marker into an apple. Preserve graph-driven behavior and the browser-only runtime while resolving these seams explicitly. Any geometry or sensory changes invalidate the affected level's final validation; retain prior bare-room evaluations as calibration evidence.
+
 ## Five authored levels
 
 Names, themes and the 6→9 room progression below are planner starting points, delegated to rename/tune. The first five-room count and five-level total are fixed user requirements; subsequent counts must increase.
