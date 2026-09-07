@@ -14,9 +14,10 @@ try {
     const {FrameArchive} = await import(`${root}/record.ts`);
     const info = await new Promise((resolve,reject)=> {
       const client = new BrainClient(reply=> {
-        if(reply.type==='lifecycleReady') {client.dispose();resolve(reply.info);}
-        if(reply.type==='error') {client.dispose();reject(Error(reply.message));}
+        if(reply.type==='lifecycleReady') {clearTimeout(timeout);client.dispose();resolve(reply.info);}
+        if(reply.type==='error') {clearTimeout(timeout);client.dispose();reject(Error(reply.message));}
       });
+      const timeout=setTimeout(()=>{client.dispose();reject(Error('Lifecycle fixture timed out after 30 seconds'));},30_000);
       client.startLifecycle(6,'mealThenStarvation');
     });
     const arms=[];
@@ -25,17 +26,22 @@ try {
       level.bodyConfig.feedingRate=feedingRate;
       level.spawn.states=Array.from({length:count},()=>structuredClone(info.level.spawn.states[0]));
       const input={attemptId:`feeding-${feedingRate}`,rootSeed:'6',flyCount:count,level,tuning:{cues:[],tasteGain:1,silencedNeurons:[]},placements:[]};
-      const arm = await new Promise(resolve=> {
+      const arm = await new Promise((resolve,reject)=> {
         let archive,ready;
         const client = new AttemptClient(reply=> {
           if(reply.type==='ready') {ready=reply.info;archive=new FrameArchive(ready.spec,ready.recordLayout,ready.archiveBytes,ready.initialBodies);}
           if(reply.type==='frames') archive.append(reply.chunk);
           if(reply.type==='error' || reply.type==='complete') {
+            clearTimeout(timeout);
             const frames=[];
             if(archive) for(let tick=1;tick<=archive.computedTick;tick++) frames.push(archive.frame(tick));
             client.dispose();resolve({input,ready,frames,error:reply.type==='error'?reply.message:null});
           }
         });
+        const timeout=setTimeout(()=>{
+          client.dispose();
+          reject(Error(`${input.attemptId} timed out after 120 seconds at recorded tick ${archive?.computedTick ?? 0}`));
+        },120_000);
         client.start(input);
       });
       arms.push(arm);
@@ -79,6 +85,7 @@ try {
     }
     rows.push({flyId:id,enabled:a,disabled:b,lifetimeDeltaTicks:a.terminal.tick-b.terminal.tick});
     if(a.starts.length) {assert.ok(a.gain>0);assert.ok(a.terminal.tick>b.terminal.tick);}
+    else {assert.equal(a.gain,0);assert.equal(a.terminal.tick,b.terminal.tick);}
   }
   assert.ok(rows[0].enabled.gain>0.5,'selected seed6 demonstrates an actual neural meal');
   const deltas=rows.map(r=>r.lifetimeDeltaTicks).sort((a,b)=>a-b);
