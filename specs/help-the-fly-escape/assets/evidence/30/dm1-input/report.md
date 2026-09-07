@@ -30,3 +30,13 @@ The bodies keep moving (~.787m path), yet end farther from the source on average
 Primary biological rationale: Semmelhack and Wang (2009), https://www.nature.com/articles/nature07983, supports testing DM1 receptor input. It does not calibrate this current gain, binary contrast detector, MaleCNS extraction or body decoder. The extraction retains only seed-touching edges, so success in a biological receptor-rescue experiment need not survive this graph/model. This is a diagnostic chamber result, not campaign acceptance.
 
 Recommendation: keep this as a negative receptor-substitution result. If further investigation is authorized, inspect directional transmission from the measured DM1 PNs to existing turning readouts before considering any new perturbation; no additional sweep was run.
+
+## Downstream transmission check
+
+The same historical core, seeds and inputs were repeated with additional observation of the existing turning and flight groups; no graph, gains, inputs, dynamics or decoder changes. Independent review compared 2,946 prior leaf values excluding elapsed time; all match exactly. The neural, graph, chamber and sensory implementation files are unchanged between the historical core and current root. `transmission.rs` and compressed `transmission.json.gz` preserve the additional measurements.
+
+Although the DM1 projection neurons increase spiking, the turning groups' paired spike-fraction changes all have descriptive intervals spanning zero. Their mean-voltage shifts are small; one left-group interval excludes zero, but the paired left/right difference still lacks reliable source-directed steering. This additional measurement does not locate a specific failed synapse, establish a biologically correct decoder, or justify retuning.
+
+Run `.venv/bin/python specs/help-the-fly-escape/assets/evidence/30/dm1-input/connectivity.py` from the repository root to print the graph check. `connectivity.py` reads the exact graph and probe groups; `connectivity.json` records directed reachability while deliberately ignoring signs and dynamics. Both DM1 projection neurons reach all 25 left and all 25 right turning readouts through two to four edges, with no direct edges. The problem is not complete topological disconnection. Reachability cannot establish effective neural transmission, so no missing-connection patch follows from this result.
+
+The unresolved question is functional transmission and decoding after the measured odor relays. Further observation may localize it, but the pending user decision about the strict model versus a labeled simplified model remains unchanged. Do not count this evidence as attraction, a campaign gate, or authorization to replace neural control.
