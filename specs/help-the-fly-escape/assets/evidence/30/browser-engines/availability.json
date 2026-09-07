@@ -1,0 +1,26 @@
+{
+  "firefox": {
+    "playwrightRevision": 1543,
+    "version": "155.0",
+    "installed": true
+  },
+  "webkit": {
+    "playwrightRevision": 2359,
+    "version": "26.6",
+    "installed": true,
+    "isSafari": false
+  },
+  "safari": {
+    "version": "26.4",
+    "driverVersion": "21624.1.16.11.4",
+    "installed": true,
+    "remoteAutomationEnabled": false
+  },
+  "expectedChromiumRevision1243Installed": false,
+  "olderChromiumRevisions": [
+    1223,
+    1228
+  ],
+  "chromeAppInstalled": true,
+  "installedBrowsersDuringTask": false
+}

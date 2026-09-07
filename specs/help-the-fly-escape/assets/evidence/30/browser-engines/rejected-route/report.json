@@ -1,0 +1,17 @@
+{
+  "engine": "firefox",
+  "url": "http://127.0.0.1:5322",
+  "checks": [],
+  "errors": [],
+  "console": [],
+  "models": [],
+  "version": "155.0",
+  "capabilities": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "webgpu": true,
+    "adapter": false
+  },
+  "passed": false,
+  "failure": "TimeoutError: page.waitForFunction: Timeout 60000ms exceeded.",
+  "bodyText": "Error response\n\nError code: 404\n\nMessage: File not found.\n\nError code explanation: 404 - Nothing matches the given URI."
+}
