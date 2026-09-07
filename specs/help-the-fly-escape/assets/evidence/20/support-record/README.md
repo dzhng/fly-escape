@@ -38,9 +38,43 @@ transferred buffers detach, hidden production stops within its existing credit
 bound, and cancellation/reentrant restart checks pass. This establishes actual
 transport integration, not curved physical motion or visual contact acceptance.
 The proportions workbench and motion-context capture also consume recorded
-orientation; fractional capture uses the shared client interpolation helper.
+orientation; fractional capture uses the shared renderer interpolation helper.
 
 Review: kept the existing packed-buffer owner; added no retained frame history,
 new dependency, compatibility reader, or parallel simulation. The archive-bound
 calculation includes the new values/state. The test that synthesizes flying
 modes now also clears food support to represent an actual airborne state.
+
+## Next bounded consumer experiment
+
+After the measured rotating face/edge seam, replace the isolated prototype's
+sample-time SLERP plus `support_at` reprojection with one core-owned motion
+representation. Stored start, planar displacement, canonical rotation parameters
+and retained contact formulas must describe the same path for body events and
+fractional replay. Construct rotation parameters once; do not prove agreement to
+a separate ideal trajectory that no consumer uses. Preserve the authoritative
+start and prevent numerical drift across successive segments.
+
+Independent numerical review distinguishes representation error from a geometric
+gap. A whole-interval bound on combined start, evaluator and playback conversion
+error may use the existing10nm contact precision once, expressed as displacement
+of hull points (including rotation error). Bit-identical floating-point results
+are unnecessary. Each stage does not receive a fresh allowance. Endpoint residuals
+alone do not prove that bound, and no size of rounding allowance permits a
+positive-width interval without valid contact witnesses or obstacle exclusion.
+This concerns CPU contact/pose evaluation; it is not a raster precision guarantee.
+
+Current playback in `apps/web/src/playback.tsx` reads endpoint frames and blends
+position plus renderer quaternion interpolation. `FrameArchive` owns transferred
+packed data, and Rust's record layout owns its128MiB bound. The diagnostic should
+replace supported-path sampling through these owners, not add another physics
+query in the renderer or rebuild recording independently.
+
+A local initialization probe of the current built `game_wasm` module loaded no
+graph/session:844,949module bytes,1,245,184initial memory bytes and5.55ms for one
+Bun initialization. This is feasibility evidence for a stateless core evaluator
+on the playback thread using the existing WASM boundary, not browser timing or
+a committed runtime loader. Neural work and path construction remain in the
+attempt Worker. Descriptor shape, archive bounds, main-thread evaluation cost
+and cancellation/replacement lifetime still need actual diagnostic measurements
+before implementation is selected. No production sampling changes in this note.
