@@ -14,11 +14,12 @@ preserved. Stage cameras, floor and light are excluded from `sofa.glb`.
 Both the authored scene and a fresh GLB import must match the catalog bounds
 within1e-6m. A mismatch fails authoring; the model is never stretched to pass.
 
-This is preparation only. Per-key production loading, authoritative furnishing
-occupancy, browser shape review and natural materials remain in20–22. Do not
-pass this native metre asset to the unit-solid loader or stretch it into a
-new occupancy footprint. [Preparation measurements and renders](../../../specs/help-the-fly-escape/assets/evidence/21/sofa-prepared/README.md)
-record the current limits.
+The production renderer loads this model by its catalogue identity on an existing
+solid. Do not stretch it into a new occupancy footprint. [Furnishing identity
+evidence](../../../specs/help-the-fly-escape/assets/evidence/20/furniture-identity/README.md)
+separates verified loading and occupancy from the remaining realistic-art gates.
+[Shape preparation](../../../specs/help-the-fly-escape/assets/evidence/21/sofa-prepared/README.md)
+retains the authoring measurements and renders.
 
 [Shared authoring validation](../authoring.py) owns native envelope checks and
 static GLB export/import cleanup for house assets.
