@@ -1,6 +1,6 @@
 # 15 — Level 1 is the tutorial
 
-Status: prior bare-room tuning and bounded WASM transfer pass as calibration evidence only. Final acceptance requires randomized starts (18), furnished geometry/contact and realistic art, followed by fresh tuning and held-out validation. Dependencies: 03,04,09,12,14,18 and the revised realism passes.
+Status: the furnished first house completes in the production browser with earned stars, replay, retry and actual second-level unlock. Final art/contact acceptance and fresh tuning/held-out validation remain open. Dependencies: 03,04,09,12,14,18 and the revised realism passes.
 
 ## Contract and seam
 
@@ -14,7 +14,7 @@ Open Window playable from fresh progress; topology diagram, reference/poor place
 
 ## Verification
 
-Meet GAMEPLAY.md campaign criteria on tuning and held-out seeds. Verify pantry is a genuine one-door dead end and main route has physical reachable exit. No tutorial screen. Complete Run→results→retry→replay. Whole-frame composition check uses previously accepted visual components, then fresh critique.
+Meet GAMEPLAY.md campaign criteria on tuning and held-out seeds. Verify side rooms include genuine one-door dead ends and main route has physical reachable exit. No tutorial screen. Complete Run→results→retry→replay. Whole-frame composition check uses previously accepted visual components, then fresh critique.
 
 Visual variable and crop: Integration of already accepted components; whole frame at default/follow and active UI states. First establish the revised realistic art in its own focused passes; this integration uses their accepted results. Defects return to their owning visual pass.
 
@@ -30,11 +30,11 @@ Human feedback that changes this slice: If the first puzzle is confusing or puni
 
 Must stay green: all accepted dependency contracts and their focused fixtures; neural motor ownership, real-data provenance, bounded work and the [global invariants](../README.md#standing-gates-and-ownership). Do not broaden testing without a new failure or changed consumer. Record evidence under `assets/evidence/15/` and update the README handoff before ending the pass. Unlisted material decisions require a spec update.
 
-## Frozen candidate validation
+## Superseded bare-room calibration
 
-Use the exact [frozen fan candidate](../assets/evidence/15/fan-pilot/frozen-candidate.json), not the rejected exploratory `assets/levels/OpenWindow.json`. The [pilot review](../assets/evidence/15/fan-pilot/review.md) records reference escapes 8/10/12, reversed-fan poor controls 0/0/2 and identical scents without fans 5/5/4. This supports full validation, not acceptance. Physical wind and odor advection already belong to the shared field/body contract; this is combined tool benefit, not isolated neural-foraging proof.
+Historical baseline: the [frozen fan candidate](../assets/evidence/15/fan-pilot/frozen-candidate.json). The [pilot review](../assets/evidence/15/fan-pilot/review.md) records reference escapes 8/10/12, reversed-fan poor controls 0/0/2 and identical scents without fans 5/5/4. This described the old bare-room validation and does not authorize reusing its content. Physical wind and odor advection already belong to the shared field/body contract; this is combined tool benefit, not isolated neural-foraging proof.
 
-Content, placements, three positive increasing star thresholds and disjoint seed sets are frozen. The full tuning set passes: all 30 reference attempts earn at least one star, median paired escape benefit is +8.5 versus reversed fans and +5 versus the same scents without fans. The held-out set completed against the identical content and executable: 30/30 reference star attempts and median paired +9.5 escapes versus poor. Both sets remain bare-room baseline evidence under the revised scope. Do not mutate the candidate between sets. A partial or single-set report cannot accept Level 1.
+The historical content, placements, star thresholds and seed sets were frozen. The full tuning set passes: all 30 reference attempts earn at least one star, median paired escape benefit is +8.5 versus reversed fans and +5 versus the same scents without fans. The held-out set completed against the identical content and executable: 30/30 reference star attempts and median paired +9.5 escapes versus poor. Both sets remain bare-room baseline evidence under the revised scope. New furnished content requires a new matching pair of frozen sets. A partial or single-set report cannot accept Level 1.
 
 The [WASM transfer check](../assets/evidence/15/fan-pilot/wasm/review.md) matches all nine native outcomes on the first three tuning seeds with the actual browser Worker and identical level, tuning and placement identities. Native and WASM build IDs remain distinct because the target participates in their identity. This check does not replace the production UI or performance gates.
 

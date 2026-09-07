@@ -1,6 +1,6 @@
 # 16 — A carefully designed second level
 
-Status: final content and integration pending Level 1 acceptance. A six-room topology candidate and an isolated campaign progression implementation are prepared; neither is accepted campaign content. Dependencies: 15.
+Status: both furnished houses and campaign progression are integrated. Second-level route tuning and meaningful food replenishment remain open; final acceptance depends on 15.
 
 ## Contract and seam
 
@@ -10,7 +10,9 @@ One additional LevelDef using the shared tool/geometry schema → two-level camp
 
 ## Implementation pickup
 
-After 15 passes, finalize the second level in the same authoritative content seam. Integrate the prepared selector and one-star unlock consumer from `codex/campaign-seam` (`/tmp/fly-campaign-ui`), whose frozen workflow and single-Worker evidence are banked at commit `1b073bc`. The existing progress store remains the owner of per-level stars and editable setups. Root still opens the integration fixture; rebase and verify the prepared implementation against accepted furnished content instead of rebuilding it. Do not create a second progress store or duplicate level geometry in TypeScript.
+The production registry and level files in `apps/web/src/` are authoritative. Earned first-level stars unlock the second level through the existing progress store; actual browser completion verifies that transition. Do not reintegrate the obsolete isolated campaign worktree.
+
+The current second house starts in the study and traverses the hall and kitchen. Ordinary door openings and native furnishings are settled enough for bounded route/food diagnostics. Timed wall sliding fixes the measured doorway stall; tune placements on current geometry, then freeze and run the campaign criteria. Food must be reachable and actually replenish life before a full food-energy comparison is useful.
 
 The [game contract](../GAMEPLAY.md) owns increasing room counts, tool eligibility, topology and food-dependence requirements.
 
@@ -36,13 +38,9 @@ Human feedback that changes this slice: Human difficulty feedback may reshape a 
 
 Must stay green: all accepted dependency contracts and their focused fixtures; neural motor ownership, real-data provenance, bounded work and the [global invariants](../README.md#standing-gates-and-ownership). Do not broaden testing without a new failure or changed consumer. Record evidence under `assets/evidence/16/` and update the README handoff before ending the pass. Unlisted material decisions require a spec update.
 
-## Prepared six-room greybox
-
-Prepare Turn the Corner with main route 1→2→3→4→6 and a straight-ahead, one-door dead end 5 at the fork in room 3. Inherit the frozen Level 1 body/tuning, spawn and duration; add one existing fan for the required bend. Reference and poor use the same legal placements with different junction/upper-route fan headings. Validate actual Geometry sweeps and wall-aware fan crossing, then inspect overview and junction through the existing renderer. Candidate and evidence stay under `assets/evidence/16/prepared/`; no neural calibration or acceptance batch before 15 acceptance.
-
 ## Generic native validation preparation
 
-The existing campaign probe now prepares to validate 5–9-room authored Geometry rather than a hardcoded first-level adjacency list. Shared openings are tested through body occupancy and sweep, independent of room array order; all rooms and spawns must connect to an exit with a clear outward body sweep. This is offline topology validation, never runtime steering. Explicit no-fans controls preserve reference scents. A separate diagnostic food-energy arm sets only the existing feedingRate to zero, preserving source/food placement, contact and taste configuration; later energy-dependent behavior may diverge. Per-fly body events/reserves and paired starvation medians distinguish missing replenishment from navigation. Detector-only modes cannot report seed-set acceptance. A full frozen food-energy run retains its reference/poor placement gate and reports a separate food-energy gate requiring higher median escapes and lower median starvation than the no-replenishment arm, with paired medians retained as diagnostics. No neural batches run until level 1 acceptance.
+The existing campaign probe now prepares to validate 5–9-room authored Geometry rather than a hardcoded first-level adjacency list. Shared openings are tested through body occupancy and sweep, independent of room array order; all rooms and spawns must connect to an exit with a clear outward body sweep. This is offline topology validation, never runtime steering. Explicit no-fans controls preserve reference scents. A separate diagnostic food-energy arm sets only the existing feedingRate to zero, preserving source/food placement, contact and taste configuration; later energy-dependent behavior may diverge. Per-fly body events/reserves and paired starvation medians distinguish missing replenishment from navigation. Detector-only modes cannot report seed-set acceptance. A full frozen food-energy run retains its reference/poor placement gate and reports a separate food-energy gate requiring higher median escapes and lower median starvation than the no-replenishment arm, with paired medians retained as diagnostics. Full acceptance batches follow settled first-level contracts; bounded second-level diagnostics may proceed independently.
 
 Preparation checks: six focused native tests pass, including real five-/six-room fixtures in both room orders and a red check against the retired hardcoded topology. Diagnostic, incomplete, unfrozen or missing required control summaries cannot pass the seed-set gate. Shared-boundary sampling remains bounded to 99 positions per edge, so it can conservatively reject an unusually narrow unsampled opening; it does not prove within-room navigation or puzzle benefit. Food-energy evidence does not by itself accept campaign content; the full reference/poor gate remains usable without repeating identical arms.
 
