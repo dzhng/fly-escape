@@ -1,0 +1,104 @@
+
+inhibitoryOdor sourceZ=-1.0
+  warmup0 active-minus-no-current:
+    sourceSignedMeanTurn   -0.0008 [-0.0028, 0.0013] +14/-16  seSwarm20=0.0013
+    meanDistance           0.0409 [0.0336, 0.0482] +30/-0  seSwarm20=0.0044
+    minDistance            0.0103 [-0.0019, 0.0224] +14/-1  seSwarm20=0.0073
+    finalDistance          0.0715 [0.0393, 0.1037] +24/-6  seSwarm20=0.0193
+    ticksWithin0_50m       0.0000 [0.0000, 0.0000] +0/-0  seSwarm20=0.0000
+    ticksWithin0_75m       -0.5667 [-1.6834, 0.5500] +1/-2  seSwarm20=0.6687
+  warmup60 active-minus-no-current:
+    sourceSignedMeanTurn   0.0042 [0.0018, 0.0067] +23/-7  seSwarm20=0.0014
+    meanDistance           -0.0135 [-0.0288, 0.0018] +11/-19  seSwarm20=0.0091
+    minDistance            -0.0148 [-0.0351, 0.0055] +11/-14  seSwarm20=0.0122
+    finalDistance          -0.0785 [-0.1286, -0.0283] +7/-23  seSwarm20=0.0300
+    ticksWithin0_50m       0.1333 [-0.1394, 0.4060] +1/-0  seSwarm20=0.1633
+    ticksWithin0_75m       0.2333 [-1.9166, 2.3833] +3/-3  seSwarm20=1.2875
+  warm60-contrast minus cold-contrast:
+    sourceSignedMeanTurn   0.0050 [0.0017, 0.0083] +21/-9  seSwarm20=0.0020
+    meanDistance           -0.0544 [-0.0725, -0.0363] +2/-28  seSwarm20=0.0108
+    minDistance            -0.0251 [-0.0487, -0.0014] +10/-16  seSwarm20=0.0141
+    finalDistance          -0.1500 [-0.2141, -0.0859] +7/-23  seSwarm20=0.0384
+    ticksWithin0_50m       0.1333 [-0.1394, 0.4060] +1/-0  seSwarm20=0.1633
+    ticksWithin0_75m       0.8000 [-1.9324, 3.5324] +4/-4  seSwarm20=1.6362
+  absolute means (stimulus / no-current):
+    warmup0: sourceSignedMeanTurn=0.0016/0.0023  meanDistance=1.1125/1.0716  minDistance=0.9660/0.9557  finalDistance=1.2545/1.1830  ticksWithin0_50m=0.0000/0.0000  ticksWithin0_75m=0.9333/1.5000
+    warmup60: sourceSignedMeanTurn=0.0079/0.0037  meanDistance=1.0167/1.0302  minDistance=0.8799/0.8947  finalDistance=1.0224/1.1009  ticksWithin0_50m=0.2667/0.1333  ticksWithin0_75m=5.4667/5.2333
+
+inhibitoryOdor sourceZ=1.0
+  warmup0 active-minus-no-current:
+    sourceSignedMeanTurn   0.0019 [-0.0002, 0.0040] +17/-13  seSwarm20=0.0013
+    meanDistance           0.0618 [0.0547, 0.0690] +29/-1  seSwarm20=0.0043
+    minDistance            0.0136 [0.0048, 0.0224] +18/-0  seSwarm20=0.0053
+    finalDistance          0.0757 [0.0472, 0.1042] +26/-4  seSwarm20=0.0171
+    ticksWithin0_50m       0.0000 [0.0000, 0.0000] +0/-0  seSwarm20=0.0000
+    ticksWithin0_75m       0.0000 [0.0000, 0.0000] +0/-0  seSwarm20=0.0000
+  warmup60 active-minus-no-current:
+    sourceSignedMeanTurn   0.0118 [0.0088, 0.0148] +29/-1  seSwarm20=0.0018
+    meanDistance           -0.1093 [-0.1389, -0.0797] +2/-28  seSwarm20=0.0177
+    minDistance            -0.1196 [-0.1734, -0.0658] +2/-21  seSwarm20=0.0322
+    finalDistance          -0.3072 [-0.3813, -0.2330] +1/-29  seSwarm20=0.0444
+    ticksWithin0_50m       1.4000 [-0.2745, 3.0745] +3/-0  seSwarm20=1.0028
+    ticksWithin0_75m       5.0000 [1.1269, 8.8731] +10/-0  seSwarm20=2.3193
+  warm60-contrast minus cold-contrast:
+    sourceSignedMeanTurn   0.0099 [0.0062, 0.0136] +27/-3  seSwarm20=0.0022
+    meanDistance           -0.1712 [-0.2018, -0.1406] +0/-30  seSwarm20=0.0183
+    minDistance            -0.1332 [-0.1873, -0.0790] +1/-26  seSwarm20=0.0324
+    finalDistance          -0.3829 [-0.4566, -0.3092] +1/-29  seSwarm20=0.0441
+    ticksWithin0_50m       1.4000 [-0.2745, 3.0745] +3/-0  seSwarm20=1.0028
+    ticksWithin0_75m       5.0000 [1.1269, 8.8731] +10/-0  seSwarm20=2.3193
+  absolute means (stimulus / no-current):
+    warmup0: sourceSignedMeanTurn=-0.0005/-0.0023  meanDistance=1.1476/1.0858  minDistance=0.9975/0.9839  finalDistance=1.3256/1.2499  ticksWithin0_50m=0.0000/0.0000  ticksWithin0_75m=0.0000/0.0000
+    warmup60: sourceSignedMeanTurn=0.0081/-0.0037  meanDistance=1.0130/1.1223  minDistance=0.8424/0.9620  finalDistance=1.0064/1.3135  ticksWithin0_50m=1.4000/0.0000  ticksWithin0_75m=7.1667/2.1667
+
+excitatoryOdor sourceZ=-1.0
+  warmup0 active-minus-no-current:
+    sourceSignedMeanTurn   -0.0166 [-0.0204, -0.0128] +2/-28  seSwarm20=0.0023
+    meanDistance           -0.0082 [-0.0290, 0.0126] +13/-17  seSwarm20=0.0125
+    minDistance            -0.0465 [-0.0787, -0.0143] +4/-26  seSwarm20=0.0193
+    finalDistance          0.1476 [0.0763, 0.2188] +21/-9  seSwarm20=0.0427
+    ticksWithin0_50m       0.0000 [0.0000, 0.0000] +0/-0  seSwarm20=0.0000
+    ticksWithin0_75m       -1.5000 [-3.3155, 0.3155] +0/-3  seSwarm20=1.0872
+  warmup60 active-minus-no-current:
+    sourceSignedMeanTurn   -0.0166 [-0.0203, -0.0129] +1/-29  seSwarm20=0.0022
+    meanDistance           0.1603 [0.1285, 0.1921] +30/-0  seSwarm20=0.0190
+    minDistance            0.0820 [0.0348, 0.1291] +24/-1  seSwarm20=0.0283
+    finalDistance          0.4049 [0.3205, 0.4894] +30/-0  seSwarm20=0.0506
+    ticksWithin0_50m       -0.1333 [-0.4060, 0.1394] +0/-1  seSwarm20=0.1633
+    ticksWithin0_75m       -5.2333 [-9.9552, -0.5114] +0/-6  seSwarm20=2.8276
+  warm60-contrast minus cold-contrast:
+    sourceSignedMeanTurn   -0.0000 [-0.0051, 0.0051] +13/-17  seSwarm20=0.0030
+    meanDistance           0.1685 [0.1318, 0.2053] +30/-0  seSwarm20=0.0220
+    minDistance            0.1285 [0.0722, 0.1847] +26/-4  seSwarm20=0.0337
+    finalDistance          0.2574 [0.1595, 0.3552] +23/-7  seSwarm20=0.0586
+    ticksWithin0_50m       -0.1333 [-0.4060, 0.1394] +0/-1  seSwarm20=0.1633
+    ticksWithin0_75m       -3.7333 [-8.3086, 0.8420] +2/-6  seSwarm20=2.7398
+  absolute means (stimulus / no-current):
+    warmup0: sourceSignedMeanTurn=-0.0143/0.0023  meanDistance=1.0634/1.0716  minDistance=0.9092/0.9557  finalDistance=1.3306/1.1830  ticksWithin0_50m=0.0000/0.0000  ticksWithin0_75m=0.0000/1.5000
+    warmup60: sourceSignedMeanTurn=-0.0129/0.0037  meanDistance=1.1905/1.0302  minDistance=0.9767/0.8947  finalDistance=1.5058/1.1009  ticksWithin0_50m=0.0000/0.1333  ticksWithin0_75m=0.0000/5.2333
+
+excitatoryOdor sourceZ=1.0
+  warmup0 active-minus-no-current:
+    sourceSignedMeanTurn   -0.0079 [-0.0112, -0.0046] +3/-27  seSwarm20=0.0020
+    meanDistance           -0.0066 [-0.0200, 0.0068] +12/-18  seSwarm20=0.0080
+    minDistance            -0.0386 [-0.0533, -0.0239] +2/-27  seSwarm20=0.0088
+    finalDistance          0.0730 [0.0293, 0.1168] +20/-10  seSwarm20=0.0262
+    ticksWithin0_50m       0.0000 [0.0000, 0.0000] +0/-0  seSwarm20=0.0000
+    ticksWithin0_75m       0.0000 [0.0000, 0.0000] +0/-0  seSwarm20=0.0000
+  warmup60 active-minus-no-current:
+    sourceSignedMeanTurn   -0.0099 [-0.0137, -0.0061] +5/-25  seSwarm20=0.0023
+    meanDistance           0.0650 [0.0406, 0.0895] +25/-5  seSwarm20=0.0146
+    minDistance            0.0169 [-0.0030, 0.0369] +11/-6  seSwarm20=0.0119
+    finalDistance          0.1738 [0.1120, 0.2357] +25/-5  seSwarm20=0.0370
+    ticksWithin0_50m       0.0000 [0.0000, 0.0000] +0/-0  seSwarm20=0.0000
+    ticksWithin0_75m       -2.1667 [-5.6003, 1.2670] +0/-2  seSwarm20=2.0562
+  warm60-contrast minus cold-contrast:
+    sourceSignedMeanTurn   -0.0020 [-0.0064, 0.0024] +14/-16  seSwarm20=0.0026
+    meanDistance           0.0716 [0.0478, 0.0955] +25/-5  seSwarm20=0.0143
+    minDistance            0.0556 [0.0291, 0.0820] +27/-2  seSwarm20=0.0158
+    finalDistance          0.1008 [0.0385, 0.1631] +22/-8  seSwarm20=0.0373
+    ticksWithin0_50m       0.0000 [0.0000, 0.0000] +0/-0  seSwarm20=0.0000
+    ticksWithin0_75m       -2.1667 [-5.6003, 1.2670] +0/-2  seSwarm20=2.0562
+  absolute means (stimulus / no-current):
+    warmup0: sourceSignedMeanTurn=-0.0103/-0.0023  meanDistance=1.0792/1.0858  minDistance=0.9453/0.9839  finalDistance=1.3230/1.2499  ticksWithin0_50m=0.0000/0.0000  ticksWithin0_75m=0.0000/0.0000
+    warmup60: sourceSignedMeanTurn=-0.0136/-0.0037  meanDistance=1.1874/1.1223  minDistance=0.9790/0.9620  finalDistance=1.4874/1.3135  ticksWithin0_50m=0.0000/0.0000  ticksWithin0_75m=0.0000/2.1667

@@ -1,0 +1,11 @@
+# Neural initialization and odor response
+
+Claude ran480 matched Chamber observations:30 seeds, mirrored attractive/repellent sources, current anatomical sampling and gain2, with cold or60 unstimulated neural updates before movement. The only experimental factor was warmup. Root inspected the probe, verified source hashes against current neural/sensory/body owners, checked all480 observations and independently recomputed every paired mean, standard deviation and descriptive95% interval. No production neural behavior changed.
+
+Warmup improves the attraction effect in this fixture. Mean distance active-minus-control changes from +0.0409m cold to -0.0135m warm for one source side, and from +0.0618m to -0.1093m for the other. The small warm effect on the first side has an interval spanning zero; the larger opposite-side effect is clear in these data. Warm repulsion increases mean distance by0.1603m and0.0650m, compared with near-zero cold mean-distance effects. These are distributional effects, not guaranteed following.
+
+This establishes warmup as a useful candidate at current sampling, not the sole cause of historical differences. The probe uses Chamber motion, fixed initial heading, settled fields and no physical food or escape objective. Actual campaign settings are walk0.12m/s, flight0.24m/s and turn gain8; the initial Claude report incorrectly cited generic body defaults. Simulated flies share an environment but this report does not establish inter-fly interaction. Derived swarm standard errors in the raw summaries assume independent draws and are not measured escape-count effects. Descriptive intervals are unadjusted for multiple comparisons.
+
+The next gate is a paired pilot with the actual20-fly campaign owner, cold versus warm initialization, and predeclared valid apple/vinegar placements. Keep all results, including errors and negative effects. Do not ship a warmup or simplified controller based on Chamber evidence alone.
+
+`odor_response_spike.rs` is the preserved temporary example; compile in the workspace using its lockfile and pass the prepared brain directory plus an output JSON path. `evidence.json` contains source hashes, exact conditions and per-seed results; `summary-table.txt` is secondary presentation.
