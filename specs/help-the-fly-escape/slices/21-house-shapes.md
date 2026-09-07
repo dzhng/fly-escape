@@ -1,6 +1,6 @@
 # 21 — Recognizable household shapes
 
-Status: pending. Dependencies: 19,20.
+Status: prepared neutral assets; browser shape integration pending. Dependencies: 19,20.
 
 ## Contract, seam and review surface
 
@@ -18,9 +18,7 @@ Delegated: reversible asset composition, implementation naming and measurements 
 
 ## Prepared banana shape
 
-A bounded [banana study](../../../assets/food/banana/README.md) assumes a medium household fruit, approximately 22 cm long and 4 cm thick, resting on its side. Geometry is one closed baked skin including tapered ends; the grounded pivot and measured native-metre bounds survive export without stretching. Shared export/staging helpers remain the owner. This pass prepares authoring evidence only: runtime catalogue adoption, room framing and actual contact remain open gates; neutral material keeps slice 22 frozen.
-
-The [prepared evidence and review](../assets/evidence/21/banana-prepared/README.md) retain all rejected and final authoring views. Fresh critique drove end-shape refinement; the result is recognizable but still somewhat stylized at the shoulder/stalk. Browser replacement/disposal, room composition and physical food contact remain explicit integration gates.
+The [banana source](../../../assets/food/banana/README.md) owns a medium household fruit resting on its side, with one closed baked skin and differentiated cut stalk/blossom terminals. The [terminal-anatomy evidence](../assets/evidence/21/banana-terminal/README.md) links the retained before/after and rejected candidates, measured dimension drift and independent critique. Native export and exact geometric contact topology are verified preparation. Freeze further clay refinement while testing browser replacement, disposal, room framing and actual food contact; broad smooth appearance and blossom regularity remain later realism checks. Neutral material preserves the separate surface-treatment gate.
 
 ## Plant shape refinement
 
@@ -35,12 +33,6 @@ the existing room-scale envelope and provides closed panes, backed sash reveals
 and an asymmetric handle. Neutral authoring and export checks pass; the model
 remains unregistered until wall placement, glass/light treatment and production
 replacement/occlusion are verified. It does not create a new physical opening.
-
-## Banana end-shape refinement
-
-Refine the broad blossom shoulder and flat-looking stalk neck through gradual authored radius transitions along the existing curved skin. Preserve the medium household size, continuous closed mesh, neutral material and shared fixed stage; measure gross-dimension drift rather than stretching the asset. Before/after close views and export/topology validation judge this bounded silhouette change. Runtime food adoption, contact behavior and material treatment remain outside it.
-
-The [shoulder/taper checkpoint](../assets/evidence/21/banana-refined/README.md) is a measurable improvement, but fresh critique still finds sealed nubs and a fin-like near end. The [terminal-anatomy pass](../assets/evidence/21/banana-terminal/README.md) authors a cut stalk/collar and smaller blossom scar within the same closed skin, with an additional reverse view to expose the scar. Rejected circular and faceted caps are retained; the final independent recheck confirms differentiated terminals without the former hook, manufactured circular disk or triangular cut-face artifact. Overall surface realism and actual browser/contact acceptance remain separate gates.
 
 ## Household sconce
 

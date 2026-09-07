@@ -283,12 +283,15 @@ shows why the favorable original contact poses cannot select a hull alone.
 
 - Retain an active feature and its exact domain; cross its boundary without
   zero-time cycling, skipping intervening obstacles, or jumping across gaps.
-  Compare emitted segments with the brute-force envelope oracle.
+  Compare diagnostic poses with the original-plane feature inventory and native
+  support/static-contact queries; the audited raw-edge sweep is not an oracle.
+  Whole-interval validity, rather than sampled agreement, accepts a segment.
 - Establish continuous orientation changes. Fixed-orientation paths cannot be
   joined by snapping rotations. An analytic rotating feature evaluator still
   needs domain validity and transition checks.
 - Bound candidate work, feature transitions, archive size and failure behavior.
-  Measure preparation and replay in browser WASM for 20 and 100 flies. Current
+  Measure actual construction frequency and replay in browser WASM for 20 flies;
+  100-fly profiling informs future optimization rather than release acceptance. Current
   millisecond construction costs are not production performance acceptance.
 - Verify landing, walking, feeding, support loss, departure, revisit and
   neighboring-food collisions through the actual body owner. Prove every replay
@@ -296,13 +299,28 @@ shows why the favorable original contact poses cannot select a hull alone.
 - Preserve the native geometry and established numerical tolerance. Neither
   clearance padding nor a more permissive penetration threshold is adopted here.
 
-The [fixed-orientation prefix component](fixed-prefix-component.md) now consumes
-the [original-plane inventory](native-envelope/plane-inventory/README.md) under
-the existing query owner. The current pickup is rotating feature-domain and
-global competitor certification, first measuring interval tests on retained
-contact charts. A small excursion bounds geometric error, not ownership across
-a real gap; unresolved intervals must remain explicit. The
-[affine trigonometric reduction](affine-trig-domains.md) is an independently
-reviewed mathematical direction for some translating-rotation constraints;
-numerical sign certification and actual path construction remain unimplemented.
-Continuous accepted-path validity and browser work bounds remain separate gates.
+## Current component and rotating evidence
+
+The [fixed-orientation prefix component](fixed-prefix-component.md) consumes the
+[original-plane inventory](native-envelope/plane-inventory/README.md) under the
+existing query owner. It preserves supplied start contact and reports a bounded
+prefix ending at a gap, discontinuity or other surface.
+
+The rotating experiments use that original geometry:
+
+- [Retained-chart intervals](retained-chart-interval.md) certify local contact
+  domains and separation over whole intervals, with explicit unresolved results.
+- [Same-triangle handoffs](same-triangle-handoff.md) use a continuous maximum of
+  valid face/vertex heights to cross a vertex boundary without sampling acceptance.
+- [Dominated charts](dominated-chart.md) exempt strictly losing witnesses from
+  irrelevant domain checks and measure bounded separating-axis proposals.
+
+The next measured failure is a face-to-edge transition, rather than a newly
+winning triangle-face chart. Extend the local certificate only after identifying
+its actual original-plane features. Small excursion or height error does not
+prove continued ownership across a real gap; unresolved intervals remain explicit.
+Rotating certificates are conditional on the declared path and rounded geometry;
+exact caller-start preservation and runtime quaternion conversion are still open.
+The [affine trigonometric reduction](affine-trig-domains.md) remains a mathematical
+direction, not an adopted production evaluator. Continuous complete path validity,
+body/replay integration and browser work bounds remain separate gates.

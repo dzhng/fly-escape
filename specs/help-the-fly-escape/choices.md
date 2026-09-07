@@ -551,3 +551,28 @@ specify how shading splits map to topology. This prevents a closed fruit from
 being mistaken for an open surface. It applies across primitive boundaries, uses
 no distance tolerance, and does not repair overlapping components; invalid face
 arrangements still fail the existing contact validation.
+
+## Neutral wall fixture preparation — 2026-09-07
+
+### Sound — medium confidence: a compact shaded wall fixture is a separate appearance proposal
+
+The requested house lighting needs a recognizable household fixture. The prepared
+sconce uses a 22 × 32 × 16 cm envelope and a flat rear mounting plane, with its
+local origin beneath the model. The plan left the fixture size and installation
+convention open. This proposal adds no gameplay light, collision or mounting
+height: later placement must explicitly position it on a wall and verify scale.
+The geometry can be replaced before that adoption without changing game rules.
+
+## Rotating contact research bounds — 2026-09-07
+
+### Sound — medium confidence: incomplete geometric experiments fail explicitly
+
+When a rotating fly changes which part touches a fruit, the experiment considers
+a small bounded group of possible contact formulas. It checks the whole time
+interval before accepting their combined path. The plan required bounded work
+but did not prescribe a research representation; current caps limit active
+formulas, subdivision and separating-direction proposals. A closest-point query
+may suggest a direction to check, but cannot itself certify safety. Exhausting a
+cap produces an unresolved result, never a successful path or a gameplay stop.
+These are experiment limits, not final runtime budgets. General feature coverage,
+exact initial contact and browser performance must be established before adoption.
