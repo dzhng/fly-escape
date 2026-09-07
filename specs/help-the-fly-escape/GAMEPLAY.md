@@ -2,7 +2,7 @@
 
 ## User requirements
 
-The shipped game runs locally in a desktop browser and contains five authored levels of increasing size and difficulty. Every level has 20 flies. Level 1 has five rooms and teaches through its layout; there is no separate tutorial. Dead ends are intentional choices, not malformed rooms. Structure the simulation for up to 100 flies later without making that optimization an MVP gate.
+The shipped game runs locally in a desktop browser and contains two carefully designed authored levels of increasing size and difficulty. Every level has 20 flies. Level 1 has five rooms and teaches through its layout; there is no separate tutorial. Dead ends are intentional choices, not malformed rooms. Structure the simulation for up to 100 flies later without making that optimization an MVP gate.
 
 The player shapes the environment before releasing the flies. Each level supplies a fixed inventory, without money or a shop. Attempts use fresh random seeds; replay preserves the same attempt. One star unlocks the next level; higher stars reward more escaped flies. Eating extends a finite life reserve and must matter on larger maps. Only flies that physically escape count toward the score.
 
@@ -22,6 +22,12 @@ All placement tuning, exact layouts, tool counts, time budgets and star numbers 
 
 Progress uses localStorage: best stars per level, preferences and last editable placements. Unlocks derive from best stars. Store completed results once per attempt; failures to persist do not destroy the current playable session. No accounts, migration, cross-device saves or persistent replay library. Reset progress is an explicit player action. Reloading ends an unfinished attempt.
 
+## A natural starting swarm
+
+Each attempt starts twenty flies in the same authored general area, with randomized individual positions and headings spanning all directions. Some begin walking and some begin flying. They should read as a loose swarm rather than a formation or a line all facing the exit. Interpret the user's “waking” as walking alongside flying.
+
+Randomness is derived from the attempt seed, so replay and paired experiments preserve the exact starting swarm. Initialization does not add a continuing random steering controller: subsequent motion still comes from the established neural/body simulation. Spawn states must be physically valid, clear blocking furniture and walls, and remain inside the authored spawn area. Tool placement reserves that whole area rather than only a few sample starting points. Fixed initial states remain useful for explicitly controlled scientific diagnostic fixtures, not for campaign starts.
+
 ## Visual target: a warm, lived-in house
 
 The user explicitly requests photorealistic rooms and selected a warm, lived-in house. Final presentation needs realistic natural colors and materials, daylight and household lighting, furniture, plants, and recognizable three-dimensional food such as apples and bananas. Empty blue-grey rooms, generic block furniture and nearly flat source markers are intermediate foundations, not the final art target.
@@ -30,23 +36,17 @@ Establish the look in one furnished room using Blender-authored assets and the a
 
 Furniture that occupies traversable floor must agree with authoritative collision and sensory geometry. Wall-mounted decoration and background detail must not create false solid passageways. Proper food models require a coherent visible contact surface and feeding presentation; the earlier near-flush food contract must be revisited rather than stretching a flat marker into an apple. Preserve graph-driven behavior and the browser-only runtime while resolving these seams explicitly. Any geometry or sensory changes invalidate the affected level's final validation; retain prior bare-room evaluations as calibration evidence.
 
-## Five authored levels
+## Two authored levels
 
-Names, themes and the 6→9 room progression below are planner starting points, delegated to rename/tune. The first five-room count and five-level total are fixed user requirements; subsequent counts must increase.
+The user reduced the campaign from five levels to **two**, prioritizing level quality. Level 1 still has five rooms and teaches through play without a separate tutorial. Level 2 must be larger and introduce meaningful decisions, with eating materially extending a fly's ability to complete the route. Exact second-level room count, layout, names and inventory are delegated; the prepared six-room turning layout is a starting point, not an accepted puzzle.
 
-| Level | Rooms | Design question | Authored structure |
-|---|---:|---|---|
-| 1 — Open Window | 5 | Can a clear scent route help flies escape? | Four-room main route plus a one-door pantry; generous reserve; fruit and crumbs; no lethal hazard |
-| 2 — Wrong Turn | 6 | Can placement pull flies away from a tempting dead end? | Two branches, a food alcove and repellent control; no new UI explanation required |
-| 3 — Shade Route | 7 | Can a visual cue support the scent route? | A contrasting bright/shaded choice; add only a measured effective cue, never assume opposite AOTU responses |
-| 4 — Long Crossing | 8 | Where should flies eat before a longer journey? | Separated feeding stops, a fan and longer traversal; food materially changes survival |
-| 5 — Way Out | 9 | Can the player combine the learned tools? | Main route, a loop and multiple dead ends; food timing and wind; at most one avoidable zapper |
+Both levels use the warm, lived-in furnished visual target above. Finish and playtest these two levels rather than adding breadth through more campaign entries. One star on the first unlocks the second; higher stars reward additional escapes.
 
 Each layout is connected from spawn to exit, has legal placement surfaces and a reachable exit opening. A room may have one doorway; doors are bidirectional passage openings, not mandatory entry/exit pairs. Use a topology diagram and a greybox run to inspect each layout before decoration. Later levels must grow in room count and decision complexity, not merely shrink time limits.
 
 For each level publish a reference placement and a deliberately poor but legal placement. Evaluate both using the same 30 root seeds, 20 flies each; hold another 30 seeds out for final validation. Record distributions, star rates and paired escape differences, not a cherry-picked run. Reference placement should earn ≥1 star in at least 27/30 attempts and improve median escapes by ≥4/20 over the poor placement. Initial targets are planner gates; if they prove mismatched to the neural model, revise the spec with evidence rather than silently lowering the bar. Freeze all three increasing star thresholds before holdout evaluation. No threshold may be zero.
 
-For levels 4 and 5, compare the same reference with its food replenishment disabled while odor remains unchanged: median escapes must fall and starvation must rise. This isolates eating from attraction. Confirm a representative fly can eat, leave, and eventually need food again. Difficulty also needs a human route/inventory review—statistics alone do not establish fun.
+For level 2, compare the same reference with its food replenishment disabled while odor remains unchanged: median escapes must fall and starvation must rise. This isolates eating from attraction. Confirm a representative fly can eat, leave, and eventually need food again. Difficulty also needs a human route/inventory review—statistics alone do not establish fun.
 
 ## Science panel and honest explanations
 

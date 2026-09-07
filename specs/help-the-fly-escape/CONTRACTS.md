@@ -83,3 +83,7 @@ Start with ≤20k triangles per fly, ≤3 materials, ≤1024 textures; profile r
 ## Furnished realism revision
 
 The final visual target is the warm, lived-in photorealistic house in GAMEPLAY.md. The shared renderer, Blender replacement pipeline, camera and scientific ownership remain the foundations. Existing flat-color house roles and near-flush tool shapes are not final-art constraints. Reslice realistic materials, furnished geometry, raised food contact and household lighting before implementation; use one representative room to establish the target. Furnishings that block movement must consume the same authoritative geometry as collision and sensory fields. Do not treat rendered obstacles as decoration to preserve old calibration scores, and do not move neural/body behavior into the renderer.
+
+## Randomized campaign initialization
+
+Campaign LevelDef content owns a spawn area, while the Rust attempt owner derives legal individual positions, headings and mixed walking/flying initial states from a dedicated stream of the root seed. Brain-noise streams remain independent. Record/export the resolved starting states so setup release, initial camera framing and replay consume the same authoritative state rather than independently sampling. Reserve the whole authored spawn area during placement. Fixed-state scientific chambers remain explicitly controlled inputs. This revision supersedes fixed aligned campaign spawn poses and invalidates their final difficulty acceptance; keep the evidence as baseline calibration.

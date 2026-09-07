@@ -6,11 +6,13 @@ Build a local, fully 3D browser game in which the player places environmental to
 
 ## Current pickup
 
+The user reduced the campaign to **two carefully designed levels** and requested randomized clustered starting positions, varied headings, and mixed walking/flying initial states. Update the core spawn and recorded-start seam before further campaign calibration.
+
 The user changed the final visual target to a **photorealistic, warm, lived-in house** with real materials, furniture, lights, plants, apples and bananas. Follow [the updated game contract](GAMEPLAY.md#visual-target-a-warm-lived-in-house). First establish one furnished room in the actual browser renderer and reslice its asset/contact/material/lighting seams before expanding the look. Existing visual checkpoints remain foundation evidence; they no longer establish final art acceptance.
 
 Finish the already-running frozen first-level held-out evaluation as bare-room calibration evidence, and complete the isolated renderer-retention fix and campaign UI ownership checks. Do not start further campaign seed batches until the furnishing/collision contract is settled. Geometry and sensory changes require revalidation; previously accepted neural fidelity and twenty-fly performance requirements still hold.
 
-Then author and accept each remaining level with progression in [16](slices/16-campaign.md), followed by final production/platform gates in [17](slices/17-static-release.md). [The remaining-work audit](assets/planning/maintenance-2026-09-07.md) distinguishes missing implementation from verification. Update this pickup, checklist and owning slice status together; completed experiments belong in evidence, not new pickup paragraphs.
+Then author and accept the second and final level with progression in [16](slices/16-campaign.md), followed by final production/platform gates in [17](slices/17-static-release.md). [The remaining-work audit](assets/planning/maintenance-2026-09-07.md) distinguishes missing implementation from verification. Update this pickup, checklist and owning slice status together; completed experiments belong in evidence, not new pickup paragraphs.
 
 Slices 01–14 have foundation acceptance; the revised final-art scope remains open. Existing performance evidence is build-specific and does not replace final release measurements. The [retry investigation](assets/evidence/17/retry-resources/review.md) found renderer retention in Three.js; its isolated dependency fix must pass lifetime and unchanged-render checks before release. Preserve actual graph provenance, neural motor ownership and the established campaign criteria; no steering, reduced graph or silent sensitivity change. Reproduce ignored graph artifacts with the [exporter](../../scripts/connectome/README.md). A committed pass is a checkpoint, not completion.
 
@@ -33,7 +35,7 @@ Open the [interactive roadmap](visualizations/roadmap.html) for dependency and m
 - [x] [13 — All-fly science and explanations](slices/13-science-panel.md) — dependencies: 05,06.
 - [x] [14 — Editable setup and attempt loop](slices/14-placement-attempt.md) — dependencies: 05,06,10,13.
 - [ ] [15 — Level 1 is the tutorial](slices/15-first-level.md) — dependencies: 03,04,09,12,14.
-- [ ] [16 — Four more authored puzzles](slices/16-campaign.md) — dependencies: 15.
+- [ ] [16 — A carefully designed second level](slices/16-campaign.md) — dependencies: 15.
 - [ ] [17 — Browser release and clean cutover](slices/17-static-release.md) — dependencies: 16.
 
 ## Standing gates and ownership

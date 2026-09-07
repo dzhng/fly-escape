@@ -1,12 +1,12 @@
-# 16 — Four more authored puzzles
+# 16 — A carefully designed second level
 
 Status: implementation pending Level 1 acceptance; additional content and campaign progression are not implemented. Dependencies: 15.
 
 ## Contract and seam
 
-Five sequentially unlocked levels grow in rooms and decisions; food sustains larger-map routes.
+Two authored levels grow in rooms and decisions; the second makes food important for completing its larger route.
 
-Four additional LevelDefs using existing tool/geometry schema → campaign progression.
+One additional LevelDef using the shared tool/geometry schema → two-level campaign progression.
 
 ## Implementation pickup
 
@@ -20,7 +20,7 @@ Each level individually playable with topology and reference solution; campaign 
 
 ## Verification
 
-Accept levels 2, 3, 4 and 5 separately using GAMEPLAY.md paired/holdout criteria before moving to the next. Verify increasing room counts and one-star unlocks. For 4/5 perform food-replenishment ablation holding odor constant. Check no required route is sealed and zapper cannot cover spawn/only exit. Run a fresh-progress complete campaign.
+Accept level 2 using GAMEPLAY.md paired/holdout criteria after the furnished geometry and randomized spawn contract are settled. Verify increasing room counts and one-star unlocks. For level 2 perform food-replenishment ablation holding odor constant. Check no required route is sealed and zapper cannot cover spawn/only exit. Run a fresh-progress complete campaign.
 
 Visual variable and crop: Topology readability per level; overview and critical junction crops, with accepted house materials frozen. New visual effects and tool types are out of scope.
 
@@ -45,3 +45,5 @@ Prepare Turn the Corner with main route 1→2→3→4→6 and a straight-ahead, 
 The existing campaign probe now prepares to validate 5–9-room authored Geometry rather than a hardcoded first-level adjacency list. Shared openings are tested through body occupancy and sweep, independent of room array order; all rooms and spawns must connect to an exit with a clear outward body sweep. This is offline topology validation, never runtime steering. Explicit no-fans controls preserve reference scents. A separate diagnostic food-energy arm sets only the existing feedingRate to zero, preserving source/food placement, contact and taste configuration; later energy-dependent behavior may diverge. Per-fly body events/reserves and paired starvation medians distinguish missing replenishment from navigation. Detector-only modes cannot report seed-set acceptance. A full frozen food-energy run retains its reference/poor placement gate and reports a separate food-energy gate requiring higher median escapes and lower median starvation than the no-replenishment arm, with paired medians retained as diagnostics. No neural batches run until level 1 acceptance.
 
 Preparation checks: six focused native tests pass, including real five-/six-room fixtures in both room orders and a red check against the retired hardcoded topology. Diagnostic, incomplete, unfrozen or missing required control summaries cannot pass the seed-set gate. Shared-boundary sampling remains bounded to 99 positions per edge, so it can conservatively reject an unusually narrow unsampled opening; it does not prove within-room navigation or puzzle benefit. Food-energy evidence does not by itself accept campaign content; the full reference/poor gate remains usable without repeating identical arms.
+
+The user reduced scope to two well-designed levels and requested a randomized mixed walking/flying starting swarm. The existing six-room preparation is topology evidence only; its fixed, aligned spawn and inherited timing are superseded for campaign acceptance. Rework it with furnishings, randomized starts and food dependence before final seed evaluation.
