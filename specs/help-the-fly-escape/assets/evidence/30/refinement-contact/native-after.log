@@ -1,0 +1,19 @@
+   Compiling sim v0.1.0 (/private/tmp/fly-refinement-fix/crates/sim)
+    Finished `release` profile [optimized] target(s) in 5.55s
+     Running `/tmp/fly-dm1-transmission/target/release/examples/refinement_repro`
+tick 20
+tick 40
+tick 60
+tick 80
+tick 100
+tick 120
+tick 140
+tick 160
+tick 180
+tick 200
+tick 220
+tick 240
+tick 260
+tick 280
+tick 300
+{"attemptId":"085e7a68-b4f5-461a-8f93-96bd859bc1ca","completedTick":304,"outcomes":{"escaped":0,"starved":20,"zapped":0,"caught":0,"timedOut":0,"score":0},"stars":0}

@@ -1,0 +1,15 @@
+# Shoe rim refinement stop
+
+Production second-house seed `1744322718178062846` aborted at native tick 54 with a refinement-budget error. The browser had received frames through tick 50. The exact current level/tuning, empty placements and 20-fly input are preserved in `request.json`; native reproduction uses the workspace lockfile.
+
+The fly lands on worn-shoe surface 27 near (2.714, 6.687). Downward support projection then follows a near-vertical rim: after 16 subdivisions the planar span is about 15 nm while heights still differ 16.4 µm. The contact normal changes from y ≈ 0.000654 to 0.0213. Endpoint and midpoint penetration queries return zero, but the proposed continuous support segment still fails the existing error criterion. `reduced-query.json` records the request, span and exact queries.
+
+The body owner now returns an internal unresolved-support outcome at that depth. It discards the unverified remainder, checks the retained pose against the whole contact scene (including the selected surface), and consumes the remaining tick at that exact pose. It does not accept the failed segment as resolved. Invalid containment, contact-query failures and query/segment/substep budget errors still propagate. No refinement limit, precision, geometry, gains or neural outputs changed. No public flag, generated schema or runtime presentation change is needed.
+
+The reduced native-shoe regression fails before and passes after, checks the stationary remainder and samples 101 positions per retained segment for penetration. A separate guard rejects selected-surface containment and retains the query-limit error. All 63 applicable lib/body/food/placement tests pass, including ordinary fruit movement, landing, feeding, previous shoe/rotation cases and contact hazards.
+
+The exact full swarm completes at tick 304 with 20 starved and no escapes. Temporary instrumentation checked every produced motion knot against all native surfaces and found none above 3 µm penetration. It counted 106 body-ticks with declined support refinement; later requests can remain blocked while time/reserve advance. Instrumentation and its temporary flag were removed. This is conservative physical stopping, not recovered traversal, approach or campaign success. Native evidence does not substitute for the pending exact-seed browser gate.
+
+Manual and parent review retained the existing motion owner and removed an unnecessary public diagnostic flag. Independent CLI review was attempted but the installed CLI rejected the configured model as requiring an update. No replacement model or dependencies were installed.
+
+To reproduce, use `request.json` at the scratch input path named by `reproduce.rs`; temporarily copy that source into the sim crate's examples directory and run it with `cargo run --release -p sim --example refinement_repro` from the repository workspace, then remove the temporary example. This preserves Cargo.lock rather than allowing an independent scratch package to select newer patch dependencies. Focused gates: `cargo test --release -p sim --lib --test body --test food --test placement`.

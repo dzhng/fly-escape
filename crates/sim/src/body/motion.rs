@@ -274,7 +274,7 @@ pub(super) fn advance(
                 let progress =
                     supported_knots(world, &point, endpoint, &mut trace.points, &mut work)?;
                 point = trace.end().clone();
-                if matches!(progress, SupportedProgress::Blocked) {
+                if !matches!(progress, SupportedProgress::Complete) {
                     break;
                 }
                 elapsed += step;
@@ -620,6 +620,7 @@ fn mix(a: &MotionPoint, b: &MotionPoint, t: f64) -> MotionPoint {
 enum SupportedProgress {
     Complete,
     Blocked,
+    Unresolved,
 }
 
 fn stop_supported(
@@ -631,16 +632,15 @@ fn stop_supported(
     // pose cannot be reclassified as successful stationary motion.
     let last = out.last().unwrap();
     work.query()?;
-    if world.surfaces.neighbor_penetration(
-        world.hull,
-        last.root(),
-        last.rotation,
-        last.support
-            .ok_or("blocked support trace lost its surface identity")?,
-    )? > MOTION_ERROR
+    last.support
+        .ok_or("blocked support trace lost its surface identity")?;
+    if world
+        .surfaces
+        .penetration(world.hull, last.root(), last.rotation)?
+        > MOTION_ERROR
     {
         return Err(
-            "numerical support unresolved: retained pose penetrates neighboring surface".into(),
+            "numerical support unresolved: retained pose penetrates contact surface".into(),
         );
     }
     Ok(SupportedProgress::Blocked)
@@ -733,7 +733,11 @@ fn supported_knots(
         }
         if let Some(p) = split {
             if depth >= 16 {
-                return Err("numerical motion unresolved: refinement budget".into());
+                // This candidate has no verified continuous representation within
+                // the fixed depth. Decline it, rather than accepting an
+                // approximation or treating the clear retained pose as fatal.
+                stop_supported(world, out, work)?;
+                return Ok(SupportedProgress::Unresolved);
             }
             stack.push((p.clone(), b, depth + 1));
             stack.push((a, p, depth + 1));
@@ -763,6 +767,52 @@ mod coalescing_tests {
             support: None,
             grounded: true,
         }
+    }
+    #[test]
+    fn stopped_support_rejects_selected_surface_penetration_and_query_exhaustion() {
+        let geometry = Geometry {
+            rooms: vec![crate::environment::RectRoom {
+                id: 1,
+                min: Point { x: -1., z: -1. },
+                max: Point { x: 1., z: 1. },
+            }],
+            walls: vec![],
+            solids: vec![],
+        };
+        let apple: ContactSurface =
+            serde_json::from_str(include_str!("../../../../assets/food/apple/contact.json"))
+                .unwrap();
+        let world = BodyWorld::new(
+            &geometry,
+            std::slice::from_ref(&apple),
+            &[],
+            &[],
+            ExitOpening {
+                a: Point { x: 1., z: 0. },
+                b: Point { x: 1., z: 0.1 },
+                outward: Point { x: 1., z: 0. },
+            },
+            100,
+        )
+        .unwrap();
+        let mut retained = point(0.5, 0.);
+        retained.height = 0.04;
+        retained.support = Some(apple.id);
+        assert!(world
+            .surfaces
+            .penetration(world.hull, retained.root(), retained.rotation)
+            .unwrap_err()
+            .contains("inside closed food"));
+        assert!(
+            matches!(stop_supported(&world, &[retained.clone()], &mut Work::default()), Err(message) if message.contains("inside closed food"))
+        );
+        let mut work = Work {
+            queries: MAX_QUERIES,
+            segments: 0,
+        };
+        assert!(
+            matches!(stop_supported(&world, &[retained], &mut work), Err(message) if message.contains("query budget"))
+        );
     }
     #[test]
     fn straight_knots_coalesce_without_moving_any_intermediate_pose() {
