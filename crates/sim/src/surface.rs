@@ -184,6 +184,7 @@ impl ContactScene {
         hull: &ContactHull,
         position: [f64; 3],
         rotation: [f64; 4],
+        include: impl Fn(u32) -> bool,
     ) -> Result<Option<u32>, String> {
         if !bounded(position) {
             return Err("hull contact requires a bounded finite position".into());
@@ -196,7 +197,7 @@ impl ContactScene {
         for entry in self
             .meshes
             .iter()
-            .filter(|entry| entry.mesh.local_aabb().intersects(&bounds))
+            .filter(|entry| include(entry.id) && entry.mesh.local_aabb().intersects(&bounds))
         {
             if contact(
                 &pose,

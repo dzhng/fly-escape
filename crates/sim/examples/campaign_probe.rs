@@ -22,9 +22,11 @@ fn topology(level: &LevelDef) -> Result<Value, String> {
     if !(5..=9).contains(&geometry.rooms.len()) || !radius.is_finite() || radius <= 0. {
         return Err("campaign topology requires 5..9 rooms and positive body radius".into());
     }
+    let resolved = sim::placement::resolve_placements(level, &[])?;
     sim::body::BodyWorld::new(
         geometry,
-        &sim::placement::resolve_placements(level, &[])?.state.food,
+        &resolved.state.food,
+        &resolved.state.objects,
         &level.zappers,
         level.exit,
         level.duration_ticks,

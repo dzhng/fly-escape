@@ -196,7 +196,7 @@ fn canonical_resolution_binds_each_tool_without_mixing_food_and_odor() {
         .state
         .remaining
         .iter()
-        .all(|s| s.count == u32::from(s.kind == ToolKind::Banana)));
+        .all(|s| s.count == u32::from(!placements.iter().any(|p| p.kind == s.kind))));
     let mut no_replenishment = level;
     no_replenishment.body_config.feeding_rate = 0.;
     let ablated = resolve_placements(&no_replenishment, &placements).unwrap();
@@ -264,22 +264,120 @@ fn fixed_objects_keep_effects_and_space_without_spending_editable_stock() {
     let fixed = resolve_placements(&level, &[]).unwrap();
     assert!(fixed.state.placements.is_empty());
     assert_eq!(left(&fixed.state, ToolKind::Banana), 1);
-    assert_eq!(fixed.state.food, vec![sim::food::FoodDef { position: Point { x: 1., z: 1. }, heading: 0., shape: sim::food::FoodShape::Banana }.surface(0).unwrap()]);
-    assert_eq!(fixed.sources.iter().map(|s| s.kind).collect::<Vec<_>>(),
-        vec![SourceKind::AttractiveOdor, SourceKind::RepellentOdor]);
-    assert_eq!(edit_placements(&level, &[], PlacementEdit::Remove { id: 1 }).unwrap(), fixed.state);
-    assert!(edit_placements(&level, &[], PlacementEdit::Move {
-        id: 1, position: Point { x: 4., z: 1. }, heading: 0.,
-    }).is_err());
-    assert!(resolve_placements(&level, &[item(1, ToolKind::Fruit, 1., 1.)])
-        .unwrap_err().contains("overlap"));
+    assert!(
+        fixed.state.food
+            == vec![sim::food::FoodDef {
+                position: Point { x: 1., z: 1. },
+                heading: 0.,
+                shape: sim::food::FoodShape::Banana
+            }
+            .surface(0)
+            .unwrap()],
+        "fixed banana must preserve its native edible surface"
+    );
+    assert_eq!(
+        fixed.sources.iter().map(|s| s.kind).collect::<Vec<_>>(),
+        vec![SourceKind::AttractiveOdor, SourceKind::RepellentOdor]
+    );
+    assert_eq!(
+        edit_placements(&level, &[], PlacementEdit::Remove { id: 1 }).unwrap(),
+        fixed.state
+    );
+    assert!(edit_placements(
+        &level,
+        &[],
+        PlacementEdit::Move {
+            id: 1,
+            position: Point { x: 4., z: 1. },
+            heading: 0.,
+        }
+    )
+    .is_err());
+    assert!(
+        resolve_placements(&level, &[item(1, ToolKind::Fruit, 1., 1.)])
+            .unwrap_err()
+            .contains("overlap")
+    );
     let editable = resolve_placements(&level, &[item(1, ToolKind::Banana, 4., 3.)]).unwrap();
     assert_eq!(editable.state.placements.len(), 1);
     assert_eq!(editable.state.food.len(), 2);
     assert_eq!(left(&editable.state, ToolKind::Banana), 0);
     level.fixed_objects.reverse();
-    assert_eq!(serde_json::to_value(resolve_placements(&level, &[]).unwrap()).unwrap(),
-        serde_json::to_value(fixed).unwrap());
+    assert_eq!(
+        serde_json::to_value(resolve_placements(&level, &[]).unwrap()).unwrap(),
+        serde_json::to_value(fixed).unwrap()
+    );
     level.fixed_objects[1].id = level.fixed_objects[0].id;
     assert!(resolve_placements(&level, &[]).unwrap_err().contains("IDs"));
+}
+
+#[test]
+fn household_native_contacts_keep_their_non_edible_role_and_modeled_odor_sources() {
+    let level = level();
+    let resolved = resolve_placements(
+        &level,
+        &[
+            item(1, ToolKind::WornShoes, -4., -4.),
+            item(2, ToolKind::DirtyDishes, -2., -4.),
+            item(3, ToolKind::Laundry, 0., -4.),
+            item(4, ToolKind::SleepingCat, 2., -4.),
+            item(5, ToolKind::Fruit, 4., -4.),
+        ],
+    )
+    .unwrap();
+    assert!(resolved
+        .sources
+        .iter()
+        .all(|s| s.kind == SourceKind::AttractiveOdor));
+    assert!(
+        !resolved
+            .sources
+            .iter()
+            .any(|s| s.position == Point { x: 2., z: -4. }),
+        "the sleeping cat has no odor source"
+    );
+    let mut fields = FieldSet::new(
+        level.geometry.clone(),
+        resolved.field_config.clone(),
+        resolved.sources.clone(),
+        None,
+    )
+    .unwrap();
+    for _ in 0..10 {
+        fields.advance(0.1).unwrap();
+    }
+    let odor = |x| fields.sample_point(Point { x, z: -4. }).attractive_odor;
+    assert!(
+        odor(-2.) > odor(4.),
+        "dirty dishes model a stronger odor than fruit"
+    );
+    assert!(
+        odor(4.) > odor(-4.) && odor(4.) > odor(0.),
+        "shoes and laundry model weaker cues than fruit"
+    );
+    assert!(odor(-4.) > 0. && odor(0.) > 0.);
+    assert_eq!(resolved.state.food.len(), 1);
+    let food = &resolved.state.food[0];
+    assert!(
+        food.vertices.iter().all(|p| p[0] > 3.5),
+        "only the fruit is edible"
+    );
+    assert!(!resolved.state.objects.is_empty());
+    assert!(resolved.state.objects.iter().all(|s| s.id != food.id));
+    sim::body::BodyWorld::new(
+        &level.geometry,
+        &resolved.state.food,
+        &resolved.state.objects,
+        &level.zappers,
+        level.exit,
+        level.duration_ticks,
+    )
+    .unwrap();
+    // Reordering edits cannot change the IDs consumed by support and role lookup.
+    let mut reversed = resolved.state.placements.clone();
+    reversed.reverse();
+    assert_eq!(
+        resolve_placements(&level, &reversed).unwrap().state,
+        resolved.state
+    );
 }

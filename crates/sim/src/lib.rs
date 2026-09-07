@@ -28,3 +28,4 @@ pub mod spawn;
 pub mod surface;
 
 pub mod food;
+pub mod native_object;

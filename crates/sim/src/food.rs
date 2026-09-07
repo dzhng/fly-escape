@@ -1,7 +1,7 @@
 //! Edible geometry is baked from the visible asset, then placed in native metres.
+use crate::native_object::NativeObjectShape;
 use crate::{environment::Point, surface::ContactSurface};
 use serde::{Deserialize, Serialize};
-use std::sync::OnceLock;
 use ts_rs::TS;
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize, TS)]
@@ -22,35 +22,17 @@ pub struct FoodDef {
     pub shape: FoodShape,
 }
 impl FoodShape {
-    fn native(&self) -> Option<&'static (ContactSurface, f64)> {
-        static APPLE: OnceLock<(ContactSurface, f64)> = OnceLock::new();
-        static BANANA: OnceLock<(ContactSurface, f64)> = OnceLock::new();
-        let (asset, source) = match self {
-            Self::Apple => (
-                &APPLE,
-                include_str!("../../../assets/food/apple/contact.json"),
-            ),
-            Self::Banana => (
-                &BANANA,
-                include_str!("../../../assets/food/banana/contact.json"),
-            ),
-            Self::Patch { .. } => return None,
-        };
-        Some(asset.get_or_init(|| {
-            let surface: ContactSurface = serde_json::from_str(source)
-                .expect("authored food must pass contact export validation");
-            let radius = surface
-                .vertices
-                .iter()
-                .map(|p| p[0].hypot(p[2]))
-                .fold(0., f64::max);
-            (surface, radius)
-        }))
+    fn native(&self) -> Option<NativeObjectShape> {
+        match self {
+            Self::Apple => Some(NativeObjectShape::Apple),
+            Self::Banana => Some(NativeObjectShape::Banana),
+            Self::Patch { .. } => None,
+        }
     }
     pub fn footprint_radius(&self) -> f64 {
         match self {
             Self::Patch { radius } => *radius,
-            _ => self.native().unwrap().1,
+            _ => self.native().unwrap().footprint_radius(),
         }
     }
 }
@@ -65,8 +47,15 @@ impl FoodDef {
         {
             return Err("food requires a finite pose and positive bounded dimensions".into());
         }
-        let mut surface = match self.shape {
-            FoodShape::Apple | FoodShape::Banana => self.shape.native().unwrap().0.clone(),
+        if let Some(shape) = self.shape.native() {
+            let mut surfaces = shape.placed_surfaces(self.position, self.heading, id)?;
+            if surfaces.len() != 1 {
+                return Err("food must have one connected contact boundary".into());
+            }
+            return Ok(surfaces.remove(0));
+        }
+        let surface = match self.shape {
+            FoodShape::Apple | FoodShape::Banana => unreachable!(),
             FoodShape::Patch { radius } => {
                 const SEGMENTS: u32 = 128;
                 let mut vertices = vec![[0.; 3]];
@@ -83,16 +72,6 @@ impl FoodDef {
                 }
             }
         };
-        surface.id = id;
-        let (sin, cos) = self.heading.sin_cos();
-        for p in &mut surface.vertices {
-            let [x, y, z] = *p;
-            *p = [
-                self.position.x + x * cos - z * sin,
-                y,
-                self.position.z + x * sin + z * cos,
-            ];
-        }
-        Ok(surface)
+        crate::native_object::place_surface(surface, self.position, self.heading, id)
     }
 }

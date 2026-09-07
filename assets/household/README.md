@@ -15,3 +15,10 @@ Blender staging is authoring evidence, not production acceptance. The cloth is
 loose linen rather than a recognizably cut garment; the cat is a simplified
 sculpture. Both need judgment at the gameplay camera scale. Web threads and
 appliance grille detail particularly need checking against real room lighting.
+
+Native contact preserves the complete baked mesh. Disconnected authored pieces
+become stable, edge-connected support surfaces so each closed piece keeps the
+contact engine's manifold-boundary guarantees. A placement's edible role is
+separate from its geometry: shoes, dishes, linens, and the cat support bodies
+without granting taste or energy. Odor strengths are explicit game assumptions
+owned by the placement catalog.

@@ -40,6 +40,7 @@ proboscisThreshold: number, };
 export type ContactRegion = { center: Point, radius: number, };
 export type FoodDef = { position: Point, heading: number, shape: FoodShape, };
 export type FoodShape = { "type": "apple" } | { "type": "banana" } | { "type": "patch", radius: number, };
+export type NativeObjectShape = "apple" | "banana" | "wornShoes" | "dirtyDishes" | "laundry" | "sleepingCat";
 export type ContactSurface = { id: number, vertices: Array<[number, number, number]>, triangles: Array<[number, number, number]>, };
 export type SurfaceHit = { surfaceId: number, fraction: number, point: [number, number, number], normal: [number, number, number], };
 export type SupportSample = { surfaceId: number, root: [number, number, number], rotation: [number, number, number, number], point: [number, number, number], normal: [number, number, number], };
@@ -50,9 +51,9 @@ export type BodyEventKind = { "type": "modeChanged", from: BodyMode, to: BodyMod
 export type BodyEvent = { tick: number, kind: BodyEventKind, };
 export type OutcomeSummary = { escaped: number, starved: number, zapped: number, timedOut: number, score: number, };
 export type LevelDef = { id: string, geometry: Geometry, spawn: SpawnDef, exit: ExitOpening, exitCue: ExitCue | null, food: Array<FoodDef>, fixedObjects: Array<Placement>, zappers: Array<ContactRegion>, sources: Array<Source>, fieldConfig: FieldConfig, bodyConfig: BodyConfig, initialReserve: number, durationTicks: number, starThresholds: [number, number, number], placementRules: PlacementRules, };
-export type ToolKind = "fruit" | "banana" | "crumbs" | "vinegar" | "lamp" | "shade" | "fan";
-export type ToolEffect = { "type": "source", kind: SourceKind, radius: number, rate: number, food: FoodShape | null, } | { "type": "fan", reach: number, halfWidth: number, speed: number, };
-export type ToolDef = { kind: ToolKind, footprintRadius: number, effect: ToolEffect, };
+export type ToolKind = "fruit" | "banana" | "crumbs" | "vinegar" | "lamp" | "shade" | "fan" | "wornShoes" | "dirtyDishes" | "laundry" | "sleepingCat";
+export type ToolEffect = { "type": "none" } | { "type": "source", kind: SourceKind, radius: number, rate: number, } | { "type": "fan", reach: number, halfWidth: number, speed: number, };
+export type ToolDef = { kind: ToolKind, footprintRadius: number, effect: ToolEffect, contact: NativeObjectShape | null, edible: boolean, };
 export type ToolStock = { kind: ToolKind, count: number, };
 export type PlacementRules = { inventory: Array<ToolStock>,
 /**
@@ -61,7 +62,7 @@ export type PlacementRules = { inventory: Array<ToolStock>,
 reserved: Array<ContactRegion>, };
 export type Placement = { id: number, kind: ToolKind, position: Point, heading: number, };
 export type PlacementEdit = { "type": "place", placement: Placement, } | { "type": "move", id: number, position: Point, heading: number, } | { "type": "remove", id: number, };
-export type PlacementState = { placements: Array<Placement>, remaining: Array<ToolStock>, food: Array<ContactSurface>, };
+export type PlacementState = { placements: Array<Placement>, remaining: Array<ToolStock>, food: Array<ContactSurface>, objects: Array<ContactSurface>, };
 export type ResolvedSetup = { state: PlacementState, sources: Array<Source>, fieldConfig: FieldConfig, };
 export type CueInput = { pathway: CuePathway, gain: number, };
 export type AttemptTuning = { cues: Array<CueInput>, tasteGain: number,

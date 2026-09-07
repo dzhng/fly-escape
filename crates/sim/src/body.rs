@@ -158,7 +158,8 @@ pub struct BodyEvent {
 /// Prepared immutable world shared by all bodies for the lifetime of an attempt.
 pub struct BodyWorld {
     geometry: Geometry,
-    food: ContactScene,
+    surfaces: ContactScene,
+    edible_ids: std::collections::BTreeSet<u32>,
     hull: &'static ContactHull,
     zappers: Vec<ContactRegion>,
     exit: ExitOpening,
@@ -168,6 +169,7 @@ impl BodyWorld {
     pub fn new(
         geometry: &Geometry,
         food: &[ContactSurface],
+        objects: &[ContactSurface],
         zappers: &[ContactRegion],
         exit: ExitOpening,
         duration_ticks: u32,
@@ -175,7 +177,8 @@ impl BodyWorld {
         Self::validate(geometry, zappers, exit, duration_ticks)?;
         Ok(Self {
             geometry: geometry.clone(),
-            food: ContactScene::new(food)?,
+            surfaces: ContactScene::new(&food.iter().chain(objects).cloned().collect::<Vec<_>>())?,
+            edible_ids: food.iter().map(|surface| surface.id).collect(),
             hull: native_hull()?,
             zappers: zappers.to_vec(),
             exit,
@@ -248,11 +251,12 @@ impl BodyWorld {
     }
     fn food_at(&self, state: &BodyState) -> Result<bool, String> {
         Ok(self
-            .food
+            .surfaces
             .touching_hull(
                 self.hull,
                 [state.pose.position.x, state.height, state.pose.position.z],
                 state.rotation,
+                |id| self.edible_ids.contains(&id),
             )?
             .is_some())
     }

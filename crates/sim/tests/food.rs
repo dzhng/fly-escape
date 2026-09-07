@@ -91,3 +91,30 @@ fn banana_contact_preserves_native_curved_surface_and_rotated_footprint() {
     assert_eq!(scene.touching(top.point, 1e-6).unwrap(), Some(7));
     assert_eq!(scene.touching([2.2, 0., 3.], 0.002).unwrap(), None);
 }
+
+#[test]
+fn native_food_keeps_exact_baked_vertex_and_triangle_order() {
+    for (shape, source) in [
+        (
+            FoodShape::Apple,
+            include_str!("../../../assets/food/apple/contact.json"),
+        ),
+        (
+            FoodShape::Banana,
+            include_str!("../../../assets/food/banana/contact.json"),
+        ),
+    ] {
+        let baked: sim::surface::ContactSurface = serde_json::from_str(source).unwrap();
+        let actual = FoodDef {
+            position: Point { x: 0., z: 0. },
+            heading: 0.,
+            shape,
+        }
+        .surface(baked.id)
+        .unwrap();
+        assert!(
+            actual == baked,
+            "native fruit contact must preserve exact baked geometry order"
+        );
+    }
+}

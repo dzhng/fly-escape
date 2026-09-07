@@ -229,15 +229,18 @@ pub(super) fn advance(
         let previous_support = point.support;
         if let Some(id) = point.support {
             work.query()?;
-            let candidate =
-                world
-                    .food
-                    .support_at(world.hull, id, [target.x, target.z], heading, current_up)?;
+            let candidate = world.surfaces.support_at(
+                world.hull,
+                id,
+                [target.x, target.z],
+                heading,
+                current_up,
+            )?;
             if let Some(candidate) = candidate.filter(|s| s.normal[1] > 0.) {
                 let next_up = toward(current_up, candidate.normal, step);
                 work.query()?;
                 let sample = world
-                    .food
+                    .surfaces
                     .support_at(world.hull, id, [target.x, target.z], heading, next_up)?
                     .ok_or("support disappeared while changing orientation")?;
                 let endpoint = MotionPoint {
@@ -268,7 +271,7 @@ pub(super) fn advance(
                 continue;
             }
             // Test a constrained horizontal departure before beginning descent.
-            // The supported endpoint is absent, but the old pose still touches food.
+            // The supported endpoint is absent, but the old pose still touches its surface.
             point.support = None;
             point.grounded = false;
             if let Some(last) = trace.points.last_mut() {
@@ -294,7 +297,7 @@ pub(super) fn advance(
                 let mut next = mix(&from, &departure, t);
                 work.query()?;
                 if world
-                    .food
+                    .surfaces
                     .penetration(world.hull, next.root(), next.rotation)?
                     > CONTACT_PRECISION
                 {
@@ -314,8 +317,8 @@ pub(super) fn advance(
             }
             work.query()?;
             if world
-                .food
-                .touching_hull(world.hull, point.root(), point.rotation)?
+                .surfaces
+                .touching_hull(world.hull, point.root(), point.rotation, |_| true)?
                 .is_some()
             {
                 return Err("numerical departure unresolved: unilateral contact remains".into());
@@ -354,8 +357,8 @@ pub(super) fn advance(
             target.z - point.pose.position.z,
         ];
         work.query()?;
-        let food = world
-            .food
+        let surface_hit = world
+            .surfaces
             .cast(world.hull, point.root(), heading, next_up, delta)?;
         let floor_fraction = if !point.grounded && height <= floor + 1e-12 && height < point.height
         {
@@ -363,13 +366,13 @@ pub(super) fn advance(
         } else {
             None
         };
-        let food_first = food.filter(|hit| {
+        let surface_first = surface_hit.filter(|hit| {
             floor_fraction.is_none_or(|f| {
                 hit.fraction < f
                     && (point.height + delta[1] * hit.fraction - floor).abs() > CONTACT_PRECISION
             })
         });
-        if let Some(hit) = food_first {
+        if let Some(hit) = surface_first {
             let used = step * hit.fraction;
             point.pose.position = Point {
                 x: point.pose.position.x + delta[0] * hit.fraction,
@@ -386,7 +389,7 @@ pub(super) fn advance(
                 }
                 work.query()?;
                 let sample = world
-                    .food
+                    .surfaces
                     .support_at(
                         world.hull,
                         hit.surface_id,
@@ -524,16 +527,16 @@ fn supported_knots(
     work: &mut Work,
 ) -> Result<(), String> {
     let selected = start.support.unwrap();
-    let neighbors = world.food.has_other_surface(selected);
+    let neighbors = world.surfaces.has_other_surface(selected);
     if neighbors {
         work.query()?;
         if world
-            .food
+            .surfaces
             .neighbor_penetration(world.hull, end.root(), end.rotation, selected)?
             > MOTION_ERROR
         {
             return Err(
-                "numerical support unresolved: endpoint blocked by neighboring food".into(),
+                "numerical support unresolved: endpoint blocked by neighboring surface".into(),
             );
         }
     }
@@ -550,7 +553,7 @@ fn supported_knots(
             work.query()
                 .map_err(|e| format!("{e} span {:?} -> {:?}", a.root(), b.root()))?;
             let sample = world
-                .food
+                .surfaces
                 .support_at(
                     world.hull,
                     a.support.unwrap(),
@@ -563,7 +566,7 @@ fn supported_knots(
             let penetration = if neighbors {
                 work.query()?;
                 world
-                    .food
+                    .surfaces
                     .neighbor_penetration(world.hull, p.root(), p.rotation, selected)?
             } else {
                 0.
@@ -575,7 +578,7 @@ fn supported_knots(
                 } else {
                     work.query()?;
                     world
-                        .food
+                        .surfaces
                         .support_at(
                             world.hull,
                             a.support.unwrap(),
@@ -589,7 +592,7 @@ fn supported_knots(
                 middle.rotation = center.rotation;
                 if neighbors {
                     work.query()?;
-                    if world.food.neighbor_penetration(
+                    if world.surfaces.neighbor_penetration(
                         world.hull,
                         middle.root(),
                         middle.rotation,
@@ -597,7 +600,7 @@ fn supported_knots(
                     )? > MOTION_ERROR
                     {
                         return Err(
-                            "numerical support unresolved: midpoint blocked by neighboring food"
+                            "numerical support unresolved: midpoint blocked by neighboring surface"
                                 .into(),
                         );
                     }

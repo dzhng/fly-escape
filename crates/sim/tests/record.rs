@@ -209,6 +209,7 @@ fn dense_real_body_transitions_fit_and_replay_in_order() {
         &geometry,
         &food,
         &[],
+        &[],
         ExitOpening {
             a: Point { x: 4., z: 1. },
             b: Point { x: 4., z: 3. },
@@ -425,8 +426,11 @@ fn packed_motion_preserves_curvature_and_terminal_hold() {
     assert_eq!(sample(0.9), sample(1.));
     let mut mismatched = chunk.clone();
     let last = *mismatched.motion_offsets.last().unwrap() as usize - 1;
-    mismatched.motion_values[last*9+1] += 0.001;
-    assert!(mismatched.decode(&layout).unwrap_err().contains("endpoint differs"));
+    mismatched.motion_values[last * 9 + 1] += 0.001;
+    assert!(mismatched
+        .decode(&layout)
+        .unwrap_err()
+        .contains("endpoint differs"));
     let mut broken = chunk.motion_offsets.clone();
     broken[1] = u32::MAX;
     assert!(sample_motion(&chunk.motion_values, &chunk.motion_states, &broken, 0.5).is_err());

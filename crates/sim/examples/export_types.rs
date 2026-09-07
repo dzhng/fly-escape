@@ -28,6 +28,7 @@ fn main() {
         ContactRegion::decl(),
         sim::food::FoodDef::decl(),
         sim::food::FoodShape::decl(),
+        sim::native_object::NativeObjectShape::decl(),
         sim::surface::ContactSurface::decl(),
         sim::surface::SurfaceHit::decl(),
         sim::surface::SupportSample::decl(),

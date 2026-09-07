@@ -215,6 +215,7 @@ impl Attempt {
         let world = BodyWorld::new(
             &level.geometry,
             &resolved.state.food,
+            &resolved.state.objects,
             &level.zappers,
             level.exit,
             level.duration_ticks,

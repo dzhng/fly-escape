@@ -1,9 +1,6 @@
 //! Authored inventory, atomic setup edits and resolution into existing field/body inputs.
 use crate::{
-    attempt::LevelDef,
-    body::ContactRegion,
-    environment::*,
-    food::{FoodDef, FoodShape},
+    attempt::LevelDef, body::ContactRegion, environment::*, native_object::NativeObjectShape,
     surface::ContactSurface,
 };
 use serde::{Deserialize, Serialize};
@@ -20,6 +17,10 @@ pub enum ToolKind {
     Lamp,
     Shade,
     Fan,
+    WornShoes,
+    DirtyDishes,
+    Laundry,
+    SleepingCat,
 }
 #[derive(Clone, Debug, Serialize, TS)]
 #[serde(
@@ -28,11 +29,11 @@ pub enum ToolKind {
     rename_all_fields = "camelCase"
 )]
 pub enum ToolEffect {
+    None,
     Source {
         kind: SourceKind,
         radius: f64,
         rate: f64,
-        food: Option<FoodShape>,
     },
     Fan {
         reach: f64,
@@ -46,35 +47,68 @@ pub struct ToolDef {
     pub kind: ToolKind,
     pub footprint_radius: f64,
     pub effect: ToolEffect,
+    pub contact: Option<NativeObjectShape>,
+    pub edible: bool,
 }
 /// Shared calibration for palette descriptions and physical/sensory resolution.
 /// Threat has no catalog entry until its circuit effect is measured.
 pub fn tool_def(kind: ToolKind) -> ToolDef {
-    let source = |kind, radius, rate, food| ToolEffect::Source {
-        kind,
-        radius,
-        rate,
-        food,
-    };
-    let (footprint_radius, effect) = match kind {
+    let source = |kind, radius, rate| ToolEffect::Source { kind, radius, rate };
+    let (contact, edible, fallback_radius, effect) = match kind {
         ToolKind::Fruit => (
-            FoodShape::Apple.footprint_radius(),
-            source(SourceKind::AttractiveOdor, 0.75, 1., Some(FoodShape::Apple)),
+            Some(NativeObjectShape::Apple),
+            true,
+            0.,
+            source(SourceKind::AttractiveOdor, 0.75, 1.),
         ),
         ToolKind::Banana => (
-            FoodShape::Banana.footprint_radius(),
-            source(
-                SourceKind::AttractiveOdor,
-                0.75,
-                1.,
-                Some(FoodShape::Banana),
-            ),
+            Some(NativeObjectShape::Banana),
+            true,
+            0.,
+            source(SourceKind::AttractiveOdor, 0.75, 1.),
         ),
-        ToolKind::Crumbs => (0.2, source(SourceKind::AttractiveOdor, 0.75, 1., None)),
-        ToolKind::Vinegar => (0.2, source(SourceKind::RepellentOdor, 0.75, 1., None)),
-        ToolKind::Lamp => (0.25, source(SourceKind::Lamp, 1.5, 0.4, None)),
-        ToolKind::Shade => (0.25, source(SourceKind::Shade, 1.5, 0.2, None)),
+        // Domestic odor strengths are game assumptions, not measurements of these materials.
+        ToolKind::WornShoes => (
+            Some(NativeObjectShape::WornShoes),
+            false,
+            0.,
+            source(SourceKind::AttractiveOdor, 0.75, 0.35),
+        ),
+        ToolKind::DirtyDishes => (
+            Some(NativeObjectShape::DirtyDishes),
+            false,
+            0.,
+            source(SourceKind::AttractiveOdor, 0.75, 1.5),
+        ),
+        ToolKind::Laundry => (
+            Some(NativeObjectShape::Laundry),
+            false,
+            0.,
+            source(SourceKind::AttractiveOdor, 0.75, 0.2),
+        ),
+        ToolKind::SleepingCat => (
+            Some(NativeObjectShape::SleepingCat),
+            false,
+            0.,
+            ToolEffect::None,
+        ),
+        ToolKind::Crumbs => (
+            None,
+            false,
+            0.2,
+            source(SourceKind::AttractiveOdor, 0.75, 1.),
+        ),
+        ToolKind::Vinegar => (
+            None,
+            false,
+            0.2,
+            source(SourceKind::RepellentOdor, 0.75, 1.),
+        ),
+        ToolKind::Lamp => (None, false, 0.25, source(SourceKind::Lamp, 1.5, 0.4)),
+        ToolKind::Shade => (None, false, 0.25, source(SourceKind::Shade, 1.5, 0.2)),
         ToolKind::Fan => (
+            None,
+            false,
             0.25,
             ToolEffect::Fan {
                 reach: 3.,
@@ -85,10 +119,13 @@ pub fn tool_def(kind: ToolKind) -> ToolDef {
     };
     ToolDef {
         kind,
-        footprint_radius,
+        footprint_radius: contact.map_or(fallback_radius, NativeObjectShape::footprint_radius),
         effect,
+        contact,
+        edible,
     }
 }
+
 pub fn tool_catalog() -> Vec<ToolDef> {
     [
         ToolKind::Fruit,
@@ -98,6 +135,10 @@ pub fn tool_catalog() -> Vec<ToolDef> {
         ToolKind::Lamp,
         ToolKind::Shade,
         ToolKind::Fan,
+        ToolKind::WornShoes,
+        ToolKind::DirtyDishes,
+        ToolKind::Laundry,
+        ToolKind::SleepingCat,
     ]
     .into_iter()
     .map(tool_def)
@@ -156,6 +197,7 @@ pub struct PlacementState {
     pub placements: Vec<Placement>,
     pub remaining: Vec<ToolStock>,
     pub food: Vec<ContactSurface>,
+    pub objects: Vec<ContactSurface>,
 }
 #[derive(Clone, Debug, Serialize, TS)]
 #[serde(rename_all = "camelCase")]
@@ -224,7 +266,8 @@ pub fn resolve_placements(
         }) || !level.geometry.contains_body(placement.position, radius)
         {
             return Err(
-                "object footprint must fit open floor in one room and clear walls and solids".into(),
+                "object footprint must fit open floor in one room and clear walls and solids"
+                    .into(),
             );
         }
         if rules
@@ -269,7 +312,7 @@ pub fn resolve_placements(
         }
     }
     let mut sources = level.sources.clone();
-    let mut food_defs = level.food.clone();
+    let food_defs = &level.food;
     if food_defs.len() > 256
         || food_defs
             .iter()
@@ -277,28 +320,35 @@ pub fn resolve_placements(
     {
         return Err("food requires floor positions and at most 256 surfaces".into());
     }
+    let mut food = food_defs
+        .iter()
+        .enumerate()
+        .map(|(id, food)| food.surface(id as u32))
+        .collect::<Result<Vec<_>, _>>()?;
+    let mut objects = vec![];
+    let mut surface_id = food.len() as u32;
     let mut field_config = level.field_config.clone();
     for placement in all {
-        match tool_def(placement.kind).effect {
-            ToolEffect::Source {
-                kind,
-                radius,
-                rate,
-                food,
-            } => {
+        let definition = tool_def(placement.kind);
+        if let Some(shape) = definition.contact {
+            let surfaces =
+                shape.placed_surfaces(placement.position, placement.heading, surface_id)?;
+            surface_id += surfaces.len() as u32;
+            if definition.edible {
+                food.extend(surfaces);
+            } else {
+                objects.extend(surfaces);
+            }
+        }
+        match definition.effect {
+            ToolEffect::None => {}
+            ToolEffect::Source { kind, radius, rate } => {
                 sources.push(Source {
                     position: placement.position,
                     radius,
                     rate,
                     kind,
                 });
-                if let Some(shape) = food {
-                    food_defs.push(FoodDef {
-                        position: placement.position,
-                        heading: placement.heading,
-                        shape,
-                    });
-                }
             }
             ToolEffect::Fan {
                 reach,
@@ -313,18 +363,14 @@ pub fn resolve_placements(
             }),
         }
     }
-    if sources.len() > 256 || food_defs.len() > 256 || field_config.fans.len() > 64 {
+    if sources.len() > 256 || food.len() + objects.len() > 256 || field_config.fans.len() > 64 {
         return Err("resolved setup exceeds field/body source limits".into());
     }
-    let food = food_defs
-        .iter()
-        .enumerate()
-        .map(|(id, food)| food.surface(id as u32))
-        .collect::<Result<Vec<_>, _>>()?;
     Ok(ResolvedSetup {
         state: PlacementState {
             placements,
             food,
+            objects,
             remaining: remaining
                 .into_iter()
                 .map(|(kind, count)| ToolStock { kind, count })

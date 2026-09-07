@@ -80,7 +80,13 @@ def dishes():
         z=.008+n*.018; segments=40
         profile=[(.0,z),(.09,z),(.122,z+.014),(.139,z+.021),(.137,z+.027),(.12,z+.024),(.087,z+.01),(.0,z+.01)]
         verts=[(r*cos(j*2*pi/segments),r*sin(j*2*pi/segments),zz) for r,zz in profile for j in range(segments)]
-        faces=[(i*segments+j,i*segments+(j+1)%segments,(i+1)*segments+(j+1)%segments,(i+1)*segments+j) for i in range(len(profile)-1) for j in range(segments)]
+        faces=[]
+        for i in range(len(profile)-1):
+            for j in range(segments):
+                a,b,c,d=i*segments+j,i*segments+(j+1)%segments,(i+1)*segments+(j+1)%segments,(i+1)*segments+j
+                if profile[i][0] == 0: faces.append((a,c,d))
+                elif profile[i+1][0] == 0: faces.append((a,b,c))
+                else: faces.append((a,b,c,d))
         mesh('Stacked shallow plate',verts,faces,ceramic); ring('Glazed rim',(0,0,z+.026),.137,.002,edge)
     ellipsoid('Dried sauce smear',(-.025,-.015,.073),(.063,.045,.0015),sauce)
     rng=random.Random(23)
@@ -104,7 +110,11 @@ def laundry():
         for p in obj.data.polygons:p.use_smooth=True
         # Closed underside avoids a single-sided cloth silhouette when viewed from below.
         boundary=[verts[i] for i in range(nx+1)]+[verts[j*(nx+1)+nx] for j in range(1,ny+1)]+[verts[ny*(nx+1)+i] for i in range(nx-1,-1,-1)]+[verts[j*(nx+1)] for j in range(ny-1,0,-1)]
-        mesh('Garment underside',boundary,[tuple(range(len(boundary)-1,-1,-1))],finish)
+        count=len(boundary)
+        underside=boundary+[(x,y,z-.002) for x,y,z in boundary]
+        faces=[tuple(range(2*count-1,count-1,-1))]
+        faces.extend((i,count+i,count+(i+1)%count,(i+1)%count) for i in range(count))
+        mesh('Garment thickness',underside,faces,finish)
         tube('Rolled garment hem',boundary+[boundary[0]],.003,seam)
     ellipsoid('Rolled sock',(.18,-.13,.045),(.11,.047,.038),fabric)
 

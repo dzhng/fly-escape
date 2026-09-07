@@ -21,6 +21,7 @@ fn numerical_producer_handles_actual_requests() {
         &geometry,
         std::slice::from_ref(&apple),
         &[],
+        &[],
         ExitOpening {
             a: Point { x: 1., z: -0.1 },
             b: Point { x: 1., z: 0.1 },
@@ -41,14 +42,14 @@ fn numerical_producer_handles_actual_requests() {
         let mut up = [0., 1., 0.];
         if aligned {
             up = world
-                .food
+                .surfaces
                 .below([0.02, 0.2, -0.003], 0.4)
                 .unwrap()
                 .unwrap()
                 .normal;
         }
         let sample = world
-            .food
+            .surfaces
             .support_at(world.hull, apple.id, [0.02, -0.003], heading, up)
             .unwrap()
             .unwrap();
@@ -121,6 +122,7 @@ fn motion_requests_advance_within_budget() {
         &geometry,
         std::slice::from_ref(&apple),
         &[],
+        &[],
         ExitOpening {
             a: Point { x: 1., z: -0.1 },
             b: Point { x: 1., z: 0.1 },
@@ -157,10 +159,15 @@ fn motion_requests_advance_within_budget() {
             let (x, z) = if center { (0., 0.) } else { (0.02, -0.003) };
             let mut up = [0., 1., 0.];
             if aligned {
-                up = world.food.below([x, 0.2, z], 0.4).unwrap().unwrap().normal;
+                up = world
+                    .surfaces
+                    .below([x, 0.2, z], 0.4)
+                    .unwrap()
+                    .unwrap()
+                    .normal;
             }
             let sample = world
-                .food
+                .surfaces
                 .support_at(world.hull, apple.id, [x, z], heading, up)
                 .unwrap()
                 .unwrap();
@@ -216,7 +223,7 @@ fn motion_requests_advance_within_budget() {
                     let p = result.motion.at(t).unwrap();
                     assert!(
                         world
-                            .food
+                            .surfaces
                             .penetration(
                                 world.hull,
                                 [p.pose.position.x, p.height, p.pose.position.z],

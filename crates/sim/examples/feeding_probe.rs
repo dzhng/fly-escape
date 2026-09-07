@@ -110,6 +110,7 @@ fn run(
         &geometry,
         &food,
         &[],
+        &[],
         ExitOpening {
             a: Point { x: 100., z: 49. },
             b: Point { x: 100., z: 51. },
@@ -167,7 +168,9 @@ fn run(
             f64::from((values[3] + values[5]) / 2. > config.landing_threshold);
         result.flight_above_threshold_fraction += f64::from(values[6] > config.takeoff_threshold);
         let body_active = body.state().outcome.is_none();
-        let events = body.step(&out, &world, Point::default(), 0.1, tick as u32)?;
+        let events = body
+            .step(&out, &world, Point::default(), 0.1, tick as u32)?
+            .events;
         result.mode_transitions += events
             .iter()
             .filter(|e| matches!(e.kind, BodyEventKind::ModeChanged { .. }))

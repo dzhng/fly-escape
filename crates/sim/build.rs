@@ -25,6 +25,11 @@ fn main() {
         root.join("../../Cargo.lock"),
         root.join("../../Cargo.toml"),
         root.join("../../assets/food/apple/contact.json"),
+        root.join("../../assets/food/banana/contact.json"),
+        root.join("../../assets/household/worn-shoes/contact.json"),
+        root.join("../../assets/household/dirty-dishes/contact.json"),
+        root.join("../../assets/household/crumpled-laundry/contact.json"),
+        root.join("../../assets/household/sleeping-cat/contact.json"),
         root.join("../../assets/fly/contact-hull.json"),
         root.join("../../assets/house/catalog.json"),
     ]);

@@ -79,7 +79,7 @@ fn food_patch(x: f64, z: f64, radius: f64) -> sim::surface::ContactSurface {
 fn food_contact_without_proboscis_motor_activity_never_starts_feeding() {
     let g = geometry();
     let foods = [food_patch(2., 2., 0.8)];
-    let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
+    let world = BodyWorld::new(&g, &foods, &[], &[], exit(), 100).unwrap();
     let mut b = body(2., 2., 3.);
     for tick in 1..=10 {
         b.step(&neural(0., 0.), &world, Point::default(), 0.1, tick)
@@ -92,7 +92,7 @@ fn food_contact_without_proboscis_motor_activity_never_starts_feeding() {
 fn feeding_replenishes_within_capacity_then_contact_loss_allows_later_starvation() {
     let g = geometry();
     let foods = [food_patch(2., 2., 0.2)];
-    let world = BodyWorld::new(&g, &foods, &[], exit(), 6000).unwrap();
+    let world = BodyWorld::new(&g, &foods, &[], &[], exit(), 6000).unwrap();
     let mut b = body(2., 2., 1.);
     let events = b
         .step(&neural(0., 0.5), &world, Point::default(), 1., 1)
@@ -121,7 +121,7 @@ fn feeding_replenishes_within_capacity_then_contact_loss_allows_later_starvation
 fn meal_plus_timeout_scores_zero_and_terminal_body_is_frozen() {
     let g = geometry();
     let foods = [food_patch(2., 2., 0.5)];
-    let world = BodyWorld::new(&g, &foods, &[], exit(), 2).unwrap();
+    let world = BodyWorld::new(&g, &foods, &[], &[], exit(), 2).unwrap();
     let mut b = body(2., 2., 1.);
     b.step(&neural(0., 0.5), &world, Point::default(), 1., 1)
         .unwrap();
@@ -148,7 +148,7 @@ fn meal_plus_timeout_scores_zero_and_terminal_body_is_frozen() {
 #[test]
 fn swept_outward_exit_counts_once_and_adjacent_or_covering_wall_never_escapes() {
     let g = geometry();
-    let world = BodyWorld::new(&g, &[], &[], exit(), 20).unwrap();
+    let world = BodyWorld::new(&g, &[], &[], &[], exit(), 20).unwrap();
     let mut open = body(2., 2., 10.);
     let events = open
         .step(&neural(2., 0.), &world, Point { x: 5., z: 0. }, 1., 1)
@@ -180,7 +180,7 @@ fn swept_outward_exit_counts_once_and_adjacent_or_covering_wall_never_escapes() 
         a: Point { x: 4., z: 1. },
         b: Point { x: 4., z: 3. },
     });
-    let blocked_world = BodyWorld::new(&blocked, &[], &[], exit(), 20).unwrap();
+    let blocked_world = BodyWorld::new(&blocked, &[], &[], &[], exit(), 20).unwrap();
     let mut b = body(2., 2., 10.);
     b.step(
         &neural(2., 0.),
@@ -197,7 +197,7 @@ fn swept_outward_exit_counts_once_and_adjacent_or_covering_wall_never_escapes() 
 fn takeoff_and_landing_require_their_neural_readouts_and_flight_cannot_feed() {
     let g = geometry();
     let foods = [food_patch(2., 2., 1.)];
-    let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
+    let world = BodyWorld::new(&g, &foods, &[], &[], exit(), 100).unwrap();
     let mut b = body(2., 2., 3.);
     let mut command = neural(0., 1.);
     command.motor.flight_thrust = 0.5;
@@ -237,7 +237,7 @@ fn takeoff_and_landing_require_their_neural_readouts_and_flight_cannot_feed() {
 fn feeding_is_capped_and_cannot_restart_until_motor_resets() {
     let g = geometry();
     let foods = [food_patch(2., 2., 0.5)];
-    let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
+    let world = BodyWorld::new(&g, &foods, &[], &[], exit(), 100).unwrap();
     let mut b = body(2., 2., 1.);
     let mut ended = false;
     for tick in 1..=3 {
@@ -279,7 +279,7 @@ fn feeding_is_capped_and_cannot_restart_until_motor_resets() {
 #[test]
 fn wind_is_world_space_without_a_hidden_turn_and_inward_crossing_is_not_escape() {
     let g = geometry();
-    let world = BodyWorld::new(&g, &[], &[], exit(), 100).unwrap();
+    let world = BodyWorld::new(&g, &[], &[], &[], exit(), 100).unwrap();
     let mut east = body(2., 2., 10.);
     let mut south = body(2., 2., 10.);
     east.step(&neural(0., 0.), &world, Point { x: 1., z: 0. }, 0.1, 1)
@@ -305,13 +305,13 @@ fn swept_zapper_or_earlier_starvation_preempts_exit() {
         center: Point { x: 3., z: 2. },
         radius: 0.1,
     }];
-    let world = BodyWorld::new(&g, &[], &zappers, exit(), 100).unwrap();
+    let world = BodyWorld::new(&g, &[], &[], &zappers, exit(), 100).unwrap();
     let mut b = body(2., 2., 10.);
     b.step(&neural(2., 0.), &world, Point { x: 5., z: 0. }, 1., 1)
         .unwrap();
     assert_eq!(b.state().outcome, Some(TerminalOutcome::Zapped));
     assert!(b.state().pose.position.x < 3.);
-    let clear = BodyWorld::new(&g, &[], &[], exit(), 100).unwrap();
+    let clear = BodyWorld::new(&g, &[], &[], &[], exit(), 100).unwrap();
     let mut hungry = body(2., 2., 0.01);
     hungry
         .step(&neural(2., 0.), &clear, Point { x: 5., z: 0. }, 1., 1)
@@ -324,7 +324,7 @@ fn swept_zapper_or_earlier_starvation_preempts_exit() {
 fn feeding_does_not_exempt_a_body_from_net_energy_loss() {
     let g = geometry();
     let foods = [food_patch(2., 2., 10.)];
-    let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
+    let world = BodyWorld::new(&g, &foods, &[], &[], exit(), 100).unwrap();
     let mut b = Body::new(
         BodyPose {
             position: Point { x: 2., z: 2. },
@@ -346,7 +346,7 @@ fn feeding_does_not_exempt_a_body_from_net_energy_loss() {
 fn a_proboscis_spike_starts_a_bout_that_stays_latched_between_pulses() {
     let g = geometry();
     let foods = [food_patch(2., 2., 0.5)];
-    let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
+    let world = BodyWorld::new(&g, &foods, &[], &[], exit(), 100).unwrap();
     let mut b = body(2., 2., 1.);
     let mut pulse = neural(0., 0.);
     pulse.groups[0].spike_fraction = 0.25;
@@ -364,7 +364,7 @@ fn a_proboscis_spike_starts_a_bout_that_stays_latched_between_pulses() {
 fn landing_spike_enforces_one_game_second_of_ground_dwell() {
     for dt in [0.1, 0.25] {
         let g = geometry();
-        let world = BodyWorld::new(&g, &[], &[], exit(), 100).unwrap();
+        let world = BodyWorld::new(&g, &[], &[], &[], exit(), 100).unwrap();
         let mut b = body(2., 2., 10.);
         let mut flight = neural(0., 0.);
         flight.motor.flight_thrust = 0.5;
@@ -401,7 +401,7 @@ fn landing_spike_enforces_one_game_second_of_ground_dwell() {
 fn a_new_bout_requires_motor_rearming_after_contact_loss() {
     let g = geometry();
     let foods = [food_patch(2., 2., 0.2)];
-    let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
+    let world = BodyWorld::new(&g, &foods, &[], &[], exit(), 100).unwrap();
     let mut b = body(2., 2., 1.);
     let pulse = neural(0., 0.25);
     b.step(&pulse, &world, Point::default(), 0.1, 1).unwrap();
@@ -421,7 +421,7 @@ fn a_new_bout_requires_motor_rearming_after_contact_loss() {
 fn tonic_voltage_without_spikes_does_not_initiate_feeding_or_landing() {
     let g = geometry();
     let foods = [food_patch(2., 2., 0.5)];
-    let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
+    let world = BodyWorld::new(&g, &foods, &[], &[], exit(), 100).unwrap();
     let mut b = body(2., 2., 1.);
     let mut quiet = neural(0., 0.);
     quiet.groups[0].mean_voltage = 1.;
@@ -449,7 +449,7 @@ fn tonic_voltage_without_spikes_does_not_initiate_feeding_or_landing() {
 fn airborne_landing_is_latched_and_terminal_height_freezes_at_the_actual_time() {
     let g = geometry();
     let foods = [food_patch(2., 2., 1.)];
-    let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
+    let world = BodyWorld::new(&g, &foods, &[], &[], exit(), 100).unwrap();
     let start = BodyPose {
         position: Point { x: 2., z: 2. },
         heading: 0.,
@@ -500,7 +500,7 @@ fn native_fly_lands_on_authored_apple_before_it_can_feed() {
     }
     .surface(7)
     .unwrap();
-    let world = BodyWorld::new(&g, &[apple], &[], exit(), 100).unwrap();
+    let world = BodyWorld::new(&g, &[apple], &[], &[], exit(), 100).unwrap();
     let mut b = Body::new_in_mode(
         BodyPose {
             position: Point { x: 2., z: 2. },
@@ -549,7 +549,7 @@ fn apple_support_follows_walking_and_is_lost_at_the_edge() {
     }
     .surface(7)
     .unwrap();
-    let world = BodyWorld::new(&g, &[apple], &[], exit(), 1000).unwrap();
+    let world = BodyWorld::new(&g, &[apple], &[], &[], exit(), 1000).unwrap();
     let mut b = Body::new_in_mode(
         BodyPose {
             position: Point { x: 2., z: 2. },
@@ -604,7 +604,7 @@ fn apple_support_follows_walking_and_is_lost_at_the_edge() {
 fn recorded_orientation_tracks_turns_and_freezes_with_terminal_pose() {
     use parry3d_f64::math::{Rotation, Vector};
     let g = geometry();
-    let world = BodyWorld::new(&g, &[], &[], exit(), 1).unwrap();
+    let world = BodyWorld::new(&g, &[], &[], &[], exit(), 1).unwrap();
     let mut b = body(2., 2., 10.);
     let initial = b.state().rotation;
     let mut command = neural(0.2, 0.);
@@ -646,7 +646,7 @@ fn neighboring_apple_blocks_while_time_advances() {
         serde_json::from_str(include_str!("../../../assets/fly/contact-hull.json")).unwrap();
     let vertices: Vec<[f64; 3]> = serde_json::from_value(asset["vertices"].clone()).unwrap();
     let hull = sim::surface::ContactHull::new(&vertices).unwrap();
-    let world = BodyWorld::new(&g, &[apple, neighbor], &[], exit(), 1000).unwrap();
+    let world = BodyWorld::new(&g, &[apple, neighbor], &[], &[], exit(), 1000).unwrap();
     let mut b = Body::new_in_mode(
         BodyPose {
             position: Point { x: 2., z: 2. },
@@ -719,7 +719,7 @@ fn neighboring_apple_blocks_while_time_advances() {
 #[test]
 fn feeding_prefix_energy_and_terminal_hold_share_the_motion_clock() {
     let g = geometry();
-    let world = BodyWorld::new(&g, &[food_patch(2., 2., 1.)], &[], exit(), 100).unwrap();
+    let world = BodyWorld::new(&g, &[food_patch(2., 2., 1.)], &[], &[], exit(), 100).unwrap();
     let config = BodyConfig {
         idle_cost: 1.,
         feeding_rate: 0.1,
@@ -768,7 +768,7 @@ fn takeoff_from_tilted_apple_makes_progress() {
     }
     .surface(7)
     .unwrap();
-    let world = BodyWorld::new(&g, &[apple], &[], exit(), 1000).unwrap();
+    let world = BodyWorld::new(&g, &[apple], &[], &[], exit(), 1000).unwrap();
     let mut b = Body::new_in_mode(
         BodyPose {
             position: Point { x: 2., z: 2. },
@@ -840,7 +840,7 @@ fn takeoff_from_tilted_apple_makes_progress() {
 #[test]
 fn oblique_wind_slides_at_actual_contact_time_and_a_corner_stops_both_axes() {
     let g = geometry();
-    let world = BodyWorld::new(&g, &[], &[], exit(), 100).unwrap();
+    let world = BodyWorld::new(&g, &[], &[], &[], exit(), 100).unwrap();
     let mut b = body(0.2, 2., 3.);
     let radius = BodyConfig::default().body_radius;
     let step = b
@@ -878,7 +878,7 @@ fn native_fly_can_land_and_feed_on_the_authored_banana() {
     }
     .surface(7)
     .unwrap();
-    let world = BodyWorld::new(&g, &[banana], &[], exit(), 100).unwrap();
+    let world = BodyWorld::new(&g, &[banana], &[], &[], exit(), 100).unwrap();
     let mut b = Body::new_in_mode(
         BodyPose {
             position: Point { x: 2., z: 2. },
@@ -909,4 +909,118 @@ fn native_fly_can_land_and_feed_on_the_authored_banana() {
         .unwrap();
     assert_eq!(b.state().mode, BodyMode::Feeding);
     assert!(b.state().reserve > reserve);
+}
+
+#[test]
+fn household_surfaces_support_walking_but_never_feed_even_with_proboscis_spikes() {
+    use sim::native_object::NativeObjectShape;
+    for (shape, local_x, local_z) in [
+        (NativeObjectShape::WornShoes, -0.079, 0.06),
+        (NativeObjectShape::DirtyDishes, 0., 0.),
+        (NativeObjectShape::Laundry, 0., 0.),
+        (NativeObjectShape::SleepingCat, 0., 0.),
+    ] {
+        let surfaces = shape
+            .placed_surfaces(Point { x: 2., z: 2. }, 0., 7)
+            .unwrap();
+        let world = BodyWorld::new(&geometry(), &[], &surfaces, &[], exit(), 100)
+            .unwrap_or_else(|error| panic!("{shape:?} world: {error}"));
+        let mut b = Body::new_in_mode(
+            BodyPose {
+                position: Point {
+                    x: 2. + local_x,
+                    z: 2. + local_z,
+                },
+                heading: 0.,
+            },
+            10.,
+            BodyConfig::default(),
+            BodyMode::Flying,
+        )
+        .unwrap();
+        let mut landing = neural(0., 1.);
+        landing.groups.push(GroupActivity {
+            id: "landingL".into(),
+            mean_voltage: 0.,
+            spike_fraction: 1.,
+        });
+        for tick in 1..=10 {
+            b.step(&landing, &world, Point::default(), 0.1, tick)
+                .unwrap_or_else(|error| panic!("{shape:?} landing: {error}"));
+            if b.state().mode == BodyMode::Walking {
+                break;
+            }
+        }
+        assert!(
+            b.state()
+                .support
+                .is_some_and(|id| surfaces.iter().any(|s| s.id == id)),
+            "{shape:?}"
+        );
+        assert!(
+            b.state().height > 0.01,
+            "{shape:?} must rest above the floor"
+        );
+        assert!(!b.contacts(&world).unwrap().food, "{shape:?} is not food");
+        let start = b.state().clone();
+        b.step(&neural(0.01, 1.), &world, Point::default(), 0.1, 11)
+            .unwrap_or_else(|error| panic!("{shape:?} supported walk: {error}"));
+        assert_eq!(
+            b.state().mode,
+            BodyMode::Walking,
+            "{shape:?} cannot begin a feeding bout"
+        );
+        assert_eq!(
+            b.state().support,
+            start.support,
+            "{shape:?} should retain local support"
+        );
+        assert!(
+            (b.state().pose.position.x - start.pose.position.x)
+                .hypot(b.state().pose.position.z - start.pose.position.z)
+                > 0.0001,
+            "{shape:?} must make supported progress"
+        );
+        assert!(
+            b.state().reserve < start.reserve,
+            "{shape:?} cannot replenish energy"
+        );
+        assert!(!b.contacts(&world).unwrap().food);
+    }
+}
+
+#[test]
+fn household_meshes_do_not_block_the_air_above_their_native_height() {
+    use sim::native_object::NativeObjectShape;
+    for shape in [
+        NativeObjectShape::WornShoes,
+        NativeObjectShape::DirtyDishes,
+        NativeObjectShape::Laundry,
+        NativeObjectShape::SleepingCat,
+    ] {
+        let surfaces = shape
+            .placed_surfaces(Point { x: 2., z: 2. }, 0., 7)
+            .unwrap();
+        let world = BodyWorld::new(&geometry(), &[], &surfaces, &[], exit(), 100).unwrap();
+        let mut b = Body::new_in_mode(
+            BodyPose {
+                position: Point { x: 1.5, z: 2. },
+                heading: 0.,
+            },
+            10.,
+            BodyConfig::default(),
+            BodyMode::Flying,
+        )
+        .unwrap();
+        let mut forward = neural(0., 1.);
+        forward.motor.flight_thrust = 1.;
+        b.step(&forward, &world, Point::default(), 0.5, 1).unwrap();
+        assert!(
+            (b.state().pose.position.x - 2.5).abs() < 1e-8,
+            "{shape:?} must allow a fly to cross above it"
+        );
+        assert_eq!(b.state().mode, BodyMode::Flying);
+        assert!(b.state().support.is_none());
+        assert!(!b.contacts(&world).unwrap().food);
+    }
 }
