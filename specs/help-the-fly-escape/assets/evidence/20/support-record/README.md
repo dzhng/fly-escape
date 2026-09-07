@@ -47,22 +47,7 @@ modes now also clears food support to represent an actual airborne state.
 
 ## Next bounded consumer experiment
 
-After the measured rotating face/edge seam, replace the isolated prototype's
-sample-time SLERP plus `support_at` reprojection with one core-owned motion
-representation. Stored start, planar displacement, canonical rotation parameters
-and retained contact formulas must describe the same path for body events and
-fractional replay. Construct rotation parameters once; do not prove agreement to
-a separate ideal trajectory that no consumer uses. Preserve the authoritative
-start and prevent numerical drift across successive segments.
-
-Independent numerical review distinguishes representation error from a geometric
-gap. A whole-interval bound on combined start, evaluator and playback conversion
-error may use the existing10nm contact precision once, expressed as displacement
-of hull points (including rotation error). Bit-identical floating-point results
-are unnecessary. Each stage does not receive a fresh allowance. Endpoint residuals
-alone do not prove that bound, and no size of rounding allowance permits a
-positive-width interval without valid contact witnesses or obstacle exclusion.
-This concerns CPU contact/pose evaluation; it is not a raster precision guarantee.
+The [actual-request numerical reslice](../../../../slices/20-furnished-contact.md) supersedes the formal whole-interval agreement proposal. Replace sample-time support reprojection with one Rust-generated knot trajectory, consumed by body events and fractional replay. Preserve supplied starts and original neural intent. Query precision remains10nm; additional trajectory/replay error and visible maximum-close error have separate provisional diagnostic limits in the slice. Dense independent sweeps and halved-step convergence supply empirical evidence, not a formal all-instants certificate. No approximation allowance permits a physical gap to become edible support or a failed interval to become an obstacle.
 
 Current playback in `apps/web/src/playback.tsx` reads endpoint frames and blends
 position plus renderer quaternion interpolation. `FrameArchive` owns transferred
