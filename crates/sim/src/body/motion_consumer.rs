@@ -237,3 +237,127 @@ fn motion_requests_advance_within_budget() {
         }
     }
 }
+
+#[test]
+fn native_shoe_rim_blocks_supported_motion_without_aborting_the_tick() {
+    // Production second-house seed 18065457143613761157, fly 9, tick 141.
+    let state = BodyState {
+        height: 0.11172231836479321,
+        mode: BodyMode::Walking,
+        outcome: None,
+        pose: BodyPose {
+            heading: 2.8234335720516226,
+            position: Point {
+                x: 2.6755426166459073,
+                z: 6.711418810252831,
+            },
+        },
+        reserve: 9.800000000000102,
+        rotation: [
+            0.03067463703697428,
+            -0.5850770845133865,
+            0.03628180674069793,
+            0.8095847715462514,
+        ],
+        support: Some(25),
+    };
+    let objects = crate::native_object::NativeObjectShape::WornShoes
+        .placed_surfaces(Point { x: 2.6, z: 6.7 }, 0.8, 2)
+        .unwrap();
+    let geometry = Geometry {
+        rooms: vec![crate::environment::RectRoom {
+            id: 1,
+            min: Point { x: 0., z: 0. },
+            max: Point { x: 10., z: 10. },
+        }],
+        walls: vec![],
+        solids: vec![],
+    };
+    let world = BodyWorld::new(
+        &geometry,
+        &[],
+        &objects,
+        &[],
+        ExitOpening {
+            a: Point { x: 10., z: 1. },
+            b: Point { x: 10., z: 2. },
+            outward: Point { x: 1., z: 0. },
+        },
+        1000,
+    )
+    .unwrap();
+    let desired = desired_pose(
+        state.pose,
+        Locomotion {
+            thrust: 0.6814009710002883,
+            turn: 0.02024135047684794,
+            speed: 0.12,
+            turn_gain: 8.,
+        },
+        Point::default(),
+        0.1,
+    );
+    let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
+    assert_eq!(trace.points.first().unwrap().fraction, 0.);
+    assert_eq!(trace.end().fraction, 1.);
+    let tail = &trace.points[trace.points.len() - 2];
+    assert_eq!(
+        tail.pose,
+        trace.end().pose,
+        "blocked remainder holds its last verified pose"
+    );
+    assert_eq!(tail.rotation, trace.end().rotation);
+    assert!(tail.fraction > 0. && tail.fraction < 1.);
+    assert!(
+        tail.pose.position.distance(state.pose.position) > 0.001,
+        "retain the verified approach instead of freezing the whole request"
+    );
+    assert_eq!(trace.end().support, state.support);
+    assert!(
+        trace.end().pose.position.distance(desired.position) > 1e-5,
+        "blocked motion cannot claim to reach its request"
+    );
+    for i in 0..=100 {
+        let p = trace.at(i as f64 / 100.).unwrap();
+        assert!(
+            world
+                .surfaces
+                .neighbor_penetration(
+                    world.hull,
+                    [p.pose.position.x, p.height, p.pose.position.z],
+                    p.rotation,
+                    state.support.unwrap()
+                )
+                .unwrap()
+                <= 3e-6
+        );
+    }
+    // The collision result is local to this request, not a permanently stuck body.
+    let mut airborne = state.clone();
+    trace.end().apply(&mut airborne);
+    airborne.mode = BodyMode::Flying;
+    let takeoff = motion::advance(&world, &airborne, airborne.pose, 0.1, 0.002632).unwrap();
+    assert!(takeoff.end().height > airborne.height);
+    assert!(takeoff.end().support.is_none());
+
+    // This was the rejected penetrative candidate, not a valid collision-stop pose.
+    let mut invalid = state.clone();
+    invalid.pose = BodyPose {
+        position: Point {
+            x: 2.668859341094733,
+            z: 6.713500595041672,
+        },
+        heading: 2.8372961345630845,
+    };
+    invalid.height = 0.11020450435284063;
+    invalid.rotation = [
+        0.08686251057183285,
+        -0.5842617566230327,
+        0.09497281409803214,
+        0.8012947451389076,
+    ];
+    assert!(
+        motion::advance(&world, &invalid, invalid.pose, 0.1, 0.002632).is_err(),
+        "an invalid initial penetration remains an error"
+    );
+}

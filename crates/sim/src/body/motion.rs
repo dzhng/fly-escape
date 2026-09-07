@@ -257,8 +257,12 @@ pub(super) fn advance(
                     support: Some(id),
                     grounded: true,
                 };
-                supported_knots(world, &point, endpoint, &mut trace.points, &mut work)?;
+                let progress =
+                    supported_knots(world, &point, endpoint, &mut trace.points, &mut work)?;
                 point = trace.end().clone();
+                if matches!(progress, SupportedProgress::Blocked) {
+                    break;
+                }
                 elapsed += step;
                 origin = point.pose.position;
                 origin_time = elapsed;
@@ -519,13 +523,41 @@ fn mix(a: &MotionPoint, b: &MotionPoint, t: f64) -> MotionPoint {
         grounded: a.grounded,
     }
 }
+enum SupportedProgress {
+    Complete,
+    Blocked,
+}
+
+fn stop_supported(
+    world: &BodyWorld,
+    out: &[MotionPoint],
+    work: &mut Work,
+) -> Result<SupportedProgress, String> {
+    // A known collision can hold a verified prefix; an already invalid starting
+    // pose cannot be reclassified as successful stationary motion.
+    let last = out.last().unwrap();
+    work.query()?;
+    if world.surfaces.neighbor_penetration(
+        world.hull,
+        last.root(),
+        last.rotation,
+        last.support.unwrap(),
+    )? > MOTION_ERROR
+    {
+        return Err(
+            "numerical support unresolved: retained pose penetrates neighboring surface".into(),
+        );
+    }
+    Ok(SupportedProgress::Blocked)
+}
+
 fn supported_knots(
     world: &BodyWorld,
     start: &MotionPoint,
     end: MotionPoint,
     out: &mut Vec<MotionPoint>,
     work: &mut Work,
-) -> Result<(), String> {
+) -> Result<SupportedProgress, String> {
     let selected = start.support.unwrap();
     let neighbors = world.surfaces.has_other_surface(selected);
     if neighbors {
@@ -535,9 +567,7 @@ fn supported_knots(
             .neighbor_penetration(world.hull, end.root(), end.rotation, selected)?
             > MOTION_ERROR
         {
-            return Err(
-                "numerical support unresolved: endpoint blocked by neighboring surface".into(),
-            );
+            return stop_supported(world, out, work);
         }
     }
     let mut stack = vec![(start.clone(), end, 0usize)];
@@ -599,10 +629,7 @@ fn supported_knots(
                         selected,
                     )? > MOTION_ERROR
                     {
-                        return Err(
-                            "numerical support unresolved: midpoint blocked by neighboring surface"
-                                .into(),
-                        );
+                        return stop_supported(world, out, work);
                     }
                 }
                 split = Some(middle);
@@ -623,7 +650,7 @@ fn supported_knots(
             append_point(out, b)?;
         }
     }
-    Ok(())
+    Ok(SupportedProgress::Complete)
 }
 
 #[cfg(test)]
