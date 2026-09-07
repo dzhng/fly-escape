@@ -205,6 +205,59 @@ The source remains `/tmp/fly-rotation-probe/src/bin/coverage.rs`. This complete
 local-set implementation is a correctness oracle for reducing competing-feature
 work, not a proposed production replay function.
 
+## Conservative exclusion over a finite rotating interval
+
+The [interval experiment](interval-results.json.gz) reduces competing triangles
+using a geometric whole-interval excursion bound. It does not infer safety from
+sampled absence. Its specified candidate path uses linear root XZ translation,
+shortest quaternion interpolation, and the retained triangle-face/hull-vertex
+height formula above. The formula remains defined after feature-domain loss,
+which lets the filter retain possible collisions even for an invalid proposed
+path. It does not make that path valid.
+
+Let `theta` be the total quaternion angle, `R` the largest native hull vertex
+radius, `v` the retained vertex, `n` the unit triangle normal with positive `n.y`,
+and `dx,dz` the interval's planar displacement. Relative to the midpoint:
+
+```
+vertical = (abs(n.x*dx + n.z*dz)/2 + 2*length(v)*sin(theta/4)) / n.y
+rootBound = sqrt((dx*dx + dz*dz)/4 + vertical*vertical)
+B = rootBound + 2*R*sin(theta/4)
+```
+
+Every transformed hull point lies within `B` of its midpoint counterpart: the
+first term bounds root travel, and the second bounds rotational travel. Distance
+to a fixed triangle is Lipschitz under that excursion. Consequently, midpoint
+hull-to-triangle distance greater than `B` excludes contact throughout the
+interval. The implementation keeps an additional existing 1e-8 m numerical
+margin in this exclusion comparison; it does not offset the geometry or path.
+This exact-arithmetic argument still depends on the numerical distance query's
+accuracy. Sample checks exercise that implementation; they are not a formal
+floating-point error proof.
+
+A conservative midpoint root box expanded by `R + rootBound` first rejects distant
+triangles. The remaining triangle distances require no active-winner IDs. On the
+same authored apple, short turn/tilt/mixed intervals retain only triangle 201;
+a cone-crossing interval retains four triangles and an edge-crossing interval
+retains six. These short intervals perform 16 distance queries and cost about
+222–317 μs natively, including scanning all 1,520 triangle bounds. A broad 1.67 rad
+interval retains 23 triangles and costs about 399 μs. The broader interval honestly
+loses pruning power rather than dropping candidates to meet a fixed count.
+
+All six fixtures check actual transformed native vertices at 101 poses against
+the derived excursion bound and independently search for triangle contacts at
+those poses. They find no exceeded bounds or missed contacts. The retained
+feature is not validated by these checks; boundary-crossing fixtures can represent
+invalid proposed motion. Existing valid starting contact, feature-domain events,
+and competitor resolution are still required before moving a body.
+
+This provides an implementable candidate exclusion primitive: retain the certified
+triangle set until the specified interval expires or the path changes. Rebuilding
+on every rendered frame is not proposed. The cost and frequency of interval
+renewal, feature events and changed paths need measurement before an event-driven
+owner can be accepted. The scratch source is `src/bin/interval.rs` in the temporary
+probe crate; no core API or production cache is introduced.
+
 ## Remaining gates
 
 - Retain an active feature and its exact domain; cross its boundary without
@@ -222,6 +275,7 @@ work, not a proposed production replay function.
 - Preserve the native geometry and established numerical tolerance. Neither
   clearance padding nor a more permissive penetration threshold is adopted here.
 
-The next bounded experiment is reducing the complete local competitor set while
-preserving its results across feature changes and moving footprint boundaries.
-Continuous interval validity and browser work bounds remain separate gates.
+The next bounded experiment is resolving feature-domain and competitor events
+inside the certified interval set, then measuring interval renewal and path-change
+frequency. Continuous accepted-path validity and browser work bounds remain
+separate gates.
