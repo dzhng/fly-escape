@@ -467,7 +467,7 @@ export function AttemptPlayback({
           </span>
           <h1>{input ? "Watch your setup unfold." : "Twenty lives, one shared clock."}</h1>
         </div>
-        <a href="/lab/lifecycle">Lifecycle lab</a>
+        {!input && <a href="/lab/lifecycle">Lifecycle lab</a>}
       </header>
       <section className="workspace">
         <div className="world playback-world">
@@ -580,8 +580,8 @@ export function AttemptPlayback({
           <span className="eyebrow">Recorded neural activity</span>
           <h2>Read any fly’s record</h2>
           <p className="intro">
-            Each fly has its own neural state. Group voltage and firing are recorded during
-            production and read back at the shared playback time.
+            Neurons combine incoming signals and send brief electrical pulses called spikes.
+            These charts show each fly’s neural activity.
           </p>
           {input && display.state === "ended" && run.current?.archive.result && (
             <p role="status" data-testid="attempt-result">
