@@ -24,7 +24,7 @@ const names: Record<ToolKind, string> = {
   fruit: "Apple",
   banana: "Banana",
   crumbs: "Scent crumbs",
-  vinegar: "Strong vinegar",
+  vinegar: "Vinegar",
   lamp: "Lamp",
   shade: "Shade",
   fan: "Fan",
