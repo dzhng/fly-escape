@@ -1,0 +1,23 @@
+{
+  "sourceBase": "095db8c",
+  "tileGlbSha256": "b5e86fb10dcdf047ecfd4359bdf1fbe60c2436b0172e332cb2e135b17bd4a523",
+  "tileGlbBytes": 325504,
+  "images": 1,
+  "materials": 1,
+  "textureSize": [
+    1024,
+    1024
+  ],
+  "rgba8MipEstimateBytes": 5592405,
+  "canonicalFloor": {
+    "vertices": 20,
+    "triangles": 36,
+    "exactIdentity": true
+  },
+  "tests": {
+    "renderer": 52,
+    "typecheck": "pass (worktree paths config)"
+  },
+  "codexReview": "unavailable: configured model requires newer installed CLI",
+  "visualReview": "accepted bounded tile finish; final material realism open"
+}

@@ -1,4 +1,4 @@
-import type { RoomDetail } from "@fly-escape/game-renderer";
+import type { RoomDetail, RoomFloor } from "@fly-escape/game-renderer";
 import { loadWorldAssets } from "./world-assets";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -128,6 +128,7 @@ export function AttemptPlayback({
   client,
   catalog = [],
   roomDetails,
+  roomFloors,
   onReturn,
   onResult,
 }: {
@@ -135,6 +136,7 @@ export function AttemptPlayback({
   client?: AttemptClient;
   catalog?: ToolDef[];
   roomDetails?: readonly RoomDetail[];
+  roomFloors?: readonly RoomFloor[];
   onReturn?: () => void;
   onResult?: (result: AttemptResult) => void;
 }) {
@@ -223,6 +225,7 @@ export function AttemptPlayback({
           container.current!,
           reply.info.level.geometry,
           reply.info.spec.flyCount,
+          roomFloors,
         );
         scene.current.setContactGeometry(
           reply.info.resolvedSetup.state.food.slice(0, reply.info.level.food.length),

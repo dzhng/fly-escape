@@ -1,5 +1,5 @@
 import { objectThumbnails } from "../../../assets/tools/thumbnails";
-import type { RoomDetail } from "@fly-escape/game-renderer";
+import type { RoomDetail, RoomFloor } from "@fly-escape/game-renderer";
 import { loadWorldAssets } from "./world-assets";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -44,6 +44,7 @@ export function SetupGame({
 }: {
   content: {
     roomDetails?: readonly RoomDetail[];
+    roomFloors?: readonly RoomFloor[];
     level: LevelDef;
     tuning: AttemptTuning;
     catalog: ToolDef[];
@@ -111,7 +112,7 @@ export function SetupGame({
   }, [input, onAttemptChange]);
   useEffect(() => {
     if (input || !container.current) return;
-    const view = new WorldView(container.current, content.level.geometry, 20);
+    const view = new WorldView(container.current, content.level.geometry, 20, content.roomFloors);
     world.current = view;
     const spawn = content.level.spawn;
     if (spawn.kind === "cluster") view.setSpawnArea(spawn.min, spawn.max);
@@ -215,6 +216,7 @@ export function SetupGame({
         client={client}
         catalog={content.catalog}
         roomDetails={content.roomDetails}
+        roomFloors={content.roomFloors}
         onReturn={() => {
           client.cancel();
           setInput(undefined);

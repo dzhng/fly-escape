@@ -20,3 +20,5 @@ The [open doorway](doorway/README.md) frames an ordinary clear passage beneath a
 The [study and bedroom furnishings](author-study-bedroom.py) use native-sized closed bases so their visible floor occupancy agrees with the existing rectangular collision contract. The [kitchen run](kitchen/README.md) combines appliances and counter space under one placed footprint.
 
 The [open French window](exit-window/README.md) dresses a floor-level escape opening with outward-facing leaves; its clear passage must agree with the simulation exit.
+
+The [kitchen ceramic finish](tile-floor/README.md) reuses the physical floor kit with a portable material variant. Room appearance references existing room IDs; it cannot create simulation surfaces.

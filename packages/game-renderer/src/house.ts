@@ -6,7 +6,9 @@ import { disposeObjectResources } from "./resources";
 import catalog from "../../../assets/house/catalog.json";
 
 export type HousePart = "wall" | "floor" | "solid";
-export type HouseAsset = HousePart | FurnitureModel;
+export type RoomFloor = { roomId: number; finish: "tile" };
+export type HouseAsset = HousePart | "tileFloor" | FurnitureModel;
+const isFloor = (part: HouseAsset): part is "floor" | "tileFloor" => part === "floor" || part === "tileFloor";
 const PART_BOUNDS = {
   wall: [-0.5, 0, -0.06, 0.5, 2.5, 0.06],
   floor: [-0.5, -0.25, -0.5, 0.5, 0, 0.5],
@@ -15,13 +17,13 @@ const PART_BOUNDS = {
 
 /** Catalogue placement contracts stay separate from static GLB validation. */
 export function loadHousePart(bytes: ArrayBuffer, part: HouseAsset) {
-  const expected = part in PART_BOUNDS ? PART_BOUNDS[part as HousePart] : (() => {
+  const expected = part === "tileFloor" ? PART_BOUNDS.floor : part in PART_BOUNDS ? PART_BOUNDS[part as HousePart] : (() => {
     const [x, y, z] = catalog[part as FurnitureModel];
     return [-x / 2, 0, -z / 2, x / 2, y, z / 2] as const;
   })();
   return loadStaticHouseModel(bytes, {
-    name: part, bounds: expected, tolerance: part in PART_BOUNDS ? 0.001 : 1e-6,
-    castShadow: part !== "floor",
+    name: part, bounds: expected, tolerance: isFloor(part) || part in PART_BOUNDS ? 0.001 : 1e-6,
+    castShadow: !isFloor(part),
   });
 }
 
@@ -81,20 +83,27 @@ export class HouseGeometry {
   private wallViews: { group: THREE.Group; full: THREE.Group; base: THREE.Group; upper: THREE.Group; segment: Geometry["walls"][number] }[] = [];
   private readonly viewDirection = new THREE.Vector3();
   private readonly solidSources = new Map<"solid" | FurnitureModel, { source: THREE.Group; native: boolean }>();
-  constructor(private readonly geometry: Geometry) {
+  constructor(private readonly geometry: Geometry, private readonly roomFloors: readonly RoomFloor[] = []) {
+    const ids = new Set<number>();
+    for (const floor of roomFloors) {
+      if (ids.has(floor.roomId) || !geometry.rooms.some(room => room.id === floor.roomId)) throw new Error("Floor appearance requires unique existing room IDs");
+      ids.add(floor.roomId);
+    }
     this.root.add(this.floors, this.walls, this.solids);
     const wall = new THREE.Group();
     const wallMesh = new THREE.Mesh(new THREE.BoxGeometry(1, 2.5, 0.12), houseMaterial("wall"));
     wallMesh.position.y = 1.25;
     wallMesh.castShadow = wallMesh.receiveShadow = true;
     wall.add(wallMesh);
-    const floor = new THREE.Group();
-    const floorMesh = new THREE.Mesh(new THREE.BoxGeometry(1, 0.25, 1), houseMaterial("floor"));
-    floorMesh.position.y = -0.125;
-    floorMesh.receiveShadow = true;
-    floor.add(floorMesh);
     this.replace("wall", wall);
-    this.replace("floor", floor);
+    for (const part of this.floorAssets) {
+      const floor = new THREE.Group();
+      const mesh = new THREE.Mesh(new THREE.BoxGeometry(1, 0.25, 1), houseMaterial("floor"));
+      mesh.position.y = -0.125;
+      mesh.receiveShadow = true;
+      floor.add(mesh);
+      this.replace(part, floor);
+    }
     for (const key of new Set(geometry.solids.map(prop => prop.furnishing?.model ?? "solid"))) {
       const source = new THREE.Group();
       const mesh = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), houseMaterial("solid"));
@@ -127,7 +136,9 @@ export class HouseGeometry {
       wall.group.userData.cutaway = cut;
     }
   }
-  get assetKeys(): HouseAsset[] { return ["wall", "floor", ...this.solidSources.keys()]; }
+  private floorAsset(roomId: number): "floor" | "tileFloor" { return this.roomFloors.some(floor => floor.roomId === roomId) ? "tileFloor" : "floor"; }
+  private get floorAssets() { return [...new Set(this.geometry.rooms.map(room => this.floorAsset(room.id)))]; }
+  get assetKeys(): HouseAsset[] { return ["wall", ...this.floorAssets, ...this.solidSources.keys()]; }
   private rebuildSolids(): void {
     // Templates own resources; rebuilding placements must not dispose shared meshes.
     this.solids.clear();
@@ -146,7 +157,7 @@ export class HouseGeometry {
 
   /** Owns imported materials; floor instances copy UV geometry to preserve grain scale. */
   replace(part: HouseAsset, source: THREE.Group): void {
-    if (part !== "wall" && part !== "floor") {
+    if (part !== "wall" && !isFloor(part)) {
       const old = this.solidSources.get(part);
       if (!old) { disposeObjectResources(source); return; }
       this.solidSources.set(part, { source, native: part !== "solid" });
@@ -155,8 +166,12 @@ export class HouseGeometry {
       return;
     }
     const owner = part === "wall" ? this.walls : this.floors;
-    disposeObjectResources(owner);
-    owner.clear();
+    const retired = new THREE.Group();
+    for (const child of [...owner.children]) {
+      if (part === "wall" || child.userData.floorAsset === part) retired.add(child);
+    }
+    disposeObjectResources(retired);
+    retired.clear();
     if (part === "wall") {
       this.wallViews = [];
       const clipped = (normal: number, constant: number, opacity: number) => {
@@ -200,8 +215,8 @@ export class HouseGeometry {
         placement.rotation.y = -Math.atan2(dz, dx);
         owner.add(placement);
       }
-    } else if (part === "floor") {
-      for (const room of this.geometry.rooms) {
+    } else if (isFloor(part)) {
+      for (const room of this.geometry.rooms.filter(room => this.floorAsset(room.id) === part)) {
         const placement = new THREE.Group();
         const instance = source.clone(true);
         instance.traverse(object => {
@@ -211,14 +226,16 @@ export class HouseGeometry {
           if (uv) for (let i = 0; i < uv.count; i++)
             uv.setXY(i, uv.getX(i) * (room.max.x - room.min.x), uv.getY(i) * (room.max.z - room.min.z));
         });
+        placement.userData.floorAsset = part;
+        placement.userData.roomId = room.id;
         placement.add(instance);
         placement.scale.set(room.max.x - room.min.x, 1, room.max.z - room.min.z);
         placement.position.set((room.min.x + room.max.x) / 2, 0, (room.min.z + room.max.z) / 2);
         owner.add(placement);
       }
     }
-    if (!owner.children.length) disposeObjectResources(source);
-    else if (part === "floor") source.traverse(object => {
+    if (!owner.children.some(child => part === "wall" || child.userData.floorAsset === part)) disposeObjectResources(source);
+    else if (isFloor(part)) source.traverse(object => {
       if (object instanceof THREE.Mesh) object.geometry.dispose();
     });
   }

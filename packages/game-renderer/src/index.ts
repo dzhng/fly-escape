@@ -1,3 +1,5 @@
+import type { RoomFloor } from "./house";
+export type { RoomFloor } from "./house";
 import * as THREE from "three";
 import type { RoomDetails } from "./room-details";
 export { loadRoomDetails } from "./room-details";
@@ -98,11 +100,12 @@ export class WorldView {
     private readonly container: HTMLElement,
     geometry: Geometry,
     flyCount = 1,
+    roomFloors: readonly RoomFloor[] = [],
   ) {
     if (!Number.isInteger(flyCount) || flyCount < 1 || flyCount > 100)
       throw new Error("Scene requires 1..100 flies");
     while (this.flies.length < flyCount) this.flies.push(this.flies[0].clone(true));
-    this.house = new HouseGeometry(geometry);
+    this.house = new HouseGeometry(geometry, roomFloors);
     this.exterior = new ExteriorGrass(geometry);
     this.scene.add(this.exterior.root);
     this.bounds = new THREE.Box3();

@@ -39,3 +39,11 @@ The [fruit skin pass](../assets/evidence/22/fruit-skins/README.md) preserves aut
 The [meadow refinement](../assets/evidence/30/meadow-tray/README.md) adds terrain variation, wind-driven grass and leaves, flowers and stones around both houses. The user's outdoor reference supersedes the earlier plain-lawn target; bounded rendering and final composed checks still apply.
 
 [Fly eye shading](../assets/evidence/22/fly-eye-shading/README.md) removes coarse highlight facets at close follow while preserving the exact animated geometry and numerical hull. Source provenance and the rebuilt WASM identity agree. Glossy bead-like eyes and missing fine compound detail remain realism limits.
+
+## Kitchen floor appearance pass
+
+Give room 2 in both campaign houses a warm light ceramic/stone tile finish; retain wood elsewhere. Renderer/app `RoomFloor` entries reference existing room IDs only, with `finish: "tile"`; no duplicated room bounds or simulation surface types. Setup and playback pass the same appearance metadata to HouseGeometry. Extend the existing house asset loader with a tile-floor variant under the unchanged floor bounds. Each room retains one existing floor placement; replacing one finish releases only that finish's resources, without overlays or hidden floor copies.
+
+Author a portable Blender material variant on the exact floor mesh, using bounded shared color/data textures and world-metre UV density. Verify canonical geometry identity, threshold joins, fixed tile size across differently sized kitchens, stale loads and disposal. Actual game whole-house, kitchen-close and doorway-threshold before/after captures plus independent critique determine bounded acceptance. No carpet, other room finishes, lights, camera changes or physical behavior belong to this pass.
+
+[Kitchen tile evidence](../assets/evidence/22/kitchen-tile/README.md) accepts this bounded room-identity pass: exact floor geometry, finish-scoped ownership and fixed world UV density pass; actual setup and playback show both kitchens. Soft close stone and flat grout keep final material realism open.
