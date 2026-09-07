@@ -50,3 +50,22 @@ test("maximum zoom-out still fits the house while following an edge fly", () => 
   rig.zoom(100000);
   for (const x of [-5, 8]) for (const y of [0, 1]) for (const z of [-4, 9]) expect(rig.project(new THREE.Vector3(x,y,z)).visible).toBe(true);
 });
+
+test("millimetre subjects stay in the frustum at follow and extra-close household framing", () => {
+  const room = new THREE.Box3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(4, 2.6, 4));
+  const rig = new WorldCamera(room, 0.0018);
+  rig.resize(1120, 794);
+  const subject = new THREE.Vector3(2, 0.0009, 2);
+  rig.follow(subject);
+  for (const close of [false, true]) {
+    if (close) rig.zoomClose();
+    for (const y of [0, 0.0009, 0.0018]) {
+      expect(rig.project(new THREE.Vector3(2, y, 2)).visible).toBe(true);
+    }
+    expect(rig.state.following).toBe(true);
+    expect(rig.state.target).toEqual(subject.toArray());
+  }
+  rig.overview();
+  for (const x of [0, 4]) for (const y of [0, 2.6]) for (const z of [0, 4])
+    expect(rig.project(new THREE.Vector3(x, y, z)).visible).toBe(true);
+});

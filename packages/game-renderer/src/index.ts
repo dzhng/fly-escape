@@ -177,6 +177,10 @@ export class WorldView {
 
   setHousePart(part: HousePart, source: THREE.Group): void {
     this.house.replace(part, source);
+    cutAwayOccluders(this.house.walls);
+    cutAwayOccluders(this.house.solids);
+    this.bounds.max.y = Math.max(1, new THREE.Box3().setFromObject(this.house.root).max.y);
+    this.navigation.resize(this.container.clientWidth, this.container.clientHeight);
   }
 
   /** Takes ownership of the model and all its shared resources. */
@@ -653,7 +657,7 @@ export class WorldView {
       const fly = this.flies[this.selectedFly];
       selectedTarget = fly.position.clone().add(new THREE.Vector3(0, this.subjectCenterY, 0));
       this.navigation.track(selectedTarget);
-      this.selectionRing.position.set(fly.position.x, fly.position.y + 0.03, fly.position.z);
+      this.selectionRing.position.set(fly.position.x, fly.position.y + this.subjectCenterY * 0.12, fly.position.z);
       this.updateSelectionRing();
     }
     // Only visual occluders on the camera-to-subject ray cut away; floor/wall

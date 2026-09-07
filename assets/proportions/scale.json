@@ -1,0 +1,28 @@
+{
+  "worldUnitMetres": 1,
+  "flyBodyLength": 0.003,
+  "wallHeight": 2.6,
+  "doorHeight": 2.1,
+  "geometry": {
+    "rooms": [{"id":1,"min":{"x":0,"z":0},"max":{"x":4,"z":4}}],
+    "walls": [
+      {"a":{"x":0,"z":0},"b":{"x":4,"z":0}},
+      {"a":{"x":0,"z":0},"b":{"x":0,"z":4}},
+      {"a":{"x":0,"z":4},"b":{"x":4,"z":4}},
+      {"a":{"x":4,"z":0},"b":{"x":4,"z":1.55}},
+      {"a":{"x":4,"z":2.45},"b":{"x":4,"z":4}}
+    ],
+    "solids": [
+      {"id":1,"min":{"x":0.3,"z":0.1},"max":{"x":1.5,"z":0.55},"height":0.85},
+      {"id":2,"min":{"x":0.3,"z":3.05},"max":{"x":2.2,"z":3.9},"height":0.85},
+      {"id":3,"min":{"x":3.4,"z":0.3},"max":{"x":3.7,"z":0.6},"height":0.4}
+    ]
+  },
+  "solidLabels": {"1":"Closed-base cabinet proxy","2":"Closed-base upholstered-seat envelope","3":"Plant-pot envelope"},
+  "visualOnly": {
+    "apple":{"center":{"x":2.025,"z":1.96},"diameter":0.08},
+    "banana":{"center":{"x":2.13,"z":2.01},"length":0.18,"diameter":0.028},
+    "window":{"centerX":0.9,"sillHeight":1.05,"width":1.4,"height":1.1,"depth":0.08}
+  },
+  "inspectFly":{"x":1.975,"z":1.93}
+}

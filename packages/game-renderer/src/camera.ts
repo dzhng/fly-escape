@@ -97,6 +97,9 @@ export class WorldCamera {
   }
   get state() {
     return {
+      near: this.camera.near,
+      far: this.camera.far,
+      fov: this.camera.fov,
       following: this.followed,
       distance: this.distance,
       minDistance: this.closeDistance / 2,
@@ -131,6 +134,7 @@ export class WorldCamera {
     const atMinimumZoom = this.distance === this.fitDistance;
     this.fitDistance = this.requiredFit(this.target);
     this.distance = atMinimumZoom ? this.fitDistance : Math.min(this.distance, this.fitDistance);
+    this.camera.near = Math.min(0.1, this.distance / 20);
     this.camera.position.copy(this.backward).multiplyScalar(this.distance).add(this.target);
     this.camera.far = this.fitDistance + this.bounds.getSize(new THREE.Vector3()).length() * 3;
     this.camera.lookAt(this.target);

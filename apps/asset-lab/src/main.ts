@@ -8,6 +8,9 @@ import houseGeometry from "../../../assets/house/five-rooms.json";
 import wallUrl from "../../../assets/house/wall.glb?url";
 import floorUrl from "../../../assets/house/floor.glb?url";
 import { doorwayProbes } from "./house-probes";
+if (new URLSearchParams(location.search).get("fixture") === "proportions") {
+  void import("./proportions-workbench").then(module => module.proportionsWorkbench());
+} else {
 const house = new URLSearchParams(location.search).get("fixture") === "house";
 const doorways = doorwayProbes(houseGeometry);
 
@@ -205,3 +208,5 @@ window.addEventListener("pagehide", (event) => {
   probeClient?.dispose();
   view.dispose();
 });
+
+}

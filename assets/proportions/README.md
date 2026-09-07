@@ -1,0 +1,7 @@
+# Neutral physical-scale fixture
+
+This is a diagnostic composition, not production house art or a campaign level. `scale.json` owns the proposed metre units, room/solid dimensions and visual proxy dimensions. Cabinet, seat and pot are geometry-owned cuboid envelopes. The apple, banana, window and doorway lintel establish scale; they add no accepted food/support/collision semantics.
+
+`author.py` runs through Blender MCP and writes only a newly named scene, its scoped `.blend`, and the diagnostic GLB. It preserves other scenes. The GLB normalizes the one room's floor X/Z coordinates for the existing floor-instance transform. Its above-floor content deliberately violates the production floor-kit bounds: only the explicitly labeled proportions workbench composes it. Production kit and placement loaders remain strict. Replace this diagnostic composition with geometry-owned furnishing/food identities in their later owning slices; do not promote it as a modular kit.
+
+The workbench scales the existing fly uniformly from measured body landmarks to the declared 3 mm body. This changes only this diagnostic asset presentation. The recorded core still has its old dimensions and unmodified poses; the visible/core mismatch is evidence requiring physical calibration, not an accepted gameplay shortcut. See the [measurement and review record](../../specs/help-the-fly-escape/assets/evidence/19/proportions/README.md).
