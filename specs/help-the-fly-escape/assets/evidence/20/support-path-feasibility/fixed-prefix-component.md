@@ -30,3 +30,10 @@ lint in physical_sampling.rs. Independent review found and verified fixes for
 short-interval merging, zero-width output, mixed-component containment and
 rounded-midpoint gap coverage. The final endpoint is independently checked;
 a mismatch stops as Discontinuity while retaining the reached root.
+
+Root integration reran the 10 support-path consumers, 11 existing surface tests,
+6 library tests and 2 exporter tests successfully, followed by clean targeted
+release Clippy. Root reviewed ownership and the settled fixes; duplicate edge
+maps were collapsed, and identical affine-span identity removed redundant knots
+without weakening the geometric join check. Shared boundary validation replaces
+the exporter copy. No Worker, body or replay consumer is adopted by this pass.

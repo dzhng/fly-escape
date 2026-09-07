@@ -516,3 +516,25 @@ this attachment detail open. This makes the leaf and soil look connected while
 preserving separate editable meshes. It is an art overlap, not a fly collision
 allowance; foliage and recessed-soil contact still need their own integration.
 The sparse blade arrangement and softened planter rim are delegated shape work.
+
+## Fixed-orientation support prefixes — 2026-09-07
+
+### Sound — medium confidence: one closed food boundary per surface identity
+
+When an authored food is loaded, its mesh must be one connected, outward-facing
+closed boundary. Adding a detached open triangle or another closed object to that
+same identity is rejected; separate foods can use separate identities. Disconnected
+open patches remain allowed for floor-food diagnostics. The plan required honest
+inside-food detection but left mixed mesh semantics open. This restriction avoids
+an open scrap hiding a closed food's interior and keeps later authoring explicit.
+It does not automatically repair or weld contact geometry.
+
+### Sound — medium confidence: expose logical work and storage budgets for path experiments
+
+A caller trying a support path supplies limits for counted computation and live
+array items. The query stops with an explicit error when either is exhausted,
+instead of returning an incomplete path as finished. The plan required bounded
+work but did not prescribe these counters. Existing geometry-kernel calls are
+charged conservatively by triangle count; their internal iterations and allocator
+capacity are not measured by these counters. The limits help compare candidate
+paths, while browser timing and final archive limits still need direct evidence.

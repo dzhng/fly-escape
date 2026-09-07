@@ -296,9 +296,12 @@ shows why the favorable original contact poses cannot select a hull alone.
 - Preserve the native geometry and established numerical tolerance. Neither
   clearance padding nor a more permissive penetration threshold is adopted here.
 
-The current pickup is the [original-plane inventory](native-envelope/plane-inventory/README.md)
-and its bounded fixed-orientation path component under the existing query owner.
-Then resolve rotating feature-domain and global competitor events. The
+The [fixed-orientation prefix component](fixed-prefix-component.md) now consumes
+the [original-plane inventory](native-envelope/plane-inventory/README.md) under
+the existing query owner. The current pickup is rotating feature-domain and
+global competitor certification, first measuring interval tests on retained
+contact charts. A small excursion bounds geometric error, not ownership across
+a real gap; unresolved intervals must remain explicit. The
 [affine trigonometric reduction](affine-trig-domains.md) is an independently
 reviewed mathematical direction for some translating-rotation constraints;
 numerical sign certification and actual path construction remain unimplemented.
