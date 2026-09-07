@@ -123,6 +123,21 @@ export class WorldView {
         depthWrite: false,
       }),
     );
+    // Keep the yellow circle legible on pale surfaces with a narrow dark edge.
+    // Ring UVs retain their authored 0.94..1 radial band as its screen width changes.
+    this.selectionRing.material.onBeforeCompile = (shader) => {
+      shader.vertexShader = shader.vertexShader
+        .replace("#include <common>", "#include <common>\nvarying float ringBand;")
+        .replace("#include <begin_vertex>", "#include <begin_vertex>\nringBand = (length(uv - 0.5) * 2.0 - 0.94) / 0.06;");
+      shader.fragmentShader = shader.fragmentShader
+        .replace("#include <common>", "#include <common>\nvarying float ringBand;")
+        .replace("#include <color_fragment>", `#include <color_fragment>
+          float edge = 1.0 - ringBand;
+          float antialias = fwidth(ringBand) * 0.5;
+          float yellow = smoothstep(0.3 - antialias, 0.3 + antialias, edge);
+          diffuseColor.rgb = mix(vec3(0.035, 0.024, 0.005), diffuseColor.rgb, yellow);
+        `);
+    };
     this.navigation = new WorldCamera(this.bounds, modelBounds.getSize(new THREE.Vector3()).y);
     this.trails = new FlyTrails(flyCount, this.navigation);
     this.scene.add(this.trails.mesh);
