@@ -3,17 +3,18 @@
   "url": "http://127.0.0.1:5322",
   "checks": [
     "setup models ready",
-    "released twenty flies",
+    "twenty flies playing with native models ready",
     "pause and reverse/forward seek",
     "cancel returns to ready setup",
-    "retry releases twenty flies"
+    "new retry attempt playing with native models ready"
   ],
   "errors": [],
   "console": [
-    "[Fly escape] attempt ready {schemaVersion: 1, attemptId: aa171110-d634-4866-9481-09b790b5e323, graphHash: 6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454, graphManifestHash: 3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5, simulationBuildId: c8874644fcfa93fb312e8d3dff9c531dcd2b19882178644445ca9fac5ed61b5c}",
+    "[Fly escape] attempt ready {schemaVersion: 1, attemptId: 354fc178-b71e-411f-aac7-20d1cea5680e, graphHash: 6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454, graphManifestHash: 3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5, simulationBuildId: c8874644fcfa93fb312e8d3dff9c531dcd2b19882178644445ca9fac5ed61b5c}",
     "[Fly escape] playback {spec: Object, initialBodies: Array, userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap… (KHTML, like Gecko) Version/26.6 Safari/605.1.15, viewport: undefined, devicePixelRatio: 1}",
     "[Fly escape] playback {spec: Object, initialBodies: Array, userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap… (KHTML, like Gecko) Version/26.6 Safari/605.1.15, viewport: undefined, devicePixelRatio: 1}",
-    "[Fly escape] attempt ready {schemaVersion: 1, attemptId: 673126df-37a9-43f0-8b1f-061bd085bb3f, graphHash: 6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454, graphManifestHash: 3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5, simulationBuildId: c8874644fcfa93fb312e8d3dff9c531dcd2b19882178644445ca9fac5ed61b5c}",
+    "[Fly escape] attempt ready {schemaVersion: 1, attemptId: 11da92f3-1481-4707-8d1f-d80a41eab34f, graphHash: 6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454, graphManifestHash: 3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5, simulationBuildId: c8874644fcfa93fb312e8d3dff9c531dcd2b19882178644445ca9fac5ed61b5c}",
+    "[Fly escape] playback {spec: Object, initialBodies: Array, userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap… (KHTML, like Gecko) Version/26.6 Safari/605.1.15, viewport: undefined, devicePixelRatio: 1}",
     "[Fly escape] playback {spec: Object, initialBodies: Array, userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap… (KHTML, like Gecko) Version/26.6 Safari/605.1.15, viewport: undefined, devicePixelRatio: 1}"
   ],
   "models": [
@@ -34,11 +35,11 @@
       "status": 200
     },
     {
-      "url": "http://127.0.0.1:5322/assets/chair-C6SsO7ej.glb",
+      "url": "http://127.0.0.1:5322/assets/bed-BAtm8UL6.glb",
       "status": 200
     },
     {
-      "url": "http://127.0.0.1:5322/assets/bed-BAtm8UL6.glb",
+      "url": "http://127.0.0.1:5322/assets/chair-C6SsO7ej.glb",
       "status": 200
     },
     {
@@ -46,19 +47,19 @@
       "status": 200
     },
     {
-      "url": "http://127.0.0.1:5322/assets/wall-plant-BH3kXnr0.glb",
-      "status": 200
-    },
-    {
       "url": "http://127.0.0.1:5322/assets/sconce-CqhfygL7.glb",
       "status": 200
     },
     {
-      "url": "http://127.0.0.1:5322/assets/doorway-bOmbiQ6W.glb",
+      "url": "http://127.0.0.1:5322/assets/exit-window-BZ-EvLG2.glb",
       "status": 200
     },
     {
-      "url": "http://127.0.0.1:5322/assets/exit-window-BZ-EvLG2.glb",
+      "url": "http://127.0.0.1:5322/assets/wall-plant-BH3kXnr0.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/doorway-bOmbiQ6W.glb",
       "status": 200
     },
     {
@@ -74,11 +75,111 @@
       "status": 200
     },
     {
+      "url": "http://127.0.0.1:5322/assets/vinegar-DIfAr2vf.glb",
+      "status": 200
+    },
+    {
       "url": "http://127.0.0.1:5322/assets/fan-D2OltmOR.glb",
       "status": 200
     },
     {
+      "url": "http://127.0.0.1:5322/assets/lamp-D7bX1F7V.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/shade-ByQD8-3_.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/worn-shoes-T9hDUp5C.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/dirty-dishes-U8YVj2x7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/crumpled-laundry-D-9r_zaW.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sleeping-cat-CvrZjof7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/bug-zapper-CMFOC8K4.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/corner-spider-BjZBDdmx.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/fly-DfinqL-W.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/floor-CWY_kn0a.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sofa-Ht1b2HT8.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/kitchen-AXOHy94n.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/desk-Ctq-uvrh.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/chair-C6SsO7ej.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/bed-BAtm8UL6.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/window-D0F6K1F7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sconce-CqhfygL7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/wall-plant-BH3kXnr0.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/exit-window-BZ-EvLG2.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/doorway-bOmbiQ6W.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/apple-DHEx_6lU.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/banana-txuq2LPt.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/crumbs-DsKjrqwK.glb",
+      "status": 200
+    },
+    {
       "url": "http://127.0.0.1:5322/assets/vinegar-DIfAr2vf.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/fan-D2OltmOR.glb",
       "status": 200
     },
     {
@@ -174,106 +275,6 @@
       "status": 200
     },
     {
-      "url": "http://127.0.0.1:5322/assets/vinegar-DIfAr2vf.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/fan-D2OltmOR.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/shade-ByQD8-3_.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/lamp-D7bX1F7V.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/dirty-dishes-U8YVj2x7.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/crumpled-laundry-D-9r_zaW.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/worn-shoes-T9hDUp5C.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/sleeping-cat-CvrZjof7.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/bug-zapper-CMFOC8K4.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/corner-spider-BjZBDdmx.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/fly-DfinqL-W.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/floor-CWY_kn0a.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/sofa-Ht1b2HT8.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/kitchen-AXOHy94n.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/desk-Ctq-uvrh.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/chair-C6SsO7ej.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/bed-BAtm8UL6.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/window-D0F6K1F7.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/sconce-CqhfygL7.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/wall-plant-BH3kXnr0.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/doorway-bOmbiQ6W.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/apple-DHEx_6lU.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/exit-window-BZ-EvLG2.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/crumbs-DsKjrqwK.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/vinegar-DIfAr2vf.glb",
-      "status": 200
-    },
-    {
       "url": "http://127.0.0.1:5322/assets/fan-D2OltmOR.glb",
       "status": 200
     },
@@ -314,7 +315,7 @@
       "status": 200
     },
     {
-      "url": "http://127.0.0.1:5322/assets/banana-txuq2LPt.glb",
+      "url": "http://127.0.0.1:5322/assets/vinegar-DIfAr2vf.glb",
       "status": 200
     },
     {
@@ -350,7 +351,11 @@
       "status": 200
     },
     {
-      "url": "http://127.0.0.1:5322/assets/wall-plant-BH3kXnr0.glb",
+      "url": "http://127.0.0.1:5322/assets/apple-DHEx_6lU.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/doorway-bOmbiQ6W.glb",
       "status": 200
     },
     {
@@ -358,11 +363,7 @@
       "status": 200
     },
     {
-      "url": "http://127.0.0.1:5322/assets/apple-DHEx_6lU.glb",
-      "status": 200
-    },
-    {
-      "url": "http://127.0.0.1:5322/assets/doorway-bOmbiQ6W.glb",
+      "url": "http://127.0.0.1:5322/assets/wall-plant-BH3kXnr0.glb",
       "status": 200
     },
     {
@@ -394,11 +395,11 @@
       "status": 200
     },
     {
-      "url": "http://127.0.0.1:5322/assets/crumpled-laundry-D-9r_zaW.glb",
+      "url": "http://127.0.0.1:5322/assets/dirty-dishes-U8YVj2x7.glb",
       "status": 200
     },
     {
-      "url": "http://127.0.0.1:5322/assets/dirty-dishes-U8YVj2x7.glb",
+      "url": "http://127.0.0.1:5322/assets/crumpled-laundry-D-9r_zaW.glb",
       "status": 200
     },
     {
@@ -406,11 +407,11 @@
       "status": 200
     },
     {
-      "url": "http://127.0.0.1:5322/assets/corner-spider-BjZBDdmx.glb",
+      "url": "http://127.0.0.1:5322/assets/bug-zapper-CMFOC8K4.glb",
       "status": 200
     },
     {
-      "url": "http://127.0.0.1:5322/assets/bug-zapper-CMFOC8K4.glb",
+      "url": "http://127.0.0.1:5322/assets/corner-spider-BjZBDdmx.glb",
       "status": 200
     },
     {
@@ -424,6 +425,12 @@
     "webgpu": true,
     "adapter": true
   },
+  "setupRaster": [
+    {
+      "attempt": 0,
+      "quantizedColors": 240
+    }
+  ],
   "webgl": {
     "available": true,
     "version": "WebGL 2.0",
@@ -432,7 +439,7 @@
   "attempt": {
     "spec": {
       "schemaVersion": 1,
-      "attemptId": "aa171110-d634-4866-9481-09b790b5e323",
+      "attemptId": "354fc178-b71e-411f-aac7-20d1cea5680e",
       "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
       "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
       "simulationBuildId": "c8874644fcfa93fb312e8d3dff9c531dcd2b19882178644445ca9fac5ed61b5c",
@@ -440,7 +447,7 @@
       "placements": [],
       "levelHash": "da9e0d7806cb53864c563f4df98b7a41b4d03ffeaaafa8720d54b89f3218e95a",
       "levelId": "open-window",
-      "rootSeed": "1376056888975961505",
+      "rootSeed": "9939123262474224808",
       "flyCount": 20,
       "durationTicks": 800
     },
@@ -448,17 +455,17 @@
       {
         "pose": {
           "position": {
-            "x": 3.210647881486077,
-            "z": 2.1070448062895712
+            "x": 3.417267426058189,
+            "z": 2.000148713041492
           },
-          "heading": 2.838954534857721
+          "heading": 3.5078966800020446
         },
         "height": 0.6,
         "rotation": [
           0,
-          -0.5924358756589998,
+          0.8240652621895768,
           0,
-          0.8056176098076272
+          -0.5664948752216775
         ],
         "support": null,
         "mode": "flying",
@@ -468,17 +475,17 @@
       {
         "pose": {
           "position": {
-            "x": 3.381189174652354,
-            "z": 2.072562400874882
+            "x": 3.0785121860105367,
+            "z": 2.662483586391811
           },
-          "heading": 2.0500202277702027
+          "heading": 3.4626026992829595
         },
         "height": 0,
         "rotation": [
           0,
-          -0.23732568131221032,
+          0.8110256380472053,
           0,
-          0.9714301421047709
+          -0.5850106105278123
         ],
         "support": null,
         "mode": "walking",
@@ -488,17 +495,17 @@
       {
         "pose": {
           "position": {
-            "x": 3.144098742366403,
-            "z": 2.5802653162626434
+            "x": 3.4234383651521147,
+            "z": 2.1842855426770504
           },
-          "heading": 2.0281302571417594
+          "heading": 1.75941503541668
         },
         "height": 0,
         "rotation": [
           0,
-          -0.22667939014965613,
+          -0.09416961457255792,
           0,
-          0.9739694318002902
+          0.9955561680243138
         ],
         "support": null,
         "mode": "walking",
@@ -508,17 +515,17 @@
       {
         "pose": {
           "position": {
-            "x": 3.2568960521760064,
-            "z": 2.073308686137567
+            "x": 3.2426103052046353,
+            "z": 2.023490656204949
           },
-          "heading": 0.6718715124647755
+          "heading": 0.912135242303252
         },
         "height": 0,
         "rotation": [
           0,
-          0.43448139737024494,
+          0.3234096204457439,
           0,
-          0.9006808065786677
+          0.9462590646345956
         ],
         "support": null,
         "mode": "walking",
@@ -528,17 +535,17 @@
       {
         "pose": {
           "position": {
-            "x": 3.0310408798186703,
-            "z": 2.5607563255602184
+            "x": 3.30006557126021,
+            "z": 2.4359963934163034
           },
-          "heading": 1.7289655261130126
+          "heading": 1.66491525139744
         },
         "height": 0.6,
         "rotation": [
           0,
-          -0.07900218799223965,
+          -0.047042094631928516,
           0,
-          0.9968744425916629
+          0.9988929078397947
         ],
         "support": null,
         "mode": "flying",
@@ -548,17 +555,97 @@
       {
         "pose": {
           "position": {
-            "x": 3.179491880935941,
-            "z": 2.237328272184015
+            "x": 3.1550339540636623,
+            "z": 2.6005581769650497
           },
-          "heading": 3.9736891057306103
+          "heading": 2.043843061618626
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          -0.23432421142128493,
+          0,
+          0.9721585076219788
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.109367462861409,
+            "z": 2.009430854516682
+          },
+          "heading": 1.554150513087552
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.008322810764965641,
+          0,
+          0.9999653648106871
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.0497100572999605,
+            "z": 2.4549488336153895
+          },
+          "heading": 4.927715479874786
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9942099084971364,
+          0,
+          0.1074553760689324
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.1947060714296316,
+            "z": 2.5687497585581074
+          },
+          "heading": 1.1283536146082536
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.21942137831302091,
+          0,
+          0.9756301854387317
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.1511416818294986,
+            "z": 2.3339047059898252
+          },
+          "heading": 2.5832426756666242
         },
         "height": 0,
         "rotation": [
           0,
-          0.9325622212916378,
+          -0.48487756917547725,
           0,
-          -0.36100928439529983
+          0.8745820389823247
         ],
         "support": null,
         "mode": "walking",
@@ -568,17 +655,37 @@
       {
         "pose": {
           "position": {
-            "x": 3.242745517289768,
-            "z": 2.5348974686339494
+            "x": 3.2233744508768063,
+            "z": 2.335043037443461
           },
-          "heading": 3.5314888716034325
+          "heading": 5.441947610419797
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9342025117660366,
+          0,
+          0.35674313870070185
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.3491786201329523,
+            "z": 2.4838358496609634
+          },
+          "heading": 5.501012107439336
         },
         "height": 0,
         "rotation": [
           0,
-          0.8306902022343983,
+          0.92326126160966,
           0,
-          -0.5567349350559695
+          0.38417267317046266
         ],
         "support": null,
         "mode": "walking",
@@ -588,17 +695,17 @@
       {
         "pose": {
           "position": {
-            "x": 3.058513332960206,
-            "z": 2.5243003077556194
+            "x": 3.3597368267719814,
+            "z": 2.0866306702566946
           },
-          "heading": 4.5431189878495335
+          "heading": 0.7880852308457273
         },
         "height": 0,
         "rotation": [
           0,
-          0.9964205960993353,
+          0.38144182404194726,
           0,
-          -0.08453399120498913
+          0.9243928466142262
         ],
         "support": null,
         "mode": "walking",
@@ -608,57 +715,17 @@
       {
         "pose": {
           "position": {
-            "x": 3.317243016632358,
-            "z": 2.293594027009517
+            "x": 3.1820231864980473,
+            "z": 2.106987036588159
           },
-          "heading": 1.9585465661841792
-        },
-        "height": 0.6,
-        "rotation": [
-          0,
-          -0.19266285140127848,
-          0,
-          0.9812650129755615
-        ],
-        "support": null,
-        "mode": "flying",
-        "reserve": 20,
-        "outcome": null
-      },
-      {
-        "pose": {
-          "position": {
-            "x": 3.4206085331817313,
-            "z": 2.1332739854757268
-          },
-          "heading": 6.155176247512532
-        },
-        "height": 0.6,
-        "rotation": [
-          0,
-          0.7508860587440837,
-          0,
-          0.6604317729968604
-        ],
-        "support": null,
-        "mode": "flying",
-        "reserve": 20,
-        "outcome": null
-      },
-      {
-        "pose": {
-          "position": {
-            "x": 3.2505433910032284,
-            "z": 2.689653950588938
-          },
-          "heading": 6.169782327638293
+          "heading": 0.28499336429349265
         },
         "height": 0,
         "rotation": [
           0,
-          0.7460429179828417,
+          0.5995201901287267,
           0,
-          0.6658978634352622
+          0.8003596326827179
         ],
         "support": null,
         "mode": "walking",
@@ -668,37 +735,17 @@
       {
         "pose": {
           "position": {
-            "x": 3.3354139337142863,
-            "z": 2.5004675878886773
+            "x": 3.346334517788141,
+            "z": 2.10367169032831
           },
-          "heading": 1.3555571936990933
-        },
-        "height": 0.6,
-        "rotation": [
-          0,
-          0.10741194569898398,
-          0,
-          0.9942146015429258
-        ],
-        "support": null,
-        "mode": "flying",
-        "reserve": 20,
-        "outcome": null
-      },
-      {
-        "pose": {
-          "position": {
-            "x": 3.085280737851934,
-            "z": 2.0483314999730036
-          },
-          "heading": 3.9171224202525594
+          "heading": 5.118111016079983
         },
         "height": 0,
         "rotation": [
           0,
-          0.9219800576984613,
+          0.9794941709884053,
           0,
-          -0.38723736029255024
+          0.20147250184513138
         ],
         "support": null,
         "mode": "walking",
@@ -708,17 +755,17 @@
       {
         "pose": {
           "position": {
-            "x": 3.417915530361351,
-            "z": 2.2130273725865552
+            "x": 3.0589616859454742,
+            "z": 2.57329987832368
           },
-          "heading": 0.878802515454868
+          "heading": 1.6431079017685295
         },
         "height": 0,
         "rotation": [
           0,
-          0.33913467249355994,
+          -0.03614791061390567,
           0,
-          0.9407378348470342
+          0.9993464507157912
         ],
         "support": null,
         "mode": "walking",
@@ -728,17 +775,17 @@
       {
         "pose": {
           "position": {
-            "x": 3.144743068230488,
-            "z": 2.02917110742853
+            "x": 3.267015875093958,
+            "z": 2.4439175538145315
           },
-          "heading": 3.2517742430047996
+          "heading": 2.8266904865366325
         },
         "height": 0.6,
         "rotation": [
           0,
-          0.7449693923016565,
+          -0.5874847017014626,
           0,
-          -0.6670986467784961
+          0.8092352718874427
         ],
         "support": null,
         "mode": "flying",
@@ -748,17 +795,17 @@
       {
         "pose": {
           "position": {
-            "x": 3.023993785508666,
-            "z": 2.285972101429146
+            "x": 3.083644350406436,
+            "z": 2.617895131621184
           },
-          "heading": 5.783903008599188
+          "heading": 1.1263262356456205
         },
         "height": 0.6,
         "rotation": [
           0,
-          0.859882425955103,
+          0.2204102514652759,
           0,
-          0.5104921287674932
+          0.9754072590713141
         ],
         "support": null,
         "mode": "flying",
@@ -768,17 +815,17 @@
       {
         "pose": {
           "position": {
-            "x": 3.1484487149067997,
-            "z": 2.0086266109922035
+            "x": 3.0102365910093525,
+            "z": 2.2470510000045896
           },
-          "heading": 5.205822181721684
+          "heading": 1.0161963764119002
         },
         "height": 0.6,
         "rotation": [
           0,
-          0.969719523467706,
+          0.27375977085691894,
           0,
-          0.2442213049788351
+          0.9617981014019351
         ],
         "support": null,
         "mode": "flying",
@@ -788,60 +835,20 @@
       {
         "pose": {
           "position": {
-            "x": 3.2546874268248276,
-            "z": 2.5642159909140223
+            "x": 3.3374025206352376,
+            "z": 2.400762613558106
           },
-          "heading": 1.49209778410482
+          "heading": 1.3228324602761274
         },
         "height": 0,
         "rotation": [
           0,
-          0.03933911762438016,
+          0.12366454550442285,
           0,
-          0.9992259173102624
+          0.9923240802203606
         ],
         "support": null,
         "mode": "walking",
-        "reserve": 20,
-        "outcome": null
-      },
-      {
-        "pose": {
-          "position": {
-            "x": 3.169546111752122,
-            "z": 2.0155708391523732
-          },
-          "heading": 3.8736079118535245
-        },
-        "height": 0.6,
-        "rotation": [
-          0,
-          0.9133372867381685,
-          0,
-          -0.4072038809414278
-        ],
-        "support": null,
-        "mode": "flying",
-        "reserve": 20,
-        "outcome": null
-      },
-      {
-        "pose": {
-          "position": {
-            "x": 3.1299445102086274,
-            "z": 2.61572893650121
-          },
-          "heading": 4.08649115660575
-        },
-        "height": 0.6,
-        "rotation": [
-          0,
-          0.9514298393674502,
-          0,
-          -0.3078656537537568
-        ],
-        "support": null,
-        "mode": "flying",
         "reserve": 20,
         "outcome": null
       }
@@ -858,17 +865,17 @@
     "state": "playing",
     "speed": 1,
     "complete": false,
-    "initialWaitMs": 1318,
-    "warmWaitMs": 1207,
-    "productionMs": 1117,
+    "initialWaitMs": 1218,
+    "warmWaitMs": 1109,
+    "productionMs": 1101,
     "activeNeuralSteps": 600,
-    "activeEquivalentProductionRate": 2.6857654431512983,
+    "activeEquivalentProductionRate": 2.7247956403269753,
     "underruns": 0,
     "frameIntervals": {
-      "count": 6,
-      "p95Ms": 542,
+      "count": 15,
+      "p95Ms": 366,
       "p95Capped": false,
-      "maxMs": 542,
+      "maxMs": 366,
       "histogramResolutionMs": 1
     },
     "interactions": {
@@ -891,8 +898,8 @@
     "renderer": {
       "flyCount": 20,
       "modelKind": "glb",
-      "drawCalls": 1170,
-      "triangles": 429720,
+      "drawCalls": 1167,
+      "triangles": 429020,
       "geometries": 300,
       "textures": 26
     },
@@ -906,9 +913,9 @@
       "maxDistance": 20.745148090393798,
       "closeDistance": 0.024807338160150398,
       "target": [
-        3.210647881486077,
+        3.417267426058189,
         0.6009010391100541,
-        2.1070448062895712
+        2.000148713041492
       ],
       "width": 1075,
       "height": 474,
@@ -917,122 +924,732 @@
       "flies": [
         {
           "id": 0,
-          "x": 537.5,
+          "x": 537.5000000000063,
           "y": 237,
           "visible": true
         },
         {
           "id": 1,
-          "x": 765.7523617741758,
-          "y": 939.7246154426616,
+          "x": -834.0107790058663,
+          "y": 1303.7831387756312,
           "visible": false
         },
         {
           "id": 2,
-          "x": -286.152834456389,
-          "y": 1524.891030334053,
+          "x": 328.01496201591567,
+          "y": 1030.2150869787165,
           "visible": false
         },
         {
           "id": 3,
-          "x": 616.7609843080969,
-          "y": 766.2315086599124,
+          "x": 366.2462462895659,
+          "y": 587.4994647431837,
           "visible": false
         },
         {
           "id": 4,
-          "x": 3784.2868519439935,
-          "y": -867.9805783151047,
+          "x": 2890.507327524117,
+          "y": -829.0420676620184,
           "visible": false
         },
         {
           "id": 5,
-          "x": 364.1666452896135,
-          "y": 883.5339347640708,
+          "x": 3952.9700176892384,
+          "y": -815.8561569705959,
           "visible": false
         },
         {
           "id": 6,
-          "x": -113.9332772003451,
-          "y": 1695.2320812565856,
+          "x": -456.78983224387065,
+          "y": -499.0832013039701,
           "visible": false
         },
         {
           "id": 7,
-          "x": -190.25816432524476,
-          "y": 1173.485397846652,
+          "x": 30619.91215812675,
+          "y": -2272.5059084352206,
           "visible": false
         },
         {
           "id": 8,
-          "x": 914.3755199202035,
-          "y": -849.5398680219708,
+          "x": 3584.7968251354887,
+          "y": -811.0497455971471,
           "visible": false
         },
         {
           "id": 9,
-          "x": -603.4862668014732,
-          "y": -916.360087221063,
+          "x": -87.60297046939394,
+          "y": 838.6784926405949,
           "visible": false
         },
         {
           "id": 10,
-          "x": -638.2002202941638,
-          "y": 2433.0557644747646,
+          "x": 7533.019270026018,
+          "y": -1229.7938200806077,
           "visible": false
         },
         {
           "id": 11,
-          "x": 1186.2018896244535,
-          "y": -746.8804965556402,
+          "x": -314.8957019334692,
+          "y": 1551.676694578447,
           "visible": false
         },
         {
           "id": 12,
-          "x": 481.2796956293705,
-          "y": 557.0735676592427,
+          "x": 392.6720692532918,
+          "y": 787.0848118633587,
           "visible": false
         },
         {
           "id": 13,
-          "x": 674.5218535932404,
-          "y": 1279.4145221476836,
+          "x": 236.26775032126872,
+          "y": 609.7091905081605,
           "visible": false
         },
         {
           "id": 14,
-          "x": 603.9852767604915,
-          "y": -391.0187518644273,
+          "x": 361.47822763813093,
+          "y": 791.7844553846145,
           "visible": false
         },
         {
           "id": 15,
-          "x": -5775.871332102492,
-          "y": 132.07382709450718,
+          "x": -588.1067742614266,
+          "y": 1074.6431995776238,
           "visible": false
         },
         {
           "id": 16,
-          "x": 723.1079181987536,
-          "y": -410.2306121337546,
+          "x": 3333.0928180255814,
+          "y": -849.2082888252271,
           "visible": false
         },
         {
           "id": 17,
-          "x": -186.68279062656134,
-          "y": 1846.7701074369973,
+          "x": 5199.869760731025,
+          "y": -857.8919663361531,
           "visible": false
         },
         {
           "id": 18,
-          "x": 833.8633181156051,
-          "y": -376.3444829936172,
+          "x": -2821.1953088648206,
+          "y": -409.7149491524806,
           "visible": false
         },
         {
           "id": 19,
-          "x": 2306.4962779852203,
-          "y": -773.0830963695656,
+          "x": -118.48091821752108,
+          "y": 1297.0438820378204,
+          "visible": false
+        }
+      ]
+    },
+    "result": null
+  },
+  "retry": {
+    "spec": {
+      "schemaVersion": 1,
+      "attemptId": "11da92f3-1481-4707-8d1f-d80a41eab34f",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+      "simulationBuildId": "c8874644fcfa93fb312e8d3dff9c531dcd2b19882178644445ca9fac5ed61b5c",
+      "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb",
+      "placements": [],
+      "levelHash": "da9e0d7806cb53864c563f4df98b7a41b4d03ffeaaafa8720d54b89f3218e95a",
+      "levelId": "open-window",
+      "rootSeed": "10862352473958862650",
+      "flyCount": 20,
+      "durationTicks": 800
+    },
+    "initialBodies": [
+      {
+        "pose": {
+          "position": {
+            "x": 3.1514998894394353,
+            "z": 2.547596702277593
+          },
+          "heading": 0.17856917974657008
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.6412403265681746,
+          0,
+          0.7673401094578212
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.3854880434074843,
+            "z": 2.44125170090294
+          },
+          "heading": 2.9371671699674566
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          -0.6312667266022449,
+          0,
+          0.775565806289116
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.1389871278424852,
+            "z": 2.0453973645902623
+          },
+          "heading": 2.8285131171699542
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          -0.5882219261457234,
+          0,
+          0.8086995521214383
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.077340002541498,
+            "z": 2.4662507330814174
+          },
+          "heading": 0.9228097374468605
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.31835461918206176,
+          0,
+          0.9479716960149415
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.0497560827158408,
+            "z": 2.4723573057051547
+          },
+          "heading": 2.7673505197648844
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          -0.5632196624253748,
+          0,
+          0.8263072139691429
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.4264597561868197,
+            "z": 2.3154995186186
+          },
+          "heading": 6.205174901716535
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.7341428014622772,
+          0,
+          0.6789951009109856
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.2382827862777956,
+            "z": 2.280878549120229
+          },
+          "heading": 0.6405386392256861
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.44853796107651955,
+          0,
+          0.8937637816969978
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.207391162483419,
+            "z": 2.006097389087831
+          },
+          "heading": 5.460453724817962
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9308616017136838,
+          0,
+          0.36537197272784194
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.285592945131462,
+            "z": 2.492237914035183
+          },
+          "heading": 4.640086186620339
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9993466094173429,
+          0,
+          -0.03614352287839283
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.0430298221635197,
+            "z": 2.3460685096141067
+          },
+          "heading": 0.2277407975374456
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.622182756876469,
+          0,
+          0.7828720310788964
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.2361082953683127,
+            "z": 2.32007945236645
+          },
+          "heading": 1.694659409532213
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          -0.0618919590592749,
+          0,
+          0.9980828549793874
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.0003975528287103,
+            "z": 2.024244618050347
+          },
+          "heading": 1.6042080986006872
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          -0.01670510884885629,
+          0,
+          0.999860459933459
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.299747268306298,
+            "z": 2.5827498707773513
+          },
+          "heading": 1.4027525471278768
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.08392306347661407,
+          0,
+          0.9964722371529977
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.3630100139125196,
+            "z": 2.5783737416631776
+          },
+          "heading": 5.110074054302335
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9802958736900436,
+          0,
+          0.19753480712591948
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.4383652219225014,
+            "z": 2.670763985323079
+          },
+          "heading": 6.058870001048844
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.7818052424799388,
+          0,
+          0.6235227043427402
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.112209888002168,
+            "z": 2.2031183966877297
+          },
+          "heading": 4.474884426092418
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9929572306637734,
+          0,
+          -0.11847336440116042
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.244537474716825,
+            "z": 2.630368674745441
+          },
+          "heading": 3.893852018338977
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9174121676936434,
+          0,
+          -0.39793833010612384
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.1810714312119748,
+            "z": 2.4883067933682854
+          },
+          "heading": 3.1162508012122516
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          -0.6980905600272583,
+          0,
+          0.7160094761948537
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.182101459140221,
+            "z": 2.395952220130902
+          },
+          "heading": 3.4705950840919377
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.8133569709331018,
+          0,
+          -0.581764933486481
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.3021749598666608,
+            "z": 2.3245152607999646
+          },
+          "heading": 0.7620385424980763
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.3934478226909057,
+          0,
+          0.9193469480124387
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      }
+    ],
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Safari/605.1.15",
+    "viewport": [
+      1440,
+      900
+    ],
+    "devicePixelRatio": 1,
+    "cursorTick": 0,
+    "sampleTick": 0,
+    "computedTick": 30,
+    "state": "playing",
+    "speed": 1,
+    "complete": false,
+    "initialWaitMs": 1659,
+    "warmWaitMs": 1567,
+    "productionMs": 1560,
+    "activeNeuralSteps": 600,
+    "activeEquivalentProductionRate": 1.9230769230769231,
+    "underruns": 0,
+    "frameIntervals": {
+      "count": 23,
+      "p95Ms": 493,
+      "p95Capped": false,
+      "maxMs": 504,
+      "histogramResolutionMs": 1
+    },
+    "interactions": {
+      "count": 0,
+      "p95Ms": null,
+      "p95Capped": false,
+      "maxMs": 0,
+      "histogramResolutionMs": 1,
+      "measurement": "control callback to synchronous scene render completion; excludes browser paint"
+    },
+    "memory": {
+      "wasmBytes": 102694912,
+      "archiveOwnedChunkBytes": 593804,
+      "archiveBoundBytes": 134217728,
+      "graphBytes": 9864584,
+      "brainStateBytes": 64400000,
+      "observedJSHeapBytes": null,
+      "note": "WASM includes graph and brain state; do not add those again. Download report includes an on-demand GPU memory estimate."
+    },
+    "renderer": {
+      "flyCount": 20,
+      "modelKind": "glb",
+      "drawCalls": 1295,
+      "triangles": 444620,
+      "geometries": 300,
+      "textures": 26
+    },
+    "camera": {
+      "near": 0.00124036690800752,
+      "far": 58.864041043888655,
+      "fov": 38,
+      "following": true,
+      "distance": 0.024807338160150398,
+      "minDistance": 0.012403669080075199,
+      "maxDistance": 20.745148090393798,
+      "closeDistance": 0.024807338160150398,
+      "target": [
+        3.1514998894394353,
+        0.6009010391100541,
+        2.547596702277593
+      ],
+      "width": 1075,
+      "height": 474,
+      "selectedFlyId": 0,
+      "displayScale": 1,
+      "flies": [
+        {
+          "id": 0,
+          "x": 537.5000000000031,
+          "y": 237,
+          "visible": true
+        },
+        {
+          "id": 1,
+          "x": -4813.701881600535,
+          "y": -1341.16155358281,
+          "visible": false
+        },
+        {
+          "id": 2,
+          "x": 867.8445179574261,
+          "y": 317.60640001200255,
+          "visible": true
+        },
+        {
+          "id": 3,
+          "x": 543.6952454789097,
+          "y": 583.5219459311446,
+          "visible": false
+        },
+        {
+          "id": 4,
+          "x": 515.0236384255544,
+          "y": 563.535321560761,
+          "visible": false
+        },
+        {
+          "id": 5,
+          "x": 41109.15958263699,
+          "y": 2933.821251992976,
+          "visible": false
+        },
+        {
+          "id": 6,
+          "x": 836.6050912298596,
+          "y": 560.8391362968908,
+          "visible": false
+        },
+        {
+          "id": 7,
+          "x": 1764.572238658081,
+          "y": -547.3402212599684,
+          "visible": false
+        },
+        {
+          "id": 8,
+          "x": -9079.452222929474,
+          "y": -2905.745944220491,
+          "visible": false
+        },
+        {
+          "id": 9,
+          "x": 820.163704984184,
+          "y": -503.4263488857405,
+          "visible": false
+        },
+        {
+          "id": 10,
+          "x": 809.2377568514088,
+          "y": 595.5567496379394,
+          "visible": false
+        },
+        {
+          "id": 11,
+          "x": 766.473544824725,
+          "y": 233.23322229351163,
+          "visible": true
+        },
+        {
+          "id": 12,
+          "x": -457.6440207998354,
+          "y": -1031.9749656343004,
+          "visible": false
+        },
+        {
+          "id": 13,
+          "x": 762.6047886586985,
+          "y": 1127.2167420164685,
+          "visible": false
+        },
+        {
+          "id": 14,
+          "x": 788.4477042017852,
+          "y": 1534.8993276702245,
+          "visible": false
+        },
+        {
+          "id": 15,
+          "x": 761.1108746804296,
+          "y": 399.99051248715483,
+          "visible": true
+        },
+        {
+          "id": 16,
+          "x": 441.40932284465913,
+          "y": -1057.0340887273683,
+          "visible": false
+        },
+        {
+          "id": 17,
+          "x": 1681.9571321493727,
+          "y": -63.96634649288283,
+          "visible": false
+        },
+        {
+          "id": 18,
+          "x": 1679.277415304412,
+          "y": -359.30650376474466,
+          "visible": false
+        },
+        {
+          "id": 19,
+          "x": 881.866023828424,
+          "y": 667.5415840476558,
           "visible": false
         }
       ]
