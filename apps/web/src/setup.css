@@ -157,3 +157,9 @@
   white-space: nowrap;
 }
 .setup-world canvas:focus { outline: none; }
+
+.campaign-levels { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 24px 0; }
+.campaign-levels button[aria-current="step"] { border-color: var(--accent, #e4b950); }
+
+.campaign-shell { height: 100vh; display: flex; flex-direction: column; }
+.campaign-shell > .setup-game, .campaign-shell > .playback-lab { height: auto; flex: 1; min-height: 0; }

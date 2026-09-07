@@ -38,6 +38,7 @@ export type AttemptEnvelope = { generation: number; reply: AttemptReply };
 
 export type SetupCommand =
   | { type: "fixture" }
+  | { type: "catalog" }
   | {
       type: "resolve";
       level: import("./generated/sim").LevelDef;
@@ -57,6 +58,7 @@ export type SetupRequest = {
 export type SetupReply = { type: "setup"; requestId: number } & (
   | {
       value:
+        | import("./generated/sim").ToolDef[]
         | import("./generated/sim").SetupFixture
         | import("./generated/sim").ResolvedSetup
         | import("./generated/sim").PlacementState;

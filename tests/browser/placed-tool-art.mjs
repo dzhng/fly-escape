@@ -19,7 +19,7 @@ try {
     crypto.getRandomValues = (a) =>
       a instanceof BigUint64Array && a.length === 1 ? ((a[0] = 42n), a) : random(a);
   });
-  await page.goto(base + "/");
+  await page.goto(base + "/lab/setup");
   await page.getByRole("button", { name: "Run · release flies", exact: true }).waitFor();
   await page.waitForFunction(() => !document.querySelector(".run-setup").disabled);
   let id = 0;

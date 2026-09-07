@@ -18,7 +18,7 @@ await page.route(pattern, async (route) => {
   else await route.continue();
 });
 try {
-  await page.goto(url);
+  await page.goto(url + "/lab/setup");
   await page.getByRole("alert").filter({ hasText: "House solid request failed (503)" }).waitFor();
   assert.equal(await page.locator(".run-setup").isDisabled(), true);
   assert.deepEqual([...new Set(loaded)].sort(), ["floor", "solid", "wall"]);

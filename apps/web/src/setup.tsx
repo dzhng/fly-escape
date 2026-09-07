@@ -2,7 +2,9 @@ import { loadWorldAssets } from "./world-assets";
 import React, { useEffect, useRef, useState } from "react";
 import {
   AttemptClient,
-  type SetupFixture,
+  type LevelDef,
+  type AttemptTuning,
+  type ToolDef,
   type Placement,
   type PlacementEdit,
   type PlacementState,
@@ -12,7 +14,7 @@ import {
 } from "@fly-escape/sim-client";
 import { WorldView } from "@fly-escape/game-renderer";
 import { AttemptPlayback } from "./playback";
-import { loadProgress, saveProgress, awardResult, emptyProgress } from "./progress";
+import { type Progress, awardResult, emptyProgress } from "./progress";
 import "./setup.css";
 
 type Intent = { edit: PlacementEdit; placement?: Placement; commit: boolean };
@@ -32,13 +34,31 @@ const descriptions: Record<ToolKind, string> = {
   shade: "A local shaded cue",
   fan: "A directional local wind",
 };
-export function SetupGame() {
+export function SetupGame({
+  content,
+  progress,
+  setProgress,
+  storageFailed,
+  onAttemptChange,
+}: {
+  content: {
+    level: LevelDef;
+    tuning: AttemptTuning;
+    catalog: ToolDef[];
+    title: string;
+    description: string;
+  };
+  progress: Progress;
+  setProgress: React.Dispatch<React.SetStateAction<Progress>>;
+  storageFailed: boolean;
+  onAttemptChange?: (active: boolean) => void;
+}) {
   const [client] = useState(() => new AttemptClient(() => {}));
-  const [fixture, setFixture] = useState<SetupFixture>();
   const [setup, setSetup] = useState<PlacementState>();
-  const [progress, setProgress] = useState(loadProgress);
   const [input, setInput] = useState<StartAttempt>();
-  const [tool, setTool] = useState<ToolKind>("fruit");
+  const [tool, setTool] = useState<ToolKind | undefined>(
+    content.level.placementRules.inventory.find((stock) => stock.count > 0)?.kind,
+  );
   const [selected, setSelected] = useState<number>();
   const [heading, setHeading] = useState(0);
   const [intent, setIntent] = useState<Intent>();
@@ -49,7 +69,6 @@ export function SetupGame() {
   const [valid, setValid] = useState<boolean | null>(null);
   const [message, setMessage] = useState("Loading placement tools…");
   const [worldState, setWorldState] = useState("loading");
-  const [storageFailed, setStorageFailed] = useState(false);
   const world = useRef<WorldView | undefined>(undefined);
   const container = useRef<HTMLDivElement>(null);
   const awarded = useRef<string | undefined>(undefined);
@@ -57,23 +76,21 @@ export function SetupGame() {
     let live = true;
     void (async () => {
       try {
-        const f: SetupFixture = await client.setup({ type: "fixture" });
         let resolved: ResolvedSetup;
         try {
           resolved = await client.setup({
             type: "resolve",
-            level: f.level,
-            placements: progress.setups[f.level.id] ?? [],
+            level: content.level,
+            placements: progress.setups[content.level.id] ?? [],
           });
         } catch {
           resolved = await client.setup({
             type: "resolve",
-            level: f.level,
+            level: content.level,
             placements: [],
           });
         }
         if (live) {
-          setFixture(f);
           setSetup(resolved.state);
           setMessage("Choose a tool, then click open floor.");
         }
@@ -87,15 +104,16 @@ export function SetupGame() {
     };
   }, []);
   useEffect(() => {
-    setStorageFailed(!saveProgress(progress));
-  }, [progress]);
+    onAttemptChange?.(!!input);
+    return () => onAttemptChange?.(false);
+  }, [input, onAttemptChange]);
   useEffect(() => {
-    if (!fixture || input || !container.current) return;
-    const view = new WorldView(container.current, fixture.level.geometry, 20);
+    if (!content || input || !container.current) return;
+    const view = new WorldView(container.current, content.level.geometry, 20);
     world.current = view;
-    const spawn = fixture.level.spawn;
+    const spawn = content.level.spawn;
     if (spawn.kind === "cluster") view.setSpawnArea(spawn.min, spawn.max);
-    view.setContactGeometry([], [], fixture.level.exit);
+    view.setContactGeometry([], [], content.level.exit);
     view.overview();
     view.enableCamera();
     let live = true;
@@ -119,24 +137,24 @@ export function SetupGame() {
       view.dispose();
       world.current = undefined;
     };
-  }, [fixture, input]);
+  }, [content, input]);
   useEffect(() => {
-    if (!fixture || !setup) return;
-    world.current?.setContactGeometry(setup.food.slice(0, fixture.level.food.length), fixture.level.zappers, fixture.level.exit, false);
+    if (!content || !setup) return;
+    world.current?.setContactGeometry(setup.food.slice(0, content.level.food.length), content.level.zappers, content.level.exit, false);
     world.current?.setPlacements(
       progress.preferences.showTools ? setup.placements : [],
-      fixture.catalog,
+      content.catalog,
       intent?.placement ? { placement: intent.placement, valid } : undefined,
     );
-  }, [fixture, setup, intent, valid, input, progress.preferences.showTools]);
+  }, [content, setup, intent, valid, input, progress.preferences.showTools]);
   useEffect(() => {
-    if (!intent || checked.current === intent || busy || !fixture || !setup || input) return;
+    if (!intent || checked.current === intent || busy || !content || !setup || input) return;
     checked.current = intent;
     setBusy(true);
     void client
       .setup({
         type: "edit",
-        level: fixture.level,
+        level: content.level,
         placements: setup.placements,
         edit: intent.edit,
       })
@@ -150,7 +168,7 @@ export function SetupGame() {
           setSelected(undefined);
           setProgress((p) => ({
             ...p,
-            setups: { ...p.setups, [fixture.level.id]: state.placements },
+            setups: { ...p.setups, [content.level.id]: state.placements },
           }));
         }
       })
@@ -161,17 +179,19 @@ export function SetupGame() {
         if (intent.commit) setIntent(undefined);
       })
       .finally(() => setBusy(false));
-  }, [intent, busy, fixture, setup, input]);
+  }, [intent, busy, content, setup, input]);
   const pointerDown = useRef<{ x: number; y: number } | undefined>(undefined);
   const propose = (event: { clientX: number; clientY: number }, commit: boolean) => {
     if (intentRef.current?.commit) return;
-    if (!setup || !fixture) return;
+    if (!setup || !content) return;
     const position = world.current?.floorPoint(event.clientX, event.clientY);
     if (!position) return;
     const existing = setup.placements.find((p) => p.id === selected);
+    const kind = existing?.kind ?? tool;
+    if (!kind) return;
     const placement: Placement = {
       id: existing?.id ?? Math.max(0, ...setup.placements.map((p) => p.id)) + 1,
-      kind: existing?.kind ?? tool,
+      kind,
       position,
       heading,
     };
@@ -208,12 +228,12 @@ export function SetupGame() {
       setValid(null);
     }
   };
-  if (input && fixture)
+  if (input && content)
     return (
       <AttemptPlayback
         input={input}
         client={client}
-        catalog={fixture.catalog}
+        catalog={content.catalog}
         onReturn={() => {
           client.cancel();
           setInput(undefined);
@@ -223,7 +243,7 @@ export function SetupGame() {
         onResult={(result) => {
           if (awarded.current === input.attemptId) return;
           awarded.current = input.attemptId;
-          setProgress((p) => awardResult(p, fixture.level.id, result));
+          setProgress((p) => awardResult(p, content.level.id, result));
         }}
       />
     );
@@ -231,10 +251,10 @@ export function SetupGame() {
     <main className="setup-game" data-testid="setup-game" data-world-state={worldState}>
       <header>
         <div>
-          <span className="eyebrow">Fly escape · setup fixture</span>
-          <h1>Give twenty flies a way out.</h1>
+          <span className="eyebrow">Fly escape</span>
+          <h1>{content.title}</h1>
         </div>
-        <span>Best: {fixture ? (progress.bestStars[fixture.level.id] ?? 0) : 0} / 3 stars</span>
+        <span>Best: {content ? (progress.bestStars[content.level.id] ?? 0) : 0} / 3 stars</span>
       </header>
       {worldState !== "ready" && (
         <p role={worldState === "loading" ? "status" : "alert"}>
@@ -261,8 +281,9 @@ export function SetupGame() {
             }}
           />
           <div className="setup-note">
-            Five rooms · 20 flies · 60 game seconds
-            <span>Flies start inside the outlined area. Campaign difficulty is still being authored.</span>
+            {content.level.geometry.rooms.length} rooms · 20 flies ·{" "}
+            {content.level.durationTicks / 10} game seconds
+            <span>{content.description}</span>
           </div>
           <div
             className={`placement-feedback ${valid === false ? "invalid" : ""}`}
@@ -279,24 +300,30 @@ export function SetupGame() {
             to pan; scroll to zoom.
           </p>
           <div className="tool-palette">
-            {setup?.remaining.map((stock) => (
-              <button
-                key={stock.kind}
-                aria-pressed={tool === stock.kind && selected === undefined}
-                disabled={stock.count === 0 || !!intent?.commit}
-                title={descriptions[stock.kind]}
-                onClick={() => {
-                  setTool(stock.kind);
-                  setSelected(undefined);
-                  setIntent(undefined);
-                }}
-              >
-                <b>{names[stock.kind]}</b>
-                <span>{stock.count} left</span>
-              </button>
-            ))}
+            {setup?.remaining
+              .filter((stock) =>
+                content.level.placementRules.inventory.some(
+                  (original) => original.kind === stock.kind && original.count > 0,
+                ),
+              )
+              .map((stock) => (
+                <button
+                  key={stock.kind}
+                  aria-pressed={tool === stock.kind && selected === undefined}
+                  disabled={stock.count === 0 || !!intent?.commit}
+                  title={descriptions[stock.kind]}
+                  onClick={() => {
+                    setTool(stock.kind);
+                    setSelected(undefined);
+                    setIntent(undefined);
+                  }}
+                >
+                  <b>{names[stock.kind]}</b>
+                  <span>{stock.count} left</span>
+                </button>
+              ))}
           </div>
-          <p>{descriptions[tool]}</p>
+          <p>{tool ? descriptions[tool] : "This level has no placement tools."}</p>
           <button
             onClick={rotate}
             disabled={
@@ -354,13 +381,13 @@ export function SetupGame() {
           </label>
           <button
             className="run-setup"
-            disabled={!fixture || !setup || worldState !== "ready" || busy || !!intent?.commit}
+            disabled={!content || !setup || worldState !== "ready" || busy || !!intent?.commit}
             onClick={() => {
-              if (!fixture || !setup) return;
+              if (!content || !setup) return;
               setIntent(undefined);
               setInput({
-                level: fixture.level,
-                tuning: fixture.tuning,
+                level: content.level,
+                tuning: content.tuning,
                 placements: structuredClone(setup.placements),
                 flyCount: 20,
                 attemptId: crypto.randomUUID(),
@@ -371,15 +398,15 @@ export function SetupGame() {
             Run · release flies
           </button>
           <button
-            disabled={!fixture || busy || !!intent?.commit}
+            disabled={!content || busy || !!intent?.commit}
             onClick={() => {
-              if (!fixture) return;
+              if (!content) return;
               setBusy(true);
               setIntent(undefined);
               void client
                 .setup({
                   type: "resolve",
-                  level: fixture.level,
+                  level: content.level,
                   placements: [],
                 })
                 .then((resolved) => {

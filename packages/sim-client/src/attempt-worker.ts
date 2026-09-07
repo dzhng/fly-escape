@@ -2,6 +2,7 @@ import init, {
   AttemptSession,
   swarm_request,
   setup_fixture,
+  tool_catalog,
   resolve_setup,
   edit_setup,
   type InitOutput,
@@ -143,15 +144,17 @@ self.onmessage = async (event: MessageEvent<AttemptRequest | SetupRequest>) => {
       if (active || currentAttemptId) throw new Error("Setup is frozen during an attempt");
       const c = message.command;
       const value =
-        c.type === "fixture"
-          ? setup_fixture()
-          : c.type === "resolve"
-            ? resolve_setup(JSON.stringify(c.level), JSON.stringify(c.placements))
-            : edit_setup(
-                JSON.stringify(c.level),
-                JSON.stringify(c.placements),
-                JSON.stringify(c.edit),
-              );
+        c.type === "catalog"
+          ? tool_catalog()
+          : c.type === "fixture"
+            ? setup_fixture()
+            : c.type === "resolve"
+              ? resolve_setup(JSON.stringify(c.level), JSON.stringify(c.placements))
+              : edit_setup(
+                  JSON.stringify(c.level),
+                  JSON.stringify(c.placements),
+                  JSON.stringify(c.edit),
+                );
       self.postMessage({
         type: "setup",
         requestId: message.requestId,

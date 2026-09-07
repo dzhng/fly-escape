@@ -21,7 +21,7 @@ try {
         ? ((a[0] = 42n), a)
         : random(a);
   });
-  await page.goto(base + "/");
+  await page.goto(base + "/lab/setup");
   await page
     .getByRole("button", { name: "Run · release flies", exact: true })
     .waitFor();

@@ -1,5 +1,6 @@
 import { About } from "./about";
-import { SetupGame } from "./setup";
+import { Campaign, DiagnosticSetup } from "./campaign";
+import { acceptedCampaign } from "./campaign-content";
 import { PlaybackLab } from "./playback";
 import { LifecycleLab } from "./lifecycle";
 import React, { useEffect, useRef, useState } from "react";
@@ -250,8 +251,10 @@ createRoot(document.getElementById("root")!).render(
     <About />
   ) : (
     <>
-      {location.pathname === "/lab/setup" || location.pathname === "/" ? (
-        <SetupGame />
+      {location.pathname === "/" ? (
+        <Campaign levels={acceptedCampaign} />
+      ) : location.pathname === "/lab/setup" ? (
+        <DiagnosticSetup />
       ) : location.pathname === "/lab/playback" ? (
         <PlaybackLab />
       ) : location.pathname === "/lab/lifecycle" ? (

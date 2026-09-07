@@ -598,3 +598,6 @@ exact initial contact and browser performance must be established before adoptio
 ### Exterior camera range and grass batches
 
 **Sound; medium confidence.** Maximum zoom uses the centred whole-house distance. When following a fly near an edge, opposite rooms may leave the frame; the player can pan to them. The user delegated coordinated grass radius and camera limits. A fixed full-house distance avoids making the lawn much larger just because a fly moved. Uniform grass is split into static spatial batches so the renderer can omit offscreen blades without a second detail system. The finite density cap is provisional: very wide layouts can make individual blades look sparse at close range. This is an appearance choice, with no physical or neural effect; final realism remains open.
+## Campaign content ownership
+
+Only explicitly accepted authored entries populate the release campaign registry. Setup receives level/tuning/catalog content; the core catalog travels through its own typed worker command rather than a production dependency on the diagnostic fixture. Progress and sequential unlocks belong to the campaign shell, while each selected level owns an isolated editor/attempt lifetime. Test-authored progression content never joins the release registry.

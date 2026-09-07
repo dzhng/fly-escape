@@ -23,7 +23,7 @@ try {
     };
   });
   await page.goto((process.env.BRAIN_URL ?? "http://127.0.0.1:5173") + "/lab/setup");
-  await page.waitForFunction(() => !document.querySelector(".run-setup")?.disabled);
+  await page.waitForFunction(() => document.querySelector(".run-setup")?.disabled === false);
   async function commitThenSelect(x, y, otherControl, placedName) {
     await page.mouse.move(x, y);
     await page.getByTestId("placement-feedback").filter({ hasText: "Valid placement" }).waitFor();

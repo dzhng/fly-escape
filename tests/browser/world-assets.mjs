@@ -25,7 +25,7 @@ try {
       if (fail) await route.fulfill({ status: 503, body: "Unavailable" });
       else await route.continue();
     });
-    await page.goto(url);
+    await page.goto(url + "/lab/setup");
     await page.getByRole("alert").filter({ hasText: failure }).waitFor();
     assert.equal(await page.locator(".run-setup").isDisabled(), true);
     fail = false;

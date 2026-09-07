@@ -1,4 +1,10 @@
-import type { StartAttempt, SetupFixture, ResolvedSetup, PlacementState } from "./generated/sim";
+import type {
+  StartAttempt,
+  ToolDef,
+  SetupFixture,
+  ResolvedSetup,
+  PlacementState,
+} from "./generated/sim";
 import type {
   AttemptReply,
   AttemptCommand,
@@ -23,13 +29,14 @@ export class AttemptClient {
   private setupSequence = 0;
   private setupPending?: {
     id: number;
-    resolve: (value: SetupFixture | ResolvedSetup | PlacementState) => void;
+    resolve: (value: SetupFixture | ToolDef[] | ResolvedSetup | PlacementState) => void;
     reject: (reason: Error) => void;
   };
+  setup(command: Extract<SetupCommand, { type: "catalog" }>): Promise<ToolDef[]>;
   setup(command: Extract<SetupCommand, { type: "fixture" }>): Promise<SetupFixture>;
   setup(command: Extract<SetupCommand, { type: "resolve" }>): Promise<ResolvedSetup>;
   setup(command: Extract<SetupCommand, { type: "edit" }>): Promise<PlacementState>;
-  setup(command: SetupCommand): Promise<SetupFixture | ResolvedSetup | PlacementState> {
+  setup(command: SetupCommand): Promise<SetupFixture | ToolDef[] | ResolvedSetup | PlacementState> {
     if (this.setupPending) return Promise.reject(new Error("Setup validation is already pending"));
     this.worker ??= this.createWorker();
     const id = ++this.setupSequence;
