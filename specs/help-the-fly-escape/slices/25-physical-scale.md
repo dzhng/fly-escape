@@ -1,6 +1,6 @@
 # 25 — Physical scale and sensory sampling
 
-Status: pending measured reproduction. Dependency: 19. Required before 20 and final campaign calibration.
+Status: measured reproduction failed; separate sampling correction required. Dependency: 19. Required before 20 and final campaign calibration.
 
 ## Contract and seam
 
@@ -17,3 +17,9 @@ A dimension sheet and bounded native/WASM sensory probe establish one consistent
 Visual variable, if captured: physical envelope and sample-point alignment only; materials, camera and room art stay frozen. Use compare-screenshots for the prior/proposed overlay and screenshot-critique as the final visual gate, with its documented adversarial fallback only when a fresh reviewer is unavailable. Human review uses preview-shots and the standing non-blocking five-minute window. Preserve the source graph, neural cadence, independent seed streams and twenty-fly count.
 
 Delegated: measuring the authored anatomy, conservative collision representation and bounded experiment implementation. Exact revised physical parameters require evidence in this slice before downstream use. Sensory cutoff changes, new anatomy assumptions or a failed reproduction require an explicit spec update, not an unlisted implementation choice. Bank evidence under `assets/evidence/25/` and update the global handoff.
+
+## Bounded reproduction underway
+
+Measure 101 absolute phases of each existing Walk/Fly/Land/Feed clip through posed vertices, preserving the GLB and production motion mapping. The measured anatomy has a 0.404145 mm antenna-tip separation and a 1.414508 mm forward offset; the frozen adapter samples a 300 mm span at the body centre. First compare current versus anatomical positions through canonical sample_point and cue_currents, without changing production defaults. A nearest-cell phase scan must distinguish within-cell sampling from the old z=0 grid-boundary start. Then use three paired seeds, scientific-only 60 stationary brain warmup ticks and 100 measured moving ticks in the existing mirrored odor fixtures; retain neutral and bilateral pathway-silenced controls, with their own matched neutral controls. Body motion calls the existing desired_pose and Geometry sweep owners. No field interpolation or five-percent cutoff change is part of this reproduction.
+
+[Measured reproduction](../assets/evidence/25/README.md): at anatomical span,4090/4097 phase positions have identical cell samples, and all twelve cell-centre mirrored runs match neutral motor/body trajectories exactly. Keep the five-percent cutoff frozen. Next isolate wall-aware continuous field sampling before any sensory-adapter correction; no production parameters are accepted by this failure report.

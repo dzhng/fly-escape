@@ -1,0 +1,24 @@
+{
+  "base": "04fe2a3",
+  "coreSources": {
+    "crates/sim/src/attempt.rs": "00adf1df3dd3b0338e24f88429a9e129154f1a4228599b5738cdcf0f7edecae6",
+    "crates/sim/src/body.rs": "33ff9d365b3e3dcede0f7f3be4dd889d6ae6133555df0167511faee2e95dde3a",
+    "crates/sim/src/chamber.rs": "be1451151d395347bd27e2f12c8805b6269b42a47a56749e84d0016715f05911",
+    "crates/sim/src/environment/fields.rs": "ebd383147ea73dfeda1d5c34eaa9da14b924c18d77937e2d69eeebe8bf42df85",
+    "crates/sim/src/environment/mod.rs": "0b8d550817e11875200d1982331b9a5cf80d812d414fb306fc8459e2bca84948",
+    "crates/sim/src/field_lab.rs": "4153b078185fc5bae18fe17ffe2a2d4ef1febd0cd6c7a3530a41c884c2963774",
+    "crates/sim/src/graph.rs": "379c05b56369f3009b1015ab50ce0a6e0ccaff9603f811eafe86dd85dcf63c2e",
+    "crates/sim/src/house_lab.rs": "375667a70e6b602fbae064752752879eb7e93830bd452b579130b60399e98d91",
+    "crates/sim/src/lib.rs": "a0104cc70ca49dac77950b8c89cc4f09b84a7c1b7654bd8a62ee4226ae18a5a0",
+    "crates/sim/src/lif.rs": "7394c44c26718bd00cf6c9c4ae191274b3b6bd60a12878bd752e27fdc9a258a1",
+    "crates/sim/src/lifecycle_lab.rs": "e619d0698aaa82925a19b797401e8fc2132da946d2e8e46ecceb2ddcb4747e02",
+    "crates/sim/src/placement.rs": "36dae3978e194f3ec0056f5a20b0c8743ed189b4059bc885480119fa1e5e14c6",
+    "crates/sim/src/record.rs": "0b39a49939588913fd6c20df4420967c092c11dcd9504b150a632165cc77d3e0",
+    "crates/sim/src/sensory.rs": "60d716f8b34fbd6d5995be8c9428a2131c1c0df52d8914f2b005957cc59e2059",
+    "crates/sim/src/setup_fixture.rs": "b292822189b74641c982728a7668b8a9625759299a93d48ff05cd0dd53593571",
+    "crates/sim/src/spawn.rs": "ee712d8c629ee3710f33b159c5f2c230c861a981feed99de5e13637da0fdc40b",
+    "crates/sim/src/swarm_lab.rs": "2ffd658156fabc5192dc9573889704333659872a30ad6976e5b3b60c0bac810d"
+  },
+  "measuredProbeSourceHash": "ef009a148fba12232e3381f88b6716ca3bdbd900fec847605e714e0e5c915e21",
+  "note": "measured-probe.rs is exact source at execution. The current example adds only a coordinate-equivalence unit test after that run. Telemetry-only rerun preserved all144 motor/body trajectories while exposing actual post-silencing current."
+}

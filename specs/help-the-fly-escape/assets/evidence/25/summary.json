@@ -1,0 +1,549 @@
+{
+  "scope": "Failed frozen-adapter reproduction at anatomical sampling scale; diagnostic only, no production/campaign acceptance",
+  "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+  "nativeBuildId": "40cfa8ea5757b5752a100846ab30b3ca864f3e56b6199aa89b828d96167fbdd7",
+  "probeSourceHash": "ef009a148fba12232e3381f88b6716ca3bdbd900fec847605e714e0e5c915e21",
+  "phaseScan": [
+    {
+      "scenario": "excitatoryOdor",
+      "physical": false,
+      "mirror": 1.0,
+      "samples": 4097,
+      "equalSamples": 0,
+      "detectedSamples": 4097,
+      "nonzeroContrastRange": [
+        0.15769944443659303,
+        0.31651254971729537
+      ]
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "physical": false,
+      "mirror": -1.0,
+      "samples": 4097,
+      "equalSamples": 0,
+      "detectedSamples": 4097,
+      "nonzeroContrastRange": [
+        0.15769944443659306,
+        0.3165125497172954
+      ]
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "physical": true,
+      "mirror": 1.0,
+      "samples": 4097,
+      "equalSamples": 4090,
+      "detectedSamples": 7,
+      "nonzeroContrastRange": [
+        0.15769944443659303,
+        0.15769944443659303
+      ]
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "physical": true,
+      "mirror": -1.0,
+      "samples": 4097,
+      "equalSamples": 4090,
+      "detectedSamples": 7,
+      "nonzeroContrastRange": [
+        0.15769944443659306,
+        0.15769944443659306
+      ]
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "physical": false,
+      "mirror": 1.0,
+      "samples": 4097,
+      "equalSamples": 0,
+      "detectedSamples": 4097,
+      "nonzeroContrastRange": [
+        0.15769944443659303,
+        0.31651254971729537
+      ]
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "physical": false,
+      "mirror": -1.0,
+      "samples": 4097,
+      "equalSamples": 0,
+      "detectedSamples": 4097,
+      "nonzeroContrastRange": [
+        0.15769944443659306,
+        0.3165125497172954
+      ]
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "physical": true,
+      "mirror": 1.0,
+      "samples": 4097,
+      "equalSamples": 4090,
+      "detectedSamples": 7,
+      "nonzeroContrastRange": [
+        0.15769944443659303,
+        0.15769944443659303
+      ]
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "physical": true,
+      "mirror": -1.0,
+      "samples": 4097,
+      "equalSamples": 4090,
+      "detectedSamples": 7,
+      "nonzeroContrastRange": [
+        0.15769944443659306,
+        0.15769944443659306
+      ]
+    }
+  ],
+  "movingComparisons": [
+    {
+      "scenario": "excitatoryOdor",
+      "physical": false,
+      "initialZ": 0.0,
+      "effectiveActiveTicks": [
+        91,
+        50,
+        59,
+        86,
+        83,
+        85
+      ],
+      "meanActiveTicks": 75.66666666666667,
+      "pairedDifferences": [
+        {
+          "seed": 0,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": 0.01943341843790255,
+          "finalHeadingMinusNeutral": -4.728511832147386
+        },
+        {
+          "seed": 0,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": -0.006466463141827583,
+          "finalHeadingMinusNeutral": -0.5173170513462155
+        },
+        {
+          "seed": 1,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": 0.023627242882265715,
+          "finalHeadingMinusNeutral": -4.393005876598328
+        },
+        {
+          "seed": 1,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": -0.001189638276086799,
+          "finalHeadingMinusNeutral": -0.09517106208694681
+        },
+        {
+          "seed": 2,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": 0.007883455005186526,
+          "finalHeadingMinusNeutral": 0.630676400414926
+        },
+        {
+          "seed": 2,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": -0.022705266650862244,
+          "finalHeadingMinusNeutral": 4.466763975110609
+        }
+      ],
+      "exactlyNeutralMotorAndBody": 0,
+      "comparisons": 6,
+      "allSilencedMotorAndBodyExactlyMatchSilencedNeutral": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "physical": false,
+      "initialZ": 0.125,
+      "effectiveActiveTicks": [
+        97,
+        52,
+        58,
+        84,
+        67,
+        95
+      ],
+      "meanActiveTicks": 75.5,
+      "pairedDifferences": [
+        {
+          "seed": 0,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": 0.02481503688216862,
+          "finalHeadingMinusNeutral": -4.2979823566061
+        },
+        {
+          "seed": 0,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": -0.011824661232830885,
+          "finalHeadingMinusNeutral": -0.945972898626473
+        },
+        {
+          "seed": 1,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": 0.028792811055066675,
+          "finalHeadingMinusNeutral": -3.979760422774252
+        },
+        {
+          "seed": 1,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": -0.003109893300978656,
+          "finalHeadingMinusNeutral": -0.24879146407828845
+        },
+        {
+          "seed": 2,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": 0.00941957114202099,
+          "finalHeadingMinusNeutral": 0.7535656913616838
+        },
+        {
+          "seed": 2,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": -0.025485549844401763,
+          "finalHeadingMinusNeutral": 4.244341319627449
+        }
+      ],
+      "exactlyNeutralMotorAndBody": 0,
+      "comparisons": 6,
+      "allSilencedMotorAndBodyExactlyMatchSilencedNeutral": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "physical": true,
+      "initialZ": 0.0,
+      "effectiveActiveTicks": [
+        2,
+        1,
+        2,
+        3,
+        1,
+        1
+      ],
+      "meanActiveTicks": 1.6666666666666667,
+      "pairedDifferences": [
+        {
+          "seed": 0,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": 0.003340340833133074,
+          "finalHeadingMinusNeutral": -6.015958040528948
+        },
+        {
+          "seed": 0,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": -0.0035369428465753354,
+          "finalHeadingMinusNeutral": -0.2829554277260309
+        },
+        {
+          "seed": 1,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": 0.008112047865265135,
+          "finalHeadingMinusNeutral": 0.648963829221211
+        },
+        {
+          "seed": 1,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": 0.0014199327426667897,
+          "finalHeadingMinusNeutral": 0.11359461941334548
+        },
+        {
+          "seed": 2,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": -0.00014787669948708015,
+          "finalHeadingMinusNeutral": -0.011830135958960986
+        },
+        {
+          "seed": 2,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": -0.0030213189894227966,
+          "finalHeadingMinusNeutral": -0.24170551915381944
+        }
+      ],
+      "exactlyNeutralMotorAndBody": 0,
+      "comparisons": 6,
+      "allSilencedMotorAndBodyExactlyMatchSilencedNeutral": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "physical": true,
+      "initialZ": 0.125,
+      "effectiveActiveTicks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "meanActiveTicks": 0,
+      "pairedDifferences": [
+        {
+          "seed": 0,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": 0.0,
+          "finalHeadingMinusNeutral": 0.0
+        },
+        {
+          "seed": 0,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": 0.0,
+          "finalHeadingMinusNeutral": 0.0
+        },
+        {
+          "seed": 1,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": 0.0,
+          "finalHeadingMinusNeutral": 0.0
+        },
+        {
+          "seed": 1,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": 0.0,
+          "finalHeadingMinusNeutral": 0.0
+        },
+        {
+          "seed": 2,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": 0.0,
+          "finalHeadingMinusNeutral": 0.0
+        },
+        {
+          "seed": 2,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": 0.0,
+          "finalHeadingMinusNeutral": 0.0
+        }
+      ],
+      "exactlyNeutralMotorAndBody": 6,
+      "comparisons": 6,
+      "allSilencedMotorAndBodyExactlyMatchSilencedNeutral": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "physical": false,
+      "initialZ": 0.0,
+      "effectiveActiveTicks": [
+        83,
+        100,
+        100,
+        83,
+        100,
+        93
+      ],
+      "meanActiveTicks": 93.16666666666667,
+      "pairedDifferences": [
+        {
+          "seed": 0,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": -0.011647535199256702,
+          "finalHeadingMinusNeutral": -0.9318028159405385
+        },
+        {
+          "seed": 0,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": 0.009142167905950783,
+          "finalHeadingMinusNeutral": -5.5518118747035246
+        },
+        {
+          "seed": 1,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": -0.0037758594457150425,
+          "finalHeadingMinusNeutral": -0.3020687556572019
+        },
+        {
+          "seed": 1,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": 0.009566895244868995,
+          "finalHeadingMinusNeutral": 0.7653516195895209
+        },
+        {
+          "seed": 2,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": -0.011468160342918882,
+          "finalHeadingMinusNeutral": 5.3657324797460815
+        },
+        {
+          "seed": 2,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": 0.015123682958372787,
+          "finalHeadingMinusNeutral": 1.209894636669826
+        }
+      ],
+      "exactlyNeutralMotorAndBody": 0,
+      "comparisons": 6,
+      "allSilencedMotorAndBodyExactlyMatchSilencedNeutral": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "physical": false,
+      "initialZ": 0.125,
+      "effectiveActiveTicks": [
+        84,
+        100,
+        100,
+        92,
+        100,
+        100
+      ],
+      "meanActiveTicks": 96,
+      "pairedDifferences": [
+        {
+          "seed": 0,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": -0.009959679794564696,
+          "finalHeadingMinusNeutral": -0.796774383565177
+        },
+        {
+          "seed": 0,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": 0.009142167905950783,
+          "finalHeadingMinusNeutral": -5.5518118747035246
+        },
+        {
+          "seed": 1,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": -0.0037758594457150425,
+          "finalHeadingMinusNeutral": -0.3020687556572019
+        },
+        {
+          "seed": 1,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": 0.011049599963340788,
+          "finalHeadingMinusNeutral": 0.8839679970672654
+        },
+        {
+          "seed": 2,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": -0.011468160342918882,
+          "finalHeadingMinusNeutral": 5.3657324797460815
+        },
+        {
+          "seed": 2,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": 0.010011032138233171,
+          "finalHeadingMinusNeutral": 0.8008825710586568
+        }
+      ],
+      "exactlyNeutralMotorAndBody": 0,
+      "comparisons": 6,
+      "allSilencedMotorAndBodyExactlyMatchSilencedNeutral": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "physical": true,
+      "initialZ": 0.0,
+      "effectiveActiveTicks": [
+        1,
+        2,
+        3,
+        2,
+        1,
+        1
+      ],
+      "meanActiveTicks": 1.6666666666666667,
+      "pairedDifferences": [
+        {
+          "seed": 0,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": -0.002556896129223808,
+          "finalHeadingMinusNeutral": -0.2045516903379081
+        },
+        {
+          "seed": 0,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": 0.000972310588464661,
+          "finalHeadingMinusNeutral": -6.2054004601024175
+        },
+        {
+          "seed": 1,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": -0.004410868544075746,
+          "finalHeadingMinusNeutral": -0.35286948352606196
+        },
+        {
+          "seed": 1,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": 0.00020577258059980424,
+          "finalHeadingMinusNeutral": 0.016461806447983562
+        },
+        {
+          "seed": 2,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": -0.000515546447379619,
+          "finalHeadingMinusNeutral": -0.041243715790367896
+        },
+        {
+          "seed": 2,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": -0.0004251324874703826,
+          "finalHeadingMinusNeutral": -0.03401059899763226
+        }
+      ],
+      "exactlyNeutralMotorAndBody": 0,
+      "comparisons": 6,
+      "allSilencedMotorAndBodyExactlyMatchSilencedNeutral": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "physical": true,
+      "initialZ": 0.125,
+      "effectiveActiveTicks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "meanActiveTicks": 0,
+      "pairedDifferences": [
+        {
+          "seed": 0,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": 0.0,
+          "finalHeadingMinusNeutral": 0.0
+        },
+        {
+          "seed": 0,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": 0.0,
+          "finalHeadingMinusNeutral": 0.0
+        },
+        {
+          "seed": 1,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": 0.0,
+          "finalHeadingMinusNeutral": 0.0
+        },
+        {
+          "seed": 1,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": 0.0,
+          "finalHeadingMinusNeutral": 0.0
+        },
+        {
+          "seed": 2,
+          "mirror": 1.0,
+          "meanTurnMinusNeutral": 0.0,
+          "finalHeadingMinusNeutral": 0.0
+        },
+        {
+          "seed": 2,
+          "mirror": -1.0,
+          "meanTurnMinusNeutral": 0.0,
+          "finalHeadingMinusNeutral": 0.0
+        }
+      ],
+      "exactlyNeutralMotorAndBody": 6,
+      "comparisons": 6,
+      "allSilencedMotorAndBodyExactlyMatchSilencedNeutral": true
+    }
+  ],
+  "assumptions": "Existing field_lab mirrored odor fixtures settle100 fields ticks. Each Brain warms60 neutral stationary ticks (scientific control only), then100 measured ground-body ticks. Canonical sample_point/cue_currents/Brain/desired_pose/sweep; cue gain1, threshold5%, speed0.12m/s and turnGain8 unchanged. Diagnostic sampling adds measured lateral/forward coordinates without modifying FieldConfig or production APIs. Old collision radius0.08m; proposed rest AABB corner2.631336mm. Geometry/field grid/sources unchanged. No reserve/flight-mode model in this ground-moving sensory fixture.",
+  "totalArms": 144,
+  "probeWallSeconds": 49.066017667
+}
