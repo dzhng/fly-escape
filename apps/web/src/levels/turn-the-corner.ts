@@ -406,11 +406,11 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
     "spawn": {
       "kind": "cluster",
       "min": {
-        "x": 0.9,
+        "x": 1.3,
         "z": 7.2
       },
       "max": {
-        "x": 1.55,
+        "x": 1.95,
         "z": 7.85
       },
       "flyingCount": 10
