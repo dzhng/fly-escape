@@ -33,3 +33,5 @@ The camera bounds the circular lawn independently of house geometry. Normal maxi
 [Exterior evidence](../assets/evidence/22/exterior-grass/README.md) records the prepared comparisons and close-range limitations. Root integration additionally passes production setup, follow, wheel zoom and wide/portrait resize restoration without browser errors. Final household materials and composed readability remain open.
 
 The [warm-house integration](../assets/evidence/22/warm-house/README.md) retains authored materials and brings the first finished surfaces and native furnishings into both actual campaign levels. Detailed decoration, surface realism and lighting remain open.
+
+The [fruit skin pass](../assets/evidence/22/fruit-skins/README.md) preserves authored geometry and contact exports while replacing neutral grey skin with asset-authored colour and roughness. Root integration passes both export identity tests, all twelve placement-model tests and TypeScript. The regular apple stripes and smooth banana finish remain below the final realism target.

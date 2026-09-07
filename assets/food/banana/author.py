@@ -11,11 +11,6 @@ EVIDENCE.mkdir(parents=True, exist_ok=True)
 scene = bpy.data.scenes.new('Banana-Metres')
 scene.unit_settings.system = 'METRIC'
 scene.unit_settings.scale_length = 1
-neutral = bpy.data.materials.new('Banana-Neutral-ShapeOnly')
-neutral.use_nodes = True
-neutral.diffuse_color = (0.5,0.5,0.5,1)
-neutral.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value = (0.5,0.5,0.5,1)
-neutral.node_tree.nodes['Principled BSDF'].inputs['Roughness'].default_value = 0.65
 
 # The stalk is cut across a short round collar; the opposite smaller terminal
 # has a shallow blossom scar. Both caps belong to the same closed skin.

@@ -1,6 +1,6 @@
 """Deterministic vertex skin colours; geometry stays owned by each fruit author."""
 import bpy
-from math import sin, cos, atan2
+from math import sin, atan2
 
 def apply_skin(mesh, kind):
     material=bpy.data.materials.new(kind.title()+'-Skin')
@@ -24,7 +24,7 @@ def apply_skin(mesh, kind):
             rgb=(0.42+0.16*gold+0.02*fleck,0.012+0.24*gold,0.009+0.025*gold)
         else:
             t=(x-lo)/(hi-lo)
-            terminal=max(0.,min(1.,(0.055-t)/0.035,(1.0))) if t<0.055 else max(0.,min(1.,(t-0.91)/0.055))
+            terminal=max(0.,min(1.,(0.055-t)/0.035)) if t<0.055 else max(0.,min(1.,(t-0.91)/0.055))
             variation=0.5+0.5*sin(x*290+y*520+z*210)
             yellow=(0.72+0.025*variation,0.46+0.025*variation,0.025+0.006*variation)
             brown=(0.10,0.043,0.012)
