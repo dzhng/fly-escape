@@ -1,0 +1,3754 @@
+{
+  "arms": [
+    {
+      "absoluteActive": {
+        "distanceReduction": {
+          "ci95": [
+            -0.27592828365077987,
+            -0.09593417891311422
+          ],
+          "mean": -0.18593123128194705,
+          "negativeSeeds": 24,
+          "positiveSeeds": 6
+        },
+        "finalAlignment": {
+          "ci95": [
+            -0.6048925235455637,
+            -0.18556234358894805
+          ],
+          "mean": -0.39522743356725587,
+          "negativeSeeds": 23,
+          "positiveSeeds": 7
+        },
+        "meanThrust": {
+          "ci95": [
+            0.6554450161377842,
+            0.656877895095051
+          ],
+          "mean": 0.6561614556164176,
+          "negativeSeeds": 0,
+          "positiveSeeds": 30
+        },
+        "netDisplacement": {
+          "ci95": [
+            0.709939130635874,
+            0.7429582046550074
+          ],
+          "mean": 0.7264486676454407,
+          "negativeSeeds": 0,
+          "positiveSeeds": 30
+        },
+        "pathLength": {
+          "ci95": [
+            0.7865340193653408,
+            0.7882534741140611
+          ],
+          "mean": 0.787393746739701,
+          "negativeSeeds": 0,
+          "positiveSeeds": 30
+        },
+        "sourceSignedMeanTurn": {
+          "ci95": [
+            -0.0023406539283225103,
+            0.005207997274219377
+          ],
+          "mean": 0.0014336716729484336,
+          "negativeSeeds": 15,
+          "positiveSeeds": 15
+        }
+      },
+      "activeMinusMatchedNoCurrent": {
+        "distanceReduction": {
+          "ci95": [
+            -0.02101424551402138,
+            0.015185200402143913
+          ],
+          "mean": -0.002914522555938733,
+          "negativeSeeds": 19,
+          "positiveSeeds": 11
+        },
+        "finalAlignment": {
+          "ci95": [
+            -0.10557245776294852,
+            0.012642369153529356
+          ],
+          "mean": -0.04646504430470958,
+          "negativeSeeds": 19,
+          "positiveSeeds": 11
+        },
+        "meanFlightTurn": {
+          "ci95": [
+            -0.0008047216210992684,
+            0.0014826640444901363
+          ],
+          "mean": 0.00033897121169543395,
+          "negativeSeeds": 13,
+          "positiveSeeds": 17
+        },
+        "meanThrust": {
+          "ci95": [
+            -0.000017409075794250998,
+            0.00014824588810707256
+          ],
+          "mean": 0.00006541840615641078,
+          "negativeSeeds": 10,
+          "positiveSeeds": 20
+        },
+        "meanTurn": {
+          "ci95": [
+            -0.00007079948073924547,
+            0.0018492264695160764
+          ],
+          "mean": 0.0008892134943884154,
+          "negativeSeeds": 11,
+          "positiveSeeds": 19
+        },
+        "netDisplacement": {
+          "ci95": [
+            -0.006424207429672298,
+            0.007752127965366492
+          ],
+          "mean": 0.0006639602678470968,
+          "negativeSeeds": 16,
+          "positiveSeeds": 14
+        },
+        "pathLength": {
+          "ci95": [
+            -0.000020890890952883815,
+            0.00017789506572863086
+          ],
+          "mean": 0.00007850208738787352,
+          "negativeSeeds": 10,
+          "positiveSeeds": 20
+        },
+        "sourceSignedMeanTurn": {
+          "ci95": [
+            -0.0018492264695160764,
+            0.00007079948073924547
+          ],
+          "mean": -0.0008892134943884154,
+          "negativeSeeds": 19,
+          "positiveSeeds": 11
+        }
+      },
+      "activityActiveMinusControl": {
+        "dm1PNLMeanVoltage": {
+          "ci95": [
+            -0.2139488108966712,
+            -0.18039660574782299
+          ],
+          "mean": -0.1971727083222471,
+          "negativeSeeds": 30,
+          "positiveSeeds": 0
+        },
+        "dm1PNLSpikeFraction": {
+          "ci95": [
+            0.19299269410992959,
+            0.2143406392234039
+          ],
+          "mean": 0.20366666666666675,
+          "negativeSeeds": 0,
+          "positiveSeeds": 30
+        },
+        "dm1PNRMeanVoltage": {
+          "ci95": [
+            -0.17631678390221428,
+            -0.14301587524508025
+          ],
+          "mean": -0.15966632957364726,
+          "negativeSeeds": 30,
+          "positiveSeeds": 0
+        },
+        "dm1PNRSpikeFraction": {
+          "ci95": [
+            0.1324039796433497,
+            0.14626268702331702
+          ],
+          "mean": 0.13933333333333336,
+          "negativeSeeds": 0,
+          "positiveSeeds": 30
+        },
+        "odorInhLMeanVoltage": {
+          "ci95": [
+            -0.6642626443788058,
+            -0.6215310523475759
+          ],
+          "mean": -0.6428968483631908,
+          "negativeSeeds": 30,
+          "positiveSeeds": 0
+        },
+        "odorInhLSpikeFraction": {
+          "ci95": [
+            0.42431154324935083,
+            0.4706027424649353
+          ],
+          "mean": 0.44745714285714305,
+          "negativeSeeds": 0,
+          "positiveSeeds": 30
+        },
+        "odorInhRMeanVoltage": {
+          "ci95": [
+            -0.023177303957203535,
+            -0.00608347577625021
+          ],
+          "mean": -0.014630389866726871,
+          "negativeSeeds": 27,
+          "positiveSeeds": 3
+        },
+        "odorInhRSpikeFraction": {
+          "ci95": [
+            -0.0004760531348175093,
+            0.005843574502338876
+          ],
+          "mean": 0.0026837606837606834,
+          "negativeSeeds": 0,
+          "positiveSeeds": 30
+        }
+      },
+      "gain": 2.0,
+      "observations": [
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3780586845637382,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.42178704917026333,
+              "dm1PNRSpikeFraction": 0.18000000000000002,
+              "odorInhLMeanVoltage": 0.0,
+              "odorInhLSpikeFraction": 0.5000000000000002,
+              "odorInhRMeanVoltage": 0.6721502956796385,
+              "odorInhRSpikeFraction": 0.009487179487179486
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.012887203102329603,
+            "finalAlignment": 0.28049807730505255,
+            "finalHeading": 5.253967247880741,
+            "finalX": -1.3308342281205066,
+            "finalZ": -0.2743218044173689,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.00804531141881099,
+            "meanThrust": 0.65514454708286,
+            "meanTurn": -0.012865225741235544,
+            "netDisplacement": 0.7232117826984564,
+            "pathLength": 0.7861734564994316,
+            "sourceSignedMeanTurn": 0.012865225741235544
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6164752928993273,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.5990937107065003,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6771289093309637,
+              "odorInhLSpikeFraction": 0.008,
+              "odorInhRMeanVoltage": 0.6858880190669633,
+              "odorInhRSpikeFraction": 0.008205128205128202
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.0466185612270007,
+            "finalAlignment": 0.14874367206322217,
+            "finalHeading": 5.391622259646343,
+            "finalX": -1.2925286852771916,
+            "finalZ": -0.22870579442779562,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.006349031969079621,
+            "meanThrust": 0.6546527618418423,
+            "meanTurn": -0.011144538094165584,
+            "netDisplacement": 0.7435200075051567,
+            "pathLength": 0.7855833142102117,
+            "sourceSignedMeanTurn": 0.011144538094165584
+          },
+          "seed": 0
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.38887308822843736,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.41946393138599963,
+              "dm1PNRSpikeFraction": 0.18000000000000002,
+              "odorInhLMeanVoltage": 0.0,
+              "odorInhLSpikeFraction": 0.5000000000000002,
+              "odorInhRMeanVoltage": 0.666525444536808,
+              "odorInhRSpikeFraction": 0.009743589743589739
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.06699635496775902,
+            "finalAlignment": -0.7261841715788308,
+            "finalHeading": 0.08480109331952575,
+            "finalX": -1.2900806553135593,
+            "finalZ": -0.20344758769151997,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.005269433062853064,
+            "meanThrust": 0.6600849278177956,
+            "meanTurn": 0.0010600136664941466,
+            "netDisplacement": 0.7384960371576303,
+            "pathLength": 0.7921019133813556,
+            "sourceSignedMeanTurn": -0.0010600136664941466
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5618627402827168,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.6097571720593622,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6664635411222475,
+              "odorInhLSpikeFraction": 0.009428571428571429,
+              "odorInhRMeanVoltage": 0.6713648082935272,
+              "odorInhRSpikeFraction": 0.008461538461538458
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.14476311773148498,
+            "finalAlignment": -0.5504454957598442,
+            "finalHeading": 6.14560667736047,
+            "finalX": -1.2447508378306913,
+            "finalZ": -0.1397202206486155,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0018045645565498362,
+            "meanThrust": 0.6600539617987807,
+            "meanTurn": -0.0017197328727389426,
+            "netDisplacement": 0.7680644745173029,
+            "pathLength": 0.7920647541585359,
+            "sourceSignedMeanTurn": 0.0017197328727389426
+          },
+          "seed": 1
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.38349460954224546,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.4076272312999936,
+              "dm1PNRSpikeFraction": 0.18000000000000002,
+              "odorInhLMeanVoltage": 0.0,
+              "odorInhLSpikeFraction": 0.5000000000000002,
+              "odorInhRMeanVoltage": 0.6511352506288112,
+              "odorInhRSpikeFraction": 0.010512820512820507
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.09132565678611537,
+            "finalAlignment": -0.3072556790887833,
+            "finalHeading": 5.911949464719447,
+            "finalX": -1.3107792181606734,
+            "finalZ": -0.1538520206013411,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.008177929652184432,
+            "meanThrust": 0.6588857557938264,
+            "meanTurn": -0.0046404480307517685,
+            "netDisplacement": 0.7061839210590454,
+            "pathLength": 0.7906629069525922,
+            "sourceSignedMeanTurn": 0.0046404480307517685
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.594288884365716,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.6469784494972045,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6768238325169835,
+              "odorInhLSpikeFraction": 0.008,
+              "odorInhRMeanVoltage": 0.655269435161408,
+              "odorInhRSpikeFraction": 0.009230769230769228
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.1309972316234853,
+            "finalAlignment": -0.27267062202988357,
+            "finalHeading": 5.872931290235946,
+            "finalX": -1.2832040234564213,
+            "finalZ": -0.1251524327341791,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.008625167833907618,
+            "meanThrust": 0.6588179263594883,
+            "meanTurn": -0.005128175211795493,
+            "netDisplacement": 0.7276397483702672,
+            "pathLength": 0.7905815116313866,
+            "sourceSignedMeanTurn": 0.005128175211795493
+          },
+          "seed": 2
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.414622798875997,
+              "dm1PNLSpikeFraction": 0.19000000000000003,
+              "dm1PNRMeanVoltage": 0.524069346095911,
+              "dm1PNRSpikeFraction": 0.12999999999999998,
+              "odorInhLMeanVoltage": 0.10428878634728735,
+              "odorInhLSpikeFraction": 0.38000000000000017,
+              "odorInhRMeanVoltage": 0.6680100169659672,
+              "odorInhRSpikeFraction": 0.009230769230769228
+            },
+            "detectedTicks": 76,
+            "distanceReduction": -0.4380699949301792,
+            "finalAlignment": -0.9758088977400112,
+            "finalHeading": 0.8861041055727396,
+            "finalX": -1.35605349893766,
+            "finalZ": 0.2858375535377923,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.007001553847386439,
+            "meanThrust": 0.6574789775909634,
+            "meanTurn": 0.011076301319659254,
+            "netDisplacement": 0.704535452083783,
+            "pathLength": 0.7889747731091568,
+            "sourceSignedMeanTurn": -0.011076301319659254
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5677531916081728,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5995810553996074,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6868861850175262,
+              "odorInhLSpikeFraction": 0.008857142857142859,
+              "odorInhRMeanVoltage": 0.6707637745728104,
+              "odorInhRSpikeFraction": 0.008717948717948716
+            },
+            "detectedTicks": 77,
+            "distanceReduction": -0.43440081002677133,
+            "finalAlignment": -0.9730593836759529,
+            "finalHeading": 0.8685422087128722,
+            "finalX": -1.3508828405476514,
+            "finalZ": 0.2791218069871108,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006998016251013739,
+            "meanThrust": 0.6575617197352813,
+            "meanTurn": 0.010856777608910899,
+            "netDisplacement": 0.7065847930936779,
+            "pathLength": 0.7890740636823381,
+            "sourceSignedMeanTurn": -0.010856777608910899
+          },
+          "seed": 3
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5096118008020838,
+              "dm1PNLSpikeFraction": 0.17,
+              "dm1PNRMeanVoltage": 0.4296534913588699,
+              "dm1PNRSpikeFraction": 0.12999999999999998,
+              "odorInhLMeanVoltage": 0.1277910389849802,
+              "odorInhLSpikeFraction": 0.3300000000000001,
+              "odorInhRMeanVoltage": 0.6603496098034537,
+              "odorInhRSpikeFraction": 0.009743589743589739
+            },
+            "detectedTicks": 65,
+            "distanceReduction": -0.3789154426205654,
+            "finalAlignment": -0.9996632562410608,
+            "finalHeading": 1.1016361745686531,
+            "finalX": -1.4086665658837731,
+            "finalZ": 0.24568558135421129,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.01798336158141771,
+            "meanThrust": 0.6549181325275204,
+            "meanTurn": 0.013770452182108157,
+            "netDisplacement": 0.6403410303807237,
+            "pathLength": 0.7859017590330255,
+            "sourceSignedMeanTurn": -0.013770452182108157
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5640515648183451,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.6013905275818877,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.676338738066109,
+              "odorInhLSpikeFraction": 0.008,
+              "odorInhRMeanVoltage": 0.6667789515903917,
+              "odorInhRSpikeFraction": 0.008717948717948716
+            },
+            "detectedTicks": 66,
+            "distanceReduction": -0.3802402016614408,
+            "finalAlignment": -0.9971221531765992,
+            "finalHeading": 1.0341160086674501,
+            "finalX": -1.3862609199410052,
+            "finalZ": 0.23627964307868207,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.021705342919575835,
+            "meanThrust": 0.6550496205401003,
+            "meanTurn": 0.012926450108343118,
+            "netDisplacement": 0.6576501563331758,
+            "pathLength": 0.7860595446481208,
+            "sourceSignedMeanTurn": -0.012926450108343118
+          },
+          "seed": 4
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.384977002463728,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.4003951031023107,
+              "dm1PNRSpikeFraction": 0.18000000000000002,
+              "odorInhLMeanVoltage": 0.0,
+              "odorInhLSpikeFraction": 0.5000000000000002,
+              "odorInhRMeanVoltage": 0.6574765788351709,
+              "odorInhRSpikeFraction": 0.010512820512820509
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.014333883759533927,
+            "finalAlignment": 0.39854008755550424,
+            "finalHeading": 5.162059281116123,
+            "finalX": -1.337899147271458,
+            "finalZ": -0.23156282718830085,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.020111278941858577,
+            "meanThrust": 0.6539487597932783,
+            "meanTurn": -0.014014075325793303,
+            "netDisplacement": 0.7014263198079334,
+            "pathLength": 0.7847385117519338,
+            "sourceSignedMeanTurn": 0.014014075325793303
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5871439599066692,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5729215153814745,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6878171915773317,
+              "odorInhLSpikeFraction": 0.008285714285714287,
+              "odorInhRMeanVoltage": 0.6769223040308723,
+              "odorInhRSpikeFraction": 0.009230769230769228
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.06847297271615038,
+            "finalAlignment": 0.4127319103575233,
+            "finalHeading": 5.167720227327567,
+            "finalX": -1.3198658864100565,
+            "finalZ": -0.17595383566446401,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.020424747103612244,
+            "meanThrust": 0.6537632148254151,
+            "meanTurn": -0.013943313498150237,
+            "netDisplacement": 0.7025255616373082,
+            "pathLength": 0.7845158577904968,
+            "sourceSignedMeanTurn": 0.013943313498150237
+          },
+          "seed": 5
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3621537927410573,
+              "dm1PNLSpikeFraction": 0.24000000000000007,
+              "dm1PNRMeanVoltage": 0.4533540143834338,
+              "dm1PNRSpikeFraction": 0.17,
+              "odorInhLMeanVoltage": 0.010062446841258317,
+              "odorInhLSpikeFraction": 0.47000000000000025,
+              "odorInhRMeanVoltage": 0.6709081766879683,
+              "odorInhRSpikeFraction": 0.010256410256410251
+            },
+            "detectedTicks": 94,
+            "distanceReduction": -0.5034189087029657,
+            "finalAlignment": -0.5638396640686826,
+            "finalHeading": 0.119767821516456,
+            "finalX": -1.3067397274330466,
+            "finalZ": 0.33403845878820526,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.012343431190252517,
+            "meanThrust": 0.6552402387644023,
+            "meanTurn": 0.0014970977689557022,
+            "netDisplacement": 0.7695397958970063,
+            "pathLength": 0.7862882865172821,
+            "sourceSignedMeanTurn": -0.0014970977689557022
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5558031938159755,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5671143950366845,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.660462321524726,
+              "odorInhLSpikeFraction": 0.009428571428571427,
+              "odorInhRMeanVoltage": 0.6854923108835362,
+              "odorInhRSpikeFraction": 0.008461538461538456
+            },
+            "detectedTicks": 88,
+            "distanceReduction": -0.5183008171801999,
+            "finalAlignment": -0.6002041106829316,
+            "finalHeading": 0.17912592837925975,
+            "finalX": -1.3196609981992962,
+            "finalZ": 0.35734159815386357,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.011129976057915532,
+            "meanThrust": 0.6557046011122981,
+            "meanTurn": 0.0022390741047407458,
+            "netDisplacement": 0.7684752274096645,
+            "pathLength": 0.7868455213347578,
+            "sourceSignedMeanTurn": -0.0022390741047407458
+          },
+          "seed": 6
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.37324703422925615,
+              "dm1PNLSpikeFraction": 0.21000000000000005,
+              "dm1PNRMeanVoltage": 0.42604127708357986,
+              "dm1PNRSpikeFraction": 0.15,
+              "odorInhLMeanVoltage": 0.05272316966175546,
+              "odorInhLSpikeFraction": 0.4200000000000002,
+              "odorInhRMeanVoltage": 0.6639934994482086,
+              "odorInhRSpikeFraction": 0.010512820512820507
+            },
+            "detectedTicks": 84,
+            "distanceReduction": -0.4028921912084671,
+            "finalAlignment": -0.2138932676763502,
+            "finalHeading": 5.964448821031539,
+            "finalX": -1.2855987346946536,
+            "finalZ": 0.20736793575273216,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.005008635649318532,
+            "meanThrust": 0.6565811545666232,
+            "meanTurn": -0.003984206076850606,
+            "netDisplacement": 0.7438888550369801,
+            "pathLength": 0.7878973854799493,
+            "sourceSignedMeanTurn": 0.003984206076850606
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5529610874279377,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5756117282904851,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6763300504118237,
+              "odorInhLSpikeFraction": 0.008285714285714285,
+              "odorInhRMeanVoltage": 0.6624846081728444,
+              "odorInhRSpikeFraction": 0.009999999999999995
+            },
+            "detectedTicks": 84,
+            "distanceReduction": -0.3893499327605634,
+            "finalAlignment": -0.12368062715081883,
+            "finalHeading": 5.869608774759527,
+            "finalX": -1.288577453219751,
+            "finalZ": 0.1933864401753886,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0063273186093068135,
+            "meanThrust": 0.6563373907508632,
+            "meanTurn": -0.005169706655250735,
+            "netDisplacement": 0.7372383300609138,
+            "pathLength": 0.7876048689010368,
+            "sourceSignedMeanTurn": 0.005169706655250735
+          },
+          "seed": 7
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.37438014917567264,
+              "dm1PNLSpikeFraction": 0.21000000000000005,
+              "dm1PNRMeanVoltage": 0.45889430000508985,
+              "dm1PNRSpikeFraction": 0.15,
+              "odorInhLMeanVoltage": 0.05348590403036387,
+              "odorInhLSpikeFraction": 0.4200000000000002,
+              "odorInhRMeanVoltage": 0.6721090475147209,
+              "odorInhRSpikeFraction": 0.008974358974358972
+            },
+            "detectedTicks": 83,
+            "distanceReduction": -0.36476045912236343,
+            "finalAlignment": -0.8157357712806648,
+            "finalHeading": 0.3991034999068859,
+            "finalX": -1.2809685785999037,
+            "finalZ": 0.1599848817218443,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.003293249231734485,
+            "meanThrust": 0.6557094487773153,
+            "meanTurn": 0.00498879374883607,
+            "netDisplacement": 0.7366147889773836,
+            "pathLength": 0.7868513385327781,
+            "sourceSignedMeanTurn": -0.00498879374883607
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5900102042608676,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5448204678625713,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6700645876363692,
+              "odorInhLSpikeFraction": 0.009142857142857142,
+              "odorInhRMeanVoltage": 0.6706378865571779,
+              "odorInhRSpikeFraction": 0.008461538461538458
+            },
+            "detectedTicks": 88,
+            "distanceReduction": -0.34822652631419104,
+            "finalAlignment": -0.8833785128170525,
+            "finalHeading": 0.5130113622145653,
+            "finalX": -1.2724407600341623,
+            "finalZ": 0.13506489620530637,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.004644719046893705,
+            "meanThrust": 0.6556673321337456,
+            "meanTurn": 0.0064126420276820586,
+            "netDisplacement": 0.7399898471240113,
+            "pathLength": 0.7868007985604951,
+            "sourceSignedMeanTurn": -0.0064126420276820586
+          },
+          "seed": 8
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.38283627406775017,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.4190822141289841,
+              "dm1PNRSpikeFraction": 0.17,
+              "odorInhLMeanVoltage": 0.0,
+              "odorInhLSpikeFraction": 0.5000000000000002,
+              "odorInhRMeanVoltage": 0.6681277220601112,
+              "odorInhRSpikeFraction": 0.009487179487179483
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.17663928361309744,
+            "finalAlignment": -0.9062091252619819,
+            "finalHeading": 0.45989311480245093,
+            "finalX": -1.2653300062134285,
+            "finalZ": -0.08090261453359468,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.001436850430842788,
+            "meanThrust": 0.6574006058642657,
+            "meanTurn": 0.005748663935030618,
+            "netDisplacement": 0.739111109921054,
+            "pathLength": 0.7888807270371189,
+            "sourceSignedMeanTurn": -0.005748663935030618
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.628071604697794,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.6215079501367303,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6875328066126578,
+              "odorInhLSpikeFraction": 0.007428571428571429,
+              "odorInhRMeanVoltage": 0.6798489640842774,
+              "odorInhRSpikeFraction": 0.008205128205128202
+            },
+            "detectedTicks": 99,
+            "distanceReduction": -0.19969013436652805,
+            "finalAlignment": -0.9299661547393877,
+            "finalHeading": 0.5321885911167662,
+            "finalX": -1.26243066727013,
+            "finalZ": -0.05382459453186353,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0008597183924669997,
+            "meanThrust": 0.657149787119929,
+            "meanTurn": 0.006652357388959541,
+            "netDisplacement": 0.7395306670856221,
+            "pathLength": 0.7885797445439153,
+            "sourceSignedMeanTurn": -0.006652357388959541
+          },
+          "seed": 9
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3710979375558521,
+              "dm1PNLSpikeFraction": 0.21000000000000005,
+              "dm1PNRMeanVoltage": 0.4739632632029544,
+              "dm1PNRSpikeFraction": 0.15,
+              "odorInhLMeanVoltage": 0.04015508240396608,
+              "odorInhLSpikeFraction": 0.4200000000000002,
+              "odorInhRMeanVoltage": 0.6705335869715198,
+              "odorInhRSpikeFraction": 0.009743589743589739
+            },
+            "detectedTicks": 84,
+            "distanceReduction": -0.48656581063218396,
+            "finalAlignment": -0.9734040296623278,
+            "finalHeading": 0.8573914390702219,
+            "finalX": -1.3105607698653883,
+            "finalZ": 0.3170237117424714,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0008410424721992265,
+            "meanThrust": 0.6553661678483547,
+            "meanTurn": 0.010717392988377778,
+            "netDisplacement": 0.7588349529743472,
+            "pathLength": 0.7864394014180255,
+            "sourceSignedMeanTurn": -0.010717392988377778
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5741383051964366,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.5549846236644521,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6874527458210996,
+              "odorInhLSpikeFraction": 0.007714285714285716,
+              "odorInhRMeanVoltage": 0.6752217689659271,
+              "odorInhRSpikeFraction": 0.008717948717948712
+            },
+            "detectedTicks": 79,
+            "distanceReduction": -0.4850828912447671,
+            "finalAlignment": -0.9701014512990006,
+            "finalHeading": 0.8419360520126408,
+            "finalX": -1.3093341575750752,
+            "finalZ": 0.314706008191712,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.00003864583774676783,
+            "meanThrust": 0.6555375268372005,
+            "meanTurn": 0.01052420065015801,
+            "netDisplacement": 0.7589856240301874,
+            "pathLength": 0.7866450322046394,
+            "sourceSignedMeanTurn": -0.01052420065015801
+          },
+          "seed": 10
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3799860695207914,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.4193100391390473,
+              "dm1PNRSpikeFraction": 0.18000000000000002,
+              "odorInhLMeanVoltage": 0.0,
+              "odorInhLSpikeFraction": 0.5000000000000002,
+              "odorInhRMeanVoltage": 0.6625862276907741,
+              "odorInhRSpikeFraction": 0.00974358974358974
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.2915006549913173,
+            "finalAlignment": -0.5192185033044244,
+            "finalHeading": 6.1979849119033394,
+            "finalX": -1.2379334511110187,
+            "finalZ": 0.04270250642618085,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.008539964286207919,
+            "meanThrust": 0.6568827386293512,
+            "meanTurn": -0.0010650049409530685,
+            "netDisplacement": 0.7632620316710639,
+            "pathLength": 0.7882592863552216,
+            "sourceSignedMeanTurn": 0.0010650049409530685
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6394465335825107,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.597976733038856,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6837582037666678,
+              "odorInhLSpikeFraction": 0.008857142857142859,
+              "odorInhRMeanVoltage": 0.6802783852390154,
+              "odorInhRSpikeFraction": 0.00846153846153846
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.2774796974783913,
+            "finalAlignment": -0.41554836469223794,
+            "finalHeading": 6.063720104351093,
+            "finalX": -1.22891115444635,
+            "finalZ": 0.018516749853541476,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.005427798187867514,
+            "meanThrust": 0.6569824928827299,
+            "meanTurn": -0.0027433150353561643,
+            "netDisplacement": 0.7713111419929051,
+            "pathLength": 0.7883789914592766,
+            "sourceSignedMeanTurn": 0.0027433150353561643
+          },
+          "seed": 11
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.37027997763908066,
+              "dm1PNLSpikeFraction": 0.24000000000000007,
+              "dm1PNRMeanVoltage": 0.40870257853898423,
+              "dm1PNRSpikeFraction": 0.17,
+              "odorInhLMeanVoltage": 0.00450675802439064,
+              "odorInhLSpikeFraction": 0.48000000000000026,
+              "odorInhRMeanVoltage": 0.6724892982454814,
+              "odorInhRSpikeFraction": 0.009230769230769228
+            },
+            "detectedTicks": 95,
+            "distanceReduction": -0.1665689277729716,
+            "finalAlignment": -0.9900504087787976,
+            "finalHeading": 0.744901543594142,
+            "finalX": -1.2622025452634584,
+            "finalZ": -0.09637508941504859,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0019578905625937315,
+            "meanThrust": 0.6546767254913978,
+            "meanTurn": 0.009311269294926804,
+            "netDisplacement": 0.7440653479873106,
+            "pathLength": 0.7856120705896769,
+            "sourceSignedMeanTurn": -0.009311269294926804
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6089308027589809,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5678922429977483,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6798230545601287,
+              "odorInhLSpikeFraction": 0.008571428571428572,
+              "odorInhRMeanVoltage": 0.6831888015628839,
+              "odorInhRSpikeFraction": 0.008205128205128202
+            },
+            "detectedTicks": 95,
+            "distanceReduction": -0.16582646114724553,
+            "finalAlignment": -0.9860014589096077,
+            "finalHeading": 0.713610280832657,
+            "finalX": -1.25820760704619,
+            "finalZ": -0.100613885326791,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006210642949452271,
+            "meanThrust": 0.6541983174112632,
+            "meanTurn": 0.008920128510408227,
+            "netDisplacement": 0.7485847367965046,
+            "pathLength": 0.7850379808935164,
+            "sourceSignedMeanTurn": -0.008920128510408227
+          },
+          "seed": 12
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3787064476873605,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.4250058475878709,
+              "dm1PNRSpikeFraction": 0.18000000000000002,
+              "odorInhLMeanVoltage": 0.0,
+              "odorInhLSpikeFraction": 0.5000000000000002,
+              "odorInhRMeanVoltage": 0.6640934672867312,
+              "odorInhRSpikeFraction": 0.009999999999999995
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.16569497706713987,
+            "finalAlignment": -0.05202690834583923,
+            "finalHeading": 5.665558010722577,
+            "finalX": -1.2764142720948435,
+            "finalZ": -0.08606976528209526,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0026745246383563,
+            "meanThrust": 0.6548399615013403,
+            "meanTurn": -0.007720341205712602,
+            "netDisplacement": 0.7286867023102248,
+            "pathLength": 0.7858079538016092,
+            "sourceSignedMeanTurn": 0.007720341205712602
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6113207584587195,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.6561417769899958,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6773950938101747,
+              "odorInhLSpikeFraction": 0.007714285714285715,
+              "odorInhRMeanVoltage": 0.6878675149931559,
+              "odorInhRSpikeFraction": 0.008205128205128202
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.12370107498383476,
+            "finalAlignment": -0.03304289536014279,
+            "finalHeading": 5.643621882802841,
+            "finalX": -1.299898866245234,
+            "finalZ": -0.12104464935065282,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0024205836389969908,
+            "meanThrust": 0.6547479758344302,
+            "meanTurn": -0.007994542804709306,
+            "netDisplacement": 0.7104881453065429,
+            "pathLength": 0.7856975710013165,
+            "sourceSignedMeanTurn": 0.007994542804709306
+          },
+          "seed": 13
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3806092471998387,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.3926710657564859,
+              "dm1PNRSpikeFraction": 0.18000000000000002,
+              "odorInhLMeanVoltage": 0.0,
+              "odorInhLSpikeFraction": 0.5000000000000002,
+              "odorInhRMeanVoltage": 0.6663318993825994,
+              "odorInhRSpikeFraction": 0.00974358974358974
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.20019434071544806,
+            "finalAlignment": -0.6585908260154435,
+            "finalHeading": 0.04451478240052964,
+            "finalX": -1.2505361885476376,
+            "finalZ": -0.06257242903321504,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.007117214896524645,
+            "meanThrust": 0.6547070625925706,
+            "meanTurn": 0.0005564347800066155,
+            "netDisplacement": 0.7520713487108912,
+            "pathLength": 0.7856484751110864,
+            "sourceSignedMeanTurn": -0.0005564347800066155
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5878205506205038,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.5696644072790219,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6802018448163016,
+              "odorInhLSpikeFraction": 0.008571428571428572,
+              "odorInhRMeanVoltage": 0.6752952696128214,
+              "odorInhRSpikeFraction": 0.009230769230769225
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.17675702791944525,
+            "finalAlignment": -0.4800979441444999,
+            "finalHeading": 6.09869324345091,
+            "finalX": -1.255262107547115,
+            "finalZ": -0.08888937318092868,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006810254451128234,
+            "meanThrust": 0.65457120355021,
+            "meanTurn": -0.00230615079660845,
+            "netDisplacement": 0.750023899032333,
+            "pathLength": 0.7854854442602524,
+            "sourceSignedMeanTurn": 0.00230615079660845
+          },
+          "seed": 14
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.4134334477550043,
+              "dm1PNLSpikeFraction": 0.21000000000000005,
+              "dm1PNRMeanVoltage": 0.4538142383432385,
+              "dm1PNRSpikeFraction": 0.13999999999999999,
+              "odorInhLMeanVoltage": 0.06550368111157565,
+              "odorInhLSpikeFraction": 0.4100000000000002,
+              "odorInhRMeanVoltage": 0.6726555016335382,
+              "odorInhRSpikeFraction": 0.009743589743589739
+            },
+            "detectedTicks": 82,
+            "distanceReduction": -0.345490109879131,
+            "finalAlignment": -0.8800489853526374,
+            "finalHeading": 0.50773097550072,
+            "finalX": -1.2759316005999803,
+            "finalZ": 0.13404964122954066,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006806866245125547,
+            "meanThrust": 0.6534890943142824,
+            "meanTurn": 0.0063466371937589946,
+            "netDisplacement": 0.7363724284107024,
+            "pathLength": 0.7841869131771392,
+            "sourceSignedMeanTurn": -0.0063466371937589946
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6272365841055241,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.6044103957985447,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6558440768301643,
+              "odorInhLSpikeFraction": 0.009428571428571427,
+              "odorInhRMeanVoltage": 0.6783302650249302,
+              "odorInhRSpikeFraction": 0.008717948717948716
+            },
+            "detectedTicks": 82,
+            "distanceReduction": -0.3636499083331546,
+            "finalAlignment": -0.9176152322983866,
+            "finalHeading": 0.6089272952105426,
+            "finalX": -1.2836242201036014,
+            "finalZ": 0.1603218581388732,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.008031433770314522,
+            "meanThrust": 0.6534530400197887,
+            "meanTurn": 0.007611591190131795,
+            "netDisplacement": 0.7340962853871924,
+            "pathLength": 0.784143648023746,
+            "sourceSignedMeanTurn": -0.007611591190131795
+          },
+          "seed": 15
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3828102423645712,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.42234976286187,
+              "dm1PNRSpikeFraction": 0.17,
+              "odorInhLMeanVoltage": 0.0,
+              "odorInhLSpikeFraction": 0.5000000000000002,
+              "odorInhRMeanVoltage": 0.6785425344429074,
+              "odorInhRSpikeFraction": 0.008974358974358972
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.22101138598121095,
+            "finalAlignment": -0.00964682698713616,
+            "finalHeading": 5.4546639866953806,
+            "finalX": -1.4208848470947522,
+            "finalZ": -0.47899241805282194,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.010710825799352673,
+            "meanThrust": 0.6591627619769471,
+            "meanTurn": -0.01035651650605259,
+            "netDisplacement": 0.7515371560186216,
+            "pathLength": 0.7909953143723364,
+            "sourceSignedMeanTurn": 0.01035651650605259
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5652560133663568,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5746170558479107,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6704728097224825,
+              "odorInhLSpikeFraction": 0.009428571428571429,
+              "odorInhRMeanVoltage": 0.6841188633245108,
+              "odorInhRSpikeFraction": 0.007435897435897433
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.07644236944163763,
+            "finalAlignment": -0.3715839156386934,
+            "finalHeading": 5.851739270852072,
+            "finalX": -1.329704797547595,
+            "finalZ": -0.36465518139213077,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.01037426582804507,
+            "meanThrust": 0.6586187250332282,
+            "meanTurn": -0.005393075454093923,
+            "netDisplacement": 0.7630655671348553,
+            "pathLength": 0.7903424700398742,
+            "sourceSignedMeanTurn": 0.005393075454093923
+          },
+          "seed": 16
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.38205843794716615,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.4109912025918644,
+              "dm1PNRSpikeFraction": 0.18000000000000002,
+              "odorInhLMeanVoltage": 0.0,
+              "odorInhLSpikeFraction": 0.5000000000000002,
+              "odorInhRMeanVoltage": 0.6573437722293688,
+              "odorInhRSpikeFraction": 0.010256410256410253
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.05367494605400247,
+            "finalAlignment": 0.5232600204225157,
+            "finalHeading": 5.011947293186724,
+            "finalX": -1.3047746417970387,
+            "finalZ": -0.20823450867477875,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.025780980676010756,
+            "meanThrust": 0.6526431069659672,
+            "meanTurn": -0.01589047517491081,
+            "netDisplacement": 0.725740938139404,
+            "pathLength": 0.7831717283591613,
+            "sourceSignedMeanTurn": 0.01589047517491081
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.617175507714023,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.6241209549587838,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6660705421462797,
+              "odorInhLSpikeFraction": 0.008857142857142857,
+              "odorInhRMeanVoltage": 0.679672312902713,
+              "odorInhRSpikeFraction": 0.008205128205128202
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.03066264637687688,
+            "finalAlignment": 0.4272345402278809,
+            "finalHeading": 5.116943565805528,
+            "finalX": -1.3166777786603054,
+            "finalZ": -0.22841965262198866,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02447085180930794,
+            "meanThrust": 0.6526791527853159,
+            "meanTurn": -0.014578021767175727,
+            "netDisplacement": 0.7204892753404206,
+            "pathLength": 0.7832149833423793,
+            "sourceSignedMeanTurn": 0.014578021767175727
+          },
+          "seed": 17
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.38065186483888597,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.4271956143789807,
+              "dm1PNRSpikeFraction": 0.18000000000000002,
+              "odorInhLMeanVoltage": 0.0,
+              "odorInhLSpikeFraction": 0.5000000000000002,
+              "odorInhRMeanVoltage": 0.6559444498358373,
+              "odorInhRSpikeFraction": 0.009999999999999997
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.0420426410545901,
+            "finalAlignment": 0.19346181371314314,
+            "finalHeading": 5.343130613236002,
+            "finalX": -1.350274725693768,
+            "finalZ": -0.2960544271853424,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.028505302396035728,
+            "meanThrust": 0.6570595137051797,
+            "meanTurn": -0.011750683674294847,
+            "netDisplacement": 0.7139966077849038,
+            "pathLength": 0.7884714164462163,
+            "sourceSignedMeanTurn": 0.011750683674294847
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5857843858296781,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5565793623928124,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6714194092621752,
+              "odorInhLSpikeFraction": 0.009142857142857142,
+              "odorInhRMeanVoltage": 0.6794624133974679,
+              "odorInhRSpikeFraction": 0.008205128205128203
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.12729316112265188,
+            "finalAlignment": 0.6831447964335637,
+            "finalHeading": 4.804298271546074,
+            "finalX": -1.420084856216009,
+            "finalZ": -0.34783770989631213,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.035142785911674634,
+            "meanThrust": 0.6568156935878428,
+            "meanTurn": -0.01848608794541893,
+            "netDisplacement": 0.676234165371669,
+            "pathLength": 0.7881788323054116,
+            "sourceSignedMeanTurn": 0.01848608794541893
+          },
+          "seed": 18
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.4346750866789651,
+              "dm1PNLSpikeFraction": 0.18000000000000002,
+              "dm1PNRMeanVoltage": 0.4816856736699985,
+              "dm1PNRSpikeFraction": 0.13999999999999999,
+              "odorInhLMeanVoltage": 0.13449662057677073,
+              "odorInhLSpikeFraction": 0.36000000000000015,
+              "odorInhRMeanVoltage": 0.6688752187797031,
+              "odorInhRSpikeFraction": 0.00974358974358974
+            },
+            "detectedTicks": 72,
+            "distanceReduction": 0.39370788662713485,
+            "finalAlignment": 0.9649287797756161,
+            "finalHeading": 4.389777023405985,
+            "finalX": -1.6635717404610566,
+            "finalZ": -0.4956130920397195,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.024155473007315503,
+            "meanThrust": 0.6578849599985135,
+            "meanTurn": -0.023667603547170016,
+            "netDisplacement": 0.5990127801788323,
+            "pathLength": 0.7894619519982159,
+            "sourceSignedMeanTurn": 0.023667603547170016
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6366942572337337,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.5774240320558462,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.661539814833233,
+              "odorInhLSpikeFraction": 0.00971428571428571,
+              "odorInhRMeanVoltage": 0.672402144884721,
+              "odorInhRSpikeFraction": 0.008974358974358972
+            },
+            "detectedTicks": 71,
+            "distanceReduction": 0.4125934292153638,
+            "finalAlignment": 0.9693420115456989,
+            "finalHeading": 3.9558441987161266,
+            "finalX": -1.7141200170666904,
+            "finalZ": -0.4868537101770915,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02897037207784306,
+            "meanThrust": 0.6576610798161882,
+            "meanTurn": -0.02909176385579327,
+            "netDisplacement": 0.5645829432024569,
+            "pathLength": 0.7891932957794248,
+            "sourceSignedMeanTurn": 0.02909176385579327
+          },
+          "seed": 19
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.38637656500249096,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.4302291475635831,
+              "dm1PNRSpikeFraction": 0.18000000000000002,
+              "odorInhLMeanVoltage": 0.0,
+              "odorInhLSpikeFraction": 0.5000000000000002,
+              "odorInhRMeanVoltage": 0.6649351979994853,
+              "odorInhRSpikeFraction": 0.009230769230769226
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.20158205301984133,
+            "finalAlignment": -0.8407151936377155,
+            "finalHeading": 0.311184117239015,
+            "finalX": -1.2375431400145345,
+            "finalZ": -0.07131331074442489,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0007139279920944301,
+            "meanThrust": 0.6552504142398403,
+            "meanTurn": 0.0038898014654876784,
+            "netDisplacement": 0.7657845987144339,
+            "pathLength": 0.7863004970878081,
+            "sourceSignedMeanTurn": -0.0038898014654876784
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6211765777974445,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.6604259308992098,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.680002062974895,
+              "odorInhLSpikeFraction": 0.007714285714285716,
+              "odorInhRMeanVoltage": 0.6800892916479877,
+              "odorInhRSpikeFraction": 0.007948717948717945
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.13816985860744646,
+            "finalAlignment": -0.6347600091336764,
+            "finalHeading": 6.273456155222191,
+            "finalX": -1.2690130769174535,
+            "finalZ": -0.1275959964988664,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0032998603311717328,
+            "meanThrust": 0.6554148795487649,
+            "meanTurn": -0.0001216143994674406,
+            "netDisplacement": 0.7420395003234178,
+            "pathLength": 0.7864978554585186,
+            "sourceSignedMeanTurn": 0.0001216143994674406
+          },
+          "seed": 20
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.383479971680647,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.39792207112291483,
+              "dm1PNRSpikeFraction": 0.18000000000000002,
+              "odorInhLMeanVoltage": 0.0,
+              "odorInhLSpikeFraction": 0.5000000000000002,
+              "odorInhRMeanVoltage": 0.6679289739148373,
+              "odorInhRSpikeFraction": 0.010256410256410251
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.270065826738936,
+            "finalAlignment": 0.4613468298850729,
+            "finalHeading": 5.0084424683684325,
+            "finalX": -1.4788089018107875,
+            "finalZ": -0.4889581852111946,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.009944581304571178,
+            "meanThrust": 0.6572423689713216,
+            "meanTurn": -0.015934285485139397,
+            "netDisplacement": 0.7146469531990619,
+            "pathLength": 0.7886908427655843,
+            "sourceSignedMeanTurn": 0.015934285485139397
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5761217217525452,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5549310224677533,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6767931780504289,
+              "odorInhLSpikeFraction": 0.009142857142857142,
+              "odorInhRMeanVoltage": 0.6769910821274104,
+              "odorInhRSpikeFraction": 0.009230769230769226
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.2987276143575197,
+            "finalAlignment": 0.7297794748462296,
+            "finalHeading": 4.698962989015935,
+            "finalX": -1.5137246033738923,
+            "finalZ": -0.49470879930398837,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.013424543927546946,
+            "meanThrust": 0.6570013022595962,
+            "meanTurn": -0.01980277897704566,
+            "netDisplacement": 0.6936862096601548,
+            "pathLength": 0.7884015627115152,
+            "sourceSignedMeanTurn": 0.01980277897704566
+          },
+          "seed": 21
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3654835420611252,
+              "dm1PNLSpikeFraction": 0.23000000000000007,
+              "dm1PNRMeanVoltage": 0.42498526347280047,
+              "dm1PNRSpikeFraction": 0.17,
+              "odorInhLMeanVoltage": 0.01543964584793088,
+              "odorInhLSpikeFraction": 0.46000000000000024,
+              "odorInhRMeanVoltage": 0.6578281087791022,
+              "odorInhRSpikeFraction": 0.009999999999999995
+            },
+            "detectedTicks": 91,
+            "distanceReduction": -0.31355891635061983,
+            "finalAlignment": -0.772342808566394,
+            "finalHeading": 0.27090667609942126,
+            "finalX": -1.2457675422740853,
+            "finalZ": 0.07543964332590107,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.002698756142249329,
+            "meanThrust": 0.6575539731135203,
+            "meanTurn": 0.003386333451242724,
+            "netDisplacement": 0.7579958707489196,
+            "pathLength": 0.7890647677362245,
+            "sourceSignedMeanTurn": -0.003386333451242724
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5491996447736261,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5994986655426949,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6875493244371108,
+              "odorInhLSpikeFraction": 0.008285714285714287,
+              "odorInhRMeanVoltage": 0.672190446469783,
+              "odorInhRSpikeFraction": 0.008717948717948714
+            },
+            "detectedTicks": 99,
+            "distanceReduction": -0.2589207747020066,
+            "finalAlignment": -0.7881292517818127,
+            "finalHeading": 0.25258809674730276,
+            "finalX": -1.2329414580476756,
+            "finalZ": -0.0017501764616861429,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.002436625661277605,
+            "meanThrust": 0.6575014335153692,
+            "meanTurn": 0.003157351209341292,
+            "netDisplacement": 0.7670605386145691,
+            "pathLength": 0.7890017202184416,
+            "sourceSignedMeanTurn": -0.003157351209341292
+          },
+          "seed": 22
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.4733012069367756,
+              "dm1PNLSpikeFraction": 0.18000000000000002,
+              "dm1PNRMeanVoltage": 0.4358343580512629,
+              "dm1PNRSpikeFraction": 0.12999999999999998,
+              "odorInhLMeanVoltage": 0.10925612891022762,
+              "odorInhLSpikeFraction": 0.34000000000000014,
+              "odorInhRMeanVoltage": 0.6722996818546834,
+              "odorInhRSpikeFraction": 0.008717948717948714
+            },
+            "detectedTicks": 66,
+            "distanceReduction": -0.490481322255631,
+            "finalAlignment": -0.9999288700941499,
+            "finalHeading": 1.1164990801318453,
+            "finalX": -1.3619511162702633,
+            "finalZ": 0.3470071246894471,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.039388147500355915,
+            "meanThrust": 0.65794047681734,
+            "meanTurn": 0.013956238501648078,
+            "netDisplacement": 0.7263059428464017,
+            "pathLength": 0.7895285721808082,
+            "sourceSignedMeanTurn": -0.013956238501648078
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5985645998068639,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.6210572750816511,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6813013255071221,
+              "odorInhLSpikeFraction": 0.008000000000000002,
+              "odorInhRMeanVoltage": 0.6887329704037244,
+              "odorInhRSpikeFraction": 0.007435897435897434
+            },
+            "detectedTicks": 83,
+            "distanceReduction": -0.4568437585111875,
+            "finalAlignment": -0.9519051730305552,
+            "finalHeading": 0.7536379752657725,
+            "finalX": -1.2942030478790685,
+            "finalZ": 0.2744584728777186,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.03489869899970861,
+            "meanThrust": 0.6579987919237068,
+            "meanTurn": 0.009420474690822168,
+            "netDisplacement": 0.7572825040614406,
+            "pathLength": 0.7895985503084483,
+            "sourceSignedMeanTurn": -0.009420474690822168
+          },
+          "seed": 23
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3859238831295753,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.4220779236876502,
+              "dm1PNRSpikeFraction": 0.18000000000000002,
+              "odorInhLMeanVoltage": 0.0,
+              "odorInhLSpikeFraction": 0.5000000000000002,
+              "odorInhRMeanVoltage": 0.6678143514555044,
+              "odorInhRSpikeFraction": 0.009743589743589739
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.32607041934859216,
+            "finalAlignment": -0.36824862459735785,
+            "finalHeading": 6.038436720852454,
+            "finalX": -1.227486196667948,
+            "finalZ": 0.07781500301897765,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.003699882409207319,
+            "meanThrust": 0.6551851659920213,
+            "meanTurn": -0.0030593573290891352,
+            "netDisplacement": 0.7764230490096207,
+            "pathLength": 0.786222199190426,
+            "sourceSignedMeanTurn": 0.0030593573290891352
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5281697442889423,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5742729290135958,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6742020378388257,
+              "odorInhLSpikeFraction": 0.008285714285714285,
+              "odorInhRMeanVoltage": 0.6813491309063971,
+              "odorInhRSpikeFraction": 0.008717948717948714
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.3225301335689694,
+            "finalAlignment": -0.3539513712414481,
+            "finalHeading": 6.020993853885642,
+            "finalX": -1.2272812323822715,
+            "finalZ": 0.07330874419679213,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0057213300876373906,
+            "meanThrust": 0.6550509136931314,
+            "meanTurn": -0.0032773931661743087,
+            "netDisplacement": 0.7761884215861324,
+            "pathLength": 0.7860610964317575,
+            "sourceSignedMeanTurn": 0.0032773931661743087
+          },
+          "seed": 24
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3819455258246614,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.43836172541577856,
+              "dm1PNRSpikeFraction": 0.18000000000000002,
+              "odorInhLMeanVoltage": 0.0,
+              "odorInhLSpikeFraction": 0.5000000000000002,
+              "odorInhRMeanVoltage": 0.6684464178722476,
+              "odorInhRSpikeFraction": 0.00974358974358974
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.1872486788628449,
+            "finalAlignment": 0.0847761729721271,
+            "finalHeading": 5.544123521243846,
+            "finalX": -1.2775452839190466,
+            "finalZ": -0.05786486708436586,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.024308072939565044,
+            "meanThrust": 0.6593026029478709,
+            "meanTurn": -0.009238272324196729,
+            "netDisplacement": 0.7247683489435106,
+            "pathLength": 0.7911631235374451,
+            "sourceSignedMeanTurn": 0.009238272324196729
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5586934429382961,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5959276648576064,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6607431055268944,
+              "odorInhLSpikeFraction": 0.009428571428571427,
+              "odorInhRMeanVoltage": 0.6764897002390896,
+              "odorInhRSpikeFraction": 0.008461538461538458
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.19763888676625307,
+            "finalAlignment": 0.07084417354718299,
+            "finalHeading": 5.562434139826282,
+            "finalX": -1.2753505368628408,
+            "finalZ": -0.046468637815338096,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02571678464863559,
+            "meanThrust": 0.6592429437373301,
+            "meanTurn": -0.009009389591916281,
+            "netDisplacement": 0.7261378510485361,
+            "pathLength": 0.7910915324847956,
+            "sourceSignedMeanTurn": 0.009009389591916281
+          },
+          "seed": 25
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.443098169162139,
+              "dm1PNLSpikeFraction": 0.18000000000000002,
+              "dm1PNRMeanVoltage": 0.4555152186443015,
+              "dm1PNRSpikeFraction": 0.13999999999999999,
+              "odorInhLMeanVoltage": 0.21887589574878616,
+              "odorInhLSpikeFraction": 0.3100000000000001,
+              "odorInhRMeanVoltage": 0.5427725227942946,
+              "odorInhRSpikeFraction": 0.05666666666666667
+            },
+            "detectedTicks": 71,
+            "distanceReduction": -0.39204129254071196,
+            "finalAlignment": -0.9500479232945936,
+            "finalHeading": 0.8721593473012919,
+            "finalX": -1.4820736297502484,
+            "finalZ": 0.2921034150323778,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.013561787592081981,
+            "meanThrust": 0.6541141605983817,
+            "meanTurn": 0.01090199184126614,
+            "netDisplacement": 0.5946193152544411,
+            "pathLength": 0.7849369927180591,
+            "sourceSignedMeanTurn": -0.01090199184126614
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5686922886270731,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.6390661130536535,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6747488384391372,
+              "odorInhLSpikeFraction": 0.008857142857142857,
+              "odorInhRMeanVoltage": 0.6719802678585867,
+              "odorInhRSpikeFraction": 0.009230769230769226
+            },
+            "detectedTicks": 62,
+            "distanceReduction": -0.4094170099392278,
+            "finalAlignment": -0.9739623277346657,
+            "finalHeading": 0.9423915017605039,
+            "finalX": -1.4515281687723214,
+            "finalZ": 0.2983200523198392,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.01529765379011019,
+            "meanThrust": 0.654071620293617,
+            "meanTurn": 0.011779893772006327,
+            "netDisplacement": 0.6243526273399951,
+            "pathLength": 0.78488594435234,
+            "sourceSignedMeanTurn": -0.011779893772006327
+          },
+          "seed": 26
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3840085432292561,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.4227496062382638,
+              "dm1PNRSpikeFraction": 0.18000000000000002,
+              "odorInhLMeanVoltage": 0.0,
+              "odorInhLSpikeFraction": 0.5000000000000002,
+              "odorInhRMeanVoltage": 0.6655080955415273,
+              "odorInhRSpikeFraction": 0.009999999999999995
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.20807788298431962,
+            "finalAlignment": -0.020453885219307452,
+            "finalHeading": 5.479584880575299,
+            "finalX": -1.4188030370010092,
+            "finalZ": -0.46208668949416504,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.009667978910201385,
+            "meanThrust": 0.653946417630986,
+            "meanTurn": -0.010045005332553581,
+            "netDisplacement": 0.7425052312320278,
+            "pathLength": 0.7847357011571834,
+            "sourceSignedMeanTurn": 0.010045005332553581
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6578905877386259,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.5611034664379589,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6788843481591078,
+              "odorInhLSpikeFraction": 0.008571428571428574,
+              "odorInhRMeanVoltage": 0.6743624906864245,
+              "odorInhRSpikeFraction": 0.009230769230769228
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.31577785331949426,
+            "finalAlignment": 0.2288117589627375,
+            "finalHeading": 5.283558919214778,
+            "finalX": -1.5242936455502205,
+            "finalZ": -0.5082038935247858,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.012318997348388629,
+            "meanThrust": 0.6541560049903379,
+            "meanTurn": -0.012495329849560106,
+            "netDisplacement": 0.6961089950989364,
+            "pathLength": 0.7849872059884052,
+            "sourceSignedMeanTurn": 0.012495329849560106
+          },
+          "seed": 27
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.40655729149285125,
+              "dm1PNLSpikeFraction": 0.19000000000000003,
+              "dm1PNRMeanVoltage": 0.4516783160177691,
+              "dm1PNRSpikeFraction": 0.13999999999999999,
+              "odorInhLMeanVoltage": 0.07714983621459434,
+              "odorInhLSpikeFraction": 0.38000000000000017,
+              "odorInhRMeanVoltage": 0.6749005932556368,
+              "odorInhRSpikeFraction": 0.009487179487179483
+            },
+            "detectedTicks": 74,
+            "distanceReduction": -0.4649847190434415,
+            "finalAlignment": -0.9349362239620401,
+            "finalHeading": 0.7058909567450501,
+            "finalX": -1.2948371917833439,
+            "finalZ": 0.28410499607266954,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.006909292998751994,
+            "meanThrust": 0.6577469306097814,
+            "meanTurn": 0.008823636959313132,
+            "netDisplacement": 0.7602435365627597,
+            "pathLength": 0.789296316731738,
+            "sourceSignedMeanTurn": -0.008823636959313132
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6014033687395334,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.5350290570519594,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6842747463876495,
+              "odorInhLSpikeFraction": 0.008571428571428572,
+              "odorInhRMeanVoltage": 0.6741371907280723,
+              "odorInhRSpikeFraction": 0.008974358974358972
+            },
+            "detectedTicks": 77,
+            "distanceReduction": -0.4648680388551749,
+            "finalAlignment": -0.987107739830758,
+            "finalHeading": 0.9152997822351668,
+            "finalX": -1.3044662584284619,
+            "finalZ": 0.2892133980047302,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0019188406733863077,
+            "meanThrust": 0.6577449130806734,
+            "meanTurn": 0.011441247277939593,
+            "netDisplacement": 0.7532672668116847,
+            "pathLength": 0.7892938956968077,
+            "sourceSignedMeanTurn": -0.011441247277939593
+          },
+          "seed": 28
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.38211123841315076,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.4025161734111441,
+              "dm1PNRSpikeFraction": 0.18000000000000002,
+              "odorInhLMeanVoltage": 0.0,
+              "odorInhLSpikeFraction": 0.5000000000000002,
+              "odorInhRMeanVoltage": 0.6565819369121283,
+              "odorInhRSpikeFraction": 0.010256410256410253
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.20272042070200835,
+            "finalAlignment": -0.2853849378921754,
+            "finalHeading": 5.898408619910714,
+            "finalX": -1.2491889996403094,
+            "finalZ": -0.06041538320782597,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02897772308479067,
+            "meanThrust": 0.6544565159687038,
+            "meanTurn": -0.004809708590860896,
+            "netDisplacement": 0.7532377956457494,
+            "pathLength": 0.7853478191624435,
+            "sourceSignedMeanTurn": 0.004809708590860896
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6018937810646281,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.5840162535380541,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.7023157188929926,
+              "odorInhLSpikeFraction": 0.006571428571428573,
+              "odorInhRMeanVoltage": 0.680497801651141,
+              "odorInhRSpikeFraction": 0.009230769230769228
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.18872721519511892,
+            "finalAlignment": 0.060830179267530086,
+            "finalHeading": 5.545280220449291,
+            "finalX": -1.25527835685607,
+            "finalZ": -0.07346771973203912,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.03195826361073007,
+            "meanThrust": 0.6546747892893617,
+            "meanTurn": -0.009223813584128682,
+            "netDisplacement": 0.7483367100507768,
+            "pathLength": 0.7856097471472343,
+            "sourceSignedMeanTurn": 0.009223813584128682
+          },
+          "seed": 29
+        }
+      ],
+      "scenario": "inhibitoryOdor",
+      "sourceZ": -1.0
+    },
+    {
+      "absoluteActive": {
+        "distanceReduction": {
+          "ci95": [
+            -0.3245242723331534,
+            -0.1761830521555675
+          ],
+          "mean": -0.25035366224436045,
+          "negativeSeeds": 25,
+          "positiveSeeds": 5
+        },
+        "finalAlignment": {
+          "ci95": [
+            -0.7066009052613281,
+            -0.38932676004559374
+          ],
+          "mean": -0.5479638326534609,
+          "negativeSeeds": 25,
+          "positiveSeeds": 5
+        },
+        "meanThrust": {
+          "ci95": [
+            0.6553874907349114,
+            0.6568360401314471
+          ],
+          "mean": 0.6561117654331793,
+          "negativeSeeds": 0,
+          "positiveSeeds": 30
+        },
+        "netDisplacement": {
+          "ci95": [
+            0.7172765775595946,
+            0.7460474179664496
+          ],
+          "mean": 0.7316619977630221,
+          "negativeSeeds": 0,
+          "positiveSeeds": 30
+        },
+        "pathLength": {
+          "ci95": [
+            0.7864649888818936,
+            0.7882032481577365
+          ],
+          "mean": 0.787334118519815,
+          "negativeSeeds": 0,
+          "positiveSeeds": 30
+        },
+        "sourceSignedMeanTurn": {
+          "ci95": [
+            -0.005453862831404817,
+            0.0017115849769314083
+          ],
+          "mean": -0.0018711389272367044,
+          "negativeSeeds": 17,
+          "positiveSeeds": 13
+        }
+      },
+      "activeMinusMatchedNoCurrent": {
+        "distanceReduction": {
+          "ci95": [
+            -0.01327472708720388,
+            0.012427027650892316
+          ],
+          "mean": -0.00042384971815578133,
+          "negativeSeeds": 14,
+          "positiveSeeds": 16
+        },
+        "finalAlignment": {
+          "ci95": [
+            -0.10061922645393993,
+            0.045746519848783626
+          ],
+          "mean": -0.027436353302578157,
+          "negativeSeeds": 16,
+          "positiveSeeds": 14
+        },
+        "meanFlightTurn": {
+          "ci95": [
+            -0.00169492600195964,
+            0.0012856892353619073
+          ],
+          "mean": -0.0002046183832988663,
+          "negativeSeeds": 16,
+          "positiveSeeds": 14
+        },
+        "meanThrust": {
+          "ci95": [
+            -0.00007614179278561899,
+            0.00010759823862216453
+          ],
+          "mean": 0.000015728222918272768,
+          "negativeSeeds": 12,
+          "positiveSeeds": 18
+        },
+        "meanTurn": {
+          "ci95": [
+            -0.0007067637339884809,
+            0.0016102562141887698
+          ],
+          "mean": 0.0004517462401001444,
+          "negativeSeeds": 12,
+          "positiveSeeds": 18
+        },
+        "netDisplacement": {
+          "ci95": [
+            -0.00033778109441283486,
+            0.01209236186526946
+          ],
+          "mean": 0.005877290385428313,
+          "negativeSeeds": 15,
+          "positiveSeeds": 15
+        },
+        "pathLength": {
+          "ci95": [
+            -0.00009137015134286756,
+            0.00012911788634652088
+          ],
+          "mean": 0.00001887386750182666,
+          "negativeSeeds": 12,
+          "positiveSeeds": 18
+        },
+        "sourceSignedMeanTurn": {
+          "ci95": [
+            -0.0007067637339884809,
+            0.0016102562141887698
+          ],
+          "mean": 0.0004517462401001444,
+          "negativeSeeds": 12,
+          "positiveSeeds": 18
+        }
+      },
+      "activityActiveMinusControl": {
+        "dm1PNLMeanVoltage": {
+          "ci95": [
+            -0.2216181451123888,
+            -0.18805549012757045
+          ],
+          "mean": -0.20483681761997963,
+          "negativeSeeds": 30,
+          "positiveSeeds": 0
+        },
+        "dm1PNLSpikeFraction": {
+          "ci95": [
+            0.18552790931646196,
+            0.20913875735020476
+          ],
+          "mean": 0.19733333333333336,
+          "negativeSeeds": 0,
+          "positiveSeeds": 30
+        },
+        "dm1PNRMeanVoltage": {
+          "ci95": [
+            -0.22366592372436953,
+            -0.19408760820566753
+          ],
+          "mean": -0.20887676596501853,
+          "negativeSeeds": 30,
+          "positiveSeeds": 0
+        },
+        "dm1PNRSpikeFraction": {
+          "ci95": [
+            0.21282741696294835,
+            0.24317258303705178
+          ],
+          "mean": 0.22800000000000006,
+          "negativeSeeds": 0,
+          "positiveSeeds": 30
+        },
+        "odorInhLMeanVoltage": {
+          "ci95": [
+            -0.023564349329319036,
+            0.0019019338408860376
+          ],
+          "mean": -0.0108312077442165,
+          "negativeSeeds": 22,
+          "positiveSeeds": 8
+        },
+        "odorInhLSpikeFraction": {
+          "ci95": [
+            -0.003738368992070507,
+            0.013509797563499078
+          ],
+          "mean": 0.004885714285714286,
+          "negativeSeeds": 2,
+          "positiveSeeds": 27
+        },
+        "odorInhRMeanVoltage": {
+          "ci95": [
+            -0.658222578356067,
+            -0.6002180897619286
+          ],
+          "mean": -0.6292203340589978,
+          "negativeSeeds": 30,
+          "positiveSeeds": 0
+        },
+        "odorInhRSpikeFraction": {
+          "ci95": [
+            0.4035203657712334,
+            0.4592146769638099
+          ],
+          "mean": 0.43136752136752166,
+          "negativeSeeds": 0,
+          "positiveSeeds": 30
+        }
+      },
+      "gain": 2.0,
+      "observations": [
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.33540513794708104,
+              "dm1PNLSpikeFraction": 0.19000000000000003,
+              "dm1PNRMeanVoltage": 0.3795775276999549,
+              "dm1PNRSpikeFraction": 0.22000000000000006,
+              "odorInhLMeanVoltage": 0.6717215914451788,
+              "odorInhLSpikeFraction": 0.008857142857142859,
+              "odorInhRMeanVoltage": 0.06864750157380091,
+              "odorInhRSpikeFraction": 0.37000000000000016
+            },
+            "detectedTicks": 72,
+            "distanceReduction": -0.4513298704448294,
+            "finalAlignment": -0.992199379315095,
+            "finalHeading": 5.323703329959111,
+            "finalX": -1.321673280578137,
+            "finalZ": -0.2830554370578764,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.005371990498248467,
+            "meanThrust": 0.6551045376407363,
+            "meanTurn": -0.011993524715255971,
+            "netDisplacement": 0.7350153187040744,
+            "pathLength": 0.7861254451688836,
+            "sourceSignedMeanTurn": -0.011993524715255971
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6164752928993273,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.5990937107065003,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6771289093309637,
+              "odorInhLSpikeFraction": 0.008,
+              "odorInhRMeanVoltage": 0.6858880190669633,
+              "odorInhRSpikeFraction": 0.008205128205128202
+            },
+            "detectedTicks": 85,
+            "distanceReduction": -0.4178270664703998,
+            "finalAlignment": -0.987730692041394,
+            "finalHeading": 5.391622259646343,
+            "finalX": -1.2925286852771916,
+            "finalZ": -0.22870579442779562,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.006349031969079621,
+            "meanThrust": 0.6546527618418423,
+            "meanTurn": -0.011144538094165584,
+            "netDisplacement": 0.7435200075051567,
+            "pathLength": 0.7855833142102117,
+            "sourceSignedMeanTurn": -0.011144538094165584
+          },
+          "seed": 0
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.4119475834523046,
+              "dm1PNLSpikeFraction": 0.20000000000000004,
+              "dm1PNRMeanVoltage": 0.37658610997283226,
+              "dm1PNRSpikeFraction": 0.22000000000000006,
+              "odorInhLMeanVoltage": 0.6613952915119249,
+              "odorInhLSpikeFraction": 0.009714285714285715,
+              "odorInhRMeanVoltage": 0.06566602083349482,
+              "odorInhRSpikeFraction": 0.38000000000000017
+            },
+            "detectedTicks": 75,
+            "distanceReduction": -0.41492129719381055,
+            "finalAlignment": -0.5536440681675825,
+            "finalHeading": 6.232243975246251,
+            "finalX": -1.2776506410405954,
+            "finalZ": -0.21664032518388654,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.002978940080706859,
+            "meanThrust": 0.6601989806645658,
+            "meanTurn": -0.0006367666491667117,
+            "netDisplacement": 0.7541363450231283,
+            "pathLength": 0.792238776797479,
+            "sourceSignedMeanTurn": -0.0006367666491667117
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5618627402827168,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.6097571720593622,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6664635411222475,
+              "odorInhLSpikeFraction": 0.009428571428571429,
+              "odorInhRMeanVoltage": 0.6713648082935272,
+              "odorInhRSpikeFraction": 0.008461538461538458
+            },
+            "detectedTicks": 93,
+            "distanceReduction": -0.36724667793078636,
+            "finalAlignment": -0.6614898198861451,
+            "finalHeading": 6.14560667736047,
+            "finalX": -1.2447508378306913,
+            "finalZ": -0.1397202206486155,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0018045645565498362,
+            "meanThrust": 0.6600539617987807,
+            "meanTurn": -0.0017197328727389426,
+            "netDisplacement": 0.7680644745173029,
+            "pathLength": 0.7920647541585359,
+            "sourceSignedMeanTurn": -0.0017197328727389426
+          },
+          "seed": 1
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.454913852659311,
+              "dm1PNLSpikeFraction": 0.19000000000000003,
+              "dm1PNRMeanVoltage": 0.39180139002403847,
+              "dm1PNRSpikeFraction": 0.22000000000000006,
+              "odorInhLMeanVoltage": 0.6774125768278597,
+              "odorInhLSpikeFraction": 0.008285714285714287,
+              "odorInhRMeanVoltage": 0.08171337081212027,
+              "odorInhRSpikeFraction": 0.3900000000000002
+            },
+            "detectedTicks": 77,
+            "distanceReduction": -0.3271666649878002,
+            "finalAlignment": -0.8169916632050159,
+            "finalHeading": 5.899992077424967,
+            "finalX": -1.2804902566823253,
+            "finalZ": -0.11520271068795986,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.009087421237467452,
+            "meanThrust": 0.6590238807164837,
+            "meanTurn": -0.0047899153719327195,
+            "netDisplacement": 0.7286740940083707,
+            "pathLength": 0.7908286568597799,
+            "sourceSignedMeanTurn": -0.0047899153719327195
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.594288884365716,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.6469784494972045,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6768238325169835,
+              "odorInhLSpikeFraction": 0.008,
+              "odorInhRMeanVoltage": 0.655269435161408,
+              "odorInhRSpikeFraction": 0.009230769230769228
+            },
+            "detectedTicks": 78,
+            "distanceReduction": -0.3340781344721546,
+            "finalAlignment": -0.8290925761997677,
+            "finalHeading": 5.872931290235946,
+            "finalX": -1.2832040234564213,
+            "finalZ": -0.1251524327341791,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.008625167833907618,
+            "meanThrust": 0.6588179263594883,
+            "meanTurn": -0.005128175211795493,
+            "netDisplacement": 0.7276397483702672,
+            "pathLength": 0.7905815116313866,
+            "sourceSignedMeanTurn": -0.005128175211795493
+          },
+          "seed": 2
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.36934252458542405,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.35811648550835085,
+              "dm1PNRSpikeFraction": 0.2900000000000001,
+              "odorInhLMeanVoltage": 0.6768109363095777,
+              "odorInhLSpikeFraction": 0.008857142857142857,
+              "odorInhRMeanVoltage": 0.0,
+              "odorInhRSpikeFraction": 0.5000000000000002
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.06371370117854891,
+            "finalAlignment": -0.5418957779130497,
+            "finalHeading": 0.15677569499289876,
+            "finalX": -1.2910643356939784,
+            "finalZ": 0.20696969670135087,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0032646073431585685,
+            "meanThrust": 0.6574426997971834,
+            "meanTurn": 0.001959696187411232,
+            "netDisplacement": 0.7385297769742729,
+            "pathLength": 0.7889312397566206,
+            "sourceSignedMeanTurn": 0.001959696187411232
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5677531916081728,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5995810553996074,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6868861850175262,
+              "odorInhLSpikeFraction": 0.008857142857142859,
+              "odorInhRMeanVoltage": 0.6707637745728104,
+              "odorInhRSpikeFraction": 0.008717948717948716
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.029938942201567342,
+            "finalAlignment": 0.13506267069751393,
+            "finalHeading": 0.8685422087128722,
+            "finalX": -1.3508828405476514,
+            "finalZ": 0.2791218069871108,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006998016251013739,
+            "meanThrust": 0.6575617197352813,
+            "meanTurn": 0.010856777608910899,
+            "netDisplacement": 0.7065847930936779,
+            "pathLength": 0.7890740636823381,
+            "sourceSignedMeanTurn": 0.010856777608910899
+          },
+          "seed": 3
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.37184554968441264,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.3793112673724756,
+              "dm1PNRSpikeFraction": 0.2800000000000001,
+              "odorInhLMeanVoltage": 0.6746386286400379,
+              "odorInhLSpikeFraction": 0.008857142857142857,
+              "odorInhRMeanVoltage": 0.0,
+              "odorInhRSpikeFraction": 0.5000000000000002
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.006787896782118885,
+            "finalAlignment": -0.012141639117357703,
+            "finalHeading": 0.6787219065923474,
+            "finalX": -1.3584715496601605,
+            "finalZ": 0.22407273761548605,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.01602461712879579,
+            "meanThrust": 0.654693175914906,
+            "meanTurn": 0.008484023832404338,
+            "netDisplacement": 0.6795346527866952,
+            "pathLength": 0.785631811097886,
+            "sourceSignedMeanTurn": 0.008484023832404338
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5640515648183451,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.6013905275818877,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.676338738066109,
+              "odorInhLSpikeFraction": 0.008,
+              "odorInhRMeanVoltage": 0.6667789515903917,
+              "odorInhRSpikeFraction": 0.008717948717948716
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.02023245513658367,
+            "finalAlignment": 0.34962717447372665,
+            "finalHeading": 1.0341160086674501,
+            "finalX": -1.3862609199410052,
+            "finalZ": 0.23627964307868207,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.021705342919575835,
+            "meanThrust": 0.6550496205401003,
+            "meanTurn": 0.012926450108343118,
+            "netDisplacement": 0.6576501563331758,
+            "pathLength": 0.7860595446481208,
+            "sourceSignedMeanTurn": 0.012926450108343118
+          },
+          "seed": 4
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.4619469610442209,
+              "dm1PNLSpikeFraction": 0.17,
+              "dm1PNRMeanVoltage": 0.4240138847139024,
+              "dm1PNRSpikeFraction": 0.18000000000000002,
+              "odorInhLMeanVoltage": 0.687557762536363,
+              "odorInhLSpikeFraction": 0.008285714285714287,
+              "odorInhRMeanVoltage": 0.2017866871364685,
+              "odorInhRSpikeFraction": 0.3200000000000001
+            },
+            "detectedTicks": 64,
+            "distanceReduction": -0.3922427340752961,
+            "finalAlignment": -0.9988891124247258,
+            "finalHeading": 5.2574444903527615,
+            "finalX": -1.335071663313874,
+            "finalZ": -0.2231966880503223,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.027998433642189374,
+            "meanThrust": 0.6540185556704365,
+            "meanTurn": -0.012821760210335327,
+            "netDisplacement": 0.7013889466514361,
+            "pathLength": 0.7848222668045243,
+            "sourceSignedMeanTurn": -0.012821760210335327
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5871439599066692,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5729215153814745,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6878171915773317,
+              "odorInhLSpikeFraction": 0.008285714285714287,
+              "odorInhRMeanVoltage": 0.6769223040308723,
+              "odorInhRSpikeFraction": 0.009230769230769228
+            },
+            "detectedTicks": 69,
+            "distanceReduction": -0.3584733475790918,
+            "finalAlignment": -0.9976183396795235,
+            "finalHeading": 5.167720227327567,
+            "finalX": -1.3198658864100565,
+            "finalZ": -0.17595383566446401,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.020424747103612244,
+            "meanThrust": 0.6537632148254151,
+            "meanTurn": -0.013943313498150237,
+            "netDisplacement": 0.7025255616373082,
+            "pathLength": 0.7845158577904968,
+            "sourceSignedMeanTurn": -0.013943313498150237
+          },
+          "seed": 5
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3695707716537162,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.36835359236967335,
+              "dm1PNRSpikeFraction": 0.2800000000000001,
+              "odorInhLMeanVoltage": 0.6588234463591773,
+              "odorInhLSpikeFraction": 0.009999999999999998,
+              "odorInhRMeanVoltage": 0.0,
+              "odorInhRSpikeFraction": 0.5000000000000002
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.036640483199501084,
+            "finalAlignment": -0.6332158829510288,
+            "finalHeading": 0.11921288888786523,
+            "finalX": -1.3056383030132852,
+            "finalZ": 0.3322250436203673,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.012159833376721664,
+            "meanThrust": 0.654988066686342,
+            "meanTurn": 0.0014901611110983168,
+            "netDisplacement": 0.7697477806728807,
+            "pathLength": 0.7859856800236102,
+            "sourceSignedMeanTurn": 0.0014901611110983168
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5558031938159755,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5671143950366845,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.660462321524726,
+              "odorInhLSpikeFraction": 0.009428571428571427,
+              "odorInhRMeanVoltage": 0.6854923108835362,
+              "odorInhRSpikeFraction": 0.008461538461538456
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.06412021133341683,
+            "finalAlignment": -0.5929728239198984,
+            "finalHeading": 0.17912592837925975,
+            "finalX": -1.3196609981992962,
+            "finalZ": 0.35734159815386357,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.011129976057915532,
+            "meanThrust": 0.6557046011122981,
+            "meanTurn": 0.0022390741047407458,
+            "netDisplacement": 0.7684752274096645,
+            "pathLength": 0.7868455213347578,
+            "sourceSignedMeanTurn": 0.0022390741047407458
+          },
+          "seed": 6
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3657287488204785,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.34130334198261486,
+              "dm1PNRSpikeFraction": 0.3000000000000001,
+              "odorInhLMeanVoltage": 0.6631144828891505,
+              "odorInhLSpikeFraction": 0.009714285714285712,
+              "odorInhRMeanVoltage": 0.0,
+              "odorInhRSpikeFraction": 0.5000000000000002
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.08712084920769203,
+            "finalAlignment": -0.849588405851931,
+            "finalHeading": 6.001575867937561,
+            "finalX": -1.2721245083119221,
+            "finalZ": 0.19251686743196175,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.004515327673281556,
+            "meanThrust": 0.6563846839890547,
+            "meanTurn": -0.0035201179905253238,
+            "netDisplacement": 0.7529046922725191,
+            "pathLength": 0.787661620786867,
+            "sourceSignedMeanTurn": -0.0035201179905253238
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5529610874279377,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5756117282904851,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6763300504118237,
+              "odorInhLSpikeFraction": 0.008285714285714285,
+              "odorInhRMeanVoltage": 0.6624846081728444,
+              "odorInhRSpikeFraction": 0.009999999999999995
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.0755219546621202,
+            "finalAlignment": -0.9071032298710066,
+            "finalHeading": 5.869608774759527,
+            "finalX": -1.288577453219751,
+            "finalZ": 0.1933864401753886,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0063273186093068135,
+            "meanThrust": 0.6563373907508632,
+            "meanTurn": -0.005169706655250735,
+            "netDisplacement": 0.7372383300609138,
+            "pathLength": 0.7876048689010368,
+            "sourceSignedMeanTurn": -0.005169706655250735
+          },
+          "seed": 7
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.365999401505587,
+              "dm1PNLSpikeFraction": 0.24000000000000007,
+              "dm1PNRMeanVoltage": 0.3614029921062161,
+              "dm1PNRSpikeFraction": 0.2800000000000001,
+              "odorInhLMeanVoltage": 0.6703286901314813,
+              "odorInhLSpikeFraction": 0.009428571428571425,
+              "odorInhRMeanVoltage": 0.0014283992087943081,
+              "odorInhRSpikeFraction": 0.49000000000000027
+            },
+            "detectedTicks": 97,
+            "distanceReduction": -0.10338360759378817,
+            "finalAlignment": -0.33393743654525804,
+            "finalHeading": 0.3664819402437074,
+            "finalX": -1.2833246607821722,
+            "finalZ": 0.16105313418328215,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.002741847228591507,
+            "meanThrust": 0.6557315119363061,
+            "meanTurn": 0.00458102425304631,
+            "netDisplacement": 0.7345486055212731,
+            "pathLength": 0.7868778143235675,
+            "sourceSignedMeanTurn": 0.00458102425304631
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5900102042608676,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5448204678625713,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6700645876363692,
+              "odorInhLSpikeFraction": 0.009142857142857142,
+              "odorInhRMeanVoltage": 0.6706378865571779,
+              "odorInhRSpikeFraction": 0.008461538461538458
+            },
+            "detectedTicks": 94,
+            "distanceReduction": -0.13024562880641333,
+            "finalAlignment": -0.18525883212172284,
+            "finalHeading": 0.5130113622145653,
+            "finalX": -1.2724407600341623,
+            "finalZ": 0.13506489620530637,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.004644719046893705,
+            "meanThrust": 0.6556673321337456,
+            "meanTurn": 0.0064126420276820586,
+            "netDisplacement": 0.7399898471240113,
+            "pathLength": 0.7868007985604951,
+            "sourceSignedMeanTurn": 0.0064126420276820586
+          },
+          "seed": 8
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.39165370357672213,
+              "dm1PNLSpikeFraction": 0.24000000000000007,
+              "dm1PNRMeanVoltage": 0.37160159373766477,
+              "dm1PNRSpikeFraction": 0.2800000000000001,
+              "odorInhLMeanVoltage": 0.6779453080989575,
+              "odorInhLSpikeFraction": 0.008857142857142859,
+              "odorInhRMeanVoltage": 0.004554698118951066,
+              "odorInhRSpikeFraction": 0.48000000000000026
+            },
+            "detectedTicks": 96,
+            "distanceReduction": -0.2548288017997278,
+            "finalAlignment": 0.0662300534334835,
+            "finalHeading": 0.7040045350054108,
+            "finalX": -1.2529126935353716,
+            "finalZ": -0.008194365360949037,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.001828588241452045,
+            "meanThrust": 0.6572116276063033,
+            "meanTurn": 0.00880005668756764,
+            "netDisplacement": 0.7471322447226075,
+            "pathLength": 0.7886539531275648,
+            "sourceSignedMeanTurn": 0.00880005668756764
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.628071604697794,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.6215079501367303,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6875328066126578,
+              "odorInhLSpikeFraction": 0.007428571428571429,
+              "odorInhRMeanVoltage": 0.6798489640842774,
+              "odorInhRSpikeFraction": 0.008205128205128202
+            },
+            "detectedTicks": 87,
+            "distanceReduction": -0.2862949881826611,
+            "finalAlignment": -0.07838816162398886,
+            "finalHeading": 0.5321885911167662,
+            "finalX": -1.26243066727013,
+            "finalZ": -0.05382459453186353,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0008597183924669997,
+            "meanThrust": 0.657149787119929,
+            "meanTurn": 0.006652357388959541,
+            "netDisplacement": 0.7395306670856221,
+            "pathLength": 0.7885797445439153,
+            "sourceSignedMeanTurn": 0.006652357388959541
+          },
+          "seed": 9
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3695609042777198,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.3624085223694121,
+              "dm1PNRSpikeFraction": 0.2800000000000001,
+              "odorInhLMeanVoltage": 0.6730909120739741,
+              "odorInhLSpikeFraction": 0.009428571428571427,
+              "odorInhRMeanVoltage": 0.0,
+              "odorInhRSpikeFraction": 0.5000000000000002
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.05008443053142431,
+            "finalAlignment": 0.008234205801007864,
+            "finalHeading": 0.8047700226724286,
+            "finalX": -1.3208690662449982,
+            "finalZ": 0.33583077161323716,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0003609092605635028,
+            "meanThrust": 0.6553620109974166,
+            "meanTurn": 0.010059625283405352,
+            "netDisplacement": 0.7576286242911383,
+            "pathLength": 0.7864344131969004,
+            "sourceSignedMeanTurn": 0.010059625283405352
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5741383051964366,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.5549846236644521,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6874527458210996,
+              "odorInhLSpikeFraction": 0.007714285714285716,
+              "odorInhRMeanVoltage": 0.6752217689659271,
+              "odorInhRSpikeFraction": 0.008717948717948712
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.027042055841533852,
+            "finalAlignment": 0.05260953455416587,
+            "finalHeading": 0.8419360520126408,
+            "finalX": -1.3093341575750752,
+            "finalZ": 0.314706008191712,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.00003864583774676783,
+            "meanThrust": 0.6555375268372005,
+            "meanTurn": 0.01052420065015801,
+            "netDisplacement": 0.7589856240301874,
+            "pathLength": 0.7866450322046394,
+            "sourceSignedMeanTurn": 0.01052420065015801
+          },
+          "seed": 10
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3697552695207914,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.3420244585302337,
+              "dm1PNRSpikeFraction": 0.3000000000000001,
+              "odorInhLMeanVoltage": 0.6687375211543822,
+              "odorInhLSpikeFraction": 0.009999999999999998,
+              "odorInhRMeanVoltage": 0.0,
+              "odorInhRSpikeFraction": 0.5000000000000002
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.2243935854502599,
+            "finalAlignment": -0.627041229808683,
+            "finalHeading": 6.278880553360183,
+            "finalX": -1.23636765319874,
+            "finalZ": 0.042918346738094255,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.004348046790948866,
+            "meanThrust": 0.6570170558999406,
+            "meanTurn": -0.000053809422742505104,
+            "netDisplacement": 0.764837463496612,
+            "pathLength": 0.7884204670799291,
+            "sourceSignedMeanTurn": -0.000053809422742505104
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6394465335825107,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.597976733038856,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6837582037666678,
+              "odorInhLSpikeFraction": 0.008857142857142859,
+              "odorInhRMeanVoltage": 0.6802783852390154,
+              "odorInhRSpikeFraction": 0.00846153846153846
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.24815358752651773,
+            "finalAlignment": -0.7741595091149484,
+            "finalHeading": 6.063720104351093,
+            "finalX": -1.22891115444635,
+            "finalZ": 0.018516749853541476,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.005427798187867514,
+            "meanThrust": 0.6569824928827299,
+            "meanTurn": -0.0027433150353561643,
+            "netDisplacement": 0.7713111419929051,
+            "pathLength": 0.7883789914592766,
+            "sourceSignedMeanTurn": -0.0027433150353561643
+          },
+          "seed": 11
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3515802003880517,
+              "dm1PNLSpikeFraction": 0.23000000000000007,
+              "dm1PNRMeanVoltage": 0.3530636975979269,
+              "dm1PNRSpikeFraction": 0.2700000000000001,
+              "odorInhLMeanVoltage": 0.6805814067347827,
+              "odorInhLSpikeFraction": 0.009142857142857142,
+              "odorInhRMeanVoltage": 0.016334406590741087,
+              "odorInhRSpikeFraction": 0.46000000000000024
+            },
+            "detectedTicks": 92,
+            "distanceReduction": -0.33091156734756666,
+            "finalAlignment": 0.09173719474713364,
+            "finalHeading": 0.6821524187978466,
+            "finalX": -1.2592163508824337,
+            "finalZ": -0.10569669679330199,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006923115011684381,
+            "meanThrust": 0.6543314241626736,
+            "meanTurn": 0.008526905234973094,
+            "netDisplacement": 0.7482861795549567,
+            "pathLength": 0.7851977089952074,
+            "sourceSignedMeanTurn": 0.008526905234973094
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6089308027589809,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5678922429977483,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6798230545601287,
+              "odorInhLSpikeFraction": 0.008571428571428572,
+              "odorInhRMeanVoltage": 0.6831888015628839,
+              "odorInhRSpikeFraction": 0.008205128205128202
+            },
+            "detectedTicks": 96,
+            "distanceReduction": -0.32725539321498864,
+            "finalAlignment": 0.12026942369340618,
+            "finalHeading": 0.713610280832657,
+            "finalX": -1.25820760704619,
+            "finalZ": -0.100613885326791,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006210642949452271,
+            "meanThrust": 0.6541983174112632,
+            "meanTurn": 0.008920128510408227,
+            "netDisplacement": 0.7485847367965046,
+            "pathLength": 0.7850379808935164,
+            "sourceSignedMeanTurn": 0.008920128510408227
+          },
+          "seed": 12
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3695383798636168,
+              "dm1PNLSpikeFraction": 0.21000000000000005,
+              "dm1PNRMeanVoltage": 0.42167194234346816,
+              "dm1PNRSpikeFraction": 0.25000000000000006,
+              "odorInhLMeanVoltage": 0.6680617548931079,
+              "odorInhLSpikeFraction": 0.008285714285714285,
+              "odorInhRMeanVoltage": 0.047904302098938055,
+              "odorInhRSpikeFraction": 0.4200000000000002
+            },
+            "detectedTicks": 83,
+            "distanceReduction": -0.29510773248387134,
+            "finalAlignment": -0.9429990486888421,
+            "finalHeading": 5.645676145746276,
+            "finalX": -1.2751314254979758,
+            "finalZ": -0.07325187558136526,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0022006297637898525,
+            "meanThrust": 0.6547726621880007,
+            "meanTurn": -0.007968864517916334,
+            "netDisplacement": 0.7285604213631045,
+            "pathLength": 0.7857271946256003,
+            "sourceSignedMeanTurn": -0.007968864517916334
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6113207584587195,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.6561417769899958,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6773950938101747,
+              "odorInhLSpikeFraction": 0.007714285714285715,
+              "odorInhRMeanVoltage": 0.6878675149931559,
+              "odorInhRSpikeFraction": 0.008205128205128202
+            },
+            "detectedTicks": 79,
+            "distanceReduction": -0.3216969029707366,
+            "finalAlignment": -0.9312428229816458,
+            "finalHeading": 5.643621882802841,
+            "finalX": -1.299898866245234,
+            "finalZ": -0.12104464935065282,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0024205836389969908,
+            "meanThrust": 0.6547479758344302,
+            "meanTurn": -0.007994542804709306,
+            "netDisplacement": 0.7104881453065429,
+            "pathLength": 0.7856975710013165,
+            "sourceSignedMeanTurn": -0.007994542804709306
+          },
+          "seed": 13
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.439362940390753,
+              "dm1PNLSpikeFraction": 0.21000000000000005,
+              "dm1PNRMeanVoltage": 0.40663053984914144,
+              "dm1PNRSpikeFraction": 0.23000000000000007,
+              "odorInhLMeanVoltage": 0.6716831965073375,
+              "odorInhLSpikeFraction": 0.009428571428571429,
+              "odorInhRMeanVoltage": 0.03773260738183594,
+              "odorInhRSpikeFraction": 0.4200000000000002
+            },
+            "detectedTicks": 83,
+            "distanceReduction": -0.3089243351295845,
+            "finalAlignment": -0.7862922706572255,
+            "finalHeading": 5.979781933832944,
+            "finalX": -1.2594339692563206,
+            "finalZ": -0.07927979189966132,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0029791393083677883,
+            "meanThrust": 0.6547929930853723,
+            "meanTurn": -0.00379254216683304,
+            "netDisplacement": 0.7447975102637643,
+            "pathLength": 0.7857515917024476,
+            "sourceSignedMeanTurn": -0.00379254216683304
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5878205506205038,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.5696644072790219,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6802018448163016,
+              "odorInhLSpikeFraction": 0.008571428571428572,
+              "odorInhRMeanVoltage": 0.6752952696128214,
+              "odorInhRSpikeFraction": 0.009230769230769225
+            },
+            "detectedTicks": 87,
+            "distanceReduction": -0.31920983754727983,
+            "finalAlignment": -0.706372166907893,
+            "finalHeading": 6.09869324345091,
+            "finalX": -1.255262107547115,
+            "finalZ": -0.08888937318092868,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006810254451128234,
+            "meanThrust": 0.65457120355021,
+            "meanTurn": -0.00230615079660845,
+            "netDisplacement": 0.750023899032333,
+            "pathLength": 0.7854854442602524,
+            "sourceSignedMeanTurn": -0.00230615079660845
+          },
+          "seed": 14
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.37244682104825305,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.42165399788817953,
+              "dm1PNRSpikeFraction": 0.2800000000000001,
+              "odorInhLMeanVoltage": 0.6548484976867549,
+              "odorInhLSpikeFraction": 0.009714285714285712,
+              "odorInhRMeanVoltage": 0.0,
+              "odorInhRSpikeFraction": 0.5000000000000002
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.1259563259145966,
+            "finalAlignment": -0.1685211383894092,
+            "finalHeading": 0.5262761624805389,
+            "finalX": -1.2784306182685676,
+            "finalZ": 0.1356416974339774,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.007057004061620303,
+            "meanThrust": 0.6534398914697551,
+            "meanTurn": 0.0065784520310067365,
+            "netDisplacement": 0.7342077653737069,
+            "pathLength": 0.7841278697637061,
+            "sourceSignedMeanTurn": 0.0065784520310067365
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6272365841055241,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.6044103957985447,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6558440768301643,
+              "odorInhLSpikeFraction": 0.009428571428571427,
+              "odorInhRMeanVoltage": 0.6783302650249302,
+              "odorInhRSpikeFraction": 0.008717948717948716
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.1037452785591102,
+            "finalAlignment": -0.09724177204682073,
+            "finalHeading": 0.6089272952105426,
+            "finalX": -1.2836242201036014,
+            "finalZ": 0.1603218581388732,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.008031433770314522,
+            "meanThrust": 0.6534530400197887,
+            "meanTurn": 0.007611591190131795,
+            "netDisplacement": 0.7340962853871924,
+            "pathLength": 0.784143648023746,
+            "sourceSignedMeanTurn": 0.007611591190131795
+          },
+          "seed": 15
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.4257801697155009,
+              "dm1PNLSpikeFraction": 0.21000000000000005,
+              "dm1PNRMeanVoltage": 0.3771244299657892,
+              "dm1PNRSpikeFraction": 0.24000000000000007,
+              "odorInhLMeanVoltage": 0.665977842479126,
+              "odorInhLSpikeFraction": 0.009428571428571427,
+              "odorInhRMeanVoltage": 0.034062717683600245,
+              "odorInhRSpikeFraction": 0.4200000000000002
+            },
+            "detectedTicks": 83,
+            "distanceReduction": -0.5226810100966528,
+            "finalAlignment": -0.6616771012179997,
+            "finalHeading": 6.011411948380322,
+            "finalX": -1.335931831977063,
+            "finalZ": -0.3702448418905374,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.00853635951506721,
+            "meanThrust": 0.6589655059571187,
+            "meanTurn": -0.0033971669849907934,
+            "netDisplacement": 0.7603076842488762,
+            "pathLength": 0.790758607148542,
+            "sourceSignedMeanTurn": -0.0033971669849907934
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5652560133663568,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5746170558479107,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6704728097224825,
+              "odorInhLSpikeFraction": 0.009428571428571429,
+              "odorInhRMeanVoltage": 0.6841188633245108,
+              "odorInhRSpikeFraction": 0.007435897435897433
+            },
+            "detectedTicks": 85,
+            "distanceReduction": -0.5203879184376268,
+            "finalAlignment": -0.7758208767791229,
+            "finalHeading": 5.851739270852072,
+            "finalX": -1.329704797547595,
+            "finalZ": -0.36465518139213077,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.01037426582804507,
+            "meanThrust": 0.6586187250332282,
+            "meanTurn": -0.005393075454093923,
+            "netDisplacement": 0.7630655671348553,
+            "pathLength": 0.7903424700398742,
+            "sourceSignedMeanTurn": -0.005393075454093923
+          },
+          "seed": 16
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.4018991371376319,
+              "dm1PNLSpikeFraction": 0.20000000000000004,
+              "dm1PNRMeanVoltage": 0.37022822296525015,
+              "dm1PNRSpikeFraction": 0.22000000000000006,
+              "odorInhLMeanVoltage": 0.6688540049899352,
+              "odorInhLSpikeFraction": 0.00914285714285714,
+              "odorInhRMeanVoltage": 0.04680916493635736,
+              "odorInhRSpikeFraction": 0.4000000000000002
+            },
+            "detectedTicks": 79,
+            "distanceReduction": -0.4046521909689702,
+            "finalAlignment": -0.9791602421488023,
+            "finalHeading": 5.014671378511174,
+            "finalX": -1.318214234540516,
+            "finalZ": -0.22809443757829712,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.025752625920554256,
+            "meanThrust": 0.6526641621339009,
+            "meanTurn": -0.015856424108355204,
+            "netDisplacement": 0.7189289967982474,
+            "pathLength": 0.7831969945606813,
+            "sourceSignedMeanTurn": -0.015856424108355204
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.617175507714023,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.6241209549587838,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6660705421462797,
+              "odorInhLSpikeFraction": 0.008857142857142857,
+              "odorInhRMeanVoltage": 0.679672312902713,
+              "odorInhRSpikeFraction": 0.008205128205128202
+            },
+            "detectedTicks": 77,
+            "distanceReduction": -0.40568278822945736,
+            "finalAlignment": -0.9946916510817798,
+            "finalHeading": 5.116943565805528,
+            "finalX": -1.3166777786603054,
+            "finalZ": -0.22841965262198866,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02447085180930794,
+            "meanThrust": 0.6526791527853159,
+            "meanTurn": -0.014578021767175727,
+            "netDisplacement": 0.7204892753404206,
+            "pathLength": 0.7832149833423793,
+            "sourceSignedMeanTurn": -0.014578021767175727
+          },
+          "seed": 17
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.35209376596255515,
+              "dm1PNLSpikeFraction": 0.19000000000000003,
+              "dm1PNRMeanVoltage": 0.3395554234600068,
+              "dm1PNRSpikeFraction": 0.22000000000000006,
+              "odorInhLMeanVoltage": 0.6712115105840808,
+              "odorInhLSpikeFraction": 0.009714285714285713,
+              "odorInhRMeanVoltage": 0.0917137178328813,
+              "odorInhRSpikeFraction": 0.36000000000000015
+            },
+            "detectedTicks": 70,
+            "distanceReduction": -0.44311309978515157,
+            "finalAlignment": -0.989004315084575,
+            "finalHeading": 5.33622769981353,
+            "finalX": -1.3394858265543403,
+            "finalZ": -0.283080841353695,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.028736466394734803,
+            "meanThrust": 0.657264263443416,
+            "meanTurn": -0.011836970092075703,
+            "netDisplacement": 0.7186193262528631,
+            "pathLength": 0.7887171161320992,
+            "sourceSignedMeanTurn": -0.011836970092075703
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5857843858296781,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5565793623928124,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6714194092621752,
+              "odorInhLSpikeFraction": 0.009142857142857142,
+              "odorInhRMeanVoltage": 0.6794624133974679,
+              "odorInhRSpikeFraction": 0.008205128205128203
+            },
+            "detectedTicks": 55,
+            "distanceReduction": -0.4672995829783848,
+            "finalAlignment": -0.9509806363688572,
+            "finalHeading": 4.804298271546074,
+            "finalX": -1.420084856216009,
+            "finalZ": -0.34783770989631213,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.035142785911674634,
+            "meanThrust": 0.6568156935878428,
+            "meanTurn": -0.01848608794541893,
+            "netDisplacement": 0.676234165371669,
+            "pathLength": 0.7881788323054116,
+            "sourceSignedMeanTurn": -0.01848608794541893
+          },
+          "seed": 18
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.36892359005262254,
+              "dm1PNLSpikeFraction": 0.21000000000000005,
+              "dm1PNRMeanVoltage": 0.41126789564479516,
+              "dm1PNRSpikeFraction": 0.20000000000000004,
+              "odorInhLMeanVoltage": 0.47317513808809003,
+              "odorInhLSpikeFraction": 0.13685714285714284,
+              "odorInhRMeanVoltage": 0.2903083078001717,
+              "odorInhRSpikeFraction": 0.27025641025641034
+            },
+            "detectedTicks": 80,
+            "distanceReduction": -0.5332459704951364,
+            "finalAlignment": -0.8533347901398027,
+            "finalHeading": 4.383707048044268,
+            "finalX": -1.665750592450706,
+            "finalZ": -0.49636911876465784,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02372819204054573,
+            "meanThrust": 0.6575750672373842,
+            "meanTurn": -0.023743478239191443,
+            "netDisplacement": 0.5984187233954642,
+            "pathLength": 0.7890900806848615,
+            "sourceSignedMeanTurn": -0.023743478239191443
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6366942572337337,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.5774240320558462,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.661539814833233,
+              "odorInhLSpikeFraction": 0.00971428571428571,
+              "odorInhRMeanVoltage": 0.672402144884721,
+              "odorInhRSpikeFraction": 0.008974358974358972
+            },
+            "detectedTicks": 83,
+            "distanceReduction": -0.5140876196935671,
+            "finalAlignment": -0.584527756597241,
+            "finalHeading": 3.9558441987161266,
+            "finalX": -1.7141200170666904,
+            "finalZ": -0.4868537101770915,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02897037207784306,
+            "meanThrust": 0.6576610798161882,
+            "meanTurn": -0.02909176385579327,
+            "netDisplacement": 0.5645829432024569,
+            "pathLength": 0.7891932957794248,
+            "sourceSignedMeanTurn": -0.02909176385579327
+          },
+          "seed": 19
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.36965940839538414,
+              "dm1PNLSpikeFraction": 0.24000000000000007,
+              "dm1PNRMeanVoltage": 0.3800213861526731,
+              "dm1PNRSpikeFraction": 0.2800000000000001,
+              "odorInhLMeanVoltage": 0.6804995497585042,
+              "odorInhLSpikeFraction": 0.008285714285714287,
+              "odorInhRMeanVoltage": 0.0004491078194937105,
+              "odorInhRSpikeFraction": 0.5000000000000002
+            },
+            "detectedTicks": 98,
+            "distanceReduction": -0.3352271422964075,
+            "finalAlignment": -0.4829389631927445,
+            "finalHeading": 0.10226091187373143,
+            "finalX": -1.2391805794816635,
+            "finalZ": -0.09726265355527938,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.003600541093514491,
+            "meanThrust": 0.6552255741894313,
+            "meanTurn": 0.0012782613984216552,
+            "netDisplacement": 0.7670112218308619,
+            "pathLength": 0.7862706890273169,
+            "sourceSignedMeanTurn": 0.0012782613984216552
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6211765777974445,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.6604259308992098,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.680002062974895,
+              "odorInhLSpikeFraction": 0.007714285714285716,
+              "odorInhRMeanVoltage": 0.6800892916479877,
+              "odorInhRSpikeFraction": 0.007948717948717945
+            },
+            "detectedTicks": 80,
+            "distanceReduction": -0.34380601763720353,
+            "finalAlignment": -0.5521055100576211,
+            "finalHeading": 6.273456155222191,
+            "finalX": -1.2690130769174535,
+            "finalZ": -0.1275959964988664,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0032998603311717328,
+            "meanThrust": 0.6554148795487649,
+            "meanTurn": -0.0001216143994674406,
+            "netDisplacement": 0.7420395003234178,
+            "pathLength": 0.7864978554585186,
+            "sourceSignedMeanTurn": -0.0001216143994674406
+          },
+          "seed": 20
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.40336131660014535,
+              "dm1PNLSpikeFraction": 0.15,
+              "dm1PNRMeanVoltage": 0.4120303145204071,
+              "dm1PNRSpikeFraction": 0.16,
+              "odorInhLMeanVoltage": 0.6751472991323034,
+              "odorInhLSpikeFraction": 0.00942857142857143,
+              "odorInhRMeanVoltage": 0.18908678126038692,
+              "odorInhRSpikeFraction": 0.2800000000000001
+            },
+            "detectedTicks": 56,
+            "distanceReduction": -0.5646191474377742,
+            "finalAlignment": -0.9592007273195224,
+            "finalHeading": 4.7657985256103546,
+            "finalX": -1.4781542629031945,
+            "finalZ": -0.47502884826121267,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.012596813416015155,
+            "meanThrust": 0.6569899903889272,
+            "meanTurn": -0.018967334769615343,
+            "netDisplacement": 0.7056737064723911,
+            "pathLength": 0.7883879884667114,
+            "sourceSignedMeanTurn": -0.018967334769615343
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5761217217525452,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5549310224677533,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6767931780504289,
+              "odorInhLSpikeFraction": 0.009142857142857142,
+              "odorInhRMeanVoltage": 0.6769910821274104,
+              "odorInhRSpikeFraction": 0.009230769230769226
+            },
+            "detectedTicks": 53,
+            "distanceReduction": -0.5718200138949272,
+            "finalAlignment": -0.9467022553414399,
+            "finalHeading": 4.698962989015935,
+            "finalX": -1.5137246033738923,
+            "finalZ": -0.49470879930398837,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.013424543927546946,
+            "meanThrust": 0.6570013022595962,
+            "meanTurn": -0.01980277897704566,
+            "netDisplacement": 0.6936862096601548,
+            "pathLength": 0.7884015627115152,
+            "sourceSignedMeanTurn": -0.01980277897704566
+          },
+          "seed": 21
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3731031655910175,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.371108021766275,
+              "dm1PNRSpikeFraction": 0.2800000000000001,
+              "odorInhLMeanVoltage": 0.6742126454166778,
+              "odorInhLSpikeFraction": 0.009428571428571427,
+              "odorInhRMeanVoltage": 0.0,
+              "odorInhRSpikeFraction": 0.5000000000000002
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.22679794348705906,
+            "finalAlignment": -0.47247647397079423,
+            "finalHeading": 0.17845412685302886,
+            "finalX": -1.2376443313822643,
+            "finalZ": 0.038830385066984045,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.001953132424264397,
+            "meanThrust": 0.657684321339563,
+            "meanTurn": 0.002230676585662871,
+            "netDisplacement": 0.7633439357707934,
+            "pathLength": 0.7892211856074755,
+            "sourceSignedMeanTurn": 0.002230676585662871
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5491996447736261,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5994986655426949,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6875493244371108,
+              "odorInhLSpikeFraction": 0.008285714285714287,
+              "odorInhRMeanVoltage": 0.672190446469783,
+              "odorInhRSpikeFraction": 0.008717948717948714
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.26169815043973377,
+            "finalAlignment": -0.3902444924199965,
+            "finalHeading": 0.25258809674730276,
+            "finalX": -1.2329414580476756,
+            "finalZ": -0.0017501764616861429,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.002436625661277605,
+            "meanThrust": 0.6575014335153692,
+            "meanTurn": 0.003157351209341292,
+            "netDisplacement": 0.7670605386145691,
+            "pathLength": 0.7890017202184416,
+            "sourceSignedMeanTurn": 0.003157351209341292
+          },
+          "seed": 22
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.371081592417281,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.40604810286382825,
+              "dm1PNRSpikeFraction": 0.2800000000000001,
+              "odorInhLMeanVoltage": 0.6669163279270119,
+              "odorInhLSpikeFraction": 0.009714285714285712,
+              "odorInhRMeanVoltage": 0.0,
+              "odorInhRSpikeFraction": 0.5000000000000002
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.09118993916136231,
+            "finalAlignment": 0.4256481881270135,
+            "finalHeading": 1.2082838995877179,
+            "finalX": -1.3682555332601913,
+            "finalZ": 0.34667415830600806,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.03991220618877613,
+            "meanThrust": 0.6577597135577041,
+            "meanTurn": 0.015103548744846483,
+            "netDisplacement": 0.7206136574431159,
+            "pathLength": 0.7893116562692445,
+            "sourceSignedMeanTurn": 0.015103548744846483
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5985645998068639,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.6210572750816511,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6813013255071221,
+              "odorInhLSpikeFraction": 0.008000000000000002,
+              "odorInhRMeanVoltage": 0.6887329704037244,
+              "odorInhRSpikeFraction": 0.007435897435897434
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.012205436263868608,
+            "finalAlignment": -0.017965612948710012,
+            "finalHeading": 0.7536379752657725,
+            "finalX": -1.2942030478790685,
+            "finalZ": 0.2744584728777186,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.03489869899970861,
+            "meanThrust": 0.6579987919237068,
+            "meanTurn": 0.009420474690822168,
+            "netDisplacement": 0.7572825040614406,
+            "pathLength": 0.7895985503084483,
+            "sourceSignedMeanTurn": 0.009420474690822168
+          },
+          "seed": 23
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3714517831295754,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.3602608138980278,
+              "dm1PNRSpikeFraction": 0.3000000000000001,
+              "odorInhLMeanVoltage": 0.6829912365860474,
+              "odorInhLSpikeFraction": 0.008571428571428572,
+              "odorInhRMeanVoltage": 0.0,
+              "odorInhRSpikeFraction": 0.5000000000000002
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.20478599158877486,
+            "finalAlignment": -0.7870354541561569,
+            "finalHeading": 6.072307814093217,
+            "finalX": -1.2283697268398446,
+            "finalZ": 0.0747454366114526,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.004209047733854813,
+            "meanThrust": 0.6550625944241243,
+            "meanTurn": -0.0026359686635796056,
+            "netDisplacement": 0.7752420001208995,
+            "pathLength": 0.7860751133089487,
+            "sourceSignedMeanTurn": -0.0026359686635796056
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5281697442889423,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5742729290135958,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6742020378388257,
+              "odorInhLSpikeFraction": 0.008285714285714285,
+              "odorInhRMeanVoltage": 0.6813491309063971,
+              "odorInhRSpikeFraction": 0.008717948717948714
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.2065864981056218,
+            "finalAlignment": -0.8176014057914076,
+            "finalHeading": 6.020993853885642,
+            "finalX": -1.2272812323822715,
+            "finalZ": 0.07330874419679213,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0057213300876373906,
+            "meanThrust": 0.6550509136931314,
+            "meanTurn": -0.0032773931661743087,
+            "netDisplacement": 0.7761884215861324,
+            "pathLength": 0.7860610964317575,
+            "sourceSignedMeanTurn": -0.0032773931661743087
+          },
+          "seed": 24
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.424024163977697,
+              "dm1PNLSpikeFraction": 0.21000000000000005,
+              "dm1PNRMeanVoltage": 0.40977457380756416,
+              "dm1PNRSpikeFraction": 0.23000000000000007,
+              "odorInhLMeanVoltage": 0.6609778489904805,
+              "odorInhLSpikeFraction": 0.01,
+              "odorInhRMeanVoltage": 0.03376857318169124,
+              "odorInhRSpikeFraction": 0.4300000000000002
+            },
+            "detectedTicks": 85,
+            "distanceReduction": -0.28256348257314334,
+            "finalAlignment": -0.9430222043325487,
+            "finalHeading": 5.650855415545129,
+            "finalX": -1.2765835445238956,
+            "finalZ": -0.059073991171787306,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.024148623005955026,
+            "meanThrust": 0.659325203609828,
+            "meanTurn": -0.007904123645430701,
+            "netDisplacement": 0.7258244308967389,
+            "pathLength": 0.7911902443317937,
+            "sourceSignedMeanTurn": -0.007904123645430701
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5586934429382961,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.5959276648576064,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6607431055268944,
+              "odorInhLSpikeFraction": 0.009428571428571427,
+              "odorInhRMeanVoltage": 0.6764897002390896,
+              "odorInhRSpikeFraction": 0.008461538461538458
+            },
+            "detectedTicks": 86,
+            "distanceReduction": -0.2728760561641743,
+            "finalAlignment": -0.9702851212378095,
+            "finalHeading": 5.562434139826282,
+            "finalX": -1.2753505368628408,
+            "finalZ": -0.046468637815338096,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02571678464863559,
+            "meanThrust": 0.6592429437373301,
+            "meanTurn": -0.009009389591916281,
+            "netDisplacement": 0.7261378510485361,
+            "pathLength": 0.7910915324847956,
+            "sourceSignedMeanTurn": -0.009009389591916281
+          },
+          "seed": 25
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.37433875726353855,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.3771181029122268,
+              "dm1PNRSpikeFraction": 0.2900000000000001,
+              "odorInhLMeanVoltage": 0.6703077672199333,
+              "odorInhLSpikeFraction": 0.009428571428571427,
+              "odorInhRMeanVoltage": 0.0,
+              "odorInhRSpikeFraction": 0.5000000000000002
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.06856311870294018,
+            "finalAlignment": -0.09009520213894298,
+            "finalHeading": 0.575734641666655,
+            "finalX": -1.4245507155592467,
+            "finalZ": 0.26758428138316276,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.010708594653172126,
+            "meanThrust": 0.6540863096541273,
+            "meanTurn": 0.007196683020833197,
+            "netDisplacement": 0.6346205374920659,
+            "pathLength": 0.7849035715849528,
+            "sourceSignedMeanTurn": 0.007196683020833197
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.5686922886270731,
+              "dm1PNLSpikeFraction": 0.03,
+              "dm1PNRMeanVoltage": 0.6390661130536535,
+              "dm1PNRSpikeFraction": 0.02,
+              "odorInhLMeanVoltage": 0.6747488384391372,
+              "odorInhLSpikeFraction": 0.008857142857142857,
+              "odorInhRMeanVoltage": 0.6719802678585867,
+              "odorInhRSpikeFraction": 0.009230769230769226
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.10939565539647389,
+            "finalAlignment": 0.2753337858825666,
+            "finalHeading": 0.9423915017605039,
+            "finalX": -1.4515281687723214,
+            "finalZ": 0.2983200523198392,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.01529765379011019,
+            "meanThrust": 0.654071620293617,
+            "meanTurn": 0.011779893772006327,
+            "netDisplacement": 0.6243526273399951,
+            "pathLength": 0.78488594435234,
+            "sourceSignedMeanTurn": 0.011779893772006327
+          },
+          "seed": 26
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.44905361629434126,
+              "dm1PNLSpikeFraction": 0.16,
+              "dm1PNRMeanVoltage": 0.4523172076254125,
+              "dm1PNRSpikeFraction": 0.19000000000000003,
+              "odorInhLMeanVoltage": 0.6822691983021009,
+              "odorInhLSpikeFraction": 0.008857142857142857,
+              "odorInhRMeanVoltage": 0.2095327890009149,
+              "odorInhRSpikeFraction": 0.3100000000000001
+            },
+            "detectedTicks": 61,
+            "distanceReduction": -0.5620349485445217,
+            "finalAlignment": -0.9090284506266643,
+            "finalHeading": 5.518876648236941,
+            "finalX": -1.4254893214577595,
+            "finalZ": -0.4525462680119423,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0038837921784622143,
+            "meanThrust": 0.6537330221346083,
+            "meanTurn": -0.00955385823678311,
+            "netDisplacement": 0.7313416742197879,
+            "pathLength": 0.7844796265615296,
+            "sourceSignedMeanTurn": -0.00955385823678311
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6578905877386259,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.5611034664379589,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6788843481591078,
+              "odorInhLSpikeFraction": 0.008571428571428574,
+              "odorInhRMeanVoltage": 0.6743624906864245,
+              "odorInhRSpikeFraction": 0.009230769230769228
+            },
+            "detectedTicks": 57,
+            "distanceReduction": -0.5814472865407883,
+            "finalAlignment": -0.9649262832617624,
+            "finalHeading": 5.283558919214778,
+            "finalX": -1.5242936455502205,
+            "finalZ": -0.5082038935247858,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.012318997348388629,
+            "meanThrust": 0.6541560049903379,
+            "meanTurn": -0.012495329849560106,
+            "netDisplacement": 0.6961089950989364,
+            "pathLength": 0.7849872059884052,
+            "sourceSignedMeanTurn": -0.012495329849560106
+          },
+          "seed": 27
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3674171965092927,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.35129341158866256,
+              "dm1PNRSpikeFraction": 0.2900000000000001,
+              "odorInhLMeanVoltage": 0.6719908483641754,
+              "odorInhLSpikeFraction": 0.009428571428571429,
+              "odorInhRMeanVoltage": 0.0,
+              "odorInhRSpikeFraction": 0.5000000000000002
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.005025481977781854,
+            "finalAlignment": 0.22592094686232564,
+            "finalHeading": 0.9987527345184061,
+            "finalX": -1.30674598301693,
+            "finalZ": 0.2862961682529773,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.003290635282633145,
+            "meanThrust": 0.6578877481770921,
+            "meanTurn": 0.01248440918148008,
+            "netDisplacement": 0.7500444173643984,
+            "pathLength": 0.7894652978125097,
+            "sourceSignedMeanTurn": 0.01248440918148008
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6014033687395334,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.5350290570519594,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.6842747463876495,
+              "odorInhLSpikeFraction": 0.008571428571428572,
+              "odorInhRMeanVoltage": 0.6741371907280723,
+              "odorInhRSpikeFraction": 0.008974358974358972
+            },
+            "detectedTicks": 100,
+            "distanceReduction": 0.0055228613786613145,
+            "finalAlignment": 0.14028289528027557,
+            "finalHeading": 0.9152997822351668,
+            "finalX": -1.3044662584284619,
+            "finalZ": 0.2892133980047302,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0019188406733863077,
+            "meanThrust": 0.6577449130806734,
+            "meanTurn": 0.011441247277939593,
+            "netDisplacement": 0.7532672668116847,
+            "pathLength": 0.7892938956968077,
+            "sourceSignedMeanTurn": 0.011441247277939593
+          },
+          "seed": 28
+        },
+        {
+          "active": {
+            "active": true,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.3661402384131506,
+              "dm1PNLSpikeFraction": 0.25000000000000006,
+              "dm1PNRMeanVoltage": 0.4039447047330561,
+              "dm1PNRSpikeFraction": 0.2700000000000001,
+              "odorInhLMeanVoltage": 0.6944209916345995,
+              "odorInhLSpikeFraction": 0.007714285714285714,
+              "odorInhRMeanVoltage": 0.0,
+              "odorInhRSpikeFraction": 0.5000000000000002
+            },
+            "detectedTicks": 100,
+            "distanceReduction": -0.2956034240407379,
+            "finalAlignment": -0.8723545912110326,
+            "finalHeading": 5.8483800604173,
+            "finalX": -1.2417432745017405,
+            "finalZ": -0.05054032317790711,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02892292968097089,
+            "meanThrust": 0.6546157283226759,
+            "meanTurn": -0.005435065584528602,
+            "netDisplacement": 0.7599391989036163,
+            "pathLength": 0.7855388739872105,
+            "sourceSignedMeanTurn": -0.005435065584528602
+          },
+          "control": {
+            "active": false,
+            "activity": {
+              "dm1PNLMeanVoltage": 0.6018937810646281,
+              "dm1PNLSpikeFraction": 0.02,
+              "dm1PNRMeanVoltage": 0.5840162535380541,
+              "dm1PNRSpikeFraction": 0.03,
+              "odorInhLMeanVoltage": 0.7023157188929926,
+              "odorInhLSpikeFraction": 0.006571428571428573,
+              "odorInhRMeanVoltage": 0.680497801651141,
+              "odorInhRSpikeFraction": 0.009230769230769228
+            },
+            "detectedTicks": 90,
+            "distanceReduction": -0.3065003907667607,
+            "finalAlignment": -0.9744875168276335,
+            "finalHeading": 5.545280220449291,
+            "finalX": -1.25527835685607,
+            "finalZ": -0.07346771973203912,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.03195826361073007,
+            "meanThrust": 0.6546747892893617,
+            "meanTurn": -0.009223813584128682,
+            "netDisplacement": 0.7483367100507768,
+            "pathLength": 0.7856097471472343,
+            "sourceSignedMeanTurn": -0.009223813584128682
+          },
+          "seed": 29
+        }
+      ],
+      "scenario": "inhibitoryOdor",
+      "sourceZ": 1.0
+    }
+  ],
+  "brainWarmupTicks": 0,
+  "config": {
+    "antennaForward": 0.0014145078816978176,
+    "antennaOffset": 0.00020207253103162883,
+    "baselineBrightness": 0.2,
+    "cellSize": 0.25,
+    "decay": 0.1,
+    "diffusion": 0.2,
+    "fans": [],
+    "wind": {
+      "x": 0.0,
+      "z": 0.0
+    }
+  },
+  "elapsedSeconds": 17.094393333,
+  "fieldSettleTicks": 100,
+  "gain": 2,
+  "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+  "initialPosition": [
+    -2,
+    0
+  ],
+  "limitations": "Cold Brain initialization; existing field fixture geometry and existing Chamber/body owner. Anatomical FieldConfig default antenna span replaces historical fixture .15 offset. Each active condition paired against same-source no-current control with identical seed. DM1 ORN group substitution only at gain 2; settled field. Path length sums actual planar frame displacements; net displacement is endpoint distance from initial pose. Absolute active statistics accompany paired contrasts. Descriptive t(29) intervals, no multiple-testing adjustment; not a campaign performance or biology validation. Source-signed mean motor turn avoids erroneous heading integration in old field_probe. Endpoint heading is actual Chamber pose.",
+  "measurementTicks": 100,
+  "seeds": 30,
+  "sourceDistance": 1,
+  "sourceRadius": 0.75,
+  "sourceRate": 1
+}
