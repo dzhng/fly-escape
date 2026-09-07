@@ -34,6 +34,9 @@ pub struct Wall {
 pub enum FurnitureModel {
     Cabinet,
     Sofa,
+    Desk,
+    Chair,
+    Bed,
 }
 impl FurnitureModel {
     pub fn dimensions(self) -> [f64; 3] {
@@ -41,6 +44,9 @@ impl FurnitureModel {
         struct Catalog {
             cabinet: [f64; 3],
             sofa: [f64; 3],
+            desk: [f64; 3],
+            chair: [f64; 3],
+            bed: [f64; 3],
         }
         static CATALOG: std::sync::OnceLock<Catalog> = std::sync::OnceLock::new();
         let catalog = CATALOG.get_or_init(|| {
@@ -50,6 +56,9 @@ impl FurnitureModel {
         match self {
             Self::Cabinet => catalog.cabinet,
             Self::Sofa => catalog.sofa,
+            Self::Desk => catalog.desk,
+            Self::Chair => catalog.chair,
+            Self::Bed => catalog.bed,
         }
     }
 }

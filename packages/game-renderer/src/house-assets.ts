@@ -4,9 +4,12 @@ import wallUrl from "../../../assets/house/wall.glb?url";
 import floorUrl from "../../../assets/house/floor.glb?url";
 import solidUrl from "../../../assets/house/solid.glb?url";
 import cabinetUrl from "../../../assets/house/cabinet/cabinet.glb?url";
+import deskUrl from "../../../assets/house/desk/desk.glb?url";
+import chairUrl from "../../../assets/house/chair/chair.glb?url";
+import bedUrl from "../../../assets/house/bed/bed.glb?url";
 import sofaUrl from "../../../assets/house/sofa/sofa.glb?url";
 
-const urls: Record<HouseAsset, string> = { wall: wallUrl, floor: floorUrl, solid: solidUrl, cabinet: cabinetUrl, sofa: sofaUrl };
+const urls: Record<HouseAsset, string> = { wall: wallUrl, floor: floorUrl, solid: solidUrl, cabinet: cabinetUrl, sofa: sofaUrl, desk: deskUrl, chair: chairUrl, bed: bedUrl };
 
 /** Load one kit per view. Replacement owns resources; retired views release late replies. */
 export async function loadHouseAssets(view: WorldView, isCurrent: () => boolean, parts: readonly HouseAsset[] = view.houseAssetKeys) {
