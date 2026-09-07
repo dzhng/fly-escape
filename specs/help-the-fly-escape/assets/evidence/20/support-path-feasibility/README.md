@@ -266,6 +266,10 @@ explicit.
 
 The complementary [edge-to-edge feature probe](edge-feature.md) evaluates the actual narrow turn handoff and its segment/cone domain. Continuous transition ownership remains open.
 
+The [feature-pair pruning probe](feature-pruning.md) applies the interval bound
+to all native feature types. It reduces short intervals substantially but exposes
+a large candidate set for 6 mm translation.
+
 ## Remaining gates
 
 - Retain an active feature and its exact domain; cross its boundary without

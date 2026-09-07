@@ -1,0 +1,162 @@
+{
+  "cases": [
+    {
+      "edgeEdgeCount": 0,
+      "exactDistanceCalls": {
+        "edgeEdge": 860,
+        "faceVertex": 0,
+        "vertexFace": 173
+      },
+      "excursionBoundMm": 0.041101279907495146,
+      "faceVertexCount": 0,
+      "featureFilterMicros": 275.542,
+      "knownCompetitorRetained": false,
+      "knownEdgePairRetained": false,
+      "name": "short-turn",
+      "retainedTriangles": [
+        201
+      ],
+      "triangleFilterMicros": 421.0,
+      "vertexFaceCount": 48
+    },
+    {
+      "edgeEdgeCount": 0,
+      "exactDistanceCalls": {
+        "edgeEdge": 685,
+        "faceVertex": 0,
+        "vertexFace": 148
+      },
+      "excursionBoundMm": 0.013700512264430014,
+      "faceVertexCount": 0,
+      "featureFilterMicros": 243.125,
+      "knownCompetitorRetained": false,
+      "knownEdgePairRetained": false,
+      "name": "short-tilt",
+      "retainedTriangles": [
+        201
+      ],
+      "triangleFilterMicros": 475.375,
+      "vertexFaceCount": 21
+    },
+    {
+      "edgeEdgeCount": 0,
+      "exactDistanceCalls": {
+        "edgeEdge": 1057,
+        "faceVertex": 0,
+        "vertexFace": 203
+      },
+      "excursionBoundMm": 0.0725908352087883,
+      "faceVertexCount": 0,
+      "featureFilterMicros": 267.708,
+      "knownCompetitorRetained": false,
+      "knownEdgePairRetained": false,
+      "name": "short-mixed",
+      "retainedTriangles": [
+        201
+      ],
+      "triangleFilterMicros": 445.375,
+      "vertexFaceCount": 59
+    },
+    {
+      "edgeEdgeCount": 302,
+      "exactDistanceCalls": {
+        "edgeEdge": 3940,
+        "faceVertex": 36,
+        "vertexFace": 818
+      },
+      "excursionBoundMm": 0.08220198182880153,
+      "faceVertexCount": 0,
+      "featureFilterMicros": 1060.5,
+      "knownCompetitorRetained": false,
+      "knownEdgePairRetained": false,
+      "name": "cone-boundary",
+      "retainedTriangles": [
+        120,
+        201,
+        202,
+        203
+      ],
+      "triangleFilterMicros": 473.041,
+      "vertexFaceCount": 98
+    },
+    {
+      "edgeEdgeCount": 422,
+      "exactDistanceCalls": {
+        "edgeEdge": 7115,
+        "faceVertex": 480,
+        "vertexFace": 1303
+      },
+      "excursionBoundMm": 0.08220198182880153,
+      "faceVertexCount": 66,
+      "featureFilterMicros": 1154.292,
+      "knownCompetitorRetained": false,
+      "knownEdgePairRetained": true,
+      "name": "edge-boundary",
+      "retainedTriangles": [
+        120,
+        121,
+        122,
+        201,
+        202,
+        203
+      ],
+      "triangleFilterMicros": 493.167,
+      "vertexFaceCount": 116
+    },
+    {
+      "edgeEdgeCount": 66,
+      "exactDistanceCalls": {
+        "edgeEdge": 5910,
+        "faceVertex": 0,
+        "vertexFace": 1494
+      },
+      "excursionBoundMm": 0.06247094481880575,
+      "faceVertexCount": 0,
+      "featureFilterMicros": 535.5419999999999,
+      "knownCompetitorRetained": true,
+      "knownEdgePairRetained": false,
+      "name": "tilt-competitor",
+      "retainedTriangles": [
+        200,
+        201,
+        202
+      ],
+      "triangleFilterMicros": 216.25,
+      "vertexFaceCount": 111
+    },
+    {
+      "edgeEdgeCount": 83644,
+      "exactDistanceCalls": {
+        "edgeEdge": 112233,
+        "faceVertex": 26808,
+        "vertexFace": 16674
+      },
+      "excursionBoundMm": 3.0054023925665634,
+      "faceVertexCount": 24744,
+      "featureFilterMicros": 7166.25,
+      "knownCompetitorRetained": true,
+      "knownEdgePairRetained": false,
+      "name": "translation",
+      "retainedTriangles": [
+        120,
+        121,
+        122,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        277,
+        278,
+        279
+      ],
+      "triangleFilterMicros": 495.875,
+      "vertexFaceCount": 12704
+    }
+  ],
+  "featureTriangle": 201,
+  "featureVertex": 1423
+}
