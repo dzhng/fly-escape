@@ -92,6 +92,23 @@ triangle-plane tangent rejection does not cover every native-hull edge/vertex
 support feature. A normal without its feature domain cannot drive this walk
 reliably. Repeating that event is not forward progress.
 
+## Body integration regression
+
+The isolated body prototype in `/tmp/fly-supported-motion` passes native apple
+landing followed by proboscis-driven feeding, but its walking-to-edge case is
+red: [inputs and reached state](body-edge-failure.json). Synthetic motor readouts
+isolate physical movement here; this is not the twenty-real-brain gate. The fly
+reaches the fruit edge, loses projected support, and immediately hits the same
+surface at zero elapsed time. A direct no-progress check now reports the failure
+instead of repeating it until the work budget is exhausted. Native release
+reproduces the failure in0.69s.
+
+The prototype is uncommitted and excluded from the root recording checkpoint.
+It also lacks continuous rotational collision proof, neighboring-food validation
+on supported segments, and an accepted replay trajectory. Retain its behavior
+regressions while replacing endpoint projection with the accepted path owner;
+its passing landing test alone is not permission to ship the movement.
+
 ## Remaining gates
 
 - Retain an active feature and its exact domain; cross its boundary without

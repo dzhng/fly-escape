@@ -1,0 +1,45 @@
+{
+  "accepted": false,
+  "worktree": "/tmp/fly-supported-motion",
+  "branch": "codex/supported-motion",
+  "test": "apple_support_follows_walking_and_is_lost_at_the_edge",
+  "inputs": {
+    "food": "native authored apple",
+    "foodPosition": [
+      2,
+      2
+    ],
+    "foodId": 7,
+    "initialMode": "flying",
+    "initialHeightMetres": 0.6,
+    "initialReserve": 20,
+    "heading": 0,
+    "landingLeftSpikeFraction": 1,
+    "landingStepSeconds": 0.7,
+    "walkingThrust": 0.02,
+    "walkingStepSeconds": 0.05,
+    "wind": [
+      0,
+      0
+    ]
+  },
+  "failureTick": 55,
+  "beforeFailure": {
+    "root": [
+      2.0410959472656223,
+      0.04361208222861894,
+      2.0
+    ],
+    "rotation": [
+      0.5850038485212149,
+      0.6197831549039792,
+      -0.3403951246673052,
+      0.39720334491966164
+    ],
+    "support": 7,
+    "mode": "walking"
+  },
+  "error": "support loss immediately reacquires the same surface without advancing time",
+  "runner": "native release",
+  "seconds": 0.69
+}
