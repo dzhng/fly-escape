@@ -1,0 +1,108 @@
+{
+  "integratedRootCommit": "1527e8db264573cc849b5f6ca9fc303cd22dc9f2",
+  "nativeBase": "1e53b80",
+  "allCoreInputsEqual": true,
+  "note": "Native and WASM build IDs differ because crates/sim/build.rs hashes target and compiler as well as source. This compares core source bytes only, not browser numerical outcomes or build identity.",
+  "files": [
+    {
+      "path": "Cargo.lock",
+      "sha256": "1b9b599c9d5914b084f72df9693af22c64d651e3342f4b9a5ae0c6e2059582f6",
+      "matchesIntegratedRoot": true
+    },
+    {
+      "path": "Cargo.toml",
+      "sha256": "e7d3ef6027025bb27aac181e85367990aa772d9ad4d00b9bb0afa35e86416049",
+      "matchesIntegratedRoot": true
+    },
+    {
+      "path": "crates/sim/Cargo.toml",
+      "sha256": "5644135629336c859dfafb50752b642a26f3ed4107fe81d60ba58303b85e348a",
+      "matchesIntegratedRoot": true
+    },
+    {
+      "path": "crates/sim/build.rs",
+      "sha256": "6dbbc74680de3231a1a9de1b58d139d1dc29be3344a52f7753aeecb3d609fd08",
+      "matchesIntegratedRoot": true
+    },
+    {
+      "path": "crates/sim/src/attempt.rs",
+      "sha256": "ed12b374543a18e988bacf552a941870a53810aac88a4a7fbf5ef37549c0fc18",
+      "matchesIntegratedRoot": true
+    },
+    {
+      "path": "crates/sim/src/body.rs",
+      "sha256": "5522c522119330ad46cd715e2dbbbb2d3d65eb84ae0c0b1f0f6f80db207bc8ac",
+      "matchesIntegratedRoot": true
+    },
+    {
+      "path": "crates/sim/src/chamber.rs",
+      "sha256": "be1451151d395347bd27e2f12c8805b6269b42a47a56749e84d0016715f05911",
+      "matchesIntegratedRoot": true
+    },
+    {
+      "path": "crates/sim/src/environment/fields.rs",
+      "sha256": "ebd383147ea73dfeda1d5c34eaa9da14b924c18d77937e2d69eeebe8bf42df85",
+      "matchesIntegratedRoot": true
+    },
+    {
+      "path": "crates/sim/src/environment/mod.rs",
+      "sha256": "0b8d550817e11875200d1982331b9a5cf80d812d414fb306fc8459e2bca84948",
+      "matchesIntegratedRoot": true
+    },
+    {
+      "path": "crates/sim/src/field_lab.rs",
+      "sha256": "4153b078185fc5bae18fe17ffe2a2d4ef1febd0cd6c7a3530a41c884c2963774",
+      "matchesIntegratedRoot": true
+    },
+    {
+      "path": "crates/sim/src/graph.rs",
+      "sha256": "379c05b56369f3009b1015ab50ce0a6e0ccaff9603f811eafe86dd85dcf63c2e",
+      "matchesIntegratedRoot": true
+    },
+    {
+      "path": "crates/sim/src/house_lab.rs",
+      "sha256": "375667a70e6b602fbae064752752879eb7e93830bd452b579130b60399e98d91",
+      "matchesIntegratedRoot": true
+    },
+    {
+      "path": "crates/sim/src/lib.rs",
+      "sha256": "eac2c94e6b13d9ae5b11b0907f2ca446cbde7812c6896f6db83a2c7bc95af748",
+      "matchesIntegratedRoot": true
+    },
+    {
+      "path": "crates/sim/src/lif.rs",
+      "sha256": "7394c44c26718bd00cf6c9c4ae191274b3b6bd60a12878bd752e27fdc9a258a1",
+      "matchesIntegratedRoot": true
+    },
+    {
+      "path": "crates/sim/src/lifecycle_lab.rs",
+      "sha256": "e44d7a0e3efb8d42e1983e4267de5676d6051d906e99dbf686c5a6a5980991c0",
+      "matchesIntegratedRoot": true
+    },
+    {
+      "path": "crates/sim/src/placement.rs",
+      "sha256": "3e991e2ec1f6d16c90fd6511fe7a98240efbde445814154a9be7a047297cf07f",
+      "matchesIntegratedRoot": true
+    },
+    {
+      "path": "crates/sim/src/record.rs",
+      "sha256": "0b39a49939588913fd6c20df4420967c092c11dcd9504b150a632165cc77d3e0",
+      "matchesIntegratedRoot": true
+    },
+    {
+      "path": "crates/sim/src/sensory.rs",
+      "sha256": "60d716f8b34fbd6d5995be8c9428a2131c1c0df52d8914f2b005957cc59e2059",
+      "matchesIntegratedRoot": true
+    },
+    {
+      "path": "crates/sim/src/setup_fixture.rs",
+      "sha256": "5052f364da5aed73161c4a59ef7162096c0d1bdaff48668e874ef2d92854fe46",
+      "matchesIntegratedRoot": true
+    },
+    {
+      "path": "crates/sim/src/swarm_lab.rs",
+      "sha256": "88aa20c0e308e07c683366e3771f78f580dbad0bfd1308bc4f1c9cfc97906cd8",
+      "matchesIntegratedRoot": true
+    }
+  ]
+}
