@@ -1,0 +1,1105 @@
+{
+  "rows": [
+    {
+      "name": "sample-0-upright",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.025208116420366,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.829055693713734,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          -0.03,
+          0.06809394649278727,
+          0
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560,
+            "y": 397,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        -0.03,
+        0.0671929073827332,
+        0
+      ],
+      "rotation": [
+        0,
+        3.061616997868383e-17,
+        0,
+        1
+      ],
+      "sample": 0,
+      "attachment": "upright"
+    },
+    {
+      "name": "sample-0-supported",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.030413433326338,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.8342610106197066,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          -0.030700287214832363,
+          0.06586275342277605,
+          0.000017229271664085278
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560.0000000000002,
+            "y": 396.9999999999996,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        -0.03,
+        0.06529603263897922,
+        0
+      ],
+      "rotation": [
+        0.008629172561128667,
+        0.004117551904283178,
+        0.4306318006189407,
+        0.9024770553553784
+      ],
+      "sample": 0,
+      "attachment": "supported"
+    },
+    {
+      "name": "sample-1-upright",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.019046321915688,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.8228938992090558,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          -0.015,
+          0.07757196044628811,
+          0
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560.0000000000002,
+            "y": 396.99999999999926,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        -0.015,
+        0.07667092133623404,
+        0
+      ],
+      "rotation": [
+        0,
+        3.061616997868383e-17,
+        0,
+        1
+      ],
+      "sample": 1,
+      "attachment": "upright"
+    },
+    {
+      "name": "sample-1-supported",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.020041880949782,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.82388945824315,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          -0.015253429634240763,
+          0.07709200723853508,
+          0.00001232006067403841
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560.0000000000001,
+            "y": 396.9999999999996,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        -0.015,
+        0.07622743039727653,
+        0
+      ],
+      "rotation": [
+        0.006767380607469293,
+        0.0009714097869000332,
+        0.1420832772819244,
+        0.9898310973290176
+      ],
+      "sample": 1,
+      "attachment": "supported"
+    },
+    {
+      "name": "sample-2-upright",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.037742731670535,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.841590308963904,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          0,
+          0.07796630205947197,
+          0
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560.0000000000005,
+            "y": 396.99999999999926,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        0,
+        0.0770652629494179,
+        0
+      ],
+      "rotation": [
+        0,
+        3.061616997868383e-17,
+        0,
+        1
+      ],
+      "sample": 2,
+      "attachment": "upright"
+    },
+    {
+      "name": "sample-2-supported",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.037648465975337,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.841496043268705,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          0.000030506828190972198,
+          0.07802111471646885,
+          0.000011767764006964738
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560.0000000000003,
+            "y": 396.9999999999996,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        0,
+        0.07712066908734344,
+        0
+      ],
+      "rotation": [
+        0.006529310249569298,
+        -0.00011057381671781153,
+        -0.016932203035569762,
+        0.9998353146300937
+      ],
+      "sample": 2,
+      "attachment": "supported"
+    },
+    {
+      "name": "sample-3-upright",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.058415075526984,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.862262652820352,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          0.015,
+          0.07763859883958583,
+          0
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560.0000000000002,
+            "y": 397.00000000000034,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        0.015,
+        0.07673755972953177,
+        0
+      ],
+      "rotation": [
+        0,
+        3.061616997868383e-17,
+        0,
+        1
+      ],
+      "sample": 3,
+      "attachment": "upright"
+    },
+    {
+      "name": "sample-3-supported",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.059861803210655,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.863709380504023,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          0.01524113640131593,
+          0.07721354538365105,
+          -0.000026072037035341797
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560.0000000000002,
+            "y": 397,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        0.015,
+        0.07634576375058183,
+        0
+      ],
+      "rotation": [
+        -0.014336611176638658,
+        0.001954870994822924,
+        -0.13509082157810468,
+        0.9907275659759932
+      ],
+      "sample": 3,
+      "attachment": "supported"
+    },
+    {
+      "name": "sample-4-upright",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.10043103778111,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.904278615074478,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          0.03,
+          0.06951152145505211,
+          0
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560.0000000000003,
+            "y": 397.00000000000034,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        0.03,
+        0.06861048234499804,
+        0
+      ],
+      "rotation": [
+        0,
+        3.061616997868383e-17,
+        0,
+        1
+      ],
+      "sample": 4,
+      "attachment": "upright"
+    },
+    {
+      "name": "sample-4-supported",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.105989678889651,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.909837256183019,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          0.03066661031361935,
+          0.06775946476098749,
+          -0.00008710992393602019
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560,
+            "y": 397,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        0.03,
+        0.06715953640795255,
+        0
+      ],
+      "rotation": [
+        -0.044208937673500405,
+        0.01968945827950536,
+        -0.40636978998108886,
+        0.9124261552877393
+      ],
+      "sample": 4,
+      "attachment": "supported"
+    },
+    {
+      "name": "sample-5-upright",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.024370669824293,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.8282182471176607,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          -0.03,
+          0.06839996580141547,
+          0
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560,
+            "y": 397,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        -0.03,
+        0.0674989266913614,
+        0
+      ],
+      "rotation": [
+        0,
+        -0.3826834323650898,
+        0,
+        0.9238795325112867
+      ],
+      "sample": 5,
+      "attachment": "upright"
+    },
+    {
+      "name": "sample-5-supported",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.03041343332634,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.8342610106197075,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          -0.030700287214832363,
+          0.0658627534227756,
+          0.000017229271664085386
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560.0000000000002,
+            "y": 396.9999999999996,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        -0.03,
+        0.06529603263897878,
+        0
+      ],
+      "rotation": [
+        0.12902411376012532,
+        -0.2490852232952729,
+        0.41093915412359416,
+        0.8674320383825717
+      ],
+      "sample": 5,
+      "attachment": "supported"
+    },
+    {
+      "name": "sample-6-upright",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.024485630469261,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.8283332077626295,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          -0.03,
+          0.06835795694108035,
+          0
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560,
+            "y": 397,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        -0.03,
+        0.06745691783102628,
+        0
+      ],
+      "rotation": [
+        0,
+        0.9238795325112867,
+        0,
+        0.3826834323650896
+      ],
+      "sample": 6,
+      "attachment": "upright"
+    },
+    {
+      "name": "sample-6-supported",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.03041343332634,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.8342610106197075,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          -0.030700287214832363,
+          0.0658627534227756,
+          0.000017229271664085332
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560.0000000000002,
+            "y": 396.9999999999996,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        -0.03,
+        0.06529603263897878,
+        0
+      ],
+      "rotation": [
+        -0.41093915412359416,
+        0.8674320383825717,
+        0.12902411376012526,
+        0.24908522329527286
+      ],
+      "sample": 6,
+      "attachment": "supported"
+    },
+    {
+      "name": "sample-7-upright",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.100371089868931,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.9042186671622985,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          0.03,
+          0.06953342759058961,
+          0
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560,
+            "y": 396.99999999999983,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        0.03,
+        0.06863238848053554,
+        0
+      ],
+      "rotation": [
+        0,
+        0.7071067811865475,
+        0,
+        0.7071067811865475
+      ],
+      "sample": 7,
+      "attachment": "upright"
+    },
+    {
+      "name": "sample-7-supported",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.10599016465007,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.9098377419434374,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          0.03066661031361935,
+          0.06775928725466278,
+          -0.00008710992393602001
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560.0000000000002,
+            "y": 397.0000000000006,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        0.03,
+        0.06715935890162784,
+        0
+      ],
+      "rotation": [
+        0.23868056225441323,
+        0.6244017732346608,
+        -0.33184699121946387,
+        0.665606181763599
+      ],
+      "sample": 7,
+      "attachment": "supported"
+    },
+    {
+      "name": "Walk-0",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.105989678889651,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.909837256183019,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          0.03066661031361935,
+          0.06775946476098749,
+          -0.00008710992393602019
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560,
+            "y": 397,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        0.03,
+        0.06715953640795255,
+        0
+      ],
+      "rotation": [
+        -0.044208937673500405,
+        0.01968945827950536,
+        -0.40636978998108886,
+        0.9124261552877393
+      ],
+      "sample": 4,
+      "attachment": "supported"
+    },
+    {
+      "name": "Walk-0.5",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.105989678889651,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.909837256183019,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          0.03066661031361935,
+          0.06775946476098749,
+          -0.00008710992393602019
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560,
+            "y": 397,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        0.03,
+        0.06715953640795255,
+        0
+      ],
+      "rotation": [
+        -0.044208937673500405,
+        0.01968945827950536,
+        -0.40636978998108886,
+        0.9124261552877393
+      ],
+      "sample": 4,
+      "attachment": "supported"
+    },
+    {
+      "name": "Walk-1",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.105989678889651,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.909837256183019,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          0.03066661031361935,
+          0.06775946476098749,
+          -0.00008710992393602019
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560,
+            "y": 397,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        0.03,
+        0.06715953640795255,
+        0
+      ],
+      "rotation": [
+        -0.044208937673500405,
+        0.01968945827950536,
+        -0.40636978998108886,
+        0.9124261552877393
+      ],
+      "sample": 4,
+      "attachment": "supported"
+    },
+    {
+      "name": "Feed-0",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.105989678889651,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.909837256183019,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          0.03066661031361935,
+          0.06775946476098749,
+          -0.00008710992393602019
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560,
+            "y": 397,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        0.03,
+        0.06715953640795255,
+        0
+      ],
+      "rotation": [
+        -0.044208937673500405,
+        0.01968945827950536,
+        -0.40636978998108886,
+        0.9124261552877393
+      ],
+      "sample": 4,
+      "attachment": "supported"
+    },
+    {
+      "name": "Feed-0.5",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.105989678889651,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.909837256183019,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          0.03066661031361935,
+          0.06775946476098749,
+          -0.00008710992393602019
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560,
+            "y": 397,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        0.03,
+        0.06715953640795255,
+        0
+      ],
+      "rotation": [
+        -0.044208937673500405,
+        0.01968945827950536,
+        -0.40636978998108886,
+        0.9124261552877393
+      ],
+      "sample": 4,
+      "attachment": "supported"
+    },
+    {
+      "name": "Feed-1",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.105989678889651,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.909837256183019,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          0.03066661031361935,
+          0.06775946476098749,
+          -0.00008710992393602019
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560,
+            "y": 397,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        0.03,
+        0.06715953640795255,
+        0
+      ],
+      "rotation": [
+        -0.044208937673500405,
+        0.01968945827950536,
+        -0.40636978998108886,
+        0.9124261552877393
+      ],
+      "sample": 4,
+      "attachment": "supported"
+    },
+    {
+      "name": "Land-0",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.105989678889651,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.909837256183019,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          0.03066661031361935,
+          0.06775946476098749,
+          -0.00008710992393602019
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560,
+            "y": 397,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        0.03,
+        0.06715953640795255,
+        0
+      ],
+      "rotation": [
+        -0.044208937673500405,
+        0.01968945827950536,
+        -0.40636978998108886,
+        0.9124261552877393
+      ],
+      "sample": 4,
+      "attachment": "supported"
+    },
+    {
+      "name": "Land-0.5",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.105989678889651,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.909837256183019,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          0.03066661031361935,
+          0.06775946476098749,
+          -0.00008710992393602019
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560,
+            "y": 397,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        0.03,
+        0.06715953640795255,
+        0
+      ],
+      "rotation": [
+        -0.044208937673500405,
+        0.01968945827950536,
+        -0.40636978998108886,
+        0.9124261552877393
+      ],
+      "sample": 4,
+      "attachment": "supported"
+    },
+    {
+      "name": "Land-1",
+      "camera": {
+        "near": 0.0010388727056518678,
+        "far": 9.105989678889651,
+        "fov": 38,
+        "following": true,
+        "distance": 0.020777454113037358,
+        "minDistance": 0.020777454113037358,
+        "maxDistance": 3.909837256183019,
+        "closeDistance": 0.041554908226074716,
+        "target": [
+          0.03066661031361935,
+          0.06775946476098749,
+          -0.00008710992393602019
+        ],
+        "width": 1120,
+        "height": 794,
+        "selectedFlyId": 0,
+        "displayScale": 1,
+        "flies": [
+          {
+            "id": 0,
+            "x": 560,
+            "y": 397,
+            "visible": true
+          }
+        ]
+      },
+      "surfaceTriangles": 1520,
+      "position": [
+        0.03,
+        0.06715953640795255,
+        0
+      ],
+      "rotation": [
+        -0.044208937673500405,
+        0.01968945827950536,
+        -0.40636978998108886,
+        0.9124261552877393
+      ],
+      "sample": 4,
+      "attachment": "supported"
+    }
+  ],
+  "errors": []
+}

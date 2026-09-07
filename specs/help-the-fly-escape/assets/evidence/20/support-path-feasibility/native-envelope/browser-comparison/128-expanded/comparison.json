@@ -1,0 +1,235 @@
+{
+  "worldCrop": [
+    0,
+    99,
+    1120,
+    893
+  ],
+  "states": [
+    {
+      "name": "sample-0-upright",
+      "changedPixels": 27,
+      "meanAbsoluteRgb": [
+        1.4618567830154732e-05,
+        1.4618567830154732e-05,
+        2.4739114789492624e-05
+      ]
+    },
+    {
+      "name": "sample-0-supported",
+      "changedPixels": 0,
+      "meanAbsoluteRgb": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "sample-1-upright",
+      "changedPixels": 4786,
+      "meanAbsoluteRgb": [
+        0.003940266282835552,
+        0.003924523209787693,
+        0.004347337171644476
+      ]
+    },
+    {
+      "name": "sample-1-supported",
+      "changedPixels": 0,
+      "meanAbsoluteRgb": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "sample-2-upright",
+      "changedPixels": 932,
+      "meanAbsoluteRgb": [
+        0.0005341399784094998,
+        0.0006252249010435408,
+        0.0006342209427851745
+      ]
+    },
+    {
+      "name": "sample-2-supported",
+      "changedPixels": 792,
+      "meanAbsoluteRgb": [
+        0.00044755307664627565,
+        0.0005318909679740914,
+        0.000529641957538683
+      ]
+    },
+    {
+      "name": "sample-3-upright",
+      "changedPixels": 2250,
+      "meanAbsoluteRgb": [
+        0.0016496491543720763,
+        0.0014382421734436847,
+        0.0018082043900683699
+      ]
+    },
+    {
+      "name": "sample-3-supported",
+      "changedPixels": 49,
+      "meanAbsoluteRgb": [
+        6.747031306225261e-05,
+        6.971932349766103e-05,
+        6.971932349766103e-05
+      ]
+    },
+    {
+      "name": "sample-4-upright",
+      "changedPixels": 1211,
+      "meanAbsoluteRgb": [
+        0.0009063512054695934,
+        0.0009963116228859303,
+        0.0010626574307304787
+      ]
+    },
+    {
+      "name": "sample-4-supported",
+      "changedPixels": 107,
+      "meanAbsoluteRgb": [
+        7.534184958618208e-05,
+        7.646635480388629e-05,
+        6.971932349766103e-05
+      ]
+    },
+    {
+      "name": "sample-5-upright",
+      "changedPixels": 3517,
+      "meanAbsoluteRgb": [
+        0.0033262864339690537,
+        0.0036321518531845986,
+        0.0036141597697013314
+      ]
+    },
+    {
+      "name": "sample-5-supported",
+      "changedPixels": 0,
+      "meanAbsoluteRgb": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "sample-6-upright",
+      "changedPixels": 4076,
+      "meanAbsoluteRgb": [
+        0.004063961856783016,
+        0.004212396545519971,
+        0.004265248290752069
+      ]
+    },
+    {
+      "name": "sample-6-supported",
+      "changedPixels": 0,
+      "meanAbsoluteRgb": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "sample-7-upright",
+      "changedPixels": 4352,
+      "meanAbsoluteRgb": [
+        0.0035523119827275997,
+        0.0032621896365599137,
+        0.003934643756747031
+      ]
+    },
+    {
+      "name": "sample-7-supported",
+      "changedPixels": 164,
+      "meanAbsoluteRgb": [
+        8.546239654551997e-05,
+        9.445843828715365e-05,
+        8.99604174163368e-05
+      ]
+    },
+    {
+      "name": "Walk-0",
+      "changedPixels": 103,
+      "meanAbsoluteRgb": [
+        7.421734436847786e-05,
+        7.309283915077366e-05,
+        6.971932349766103e-05
+      ]
+    },
+    {
+      "name": "Walk-0.5",
+      "changedPixels": 103,
+      "meanAbsoluteRgb": [
+        7.421734436847786e-05,
+        7.309283915077366e-05,
+        6.971932349766103e-05
+      ]
+    },
+    {
+      "name": "Walk-1",
+      "changedPixels": 103,
+      "meanAbsoluteRgb": [
+        7.421734436847786e-05,
+        7.309283915077366e-05,
+        6.971932349766103e-05
+      ]
+    },
+    {
+      "name": "Feed-0",
+      "changedPixels": 103,
+      "meanAbsoluteRgb": [
+        7.421734436847786e-05,
+        7.309283915077366e-05,
+        6.971932349766103e-05
+      ]
+    },
+    {
+      "name": "Feed-0.5",
+      "changedPixels": 109,
+      "meanAbsoluteRgb": [
+        7.75908600215905e-05,
+        7.421734436847786e-05,
+        7.084382871536524e-05
+      ]
+    },
+    {
+      "name": "Feed-1",
+      "changedPixels": 103,
+      "meanAbsoluteRgb": [
+        7.421734436847786e-05,
+        7.309283915077366e-05,
+        6.971932349766103e-05
+      ]
+    },
+    {
+      "name": "Land-0",
+      "changedPixels": 102,
+      "meanAbsoluteRgb": [
+        7.534184958618208e-05,
+        7.196833393306946e-05,
+        6.859481827995682e-05
+      ]
+    },
+    {
+      "name": "Land-0.5",
+      "changedPixels": 100,
+      "meanAbsoluteRgb": [
+        6.971932349766103e-05,
+        6.859481827995682e-05,
+        6.971932349766103e-05
+      ]
+    },
+    {
+      "name": "Land-1",
+      "changedPixels": 103,
+      "meanAbsoluteRgb": [
+        7.421734436847786e-05,
+        7.309283915077366e-05,
+        6.971932349766103e-05
+      ]
+    }
+  ]
+}

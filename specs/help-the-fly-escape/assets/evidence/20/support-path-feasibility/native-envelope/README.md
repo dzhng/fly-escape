@@ -3,8 +3,9 @@
 **Verdict: smaller conservative representations are feasible; none is adopted by
 this comparison.** The eight-heading check rejects judging fidelity from the
 favorable original pose alone. The 128-plane candidate has the closest measured
-agreement while still reducing query cost; browser comparison and physical
-movement acceptance remain separate gates.
+agreement while still reducing query cost; the
+[browser comparison](browser-comparison/README.md) finds no perceptible regression in the expanded views. Moving contact, body collision, and WASM
+workload acceptance remain separate gates.
 
 ## Construction and meaning of the error
 
@@ -108,12 +109,14 @@ matching numerical reference.
 then append the worst upright pose for 48 planes (x=-0.03 m, heading 3π/4),
 64 planes (x=-0.03 m, heading 7π/4), and 128 planes (x=0.03 m, heading 0).
 Each added case includes both upright and original ray-normal-aligned core
-samples, with the same XZ and authored surface. These are comparison inputs,
-not a visual acceptance result.
+samples, with the same XZ and authored surface. The
+[browser evidence](browser-comparison/README.md) compares these inputs without accepting runtime adoption.
 
-Scratch generators remain in `/tmp/fly-rotation-probe/src/bin/outer_raw.rs`,
-`outer_fixture.rs`, `outer_compare.rs` and `outer_extra_fixture.rs`; no production asset or API is changed.
-The next decision requires visual comparison at relevant and worst headings,
-followed by actual contact/movement verification. A candidate's outward error is
-an intentional representation tradeoff, not a license to relax numerical contact
+The derivative asset and durable exporter are described in
+[preparation](preparation.md); the derivative remains unused by runtime. Scratch
+comparison generators remain in `/tmp/fly-rotation-probe/src/bin/outer_raw.rs`,
+`outer_fixture.rs`, `outer_compare.rs` and `outer_extra_fixture.rs`.
+The browser evidence covers relevant and worst headings; the next decision
+requires actual moving-contact, body-collision, and WASM workload verification.
+A candidate's outward error is an intentional representation tradeoff, not a license to relax numerical contact
 tolerance. No candidate becomes accepted merely because it is faster.
