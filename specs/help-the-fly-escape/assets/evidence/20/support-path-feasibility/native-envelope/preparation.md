@@ -1,54 +1,68 @@
 # Reproducible conservative candidate
 
-The offline exporter now reproduces the reviewed 128-plane candidate through the
-existing fly-asset preparation command. The derivative lives at
-`assets/fly/contact-envelope-candidate.json`; runtime still uses neither this
-candidate nor the full animation hull as its moving body.
+The offline exporter retains original supporting planes and edge incidence in
+`assets/fly/contact-envelope-candidate.json`. It has one canonical array of 252
+vertices, 128 planes and 378 edges; every edge references its vertices and two
+incident planes. Runtime does not yet use it as the moving body.
 
 The artifact records the GLB hash, exact source-hull byte hash, algorithm
 provenance, native/candidate axis extrema, containment residual and outward
-distance. Its 245 vertices match the banked comparison candidate exactly. The
-maximum measured outward distance is 9.259275 μm; containment residual is
-3.487e-18 m. These are numerical geometry results, not continuous animation or
-movement guarantees.
+distance. All six extrema remain exact. Maximum measured outward distance is
+9.259275 μm; native point containment residual is 3.81e-18 m. These are numerical
+geometry results, not continuous animation or movement guarantees.
 
-## Integration review
+The original point-only candidate had 245 vertices. The canonical inventory
+changes nearest point positions by at most 4.53e-16 m and sampled support values
+by at most 2.61e-18 m. It retains the same physical envelope to numerical
+precision. The earlier static browser comparisons remain attachment evidence;
+this offline change does not alter game rendering or behavior.
 
-The Rust example owns the offline supporting-plane construction and reuses the
-simulator's pinned Parry dependency. The existing TypeScript exporter supplies
-the full animation hull and optionally invokes this derivative step. No runtime
-branch, query clearance, dependency, body setting or build-identity change was
-added. The source remains separate from its candidate.
+## Boundary ownership and exact audit
 
-The parent review checked polar inversion, exact incident axis coordinates,
-source hashes, bounded refinement, units and consumer isolation. The added
-surface is one offline example, one optional preparation output and one asset;
-the generator includes its focused geometry test. Asset documentation remains
-reachable from the root README. No duplicate runtime geometry owner was found.
+The [rejected reconstruction](path-comparison/README.md) showed that Parry's
+reported face topology can disagree with its point-support hull. Preparation
+therefore retains its original supporting planes and obtains edges by clipping
+plane-pair lines against all halfspaces. Plane-triplet identities share vertices;
+coordinate proximity never merges distinct features. Near-zero positive edges
+remain explicit. Parry still supplies point projections, not the final boundary
+inventory.
 
-The integrated [focused test](preparation-test.log) passes, including regenerated artifact equality,
-source-point containment, exact extrema and the sub-10-μm outward target.
-The outermost [export command](preparation-export.log) also regenerated both the full hull and derivative byte-identically on the integrated tree. The author confirmed deliberate inward shrink fails the containment check,
-and ran clean formatting checks. Integrated [release Clippy](preparation-clippy.log) also passes. Independent Codex CLI review could not
-run because the installed client rejects the configured model; this is a parent
-code review, not a successful independent CLI review.
+The [plane inventory](plane-inventory/README.md) includes numerical validation
+and an independently reviewed exact-integer construction. The
+[serialized-unit audit](plane-inventory/serialized-exact-signs.json.gz) repeats
+that construction for the actual saved metre offsets: it confirms every vertex's
+plane incidence and every edge's endpoint incidence, with all 252 vertices and
+378 edges present. Maximum saved-vertex discrepancy from exact coordinates is
+1.52976e-13 mm. The artifact SHA-256 is retained in the audit.
 
-The fixed plane budget is a reviewed preparation target. Movement, continuous
-replay, WASM and twenty-fly cost still decide adoption. The numerical rejection
-allowance never moves the shape or becomes a physical clearance.
+Certification applies to these stored binary64 halfspaces, not arbitrary future
+exports, pre-rounding construction planes, exact containment of the original
+animated fly, or rotating movement. Unit conversion is audited because it can
+round offsets. Numerical validation allowances never move a plane or add query
+clearance.
 
-## Follow-up topology finding
+## Integrated verification and review
 
-The first fixed-orientation movement comparison exposed an additional limit:
-Parry's reconstructed candidate face topology is not a valid supporting boundary.
-A reported face excludes another candidate point by 3.27 mm. The constructor
-does not run its own `check_geometry` assertion. Its edge array also retains
-deleted internal diagonals; boundary incidence must select active edges.
+Both [focused tests](boundary-test.log) pass: regenerated artifact equality,
+source-point containment, exact extrema, outward target, invalid inward plane
+rejection and nonincident edge rejection. [Release Clippy](boundary-clippy.log)
+passes. The author verified byte-identical regeneration through the outermost
+TypeScript exporter and confirmed deliberate validator falsification makes the
+test fail before restoring it.
 
-This does not invalidate the point-set support-map measurements above:
-`PointQuery::project_local_point` uses GJK support points, and the core downward
-casts still return support. It does invalidate using the candidate's reconstructed
-face witnesses or adjacency as an exact path oracle. Fixed-path comparison must
-resolve and validate its feature inventory before it can establish correctness
-or useful movement cost. Projecting every plane's offset over all points removes
-invalid halfspaces, but does not alone prove the direction inventory is complete.
+The parent reviewed line clipping, inequality signs, source hashes, normalized
+units, axis-coordinate assignment, shared vertex identity, face-cycle validation
+and bounded forward progress. The offline Rust example reuses the pinned Parry
+library; the existing TypeScript exporter optionally invokes it. No dependency,
+runtime branch, body setting or build-identity change was added. Asset docs remain
+reachable from the root README. The boundary addition costs about 240 Rust lines
+for construction, validation and behavioral tests; no second vertex array or
+runtime geometry owner was retained.
+
+Independent Codex CLI review remains unavailable because the installed client
+rejects the configured model. Parent code review and the independent arithmetic
+audit are the completed reviews, not a successful CLI review.
+
+The next component is a bounded fixed-orientation path under the existing query
+owner. Global competing contacts, continuous turns, body/replay behavior, WASM
+and twenty-fly cost still decide final adoption.

@@ -453,3 +453,35 @@ the same geometry library as the simulation. The browser receives no extra
 geometry implementation or dependency. The plan left the preparation language
 open. This keeps the difficult hull operations with their existing library and
 lets the TypeScript animation exporter remain the owner of sampled source poses.
+
+## Original-plane boundary ownership — 2026-09-07
+
+### Sound — medium confidence: retain tiny positive edges in the prepared candidate
+
+Some construction planes meet along edges far smaller than a visible pixel.
+Preparation keeps their distinct identities because exact arithmetic confirms
+that they are positive edges of the saved planes. The plan did not specify when
+to merge almost coincident features. A proximity merge could silently change
+which faces are neighbors. Keeping the source connections makes that decision
+explicit for the moving-path owner, which must handle effectively simultaneous
+transitions without cycling. This is a prepared candidate choice, not acceptance
+of its eventual runtime cost.
+
+### Sound — high confidence: construction planes own the contact boundary
+
+The geometry library can answer point-support queries correctly while reporting
+incorrect face connections for this almost coplanar shape. The asset therefore
+keeps its original construction planes and derives one vertex array plus edge
+connections from those planes. The plan required a faithful bounded shape but
+left its feature representation open. Future contact code can use the saved
+boundary directly instead of rebuilding an invalid one from points. Point-query
+and boundary data remain parts of the same prepared shape.
+
+### Sound — high confidence: certify the saved units, not only intermediate arithmetic
+
+When millimetre calculations are saved as metre values, rounding can change a
+very short edge's mathematical sign. The exact offline audit checks the saved
+plane coefficients and records the candidate's hash. The plan did not prescribe
+that audit boundary. This prevents a correct intermediate result from standing
+in for a differently rounded asset; a future replacement needs its own audit.
+No exact-integer calculation or new dependency is added to browser simulation.
