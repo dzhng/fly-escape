@@ -7,3 +7,6 @@ This is shape preparation only, not a production house-kit replacement or accept
 The authoring script validates both the authored scene and a fresh GLB import
 against that catalog within1e-6m. A changed dimension requires re-authoring;
 it never stretches the finished cabinet to hide an envelope mismatch.
+
+[Shared authoring validation](../authoring.py) owns native envelope checks and
+static GLB export/import cleanup for house assets.

@@ -19,3 +19,6 @@ occupancy, browser shape review and natural materials remain in20–22. Do not
 pass this native metre asset to the unit-solid loader or stretch it into a
 new occupancy footprint. [Preparation measurements and renders](../../../specs/help-the-fly-escape/assets/evidence/21/sofa-prepared/README.md)
 record the current limits.
+
+[Shared authoring validation](../authoring.py) owns native envelope checks and
+static GLB export/import cleanup for house assets.
