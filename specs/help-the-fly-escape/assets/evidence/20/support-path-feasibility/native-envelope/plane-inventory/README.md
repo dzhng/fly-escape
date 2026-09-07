@@ -2,9 +2,10 @@
 
 **Verdict: retaining the original supporting planes avoids the measured invalid
 QuickHull feature inventory and provides a promising fixed-path representation.**
-This is a scratch prototype. Numerical incidence checks and dense reference checks
-pass; near-zero clipping decisions remain explicit and prevent claiming formal
-exact-sign certification or accepting continuous rotating movement.
+This is a scratch prototype. Numerical incidence and dense reference checks
+pass. An independent integer-arithmetic check below certifies the boundary
+connections for the stored binary64 planes; continuous rotating movement is
+not yet accepted.
 
 ## Boundary construction
 
@@ -83,10 +84,41 @@ nonzero clipping slope is 1.10e-16. Those diagnostic ranges do not change geomet
 or suppress constraints: near-zero positive intervals remain present, negative
 ones remain rejected. Their exact combinatorial classification is not certified
 by ordinary floating-point signs. Cycle/count agreement is useful corroboration,
-not a replacement for that missing proof.
+not a replacement for an exact-sign check. The subsequent independent check
+below resolves these signs for the stored planes.
+
+## Independent exact-sign check
+
+[Exact results](exact-signs.json.gz) enumerate all plane pairs again using integer
+arithmetic. Each stored binary64 coefficient is converted to its exact integer
+ratio. The largest denominator in a plane is a common power of two, so scaling
+its normal and offset together yields an equivalent integer inequality without
+rounding. The six axis planes bound a full-dimensional intersection.
+
+For integer plane normals `n,m`, offsets `a,b`, let `d=n×m`, `L=d·d`, and
+`p=a(m×d)+b(d×n)`. The pair line is `x=(p+t*d)/L`. Every other integer plane
+`k·x≤c` becomes `(k·d)t≤cL−k·p`. Lower/upper rational bounds are compared by
+integer cross multiplication; no division or float tolerance decides validity.
+Parallel pairs cannot define an edge line. Every resulting endpoint is checked
+against every halfspace with exact integers. Coordinates are rounded only for
+reporting.
+
+The result has the same 252 vertices and 378 positive edges, with no point-only
+pairs. Every edge's incident plane pair matches the floating inventory. Maximum
+reported endpoint difference is 1.70349e-13 mm. All vertices have exactly three
+independent incident planes; their sorted identity triplets uniquely identify
+them. Runtime is about 1.39 seconds in the scratch Python standard-library
+oracle; no dependency or production path was added.
+
+A separate agent audited the formulas and inequality directions, independently
+checked a strictly interior rational centroid, reconstructed every vertex by
+rational Cramer's rule, and verified exact incidence and feasibility. This
+certifies topology of these **stored binary64 halfspaces**, not exact containment
+of the original sampled fly, recovery of pre-rounding construction planes, or
+continuous rotating contact. The source artifact hash is retained in the result.
 
 The next durable seam can retain original planes and incidence under the existing
-offline asset owner. It must preserve these numerical limitations and validate
+offline asset owner. It must preserve the geometric rounding limits and validate
 its own serialization. No runtime schema, body behavior or candidate asset was
 changed here. Rotating domain events, global competitors, moving contact and
 20/100-fly WASM performance remain separate gates.
