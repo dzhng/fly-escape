@@ -1,6 +1,6 @@
 # 24 — Follow visibility in a furnished room
 
-Status: pending. Dependencies: 23,18.
+Status: in progress. Room proportions, doorways and foreground wall cutaway are integrated; final furnished follow visibility remains open. Dependencies: 23,18.
 
 ## Contract, seam and review surface
 
