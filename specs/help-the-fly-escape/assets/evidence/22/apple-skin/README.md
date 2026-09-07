@@ -19,3 +19,7 @@ Validation: 49 renderer tests, both fruit contact export tests, TypeScript and t
 - **Bounded improvement — sound, medium confidence.** Replacing the regular stripes improves the shipped view despite soft close pores. This does not close slice 22 or establish photorealism. The retained original images show what improved and what remains.
 
 Final independent whole/tray review accepts the bounded skin improvement, with high-confidence remaining limits: the broad orange side stripe and bottom patch look painted, shine remains plastic-like, and the new tray icon is darker and less obviously apple-shaped in isolation. Red fruit plus the Apple label remain readable, without clipping or layout regression. No claim of final whole-apple realism is made.
+
+Root integration passes both contact export tests, all renderer tests, typecheck and both production builds. The workbench's valid/mismatched asset gate and full contact/animation reverse-seek gate also pass. `integration.json` verifies all three merged supported-pose captures are pixel-identical to the independently reviewed candidate and differ from the original. The rebuilt static game's `merged-tray` captures verify its matching native apple image loads without page errors. Raw pose reports are gzip-compressed.
+
+Whole/close/prior-close shots were opened together in Preview for a five-minute non-blocking review. No user response arrived; the independently accepted bounded improvement is retained, with final realism still open, and Preview was closed.

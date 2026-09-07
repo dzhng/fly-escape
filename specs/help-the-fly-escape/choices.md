@@ -696,3 +696,8 @@ The user's one-fan maximum and rejection of chained-fan solutions supersede earl
 ## Banana peel detail — 2026-09-08
 
 - **Repeat a small authored detail image — sound, medium confidence.** Close fly views magnify a tiny part of the peel. A small repeating image resolves speckles while existing vertex colors retain the broad yellow and dark ends. A unique larger image would reduce repeated groups at greater memory cost. Standard model materials own this detail, with no runtime shader override. This is a reversible art choice; soft spots and repeated clusters remain below the final realism target.
+
+## Apple skin and contact inspection — 2026-09-08
+
+- **Use a unique apple color image — sound, medium confidence.** The old repeated orange stripes looked painted. A single authored image gives the apple an irregular arrangement of red blush and pale pores, at greater texture memory cost than the banana's repeating detail. Color changes preserve the existing geometry and gloss; broad painted-looking patches and plastic shine remain visible limitations. This reversible material choice does not alter how flies move or eat.
+- **Validate physical shape independently of texture seams — sound, high confidence.** Adding a texture can duplicate render vertices at a seam without moving the surface. The diagnostic workbench now uses the same canonical geometry owner as the game, accepting those duplicates while still rejecting a changed physical position. Maintaining a separate raw-vertex interpretation would reject legitimate artwork and disagree with actual collision validation.
