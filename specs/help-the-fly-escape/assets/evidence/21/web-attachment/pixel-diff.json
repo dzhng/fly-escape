@@ -1,0 +1,89 @@
+{
+  "note": "Fixed native-pixel feature rectangles. Deltas prove image changes, not improvement; wind/camera timing can contribute. RGB max-channel threshold8 on0\u2013255.",
+  "results": [
+    {
+      "comparison": "before to third",
+      "view": "whole",
+      "region_xywh": [
+        348,
+        700,
+        65,
+        70
+      ],
+      "pixels": 4550,
+      "changed_gt8": 229,
+      "changed_gt8_percent": 5.03,
+      "mean_max_channel_delta": 1.2
+    },
+    {
+      "comparison": "before to third",
+      "view": "close",
+      "region_xywh": [
+        490,
+        470,
+        90,
+        100
+      ],
+      "pixels": 9000,
+      "changed_gt8": 727,
+      "changed_gt8_percent": 8.08,
+      "mean_max_channel_delta": 2.06
+    },
+    {
+      "comparison": "before to third",
+      "view": "extra",
+      "region_xywh": [
+        420,
+        360,
+        170,
+        210
+      ],
+      "pixels": 35700,
+      "changed_gt8": 3333,
+      "changed_gt8_percent": 9.34,
+      "mean_max_channel_delta": 2.76
+    },
+    {
+      "comparison": "second to third",
+      "view": "whole",
+      "region_xywh": [
+        348,
+        700,
+        65,
+        70
+      ],
+      "pixels": 4550,
+      "changed_gt8": 239,
+      "changed_gt8_percent": 5.25,
+      "mean_max_channel_delta": 1.27
+    },
+    {
+      "comparison": "second to third",
+      "view": "close",
+      "region_xywh": [
+        490,
+        470,
+        90,
+        100
+      ],
+      "pixels": 9000,
+      "changed_gt8": 738,
+      "changed_gt8_percent": 8.2,
+      "mean_max_channel_delta": 2.05
+    },
+    {
+      "comparison": "second to third",
+      "view": "extra",
+      "region_xywh": [
+        420,
+        360,
+        170,
+        210
+      ],
+      "pixels": 35700,
+      "changed_gt8": 3443,
+      "changed_gt8_percent": 9.64,
+      "mean_max_channel_delta": 2.87
+    }
+  ]
+}

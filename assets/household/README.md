@@ -23,9 +23,10 @@ separate from its geometry: shoes, dishes, linens, and the cat support bodies
 without granting taste or energy. Odor strengths are explicit game assumptions
 owned by the placement catalog.
 
-The web's opposite spokes share continuous strands rather than coincident hub
-caps, preserving the visible silk while keeping every baked component manifold.
-Native web contact acts only on those strands and the visible spider; gaps remain
-passable. Catching on contact is a game rule, not a model of adhesive mechanics.
-The regular polygon rings, stiff legs, and missing wall attachment strands remain
-art limitations to assess in the production framing.
+The web uses an open fan of strands between the wall and floor, with separate
+anchor endpoints that preserve closed manifold components. Native web contact acts
+only on those strands and the visible spider; gaps remain passable. Catching on
+contact is a game rule, not a model of adhesive mechanics. Mounting uses the
+actual rendered wall face while respecting placement clearance. Dotted silk at
+room scale, stiff legs, and upper attachment against a transparent cutaway wall
+remain appearance limitations; the fan does not establish full art acceptance.

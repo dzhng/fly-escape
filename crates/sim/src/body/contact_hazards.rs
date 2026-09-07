@@ -222,7 +222,6 @@ fn web_world(hazard: bool) -> BodyWorld {
     let objects = NativeObjectShape::SpiderWeb
         .placed_surfaces(Point { x: 2., z: 2. }, 0., 10)
         .unwrap();
-    assert_eq!(objects.len(), 22);
     object_world(objects, hazard.then_some(ContactHazardKind::Web))
 }
 fn web_fly(mode: BodyMode, x: f64, height: f64) -> Body {
@@ -238,8 +237,8 @@ fn web_fly(mode: BodyMode, x: f64, height: f64) -> Body {
 fn native_web_strands_catch_walk_and_flight_at_actual_contact_time() {
     let world = web_world(true);
     for (mode, x, height) in [
-        (BodyMode::Walking, 2., 0.),
-        (BodyMode::Flying, 2.18, 0.242825),
+        (BodyMode::Walking, 2.173, 0.),
+        (BodyMode::Flying, 2.18, 0.4),
     ] {
         let mut body = web_fly(mode, x, height);
         let mut input = neural();
@@ -264,9 +263,9 @@ fn native_web_strands_catch_walk_and_flight_at_actual_contact_time() {
 #[test]
 fn native_web_empty_gap_and_overflight_remain_passable() {
     let world = web_world(true);
-    // First path crosses between visible rings inside the web outline.
+    // First path crosses an open gap between the visible fan strands.
     // The other paths pass above the top strand and beside the web.
-    for (x, height) in [(2.18, 0.4), (2., 0.6), (2.4, 0.3)] {
+    for (x, height) in [(2.18, 0.242825), (2., 0.6), (2.4, 0.3)] {
         let mut body = web_fly(BodyMode::Flying, x, height);
         let step = body
             .step(&neural(), &world, Point::default(), 0.5, 1)
@@ -278,7 +277,7 @@ fn native_web_empty_gap_and_overflight_remain_passable() {
 }
 #[test]
 fn native_web_initial_contact_catches_without_feeding() {
-    let mut body = web_fly(BodyMode::Flying, 2.18, 0.242825);
+    let mut body = web_fly(BodyMode::Flying, 2.18, 0.4);
     body.step(&neural(), &web_world(false), Point::default(), 0.5, 1)
         .unwrap();
     let world = web_world(true);

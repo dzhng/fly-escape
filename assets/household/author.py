@@ -156,25 +156,51 @@ def zapper():
 
 
 def spider():
-    silk=material('Warm ivory spider silk','#c6c1ab',.85); body=material('House spider brown','#514132',.94)
-    # Web lies in a vertical local XZ plane for mounting beside a wall.
-    center=Vector((0,.025,.31)); count=12
-    endpoints=[Vector((.247*cos(i*2*pi/count),.025+.025*sin(i*2*pi/count),.31+.289*sin(i*2*pi/count))) for i in range(count)]
-    # Opposite spokes are one strand: no coincident capped faces at the hub.
-    for i in range(count//2):tube('Radial web silk',[endpoints[i],center,endpoints[i+count//2]],.0009,silk,4)
-    for n in range(1,7):
-        pts=[center+(p-center)*(n/6) for p in endpoints]
-        tube('Web capture spiral',pts+[pts[0]],.0007,silk,4)
-    ellipsoid('Spider abdomen',(0,.006,.324),(.018,.016,.026),body,16,10)
-    ellipsoid('Spider head',(0,-.005,.296),(.012,.011,.013),body,12,8)
+    silk=material('Warm ivory spider silk','#ded8c1',.72)
+    body=material('House spider brown','#514132',.94)
+    # A fan stretches from the wall to the floor, with open, irregular capture spans.
+    # Every support ends on those surfaces; the mesh remains the contact geometry.
+    apex=Vector((.2468,.025,.5983))
+    ends=[Vector(p) for p in [
+        (-.247,.025,.021),(-.168,.037,.021),(-.065,.016,.021),
+        (.053,.033,.021),(.173,.018,.021),(.2468,.025,.068),
+        (.2468,.025,.143),(.2468,.025,.269)]]
+    rays=[]
+    for i,end in enumerate(ends):
+        start=apex+Vector((0,.001*i,-.003*i))
+        bend=start.lerp(end,.57)
+        bend.x-=.006*abs(sin(i*.7)); bend.z-=.004
+        rays.append((start,bend,end))
+        tube('Wall to floor structural silk',[start,bend,end],.0009,silk,4)
+    def on_ray(ray,t):
+        a,b,c=ray
+        return a.lerp(b,t/.57) if t<=.57 else b.lerp(c,(t-.57)/.43)
+    for n,t in enumerate([.24,.36,.49,.61,.72,.82,.91]):
+        pts=[]
+        for i,ray in enumerate(rays):
+            q=on_ray(ray,t+.014*sin(i*1.9+n*2.3))
+            if pts:
+                mid=pts[-1].lerp(q,.5); mid.z-=.004+.002*sin(i+n)**2
+                pts.append(mid)
+            pts.append(q)
+        tube('Open sagging capture silk',pts,.0007,silk,4)
+    # Two low structural spans make the base attachment legible in the cutaway house.
+    tube('Low wall support silk',[ends[0],(-.012,.027,.159),ends[6]],.0009,silk,4)
+    tube('Floor support silk',[ends[2],(.062,.025,.223),ends[7]],.0009,silk,4)
+    ellipsoid('Spider abdomen',(.032,.006,.254),(.018,.016,.026),body,16,10)
+    ellipsoid('Spider head',(.032,-.005,.226),(.012,.011,.013),body,12,8)
     for side in [-1,1]:
         for j in range(4):
-            tube('Articulated spider leg',[(side*.009,-.004,.294+j*.008),(side*(.036+j*.003),-.032,.266+j*.026),(side*(.048+j*.003),.021,.25+j*.036)],.002,body)
+            root=Vector((.032+side*.009,-.004,.222+j*.006))
+            knee=Vector((.032+side*(.026+j*.004),-.032,.188+j*.025))
+            tip=Vector((.032+side*(.044+j*.004),.021,.171+j*.033))
+            tube('Articulated spider leg',[root,root.lerp(knee,.6),knee,knee.lerp(tip,.65),tip],.0016,body)
+
 
 BUILDERS={'worn-shoes':shoes,'dirty-dishes':dishes,'crumpled-laundry':laundry,'sleeping-cat':cat,'bug-zapper':zapper,'corner-spider':spider}
 
 
-def build(kind, evidence='/tmp/fly-household-evidence'):
+def build(kind, evidence='/tmp/fly-household-evidence', render=True):
     global SCENE
     SCENE=bpy.data.scenes.new('Household-'+kind+'-NativeMetres'); SCENE.unit_settings.system='METRIC'
     BUILDERS[kind]()
@@ -196,6 +222,8 @@ def build(kind, evidence='/tmp/fly-household-evidence'):
     shared['export_static'](SCENE,out/(kind+'.glb'),size,expected_bounds=bounds)
     bpy.data.libraries.write(str(out/(kind+'.blend')),{SCENE},fake_user=True,compress=True)
     (out/'envelope.json').write_text(json.dumps({'units':'metres','upAxis':'Y','bounds':bounds,'size':size,'triangles':triangles,'source':'../author.py','collision':'none: integration owns behavior'},indent=2)+'\n')
+    if not render:
+        return {'kind':kind,'bounds':bounds,'triangles':triangles}
     stage=shared['neutral_stage']('Household-'+kind,list(SCENE.objects),material('Neutral stone','#b7b1a4',1),ortho_scale=max(size)*1.65,ground_extent=2)
     stage.render.resolution_x=800; stage.render.resolution_y=700; stage.cycles.samples=16
     target=(0,0,size[1]*.48)
