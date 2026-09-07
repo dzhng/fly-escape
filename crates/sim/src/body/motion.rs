@@ -245,6 +245,12 @@ pub(super) fn advance(
             }
             // Test a constrained horizontal departure before beginning descent.
             // The supported endpoint is absent, but the old pose still touches food.
+            point.support = None;
+            point.grounded = false;
+            if let Some(last) = trace.points.last_mut() {
+                last.support = None;
+                last.grounded = false;
+            }
             let from = point.clone();
             let mut departure = point.clone();
             departure.pose.position = target;
@@ -473,46 +479,95 @@ fn supported_knots(
     out: &mut Vec<MotionPoint>,
     work: &mut Work,
 ) -> Result<(), String> {
+    let selected = start.support.unwrap();
+    let neighbors = world.food.has_other_surface(selected);
+    if neighbors {
+        work.query()?;
+        if world
+            .food
+            .neighbor_penetration(world.hull, end.root(), end.rotation, selected)?
+            > MOTION_ERROR
+        {
+            return Err(
+                "numerical support unresolved: endpoint blocked by neighboring food".into(),
+            );
+        }
+    }
     let mut stack = vec![(start.clone(), end, 0usize)];
     while let Some((a, b, depth)) = stack.pop() {
-        work.query()?;
-        if world.food.penetration(world.hull, b.root(), b.rotation)? > CONTACT_PRECISION {
-            return Err("numerical support unresolved: endpoint blocked by food".into());
-        }
-
-        let mut mid = mix(&a, &b, 0.5);
-        work.query()?;
-        let sample = world
-            .food
-            .support_at(
-                world.hull,
-                a.support.unwrap(),
-                [mid.pose.position.x, mid.pose.position.z],
-                mid.pose.heading,
-                up(mid.rotation),
-            )?
-            .ok_or("numerical motion unresolved: interior support gap")?;
-        let error = (sample.root[1] - mid.height).abs();
-        work.query()?;
-        let penetration = world
-            .food
-            .penetration(world.hull, mid.root(), mid.rotation)?;
-        let travel =
+        let distance =
             (b.pose.position.x - a.pose.position.x).hypot(b.pose.position.z - a.pose.position.z);
         let angle =
             Rotation::from_array(a.rotation).angle_between(Rotation::from_array(b.rotation));
-        if travel > 0.00005
-            || angle > 0.01
-            || error > MOTION_ERROR
-            || penetration > CONTACT_PRECISION
-        {
-            if depth >= 16 || out.len() + stack.len() >= 128 {
+        let count = (distance / 0.0005).max(angle / 0.05).ceil().max(2.) as usize;
+        let mut split = None;
+        for i in 1..count {
+            let p = mix(&a, &b, i as f64 / count as f64);
+            work.query()
+                .map_err(|e| format!("{e} span {:?} -> {:?}", a.root(), b.root()))?;
+            let sample = world
+                .food
+                .support_at(
+                    world.hull,
+                    a.support.unwrap(),
+                    [p.pose.position.x, p.pose.position.z],
+                    p.pose.heading,
+                    up(p.rotation),
+                )?
+                .ok_or("numerical motion unresolved: interior support gap")?;
+            let error = (sample.root[1] - p.height).abs();
+            let penetration = if neighbors {
+                work.query()?;
+                world
+                    .food
+                    .neighbor_penetration(world.hull, p.root(), p.rotation, selected)?
+            } else {
+                0.
+            };
+            if error > MOTION_ERROR * 0.5 || penetration > MOTION_ERROR * 0.5 {
+                let mut middle = mix(&a, &b, 0.5);
+                let center = if i * 2 == count {
+                    sample
+                } else {
+                    work.query()?;
+                    world
+                        .food
+                        .support_at(
+                            world.hull,
+                            a.support.unwrap(),
+                            [middle.pose.position.x, middle.pose.position.z],
+                            middle.pose.heading,
+                            up(middle.rotation),
+                        )?
+                        .ok_or("numerical motion unresolved: interior support gap")?
+                };
+                middle.height = center.root[1];
+                middle.rotation = center.rotation;
+                if neighbors {
+                    work.query()?;
+                    if world.food.neighbor_penetration(
+                        world.hull,
+                        middle.root(),
+                        middle.rotation,
+                        selected,
+                    )? > MOTION_ERROR
+                    {
+                        return Err(
+                            "numerical support unresolved: midpoint blocked by neighboring food"
+                                .into(),
+                        );
+                    }
+                }
+                split = Some(middle);
+                break;
+            }
+        }
+        if let Some(p) = split {
+            if depth >= 16 {
                 return Err("numerical motion unresolved: refinement budget".into());
             }
-            mid.height = sample.root[1];
-            mid.rotation = sample.rotation;
-            stack.push((mid.clone(), b, depth + 1));
-            stack.push((a, mid, depth + 1));
+            stack.push((p.clone(), b, depth + 1));
+            stack.push((a, p, depth + 1));
         } else {
             work.segments += 1;
             if work.segments > 128 {

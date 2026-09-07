@@ -130,6 +130,28 @@ impl ContactScene {
         root: [f64; 3],
         rotation: [f64; 4],
     ) -> Result<f64, String> {
+        self.penetration_on(hull, root, rotation, None)
+    }
+    pub(crate) fn has_other_surface(&self, id: u32) -> bool {
+        self.meshes.iter().any(|entry| entry.id != id)
+    }
+    /// The caller already queried the selected surface at this exact pose/orientation.
+    pub(crate) fn neighbor_penetration(
+        &self,
+        hull: &ContactHull,
+        root: [f64; 3],
+        rotation: [f64; 4],
+        selected: u32,
+    ) -> Result<f64, String> {
+        self.penetration_on(hull, root, rotation, Some(selected))
+    }
+    fn penetration_on(
+        &self,
+        hull: &ContactHull,
+        root: [f64; 3],
+        rotation: [f64; 4],
+        selected: Option<u32>,
+    ) -> Result<f64, String> {
         let pose = Pose {
             translation: Vector::from_array(root) * QUERY_UNITS,
             rotation: Rotation::from_array(rotation),
@@ -138,7 +160,11 @@ impl ContactScene {
         let interior = pose
             * (hull.shape.points().iter().copied().sum::<Vector>()
                 / hull.shape.points().len() as f64);
-        for entry in &self.meshes {
+        for entry in self
+            .meshes
+            .iter()
+            .filter(|entry| Some(entry.id) != selected)
+        {
             if entry.closed && entry.mesh.contains_local_point(interior) {
                 return Err(
                     "numerical contact unresolved: hull interior is inside closed food".into(),

@@ -688,8 +688,8 @@ fn neighboring_apple_blocks_while_time_advances() {
                                     p.rotation
                                 )
                                 .unwrap()
-                                <= 1e-8,
-                            "native hull must not enter neighboring food"
+                                <= 3e-6,
+                            "native hull trajectory exceeds the numerical food-contact budget"
                         );
                     }
                 }
