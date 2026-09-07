@@ -1,3 +1,4 @@
+import { equalPixels } from "./equal-pixels.mjs";
 import { chromium } from 'playwright';
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
@@ -63,7 +64,7 @@ try {
   await page.locator('#time').fill('0.5');
   await page.locator('#time').dispatchEvent('input');
   await page.waitForTimeout(100);
-  assert.deepEqual(
+  equalPixels(
     await page.locator('canvas').screenshot(),
     frozen,
     'supported animation restores exact pixels on reverse seek',

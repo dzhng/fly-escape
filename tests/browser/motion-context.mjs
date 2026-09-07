@@ -1,3 +1,4 @@
+import { equalPixels } from "./equal-pixels.mjs";
 import { chromium } from 'playwright';
 import { mkdir, writeFile, realpath, readFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
@@ -85,10 +86,10 @@ try {
     await page.evaluate(t=>window.draw(t),tick);
     const expected=await page.locator('canvas').screenshot();
     await page.waitForTimeout(100);
-    assert.deepEqual(await page.locator('canvas').screenshot(),expected,'pause');
+    equalPixels(await page.locator('canvas').screenshot(),expected,'pause');
     await page.evaluate(t=>window.draw(t),start+2);
     await page.evaluate(t=>window.draw(t),tick);
-    assert.deepEqual(await page.locator('canvas').screenshot(),expected,'reverse');
+    equalPixels(await page.locator('canvas').screenshot(),expected,'reverse');
   }
   const strip=await browser.newPage({viewport:{width:2940,height:490}});
   for(const name of (landingOnly?['land']:['feed','land']))for(const version of ['recorded']){

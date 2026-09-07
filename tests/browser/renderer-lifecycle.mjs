@@ -1,3 +1,4 @@
+import { equalPixels } from "./equal-pixels.mjs";
 import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
 import { chromium } from "playwright";
@@ -15,7 +16,7 @@ try {
   await page.evaluate(() => { window.lifecycle.disposeFirst(); window.lifecycle.renderSecond(); });
   const after = await page.evaluate(() => window.lifecycle.statistics());
   const afterPixels = await page.locator("#second canvas").screenshot({ path: `${output}/after.png` });
-  assert.deepEqual(afterPixels, beforePixels, "surviving view retains identical rendered pixels");
+  equalPixels(afterPixels, beforePixels, "surviving view retains identical rendered pixels");
   assert.deepEqual(after, before, "disposing another view preserves live renderer resources and draw workload");
   assert.equal(await page.locator("canvas").count(), 1);
   await page.evaluate(() => { window.lifecycle.disposeSecond(); });

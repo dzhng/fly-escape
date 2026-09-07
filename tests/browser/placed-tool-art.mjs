@@ -1,3 +1,4 @@
+import { equalPixels } from "./equal-pixels.mjs";
 import { chromium } from "playwright";
 import { mkdir, writeFile, realpath } from "node:fs/promises";
 import assert from "node:assert/strict";
@@ -78,7 +79,7 @@ try {
   const canvas = page.locator("canvas");
   const paused = await canvas.screenshot();
   await page.waitForTimeout(300);
-  assert.deepEqual(await canvas.screenshot(), paused);
+  equalPixels(await canvas.screenshot(), paused);
   const seek = async (value) => {
     await page.getByLabel("Playback time", { exact: true }).evaluate((el, v) => {
       Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value").set.call(el, String(v));
@@ -93,7 +94,7 @@ try {
   };
   await seek(30);
   await seek(50);
-  assert.deepEqual(await canvas.screenshot(), paused);
+  equalPixels(await canvas.screenshot(), paused);
 
   const report = JSON.parse(await page.getByTestId("playback-report").textContent());
   assert.equal(report.spec.placements.length, 4);

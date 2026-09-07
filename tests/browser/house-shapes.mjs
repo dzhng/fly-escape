@@ -1,3 +1,4 @@
+import { equalPixels } from "./equal-pixels.mjs";
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
@@ -44,7 +45,7 @@ try {
   await page.locator('#shape-mounting').click();
   await page.locator('[data-view=follow]').click();
   await page.waitForTimeout(100);
-  assert.deepEqual(await page.locator('canvas').screenshot(), ordinaryFollow, 'Follow restores ordinary rendering after mounting inspection');
+  equalPixels(await page.locator('canvas').screenshot(), ordinaryFollow, 'Follow restores ordinary rendering after mounting inspection');
   const models = (await read()).models;
   assert.equal(models.length, 3);
   for (const model of models) { assert.deepEqual(model.scale, [1, 1, 1]); assert.deepEqual(model.forward, [0, 0, 1]); assert.ok(Math.abs(model.nativeBounds[1]) < 1e-6); }
@@ -56,7 +57,7 @@ try {
   await page.locator('#shape-file').setInputFiles(resolve('assets/house/window/window.glb'));
   await page.waitForFunction(() => document.querySelector('#shape-status').textContent.includes('Previous shape retained'));
   assert.deepEqual((await read()).models, before.models);
-  assert.deepEqual(await page.locator('canvas').screenshot(), beforePixels, 'failed replacement retains exact visible scene');
+  equalPixels(await page.locator('canvas').screenshot(), beforePixels, 'failed replacement retains exact visible scene');
   await capture('rejected-replacement');
   const resources = [];
   for (let cycle = 0; cycle < 6; cycle++) {
@@ -81,7 +82,7 @@ try {
   await page.locator('#recorded-tick').fill('0'); await page.locator('#recorded-tick').dispatchEvent('input');
   await page.locator('#recorded-tick').fill('40'); await page.locator('#recorded-tick').dispatchEvent('input');
   await page.waitForTimeout(100);
-  assert.deepEqual(await page.locator('canvas').screenshot(), at40, 'recorded reverse is pixel identical');
+  equalPixels(await page.locator('canvas').screenshot(), at40, 'recorded reverse is pixel identical');
   assert.deepEqual((await read()).spec, before.spec, 'inspection leaves attempt identity untouched');
   assert.deepEqual(errors, []);
   // Hold a production asset response while a user replacement wins the same key.

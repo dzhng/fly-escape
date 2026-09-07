@@ -1,3 +1,4 @@
+import { equalPixels } from "./equal-pixels.mjs";
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
@@ -49,9 +50,9 @@ try {
       const name=`${view}-${tick}`;
       const expected=await canvas.screenshot();
       await page.waitForTimeout(150);
-      assert.deepEqual(await canvas.screenshot(),expected,`${name} pause`);
+      equalPixels(await canvas.screenshot(),expected,`${name} pause`);
       await seek(tick+1);await seek(tick);
-      assert.deepEqual(await canvas.screenshot(),expected,`${name} reverse`);
+      equalPixels(await canvas.screenshot(),expected,`${name} reverse`);
       await page.screenshot({path:`${output}/${name}.png`});
       const current=await report();
       captures.push({name,cursor:current.cursorTick,camera:current.camera,renderer:current.renderer});
