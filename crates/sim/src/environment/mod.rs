@@ -96,10 +96,13 @@ impl Geometry {
     }
     /// A spawn must clear the same conservative obstacle footprint used by sweep.
     pub fn contains_body(&self, p: Point, radius: f64) -> bool {
+        self.room_at(p).is_some() && self.body_clear(p, radius)
+    }
+    /// Physical clearance also applies to bodies outside a room crossing inward.
+    pub(crate) fn body_clear(&self, p: Point, radius: f64) -> bool {
         p.finite()
             && radius.is_finite()
             && radius >= 0.
-            && self.room_at(p).is_some()
             && self
                 .blocking_bounds(radius)
                 .all(|(min, max)| segment_box(p, p, min, max).is_none())

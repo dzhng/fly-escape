@@ -60,10 +60,10 @@ pub struct ContactHull {
 }
 impl ContactHull {
     pub fn floor_height(&self, heading: f64, up: [f64; 3]) -> Result<f64, String> {
-        let pose = Pose {
-            translation: Vector::ZERO,
-            rotation: Rotation::from_array(support_rotation(heading, up)?),
-        };
+        self.floor_height_at(support_rotation(heading, up)?)
+    }
+    pub(crate) fn floor_height_at(&self, rotation: [f64; 4]) -> Result<f64, String> {
+        let pose = checked_pose([0.; 3], rotation)?;
         let height = -self.shape.support_point(&pose, -Vector::Y).y / QUERY_UNITS;
         Ok(if height.abs() <= PLANE_TOLERANCE / QUERY_UNITS {
             0.
@@ -161,10 +161,7 @@ impl ContactScene {
         rotation: [f64; 4],
         selected: Option<u32>,
     ) -> Result<f64, String> {
-        let pose = Pose {
-            translation: Vector::from_array(root) * QUERY_UNITS,
-            rotation: Rotation::from_array(rotation),
-        };
+        let pose = checked_pose(root, rotation)?;
         let bounds = hull.bounds.transform_by(&pose).loosened(PLANE_TOLERANCE);
         let mut deepest = 0f64;
         let interior = pose
@@ -366,18 +363,12 @@ impl ContactScene {
         rotation: [f64; 4],
         displacement: [f64; 3],
     ) -> Result<Option<SurfaceHit>, String> {
-        if !bounded(position) || !bounded(displacement) || !rotation.iter().all(|x| x.is_finite()) {
-            return Err("contact cast requires bounded finite pose".into());
-        }
-        if (Rotation::from_array(rotation).length_squared() - 1.).abs() > 1e-6 {
-            return Err("contact cast requires a unit quaternion".into());
+        if !bounded(displacement) {
+            return Err("contact cast requires bounded finite displacement".into());
         }
         cast_on(
             hull,
-            Pose {
-                translation: Vector::from_array(position) * QUERY_UNITS,
-                rotation: Rotation::from_array(rotation),
-            },
+            checked_pose(position, rotation)?,
             Vector::from_array(displacement) * QUERY_UNITS,
             self.meshes.iter(),
         )
@@ -541,6 +532,19 @@ impl ContactScene {
         Ok(first)
     }
 }
+fn checked_pose(position: [f64; 3], rotation: [f64; 4]) -> Result<Pose, String> {
+    if !bounded(position) || !rotation.iter().all(|x| x.is_finite()) {
+        return Err("contact query requires bounded finite pose".into());
+    }
+    if (Rotation::from_array(rotation).length_squared() - 1.).abs() > 1e-6 {
+        return Err("contact query requires a unit quaternion".into());
+    }
+    Ok(Pose {
+        translation: Vector::from_array(position) * QUERY_UNITS,
+        rotation: Rotation::from_array(rotation),
+    })
+}
+
 fn cast_on<'a>(
     hull: &ContactHull,
     pose: Pose,

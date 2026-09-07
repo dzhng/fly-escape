@@ -164,6 +164,8 @@ fn toward(from: [f64; 3], to: [f64; 3], seconds: f64) -> [f64; 3] {
         .to_array()
 }
 
+/// A work-limited request consumes its tick at an independently verified start.
+/// Validation shares the same query budget as the attempted movement.
 pub(super) fn advance(
     world: &BodyWorld,
     state: &BodyState,
@@ -171,6 +173,97 @@ pub(super) fn advance(
     dt: f64,
     radius: f64,
 ) -> Result<MotionTrace, String> {
+    let mut work = Work::default();
+    validate_start(world, state, desired, dt, radius, &mut work)
+        .map_err(|error| error.to_string())?;
+    match advance_bounded(world, state, desired, dt, radius, &mut work) {
+        Ok(trace) => Ok(trace),
+        Err(
+            MotionFailure::QueryLimit
+            | MotionFailure::SegmentLimit
+            | MotionFailure::KnotLimit
+            | MotionFailure::SubstepLimit,
+        ) => {
+            let mut trace = MotionTrace::stationary(state);
+            // Mode changes can initiate takeoff while retaining the old support
+            // on BodyState until this motion owner applies its first point.
+            if !trace.points[0].grounded {
+                for point in &mut trace.points {
+                    point.support = None;
+                }
+            }
+            trace.queries = work.queries;
+            Ok(trace)
+        }
+        Err(MotionFailure::Invalid(message)) => Err(message),
+    }
+}
+
+fn validate_start(
+    world: &BodyWorld,
+    state: &BodyState,
+    desired: BodyPose,
+    dt: f64,
+    radius: f64,
+    work: &mut Work,
+) -> Result<(), MotionFailure> {
+    if !dt.is_finite()
+        || dt <= 0.
+        || dt > 1.
+        || !desired.position.finite()
+        || !desired.heading.is_finite()
+        || !state.pose.heading.is_finite()
+        || !state.height.is_finite()
+        || !world.geometry.body_clear(state.pose.position, radius)
+    {
+        return Err(
+            "motion requires a finite request and an unobstructed initial body pose".into(),
+        );
+    }
+    let floor = world.hull.floor_height_at(state.rotation)?;
+    if state.height < floor - MOTION_ERROR {
+        return Err("initial body penetrates the floor".into());
+    }
+    work.query()?;
+    if world.surfaces.penetration(
+        world.hull,
+        [state.pose.position.x, state.height, state.pose.position.z],
+        state.rotation,
+    )? > MOTION_ERROR
+    {
+        return Err("initial body penetrates native contact".into());
+    }
+    if let Some(id) = state.support {
+        work.query()?;
+        let sample = world
+            .surfaces
+            .support_at(
+                world.hull,
+                id,
+                [state.pose.position.x, state.pose.position.z],
+                state.pose.heading,
+                up(state.rotation),
+            )?
+            .ok_or("initial support is absent at the body pose")?;
+        if (sample.root[1] - state.height).abs() > MOTION_ERROR {
+            return Err("initial support does not match body height".into());
+        }
+    } else if matches!(state.mode, BodyMode::Walking | BodyMode::Feeding)
+        && (state.height - floor).abs() > MOTION_ERROR
+    {
+        return Err("grounded initial body has no supporting floor".into());
+    }
+    Ok(())
+}
+
+fn advance_bounded(
+    world: &BodyWorld,
+    state: &BodyState,
+    desired: BodyPose,
+    dt: f64,
+    radius: f64,
+    work: &mut Work,
+) -> Result<MotionTrace, MotionFailure> {
     let mut velocity = Point {
         x: (desired.position.x - state.pose.position.x) / dt,
         z: (desired.position.z - state.pose.position.z) / dt,
@@ -193,14 +286,13 @@ pub(super) fn advance(
         contact_hazard: None,
         queries: 0,
     };
-    let mut work = Work::default();
     let mut elapsed = 0.;
     let mut iterations = 0;
     let mut descending = state.mode == BodyMode::Landing;
     while elapsed < dt - 1e-12 {
         iterations += 1;
         if iterations >= MAX_MOTION_POINTS {
-            return Err("supported movement exceeds its bounded substep budget".into());
+            return Err(MotionFailure::SubstepLimit);
         }
         let speed = velocity.x.hypot(velocity.z);
         let step =
@@ -271,8 +363,7 @@ pub(super) fn advance(
                     support: Some(id),
                     grounded: true,
                 };
-                let progress =
-                    supported_knots(world, &point, endpoint, &mut trace.points, &mut work)?;
+                let progress = supported_knots(world, &point, endpoint, &mut trace.points, work)?;
                 point = trace.end().clone();
                 if !matches!(progress, SupportedProgress::Complete) {
                     break;
@@ -326,7 +417,7 @@ pub(super) fn advance(
                 }
                 work.segments += 1;
                 if work.segments > 128 {
-                    return Err("numerical motion unresolved: segment budget".into());
+                    return Err(MotionFailure::SegmentLimit);
                 }
                 next.support = None;
                 next.grounded = false;
@@ -567,13 +658,40 @@ pub(super) fn advance(
     Ok(trace)
 }
 
-fn append_point(points: &mut Vec<MotionPoint>, point: MotionPoint) -> Result<(), String> {
+fn append_point(points: &mut Vec<MotionPoint>, point: MotionPoint) -> Result<(), MotionFailure> {
     // Reserve space for an event split and a stationary terminal tail.
     if points.len() >= MAX_MOTION_POINTS - 2 {
-        return Err("numerical motion unresolved: total knot budget".into());
+        return Err(MotionFailure::KnotLimit);
     }
     points.push(point);
     Ok(())
+}
+
+#[derive(Debug)]
+enum MotionFailure {
+    QueryLimit,
+    SegmentLimit,
+    KnotLimit,
+    SubstepLimit,
+    Invalid(String),
+}
+impl From<String> for MotionFailure {
+    fn from(message: String) -> Self {
+        Self::Invalid(message)
+    }
+}
+impl From<&str> for MotionFailure {
+    fn from(message: &str) -> Self {
+        Self::Invalid(message.into())
+    }
+}
+impl std::fmt::Display for MotionFailure {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Invalid(message) => f.write_str(message),
+            other => write!(f, "motion work exhausted: {other:?}"),
+        }
+    }
 }
 
 #[derive(Default)]
@@ -582,13 +700,12 @@ struct Work {
     segments: usize,
 }
 impl Work {
-    fn query(&mut self) -> Result<(), String> {
-        self.queries += 1;
-        if self.queries > MAX_QUERIES {
-            Err("numerical motion unresolved: query budget".into())
-        } else {
-            Ok(())
+    fn query(&mut self) -> Result<(), MotionFailure> {
+        if self.queries == MAX_QUERIES {
+            return Err(MotionFailure::QueryLimit);
         }
+        self.queries += 1;
+        Ok(())
     }
 }
 fn mix(a: &MotionPoint, b: &MotionPoint, t: f64) -> MotionPoint {
@@ -627,7 +744,7 @@ fn stop_supported(
     world: &BodyWorld,
     out: &[MotionPoint],
     work: &mut Work,
-) -> Result<SupportedProgress, String> {
+) -> Result<SupportedProgress, MotionFailure> {
     // A known collision can hold a verified prefix; an already invalid starting
     // pose cannot be reclassified as successful stationary motion.
     let last = out.last().unwrap();
@@ -652,7 +769,7 @@ fn supported_knots(
     end: MotionPoint,
     out: &mut Vec<MotionPoint>,
     work: &mut Work,
-) -> Result<SupportedProgress, String> {
+) -> Result<SupportedProgress, MotionFailure> {
     let selected = start.support.unwrap();
     let neighbors = world.surfaces.has_other_surface(selected);
     if neighbors {
@@ -675,8 +792,7 @@ fn supported_knots(
         let mut split = None;
         for i in 1..count {
             let p = mix(&a, &b, i as f64 / count as f64);
-            work.query()
-                .map_err(|e| format!("{e} span {:?} -> {:?}", a.root(), b.root()))?;
+            work.query()?;
             let sample = world
                 .surfaces
                 .support_at(
@@ -733,9 +849,8 @@ fn supported_knots(
         }
         if let Some(p) = split {
             if depth >= 16 {
-                // This candidate has no verified continuous representation within
-                // the fixed depth. Decline it, rather than accepting an
-                // approximation or treating the clear retained pose as fatal.
+                // A verified prefix is useful here; query exhaustion during its
+                // validation still falls back to the verified request start.
                 stop_supported(world, out, work)?;
                 return Ok(SupportedProgress::Unresolved);
             }
@@ -744,7 +859,7 @@ fn supported_knots(
         } else {
             work.segments += 1;
             if work.segments > 128 {
-                return Err("numerical motion unresolved: segment budget".into());
+                return Err(MotionFailure::SegmentLimit);
             }
             append_point(out, b)?;
         }
@@ -804,15 +919,95 @@ mod coalescing_tests {
             .unwrap_err()
             .contains("inside closed food"));
         assert!(
-            matches!(stop_supported(&world, &[retained.clone()], &mut Work::default()), Err(message) if message.contains("inside closed food"))
+            matches!(stop_supported(&world, &[retained.clone()], &mut Work::default()), Err(MotionFailure::Invalid(message)) if message.contains("inside closed food"))
         );
         let mut work = Work {
             queries: MAX_QUERIES,
             segments: 0,
         };
-        assert!(
-            matches!(stop_supported(&world, &[retained], &mut work), Err(message) if message.contains("query budget"))
-        );
+        assert!(matches!(
+            stop_supported(&world, &[retained], &mut work),
+            Err(MotionFailure::QueryLimit)
+        ));
+    }
+    #[test]
+    fn recovery_requires_a_physically_valid_start_and_preserves_native_errors() {
+        let geometry = Geometry {
+            rooms: vec![crate::environment::RectRoom {
+                id: 1,
+                min: Point { x: -1., z: -1. },
+                max: Point { x: 1., z: 1. },
+            }],
+            walls: vec![crate::environment::Wall {
+                a: Point { x: 0.8, z: -1. },
+                b: Point { x: 0.8, z: 1. },
+            }],
+            solids: vec![],
+        };
+        let apple: ContactSurface =
+            serde_json::from_str(include_str!("../../../../assets/food/apple/contact.json"))
+                .unwrap();
+        let world = BodyWorld::new(
+            &geometry,
+            std::slice::from_ref(&apple),
+            &[],
+            &[],
+            ExitOpening {
+                a: Point { x: 1., z: 0. },
+                b: Point { x: 1., z: 0.1 },
+                outward: Point { x: 1., z: 0. },
+            },
+            100,
+        )
+        .unwrap();
+        let valid = BodyState {
+            pose: BodyPose {
+                position: Point { x: 0.3, z: 0. },
+                heading: 0.,
+            },
+            height: 0.,
+            rotation: support_rotation(0., [0., 1., 0.]).unwrap(),
+            support: None,
+            mode: BodyMode::Walking,
+            reserve: 10.,
+            outcome: None,
+        };
+        assert!(advance(&world, &valid, valid.pose, 0.1, 0.002632).is_ok());
+        let mut invalid = valid.clone();
+        invalid.rotation = [0.; 4];
+        assert!(advance(&world, &invalid, invalid.pose, 0.1, 0.002632)
+            .unwrap_err()
+            .contains("unit quaternion"));
+        invalid = valid.clone();
+        invalid.height = -0.01;
+        assert!(advance(&world, &invalid, invalid.pose, 0.1, 0.002632)
+            .unwrap_err()
+            .contains("floor"));
+        invalid = valid.clone();
+        invalid.height = 0.1;
+        assert!(advance(&world, &invalid, invalid.pose, 0.1, 0.002632)
+            .unwrap_err()
+            .contains("supporting floor"));
+        invalid = valid.clone();
+        invalid.support = Some(u32::MAX);
+        assert!(advance(&world, &invalid, invalid.pose, 0.1, 0.002632).is_err());
+        invalid = valid.clone();
+        invalid.pose.position.x = 0.8;
+        assert!(advance(&world, &invalid, invalid.pose, 0.1, 0.002632)
+            .unwrap_err()
+            .contains("unobstructed"));
+        invalid = valid.clone();
+        invalid.pose.position.x = f64::NAN;
+        assert!(advance(&world, &invalid, invalid.pose, 0.1, 0.002632)
+            .unwrap_err()
+            .contains("finite"));
+        invalid = valid;
+        invalid.pose.position.x = 0.;
+        invalid.height = 0.04;
+        invalid.mode = BodyMode::Landing;
+        assert!(advance(&world, &invalid, invalid.pose, 0.1, 0.002632)
+            .unwrap_err()
+            .contains("inside closed food"));
     }
     #[test]
     fn straight_knots_coalesce_without_moving_any_intermediate_pose() {

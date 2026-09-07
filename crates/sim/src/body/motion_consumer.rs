@@ -565,3 +565,65 @@ fn descending_shoe_rim_contact_keeps_a_verified_prefix() {
         }
     }
 }
+
+#[test]
+fn query_exhaustion_after_partial_shoe_motion_restores_verified_start() {
+    let state: BodyState = serde_json::from_str(r#"{"height":0.11255713501421462,"mode":"landing","outcome":null,"pose":{"heading":0.2176269264573418,"position":{"x":2.609781851680292,"z":6.617292034591574}},"reserve":15.800000000000088,"rotation":[0.05143462464804994,0.6216922215351854,-0.07547638774578283,0.7779181036348288],"support":null}"#).unwrap();
+    let desired: BodyPose = serde_json::from_str(
+        r#"{"heading":0.0258326279435859,"position":{"x":2.637053725814715,"z":6.61799669552226}}"#,
+    )
+    .unwrap();
+    let objects = crate::native_object::NativeObjectShape::WornShoes
+        .placed_surfaces(Point { x: 2.6, z: 6.7 }, 0.8, 2)
+        .unwrap();
+    let geometry = Geometry {
+        rooms: vec![crate::environment::RectRoom {
+            id: 1,
+            min: Point { x: 0., z: 0. },
+            max: Point { x: 10., z: 10. },
+        }],
+        walls: vec![],
+        solids: vec![],
+    };
+    let world = BodyWorld::new(
+        &geometry,
+        &[],
+        &objects,
+        &[],
+        ExitOpening {
+            a: Point { x: 10., z: 1. },
+            b: Point { x: 10., z: 2. },
+            outward: Point { x: 1., z: 0. },
+        },
+        1000,
+    )
+    .unwrap();
+    let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
+    assert_eq!(trace.end().fraction, 1.);
+    assert_eq!(trace.queries, 512);
+    assert_eq!(trace.points.len(), 2);
+    assert!(trace.end().pose.position.distance(desired.position) > 0.01);
+    let held = &trace.points[trace.points.len() - 2];
+    assert_eq!(held.fraction, 0.);
+    assert_eq!(held.pose, state.pose);
+    assert_eq!(held.height, state.height);
+    assert_eq!(held.rotation, state.rotation);
+    assert_eq!(held.pose, trace.end().pose);
+    assert_eq!(held.height, trace.end().height);
+    assert_eq!(held.rotation, trace.end().rotation);
+    for pair in trace.points.windows(2) {
+        for i in 0..=100 {
+            let t = pair[0].fraction + (pair[1].fraction - pair[0].fraction) * i as f64 / 100.;
+            let p = trace.at(t).unwrap();
+            let depth = world
+                .surfaces
+                .penetration(
+                    world.hull,
+                    [p.pose.position.x, p.height, p.pose.position.z],
+                    p.rotation,
+                )
+                .unwrap();
+            assert!(depth <= 3e-6, "rim motion penetrates by {depth} at {t}");
+        }
+    }
+}
