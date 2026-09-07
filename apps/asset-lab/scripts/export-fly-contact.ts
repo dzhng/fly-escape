@@ -1,4 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
+import { execFileSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import * as THREE from "three";
 import { ConvexGeometry } from "three/addons/geometries/ConvexGeometry.js";
@@ -6,8 +8,8 @@ import { loadFlyModel } from "../../../packages/game-renderer/src/fly-model";
 import { FlyMotion } from "../../../packages/game-renderer/src/fly-motion";
 
 // Finite animation samples are a provisional envelope, not a continuous guarantee.
-const [input, output] = process.argv.slice(2);
-if (!input || !output) throw new Error("Usage: bun apps/asset-lab/scripts/export-fly-contact.ts input.glb output.json");
+const [input, output, candidate] = process.argv.slice(2);
+if (!input || !output) throw new Error("Usage: bun apps/asset-lab/scripts/export-fly-contact.ts input.glb output.json [candidate.json]");
 const bytes = await readFile(input);
 const model = await loadFlyModel(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength));
 const motion = new FlyMotion(model.root, model.clips);
@@ -42,3 +44,11 @@ await writeFile(output, JSON.stringify({
 }) + "\n");
 console.log(JSON.stringify({ input, output, vertices: vertices.length }));
 hull.dispose(); motion.dispose(); model.dispose();
+
+if (candidate) {
+  execFileSync("cargo", [
+    "run", "--release", "--locked", "--manifest-path",
+    fileURLToPath(new URL("../../../crates/sim/Cargo.toml", import.meta.url)),
+    "--example", "export_fly_contact_envelope", "--", output, input, candidate,
+  ], { stdio: "inherit" });
+}

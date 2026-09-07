@@ -17,3 +17,29 @@ that every intermediate animated vertex lies inside it. Moving contact acceptanc
 must still establish acquisition, supported movement and departure; this asset
 alone proves none of those behaviors. The convex union also fills the spaces
 between legs and wings, so it is an envelope rather than an exact body surface.
+
+## Conservative derivative candidate
+
+`contact-envelope-candidate.json` is an offline, outward approximation of the
+full finite-sample hull. It is **not selected by the simulator**. Its source-hull
+hash preserves the exact reference bytes as well as the GLB identity. Preparation
+is reproducible through the same exporter by supplying a third output path:
+
+```sh
+bun apps/asset-lab/scripts/export-fly-contact.ts assets/fly/fly.glb assets/fly/contact-hull.json assets/fly/contact-envelope-candidate.json
+```
+
+The exporter delegates native geometry to the
+[offline Rust generator](../../crates/sim/examples/export_fly_contact_envelope.rs),
+using the simulator's pinned Parry dependency without adding browser code.
+Supporting planes contain the source points; adaptive refinement reduces the
+largest outer-vertex distance. Polar triangle facets must remain unmerged during
+inversion, because merging can cut into the source. Incident axis planes retain
+exact source extrema, including floor height, without padding.
+
+All stored measurements use metres. Maximum outer-vertex distance bounds the
+outward support error of nested convex bodies over all directions, subject to the
+reported numerical containment residual and projection accuracy. The validation
+roundoff allowance is only a rejection check; it never changes geometry or query
+clearance. This derivative inherits the finite-animation limitation above and
+still needs moving-contact acceptance before adoption.
