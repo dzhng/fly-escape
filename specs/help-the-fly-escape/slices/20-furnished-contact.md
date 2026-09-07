@@ -1,6 +1,6 @@
 # 20 — Authoritative furnishing and food contact
 
-Status: pending. Dependencies: 19,25,26 and the measured physical-adapter verdict.
+Status: in progress; query replication29 accepted. Dependencies: 19,25,26 and the measured physical-adapter verdict.
 
 ## Contract, seam and review surface
 
@@ -21,3 +21,5 @@ Delegated: reversible asset composition, implementation naming and measurements 
 ## Owner inspection after physical adoption
 
 `BodyState` currently records planar pose, mode, reserve and outcome. `Body::contacts` reduces food circles to a grounded overlap boolean; taste injection consumes that same boolean before advancing the brain. `flyHeight` currently invents display-only flight/landing height. Therefore contact cannot be fixed solely in the renderer: the proposed support identity/height must originate in body state, flow through `record.rs` and the client archive, and replace the corresponding display-height inference. Keep this as the next unresolved seam, not an accepted food-surface implementation.
+
+[29](29-surface-query.md) accepts normalized Parry f64 casts for the prototype: metre inputs/outputs with internal millimetre geometry, no extra clearance. Preserve the curved-mesh departure regression. This does not yet choose the fly support shape or change production contact.

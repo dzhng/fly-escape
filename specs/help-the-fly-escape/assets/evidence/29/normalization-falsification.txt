@@ -1,0 +1,22 @@
+
+running 1 test
+test native_reproduction ... FAILED
+
+failures:
+
+---- native_reproduction stdout ----
+
+thread 'native_reproduction' (27951463) panicked at src/lib.rs:70:9:
+mesh departure at -0.03: Some(Object {"fraction": Number(0.0), "normal": Array [Number(1.5414961342697331e-12), Number(-1.720567854864641e-12), Number(-1.0)], "point": Array [Number(-0.028284271247461905), Number(0.06828427124746189), Number(-2.1657655113998428e-17)], "position": Array [Number(-0.03), Number(0.07028019179891598), Number(0.0)], "status": String("PenetratingOrWithinTargetDist")})
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    native_reproduction
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Compiling fly-contact-query v0.0.0 (/tmp/fly-contact-query)
+    Finished `release` profile [optimized] target(s) in 0.77s
+     Running unittests src/lib.rs (/tmp/fly-contact-query/target/release/deps/fly_contact_query-c27a0610b28b0eca)
+error: test failed, to rerun pass `--lib`

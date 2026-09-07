@@ -296,3 +296,7 @@ The detector responds to a left/right difference above0.01% of their sum, keepin
 ### Fly visibility at wide zoom (slice28)
 
 User-authorized visual exaggeration uses a common zoom-derived scale with a reversible24 CSS-pixel target span and a native-size floor. Camera projection owns the scale; rendered meshes, yellow ring, follow centre and trail gap consume it. Physics and recorded trajectories retain native dimensions. Confidence: medium; browser readability is improved and close crops unchanged, but compact swarms overlap and final furnishing contrast remains open.
+
+### Curved contact queries (slice29) — sound, medium confidence
+
+Use a collision-query library to constrain proposed movement instead of creating a second physics controller. Parry f64 is the accepted prototype candidate; its shape queries run internally in millimetres because metre-scale curved-mesh departure produced an incorrect blocking normal. Public coordinates stay in metres. This is a numerical representation choice; production dependency adoption and the fly's actual support shape remain20's responsibility.

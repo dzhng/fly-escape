@@ -6,13 +6,13 @@ Build a local, fully 3D browser game in which the player places environmental to
 
 ## Next Agent Prompt
 
-The user wants **two carefully designed levels**, natural clustered starts, and a **photorealistic warm, lived-in house**. [18](slices/18-natural-starts.md) and the neutral scale feasibility prototype [19](slices/19-proportions.md) are integrated and verified. [25](slices/25-physical-scale.md) reproduced a real sampling failure: anatomical antennae usually receive the same nearest-cell value. [26](slices/26-continuous-field-sampling.md) now removes that aliasing, with native and browser gates passing. Anatomical contrast remains below the frozen detector threshold. [27](slices/27-sensory-sensitivity.md) now validates a 0.01% model cutoff across 30 paired seeds for odor and vision. [25](slices/25-physical-scale.md) now adopts native 3 mm assets and measured physical/sensory dimensions with browser alignment verified. [28](slices/28-zoom-readable-flies.md) now adds verified zoom-dependent model enlargement while preserving native close views. Continue [20](slices/20-furnished-contact.md): establish supported food contact before detailed furnished levels.
+Continue [20 — furnishing and food contact](slices/20-furnished-contact.md), using the accepted [29 — curved-surface query feasibility](slices/29-surface-query.md) result. The missing seam is authoritative contact height/identity: today food is a planar overlap and landing height is renderer-only. Parry f64 casts pass after internal millimetre normalization; native/WASM values match. Next measure the actual fly support shape and materialize the body/record seam before detailed fruit assets.
 
-Then resolve food/furnishing contact in 20 and the separate shape, material, light and readability passes through 24. Establish one real browser room before expanding into the five-room first level (15) and larger second level (16), followed by release gates (17). Existing 01–14 art is foundation evidence, not final realism acceptance. Follow GAMEPLAY.md and the single-owner contracts below.
+Then complete20, the separate shape/material/light/readability passes21–24, the five-room first level15 and larger second level16, and release17. The user wants exactly two crafted levels in a photorealistic warm, lived-in house, with natural mixed walking/flying starts. Keep actual neural motor ownership, graph provenance, twenty flies and the established campaign criteria.
 
-The old first-level tuning/holdout and bounded WASM checks are complete **bare-room, fixed-start baseline evidence**. Do not launch new campaign seed batches until physical geometry, sensory sampling, food and starts are settled. The renderer-retention patch is integrated and verified; remaining heap behavior is classified in its evidence, with final release measurements still open. Campaign progression has a tested isolated implementation awaiting accepted content; integrate it rather than rebuilding it. Preserve graph provenance, neural motor ownership, twenty flies and the established campaign criteria.
+Physical adoption25 is accepted after continuous sampling26 and sensitivity27; wide zoom readability28 is accepted with native close pixels unchanged. Bare-room campaign evidence does not validate the new physical/furnished levels: do not restart campaign batches until contact and room geometry settle. The isolated campaign progression implementation awaits accepted content; integrate it instead of rebuilding it. Renderer retention is patched; final release performance/platform measurements remain open. Component evidence stays in each owning slice.
 
-Use the checklist for dependencies. Update this prompt and owning statuses before ending each pass; keep experiment details with their evidence. A committed pass is a checkpoint, not completion.
+A committed pass is a checkpoint. Preserve the full goal and continue through every open item.
 
 ## Global checklist and review map
 
@@ -38,6 +38,7 @@ Open the [interactive roadmap](visualizations/roadmap.html) for dependency and m
 - [x] [26 — Continuous field sampling](slices/26-continuous-field-sampling.md) — dependency: 25 reproduction; required before physical adoption and 20.
 - [x] [27 — Sensory sensitivity at anatomical scale](slices/27-sensory-sensitivity.md) — dependency: 26; diagnostic comparison before physical adoption.
 - [x] [28 — Zoom-readable fly models](slices/28-zoom-readable-flies.md) — dependency:25; user-requested visual enlargement, physics unchanged.
+- [x] [29 — Curved-surface query feasibility](slices/29-surface-query.md) — prerequisite for20 contact integration.
 - [ ] [20 — Authoritative furnishing and food contact](slices/20-furnished-contact.md) — dependencies: 19,25.
 - [ ] [21 — Recognizable household shapes](slices/21-house-shapes.md) — dependencies: 19,20.
 - [ ] [22 — Natural authored materials](slices/22-house-surfaces.md) — dependencies: 21.
