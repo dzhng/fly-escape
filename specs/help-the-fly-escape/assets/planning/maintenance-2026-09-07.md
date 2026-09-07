@@ -1,4 +1,6 @@
-# Spec maintenance checkpoint
+# Historical spec maintenance checkpoint
+
+Superseded by the [current handoff](../../README.md). This audit predates the two-level scope and physical-scale revision; its remaining-work table is historical, not an implementation instruction.
 
 Audited against root `f07d212`. This is a documentation/source audit, not new runtime verification or campaign acceptance.
 

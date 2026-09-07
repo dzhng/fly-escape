@@ -1,4 +1,4 @@
-//! Diagnostic composition for slice25. Production parameters and adapter are unchanged.
+//! Physical sampling diagnostic: defaults reproduce the bounded odor comparison.
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
 use sim::{
@@ -128,8 +128,27 @@ fn run(
 }
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<_> = std::env::args().collect();
-    if args.len() != 3 {
-        return Err("physical_sampling GRAPH_DIR OUTPUT_JSON".into());
+    if !(3..=5).contains(&args.len()) {
+        return Err("physical_sampling GRAPH_DIR OUTPUT_JSON [odor|vision] [SEEDS:1..30]".into());
+    }
+    let scenarios = match args.get(3).map(String::as_str).unwrap_or("odor") {
+        "odor" => [
+            (FieldScenario::ExcitatoryOdor, ["odorExcL", "odorExcR"]),
+            (FieldScenario::InhibitoryOdor, ["odorInhL", "odorInhR"]),
+        ],
+        "vision" => [
+            (FieldScenario::Lamp, ["visionL", "visionR"]),
+            (FieldScenario::Shade, ["visionL", "visionR"]),
+        ],
+        _ => return Err("scenario group must be odor or vision".into()),
+    };
+    let seeds = args
+        .get(4)
+        .map(|s| s.parse::<u64>())
+        .transpose()?
+        .unwrap_or(3);
+    if !(1..=30).contains(&seeds) {
+        return Err("seed count must be1..30".into());
     }
     let bytes = std::fs::read(format!("{}/graph.bin", args[1]))?;
     let manifest = std::fs::read_to_string(format!("{}/manifest.json", args[1]))?;
@@ -138,10 +157,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let start = Instant::now();
     let mut phase_scan = vec![];
     let mut rows = vec![];
-    for (scenario, groups) in [
-        (FieldScenario::ExcitatoryOdor, ["odorExcL", "odorExcR"]),
-        (FieldScenario::InhibitoryOdor, ["odorInhL", "odorInhR"]),
-    ] {
+    for (scenario, groups) in scenarios {
         let silence: Vec<_> = groups
             .iter()
             .flat_map(|id| {
@@ -183,7 +199,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 phase_scan.push(json!({"scenario":scenario,"physical":physical,"mirror":mirror,"samples":samples}));
             }
             for phase in [0., 0.125] {
-                for seed in 0..3 {
+                for seed in 0..seeds {
                     // Neutral and silenced-neutral share the same phase/seed; source has no physical force.
                     for (mirror, enabled, ablated) in [
                         (1., false, false),
@@ -210,7 +226,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             }
         }
     }
-    let report = json!({"graphHash":graph.manifest.graph_hash,"manifestHash":format!("{:x}",Sha256::digest(manifest.as_bytes())),"simulationBuildId":sim::attempt::SIMULATION_BUILD_ID,"probeSourceHash":format!("{:x}",Sha256::digest(include_bytes!("physical_sampling.rs"))),"conditions":"Existing field_lab mirrored odor fixtures settle100 fields ticks. Each Brain warms60 neutral stationary ticks (scientific control only), then100 measured ground-body ticks. Canonical sample_point/cue_currents/Brain/desired_pose/sweep; cue gain1, threshold5%, speed0.12m/s and turnGain8 unchanged. Diagnostic sampling adds measured lateral/forward coordinates without modifying FieldConfig or production APIs. Old collision radius0.08m; proposed rest AABB corner2.631336mm. Geometry/field grid/sources unchanged. No reserve/flight-mode model in this ground-moving sensory fixture.","phaseScan":phase_scan,"rows":rows,"elapsedSeconds":start.elapsed().as_secs_f64(),"campaignAccepted":false});
+    let report = json!({"graphHash":graph.manifest.graph_hash,"manifestHash":format!("{:x}",Sha256::digest(manifest.as_bytes())),"simulationBuildId":sim::attempt::SIMULATION_BUILD_ID,"sensorySourceHash":format!("{:x}",Sha256::digest(include_bytes!("../src/sensory.rs"))),"seedCount":seeds,"scenarioGroup":args.get(3).map(String::as_str).unwrap_or("odor"),"probeSourceHash":format!("{:x}",Sha256::digest(include_bytes!("physical_sampling.rs"))),"conditions":"Existing field_lab mirrored fixtures settle100 fields ticks. Each Brain warms60 neutral stationary ticks (scientific control only), then100 measured ground-body ticks. Canonical sample_point/cue_currents/Brain/desired_pose/sweep; cue gain1, threshold from fingerprinted sensory adapter source, speed0.12m/s and turnGain8 unchanged. Diagnostic sampling adds measured lateral/forward coordinates without modifying FieldConfig or production APIs. Old collision radius0.08m; proposed rest AABB corner2.631336mm. Geometry/field grid/sources unchanged. No reserve/flight-mode model in this ground-moving sensory fixture.","phaseScan":phase_scan,"rows":rows,"elapsedSeconds":start.elapsed().as_secs_f64(),"campaignAccepted":false});
     std::fs::write(&args[2], serde_json::to_string_pretty(&report)?)?;
     Ok(())
 }
