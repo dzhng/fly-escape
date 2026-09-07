@@ -21,3 +21,9 @@ Delegated: reversible asset composition, implementation naming and measurements 
 A bounded [banana study](../../../assets/food/banana/README.md) assumes a medium household fruit, approximately 22 cm long and 4 cm thick, resting on its side. Geometry is one closed baked skin including tapered ends; the grounded pivot and measured native-metre bounds survive export without stretching. Shared export/staging helpers remain the owner. This pass prepares authoring evidence only: runtime catalogue adoption, room framing and actual contact remain open gates; neutral material keeps slice 22 frozen.
 
 The [prepared evidence and review](../assets/evidence/21/banana-prepared/README.md) retain all rejected and final authoring views. Fresh critique drove end-shape refinement; the result is recognizable but still somewhat stylized at the shoulder/stalk. Browser replacement/disposal, room composition and physical food contact remain explicit integration gates.
+
+## Plant shape refinement
+
+A bounded refinement keeps the existing 0.3 × 1.05 × 0.3 m visual envelope and the planter's 0.3 m square grounded footprint / 0.4 m height. Distributed broader leaf bases, varied bends/twists and a softened upper planter rim address rigid foliage and pinched attachments. The square base remains closed to the floor; upper corner softening and shallow rim detail are appearance proposals, not new collision geometry. Neutral materials, shared lighting and fixed before/after cameras stay unchanged. Foliage and recessed-soil contact remain unadopted.
+
+[Refinement evidence](../assets/evidence/21/plant-refined/README.md) retains the original comparison and rejected candidates. Fresh critique identified leaf-overlap patches and lower planter kinks; the final prepared shape separates the leaves and confines rounding to the rim. Remaining needle-like/edge-on tips and squared leaf bases remain realism refinements, not completed slice acceptance.

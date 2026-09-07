@@ -10,7 +10,7 @@ import bpy, bmesh, json
 OUT = Path(__file__).resolve().parent
 authoring = run_path(str(OUT.parent / 'authoring.py'))
 export_static = authoring['export_static']
-EVIDENCE = OUT.parents[2] / 'specs/help-the-fly-escape/assets/evidence/21/plant-prepared'
+EVIDENCE = OUT.parents[2] / 'specs/help-the-fly-escape/assets/evidence/21/plant-refined'
 EVIDENCE.mkdir(parents=True, exist_ok=True)
 asset = bpy.data.scenes.new('Plant-Metres')
 asset.unit_settings.system = 'METRIC'
@@ -22,6 +22,7 @@ bsdf = neutral.node_tree.nodes['Principled BSDF']
 bsdf.inputs['Base Color'].default_value = (0.5,0.5,0.5,1)
 bsdf.inputs['Roughness'].default_value = 0.65
 parts = []
+topology = []
 
 def mesh_part(name, vertices, faces, smooth=False):
     mesh = bpy.data.meshes.new(name)
@@ -31,6 +32,11 @@ def mesh_part(name, vertices, faces, smooth=False):
     bm.from_mesh(mesh)
     bmesh.ops.remove_doubles(bm, verts=list(bm.verts), dist=1e-7)
     bmesh.ops.recalc_face_normals(bm, faces=list(bm.faces))
+    assert all(edge.is_manifold for edge in bm.edges), name
+    assert all(face.calc_area()>1e-12 for face in bm.faces), name
+    assert bm.calc_volume(signed=True)>0, name
+    topology.append({'part':name,'vertices':len(bm.verts),'faces':len(bm.faces),
+                     'closedManifold':True,'signedVolumeM3':bm.calc_volume(signed=True)})
     bm.to_mesh(mesh)
     bm.free()
     mesh.materials.append(neutral)
@@ -42,40 +48,51 @@ def mesh_part(name, vertices, faces, smooth=False):
     parts.append(obj)
     return obj
 
-# Full floor rectangle with no feet or tapered base: no apparent passable gap.
-# Top opening is a shallow recess, contained inside the same closed solid.
+# Keep the full square floor outline; only the upper planter corners soften.
+# The shallow collar/reveal breaks the box silhouette without adding feet.
 verts = []
-for extent,z in [(0.15,0),(0.15,0.4),(0.133,0.4),(0.133,0.378)]:
-    verts.extend([(x*extent,y*extent,z) for x,y in [(-1,-1),(1,-1),(1,1),(-1,1)]])
-faces = [(3,2,1,0),(12,13,14,15)]
-for layer in range(3):
-    for i in range(4):
-        j=(i+1)%4
-        faces.append((layer*4+i,layer*4+j,(layer+1)*4+j,(layer+1)*4+i))
+ring_profile = [(.15,0,0),(.15,0,.344),(.148,0,.348),(.148,.009,.355),
+                (.15,.012,.359),(.15,.012,.396),(.146,.010,.4),
+                (.134,.009,.4),(.131,.007,.396),(.131,.007,.378)]
+for extent,radius,z in ring_profile:
+    for corner in range(4):
+        angle=corner*pi/2
+        cx=cos(angle+pi/4)*(extent-radius)*2**.5
+        cy=sin(angle+pi/4)*(extent-radius)*2**.5
+        for j in range(5):
+            theta=angle+j*pi/8
+            verts.append((cx+radius*cos(theta),cy+radius*sin(theta),z))
+stride=20
+faces = [tuple(reversed(range(stride))),tuple(range((len(ring_profile)-1)*stride,len(verts)))]
+for layer in range(len(ring_profile)-1):
+    for i in range(stride):
+        j=(i+1)%stride
+        faces.append((layer*stride+i,layer*stride+j,(layer+1)*stride+j,(layer+1)*stride+i))
 mesh_part('ClosedSquarePlanter',verts,faces)
 
 # Individual closed leaves have curved centre lines, cupped cross-sections and
 # real thickness; no alpha cards. Deliberate uneven lengths avoid a radial fan.
 for i,(angle,length,lean,width) in enumerate([
-    (0,0.67,0.012,0.035),(2.0,0.59,0.035,0.039),
-    (4.2,0.56,0.043,0.032),(0.8,0.47,0.076,0.038),
-    (2.7,0.44,0.072,0.035),(4.8,0.40,0.074,0.035),
-    (1.6,0.34,0.085,0.033),(3.6,0.30,0.093,0.034),
-    (5.7,0.28,0.087,0.031)]):
+    (0,0.673,0.025,0.040),(0.85,0.42,0.047,0.040),
+    (1.9,0.55,0.031,0.041),(2.8,0.32,0.055,0.038),
+    (3.7,0.60,0.027,0.039),(4.65,0.38,0.048,0.040),
+    (5.6,0.47,0.040,0.041)]):
     vertices=[]
-    rows,cols=20,6
+    rows,cols=32,8
     for side in [-1,1]:
         for r in range(rows+1):
             t=r/rows
-            radius=0.018 + (i%3)*0.009 + lean*sin(t*pi/2)
-            breadth=width*1.7*(0.28+0.72*sin(pi*t)**0.65)*(1-t**8)
+            radius=.060 + lean*(t*t*(3-2*t))+.016*sin(pi*t)
+            sweep=0.011*sin(pi*t)*(-1 if i%2 else 1)
+            twist=angle+(.45 if i%2 else -.4)*sin(pi*t)+.15*((i%3)-1)
+            breadth=width*1.7*(0.52+0.48*sin(pi*t)**0.65)*(1-t**8)
             for c in range(cols+1):
                 u=2*c/cols-1
                 across=u*breadth/2
-                cup=(u*u-0.5)*breadth*0.14
-                vertices.append((cos(angle)*(radius+cup+side*0.0007*(1-t))-sin(angle)*across,
-                    sin(angle)*(radius+cup+side*0.0007*(1-t))+cos(angle)*across,
-                    0.38+length*t))
+                cup=(u*u-0.5)*breadth*0.18
+                vertices.append((cos(angle)*radius-sin(angle)*sweep+cos(twist)*(cup+side*0.001*(1-t)**.65)-sin(twist)*across,
+                    sin(angle)*radius+cos(angle)*sweep+sin(twist)*(cup+side*0.001*(1-t)**.65)+cos(twist)*across,
+                    0.377+length*(t-.065*sin(pi*t))))
     faces=[]
     stride=(rows+1)*(cols+1)
     for side in range(2):
@@ -92,6 +109,7 @@ for i,(angle,length,lean,width) in enumerate([
 size = [0.3,1.05,0.3]
 bounds = export_static(asset, OUT/'plant.glb',size)
 (EVIDENCE/'roundtrip.json').write_text(json.dumps({'visualEnvelopeMetres':size,'bounds':bounds,'physicalPlanterMetres':[0.3,0.4,0.3],'integration':'not adopted'},indent=2)+'\n')
+(EVIDENCE/'authored-topology.json').write_text(json.dumps(topology,indent=2)+'\n')
 preview = authoring['neutral_stage']('Plant', parts, neutral, ortho_scale=1.8, ground_extent=200)
 authoring['render_views'](preview, EVIDENCE, target=(0,0,0.525), views=[
     ('three-quarter',(1.8,-2.8,1.8)),('front',(0,-3,1.4)),('rear',(-1.8,2.8,1.8))])
