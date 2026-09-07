@@ -106,7 +106,7 @@ assert volume>0
 bm.to_mesh(mesh)
 bm.free()
 for polygon in mesh.polygons: polygon.use_smooth=polygon.index not in cap_faces
-mesh.materials.append(neutral)
+run_path(str(OUT.parent/'skin.py'))['apply_skin'](mesh,'banana')
 banana=bpy.data.objects.new('Banana',mesh)
 scene.collection.objects.link(banana)
 banana['authorship']='Original procedural Blender geometry; no downloaded assets'

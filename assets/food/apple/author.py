@@ -1,4 +1,4 @@
-"""Neutral edible-surface geometry in metres; preserves other Blender scenes."""
+"""Edible-surface geometry and skin in metres; preserves other Blender scenes."""
 from pathlib import Path
 import bpy
 import math
@@ -7,12 +7,6 @@ OUT = Path(__file__).resolve().parent
 scene = bpy.data.scenes.new('Apple-Contact-Metres')
 scene.unit_settings.system = 'METRIC'
 scene.unit_settings.scale_length = 1
-material = bpy.data.materials.new('Apple-Neutral-Shape')
-material.use_nodes = True
-material.diffuse_color = (0.2462013267, 0.2462013267, 0.2462013267, 1)
-material.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value = (0.2462013267, 0.2462013267, 0.2462013267, 1)
-material.node_tree.nodes['Principled BSDF'].inputs['Roughness'].default_value = 0.7
-
 # Single poles avoid zero-area faces in the physical triangle export.
 segments, rings = 40, 20
 vertices = [(0, 0, 0.077)]
@@ -43,8 +37,9 @@ for polygon in mesh.polygons:
     polygon.use_smooth = True
 apple = bpy.data.objects.new('Apple', mesh)
 scene.collection.objects.link(apple)
-mesh.materials.append(material)
-apple['asset_units'] = 'metres; grounded centre pivot; neutral shape only'
+from runpy import run_path
+run_path(str(OUT.parent/'skin.py'))['apply_skin'](mesh,'apple')
+apple['asset_units'] = 'metres; grounded centre pivot; vertex-colour skin'
 
 # No separate stem/leaf collider: this first contact asset is the edible body.
 previous = bpy.context.window.scene
@@ -58,4 +53,4 @@ try:
     bpy.data.libraries.write(str(OUT / 'apple.blend'), {scene}, fake_user=True)
 finally:
     bpy.context.window.scene = previous
-print({'asset': str(OUT / 'apple.glb'), 'triangles': len(faces), 'shape_only': True})
+print({'asset': str(OUT / 'apple.glb'), 'triangles': len(faces), 'skin_material': True})
