@@ -3,6 +3,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import appleUrl from '../../../assets/food/apple/apple.glb?url';
 import { WorldView, loadFlyModel } from '@fly-escape/game-renderer';
 import data from '../../../assets/proportions/contact-fixture.json';
+import { contactGeometry } from '../../../packages/game-renderer/src/contact-geometry';
 import flyUrl from '../../../assets/fly/fly.glb?url';
 
 /** Fixed core query output isolates model attachment from neural motion and food behavior. */
@@ -23,21 +24,9 @@ export async function contactWorkbench() {
   floor.position.y = -0.005;
   scene.add(floor);
   const { scene: fruit } = await new GLTFLoader().loadAsync(appleUrl);
-  fruit.updateMatrixWorld(true);
-  const vertices: number[][] = [];
-  const triangles: number[][] = [];
+  const { vertices, triangles } = contactGeometry(fruit);
   fruit.traverse(object => {
-    if (!(object instanceof THREE.Mesh)) return;
-    const offset = vertices.length;
-    const positions = object.geometry.getAttribute('position');
-    for (let i = 0; i < positions.count; i++)
-      vertices.push(new THREE.Vector3().fromBufferAttribute(positions, i)
-        .applyMatrix4(object.matrixWorld).toArray());
-    const index = object.geometry.index;
-    const count = index?.count ?? positions.count;
-    for (let i = 0; i < count; i += 3)
-      triangles.push([0, 1, 2].map(j => offset + (index ? index.getX(i + j) : i + j)));
-    object.castShadow = object.receiveShadow = true;
+    if (object instanceof THREE.Mesh) object.castShadow = object.receiveShadow = true;
   });
   if (JSON.stringify(vertices) !== JSON.stringify(data.surface.vertices) ||
       JSON.stringify(triangles) !== JSON.stringify(data.surface.triangles))
