@@ -33,3 +33,11 @@ A fresh directory and empty Bun cache installed the frozen lockfile successfully
 Decision audit: dependency-local ownership avoids a hidden-texture application wrapper or global broadcast. Source, ES module and CJS are patched together because package exports, not source-file presence, determine the running implementation. Exact pixel equality is used here because this lifecycle-only repair intentionally changes no visual variable. Full-attempt/browser release gates remain separate.
 
 Merged root verification: frozen Bun install, typecheck, 30 renderer tests and both production app builds pass. The two-view production fixture also preserves identical survivor pixels and resources after disposal (69 draws, 5,900 triangles, 11 geometries, 3 textures), with no browser errors. Remaining heap-growth investigation is unchanged.
+
+## Residual heap classification
+
+A separate read-only comparison of the clean patched six- and twenty-cycle snapshots found live-node self sizes rising 19,586,324 → 20,543,967 bytes (+957,643). This metric differs from CDP used-heap bytes. Ordinary objects grew only 24 bytes; closure count stayed 11,349 and normalized context counts stayed constant. Both retained one attached world canvas and one LUT listener, with no detached world canvases.
+
+Most additional code bytes (+541,872) are compiled instruction streams and deoptimization metadata. Native growth includes 280 NetworkResourcesData records retained by the DevTools Network inspector, plus browser performance-resource and layout-shift timeline buffers; those timeline objects are normal browser owners, not proof of retired application views.
+
+The current renderer's 45 WebGLBindingStates program-map backing stores grew from 49,000 to 151,060 bytes while map count stayed fixed. Concrete retainers run through the current canvas/context and binding-state closure. Three uses globally increasing numeric WebGLProgram IDs as object keys; the observed backing-store capacities are consistent with sparse numeric element allocation in the current maps, not retained old renderer maps. This is an inference from two snapshots, not proof of eventual bounds. Final release measurements still need to establish warm-run behavior before making a full memory claim. Do not add another dependency patch on this evidence alone.

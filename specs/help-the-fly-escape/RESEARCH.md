@@ -50,3 +50,7 @@ The [Three.js color-management manual](https://threejs.org/manual/en/color-manag
 The [official Blender glTF exporter](https://github.com/KhronosGroup/glTF-Blender-IO/blob/main/README.md) remains the runtime asset boundary. Validate actual exported material channels and bounds through the existing browser asset workbench; procedural Blender appearance alone does not prove portable runtime appearance. Blender MCP scene inspection succeeded on 7 September; use separate authoring scenes so existing source assets survive.
 
 Scale, supported fruit contact and furnished occlusion are local reproduction questions, not solved by choosing PBR. The [revised synthesis](assets/planning/realism-synthesis.md) assigns them independent passes before campaign validation. Prior bare-room fixed-start outcomes do not establish difficulty after these physical changes.
+
+## Anatomical sampling at household scale
+
+The millimetre-scale reproduction must revisit physical sampling, not assume the original spike's antenna offset is anatomy. Primary studies of [bilateral olfactory tracking in flight](https://pmc.ncbi.nlm.nih.gov/articles/PMC2726901/), [rapid odor lateralization](https://pmc.ncbi.nlm.nih.gov/articles/PMC3590906/) and [walking olfactory navigation](https://elifesciences.org/articles/37815) provide experimental context for a targeted source review in 25. They do not validate our adapter cutoff, field grid or motor gains. Keep those model parameters distinct from measured biological anatomy and prove any correction through the actual graph and controls.

@@ -1,6 +1,6 @@
 # 20 — Authoritative furnishing and food contact
 
-Status: pending. Dependencies: 19.
+Status: pending. Dependencies: 19,25.
 
 ## Contract, seam and review surface
 
