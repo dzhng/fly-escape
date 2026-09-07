@@ -105,12 +105,14 @@ run_path(str(OUT.parent/'skin.py'))['apply_skin'](mesh,'banana')
 banana=bpy.data.objects.new('Banana',mesh)
 scene.collection.objects.link(banana)
 banana['authorship']='Original procedural Blender geometry; no downloaded assets'
-banana['shape_preparation_only']=True
 size=[maxs[0]-mins[0],maxs[2]-mins[2],maxs[1]-mins[1]]
 bounds=shared['export_static'](scene,OUT/'banana.glb',size)
 (EVIDENCE/'roundtrip.json').write_text(json.dumps({'sizeMetres':size,'roundtripBounds':bounds,
-    'vertices':len(vertices),'triangles':len(faces),'closedManifold':True,'signedVolumeM3':volume,
-    'runtimeAdoption':False},indent=2)+'\n')
+    'vertices':len(vertices),'triangles':len(faces),'closedManifold':True,'signedVolumeM3':volume},indent=2)+'\n')
+neutral=bpy.data.materials.new('Banana-Stage-Ground')
+neutral.use_nodes=True
+neutral.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value=(.45,.45,.45,1)
+neutral.node_tree.nodes['Principled BSDF'].inputs['Roughness'].default_value=.8
 preview=shared['neutral_stage']('Banana',[banana],neutral,ortho_scale=.34,ground_extent=200)
 shared['render_views'](preview,EVIDENCE,target=(0,0,.02),views=[
     ('three-quarter',(.28,-.40,.35)),('top',(0,0,.6)),('end',(.45,-.25,.24)),('blossom',(-.45,-.25,.24))])
