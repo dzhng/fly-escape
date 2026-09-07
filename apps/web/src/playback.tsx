@@ -170,6 +170,7 @@ export function AttemptPlayback({
       lastSpeed = 0;
     let requestedAt = performance.now();
     let lastDiagnosticAt = -Infinity;
+    let renderFailed = false;
     const fail = (message: string) => {
       console.error("[Fly escape] attempt failed", { message, spec: run.current?.info.spec });
       if (run.current) {
@@ -285,6 +286,7 @@ export function AttemptPlayback({
       lastState = "";
       lastSpeed = 0;
       setError("");
+      renderFailed = false;
       setRequested(true);
       setSelected(0);
       lastFrameAt = null;
@@ -305,116 +307,126 @@ export function AttemptPlayback({
     restart.current();
     const draw = (now: number) => {
       const current = run.current;
-      if (current && !current.failed) {
+      if (current) {
         try {
           const rate = productionRate(current);
-          if (current.assetsReady)
-            current.clock.update(now, {
-              computedTick: current.archive.computedTick,
-              complete: current.archive.complete,
-              productionRate: rate,
-            });
-          // Preserve native keyboard increments between React publications.
-          if (seekInput.current) seekInput.current.value = String(current.clock.cursorTick);
-          if (current.clock.state === "playing" && current.firstPlayAt === null)
-            current.firstPlayAt = now;
-          if (current.previousState === "playing" && current.clock.state === "buffering")
-            current.underruns++;
-          current.previousState = current.clock.state;
-          const poses = sample(current);
-          scene.current?.setPoses(poses);
-          scene.current?.setTrails(
-            recordedTrails(
-              current.trailHistory ?? [],
+          if (!current.failed) {
+            if (current.assetsReady)
+              current.clock.update(now, {
+                computedTick: current.archive.computedTick,
+                complete: current.archive.complete,
+                productionRate: rate,
+              });
+            // Preserve native keyboard increments between React publications.
+            if (seekInput.current) seekInput.current.value = String(current.clock.cursorTick);
+            if (current.clock.state === "playing" && current.firstPlayAt === null)
+              current.firstPlayAt = now;
+            if (current.previousState === "playing" && current.clock.state === "buffering")
+              current.underruns++;
+            current.previousState = current.clock.state;
+            const poses = sample(current);
+            scene.current?.setPoses(poses);
+            scene.current?.setTrails(
+              recordedTrails(
+                current.trailHistory ?? [],
+                current.clock.cursorTick,
+                poses,
+              ),
               current.clock.cursorTick,
-              poses,
-            ),
-            current.clock.cursorTick,
-          );
-          if (!document.hidden) {
-            if (lastFrameAt !== null) current.frameIntervals.add(now - lastFrameAt);
+            );
+          }
+          // Resizing clears the canvas even when simulation has stopped.
+          if (!document.hidden && !renderFailed) {
+            if (!current.failed && lastFrameAt !== null) current.frameIntervals.add(now - lastFrameAt);
             lastFrameAt = now;
-            scene.current?.render(current.clock.cursorTick * TICK_SECONDS);
+            try {
+              scene.current?.render(current.clock.cursorTick * TICK_SECONDS);
+            } catch (cause) {
+              renderFailed = true;
+              throw cause;
+            }
             if (interactionAt.current !== null) {
               current.interactions.add(performance.now() - interactionAt.current);
               interactionAt.current = null;
             }
           }
-          const progressDue = now - lastPublished >= 100;
-          const sampleTick = current.lower?.tick ?? 0;
-          if (
-            progressDue ||
-            sampleTick !== lastSampleTick ||
-            current.clock.state !== lastState ||
-            current.clock.speed !== lastSpeed
-          ) {
-            const heap =
-              (
-                performance as Performance & {
-                  memory?: { usedJSHeapSize: number };
-                }
-              ).memory?.usedJSHeapSize ?? null;
-            const report = {
-              spec: current.info.spec,
-              initialBodies: current.info.initialBodies,
-              userAgent: navigator.userAgent,
-              viewport: [innerWidth, innerHeight],
-              devicePixelRatio,
-              cursorTick: current.clock.cursorTick,
-              sampleTick: current.lower?.tick ?? 0,
-              computedTick: current.archive.computedTick,
-              state: current.clock.state,
-              speed: current.clock.speed,
-              complete: current.archive.complete,
-              initialWaitMs:
-                current.firstPlayAt === null ? null : current.firstPlayAt - current.requestedAt,
-              warmWaitMs:
-                current.firstPlayAt === null ? null : current.firstPlayAt - current.readyAt,
-              productionMs: current.productionMs,
-              activeNeuralSteps: current.activeNeuralSteps,
-              activeEquivalentProductionRate: rate,
-              underruns: current.underruns,
-              frameIntervals: current.frameIntervals.report(),
-              interactions: {
-                ...current.interactions.report(),
-                measurement:
-                  "control callback to synchronous scene render completion; excludes browser paint",
-              },
-              memory: {
-                wasmBytes: current.wasmBytes,
-                archiveOwnedChunkBytes: current.archive.ownedBytes,
-                archiveBoundBytes: current.info.archiveBytes,
-                graphBytes: current.info.graphBytes,
-                brainStateBytes: current.info.brainStateBytes,
-                observedJSHeapBytes: heap,
-                note: "WASM includes graph and brain state; do not add those again. Download report includes an on-demand GPU memory estimate.",
-              },
-              renderer: scene.current?.statistics,
-              camera: scene.current?.cameraState,
-              result: current.archive.result,
-            };
-            // Keep diagnostics available without a frame-by-frame console stream.
-            const ended = current.clock.state === "ended" && lastState !== "ended";
-            if (ended || (now-lastDiagnosticAt >= 1000 && current.clock.state !== lastState)
-              || (current.clock.state === "playing" && now-lastDiagnosticAt >= 10000)) {
-              console.info("[Fly escape] playback", ended ? {
-                ...report, renderer: { ...report.renderer, gpu: scene.current?.estimateGpuMemory() },
-              } : report);
-              lastDiagnosticAt = now;
+          if (!current.failed) {
+            const progressDue = now - lastPublished >= 100;
+            const sampleTick = current.lower?.tick ?? 0;
+            if (
+              progressDue ||
+              sampleTick !== lastSampleTick ||
+              current.clock.state !== lastState ||
+              current.clock.speed !== lastSpeed
+            ) {
+              const heap =
+                (
+                  performance as Performance & {
+                    memory?: { usedJSHeapSize: number };
+                  }
+                ).memory?.usedJSHeapSize ?? null;
+              const report = {
+                spec: current.info.spec,
+                initialBodies: current.info.initialBodies,
+                userAgent: navigator.userAgent,
+                viewport: [innerWidth, innerHeight],
+                devicePixelRatio,
+                cursorTick: current.clock.cursorTick,
+                sampleTick: current.lower?.tick ?? 0,
+                computedTick: current.archive.computedTick,
+                state: current.clock.state,
+                speed: current.clock.speed,
+                complete: current.archive.complete,
+                initialWaitMs:
+                  current.firstPlayAt === null ? null : current.firstPlayAt - current.requestedAt,
+                warmWaitMs:
+                  current.firstPlayAt === null ? null : current.firstPlayAt - current.readyAt,
+                productionMs: current.productionMs,
+                activeNeuralSteps: current.activeNeuralSteps,
+                activeEquivalentProductionRate: rate,
+                underruns: current.underruns,
+                frameIntervals: current.frameIntervals.report(),
+                interactions: {
+                  ...current.interactions.report(),
+                  measurement:
+                    "control callback to synchronous scene render completion; excludes browser paint",
+                },
+                memory: {
+                  wasmBytes: current.wasmBytes,
+                  archiveOwnedChunkBytes: current.archive.ownedBytes,
+                  archiveBoundBytes: current.info.archiveBytes,
+                  graphBytes: current.info.graphBytes,
+                  brainStateBytes: current.info.brainStateBytes,
+                  observedJSHeapBytes: heap,
+                  note: "WASM includes graph and brain state; do not add those again. Download report includes an on-demand GPU memory estimate.",
+                },
+                renderer: scene.current?.statistics,
+                camera: scene.current?.cameraState,
+                result: current.archive.result,
+              };
+              // Keep diagnostics available without a frame-by-frame console stream.
+              const ended = current.clock.state === "ended" && lastState !== "ended";
+              if (ended || (now-lastDiagnosticAt >= 1000 && current.clock.state !== lastState)
+                || (current.clock.state === "playing" && now-lastDiagnosticAt >= 10000)) {
+                console.info("[Fly escape] playback", ended ? {
+                  ...report, renderer: { ...report.renderer, gpu: scene.current?.estimateGpuMemory() },
+                } : report);
+                lastDiagnosticAt = now;
+              }
+              lastPublished = now;
+              setDisplay({
+                cursor: current.clock.cursorTick,
+                computed: current.archive.computedTick,
+                state: current.clock.state,
+                speed: current.clock.speed,
+                frame: current.lower,
+                rate,
+                report: JSON.stringify(report, null, 2),
+              });
+              lastSampleTick = sampleTick;
+              lastState = current.clock.state;
+              lastSpeed = current.clock.speed;
             }
-            lastPublished = now;
-            setDisplay({
-              cursor: current.clock.cursorTick,
-              computed: current.archive.computedTick,
-              state: current.clock.state,
-              speed: current.clock.speed,
-              frame: current.lower,
-              rate,
-              report: JSON.stringify(report, null, 2),
-            });
-            lastSampleTick = sampleTick;
-            lastState = current.clock.state;
-            lastSpeed = current.clock.speed;
           }
         } catch (cause) {
           observer.cancel();
@@ -478,7 +490,7 @@ export function AttemptPlayback({
           <span className="eyebrow">
             {input ? "Fly escape · attempt" : "Fly escape · playback lab"}
           </span>
-          <h1>{input ? "Off they go!" : "Twenty lives, one shared clock."}</h1>
+          <h1>{input ? (error ? "Flight interrupted" : "Off they go!") : "Twenty lives, one shared clock."}</h1>
         </div>
         {!input && <a href="/lab/lifecycle">Lifecycle lab</a>}
       </header>
@@ -493,7 +505,7 @@ export function AttemptPlayback({
             </span>
           </div>
           <div className="playback-counters" aria-label="Outcomes at playback time">
-            <b data-testid="active-count">{FLY_COUNT - terminalCount} active</b>
+            <b data-testid="active-count">{FLY_COUNT - terminalCount} {error ? "paused" : "active"}</b>
             {Object.entries(counts).map(([name, count]) => (
               <span key={name} data-testid={`outcome-${name}`}>
                 {count} {name === "timedOut" ? "timed out" : name}
@@ -504,7 +516,7 @@ export function AttemptPlayback({
             <div className="playback-status" role="status" data-testid="playback-status">
               <strong>
                 {error
-                  ? "Needs attention"
+                  ? (input ? "Flight interrupted" : "Needs attention")
                   : !worldReady && info
                     ? "Loading world assets…"
                     : display.state === "loading"
@@ -579,7 +591,7 @@ export function AttemptPlayback({
             </button>
             {onReturn ? (
               <button onClick={onReturn}>
-                {run.current?.archive.complete ? "Retry — edit setup" : "Cancel attempt"}
+                {error ? "Back to setup" : run.current?.archive.complete ? "Retry — edit setup" : "Cancel attempt"}
               </button>
             ) : (
               <button onClick={() => restart.current()}>New attempt</button>
@@ -602,7 +614,7 @@ export function AttemptPlayback({
           )}
           {error && (
             <p role="alert" className="error">
-              {error}
+              {input ? "This flight was interrupted. You can try again from setup." : error}
             </p>
           )}
           {info && (

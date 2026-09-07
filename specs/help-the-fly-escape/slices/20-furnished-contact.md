@@ -1,6 +1,6 @@
 # 20 — Authoritative furnishing and food contact
 
-Status: in progress. Query replication29, the core query kernel, fixed orientation binding and physical floor height/replay pass. Support/orientation recording is integrated; continuous curved motion and20-brain integration remain open. Dependencies: 19,25,26 and the measured physical-adapter verdict.
+Status: in progress. Native hull motion, support/orientation recording and curved replay are integrated. The remaining acceptance gate is a real curved-fruit meal with replenishment control and close-contact visual verification; successful component tests do not close that gate. Dependencies: 19,25,26 and the measured physical-adapter verdict.
 
 ## Contract, seam and review surface
 
@@ -54,3 +54,5 @@ The [authored apple preparation](../assets/evidence/20/authored-apple/README.md)
 4. **Curved playback and integration.** Prevent straight interpolation between supported samples from cutting through curved fruit. Choose one core-owned sampling/path representation and prove its worst-case archive/work bounds before implementation; a second renderer physics implementation is not permitted. Test forward play, pause, reverse seek and support transitions in close/extra-close/context/Overview. Then run twenty real brains and compare ordinary versus replenishment-disabled attempts with identical food, taste, odor and seeds. Only this gate accepts20 and unlocks final furnished content/calibration.
 
 These are checkpoints within20, not smaller substitutes for its original scope. Retain the two-level game and later art, visibility, difficulty and release gates.
+
+[Matched feeding benefit](../assets/evidence/20/feeding-benefit/README.md) confirms the current actual graph and production client extend lifetime through replenishment on the controlled flat patch. Seven of twenty independent streams feed and benefit; the others remain unchanged. Native curved-fruit meal opportunity and campaign attraction remain unverified.

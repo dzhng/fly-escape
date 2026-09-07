@@ -39,3 +39,5 @@ Must stay green: all accepted dependency contracts and their focused fixtures; n
 [Repeated actual attempts](../assets/evidence/17/retry-resources/review.md) preserve a single Worker and stable WASM allocation but retain old renderers through a Three.js shared lighting texture. The dependency ownership repair and repeated-disposal/two-live-view checks are recorded above; remaining heap and final release coverage remain open. The patch must keep the current library version and lighting appearance; final production metrics remain a separate gate.
 
 [Shared skeleton ownership](../assets/evidence/17/skeleton-sharing/README.md) removes duplicate bone textures within each cloned fly while retaining independent animation between flies. This closes a bounded resource amplification defect, not the final twenty-fly performance gate.
+
+[Failure-state recovery](../assets/evidence/17/failure-recovery/README.md) verifies retained scene redraw after producer failure, bounded renderer-error handling and a fresh attempt after either fault. Final platform, performance and native-trap resource coverage remain separate gates.
