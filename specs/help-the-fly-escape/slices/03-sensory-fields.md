@@ -34,6 +34,6 @@ Human checkpoint is non-blocking: open shots with [preview-shots](../../../.agen
 
 Delegated: Grid resolution, gains and source radii within stable/convergent solver and documented neural mapping. A cue that fails stays unavailable to level authors.
 
-Human feedback that changes this slice: Evidence may change which visual cue enters level 3; preserve the five-level structure.
+Human feedback that changes this slice: Evidence may change which visual cues enter the two authored levels. The physical-scale sensitivity revision in27 must pass before those cues are recalibrated for final content.
 
 Must stay green: all accepted dependency contracts and their focused fixtures; neural motor ownership, real-data provenance, bounded work and the [global invariants](../README.md#standing-gates-and-ownership). Do not broaden testing without a new failure or changed consumer. Record evidence under `assets/evidence/03/` and update the README handoff before ending the pass. Unlisted material decisions require a spec update.
