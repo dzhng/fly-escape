@@ -1,0 +1,567 @@
+{
+  "cases": [
+    {
+      "acceptedIntervals": 8,
+      "canonicalRotation": {
+        "angle": 0.08001605671735398,
+        "axis": [
+          -0.1082703061931095,
+          -0.02002705834431191,
+          -0.9939197441096156
+        ],
+        "start": [
+          0.0,
+          0.4199209016237868,
+          0.0,
+          0.9075607067185455
+        ]
+      },
+      "certifiedPrefix": 3.0517578125e-05,
+      "elapsedMs": 26.158666,
+      "name": "upright-seam-turn",
+      "nodes": 33,
+      "peakStack": 19,
+      "projections": 4999998,
+      "reason": "work-budget",
+      "request": {
+        "endFraction": 0.19999999999999998,
+        "neuralTickTarget": {
+          "heading": 0.7041000000000001,
+          "position": {
+            "x": 0.02,
+            "z": -0.003
+          }
+        },
+        "planarDisplacement": [
+          0.0,
+          0.0
+        ],
+        "requestedEndpointRoot": [
+          0.02,
+          0.07519865106464564,
+          -0.003
+        ],
+        "requestedHeading": 0.704084,
+        "requestedRotation": [
+          0.012763388302575904,
+          0.4188578920686125,
+          -0.037897793705280215,
+          0.9071708325354979
+        ],
+        "startFraction": 0.0,
+        "startHeading": 0.70408,
+        "startRoot": [
+          0.02,
+          0.0753452509002413,
+          -0.003
+        ],
+        "startRotation": [
+          0.0,
+          0.4199209016237868,
+          0.0,
+          0.9075607067185455
+        ],
+        "surface": 0,
+        "tickSeconds": 0.1
+      },
+      "triangle": 201,
+      "unresolvedInterval": [
+        3.0517578125e-05,
+        3.814697265625e-05
+      ],
+      "vertex": 26
+    },
+    {
+      "acceptedIntervals": 10,
+      "canonicalRotation": {
+        "angle": 0.08019383237314891,
+        "axis": [
+          -0.1715084154951708,
+          -0.06946710950040817,
+          -0.9827304737882071
+        ],
+        "start": [
+          0.0,
+          0.4199209016237868,
+          0.0,
+          0.9075607067185455
+        ]
+      },
+      "certifiedPrefix": 3.814697265625e-05,
+      "elapsedMs": 26.213416,
+      "name": "upright-ordinary-turn",
+      "nodes": 36,
+      "peakStack": 19,
+      "projections": 4999757,
+      "reason": "work-budget",
+      "request": {
+        "endFraction": 0.19999999999999998,
+        "neuralTickTarget": {
+          "heading": 0.7240800000000001,
+          "position": {
+            "x": 0.02,
+            "z": -0.003
+          }
+        },
+        "planarDisplacement": [
+          0.0,
+          0.0
+        ],
+        "requestedEndpointRoot": [
+          0.02,
+          0.07519896482594243,
+          -0.003
+        ],
+        "requestedHeading": 0.70808,
+        "requestedRotation": [
+          0.01030273836013545,
+          0.41705612270137477,
+          -0.03863936374958698,
+          0.9080005747072
+        ],
+        "startFraction": 0.0,
+        "startHeading": 0.70408,
+        "startRoot": [
+          0.02,
+          0.0753452509002413,
+          -0.003
+        ],
+        "startRotation": [
+          0.0,
+          0.4199209016237868,
+          0.0,
+          0.9075607067185455
+        ],
+        "surface": 0,
+        "tickSeconds": 0.1
+      },
+      "triangle": 201,
+      "unresolvedInterval": [
+        3.814697265625e-05,
+        4.57763671875e-05
+      ],
+      "vertex": 26
+    },
+    {
+      "acceptedIntervals": 10,
+      "canonicalRotation": {
+        "angle": 0.08019555813167785,
+        "axis": [
+          -0.11000891660997222,
+          -0.06977454371021906,
+          -0.9914784673992324
+        ],
+        "start": [
+          0.0,
+          0.4199209016237868,
+          0.0,
+          0.9075607067185455
+        ]
+      },
+      "certifiedPrefix": 1.9073486328125e-05,
+      "elapsedMs": 26.293125,
+      "name": "upright-walk-turn",
+      "nodes": 37,
+      "peakStack": 20,
+      "projections": 4999756,
+      "reason": "work-budget",
+      "request": {
+        "endFraction": 0.19999999999999998,
+        "neuralTickTarget": {
+          "heading": 0.7240800000000001,
+          "position": {
+            "x": 0.02149821837944484,
+            "z": -0.001675106914693235
+          }
+        },
+        "planarDisplacement": [
+          0.00029964367588896854,
+          0.0002649786170613529
+        ],
+        "requestedEndpointRoot": [
+          0.02029964367588897,
+          0.07504808786949752,
+          -0.002735021382938647
+        ],
+        "requestedHeading": 0.70808,
+        "requestedRotation": [
+          0.012687657244553846,
+          0.41704486892692727,
+          -0.03792321455698378,
+          0.9080057436233715
+        ],
+        "startFraction": 0.0,
+        "startHeading": 0.70408,
+        "startRoot": [
+          0.02,
+          0.0753452509002413,
+          -0.003
+        ],
+        "startRotation": [
+          0.0,
+          0.4199209016237868,
+          0.0,
+          0.9075607067185455
+        ],
+        "surface": 0,
+        "tickSeconds": 0.1
+      },
+      "triangle": 201,
+      "unresolvedInterval": [
+        1.9073486328125e-05,
+        2.288818359375e-05
+      ],
+      "vertex": 26
+    },
+    {
+      "name": "aligned-idle",
+      "status": "no-face-vertex-start"
+    },
+    {
+      "name": "aligned-turn",
+      "status": "no-face-vertex-start"
+    },
+    {
+      "name": "aligned-walk",
+      "status": "no-face-vertex-start"
+    }
+  ],
+  "scope": "Six actual Body::step requests intercepted before acceptance in an isolated diagnostic. Upright paths use the canonical normalized half-angle polynomial quaternion expression. Face-only chart discovery cannot handle the three aligned starts. Geometric interval experiment only: caller-root preservation, complete floating evaluator error and production replay are not established. Exact rounded-mm geometry, one apple, no clearance. Budget exhaustion is unresolved, never physical blockage. Formal certificate expansion stopped after this workload result.",
+  "requests": [
+    {
+      "captureStop": "diagnostic captured requested motion before acceptance",
+      "name": "upright-seam-turn",
+      "neural": {
+        "groups": [],
+        "motor": {
+          "flightThrust": 0.0,
+          "flightTurn": 0.0,
+          "thrust": 0.0,
+          "turn": 0.0002
+        },
+        "spikeCount": 0
+      },
+      "request": {
+        "endFraction": 0.19999999999999998,
+        "neuralTickTarget": {
+          "heading": 0.7041000000000001,
+          "position": {
+            "x": 0.02,
+            "z": -0.003
+          }
+        },
+        "planarDisplacement": [
+          0.0,
+          0.0
+        ],
+        "requestedEndpointRoot": [
+          0.02,
+          0.07519865106464564,
+          -0.003
+        ],
+        "requestedHeading": 0.704084,
+        "requestedRotation": [
+          0.012763388302575904,
+          0.4188578920686125,
+          -0.037897793705280215,
+          0.9071708325354979
+        ],
+        "startFraction": 0.0,
+        "startHeading": 0.70408,
+        "startRoot": [
+          0.02,
+          0.0753452509002413,
+          -0.003
+        ],
+        "startRotation": [
+          0.0,
+          0.4199209016237868,
+          0.0,
+          0.9075607067185455
+        ],
+        "surface": 0,
+        "tickSeconds": 0.1
+      }
+    },
+    {
+      "captureStop": "diagnostic captured requested motion before acceptance",
+      "name": "upright-ordinary-turn",
+      "neural": {
+        "groups": [],
+        "motor": {
+          "flightThrust": 0.0,
+          "flightTurn": 0.0,
+          "thrust": 0.0,
+          "turn": 0.2
+        },
+        "spikeCount": 0
+      },
+      "request": {
+        "endFraction": 0.19999999999999998,
+        "neuralTickTarget": {
+          "heading": 0.7240800000000001,
+          "position": {
+            "x": 0.02,
+            "z": -0.003
+          }
+        },
+        "planarDisplacement": [
+          0.0,
+          0.0
+        ],
+        "requestedEndpointRoot": [
+          0.02,
+          0.07519896482594243,
+          -0.003
+        ],
+        "requestedHeading": 0.70808,
+        "requestedRotation": [
+          0.01030273836013545,
+          0.41705612270137477,
+          -0.03863936374958698,
+          0.9080005747072
+        ],
+        "startFraction": 0.0,
+        "startHeading": 0.70408,
+        "startRoot": [
+          0.02,
+          0.0753452509002413,
+          -0.003
+        ],
+        "startRotation": [
+          0.0,
+          0.4199209016237868,
+          0.0,
+          0.9075607067185455
+        ],
+        "surface": 0,
+        "tickSeconds": 0.1
+      }
+    },
+    {
+      "captureStop": "diagnostic captured requested motion before acceptance",
+      "name": "upright-walk-turn",
+      "neural": {
+        "groups": [],
+        "motor": {
+          "flightThrust": 0.0,
+          "flightTurn": 0.0,
+          "thrust": 0.02,
+          "turn": 0.2
+        },
+        "spikeCount": 0
+      },
+      "request": {
+        "endFraction": 0.19999999999999998,
+        "neuralTickTarget": {
+          "heading": 0.7240800000000001,
+          "position": {
+            "x": 0.02149821837944484,
+            "z": -0.001675106914693235
+          }
+        },
+        "planarDisplacement": [
+          0.00029964367588896854,
+          0.0002649786170613529
+        ],
+        "requestedEndpointRoot": [
+          0.02029964367588897,
+          0.07504808786949752,
+          -0.002735021382938647
+        ],
+        "requestedHeading": 0.70808,
+        "requestedRotation": [
+          0.012687657244553846,
+          0.41704486892692727,
+          -0.03792321455698378,
+          0.9080057436233715
+        ],
+        "startFraction": 0.0,
+        "startHeading": 0.70408,
+        "startRoot": [
+          0.02,
+          0.0753452509002413,
+          -0.003
+        ],
+        "startRotation": [
+          0.0,
+          0.4199209016237868,
+          0.0,
+          0.9075607067185455
+        ],
+        "surface": 0,
+        "tickSeconds": 0.1
+      }
+    },
+    {
+      "captureStop": "diagnostic captured requested motion before acceptance",
+      "name": "aligned-idle",
+      "neural": {
+        "groups": [],
+        "motor": {
+          "flightThrust": 0.0,
+          "flightTurn": 0.0,
+          "thrust": 0.0,
+          "turn": 0.0
+        },
+        "spikeCount": 0
+      },
+      "request": {
+        "endFraction": 0.19999999999999998,
+        "neuralTickTarget": {
+          "heading": 0.70408,
+          "position": {
+            "x": 0.02,
+            "z": -0.003
+          }
+        },
+        "planarDisplacement": [
+          0.0,
+          0.0
+        ],
+        "requestedEndpointRoot": [
+          0.02,
+          0.07434399587941412,
+          -0.003
+        ],
+        "requestedHeading": 0.70408,
+        "requestedRotation": [
+          0.07252257528613258,
+          0.3765787924521589,
+          -0.24127860325514697,
+          0.8914670631943653
+        ],
+        "startFraction": 0.0,
+        "startHeading": 0.70408,
+        "startRoot": [
+          0.02,
+          0.0743439958794141,
+          -0.003
+        ],
+        "startRotation": [
+          0.07252257528613358,
+          0.3765787924521592,
+          -0.24127860325514616,
+          0.8914670631943653
+        ],
+        "surface": 0,
+        "tickSeconds": 0.1
+      }
+    },
+    {
+      "captureStop": "diagnostic captured requested motion before acceptance",
+      "name": "aligned-turn",
+      "neural": {
+        "groups": [],
+        "motor": {
+          "flightThrust": 0.0,
+          "flightTurn": 0.0,
+          "thrust": 0.0,
+          "turn": 0.2
+        },
+        "spikeCount": 0
+      },
+      "request": {
+        "endFraction": 0.19999999999999998,
+        "neuralTickTarget": {
+          "heading": 0.7240800000000001,
+          "position": {
+            "x": 0.02,
+            "z": -0.003
+          }
+        },
+        "planarDisplacement": [
+          0.0,
+          0.0
+        ],
+        "requestedEndpointRoot": [
+          0.02,
+          0.07434399587941411,
+          -0.003
+        ],
+        "requestedHeading": 0.70808,
+        "requestedRotation": [
+          0.07204792418156303,
+          0.37482485942655186,
+          -0.24142076326615877,
+          0.8922059383578317
+        ],
+        "startFraction": 0.0,
+        "startHeading": 0.70408,
+        "startRoot": [
+          0.02,
+          0.0743439958794141,
+          -0.003
+        ],
+        "startRotation": [
+          0.07252257528613358,
+          0.3765787924521592,
+          -0.24127860325514616,
+          0.8914670631943653
+        ],
+        "surface": 0,
+        "tickSeconds": 0.1
+      }
+    },
+    {
+      "captureStop": "diagnostic captured requested motion before acceptance",
+      "name": "aligned-walk",
+      "neural": {
+        "groups": [],
+        "motor": {
+          "flightThrust": 0.0,
+          "flightTurn": 0.0,
+          "thrust": 0.02,
+          "turn": 0.0
+        },
+        "spikeCount": 0
+      },
+      "request": {
+        "endFraction": 0.19999999999999998,
+        "neuralTickTarget": {
+          "heading": 0.70408,
+          "position": {
+            "x": 0.021524414840974292,
+            "z": -0.0017053342544821363
+          }
+        },
+        "planarDisplacement": [
+          0.000304882968194857,
+          0.0002589331491035726
+        ],
+        "requestedEndpointRoot": [
+          0.020304882968194857,
+          0.07419622567122838,
+          -0.0027410668508964274
+        ],
+        "requestedHeading": 0.70408,
+        "requestedRotation": [
+          0.07029146980158008,
+          0.3769930400021872,
+          -0.24090572229648335,
+          0.8915715282734483
+        ],
+        "startFraction": 0.0,
+        "startHeading": 0.70408,
+        "startRoot": [
+          0.02,
+          0.0743439958794141,
+          -0.003
+        ],
+        "startRotation": [
+          0.07252257528613358,
+          0.3765787924521592,
+          -0.24127860325514616,
+          0.8914670631943653
+        ],
+        "surface": 0,
+        "tickSeconds": 0.1
+      }
+    }
+  ],
+  "sourceSha256": {
+    "/tmp/fly-rotation-probe/src/bin/actual_requests.rs": "1fa87395e5e3ff80898c0adc7748c7b6a9f6b71cb91a2ad771eb0db8b48766c1",
+    "/tmp/fly-supported-motion/crates/sim/src/body/motion_consumer.rs": "fe6533b443c6d1288b5e901490c8e0bb3c646fb757536528caf88e438ca24423",
+    "/tmp/fly-supported-motion/crates/sim/src/motion_curve.rs": "31359042c4bc6e81f83428078e8b1b4db0d498865412491f3bfaca880cf6c32e"
+  }
+}
