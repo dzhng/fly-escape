@@ -437,3 +437,16 @@ test("the core sampler replays interior knots, seeks across chunks, and releases
   expect(() => record.sampleMotion(0.25, sampler)).toThrow("not been recorded");
   expect(record.sampleMotion(0, sampler)[0].height).toBe(initialBodies[0].height);
 });
+
+test("caught survives Rust packing and validates its summary count", () => {
+  const record = archive();
+  for (const chunk of fixture.chunks) record.append(transfer(chunk));
+  expect(record.frame(3).flies[0].body.outcome).toBe("caught");
+  expect(record.frame(3).flies[0].events.at(-1)?.kind).toEqual({type: "terminal", outcome: "caught"});
+  expect(record.result?.outcomes.caught).toBe(1);
+  const bad = archive();
+  bad.append(transfer(fixture.chunks[0]));
+  const chunk = transfer(fixture.chunks[1]);
+  chunk.result!.outcomes.caught = -1;
+  expect(() => bad.append(chunk)).toThrow();
+});

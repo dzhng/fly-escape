@@ -451,3 +451,26 @@ fn packed_motion_preserves_curvature_and_terminal_hold() {
     )
     .is_err());
 }
+
+#[test]
+fn caught_roundtrips_body_terminal_event_and_summary() {
+    let layout = RecordLayout::new(vec!["left".into(), "right".into()]).unwrap();
+    let mut f = frame(1);
+    f.flies[0].body.outcome = Some(TerminalOutcome::Caught);
+    f.flies[0].events.push(BodyEvent {
+        tick: 1,
+        kind: BodyEventKind::Terminal {
+            outcome: TerminalOutcome::Caught,
+        },
+    });
+    f.result = Some(AttemptResult {
+        attempt_id: "web".into(),
+        completed_tick: 1,
+        outcomes: summarize_outcomes(&[f.flies[0].body.clone()]),
+        stars: 0,
+    });
+    assert_eq!(f.result.as_ref().unwrap().outcomes.caught, 1);
+    sync_motion(&mut f.flies[0]);
+    let packed = PackedChunk::encode("web", 0, &layout, &[f.clone()]).unwrap();
+    assert_eq!(packed.decode(&layout).unwrap(), vec![f]);
+}

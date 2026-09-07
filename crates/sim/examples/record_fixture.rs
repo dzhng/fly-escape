@@ -14,6 +14,11 @@ fn main() {
                 heading: 1.23456789012345,
             };
             let terminal = tick >= 3;
+            let outcome = if id == 0 {
+                TerminalOutcome::Caught
+            } else {
+                TerminalOutcome::Starved
+            };
             let events = if tick == 3 {
                 vec![
                     BodyEvent {
@@ -35,9 +40,7 @@ fn main() {
                     },
                     BodyEvent {
                         tick,
-                        kind: BodyEventKind::Terminal {
-                            outcome: TerminalOutcome::Starved,
-                        },
+                        kind: BodyEventKind::Terminal { outcome },
                     },
                 ]
             } else {
@@ -59,7 +62,7 @@ fn main() {
                     },
                     mode: BodyMode::Walking,
                     reserve: 12.3456789012345,
-                    outcome: terminal.then_some(TerminalOutcome::Starved),
+                    outcome: terminal.then_some(outcome),
                 },
                 sensory: (tick != 4 && !(tick == 1 && id == 1)).then_some(SensorySample {
                     left: FieldSample {
@@ -115,7 +118,8 @@ fn main() {
                 attempt_id: "fixture".into(),
                 completed_tick: 4,
                 outcomes: OutcomeSummary {
-                    starved: 2,
+                    starved: 1,
+                    caught: 1,
                     ..Default::default()
                 },
                 stars: 0,

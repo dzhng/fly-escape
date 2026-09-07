@@ -120,6 +120,7 @@ impl RecordLayout {
                 Some(TerminalOutcome::Starved),
                 Some(TerminalOutcome::Zapped),
                 Some(TerminalOutcome::TimedOut),
+                Some(TerminalOutcome::Caught),
             ],
             feeding_ends: vec![
                 FeedingEnd::ContactLost,

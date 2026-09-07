@@ -10,7 +10,7 @@ export type SpawnState = { pose: BodyPose, mode: SpawnMode, };
 export type SpawnMode = "walking" | "flying";
 export type BodyPose = { position: Point, heading: number, };
 export type BodyMode = "walking" | "flying" | "landing" | "feeding";
-export type TerminalOutcome = "escaped" | "starved" | "zapped" | "timedOut";
+export type TerminalOutcome = "escaped" | "starved" | "zapped" | "caught" | "timedOut";
 export type BodyState = { pose: BodyPose,
 /**
  * Native support-pivot height in metres, owned by physical movement.
@@ -38,22 +38,22 @@ landingDwellSeconds: number,
  */
 proboscisThreshold: number, };
 export type ContactRegion = { center: Point, radius: number, };
-export type ContactHazardKind = "zapper";
+export type ContactHazardKind = "zapper" | "web";
 export type ContactHazard = { surfaceId: number, kind: ContactHazardKind, };
 export type FoodDef = { position: Point, heading: number, shape: FoodShape, };
 export type FoodShape = { "type": "apple" } | { "type": "banana" } | { "type": "patch", radius: number, };
-export type NativeObjectShape = "apple" | "banana" | "wornShoes" | "dirtyDishes" | "laundry" | "sleepingCat" | "fan" | "vinegar" | "bugZapper";
+export type NativeObjectShape = "apple" | "banana" | "wornShoes" | "dirtyDishes" | "laundry" | "sleepingCat" | "fan" | "vinegar" | "bugZapper" | "spiderWeb";
 export type ContactSurface = { id: number, vertices: Array<[number, number, number]>, triangles: Array<[number, number, number]>, };
 export type SurfaceHit = { surfaceId: number, fraction: number, point: [number, number, number], normal: [number, number, number], };
 export type SupportSample = { surfaceId: number, root: [number, number, number], rotation: [number, number, number, number], point: [number, number, number], normal: [number, number, number], };
 export type ExitOpening = { a: Point, b: Point, outward: Point, };
-export type BodyContacts = { food: boolean, zapper: boolean, };
+export type BodyContacts = { food: boolean, contactHazard: ContactHazardKind | null, };
 export type FeedingEnd = "contactLost" | "satiated" | "boutLimit" | "terminal";
 export type BodyEventKind = { "type": "modeChanged", from: BodyMode, to: BodyMode, } | { "type": "feedingStarted" } | { "type": "feedingEnded", reason: FeedingEnd, } | { "type": "terminal", outcome: TerminalOutcome, };
 export type BodyEvent = { tick: number, kind: BodyEventKind, };
-export type OutcomeSummary = { escaped: number, starved: number, zapped: number, timedOut: number, score: number, };
+export type OutcomeSummary = { escaped: number, starved: number, zapped: number, caught: number, timedOut: number, score: number, };
 export type LevelDef = { id: string, geometry: Geometry, spawn: SpawnDef, exit: ExitOpening, exitCue: ExitCue | null, food: Array<FoodDef>, fixedObjects: Array<Placement>, zappers: Array<ContactRegion>, sources: Array<Source>, fieldConfig: FieldConfig, bodyConfig: BodyConfig, initialReserve: number, durationTicks: number, starThresholds: [number, number, number], placementRules: PlacementRules, };
-export type ToolKind = "fruit" | "banana" | "crumbs" | "vinegar" | "lamp" | "shade" | "fan" | "bugZapper" | "wornShoes" | "dirtyDishes" | "laundry" | "sleepingCat";
+export type ToolKind = "fruit" | "banana" | "crumbs" | "vinegar" | "lamp" | "shade" | "fan" | "bugZapper" | "spiderWeb" | "wornShoes" | "dirtyDishes" | "laundry" | "sleepingCat";
 export type ToolEffect = { "type": "none" } | { "type": "source", kind: SourceKind, radius: number, rate: number, } | { "type": "fan", reach: number, halfWidth: number, speed: number, };
 export type ToolDef = { kind: ToolKind, footprintRadius: number, effect: ToolEffect, contact: NativeObjectShape | null, edible: boolean, contactHazard: ContactHazardKind | null, };
 export type ToolStock = { kind: ToolKind, count: number, };

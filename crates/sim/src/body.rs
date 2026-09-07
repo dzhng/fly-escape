@@ -56,6 +56,7 @@ pub enum TerminalOutcome {
     Escaped,
     Starved,
     Zapped,
+    Caught,
     TimedOut,
 }
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
@@ -130,7 +131,7 @@ pub struct ExitOpening {
 #[serde(rename_all = "camelCase")]
 pub struct BodyContacts {
     pub food: bool,
-    pub zapper: bool,
+    pub contact_hazard: Option<ContactHazardKind>,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
@@ -160,11 +161,13 @@ pub struct BodyEvent {
 #[serde(rename_all = "camelCase")]
 pub enum ContactHazardKind {
     Zapper,
+    Web,
 }
 impl ContactHazardKind {
     fn outcome(self) -> TerminalOutcome {
         match self {
             Self::Zapper => TerminalOutcome::Zapped,
+            Self::Web => TerminalOutcome::Caught,
         }
     }
 }
@@ -420,16 +423,22 @@ impl Body {
         &self.state
     }
     pub fn contacts(&self, world: &BodyWorld) -> Result<BodyContacts, String> {
+        let native = world.contact_hazard_at(&self.state)?;
+        let diagnostic = world
+            .zappers
+            .iter()
+            .any(|r| contact(self.state.pose.position, *r, self.config.body_radius));
         Ok(BodyContacts {
+            contact_hazard: if diagnostic {
+                Some(ContactHazardKind::Zapper)
+            } else {
+                native
+            },
             food: matches!(self.state.mode, BodyMode::Walking | BodyMode::Feeding)
                 && world.food_at(&self.state)?,
-            zapper: world.contact_hazard_at(&self.state)?.is_some()
-                || world
-                    .zappers
-                    .iter()
-                    .any(|r| contact(self.state.pose.position, *r, self.config.body_radius)),
         })
     }
+
     fn mode(&mut self, to: BodyMode, tick: u32, events: &mut Vec<BodyEvent>) {
         let from = self.state.mode;
         if from != to {
@@ -512,8 +521,8 @@ impl Body {
             });
         }
         let contacts = self.contacts(world)?;
-        if contacts.zapper {
-            self.terminal(TerminalOutcome::Zapped, tick, &mut events);
+        if let Some(kind) = contacts.contact_hazard {
+            self.terminal(kind.outcome(), tick, &mut events);
             return Ok(BodyStep {
                 events,
                 motion: MotionTrace::stationary(&self.state),
@@ -770,6 +779,7 @@ pub struct OutcomeSummary {
     pub escaped: u32,
     pub starved: u32,
     pub zapped: u32,
+    pub caught: u32,
     pub timed_out: u32,
     pub score: u32,
 }
@@ -783,6 +793,7 @@ pub fn summarize_outcomes(states: &[BodyState]) -> OutcomeSummary {
             }
             Some(TerminalOutcome::Starved) => summary.starved += 1,
             Some(TerminalOutcome::Zapped) => summary.zapped += 1,
+            Some(TerminalOutcome::Caught) => summary.caught += 1,
             Some(TerminalOutcome::TimedOut) => summary.timed_out += 1,
             None => {}
         }

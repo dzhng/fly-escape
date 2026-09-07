@@ -18,6 +18,7 @@ pub enum ToolKind {
     Shade,
     Fan,
     BugZapper,
+    SpiderWeb,
     WornShoes,
     DirtyDishes,
     Laundry,
@@ -108,6 +109,12 @@ pub fn tool_def(kind: ToolKind) -> ToolDef {
         ),
         ToolKind::Lamp => (None, false, 0.25, source(SourceKind::Lamp, 1.5, 0.4)),
         ToolKind::Shade => (None, false, 0.25, source(SourceKind::Shade, 1.5, 0.2)),
+        ToolKind::SpiderWeb => (
+            Some(NativeObjectShape::SpiderWeb),
+            false,
+            0.,
+            ToolEffect::None,
+        ),
         ToolKind::BugZapper => (
             Some(NativeObjectShape::BugZapper),
             false,
@@ -133,8 +140,11 @@ pub fn tool_def(kind: ToolKind) -> ToolDef {
         effect,
         contact,
         edible,
-        contact_hazard: (kind == ToolKind::BugZapper)
-            .then_some(crate::body::ContactHazardKind::Zapper),
+        contact_hazard: match kind {
+            ToolKind::BugZapper => Some(crate::body::ContactHazardKind::Zapper),
+            ToolKind::SpiderWeb => Some(crate::body::ContactHazardKind::Web),
+            _ => None,
+        },
     }
 }
 
@@ -148,6 +158,7 @@ pub fn tool_catalog() -> Vec<ToolDef> {
         ToolKind::Shade,
         ToolKind::Fan,
         ToolKind::BugZapper,
+        ToolKind::SpiderWeb,
         ToolKind::WornShoes,
         ToolKind::DirtyDishes,
         ToolKind::Laundry,

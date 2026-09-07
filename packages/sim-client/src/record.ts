@@ -265,6 +265,7 @@ export class FrameArchive {
           result.outcomes.escaped,
           result.outcomes.starved,
           result.outcomes.zapped,
+          result.outcomes.caught,
           result.outcomes.timedOut,
           result.outcomes.score,
         ].every(

@@ -510,3 +510,38 @@ fn native_zapper_resolves_only_non_edible_contact_hazards() {
     .unwrap();
     assert!(serde_json::from_str::<sim::body::ContactHazardKind>("\"starved\"").is_err());
 }
+
+#[test]
+fn native_web_resolves_only_non_edible_contact_hazards() {
+    let level = level();
+    let resolved = resolve_placements(&level, &[item(1, ToolKind::SpiderWeb, 2., 2.)]).unwrap();
+    assert!(resolved.state.food.is_empty());
+    assert!(
+        resolved.sources.is_empty(),
+        "no unmeasured light or odor attraction"
+    );
+    assert_eq!(resolved.state.objects.len(), 22);
+    assert_eq!(
+        resolved.state.objects.len(),
+        resolved.state.contact_hazards.len()
+    );
+    assert!(resolved
+        .state
+        .objects
+        .iter()
+        .zip(&resolved.state.contact_hazards)
+        .all(|(surface, hazard)| surface.id == hazard.surface_id
+            && hazard.kind == sim::body::ContactHazardKind::Web));
+    sim::body::BodyWorld::new(
+        &level.geometry,
+        &resolved.state.food,
+        &resolved.state.objects,
+        &level.zappers,
+        level.exit,
+        level.duration_ticks,
+    )
+    .unwrap()
+    .with_contact_hazards(&resolved.state.contact_hazards)
+    .unwrap();
+    assert!(serde_json::from_str::<sim::body::ContactHazardKind>("\"starved\"").is_err());
+}

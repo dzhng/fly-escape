@@ -160,7 +160,8 @@ def spider():
     # Web lies in a vertical local XZ plane for mounting beside a wall.
     center=Vector((0,.025,.31)); count=12
     endpoints=[Vector((.247*cos(i*2*pi/count),.025+.025*sin(i*2*pi/count),.31+.289*sin(i*2*pi/count))) for i in range(count)]
-    for p in endpoints:tube('Radial web silk',[center,p],.0009,silk,4)
+    # Opposite spokes are one strand: no coincident capped faces at the hub.
+    for i in range(count//2):tube('Radial web silk',[endpoints[i],center,endpoints[i+count//2]],.0009,silk,4)
     for n in range(1,7):
         pts=[center+(p-center)*(n/6) for p in endpoints]
         tube('Web capture spiral',pts+[pts[0]],.0007,silk,4)

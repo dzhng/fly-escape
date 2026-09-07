@@ -22,3 +22,10 @@ contact engine's manifold-boundary guarantees. A placement's edible role is
 separate from its geometry: shoes, dishes, linens, and the cat support bodies
 without granting taste or energy. Odor strengths are explicit game assumptions
 owned by the placement catalog.
+
+The web's opposite spokes share continuous strands rather than coincident hub
+caps, preserving the visible silk while keeping every baked component manifold.
+Native web contact acts only on those strands and the visible spider; gaps remain
+passable. Catching on contact is a game rule, not a model of adhesive mechanics.
+The regular polygon rings, stiff legs, and missing wall attachment strands remain
+art limitations to assess in the production framing.
