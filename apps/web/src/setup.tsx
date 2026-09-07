@@ -95,7 +95,7 @@ export function SetupGame() {
     world.current = view;
     const spawn = fixture.level.spawn;
     if (spawn.kind === "cluster") view.setSpawnArea(spawn.min, spawn.max);
-    view.setContactRegions([], [], fixture.level.exit);
+    view.setContactGeometry([], [], fixture.level.exit);
     view.overview();
     view.enableCamera();
     let live = true;
@@ -122,6 +122,7 @@ export function SetupGame() {
   }, [fixture, input]);
   useEffect(() => {
     if (!fixture || !setup) return;
+    world.current?.setContactGeometry(setup.food.slice(0, fixture.level.food.length), fixture.level.zappers, fixture.level.exit, false);
     world.current?.setPlacements(
       progress.preferences.showTools ? setup.placements : [],
       fixture.catalog,

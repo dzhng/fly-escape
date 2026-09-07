@@ -2,7 +2,7 @@ import { expect, test } from "bun:test";
 import * as THREE from "three";
 import { loadPlacementModel, PlacementModels } from "./placement-models";
 
-test("food assets fit catalog-scaled floor footprints and replacement preserves placement", async () => {
+test("edible assets preserve native metres while floor cues retain catalog scaling", async () => {
   const food = new PlacementModels();
   food.setPlacements(
     [{ id: 1, kind: "fruit", position: { x: 3, z: 4 }, heading: 0.4 }],
@@ -15,23 +15,25 @@ test("food assets fit catalog-scaled floor footprints and replacement preserves 
           kind: "attractiveOdor",
           radius: 0.75,
           rate: 1,
-          foodRadius: 0.4,
+          food: { type: "apple" },
         },
       },
     ],
   );
   for (const kind of ["fruit", "crumbs"] as const) {
     const model = await loadPlacementModel(
-      await Bun.file(new URL(`../../../assets/food/${kind}.glb`, import.meta.url)).arrayBuffer(),
+      await Bun.file(new URL(`../../../assets/food/${kind === "fruit" ? "apple/apple" : kind}.glb`, import.meta.url)).arrayBuffer(), kind,
     );
-    expect(model.bounds.max.y).toBeLessThanOrEqual(0.005001);
+    expect(model.bounds.max.y).toBeLessThanOrEqual(kind === "fruit" ? 0.1 : 0.005001);
     expect(model.bounds.min.y).toBeGreaterThanOrEqual(-0.000001);
     expect(model.triangles).toBeGreaterThan(50);
     food.replace(kind, model.root);
   }
   const box = new THREE.Box3().setFromObject(food.root, true);
-  expect(box.min.x).toBeGreaterThanOrEqual(3 - 0.350001);
-  expect(box.max.z).toBeLessThanOrEqual(4 + 0.350001);
+  expect(box.min.x).toBeGreaterThan(2.95);
+  expect(box.max.z).toBeLessThan(4.05);
+  expect(box.max.y).toBeGreaterThan(0.05);
+  expect(box.max.x - box.min.x).toBeGreaterThan(0.075);
   expect(food.root.children).toHaveLength(1);
   food.setPlacements([], []);
   expect(food.root.children).toHaveLength(0);
@@ -44,12 +46,12 @@ for (const kind of ["fruit", "crumbs", "vinegar", "fan", "lamp", "shade"] as con
     const load = () =>
       Bun.file(
         new URL(
-          `../../../assets/${kind === "fruit" || kind === "crumbs" ? "food" : "tools"}/${kind}.glb`,
+          `../../../assets/${kind === "fruit" || kind === "crumbs" ? "food" : "tools"}/${kind === "fruit" ? "apple/apple" : kind}.glb`,
           import.meta.url,
         ),
       )
         .arrayBuffer()
-        .then(loadPlacementModel);
+        .then(bytes => loadPlacementModel(bytes, kind));
     const first = await load();
     let released = 0;
     const geometries = new Set<THREE.BufferGeometry>();
@@ -67,10 +69,10 @@ for (const kind of ["fruit", "crumbs", "vinegar", "fan", "lamp", "shade"] as con
     expect(released).toBe(meshes);
   });
 
-for (const kind of ["vinegar", "fan", "lamp", "shade"])
+for (const kind of ["vinegar", "fan", "lamp", "shade"] as const)
   test(`${kind} is a finite static floor surface within its placement footprint`, async () => {
     const model = await loadPlacementModel(
-      await Bun.file(new URL(`../../../assets/tools/${kind}.glb`, import.meta.url)).arrayBuffer(),
+      await Bun.file(new URL(`../../../assets/tools/${kind}.glb`, import.meta.url)).arrayBuffer(), kind,
     );
     expect(model.triangles).toBeGreaterThan(0);
     expect(model.bounds.max.y).toBeLessThanOrEqual(0.005001);
@@ -81,7 +83,7 @@ for (const kind of ["vinegar", "fan", "lamp", "shade"])
 test("authored fan direction follows placement heading and restores after editing", async () => {
   const models = new PlacementModels();
   const model = await loadPlacementModel(
-    await Bun.file(new URL("../../../assets/tools/fan.glb", import.meta.url)).arrayBuffer(),
+    await Bun.file(new URL("../../../assets/tools/fan.glb", import.meta.url)).arrayBuffer(), "fan",
   );
   models.replace("fan", model.root);
   const catalog = [

@@ -2,7 +2,7 @@
 //! avoids the measured millimetre-body departure failure in metre-scale GJK casts.
 use parry3d_f64::{
     math::{Matrix, Pose, Rotation, Vector},
-    query::{cast_shapes, Ray, RayCast, ShapeCastOptions, ShapeCastStatus},
+    query::{cast_shapes, PointQuery, Ray, RayCast, ShapeCastOptions, ShapeCastStatus},
     shape::{ConvexPolyhedron, Shape, TriMesh, TriMeshFlags},
 };
 use serde::{Deserialize, Serialize};
@@ -14,7 +14,7 @@ const MAX_COORDINATE: f64 = 1e6;
 const MAX_SCENE_VERTICES: usize = 262_144;
 const MAX_SCENE_TRIANGLES: usize = 524_288;
 
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 pub struct ContactSurface {
     pub id: u32,
@@ -99,6 +99,17 @@ impl ContactScene {
         }
         meshes.sort_by_key(|(id, _)| *id);
         Ok(Self { meshes })
+    }
+
+    /// Surface-distance contact, including open patches; an interior point is not a surface.
+    pub fn touching(&self, position: [f64; 3], radius: f64) -> Result<Option<u32>, String> {
+        if !bounded(position) || !radius.is_finite() || !(0. ..=MAX_COORDINATE).contains(&radius) {
+            return Err("contact requires a bounded position and nonnegative finite radius".into());
+        }
+        let position = Vector::from_array(position) * QUERY_UNITS;
+        Ok(self.meshes.iter().find_map(|(id, mesh)| {
+            (mesh.distance_to_local_point(position, false) <= radius * QUERY_UNITS).then_some(*id)
+        }))
     }
 
     /// Constrain a requested translation; this query never chooses a destination.

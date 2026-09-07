@@ -16,7 +16,7 @@ import { disposeObjectResources } from "./resources";
 export { loadFlyModel, FlyModel } from "./fly-model";
 import { WorldCamera } from "./camera";
 import { cameraInput } from "./camera-input";
-import type { Geometry, FieldGrid, ContactRegion, ExitOpening, Placement, ToolDef, Point } from "@fly-escape/sim-client";
+import type { Geometry, FieldGrid, ContactRegion, ContactSurface, ExitOpening, Placement, ToolDef, Point } from "@fly-escape/sim-client";
 
 export type FieldChannel = "attractiveOdor" | "repellentOdor" | "brightness" | "shade" | "exitCue";
 /** Fixed modeled cue value at half overlay strength; never normalized per frame. */
@@ -265,8 +265,8 @@ export class WorldView {
     }
   }
 
-  setContactRegions(food: ContactRegion[], hazards: ContactRegion[], exit: ExitOpening, showFoodBounds = true): void {
-    this.contactCenter.visible = showFoodBounds && food.length > 0;
+  setContactGeometry(food: ContactSurface[], hazards: ContactRegion[], exit: ExitOpening, diagnostic = true): void {
+    this.contactCenter.visible = diagnostic && food.length > 0;
     for (const child of [...this.contactMarkers.children]) {
       if (child instanceof THREE.Mesh) {
         child.geometry.dispose();
@@ -274,24 +274,29 @@ export class WorldView {
       }
       this.contactMarkers.remove(child);
     }
-    for (const [regions, color] of [
-      [showFoodBounds ? food : [], "#6b9d52"],
-      [hazards, "#bd5349"],
-    ] as const) {
-      for (const region of regions) {
-        const mesh = new THREE.Mesh(
-          new THREE.CircleGeometry(region.radius, 48),
-          new THREE.MeshBasicMaterial({
-            color,
-            transparent: true,
-            opacity: 0.55,
-            depthWrite: false,
-          }),
-        );
-        mesh.rotation.x = -Math.PI / 2;
-        mesh.position.set(region.center.x, 0.025, region.center.z);
-        this.contactMarkers.add(mesh);
-      }
+    for (const surface of food) {
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute("position", new THREE.Float32BufferAttribute(surface.vertices.flat(), 3));
+      geometry.setIndex(surface.triangles.flat());
+      geometry.computeVertexNormals();
+      // Bias coplanar food in raster depth without moving its physical surface.
+      const onFloor = surface.vertices.every(p => p[1] === 0);
+      const mesh = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({
+        color: diagnostic ? "#6b9d52" : "#888888", roughness: 0.7,
+        polygonOffset: onFloor, polygonOffsetFactor: -1, polygonOffsetUnits: -1,
+      }));
+      mesh.castShadow = !onFloor;
+      mesh.receiveShadow = true;
+      this.contactMarkers.add(mesh);
+    }
+    for (const region of hazards) {
+      const mesh = new THREE.Mesh(
+        new THREE.CircleGeometry(region.radius, 48),
+        new THREE.MeshBasicMaterial({ color: "#bd5349", transparent: true, opacity: 0.55, depthWrite: false }),
+      );
+      mesh.rotation.x = -Math.PI / 2;
+      mesh.position.set(region.center.x, 0.025, region.center.z);
+      this.contactMarkers.add(mesh);
     }
     const length = Math.hypot(exit.b.x - exit.a.x, exit.b.z - exit.a.z);
     const doorway = new THREE.Mesh(

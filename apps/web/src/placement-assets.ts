@@ -10,7 +10,7 @@ export async function loadPlacementAssets(
     Object.entries(placementAssetUrls).map(async ([kind, url]) => {
       const response = await fetch(url);
       if (!response.ok) throw new Error(`${kind} model request failed (${response.status})`);
-      const model = await loadPlacementModel(await response.arrayBuffer());
+      const model = await loadPlacementModel(await response.arrayBuffer(), kind as keyof typeof placementAssetUrls);
       if (isCurrent()) view.setPlacementModel(kind as keyof typeof placementAssetUrls, model.root);
       else model.dispose();
     }),

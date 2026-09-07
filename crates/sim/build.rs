@@ -24,6 +24,7 @@ fn main() {
         root.join("Cargo.toml"),
         root.join("../../Cargo.lock"),
         root.join("../../Cargo.toml"),
+        root.join("../../assets/food/apple/contact.json"),
     ]);
     files.sort();
     println!("cargo:rerun-if-changed=src");

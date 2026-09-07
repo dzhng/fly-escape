@@ -1,15 +1,19 @@
 import * as THREE from "three";
+import appleSurface from "../../../assets/food/apple/contact.json";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import type { Placement, ToolDef } from "@fly-escape/sim-client";
 import { disposeObjectResources } from "./resources";
 export type PlacementKind = Placement["kind"];
 
-/** Native radius-one assets scale only in X/Z; relief stays at the ground plane. */
-export async function loadPlacementModel(bytes: ArrayBuffer) {
-  const { scene: root, animations } = await new GLTFLoader().parseAsync(bytes, "");
+/** Edible assets preserve native metres; floor-cue assets scale only in X/Z. */
+export async function loadPlacementModel(bytes: ArrayBuffer, kind: PlacementKind) {
+  const { scene: root, animations, scenes } = await new GLTFLoader().parseAsync(bytes, "");
   try {
+    if (scenes.length !== 1) throw new Error("Placement model must contain one scene.");
     root.updateMatrixWorld(true);
     let triangles = 0;
+    const vertices: number[][] = [];
+    const faces: number[][] = [];
     root.traverse((object) => {
       if (object instanceof THREE.Light || object instanceof THREE.Camera)
         throw new Error("Placement model cannot add lights or cameras.");
@@ -17,22 +21,32 @@ export async function loadPlacementModel(bytes: ArrayBuffer) {
       if (object instanceof THREE.SkinnedMesh) throw new Error("Placement model must be static.");
       triangles += (object.geometry.index?.count ?? object.geometry.attributes.position.count) / 3;
       const positions = object.geometry.attributes.position;
+      const offset = vertices.length;
       for (let i = 0; i < positions.count; i++) {
         const p = new THREE.Vector3()
           .fromBufferAttribute(positions, i)
           .applyMatrix4(object.matrixWorld);
+        vertices.push(p.toArray());
         if (
-          ![p.x, p.y, p.z].every(Number.isFinite) ||
+          ![p.x, p.y, p.z].every(Number.isFinite) || (kind !== "fruit" && (
           Math.hypot(p.x, p.z) > 1.000001 ||
           p.y < -0.000001 ||
-          p.y > 0.005001
+          p.y > 0.005001))
         )
           throw new Error(
             "Placement model must fit radius one and Y=0…0.005 without an offset pivot.",
           );
       }
+      const index = object.geometry.index;
+      const count = index?.count ?? positions.count;
+      for (let i = 0; i < count; i += 3)
+        faces.push([0, 1, 2].map(j => offset + (index ? index.getX(i + j) : i + j)));
+      object.castShadow = kind === "fruit";
       object.receiveShadow = true;
     });
+    if (kind === "fruit" && (JSON.stringify(vertices) !== JSON.stringify(appleSurface.vertices)
+      || JSON.stringify(faces) !== JSON.stringify(appleSurface.triangles)))
+      throw new Error("Edible model geometry must match the baked core contact surface.");
     if (animations.length || triangles < 1 || triangles > 5000)
       throw new Error("Placement model must contain 1–5000 static triangles.");
     return {
@@ -90,7 +104,7 @@ export class PlacementModels {
       const instance = source.clone(true);
       instance.position.set(p.position.x, 0, p.position.z);
       instance.rotation.y = -p.heading;
-      instance.scale.set(tool.footprintRadius, 1, tool.footprintRadius);
+      if (p.kind !== "fruit") instance.scale.set(tool.footprintRadius, 1, tool.footprintRadius);
       if (item.ghost) {
         this.ghostMaterial.color.set(
           item.valid === null ? "#e5dbaf" : item.valid ? "#67e5ae" : "#ff657f",

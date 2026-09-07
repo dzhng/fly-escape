@@ -1,5 +1,5 @@
 import type { ToolKind } from "../../packages/sim-client/src";
-import fruit from "../food/fruit.glb?url";
+import fruit from "../food/apple/apple.glb?url";
 import crumbs from "../food/crumbs.glb?url";
 import vinegar from "./vinegar.glb?url";
 import fan from "./fan.glb?url";

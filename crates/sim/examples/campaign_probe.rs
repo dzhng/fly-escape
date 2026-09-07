@@ -24,7 +24,7 @@ fn topology(level: &LevelDef) -> Result<Value, String> {
     }
     sim::body::BodyWorld::new(
         geometry,
-        &level.food,
+        &sim::placement::resolve_placements(level, &[])?.state.food,
         &level.zappers,
         level.exit,
         level.duration_ticks,

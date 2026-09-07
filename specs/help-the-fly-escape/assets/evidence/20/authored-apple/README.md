@@ -17,7 +17,7 @@ No independent agent was available (the existing agents report usage-limit error
 - **Shape:** the close frame looks like a broad gray surface, and Overview makes the fruit tiny. Verdict: these are useful native-contact and context checks, not proof of recognizable or photorealistic fruit. Final shape/material acceptance stays in21/22.
 - **Animation:** a few static phase samples cannot establish a continuous landing. Verdict: reverse-seek pixels and attachment binding pass; physical acquisition, movement and departure still require the recorded body integration.
 
-Accept only the authored geometry/query correspondence preparation. The visual limitations above remain explicit20 work. Review images opened at06:59:53UTC for nonblocking feedback; no feedback arrived during the five-minute window. Proceeded with the geometry-only verdict above and closed Preview; this is not user approval.
+Accept only the authored geometry/query correspondence preparation. The visual limitations above remain explicit20 work. Review images opened at06:59:53UTC for nonblocking feedback; no feedback arrived during roughly four-and-a-half minutes. Proceeded with the geometry-only verdict above and closed Preview; this is not user approval.
 
 ## Verification and review
 

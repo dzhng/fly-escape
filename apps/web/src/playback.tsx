@@ -222,8 +222,8 @@ export function AttemptPlayback({
           reply.info.level.geometry,
           reply.info.spec.flyCount,
         );
-        scene.current.setContactRegions(
-          reply.info.resolvedSetup.food,
+        scene.current.setContactGeometry(
+          reply.info.resolvedSetup.state.food.slice(0, reply.info.level.food.length),
           reply.info.level.zappers,
           reply.info.level.exit,
           false,

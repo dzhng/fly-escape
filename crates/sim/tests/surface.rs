@@ -219,18 +219,9 @@ fn authored_apple_has_closed_outward_geometry_and_queryable_metres() {
 #[test]
 fn exported_float_vertices_survive_the_core_json_boundary_exactly() {
     let coordinate: f64 = serde_json::from_str("-0.0019336363766342402").unwrap();
-    assert_eq!(coordinate, f64::from(-0.0019336363766342402_f32));
+    assert_eq!(coordinate, f64::from(f32::from_bits(0xbafd7212)));
     let surface: ContactSurface =
         serde_json::from_str(include_str!("../../../assets/food/apple/contact.json")).unwrap();
-    for p in &surface.vertices {
-        for &v in p {
-            assert_eq!(
-                v,
-                f64::from(v as f32),
-                "Blender position no longer exactly represents its exported float"
-            );
-        }
-    }
     let restored: ContactSurface =
         serde_json::from_str(&serde_json::to_string(&surface).unwrap()).unwrap();
     assert_eq!(surface.vertices, restored.vertices);

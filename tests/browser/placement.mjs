@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { resolve } from "node:path";
 import { chromium } from "playwright";
 const base = process.env.BRAIN_URL ?? "http://127.0.0.1:5173";
 const browser = await chromium.launch({
@@ -143,11 +144,11 @@ try {
   assert.deepEqual(report.metadataSetup, report.resolved);
   assert.deepEqual(report.spec.placements, report.state.placements);
   assert.equal(report.resolved.sources[0].kind, "attractiveOdor");
-  assert.equal(report.resolved.food.length, 1);
+  assert.equal(report.resolved.state.food.length, 1);
   assert.equal(report.resolved.fieldConfig.fans.length, 1);
   assert.ok(report.frame.flies[0].sensory.wind.x > 0);
   assert.equal(report.deterministic, true);
-  const output = new URL("../../specs/help-the-fly-escape/assets/evidence/14/", import.meta.url);
+  const output = pathToFileURL(resolve(process.env.PLACEMENT_EVIDENCE_DIR ?? "/tmp/fly-placement") + "/");
   await mkdir(output, { recursive: true });
   await writeFile(
     new URL("placement-boundary.json", output),

@@ -1,7 +1,13 @@
 //! Diagnostic content for the shared Attempt owner. Wind deliberately transports
 //! bodies away from food or through an exit; these are lifecycle demonstrations,
 //! not evidence of neural foraging or successful navigation.
-use crate::{attempt::*, body::*, environment::*, Graph};
+use crate::{
+    attempt::*,
+    body::*,
+    environment::*,
+    food::{FoodDef, FoodShape},
+    Graph,
+};
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use ts_rs::TS;
@@ -24,6 +30,7 @@ pub struct LifecycleInfo {
     pub scenario: LifecycleScenario,
     pub spec: AttemptSpec,
     pub level: LevelDef,
+    pub food: Vec<crate::surface::ContactSurface>,
     pub initial_grid: FieldGrid,
     pub initial_bodies: Vec<BodyState>,
 }
@@ -68,6 +75,7 @@ impl LifecycleLab {
             scenario: self.scenario,
             spec: self.attempt.spec().clone(),
             level: self.attempt.level().clone(),
+            food: self.attempt.resolved_setup().state.food.clone(),
             initial_grid: self.attempt.field_grid(),
         }
     }
@@ -154,10 +162,11 @@ fn fixture(scenario: LifecycleScenario) -> LevelDef {
         food: if exit_case {
             vec![]
         } else {
-            vec![ContactRegion {
-                center: p(-1., 0.),
+            vec![FoodDef {
+                position: p(-1., 0.),
+                heading: 0.,
                 // Covers the floor approach plus bounded horizontal travel during descent.
-                radius: 1.5,
+                shape: FoodShape::Patch { radius: 1.5 },
             }]
         },
         zappers: vec![],

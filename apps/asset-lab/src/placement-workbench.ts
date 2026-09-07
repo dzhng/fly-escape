@@ -5,7 +5,7 @@ import { placementAssetUrls } from "../../../assets/tools/registry";
 export async function placementWorkbench(view: WorldView, panel: HTMLElement) {
   panel.insertAdjacentHTML(
     "beforeend",
-    `<h3>Floor tool assets</h3><label>Tool shape <select id="tool-kind"><option value="">None</option><option value="fruit">Fruit · edible</option><option value="crumbs">Scent crumbs · odor only</option><option value="vinegar">Vinegar · repellent</option><option value="fan">Fan · directional wind</option><option value="lamp">Lamp · visual cue</option><option value="shade">Shade · visual cue</option></select></label><label>Diagnostic position <select id="tool-position"><option value="0">Under fly</option><option value="0.5">Beside fly</option></select></label><label>Tool heading <input id="tool-heading" type="range" min="0" max="6.283185307179586" step="0.01" value="0"></label><label>Replace tool GLB <input id="tool-file" type="file" accept=".glb"></label><p id="tool-status" role="status">Loading tool assets…</p><p>Native radius ≤1, Y=0…0.005. Placement scales X/Z from the core catalog. Sources are non-solid floor surfaces. Food uses recorded body contact; shade marks a visual cue, not a physical canopy.</p>`,
+    `<h3>Floor tool assets</h3><label>Tool shape <select id="tool-kind"><option value="">None</option><option value="crumbs">Scent crumbs · odor only</option><option value="vinegar">Vinegar · repellent</option><option value="fan">Fan · directional wind</option><option value="lamp">Lamp · visual cue</option><option value="shade">Shade · visual cue</option></select></label><label>Diagnostic position <select id="tool-position"><option value="0">Under fly</option><option value="0.5" selected>Beside fly</option></select></label><label>Tool heading <input id="tool-heading" type="range" min="0" max="6.283185307179586" step="0.01" value="0"></label><label>Replace tool GLB <input id="tool-file" type="file" accept=".glb"></label><p id="tool-status" role="status">Loading tool assets…</p><p>Inspect edible fruit in the <a href="?fixture=contact">surface-contact workbench</a>. These floor cues use catalog-scaled X/Z and ≤0.005m relief. Food uses recorded body contact; shade marks a visual cue, not a physical canopy.</p>`,
   );
   const status = panel.querySelector<HTMLElement>("#tool-status")!;
   const control = panel.querySelector<HTMLSelectElement>("#tool-kind")!;
@@ -42,11 +42,11 @@ export async function placementWorkbench(view: WorldView, panel: HTMLElement) {
         catalog,
       );
       status.textContent = kind
-        ? `${kind} · ${counts.get(kind) ?? 0} triangles · ≤0.005 relief`
+        ? `${kind} · ${counts.get(kind) ?? 0} triangles · ≤0.005m relief`
         : `${counts.size} tool assets ready`;
     };
     const replace = async (kind: PlacementKind, bytes: Promise<ArrayBuffer>) => {
-      const model = await loadPlacementModel(await bytes);
+      const model = await loadPlacementModel(await bytes, kind);
       if (!live) {
         model.dispose();
         return;
@@ -55,7 +55,7 @@ export async function placementWorkbench(view: WorldView, panel: HTMLElement) {
       counts.set(kind, model.triangles);
     };
     const results = await Promise.allSettled(
-      Object.entries(placementAssetUrls).map(([kind, url]) =>
+      Object.entries(placementAssetUrls).filter(([kind]) => kind !== "fruit").map(([kind, url]) =>
         replace(
           kind as PlacementKind,
           fetch(url).then((r) => {

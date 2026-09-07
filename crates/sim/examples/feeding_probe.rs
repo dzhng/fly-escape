@@ -2,9 +2,10 @@
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
+use sim::food::{FoodDef, FoodShape};
 use sim::{
     body::{
-        Body, BodyConfig, BodyEventKind, BodyMode, BodyPose, BodyWorld, ContactRegion, ExitOpening,
+        Body, BodyConfig, BodyEventKind, BodyMode, BodyPose, BodyWorld, ExitOpening,
         TerminalOutcome,
     },
     environment::{Geometry, Point, RectRoom, Wall},
@@ -98,10 +99,13 @@ fn run(
     brain.set_silenced_neurons(silence)?;
     brain.set_external_current(&inputs.iter().map(|&i| (i, gain)).collect::<Vec<_>>())?;
     let geometry = arena();
-    let food = [ContactRegion {
-        center: Point { x: 50., z: 50. },
-        radius: 40.,
-    }];
+    let food = [FoodDef {
+        position: Point { x: 50., z: 50. },
+        heading: 0.,
+        shape: FoodShape::Patch { radius: 40. },
+    }
+    .surface(0)
+    .unwrap()];
     let world = BodyWorld::new(
         &geometry,
         &food,

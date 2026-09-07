@@ -15,30 +15,31 @@ try {
   await page.goto(process.env.ASSET_URL ?? "http://127.0.0.1:5210");
   await page.locator("#tool-status").filter({ hasText: "tool assets ready" }).waitFor();
   await page.locator(".status").filter({ hasText: "triangles" }).waitFor();
-  await page.getByRole("button", { name: "Extra close", exact: true }).click();
+  await page.getByRole("button", { name: "Overview", exact: true }).click();
   const setTime = async (value) =>
     page.locator("#time").evaluate((el, v) => {
       el.value = String(v);
       el.dispatchEvent(new Event("input", { bubbles: true }));
     }, value);
-  await page.locator("#clip").selectOption("Feed");
+  await page.locator("#tool-position").selectOption("0.5");
+  await page.locator("#clip").selectOption("Static");
   await setTime(0.5);
-  for (const kind of ["fruit", "crumbs"]) {
+  for (const kind of ["crumbs"]) {
     await page
       .locator("#clip")
-      .selectOption(kind === "fruit" ? "Feed" : "Static");
+      .selectOption("Static");
     await setTime(0.5);
     await page.locator("#tool-kind").selectOption(kind);
     await page.mouse.move(1430, 20);
     await page.waitForTimeout(100);
     await page.screenshot({ path: output + "/" + kind + ".png" });
   }
-  await page.locator("#tool-kind").selectOption("fruit");
+  await page.locator("#tool-kind").selectOption("crumbs");
   await page.waitForTimeout(100);
   const canvas = page.locator("canvas"),
     before = await canvas.screenshot();
-  await page.locator("#tool-file").setInputFiles("assets/food/fruit.glb");
-  await page.locator("#tool-status").filter({ hasText: "fruit ·" }).waitFor();
+  await page.locator("#tool-file").setInputFiles("assets/food/crumbs.glb");
+  await page.locator("#tool-status").filter({ hasText: "crumbs ·" }).waitFor();
   assert.deepEqual(
     await canvas.screenshot(),
     before,
@@ -49,7 +50,7 @@ try {
   assert.deepEqual(
     await canvas.screenshot(),
     before,
-    "invalid raised asset preserves accepted food",
+    "invalid fly asset preserves accepted food",
   );
   await page.locator("#tool-status").scrollIntoViewIfNeeded();
   await page.screenshot({ path: output + "/rejected-replacement.png" });
@@ -59,7 +60,7 @@ try {
     JSON.stringify(
       {
         validReplacement: "exact canvas",
-        invalidRaisedReplacement: "rejected; exact prior canvas",
+        invalidFlyReplacement: "rejected; exact prior canvas",
         errors,
       },
       null,

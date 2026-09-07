@@ -207,9 +207,10 @@ fn sensory_and_taste_currents_sum_without_direct_motor_injection() {
     let mut definition = level(1);
     definition.sources[0].position.z = 1.6;
     definition.sources[0].radius = 0.8;
-    definition.food.push(ContactRegion {
-        center: Point { x: 2., z: 2. },
-        radius: 0.5,
+    definition.food.push(sim::food::FoodDef {
+        position: Point { x: 2., z: 2. },
+        heading: 0.,
+        shape: sim::food::FoodShape::Patch { radius: 0.5 },
     });
     let tuning = AttemptTuning {
         cues: vec![CueInput {
@@ -437,11 +438,11 @@ fn simultaneous_senses_sum_and_each_channel_can_be_ablated() {
 }
 
 #[test]
-fn resolved_placements_reach_taste_and_local_body_wind_and_replay() {
+fn resolved_placements_preserve_surface_only_taste_local_wind_and_replay() {
     use sim::placement::*;
     let graph = graph();
     let mut definition = level(1);
-    definition.body_config.body_radius = 0.08; // Fixed overlap with the authored contact region.
+    definition.body_config.body_radius = 0.08; // Diagnostic body size; the apple remains 45cm away.
     definition.sources.clear();
     definition.placement_rules.inventory = vec![
         ToolStock {
@@ -481,11 +482,10 @@ fn resolved_placements_reach_taste_and_local_body_wind_and_replay() {
     let mut replay = make(&placements);
     let frame = attempt.step().unwrap().unwrap();
     let mut reference = sim::Brain::new(graph.clone(), sim::Brain::seed_for_fly(11, 0));
-    reference.set_external_current(&[(2, 0.1)]).unwrap();
     assert_eq!(
         frame.flies[0].neural,
         Some(reference.step()),
-        "resolved fruit supplies contact-driven taste"
+        "the apple cannot supply taste across an empty 45cm gap"
     );
     assert!(frame.flies[0].sensory.unwrap().wind.x > 0.);
     let mut reversed = placements.clone();

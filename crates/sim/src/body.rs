@@ -2,6 +2,7 @@
 //! approximations pending actual-graph feasibility probes, not biological units.
 use crate::{
     environment::{Geometry, Point},
+    surface::{ContactScene, ContactSurface},
     StepOutput,
 };
 use serde::{Deserialize, Serialize};
@@ -142,31 +143,44 @@ pub struct BodyEvent {
     pub kind: BodyEventKind,
 }
 
-/// Immutable scene inputs. Region contact is measured from the body position;
-/// callers use contacts() for taste injection before advancing the brain.
-pub struct BodyWorld<'a> {
-    geometry: &'a Geometry,
-    food: &'a [ContactRegion],
-    zappers: &'a [ContactRegion],
+/// Prepared immutable world shared by all bodies for the lifetime of an attempt.
+pub struct BodyWorld {
+    geometry: Geometry,
+    food: ContactScene,
+    zappers: Vec<ContactRegion>,
     exit: ExitOpening,
     duration_ticks: u32,
 }
-impl<'a> BodyWorld<'a> {
+impl BodyWorld {
     pub fn new(
-        geometry: &'a Geometry,
-        food: &'a [ContactRegion],
-        zappers: &'a [ContactRegion],
+        geometry: &Geometry,
+        food: &[ContactSurface],
+        zappers: &[ContactRegion],
         exit: ExitOpening,
         duration_ticks: u32,
     ) -> Result<Self, String> {
+        Self::validate(geometry, zappers, exit, duration_ticks)?;
+        Ok(Self {
+            geometry: geometry.clone(),
+            food: ContactScene::new(food)?,
+            zappers: zappers.to_vec(),
+            exit,
+            duration_ticks,
+        })
+    }
+    pub fn validate(
+        geometry: &Geometry,
+        zappers: &[ContactRegion],
+        exit: ExitOpening,
+        duration_ticks: u32,
+    ) -> Result<(), String> {
         geometry.validate()?;
-        if food.len() > 256 || zappers.len() > 256 || duration_ticks == 0 || duration_ticks > 6000 {
+        if zappers.len() > 256 || duration_ticks == 0 || duration_ticks > 6000 {
             return Err(
-                "body world limit: at most 256 food/zapper regions and duration 1..6000 ticks"
-                    .into(),
+                "body world limit: at most 256 zapper regions and duration 1..6000 ticks".into(),
             );
         }
-        if food.iter().chain(zappers).any(|r| {
+        if zappers.iter().any(|r| {
             !r.center.x.is_finite()
                 || !r.center.z.is_finite()
                 || !r.radius.is_finite()
@@ -216,13 +230,13 @@ impl<'a> BodyWorld<'a> {
         if geometry.room_at(inside).is_none() || geometry.room_at(outside).is_some() {
             return Err("exit outward normal must cross an exterior floor boundary".into());
         }
-        Ok(Self {
-            geometry,
-            food,
-            zappers,
-            exit,
-            duration_ticks,
-        })
+        Ok(())
+    }
+    fn food_at(&self, position: Point, height: f64, radius: f64) -> Result<bool, String> {
+        Ok(self
+            .food
+            .touching([position.x, height, position.z], radius)?
+            .is_some())
     }
 }
 
@@ -307,19 +321,19 @@ impl Body {
     pub fn state(&self) -> &BodyState {
         &self.state
     }
-    pub fn contacts(&self, world: &BodyWorld) -> BodyContacts {
-        BodyContacts {
+    pub fn contacts(&self, world: &BodyWorld) -> Result<BodyContacts, String> {
+        Ok(BodyContacts {
             food: matches!(self.state.mode, BodyMode::Walking | BodyMode::Feeding)
-                && self.state.height == 0.
-                && world
-                    .food
-                    .iter()
-                    .any(|r| contact(self.state.pose.position, *r, self.config.body_radius)),
+                && world.food_at(
+                    self.state.pose.position,
+                    self.state.height,
+                    self.config.body_radius,
+                )?,
             zapper: world
                 .zappers
                 .iter()
                 .any(|r| contact(self.state.pose.position, *r, self.config.body_radius)),
-        }
+        })
     }
     fn mode(&mut self, to: BodyMode, tick: u32, events: &mut Vec<BodyEvent>) {
         let from = self.state.mode;
@@ -396,7 +410,7 @@ impl Body {
             self.terminal(TerminalOutcome::Starved, tick, &mut events);
             return Ok(events);
         }
-        if self.contacts(world).zapper {
+        if self.contacts(world)?.zapper {
             self.terminal(TerminalOutcome::Zapped, tick, &mut events);
             return Ok(events);
         }
@@ -408,7 +422,7 @@ impl Body {
         };
         let proboscis = spike_fraction(neural, "proboscis");
         let wants_food = proboscis > self.config.proboscis_threshold;
-        let on_food = self.contacts(world).food;
+        let on_food = self.contacts(world)?.food;
         if self.state.mode != BodyMode::Feeding && !wants_food {
             self.feeding_ready = true;
         }
@@ -427,7 +441,7 @@ impl Body {
             self.mode(BodyMode::Flying, tick, &mut events);
         }
         if self.state.mode == BodyMode::Walking
-            && self.contacts(world).food
+            && self.contacts(world)?.food
             && wants_food
             && self.feeding_ready
             && self.state.reserve < self.config.reserve_capacity
@@ -476,10 +490,7 @@ impl Body {
             .geometry
             .sweep(from, desired.position, self.config.body_radius);
         let food_after = self.state.mode == BodyMode::Feeding
-            && world
-                .food
-                .iter()
-                .any(|r| contact(to, *r, self.config.body_radius));
+            && world.food_at(to, initial_height, self.config.body_radius)?;
         let feed_seconds = if food_after {
             dt.min((self.config.max_bout_seconds - self.bout_seconds).max(0.))
         } else {
@@ -490,7 +501,7 @@ impl Body {
         if let Some(t) = exit_crossing(from, to, world.exit, self.config.body_radius) {
             terminal = Some((t, TerminalOutcome::Escaped));
         }
-        for region in world.zappers {
+        for region in &world.zappers {
             if let Some(t) = circle_crossing(from, to, *region, self.config.body_radius) {
                 if terminal.is_none_or(|(prior, _)| t <= prior) {
                     terminal = Some((t, TerminalOutcome::Zapped));

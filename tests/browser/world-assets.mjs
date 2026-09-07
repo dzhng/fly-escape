@@ -6,7 +6,7 @@ const url = process.env.BRAIN_URL ?? "http://127.0.0.1:5173";
 const results = [];
 try {
   for (const [asset, failure] of [
-    ["food/fruit", "fruit model request failed (503)"],
+    ["food/apple/apple", "fruit model request failed (503)"],
     ["food/crumbs", "crumbs model request failed (503)"],
     ["fly/fly", "Fly model request failed (503)"],
     ...["vinegar", "fan", "lamp", "shade"].map((kind) => [

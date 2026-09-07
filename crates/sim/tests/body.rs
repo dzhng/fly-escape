@@ -1,3 +1,4 @@
+use sim::food::{FoodDef, FoodShape};
 use sim::{body::*, environment::*, GroupActivity, MotorOutput, StepOutput};
 fn geometry() -> Geometry {
     Geometry {
@@ -65,13 +66,19 @@ fn body(x: f64, z: f64, reserve: f64) -> Body {
     )
     .unwrap()
 }
+fn food_patch(x: f64, z: f64, radius: f64) -> sim::surface::ContactSurface {
+    FoodDef {
+        position: Point { x, z },
+        heading: 0.,
+        shape: FoodShape::Patch { radius },
+    }
+    .surface(0)
+    .unwrap()
+}
 #[test]
 fn food_contact_without_proboscis_motor_activity_never_starts_feeding() {
     let g = geometry();
-    let foods = [ContactRegion {
-        center: Point { x: 2., z: 2. },
-        radius: 0.8,
-    }];
+    let foods = [food_patch(2., 2., 0.8)];
     let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
     let mut b = body(2., 2., 3.);
     for tick in 1..=10 {
@@ -84,10 +91,7 @@ fn food_contact_without_proboscis_motor_activity_never_starts_feeding() {
 #[test]
 fn feeding_replenishes_within_capacity_then_contact_loss_allows_later_starvation() {
     let g = geometry();
-    let foods = [ContactRegion {
-        center: Point { x: 2., z: 2. },
-        radius: 0.2,
-    }];
+    let foods = [food_patch(2., 2., 0.2)];
     let world = BodyWorld::new(&g, &foods, &[], exit(), 6000).unwrap();
     let mut b = body(2., 2., 1.);
     let events = b
@@ -112,10 +116,7 @@ fn feeding_replenishes_within_capacity_then_contact_loss_allows_later_starvation
 #[test]
 fn meal_plus_timeout_scores_zero_and_terminal_body_is_frozen() {
     let g = geometry();
-    let foods = [ContactRegion {
-        center: Point { x: 2., z: 2. },
-        radius: 0.5,
-    }];
+    let foods = [food_patch(2., 2., 0.5)];
     let world = BodyWorld::new(&g, &foods, &[], exit(), 2).unwrap();
     let mut b = body(2., 2., 1.);
     b.step(&neural(0., 0.5), &world, Point::default(), 1., 1)
@@ -188,17 +189,14 @@ fn swept_outward_exit_counts_once_and_adjacent_or_covering_wall_never_escapes() 
 #[test]
 fn takeoff_and_landing_require_their_neural_readouts_and_flight_cannot_feed() {
     let g = geometry();
-    let foods = [ContactRegion {
-        center: Point { x: 2., z: 2. },
-        radius: 1.,
-    }];
+    let foods = [food_patch(2., 2., 1.)];
     let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
     let mut b = body(2., 2., 3.);
     let mut command = neural(0., 1.);
     command.motor.flight_thrust = 0.5;
     b.step(&command, &world, Point::default(), 0.1, 1).unwrap();
     assert_eq!(b.state().mode, BodyMode::Flying);
-    assert!(!b.contacts(&world).food);
+    assert!(!b.contacts(&world).unwrap().food);
     assert!(b.state().reserve < 3.);
     command.motor.flight_thrust = 0.;
     b.step(&command, &world, Point::default(), 0.1, 2).unwrap();
@@ -219,22 +217,19 @@ fn takeoff_and_landing_require_their_neural_readouts_and_flight_cannot_feed() {
     b.step(&command, &world, Point::default(), 0.1, 3).unwrap();
     assert_eq!(b.state().mode, BodyMode::Landing);
     assert!(b.state().height > 0.);
-    assert!(!b.contacts(&world).food);
+    assert!(!b.contacts(&world).unwrap().food);
     assert!(b.state().reserve < airborne_reserve);
     b.step(&command, &world, Point::default(), 0.1, 4).unwrap();
     assert_eq!(b.state().mode, BodyMode::Walking);
     assert_eq!(b.state().height, 0.);
     b.step(&command, &world, Point::default(), 0.1, 5).unwrap();
     assert_eq!(b.state().mode, BodyMode::Feeding);
-    assert!(b.contacts(&world).food);
+    assert!(b.contacts(&world).unwrap().food);
 }
 #[test]
 fn feeding_is_capped_and_cannot_restart_until_motor_resets() {
     let g = geometry();
-    let foods = [ContactRegion {
-        center: Point { x: 2., z: 2. },
-        radius: 0.5,
-    }];
+    let foods = [food_patch(2., 2., 0.5)];
     let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
     let mut b = body(2., 2., 1.);
     let mut ended = false;
@@ -318,10 +313,7 @@ fn swept_zapper_or_earlier_starvation_preempts_exit() {
 #[test]
 fn feeding_does_not_exempt_a_body_from_net_energy_loss() {
     let g = geometry();
-    let foods = [ContactRegion {
-        center: Point { x: 2., z: 2. },
-        radius: 10.,
-    }];
+    let foods = [food_patch(2., 2., 10.)];
     let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
     let mut b = Body::new(
         BodyPose {
@@ -343,10 +335,7 @@ fn feeding_does_not_exempt_a_body_from_net_energy_loss() {
 #[test]
 fn a_proboscis_spike_starts_a_bout_that_stays_latched_between_pulses() {
     let g = geometry();
-    let foods = [ContactRegion {
-        center: Point { x: 2., z: 2. },
-        radius: 0.5,
-    }];
+    let foods = [food_patch(2., 2., 0.5)];
     let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
     let mut b = body(2., 2., 1.);
     let mut pulse = neural(0., 0.);
@@ -401,10 +390,7 @@ fn landing_spike_enforces_one_game_second_of_ground_dwell() {
 #[test]
 fn a_new_bout_requires_motor_rearming_after_contact_loss() {
     let g = geometry();
-    let foods = [ContactRegion {
-        center: Point { x: 2., z: 2. },
-        radius: 0.2,
-    }];
+    let foods = [food_patch(2., 2., 0.2)];
     let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
     let mut b = body(2., 2., 1.);
     let pulse = neural(0., 0.25);
@@ -424,10 +410,7 @@ fn a_new_bout_requires_motor_rearming_after_contact_loss() {
 #[test]
 fn tonic_voltage_without_spikes_does_not_initiate_feeding_or_landing() {
     let g = geometry();
-    let foods = [ContactRegion {
-        center: Point { x: 2., z: 2. },
-        radius: 0.5,
-    }];
+    let foods = [food_patch(2., 2., 0.5)];
     let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
     let mut b = body(2., 2., 1.);
     let mut quiet = neural(0., 0.);
@@ -455,10 +438,7 @@ fn tonic_voltage_without_spikes_does_not_initiate_feeding_or_landing() {
 #[test]
 fn airborne_landing_is_latched_and_terminal_height_freezes_at_the_actual_time() {
     let g = geometry();
-    let foods = [ContactRegion {
-        center: Point { x: 2., z: 2. },
-        radius: 1.,
-    }];
+    let foods = [food_patch(2., 2., 1.)];
     let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
     let start = BodyPose {
         position: Point { x: 2., z: 2. },
@@ -475,19 +455,19 @@ fn airborne_landing_is_latched_and_terminal_height_freezes_at_the_actual_time() 
     b.step(&pulse, &world, Point::default(), 0.1, 1).unwrap();
     assert_eq!(b.state().mode, BodyMode::Landing);
     assert!(b.state().height > 0. && b.state().height < initial_height);
-    assert!(!b.contacts(&world).food);
+    assert!(!b.contacts(&world).unwrap().food);
     let quiet = neural(0., 0.);
     for tick in 2..8 {
         let before = b.state().height;
         b.step(&quiet, &world, Point::default(), 0.1, tick).unwrap();
         assert_eq!(b.state().mode, BodyMode::Landing);
         assert!(b.state().height > 0. && b.state().height < before);
-        assert!(!b.contacts(&world).food);
+        assert!(!b.contacts(&world).unwrap().food);
     }
     b.step(&quiet, &world, Point::default(), 0.1, 8).unwrap();
     assert_eq!(b.state().height, 0.);
     assert_eq!(b.state().mode, BodyMode::Walking);
-    assert!(b.contacts(&world).food);
+    assert!(b.contacts(&world).unwrap().food);
 
     let mut dying =
         Body::new_in_mode(start, 0.04, BodyConfig::default(), BodyMode::Flying).unwrap();

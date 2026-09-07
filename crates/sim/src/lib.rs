@@ -26,3 +26,5 @@ pub mod setup_fixture;
 pub mod spawn;
 
 pub mod surface;
+
+pub mod food;

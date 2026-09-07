@@ -1,5 +1,11 @@
 //! Authored inventory, atomic setup edits and resolution into existing field/body inputs.
-use crate::{attempt::LevelDef, body::ContactRegion, environment::*};
+use crate::{
+    attempt::LevelDef,
+    body::ContactRegion,
+    environment::*,
+    food::{FoodDef, FoodShape},
+    surface::ContactSurface,
+};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 use ts_rs::TS;
@@ -25,7 +31,7 @@ pub enum ToolEffect {
         kind: SourceKind,
         radius: f64,
         rate: f64,
-        food_radius: Option<f64>,
+        food: Option<FoodShape>,
     },
     Fan {
         reach: f64,
@@ -43,16 +49,16 @@ pub struct ToolDef {
 /// Shared calibration for palette descriptions and physical/sensory resolution.
 /// Threat has no catalog entry until its circuit effect is measured.
 pub fn tool_def(kind: ToolKind) -> ToolDef {
-    let source = |kind, radius, rate, food_radius| ToolEffect::Source {
+    let source = |kind, radius, rate, food| ToolEffect::Source {
         kind,
         radius,
         rate,
-        food_radius,
+        food,
     };
     let (footprint_radius, effect) = match kind {
         ToolKind::Fruit => (
-            0.35,
-            source(SourceKind::AttractiveOdor, 0.75, 1., Some(0.4)),
+            FoodShape::Apple.footprint_radius(),
+            source(SourceKind::AttractiveOdor, 0.75, 1., Some(FoodShape::Apple)),
         ),
         ToolKind::Crumbs => (0.2, source(SourceKind::AttractiveOdor, 0.75, 1., None)),
         ToolKind::Vinegar => (0.2, source(SourceKind::RepellentOdor, 0.75, 1., None)),
@@ -138,13 +144,13 @@ pub enum PlacementEdit {
 pub struct PlacementState {
     pub placements: Vec<Placement>,
     pub remaining: Vec<ToolStock>,
+    pub food: Vec<ContactSurface>,
 }
 #[derive(Clone, Debug, Serialize, TS)]
 #[serde(rename_all = "camelCase")]
 pub struct ResolvedSetup {
     pub state: PlacementState,
     pub sources: Vec<Source>,
-    pub food: Vec<ContactRegion>,
     pub field_config: FieldConfig,
 }
 
@@ -240,7 +246,14 @@ pub fn resolve_placements(
             .ok_or("no inventory remains for this tool")?;
     }
     let mut sources = level.sources.clone();
-    let mut food = level.food.clone();
+    let mut food_defs = level.food.clone();
+    if food_defs.len() > 256
+        || food_defs
+            .iter()
+            .any(|f| !level.geometry.contains_body(f.position, 0.))
+    {
+        return Err("food requires floor positions and at most 256 surfaces".into());
+    }
     let mut field_config = level.field_config.clone();
     for placement in &placements {
         match tool_def(placement.kind).effect {
@@ -248,7 +261,7 @@ pub fn resolve_placements(
                 kind,
                 radius,
                 rate,
-                food_radius,
+                food,
             } => {
                 sources.push(Source {
                     position: placement.position,
@@ -256,10 +269,11 @@ pub fn resolve_placements(
                     rate,
                     kind,
                 });
-                if let Some(radius) = food_radius {
-                    food.push(ContactRegion {
-                        center: placement.position,
-                        radius,
+                if let Some(shape) = food {
+                    food_defs.push(FoodDef {
+                        position: placement.position,
+                        heading: placement.heading,
+                        shape,
                     });
                 }
             }
@@ -276,19 +290,24 @@ pub fn resolve_placements(
             }),
         }
     }
-    if sources.len() > 256 || food.len() > 256 || field_config.fans.len() > 64 {
+    if sources.len() > 256 || food_defs.len() > 256 || field_config.fans.len() > 64 {
         return Err("resolved setup exceeds field/body source limits".into());
     }
+    let food = food_defs
+        .iter()
+        .enumerate()
+        .map(|(id, food)| food.surface(id as u32))
+        .collect::<Result<Vec<_>, _>>()?;
     Ok(ResolvedSetup {
         state: PlacementState {
             placements,
+            food,
             remaining: remaining
                 .into_iter()
                 .map(|(kind, count)| ToolStock { kind, count })
                 .collect(),
         },
         sources,
-        food,
         field_config,
     })
 }

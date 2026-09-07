@@ -30,6 +30,8 @@ landingDwellSeconds: number,
  */
 proboscisThreshold: number, };
 export type ContactRegion = { center: Point, radius: number, };
+export type FoodDef = { position: Point, heading: number, shape: FoodShape, };
+export type FoodShape = { "type": "apple" } | { "type": "patch", radius: number, };
 export type ContactSurface = { id: number, vertices: Array<[number, number, number]>, triangles: Array<[number, number, number]>, };
 export type SurfaceHit = { surfaceId: number, fraction: number, point: [number, number, number], normal: [number, number, number], };
 export type ExitOpening = { a: Point, b: Point, outward: Point, };
@@ -38,9 +40,9 @@ export type FeedingEnd = "contactLost" | "satiated" | "boutLimit" | "terminal";
 export type BodyEventKind = { "type": "modeChanged", from: BodyMode, to: BodyMode, } | { "type": "feedingStarted" } | { "type": "feedingEnded", reason: FeedingEnd, } | { "type": "terminal", outcome: TerminalOutcome, };
 export type BodyEvent = { tick: number, kind: BodyEventKind, };
 export type OutcomeSummary = { escaped: number, starved: number, zapped: number, timedOut: number, score: number, };
-export type LevelDef = { id: string, geometry: Geometry, spawn: SpawnDef, exit: ExitOpening, exitCue: ExitCue | null, food: Array<ContactRegion>, zappers: Array<ContactRegion>, sources: Array<Source>, fieldConfig: FieldConfig, bodyConfig: BodyConfig, initialReserve: number, durationTicks: number, starThresholds: [number, number, number], placementRules: PlacementRules, };
+export type LevelDef = { id: string, geometry: Geometry, spawn: SpawnDef, exit: ExitOpening, exitCue: ExitCue | null, food: Array<FoodDef>, zappers: Array<ContactRegion>, sources: Array<Source>, fieldConfig: FieldConfig, bodyConfig: BodyConfig, initialReserve: number, durationTicks: number, starThresholds: [number, number, number], placementRules: PlacementRules, };
 export type ToolKind = "fruit" | "crumbs" | "vinegar" | "lamp" | "shade" | "fan";
-export type ToolEffect = { "type": "source", kind: SourceKind, radius: number, rate: number, foodRadius: number | null, } | { "type": "fan", reach: number, halfWidth: number, speed: number, };
+export type ToolEffect = { "type": "source", kind: SourceKind, radius: number, rate: number, food: FoodShape | null, } | { "type": "fan", reach: number, halfWidth: number, speed: number, };
 export type ToolDef = { kind: ToolKind, footprintRadius: number, effect: ToolEffect, };
 export type ToolStock = { kind: ToolKind, count: number, };
 export type PlacementRules = { inventory: Array<ToolStock>,
@@ -50,8 +52,8 @@ export type PlacementRules = { inventory: Array<ToolStock>,
 reserved: Array<ContactRegion>, };
 export type Placement = { id: number, kind: ToolKind, position: Point, heading: number, };
 export type PlacementEdit = { "type": "place", placement: Placement, } | { "type": "move", id: number, position: Point, heading: number, } | { "type": "remove", id: number, };
-export type PlacementState = { placements: Array<Placement>, remaining: Array<ToolStock>, };
-export type ResolvedSetup = { state: PlacementState, sources: Array<Source>, food: Array<ContactRegion>, fieldConfig: FieldConfig, };
+export type PlacementState = { placements: Array<Placement>, remaining: Array<ToolStock>, food: Array<ContactSurface>, };
+export type ResolvedSetup = { state: PlacementState, sources: Array<Source>, fieldConfig: FieldConfig, };
 export type CueInput = { pathway: CuePathway, gain: number, };
 export type AttemptTuning = { cues: Array<CueInput>, tasteGain: number,
 /**
@@ -67,7 +69,7 @@ export type FlyFrame = { id: number, inputPose: BodyPose, sensory: SensorySample
 export type AttemptResult = { attemptId: string, completedTick: number, outcomes: OutcomeSummary, stars: number, };
 export type AttemptFrame = { tick: number, neuralSteps: number, flies: Array<FlyFrame>, result: AttemptResult | null, };
 export type LifecycleScenario = "mealThenStarvation" | "proboscisSilenced" | "openExit" | "blockedExit";
-export type LifecycleInfo = { scenario: LifecycleScenario, spec: AttemptSpec, level: LevelDef, initialGrid: FieldGrid, initialBodies: Array<BodyState>, };
+export type LifecycleInfo = { scenario: LifecycleScenario, spec: AttemptSpec, level: LevelDef, food: Array<ContactSurface>, initialGrid: FieldGrid, initialBodies: Array<BodyState>, };
 export type LifecycleEvent = { flyId: number, event: BodyEvent, };
 export type RecordLayout = { schemaVersion: number, valueFields: Array<string>, stateFields: Array<string>, eventFields: Array<string>, groupIds: Array<string>, groupFields: Array<string>, modes: Array<BodyMode>, outcomes: Array<TerminalOutcome | null>, feedingEnds: Array<FeedingEnd>, eventKinds: Array<string>, sensoryPresentMask: number, neuralPresentMask: number, maxChunkTicks: number, maxEventsPerFlyTick: number, };
 export type PackedChunk = { schemaVersion: number, attemptId: string, sequence: number, startTick: number, tickCount: number, flyCount: number, values: Array<number>, states: Array<number>, events: Array<number>, tickNeuralSteps: Array<number>, result: AttemptResult | null, };

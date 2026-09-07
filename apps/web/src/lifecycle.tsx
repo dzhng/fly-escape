@@ -45,12 +45,12 @@ export function LifecycleLab() {
           const pose = reply.info.initialBodies[0].pose;
           scene.setPose({
             x: pose.position.x,
-            y: 0.1,
+            y: reply.info.initialBodies[0].height,
             z: pose.position.z,
             heading: pose.heading,
           });
-          scene.setContactRegions(
-            reply.info.level.food,
+          scene.setContactGeometry(
+            reply.info.food,
             reply.info.level.zappers,
             reply.info.level.exit,
           );

@@ -1,0 +1,210 @@
+{
+  "provenance": "BrainClient LifecycleSession seed 6 mealThenStarvation, real graph, core-recorded vertical movement",
+  "pauseAndReverseCanvasIdentical": true,
+  "captures": [
+    {
+      "stem": "feed--0.1-recorded",
+      "tick": 55.9,
+      "state": {
+        "mode": "walking",
+        "startedTick": 51,
+        "cursorTick": 55.9,
+        "y": 0,
+        "animation": {
+          "clip": "Walk",
+          "seconds": 0.4899999999999999
+        }
+      }
+    },
+    {
+      "stem": "feed-0-recorded",
+      "tick": 56,
+      "state": {
+        "mode": "feeding",
+        "startedTick": 56,
+        "cursorTick": 56,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0
+        }
+      }
+    },
+    {
+      "stem": "feed-1-recorded",
+      "tick": 57,
+      "state": {
+        "mode": "feeding",
+        "startedTick": 56,
+        "cursorTick": 57,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.1
+        }
+      }
+    },
+    {
+      "stem": "feed-2-recorded",
+      "tick": 58,
+      "state": {
+        "mode": "feeding",
+        "startedTick": 56,
+        "cursorTick": 58,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.2
+        }
+      }
+    },
+    {
+      "stem": "feed-4-recorded",
+      "tick": 60,
+      "state": {
+        "mode": "feeding",
+        "startedTick": 56,
+        "cursorTick": 60,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.4
+        }
+      }
+    },
+    {
+      "stem": "feed-6-recorded",
+      "tick": 62,
+      "state": {
+        "mode": "feeding",
+        "startedTick": 56,
+        "cursorTick": 62,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "stem": "feed-8-recorded",
+      "tick": 64,
+      "state": {
+        "mode": "feeding",
+        "startedTick": 56,
+        "cursorTick": 64,
+        "y": 0,
+        "animation": {
+          "clip": "Feed",
+          "seconds": 0.8
+        }
+      }
+    },
+    {
+      "stem": "land--0.1-recorded",
+      "tick": 43.9,
+      "state": {
+        "mode": "flying",
+        "startedTick": 3,
+        "cursorTick": 43.9,
+        "y": 0.5325,
+        "animation": {
+          "clip": "Fly",
+          "seconds": 4.09
+        }
+      }
+    },
+    {
+      "stem": "land-0-recorded",
+      "tick": 44,
+      "state": {
+        "mode": "landing",
+        "startedTick": 44,
+        "cursorTick": 44,
+        "y": 0.5249999999999999,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0
+        }
+      }
+    },
+    {
+      "stem": "land-1-recorded",
+      "tick": 45,
+      "state": {
+        "mode": "landing",
+        "startedTick": 44,
+        "cursorTick": 45,
+        "y": 0.4499999999999999,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.1
+        }
+      }
+    },
+    {
+      "stem": "land-2-recorded",
+      "tick": 46,
+      "state": {
+        "mode": "landing",
+        "startedTick": 44,
+        "cursorTick": 46,
+        "y": 0.3749999999999999,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.2
+        }
+      }
+    },
+    {
+      "stem": "land-4-recorded",
+      "tick": 48,
+      "state": {
+        "mode": "landing",
+        "startedTick": 44,
+        "cursorTick": 48,
+        "y": 0.22499999999999987,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.4
+        }
+      }
+    },
+    {
+      "stem": "land-6-recorded",
+      "tick": 50,
+      "state": {
+        "mode": "landing",
+        "startedTick": 44,
+        "cursorTick": 50,
+        "y": 0.07499999999999984,
+        "animation": {
+          "clip": "Land",
+          "seconds": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "stem": "land-8-recorded",
+      "tick": 52,
+      "state": {
+        "mode": "walking",
+        "startedTick": 51,
+        "cursorTick": 52,
+        "y": 0,
+        "animation": {
+          "clip": "Walk",
+          "seconds": 0.1
+        }
+      }
+    }
+  ],
+  "landingTransitions": [
+    44,
+    86,
+    105,
+    129,
+    151
+  ],
+  "errors": []
+}

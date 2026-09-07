@@ -1,3 +1,4 @@
+use sim::food::{FoodDef, FoodShape};
 use sim::{attempt::*, body::*, environment::*, record::*, GroupActivity, MotorOutput, StepOutput};
 
 fn frame(tick: u32) -> AttemptFrame {
@@ -188,10 +189,13 @@ fn dense_real_body_transitions_fit_and_replay_in_order() {
         }],
         walls: vec![],
     };
-    let food = [ContactRegion {
-        center: Point { x: 2., z: 2. },
-        radius: 1.,
-    }];
+    let food = [FoodDef {
+        position: Point { x: 2., z: 2. },
+        heading: 0.,
+        shape: FoodShape::Patch { radius: 1. },
+    }
+    .surface(0)
+    .unwrap()];
     let world = BodyWorld::new(
         &geometry,
         &food,

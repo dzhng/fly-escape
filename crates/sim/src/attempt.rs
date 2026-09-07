@@ -4,6 +4,7 @@
 use crate::{
     body::*,
     environment::*,
+    food::FoodDef,
     placement::{resolve_placements, Placement, PlacementRules, ResolvedSetup},
     record::RecordLayout,
     sensory::{cue_currents, motor_readout_indices, CuePathway},
@@ -58,7 +59,7 @@ pub struct LevelDef {
     pub spawn: crate::spawn::SpawnDef,
     pub exit: ExitOpening,
     pub exit_cue: Option<ExitCue>,
-    pub food: Vec<ContactRegion>,
+    pub food: Vec<FoodDef>,
     pub zappers: Vec<ContactRegion>,
     pub sources: Vec<Source>,
     pub field_config: FieldConfig,
@@ -136,6 +137,7 @@ pub struct Attempt {
     tuning: AttemptTuning,
     spec: AttemptSpec,
     fields: FieldSet,
+    world: BodyWorld,
     flies: Vec<Fly>,
     taste_indices: Vec<u32>,
     setup: ResolvedSetup,
@@ -206,6 +208,13 @@ impl Attempt {
             return Err("attempt identity mismatch: graph, build, tuning, resolved level, seed or horizon differs".into());
         }
         let resolved = resolve_placements(&level, &spec.placements)?;
+        let world = BodyWorld::new(
+            &level.geometry,
+            &resolved.state.food,
+            &level.zappers,
+            level.exit,
+            level.duration_ticks,
+        )?;
         let fields = FieldSet::new(
             level.geometry.clone(),
             resolved.field_config.clone(),
@@ -268,6 +277,7 @@ impl Attempt {
             tuning,
             spec,
             fields,
+            world,
             flies,
             taste_indices,
             setup: resolved,
@@ -332,13 +342,7 @@ impl Attempt {
     fn advance_tick(&mut self) -> Result<AttemptFrame, String> {
         self.fields.advance(GAME_TICK_SECONDS)?;
         self.tick += 1;
-        let world = BodyWorld::new(
-            self.fields.geometry(),
-            &self.setup.food,
-            &self.level.zappers,
-            self.level.exit,
-            self.level.duration_ticks,
-        )?;
+        let world = &self.world;
         let mut frames = Vec::with_capacity(self.flies.len());
         for (id, fly) in self.flies.iter_mut().enumerate() {
             let input_pose = fly.body.state().pose;
@@ -355,7 +359,7 @@ impl Attempt {
                         *currents.entry(index).or_default() += value;
                     }
                 }
-                if fly.body.contacts(&world).food {
+                if fly.body.contacts(world)?.food {
                     for &index in &self.taste_indices {
                         *currents.entry(index).or_default() += self.tuning.taste_gain;
                     }
@@ -366,7 +370,7 @@ impl Attempt {
                 self.neural_steps += 1;
                 let events =
                     fly.body
-                        .step(&output, &world, sample.wind, GAME_TICK_SECONDS, self.tick)?;
+                        .step(&output, world, sample.wind, GAME_TICK_SECONDS, self.tick)?;
                 (Some(sample), Some(output), events)
             };
             frames.push(FlyFrame {
@@ -447,9 +451,8 @@ fn validate_description(
     {
         return Err("star thresholds require three increasing escaped counts in 1..100".into());
     }
-    BodyWorld::new(
+    BodyWorld::validate(
         &level.geometry,
-        &level.food,
         &level.zappers,
         level.exit,
         level.duration_ticks,

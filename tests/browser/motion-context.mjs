@@ -2,9 +2,8 @@ import { chromium } from 'playwright';
 import { mkdir, writeFile, realpath, readFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 const moduleRoot = `/@fs${await realpath('.')}`;
-const foodContext=process.env.FOOD_CONTEXT==='1';
 const landingOnly=process.env.MOTION_SCOPE==='landing';
-const output = process.env.MOTION_EVIDENCE_DIR ?? (foodContext?'specs/help-the-fly-escape/assets/evidence/14/food/context':'specs/help-the-fly-escape/assets/evidence/08/context');
+const output = process.env.MOTION_EVIDENCE_DIR ?? '/tmp/fly-motion-context';
 await mkdir(output, {recursive:true});
 const browser = await chromium.launch({channel:'chrome',headless:true});
 const page = await browser.newPage({viewport:{width:1440,height:900}});
@@ -14,8 +13,8 @@ page.on('pageerror',error=>errors.push(String(error)));
 try {
   await page.route('**/motion-context', route=>route.fulfill({contentType:'text/html',body:'<style>body{margin:0;background:#f6f5eb;color:#24443a;font:18px system-ui}header{padding:20px;height:60px}#world{height:800px;width:1440px}</style><header>Recorded lifecycle motion context <span id="phase"></span></header><div id="world"></div>'}));
   await page.goto(`${process.env.BRAIN_URL ?? 'http://127.0.0.1:5207'}/motion-context`);
-  const recorded = await page.evaluate(async({moduleRoot,foodContext})=>{
-    const {BrainClient,AttemptClient}=await import(`${moduleRoot}/packages/sim-client/src/index.ts`);
+  const recorded = await page.evaluate(async({moduleRoot})=>{
+    const {BrainClient}=await import(`${moduleRoot}/packages/sim-client/src/index.ts`);
     const records = await new Promise((resolve,reject)=>{
       let info;const frames=[];
       const brain=new BrainClient(reply=>{
@@ -29,22 +28,12 @@ try {
       });
       brain.startLifecycle(6,'mealThenStarvation');
     });
-    const {WorldView,loadFlyModel,loadPlacementModel,flyAnimation}=await import(`${moduleRoot}/packages/game-renderer/src/index.ts`);
+    const {WorldView,loadFlyModel,flyAnimation}=await import(`${moduleRoot}/packages/game-renderer/src/index.ts`);
     const model=await loadFlyModel(await (await fetch(`${moduleRoot}/assets/fly/fly.glb`)).arrayBuffer());
     const view = new WorldView(document.getElementById('world'),records.info.level.geometry);
     view.setFlyModel(model);
-    view.setContactRegions(records.info.level.food,records.info.level.zappers,records.info.level.exit,!foodContext);
-    if(foodContext){
-    const client=new AttemptClient(()=>{});
-    const {catalog}=await client.setup({type:'fixture'});client.dispose();
-    const fruit=catalog.find(t=>t.kind==='fruit');
-    const region=records.info.level.food[0];
-    // The lifecycle meal region is larger than a placed tool. Preserve its recorded boundary; scale only this diagnostic art using the catalog footprint/contact ratio.
-    const diagnosticCatalog=[{...fruit,footprintRadius:region.radius*fruit.footprintRadius/fruit.effect.foodRadius}];
-    view.setPlacementModel('fruit',(await loadPlacementModel(await (await fetch(`${moduleRoot}/assets/food/fruit.glb`)).arrayBuffer())).root);
-    view.setPlacements([{id:1,kind:'fruit',position:region.center,heading:0}],diagnosticCatalog);
-    records.foodArt={catalogFruit:fruit,region,displayRadius:diagnosticCatalog[0].footprintRadius,provenance:'Diagnostic visual scale only; recorded lifecycle contact unchanged'};
-    }
+    // Native model inspection uses the game presentation, without the lifecycle lab's oversized C marker.
+    view.setContactGeometry(records.info.food,records.info.level.zappers,records.info.level.exit,false);
 
     // Captures sample actual resulting modes and poses; no injected motor inputs.
     const motionAt = tick=>{
@@ -72,7 +61,7 @@ try {
     const food=records.frames.find(f=>f.flies[0].body.mode==='feeding');
     window.draw((food ?? records.frames[0]).tick);view.selectFly(0);view.zoomClose();view.render();
     return records;
-  },{moduleRoot,foodContext});
+  },{moduleRoot});
   await writeFile(`${output}/recorded-lifecycle.json`,JSON.stringify(recorded,null,2));
   const feeding=recorded.frames.filter(f=>f.flies[0].body.mode==='feeding');
   if(!landingOnly) assert.ok(feeding.length>0,'actual lifecycle produces feeding');
@@ -80,7 +69,7 @@ try {
   const completeLanding=transitions.find(f=>recorded.frames.some(next=>next.tick>f.tick&&next.tick<=f.tick+9&&next.flies[0].body.mode==='walking'));
   assert.ok(completeLanding,'actual lifecycle contains uninterrupted landing');
   const captures=[];
-  for(const [name,start] of (landingOnly?[['land',completeLanding.tick]]:foodContext?[['feed',feeding[0].tick]]:[['feed',feeding[0].tick],['land',completeLanding.tick]])){
+  for(const [name,start] of (landingOnly?[['land',completeLanding.tick]]:[['feed',feeding[0].tick],['land',completeLanding.tick]])){
     for(const delta of [-0.1,0,1,2,4,6,8]){
       const tick=start+delta;
       if(tick>recorded.frames.at(-1).tick)continue;
@@ -102,7 +91,7 @@ try {
     assert.deepEqual(await page.locator('canvas').screenshot(),expected,'reverse');
   }
   const strip=await browser.newPage({viewport:{width:2940,height:490}});
-  for(const name of (landingOnly?['land']:foodContext?['feed']:['feed','land']))for(const version of ['recorded']){
+  for(const name of (landingOnly?['land']:['feed','land']))for(const version of ['recorded']){
     const cells=await Promise.all(captures.filter(c=>c.stem.startsWith(`${name}-`) && c.stem.endsWith(`-${version}`)).map(async c=>`<div><label>tick ${c.tick} · ${c.state.animation.clip} · y=${c.state.y.toFixed(3)}</label><img src="data:image/png;base64,${(await readFile(`${output}/${c.stem}-crop.png`)).toString('base64')}"></div>`));
     await strip.setContent(`<style>body{margin:0;display:flex;background:#f6f5eb;font:18px system-ui}div{width:420px;flex-shrink:0}label{display:block;height:30px}img{display:block}</style>${cells.join('')}`);
     await strip.screenshot({path:`${output}/sequence-${name}-${version}.jpg`});

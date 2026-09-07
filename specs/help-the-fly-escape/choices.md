@@ -330,3 +330,17 @@ When a millimetre fly rises, a world-space minimum trail width can become a broa
 ### Sound — medium confidence: preserve exported coordinates exactly through JSON
 
 When Blender exports a vertex, the browser reads its binary coordinate. Rust reads a generated text copy for contact queries. Its default JSON parser changed the final binary digit of some coordinates, so the two sides did not receive precisely the same surface. Enable the existing JSON library's exact floating-point parsing feature rather than weakening the equality check. The plan required shared geometry but did not specify parsing mode. This applies to core JSON inputs and constrains future asset baking to preserve their numeric values; no new library is added. The cost is the parser's exact conversion work during loading, with no extra per-tick conversion.
+
+## Food geometry and attempt ownership — 2026-09-07
+
+### Sound — medium confidence: retain the contact radius until supported movement lands
+
+A walking fly currently qualifies for taste only when its recorded root is within the existing modeled body radius of an edible triangle. The check measures the actual three-dimensional surface, so neither a distant odor nor a point deep inside an apple counts. This removes the former oversized edible circle, but it does not yet resolve a fly body landing or walking on the apple. The plan split geometry from supported movement; this checkpoint keeps that remaining work explicit. Replace this provisional proximity envelope with the accepted native support/contact state in the next20 pass, before treating apple feeding as complete.
+
+### Sound — high confidence: surface IDs belong to an immutable attempt
+
+Resolving a setup numbers fixed food first and then food placements sorted by placement ID. Every fly in that attempt sees those same numbers and geometry. Removing or adding a tool creates a different setup and a new attempt; IDs need not describe the same fruit across different attempts. The plan requested stable identity but did not require cross-attempt persistence. This keeps records tied to their immutable setup without another global identity registry.
+
+### Sound — high confidence: return food geometry with atomic setup state
+
+When a placement edit succeeds, its placement list, remaining inventory and resolved food triangles travel together. A rejected edit leaves that state unchanged. The attempt uses those same surfaces to prepare one shared query scene; authored floor patches render directly from them, while placed apples use the matching GLB at native scale. The plan did not specify where the resolved triangles belonged in the setup reply. Keeping them in the state avoids a second asynchronous geometry update and lets future editors render fixed food without reconstructing physics in TypeScript.

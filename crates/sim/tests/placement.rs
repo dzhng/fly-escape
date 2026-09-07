@@ -179,11 +179,14 @@ fn canonical_resolution_binds_each_tool_without_mixing_food_and_odor() {
         ]
     );
     assert_eq!(
-        resolved.food,
-        vec![ContactRegion {
-            center: Point { x: -4., z: -4. },
-            radius: 0.4
-        }]
+        resolved.state.food,
+        vec![sim::food::FoodDef {
+            position: Point { x: -4., z: -4. },
+            heading: 0.,
+            shape: sim::food::FoodShape::Apple,
+        }
+        .surface(0)
+        .unwrap()]
     );
     assert_eq!(
         resolved.field_config.fans[0].heading,
@@ -194,7 +197,7 @@ fn canonical_resolution_binds_each_tool_without_mixing_food_and_odor() {
     no_replenishment.body_config.feeding_rate = 0.;
     let ablated = resolve_placements(&no_replenishment, &placements).unwrap();
     assert_eq!(ablated.sources, resolved.sources);
-    assert_eq!(ablated.food, resolved.food);
+    assert_eq!(ablated.state.food, resolved.state.food);
 }
 
 #[test]

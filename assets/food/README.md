@@ -1,9 +1,7 @@
-# Floor food assets
+# Food and scent assets
 
-Fruit is a citrus cut face; crumbs are separate crust-edged morsels. Both are Blender-authored static meshes with native horizontal radius at most one, +Y up in GLB, pivot at floor contact, and maximum relief 0.005 world units. The renderer scales only X/Z by the authoritative catalog footprint. Relief is deliberately near-flush: these non-solid cues must not look like furniture blocking planar flies.
+The [apple](apple/README.md) uses native metre-scale geometry shared with the core's edible surface queries. Contact geometry and odor emission are separate: being near an odor source does not establish food contact.
 
-Fruit retains odor and edible body-contact semantics. Scent crumbs retain odor only. The core fruit food radius exceeds its placement footprint, and body-radius overlap can initiate feeding outside the drawn fruit. Neither the art nor renderer changes that recorded movement/heading. Grounded attached feeding is the visual target; physically exact mouth intersection is not claimed.
+Scent crumbs are odor-only floor cues. Their Blender source in [author.py](author.py) has a radius-one footprint and shallow relief; the placement renderer scales X/Z using the core catalog. This contract keeps a scent marker from implying an unmodeled solid obstacle.
 
-Each `.blend` contains a separate source scene; `author.py` can recreate the assets through Blender MCP or Blender's Python runner. `roundtrip.json` records GLB re-import bounds/counts. Rind, pith, flesh and crumbs retain their own material roles; room palette and lights are independent. Seeds sit above the flesh rather than coplanar with it.
-
-The shared placement-model loader validates finite vertices, radius, relief, static topology and a 5000-triangle ceiling. The existing asset workbench exposes catalog-scale placement and local GLB replacement. Templates own resources; placements share those resources and own transforms. Failed replacement preserves the previously accepted model.
+The main workbench inspects and replaces floor cues. The contact workbench inspects edible geometry against core-computed support poses. Replacement must preserve the applicable physical contract; a changed edible mesh must be baked for the core before its visual replacement is accepted. Templates own resources, instances share geometry/materials, and failed replacement preserves the accepted model.
