@@ -1,0 +1,17 @@
+# 21 — Recognizable household shapes
+
+Status: pending. Dependencies: 19,20.
+
+## Contract, seam and review surface
+
+Author distinct Blender assets for a warm lived-in room: closed-base furniture, upholstered seating, a window, household light fixture, potted plant and real apple/banana shapes. Keep material and lighting neutral. Per-key assets declare grounded pivots, true bounds and orientation; production loading validates them against their own contract rather than one stretched solid template. Use the existing .blend→GLB authoring/replacement workbench; verify export round trips and resource disposal.
+
+Visual variable: silhouette and geometric detail. Judge fixed per-object crops and doorway/room composition. Physical furniture occupancy and food support must match accepted core geometry. Use asymmetric orientation checks; do not make open chair/table gaps that core bodies cannot traverse. Plant shape is included here; foliage/material treatment remains in 22.
+
+## Standing verification and decision budget
+
+Use the production renderer in the existing asset workbench, with a representative room, fixed cameras and recorded attempt. This is a diagnostic fixture, not a third campaign level. Preserve twenty real-connectome flies, neural ownership, deterministic replay and the current performance budgets. Blender renders are authoring evidence; actual browser captures determine acceptance.
+
+For visual evidence, save full frames at default, close follow, further zoom and Overview plus the named crops. Use [compare-screenshots](../../../.agents/skills/compare-screenshots/SKILL.md) against the preceding pass/reference and run an unprimed [screenshot-critique](../../../.agents/skills/screenshot-critique/SKILL.md) as the last visual acceptance check. Open shots through [preview-shots](../../../.agents/skills/preview-shots/SKILL.md); the five-minute feedback window is non-blocking while independent work continues. Record the verdict and close shots.
+
+Delegated: reversible asset composition, implementation naming and measurements needed to resolve this slice's question. Record new physical assumptions before dependent implementation; do not silently change neuron dynamics, world scale, contact semantics or fidelity target. Update the global handoff and bank focused evidence under this slice's number. Deferred variables must remain frozen until their owning slice.

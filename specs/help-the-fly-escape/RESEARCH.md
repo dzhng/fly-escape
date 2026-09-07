@@ -42,3 +42,11 @@ The source code is evidence of what the prototype computes, not proof of neurosc
 ## Neuroscience explanation sources
 
 Descriptions teach neuronal processes rather than puzzle rules. The shared introductory explanations use [Gerstner et al., Neuronal Dynamics §1.3](https://neuronaldynamics.epfl.ch/online/Ch1.S3.html) for leaky integration, spike thresholds, reset and refractory modeling, and [Purves et al., Excitatory and Inhibitory Postsynaptic Potentials](https://www.ncbi.nlm.nih.gov/books/NBK11117/) for excitation/inhibition. Circuit-specific anatomical claims still need their own source review in slice 13; group names inherited from the spike are insufficient evidence.
+
+## Furnished realism revision
+
+The [Three.js color-management manual](https://threejs.org/manual/en/color-management.html) distinguishes sRGB color textures, linear working light calculations and non-color normal/roughness data. Preserve authored glTF materials and correct texture annotations; changing light intensity cannot repair incorrect color-space handling. The existing palette overwrite must be removed before judging realistic surfaces.
+
+The [official Blender glTF exporter](https://github.com/KhronosGroup/glTF-Blender-IO/blob/main/README.md) remains the runtime asset boundary. Validate actual exported material channels and bounds through the existing browser asset workbench; procedural Blender appearance alone does not prove portable runtime appearance. Blender MCP scene inspection succeeded on 7 September; use separate authoring scenes so existing source assets survive.
+
+Scale, supported fruit contact and furnished occlusion are local reproduction questions, not solved by choosing PBR. The [revised synthesis](assets/planning/realism-synthesis.md) assigns them independent passes before campaign validation. Prior bare-room fixed-start outcomes do not establish difficulty after these physical changes.

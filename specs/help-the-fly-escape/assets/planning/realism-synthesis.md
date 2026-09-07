@@ -1,0 +1,9 @@
+# Revised two-level plan — 2026-09-07
+
+Three independent read-only drafts inspected the real code: fewest-slices and risk-first Codex agents, plus fresh Claude Opus/high via the local CLI with only the brief/repo path. All found fixed starts, unconditional palette overrides, stretched solid templates and flat food contact as the important seams. Existing camera, panel, trails and graph transport remain foundations.
+
+The minimal draft merged physical spawn/furniture/food into one large seam. The risk-first draft separated scale, furniture, food, surfaces, daylight, lamps and occlusion. The seam draft emphasized exported tick-zero states, a single furniture owner and deletion of palette overrides. Synthesis: keep spawn independent (18); settle scale before detailed assets (19); give food/furniture physical agreement its own prototype (20); then shapes, surfaces, illumination and readability (21–24). Illumination has separate daylight and lamp passes. A generic height offset is not accepted as proof of curved-fruit contact. No third campaign level is introduced by the representative-room fixture.
+
+Campaign UI has an isolated prepared implementation, absent from the drafts' root snapshot; integrate its tested single-worker ownership rather than implementing a second catalog. Previous fixed-start bare-room native/WASM results remain calibration evidence only. Exactly two final levels require new furnished/random-start evaluation, with eating dependence on the second. Keep five rooms for the first; second room count/layout remain delegated.
+
+The warm lived-in photorealistic direction supersedes old whimsical palette prose and flat-food acceptance. No backward compatibility or spike preservation is required. The only retained fixed-start branch is an explicit scientific fixture input, not a campaign fallback. Root and per-slice checklists own next actions; this document records rationale, not an alternate work queue.

@@ -4,11 +4,11 @@ Status: **implementation active — campaign validation and progression**. Last 
 
 Build a local, fully 3D browser game in which the player places environmental tools and watches a real connectome-driven swarm attempt to escape. The [game contract](GAMEPLAY.md) owns user requirements; [architecture contracts](CONTRACTS.md) own runtime/data seams. This plan replaces the previous Python tech-demo scope.
 
-## Current pickup
+## Next Agent Prompt
 
 The user reduced the campaign to **two carefully designed levels** and requested randomized clustered starting positions, varied headings, and mixed walking/flying initial states. Update the core spawn and recorded-start seam before further campaign calibration.
 
-The user changed the final visual target to a **photorealistic, warm, lived-in house** with real materials, furniture, lights, plants, apples and bananas. Follow [the updated game contract](GAMEPLAY.md#visual-target-a-warm-lived-in-house). First establish one furnished room in the actual browser renderer and reslice its asset/contact/material/lighting seams before expanding the look. Existing visual checkpoints remain foundation evidence; they no longer establish final art acceptance.
+The user changed the final visual target to a **photorealistic, warm, lived-in house** with real materials, furniture, lights, plants, apples and bananas. Follow [the updated game contract](GAMEPLAY.md#visual-target-a-warm-lived-in-house). Start [19](slices/19-proportions.md) alongside [18](slices/18-natural-starts.md), then follow 20–24 to establish one furnished room before expanding the look. Existing visual checkpoints remain foundation evidence; they no longer establish final art acceptance.
 
 Finish the already-running frozen first-level held-out evaluation as bare-room calibration evidence, and complete the isolated renderer-retention fix and campaign UI ownership checks. Do not start further campaign seed batches until the furnishing/collision contract is settled. Geometry and sensory changes require revalidation; previously accepted neural fidelity and twenty-fly performance requirements still hold.
 
@@ -34,7 +34,14 @@ Open the [interactive roadmap](visualizations/roadmap.html) for dependency and m
 - [x] [12 — Depth and exit lighting](slices/12-house-lighting.md) — dependencies: 11.
 - [x] [13 — All-fly science and explanations](slices/13-science-panel.md) — dependencies: 05,06.
 - [x] [14 — Editable setup and attempt loop](slices/14-placement-attempt.md) — dependencies: 05,06,10,13.
-- [ ] [15 — Level 1 is the tutorial](slices/15-first-level.md) — dependencies: 03,04,09,12,14.
+- [ ] [18 — A natural starting swarm](slices/18-natural-starts.md) — dependencies: 05,14; required before final campaign calibration.
+- [ ] [19 — Physical proportions before detailed art](slices/19-proportions.md) — dependencies: 18 for integration; neutral authoring may proceed independently.
+- [ ] [20 — Authoritative furnishing and food contact](slices/20-furnished-contact.md) — dependencies: 19.
+- [ ] [21 — Recognizable household shapes](slices/21-house-shapes.md) — dependencies: 19,20.
+- [ ] [22 — Natural authored materials](slices/22-house-surfaces.md) — dependencies: 21.
+- [ ] [23 — Daylight and household illumination](slices/23-house-illumination.md) — dependencies: 22.
+- [ ] [24 — Follow visibility in a furnished room](slices/24-furnished-readability.md) — dependencies: 23,18.
+- [ ] [15 — Level 1 is the tutorial](slices/15-first-level.md) — dependencies: 18–24 and the accepted foundations.
 - [ ] [16 — A carefully designed second level](slices/16-campaign.md) — dependencies: 15.
 - [ ] [17 — Browser release and clean cutover](slices/17-static-release.md) — dependencies: 16.
 

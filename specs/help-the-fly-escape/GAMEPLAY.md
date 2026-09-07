@@ -58,6 +58,6 @@ Tooltip wording requires source review; old spike prose is not proof. Show detai
 
 ## Visual references and limits
 
-Use `assets/ui/` for approved framing/panel examples and the explicit negative selection reference. The source fragment is preserved at [ui-mock.fragment.html](visualizations/ui-mock.fragment.html); it expects the conversation visualization host and is evidence, not a standalone game or build dependency. The original whole-house image sets a zoom limit, not the default shot. Art direction is a cool, softly lit whimsical home with a warm orange exit and legible, appealing close-up flies.
+Use `assets/ui/` for approved framing/panel examples and the explicit negative selection reference. The source fragment is preserved at [ui-mock.fragment.html](visualizations/ui-mock.fragment.html); it expects the conversation visualization host and is evidence, not a standalone game or build dependency. The original whole-house image sets a zoom limit, not the default shot. These older stylized images establish framing and interaction only. Final art follows the warm, lived-in photorealistic house target above.
 
 Deferred: camera rotation, mobile layout, procedural levels, accounts, shop/currency, full-neuron inspection, persistent replay sharing, GPU neural compute, multiplayer, and 100-fly performance optimization. Actual 3D assets and food extending life are not deferred.
