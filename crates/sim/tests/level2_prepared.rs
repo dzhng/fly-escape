@@ -6,14 +6,21 @@ use sim::{
 use std::collections::BTreeSet;
 #[test]
 fn prepared_corner_has_real_fork_and_fan_crossing() {
-    let data: serde_json::Value = serde_json::from_str(include_str!(
+    let mut data: serde_json::Value = serde_json::from_str(include_str!(
         "../../../specs/help-the-fly-escape/assets/evidence/16/prepared/candidate.json"
     ))
     .unwrap();
+    let poses = data["level"]
+        .as_object_mut()
+        .unwrap()
+        .remove("spawnPoses")
+        .unwrap();
+    data["level"]["spawn"] = serde_json::json!({"kind":"fixed","states":poses.as_array().unwrap().iter().map(|pose|serde_json::json!({"pose":pose,"mode":"walking"})).collect::<Vec<_>>()});
     let level: LevelDef = serde_json::from_value(data["level"].clone()).unwrap();
     let g = &level.geometry;
     let r = level.body_config.body_radius;
-    for pose in &level.spawn_poses {
+    for body in sim::spawn::resolve(&level, 0, 20).unwrap() {
+        let pose = body.pose;
         assert!(g.contains_body(pose.position, r));
     }
     let mut links = BTreeSet::new();

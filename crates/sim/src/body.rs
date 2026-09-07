@@ -281,6 +281,19 @@ impl Body {
             ground_dwell_remaining: 0.,
         })
     }
+    pub fn new_in_mode(
+        pose: BodyPose,
+        reserve: f64,
+        config: BodyConfig,
+        mode: BodyMode,
+    ) -> Result<Self, String> {
+        if !matches!(mode, BodyMode::Walking | BodyMode::Flying) {
+            return Err("initial body mode must be walking or flying".into());
+        }
+        let mut body = Self::new(pose, reserve, config)?;
+        body.state.mode = mode;
+        Ok(body)
+    }
     pub fn state(&self) -> &BodyState {
         &self.state
     }

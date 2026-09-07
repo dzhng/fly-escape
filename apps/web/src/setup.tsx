@@ -10,7 +10,7 @@ import {
   type StartAttempt,
   type ToolKind,
 } from "@fly-escape/sim-client";
-import { WorldView } from "@fly-escape/game-renderer";
+import { WorldView, flyHeight } from "@fly-escape/game-renderer";
 import { AttemptPlayback } from "./playback";
 import { loadProgress, saveProgress, awardResult, emptyProgress } from "./progress";
 import "./setup.css";
@@ -93,14 +93,17 @@ export function SetupGame() {
     if (!fixture || input || !container.current) return;
     const view = new WorldView(container.current, fixture.level.geometry, 20);
     world.current = view;
-    view.setPoses(
-      fixture.level.spawnPoses.map((p) => ({
-        x: p.position.x,
-        z: p.position.z,
-        heading: p.heading,
-        y: 0,
-      })),
-    );
+    const spawn = fixture.level.spawn;
+    if (spawn.kind === "cluster") view.setSpawnArea(spawn.min, spawn.max);
+    else
+      view.setPoses(
+        spawn.states.map(({ pose: p, mode }) => ({
+          x: p.position.x,
+          z: p.position.z,
+          heading: p.heading,
+          y: flyHeight({ mode, previousMode: mode, startedTick: 0, cursorTick: 0 }, 0.1),
+        })),
+      );
     view.setContactRegions([], [], fixture.level.exit);
     view.overview();
     view.enableCamera();
@@ -267,7 +270,7 @@ export function SetupGame() {
           />
           <div className="setup-note">
             Five rooms · 20 flies · 60 game seconds
-            <span>Integration fixture — campaign difficulty is still being authored.</span>
+            <span>Flies start inside the outlined area. Campaign difficulty is still being authored.</span>
           </div>
           <div
             className={`placement-feedback ${valid === false ? "invalid" : ""}`}

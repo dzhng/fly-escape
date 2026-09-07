@@ -123,7 +123,7 @@ fn solids_exclude_field_cells_and_tool_placement() {
     assert_eq!(fields.sample_point(center).attractive_odor, 0.);
     let mut level = sim::swarm_lab::level(1).unwrap();
     level.geometry = geometry;
-    level.spawn_poses.clear();
+    level.spawn = sim::spawn::SpawnDef::fixed(vec![]);
     level.placement_rules = PlacementRules {
         inventory: vec![ToolStock {
             kind: ToolKind::Fruit,

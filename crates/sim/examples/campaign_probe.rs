@@ -115,11 +115,10 @@ fn topology(level: &LevelDef) -> Result<Value, String> {
         }
     }
     if reached.len() != geometry.rooms.len()
-        || level.spawn_poses.iter().any(|p| {
-            !geometry.contains_body(p.position, radius)
-                || geometry
-                    .room_at(p.position)
-                    .is_none_or(|id| !reached.contains(&id))
+        || sim::spawn::resolve(level, 0, 20)?.iter().any(|body| {
+            geometry
+                .room_at(body.pose.position)
+                .is_none_or(|id| !reached.contains(&id))
         })
     {
         return Err(
@@ -412,7 +411,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Err("star thresholds must be positive, strictly increasing and at most 20".into());
     }
     if !(1..=30).contains(&count)
-        || content.level.spawn_poses.len() != 20
         || !(5..=9).contains(&content.level.geometry.rooms.len())
         || content.tuning.taste_gain <= 0.
         || !content.tuning.silenced_neurons.is_empty()
@@ -570,8 +568,12 @@ fn acceptance(
 mod tests {
     use super::*;
     fn level(text: &str) -> LevelDef {
-        serde_json::from_value(serde_json::from_str::<Value>(text).unwrap()["level"].clone())
-            .unwrap()
+        let mut value = serde_json::from_str::<Value>(text).unwrap()["level"].clone();
+        // Archived greybox inputs predate SpawnDef; adaptation stays in this test.
+        if let Some(poses) = value.as_object_mut().unwrap().remove("spawnPoses") {
+            value["spawn"] = json!({"kind":"fixed","states":poses.as_array().unwrap().iter().map(|pose|json!({"pose":pose,"mode":"walking"})).collect::<Vec<_>>()});
+        }
+        serde_json::from_value(value).unwrap()
     }
     #[test]
     fn diagnostic_or_missing_control_cannot_accept_a_seed_set() {
@@ -699,7 +701,7 @@ mod tests {
             sim::placement::resolve_placements(&content.level, &content.reference).unwrap();
         content.level.body_config.feeding_rate = 0.;
         sim::body::Body::new(
-            content.level.spawn_poses[0],
+            sim::spawn::resolve(&content.level, 0, 20).unwrap()[0].pose,
             content.level.initial_reserve,
             content.level.body_config.clone(),
         )

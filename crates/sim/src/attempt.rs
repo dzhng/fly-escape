@@ -30,6 +30,7 @@ pub struct AttemptInfo {
     pub spec: AttemptSpec,
     pub level: LevelDef,
     pub resolved_setup: ResolvedSetup,
+    pub initial_bodies: Vec<BodyState>,
     pub groups: Vec<Group>,
     pub group_links: Vec<GroupLink>,
     pub record_layout: RecordLayout,
@@ -53,7 +54,7 @@ pub const SIMULATION_BUILD_ID: &str = env!("SIM_BUILD_ID");
 pub struct LevelDef {
     pub id: String,
     pub geometry: Geometry,
-    pub spawn_poses: Vec<BodyPose>,
+    pub spawn: crate::spawn::SpawnDef,
     pub exit: ExitOpening,
     pub exit_cue: Option<ExitCue>,
     pub food: Vec<ContactRegion>,
@@ -141,6 +142,7 @@ pub struct Attempt {
     neural_steps: u32,
     result: Option<AttemptResult>,
     failure: Option<String>,
+    initial_bodies: Vec<BodyState>,
 }
 impl Attempt {
     /// Describe content without allocating neural state. Constructor compares all
@@ -155,6 +157,7 @@ impl Attempt {
         placements: &[Placement],
     ) -> Result<AttemptSpec, String> {
         validate_description(level, tuning, attempt_id, fly_count)?;
+        crate::spawn::resolve(level, root_seed, fly_count)?;
         let resolved = resolve_placements(level, placements)?;
         if tuning.silenced_neurons.len() > graph.neuron_count()
             || tuning
@@ -229,10 +232,11 @@ impl Attempt {
         } else {
             vec![]
         };
+        let initial_bodies = crate::spawn::resolve(&level, seed, spec.fly_count)?;
         for cue in &tuning.cues {
             let probe = fields.sample(
-                level.spawn_poses[0].position,
-                level.spawn_poses[0].heading,
+                initial_bodies[0].pose.position,
+                initial_bodies[0].pose.heading,
                 0,
             );
             let currents = cue_currents(&graph, &probe, cue.pathway, cue.gain)?;
@@ -240,15 +244,20 @@ impl Attempt {
                 return Err("cue group has no neurons outside motor readouts".into());
             }
         }
-        let flies = level.spawn_poses[..spec.fly_count as usize]
+        let flies = initial_bodies
             .iter()
             .enumerate()
-            .map(|(id, &pose)| {
+            .map(|(id, initial)| {
                 let mut brain = Brain::new(graph.clone(), Brain::seed_for_fly(seed, id as u32));
                 brain.set_silenced_neurons(&tuning.silenced_neurons)?;
                 Ok(Fly {
                     brain,
-                    body: Body::new(pose, level.initial_reserve, level.body_config.clone())?,
+                    body: Body::new_in_mode(
+                        initial.pose,
+                        initial.reserve,
+                        level.body_config.clone(),
+                        initial.mode,
+                    )?,
                 })
             })
             .collect::<Result<_, String>>()?;
@@ -265,6 +274,7 @@ impl Attempt {
             neural_steps: 0,
             result: None,
             failure: None,
+            initial_bodies,
         })
     }
     /// Allocated numeric neural state for every fly, including fixed ablation masks.
@@ -273,6 +283,9 @@ impl Attempt {
             .iter()
             .map(|fly| fly.brain.state_storage_bytes())
             .sum()
+    }
+    pub fn initial_bodies(&self) -> Vec<BodyState> {
+        self.initial_bodies.clone()
     }
     pub fn spec(&self) -> &AttemptSpec {
         &self.spec
@@ -396,14 +409,7 @@ fn validate_description(
     {
         return Err("attempt and level IDs require 1..256 bytes".into());
     }
-    if !(1..=100).contains(&fly_count)
-        || level.spawn_poses.len() < fly_count as usize
-        || level.spawn_poses.len() > 100
-    {
-        return Err(
-            "attempt capacity requires 1..100 flies and enough spawn poses, at most 100".into(),
-        );
-    }
+    crate::spawn::validate(level, fly_count)?;
     if tuning.cues.len() > 3
         || tuning.cues.iter().enumerate().any(|(i, c)| {
             matches!(c.pathway, CuePathway::None)
@@ -438,17 +444,6 @@ fn validate_description(
         level.exit,
         level.duration_ticks,
     )?;
-    for &pose in &level.spawn_poses {
-        Body::new(pose, level.initial_reserve, level.body_config.clone())?;
-        if !level
-            .geometry
-            .contains_body(pose.position, level.body_config.body_radius)
-        {
-            return Err(
-                "spawn body must lie on a room floor and clear walls and solid props".into(),
-            );
-        }
-    }
     Ok(())
 }
 fn canonical_hash(value: &impl Serialize) -> Result<String, String> {

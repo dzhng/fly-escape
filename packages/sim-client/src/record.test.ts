@@ -22,11 +22,18 @@ const transfer = (chunk: PackedChunk): TransferChunk => ({
   events: new Uint32Array(chunk.events),
   tickNeuralSteps: new Uint32Array(chunk.tickNeuralSteps),
 });
+const initialBodies = [0, 1].map((id) => ({
+  pose: { position: { x: id, z: 0 }, heading: 0 },
+  mode: "walking" as const,
+  reserve: 10,
+  outcome: null,
+}));
 const archive = () =>
   new FrameArchive(
     { attemptId: "fixture", flyCount: 2, durationTicks: 4 },
     fixture.layout,
     fixture.archiveByteBound,
+    initialBodies,
   );
 
 test("Rust packed records decode exactly across flies, chunks, events and terminal absence", () => {
@@ -35,7 +42,7 @@ test("Rust packed records decode exactly across flies, chunks, events and termin
   for (const frame of fixture.frames) expect(record.frame(frame.tick)).toEqual(frame);
   expect(record.complete).toBe(true);
   expect(record.result).toEqual(fixture.frames[3].result);
-  expect(() => record.frame(0)).toThrow("not been recorded");
+  expect(record.frame(0).flies.map((f) => f.body)).toEqual(initialBodies);
   expect(() => record.frame(5)).toThrow("not been recorded");
   // Consumers receive fresh views of a frame, not mutable cached history.
   record.frame(2).flies[0].body.reserve = -1;
@@ -54,6 +61,7 @@ test("metadata field order determines the consumer offsets", () => {
     { attemptId: "fixture", flyCount: 2, durationTicks: 4 },
     layout,
     fixture.archiveByteBound,
+    initialBodies,
   );
   for (const source of fixture.chunks) {
     const chunk = transfer(source);
@@ -129,6 +137,7 @@ test("archive limits count retained backing allocations, and reject unsupported 
         { attemptId: "a", flyCount: 20, durationTicks: 6000 },
         fixture.layout,
         128 * 1024 * 1024 + 1,
+        initialBodies,
       ),
   ).toThrow("128 MiB");
   const chunk = transfer(fixture.chunks[0]);
@@ -146,6 +155,7 @@ test("archive limits count retained backing allocations, and reject unsupported 
         { attemptId: "fixture", flyCount: 2, durationTicks: 4 },
         { ...fixture.layout, valueFields: [] },
         fixture.archiveByteBound,
+        initialBodies,
       ),
   ).toThrow("Missing record field");
   expect(
@@ -154,6 +164,7 @@ test("archive limits count retained backing allocations, and reject unsupported 
         { attemptId: "fixture", flyCount: 2, durationTicks: 4 },
         { ...fixture.layout, schemaVersion: 99 },
         fixture.archiveByteBound,
+        initialBodies,
       ),
   ).toThrow("Unsupported");
 });
@@ -161,7 +172,7 @@ test("archive limits count retained backing allocations, and reject unsupported 
 test("accepting a chunk takes ownership and snapshots metadata and results", () => {
   const spec = { attemptId: "fixture", flyCount: 2, durationTicks: 4 };
   const layout = structuredClone(fixture.layout);
-  const record = new FrameArchive(spec, layout, fixture.archiveByteBound);
+  const record = new FrameArchive(spec, layout, fixture.archiveByteBound, initialBodies);
   const first = transfer(fixture.chunks[0]);
   record.append(first);
   const bytes = record.ownedBytes;
@@ -301,4 +312,26 @@ test("pose-only windows preserve recorded positions and terminal states across c
   for (const history of record.poseHistory(4)) {
     for (const pose of history) expect(pose.motion.mode).toBe(pose.mode);
   }
+});
+
+test("tick zero and rewind preserve immutable core initial poses and mixed modes", () => {
+  const bodies = structuredClone(initialBodies) as import("./generated/sim").BodyState[];
+  bodies[1].mode = "flying";
+  bodies[1].pose.heading = 2.4;
+  const record = new FrameArchive(
+    { attemptId: "fixture", flyCount: 2, durationTicks: 4 },
+    fixture.layout,
+    fixture.archiveByteBound,
+    bodies,
+  );
+  const zero = record.frame(0);
+  expect(zero.flies.map((f) => f.body)).toEqual(bodies);
+  expect(record.motion(0).map((m) => m.mode)).toEqual(["walking", "flying"]);
+  bodies[1].mode = "walking";
+  for (const chunk of fixture.chunks) record.append(transfer(chunk));
+  record.motion(4);
+  expect(record.motion(0).map((m) => m.mode)).toEqual(["walking", "flying"]);
+  expect(record.frame(0)).toEqual(zero);
+  zero.flies[1].body.pose.heading = 99;
+  expect(record.frame(0).flies[1].body.pose.heading).toBe(2.4);
 });

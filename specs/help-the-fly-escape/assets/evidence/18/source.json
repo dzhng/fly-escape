@@ -1,0 +1,12 @@
+{
+  "base": "d3bfcad",
+  "files": {
+    "crates/sim/src/spawn.rs": "ee712d8c629ee3710f33b159c5f2c230c861a981feed99de5e13637da0fdc40b",
+    "crates/sim/src/attempt.rs": "00adf1df3dd3b0338e24f88429a9e129154f1a4228599b5738cdcf0f7edecae6",
+    "crates/sim/src/body.rs": "33ff9d365b3e3dcede0f7f3be4dd889d6ae6133555df0167511faee2e95dde3a",
+    "crates/sim/src/placement.rs": "36dae3978e194f3ec0056f5a20b0c8743ed189b4059bc885480119fa1e5e14c6",
+    "crates/game-wasm/src/attempt_session.rs": "3706d85f380ab8ae4586946387c3c475b5e5bd7ddbb667628e8b9a6c72b506a4",
+    "packages/sim-client/src/record.ts": "ccb52f61f4358b1532d1591c456b29f94bceddef529861573a15619521c203a3"
+  },
+  "falsification": "Replacing all sampled headings by zero fails the representative-seed quadrant test (1 instead of4); restored source passes."
+}

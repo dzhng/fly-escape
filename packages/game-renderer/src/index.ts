@@ -47,9 +47,13 @@ export interface FlyPose {
 /** A presentation-only fixture. The caller owns pose sampling and frame scheduling. */
 export class WorldView {
   private readonly scene = new THREE.Scene();
+  private spawnArea: THREE.LineLoop<THREE.BufferGeometry, THREE.LineBasicMaterial> | null = null;
   private readonly placementModels = new PlacementModels();
   private readonly trails: FlyTrails;
-  private trailSample?: { paths: readonly (readonly TrailPoint[])[]; cursorTick: number };
+  private trailSample?: {
+    paths: readonly (readonly TrailPoint[])[];
+    cursorTick: number;
+  };
   private readonly navigation: WorldCamera;
   private controls?: ReturnType<typeof cameraInput>;
   private selectedFly: number | null = null;
@@ -181,6 +185,7 @@ export class WorldView {
     const removed = new THREE.Group();
     const replacements = this.flies.map((old, id) => {
       const fly = id === 0 ? model.root : model.instantiate();
+      fly.visible = old.visible;
       fly.position.copy(old.position);
       fly.quaternion.copy(old.quaternion);
       fly.userData.flyId = id;
@@ -295,13 +300,69 @@ export class WorldView {
     this.flies[0].rotation.y = Math.PI / 2 - pose.heading;
   }
 
+  /** Authored release region only; no speculative fly positions before Run. */
+  setSpawnArea(min: { x: number; z: number }, max: { x: number; z: number }): void {
+    this.clearSpawnArea();
+    this.selectedFly = null;
+    this.selectionRing.visible = false;
+    this.flies.forEach((fly) => {
+      fly.visible = false;
+    });
+    const geometry = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(min.x, 0.016, min.z),
+      new THREE.Vector3(max.x, 0.016, min.z),
+      new THREE.Vector3(max.x, 0.016, max.z),
+      new THREE.Vector3(min.x, 0.016, max.z),
+    ]);
+    this.spawnArea = new THREE.LineLoop(
+      geometry,
+      new THREE.LineBasicMaterial({ color: "#b8d2d7" }),
+    );
+    const canvas = document.createElement("canvas");
+    canvas.width = 256;
+    canvas.height = 64;
+    const context = canvas.getContext("2d")!;
+    context.fillStyle = "#203944";
+    context.fillRect(0, 0, 256, 64);
+    context.fillStyle = "#f4f7f5";
+    context.font = "bold 28px sans-serif";
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.fillText("Flies start here", 128, 32);
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    const label = new THREE.Sprite(
+      new THREE.SpriteMaterial({
+        map: texture,
+        depthTest: false,
+        depthWrite: false,
+        sizeAttenuation: false,
+      }),
+    );
+    label.center.set(0.5, 0);
+    label.position.set((min.x + max.x) / 2, 0.08, min.z);
+    label.scale.set(0.13, 0.0325, 1);
+    label.renderOrder = 10;
+    this.spawnArea.add(label);
+    this.scene.add(this.spawnArea);
+  }
+
+  private clearSpawnArea(): void {
+    if (!this.spawnArea) return;
+    this.scene.remove(this.spawnArea);
+    disposeObjectResources(this.spawnArea);
+    this.spawnArea = null;
+  }
+
   /** Poses are sampled by the caller's one playback cursor. Fly instances
    * share geometry/materials while retaining independent transforms and skeletons. */
   setPoses(poses: readonly FlyPose[]): void {
     if (poses.length !== this.flies.length)
       throw new Error("Pose count differs from scene population");
+    this.clearSpawnArea();
     poses.forEach((pose, index) => {
       const fly = this.flies[index];
+      fly.visible = true;
       this.motions[index]?.sample(pose.animation);
       fly.position.set(pose.x, pose.y, pose.z);
       fly.rotation.y = Math.PI / 2 - pose.heading;
@@ -415,7 +476,10 @@ export class WorldView {
         new THREE.Vector2((x / canvas.clientWidth) * 2 - 1, 1 - (y / canvas.clientHeight) * 2),
         this.navigation.camera,
       );
-      const hit = this.raycaster.intersectObjects(this.flies, true)[0];
+      const hit = this.raycaster.intersectObjects(
+        this.flies.filter((fly) => fly.visible),
+        true,
+      )[0];
       if (!hit) return;
       let owner: THREE.Object3D | null = hit.object;
       while (owner && owner.userData.flyId === undefined) owner = owner.parent;
@@ -425,7 +489,7 @@ export class WorldView {
 
   selectFly(id: number): void {
     const fly = this.flies[id];
-    if (!fly) throw new Error("Selected fly does not exist");
+    if (!fly || !fly.visible) throw new Error("Selected fly does not exist or is hidden");
     this.selectedFly = id;
     this.selectionRing.visible = true;
     this.navigation.follow(fly.position.clone().add(new THREE.Vector3(0, this.subjectCenterY, 0)));
@@ -611,6 +675,7 @@ export class WorldView {
   }
 
   dispose(): void {
+    this.clearSpawnArea();
     this.scene.remove(this.placementModels.root);
     this.placementModels.dispose();
     this.motions.forEach((motion) => motion.dispose());

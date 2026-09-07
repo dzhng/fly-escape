@@ -25,6 +25,7 @@ pub struct LifecycleInfo {
     pub spec: AttemptSpec,
     pub level: LevelDef,
     pub initial_grid: FieldGrid,
+    pub initial_bodies: Vec<BodyState>,
 }
 #[derive(Clone, Debug, PartialEq, Serialize, TS)]
 #[serde(rename_all = "camelCase")]
@@ -63,6 +64,7 @@ impl LifecycleLab {
     }
     pub fn info(&self) -> LifecycleInfo {
         LifecycleInfo {
+            initial_bodies: self.attempt.initial_bodies(),
             scenario: self.scenario,
             spec: self.attempt.spec().clone(),
             level: self.attempt.level().clone(),
@@ -139,10 +141,10 @@ fn fixture(scenario: LifecycleScenario) -> LevelDef {
             }],
             walls,
         },
-        spawn_poses: vec![BodyPose {
+        spawn: crate::spawn::SpawnDef::fixed(vec![BodyPose {
             position: if exit_case { p(2.5, 0.) } else { p(-1., 0.) },
             heading: 0.,
-        }],
+        }]),
         exit: ExitOpening {
             a: p(3., -1.),
             b: p(3., 1.),

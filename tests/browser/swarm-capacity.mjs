@@ -31,7 +31,7 @@ try {
             if (reply.type === "ready") {
               info = reply.info;
               wasmBytes = reply.wasmBytes;
-              archive = new FrameArchive(info.spec, info.recordLayout, info.archiveBytes);
+              archive = new FrameArchive(info.spec, info.recordLayout, info.archiveBytes, info.initialBodies);
             } else if (reply.type === "frames") {
               archive.append(reply.chunk);
               activeNeuralSteps += reply.metrics.activeNeuralSteps;

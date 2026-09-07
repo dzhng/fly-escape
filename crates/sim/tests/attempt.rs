@@ -51,13 +51,13 @@ fn level(count: usize) -> LevelDef {
                 },
             ],
         },
-        spawn_poses: vec![
+        spawn: sim::spawn::SpawnDef::fixed(vec![
             BodyPose {
                 position: Point { x: 2., z: 2. },
                 heading: 0.
             };
             count
-        ],
+        ]),
         exit: ExitOpening {
             a: Point { x: 4., z: 1. },
             b: Point { x: 4., z: 3. },
@@ -116,7 +116,7 @@ fn twenty_flies_share_one_field_evolution_and_keep_independent_seed_streams() {
 #[test]
 fn terminal_flies_stop_updates_while_other_flies_finish_and_timeout_scores_zero() {
     let mut definition = level(2);
-    definition.spawn_poses[1].position = Point { x: 1., z: 1. };
+    fixed(&mut definition)[1].pose.position = Point { x: 1., z: 1. };
     definition.zappers.push(ContactRegion {
         center: Point { x: 2., z: 2. },
         radius: 0.2,
@@ -240,8 +240,8 @@ fn sensory_and_taste_currents_sum_without_direct_motor_injection() {
 #[test]
 fn only_physical_escape_contributes_to_attempt_score_and_stars() {
     let mut definition = level(2);
-    definition.spawn_poses[0].position = Point { x: 3.8, z: 2. };
-    definition.spawn_poses[1].position = Point { x: 3.8, z: 0.5 };
+    fixed(&mut definition)[0].pose.position = Point { x: 3.8, z: 2. };
+    fixed(&mut definition)[1].pose.position = Point { x: 3.8, z: 0.5 };
     definition.field_config.wind = Point { x: 3., z: 0. };
     definition.duration_ticks = 1;
     let mut attempt = attempt(graph(), definition, 0, 2);
@@ -265,7 +265,7 @@ fn invalid_spawn_footprints_and_capacity_are_rejected_before_simulation() {
         Point { x: 3.95, z: 0.96 },
     ] {
         let mut definition = level(1);
-        definition.spawn_poses[0].position = position;
+        fixed(&mut definition)[0].pose.position = position;
         let error =
             Attempt::describe(&graph, &definition, &tuning, "spawn", 0, 1, &[]).unwrap_err();
         assert!(error.contains("spawn body"), "{error}");
@@ -287,7 +287,7 @@ fn solid_footprints_reject_spawns_before_simulation() {
     definition.exit.a.x = 16.;
     definition.exit.b.x = 16.;
     let prop = &definition.geometry.solids[0];
-    definition.spawn_poses[0].position = Point {
+    fixed(&mut definition)[0].pose.position = Point {
         x: (prop.min.x + prop.max.x) / 2.,
         z: (prop.min.z + prop.max.z) / 2.,
     };
@@ -548,4 +548,127 @@ fn canonical_placement_headings_can_start_and_resolve_repeatedly() {
         assert_eq!(again.state.placements, spec.placements);
         assert!((0. ..std::f64::consts::TAU).contains(&spec.placements[0].heading));
     }
+}
+
+fn fixed(level: &mut LevelDef) -> &mut Vec<sim::spawn::SpawnState> {
+    let sim::spawn::SpawnDef::Fixed { states } = &mut level.spawn else {
+        panic!("fixed lab")
+    };
+    states
+}
+
+#[test]
+fn seeded_cluster_is_legal_reproducible_and_does_not_consume_neural_noise() {
+    use sim::spawn::{resolve, SpawnDef};
+    let mut definition = level(20);
+    definition.spawn = SpawnDef::Cluster {
+        min: Point { x: 0.4, z: 0.4 },
+        max: Point { x: 3.5, z: 3.5 },
+        flying_count: 10,
+    };
+    let first = resolve(&definition, 81, 20).unwrap();
+    assert_eq!(first, resolve(&definition, 81, 20).unwrap());
+    assert_ne!(first, resolve(&definition, 82, 20).unwrap());
+    let mut quadrants = std::collections::BTreeSet::new();
+    for seed in 0..16 {
+        let bodies = resolve(&definition, seed, 20).unwrap();
+        assert_eq!(
+            bodies.iter().filter(|b| b.mode == BodyMode::Flying).count(),
+            10
+        );
+        for (i, b) in bodies.iter().enumerate() {
+            assert!(definition
+                .geometry
+                .contains_body(b.pose.position, definition.body_config.body_radius));
+            assert!(bodies[..i]
+                .iter()
+                .all(|a| (a.pose.position.x - b.pose.position.x)
+                    .hypot(a.pose.position.z - b.pose.position.z)
+                    > 2. * definition.body_config.body_radius));
+            assert!((0. ..std::f64::consts::TAU).contains(&b.pose.heading));
+            quadrants.insert((b.pose.heading / std::f64::consts::FRAC_PI_2) as u32);
+        }
+    }
+    assert_eq!(quadrants.len(), 4);
+    let graph = graph();
+    let tuning = AttemptTuning::default();
+    let spec = Attempt::describe(&graph, &definition, &tuning, "cluster", 81, 20, &[]).unwrap();
+    let mut attempt = Attempt::new(graph.clone(), definition, tuning, spec).unwrap();
+    let frame = attempt.step().unwrap().unwrap();
+    assert_eq!(
+        attempt.initial_bodies(),
+        first,
+        "tick-zero metadata cannot mutate after stepping"
+    );
+    for (id, fly) in frame.flies.iter().enumerate() {
+        let mut brain = sim::Brain::new(graph.clone(), sim::Brain::seed_for_fly(81, id as u32));
+        assert_eq!(
+            fly.neural,
+            Some(brain.step()),
+            "initialization must not consume neural noise"
+        );
+    }
+}
+
+#[test]
+fn cluster_rejects_hazards_and_exhaustion_and_reserves_unsampled_area() {
+    use sim::spawn::{resolve, SpawnDef};
+    let mut definition = level(20);
+    definition.spawn = SpawnDef::Cluster {
+        min: Point { x: 0.4, z: 0.4 },
+        max: Point { x: 3.5, z: 3.5 },
+        flying_count: 10,
+    };
+    definition
+        .geometry
+        .solids
+        .push(sim::environment::SolidProp {
+            id: 4,
+            min: Point { x: 1., z: 1. },
+            max: Point { x: 1.4, z: 1.4 },
+            height: 0.5,
+        });
+    definition.zappers.push(ContactRegion {
+        center: Point { x: 2., z: 2. },
+        radius: 0.6,
+    });
+    for b in resolve(&definition, 7, 20).unwrap() {
+        assert!(
+            (b.pose.position.x - 2.).hypot(b.pose.position.z - 2.)
+                > 0.6 + definition.body_config.body_radius
+        );
+    }
+    assert!(definition.spawn.excludes(Point { x: 1., z: 1. }, 0.1));
+    assert!(definition.spawn.excludes(Point { x: 3.6, z: 2. }, 0.11));
+    assert!(!definition.spawn.excludes(Point { x: 3.7, z: 2. }, 0.1));
+    definition.spawn = SpawnDef::Cluster {
+        min: Point { x: 1., z: 1. },
+        max: Point { x: 1.01, z: 1.01 },
+        flying_count: 10,
+    };
+    assert!(resolve(&definition, 7, 20)
+        .unwrap_err()
+        .contains("128 samples"));
+    definition.spawn = SpawnDef::Cluster {
+        min: Point { x: 2., z: 1. },
+        max: Point { x: 1., z: 1.01 },
+        flying_count: 10,
+    };
+    assert!(resolve(&definition, 7, 20).is_err());
+}
+
+#[test]
+fn placement_reserves_the_whole_cluster_before_seed_resolution() {
+    let fixture = sim::setup_fixture::fixture().unwrap();
+    let placement = sim::placement::Placement {
+        id: 1,
+        kind: sim::placement::ToolKind::Fruit,
+        position: Point { x: 1., z: 1.8 },
+        heading: 0.,
+    };
+    assert!(
+        sim::placement::resolve_placements(&fixture.level, &[placement])
+            .unwrap_err()
+            .contains("spawn footprint")
+    );
 }

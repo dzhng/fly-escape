@@ -42,8 +42,13 @@ export function LifecycleLab() {
         try {
           const scene = new WorldView(container.current!, reply.info.level.geometry);
           view.current = scene;
-          const pose = reply.info.level.spawnPoses[0];
-          scene.setPose({ x: pose.position.x, y: 0.1, z: pose.position.z, heading: pose.heading });
+          const pose = reply.info.initialBodies[0].pose;
+          scene.setPose({
+            x: pose.position.x,
+            y: 0.1,
+            z: pose.position.z,
+            heading: pose.heading,
+          });
           scene.setContactRegions(
             reply.info.level.food,
             reply.info.level.zappers,

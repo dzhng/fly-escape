@@ -36,7 +36,7 @@ try {
         if (reply.type === "ready") {
           archives.set(
             reply.attemptId,
-            new FrameArchive(reply.info.spec, reply.info.recordLayout, reply.info.archiveBytes),
+            new FrameArchive(reply.info.spec, reply.info.recordLayout, reply.info.archiveBytes, reply.info.initialBodies),
           );
           if (reenter) {
             reenter = false;

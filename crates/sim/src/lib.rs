@@ -22,3 +22,5 @@ pub mod house_lab;
 pub mod placement;
 
 pub mod setup_fixture;
+
+pub mod spawn;

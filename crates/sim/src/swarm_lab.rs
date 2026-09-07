@@ -62,12 +62,14 @@ pub fn level(count: u32) -> Result<LevelDef, String> {
             ],
             walls,
         },
-        spawn_poses: (0..count)
-            .map(|id| BodyPose {
-                position: point(-2. + (id % 10) as f64 * 0.4, -2. + (id / 10) as f64 * 0.4),
-                heading: 0.,
-            })
-            .collect(),
+        spawn: crate::spawn::SpawnDef::fixed(
+            (0..count)
+                .map(|id| BodyPose {
+                    position: point(-2. + (id % 10) as f64 * 0.4, -2. + (id / 10) as f64 * 0.4),
+                    heading: 0.,
+                })
+                .collect(),
+        ),
         exit: ExitOpening {
             a: point(8., -0.5),
             b: point(8., 0.5),

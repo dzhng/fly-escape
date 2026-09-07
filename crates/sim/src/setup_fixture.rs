@@ -14,16 +14,15 @@ pub fn fixture() -> Result<SetupFixture, String> {
             .map_err(|e| e.to_string())?;
     geometry.validate()?;
     let point = |x, z| Point { x, z };
-    Ok(SetupFixture {
+    let fixture = SetupFixture {
         level: LevelDef {
             id: "five-room-setup".into(),
             geometry,
-            spawn_poses: (0..20)
-                .map(|id| BodyPose {
-                    position: point(0.7 + (id % 5) as f64 * 0.3, 1.4 + (id / 5) as f64 * 0.3),
-                    heading: 0.,
-                })
-                .collect(),
+            spawn: crate::spawn::SpawnDef::Cluster {
+                min: point(0.7, 1.4),
+                max: point(1.9, 2.3),
+                flying_count: 10,
+            },
             exit: ExitOpening {
                 a: point(16., 1.5),
                 b: point(16., 2.5),
@@ -72,5 +71,6 @@ pub fn fixture() -> Result<SetupFixture, String> {
             ..Default::default()
         },
         catalog: tool_catalog(),
-    })
+    };
+    Ok(fixture)
 }

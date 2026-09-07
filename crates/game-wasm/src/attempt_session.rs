@@ -58,6 +58,7 @@ impl AttemptSession {
         let level = request.level.clone();
         let attempt = Attempt::new(graph.clone(), request.level, request.tuning, spec.clone())?;
         let info = AttemptInfo {
+            initial_bodies: attempt.initial_bodies(),
             spec: spec.clone(),
             level,
             resolved_setup: attempt.resolved_setup().clone(),

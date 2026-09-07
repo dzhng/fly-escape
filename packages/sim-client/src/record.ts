@@ -1,6 +1,7 @@
 import type {
   AttemptFrame,
   BodyMode,
+  BodyState,
   AttemptResult,
   AttemptSpec,
   BodyEventKind,
@@ -41,9 +42,10 @@ function require(condition: unknown, message: string): asserts condition {
 }
 
 /** Owns transferred numeric buffers, never decoded frame history. Tick zero is
- * supplied by attempt metadata; frame() only reads recorded ticks starting at 1. */
+ * supplied by attempt metadata; frame(0) reads the immutable core-resolved initial bodies. */
 export class FrameArchive {
   private chunks: TransferChunk[] = [];
+  private readonly initialBodies: BodyState[];
   private readonly spec: Pick<AttemptSpec, "attemptId" | "flyCount" | "durationTicks">;
   private readonly layout: RecordLayout;
   private readonly valueOffsets: Record<string, number>;
@@ -61,6 +63,7 @@ export class FrameArchive {
     spec: Pick<AttemptSpec, "attemptId" | "flyCount" | "durationTicks">,
     layout: RecordLayout,
     readonly archiveByteBound: number,
+    initialBodies: readonly BodyState[],
   ) {
     require(integer(archiveByteBound) &&
       archiveByteBound <= ARCHIVE_CAP &&
@@ -73,6 +76,17 @@ export class FrameArchive {
       spec.durationTicks <= 6000, "Invalid attempt horizon");
     require(layout.schemaVersion === 1 &&
       layout.groupIds.length <= 16, "Unsupported record layout");
+    require(initialBodies.length === spec.flyCount &&
+      initialBodies.every(
+        (b) =>
+          (b.mode === "walking" || b.mode === "flying") &&
+          b.outcome === null &&
+          [b.pose.position.x, b.pose.position.z, b.pose.heading, b.reserve].every(
+            Number.isFinite,
+          ) &&
+          b.reserve >= 0,
+      ), "Invalid initial bodies");
+    this.initialBodies = structuredClone(initialBodies) as BodyState[];
     this.spec = {
       attemptId: spec.attemptId,
       flyCount: spec.flyCount,
@@ -250,9 +264,11 @@ export class FrameArchive {
     if (tick < this.motionTick || this.motionCache.length === 0) {
       this.motionTick = 0;
       this.motionCache = new Uint16Array(this.spec.flyCount * 4);
-      const walking = this.layout.modes.indexOf("walking");
+
       for (let id = 0; id < this.spec.flyCount; id++) {
-        this.motionCache[id * 4] = this.motionCache[id * 4 + 1] = walking;
+        this.motionCache[id * 4] = this.motionCache[id * 4 + 1] = this.layout.modes.indexOf(
+          this.initialBodies[id].mode,
+        );
       }
     }
     if (tick > this.motionTick) {
@@ -354,7 +370,11 @@ export class FrameArchive {
       windowTicks <= 100, "Trace window exceeds 100 ticks");
     const group = this.layout.groupIds.indexOf(groupId);
     require(group >= 0, "Unknown neural group");
-    const points: { tick: number; meanVoltage: number | null; spikeFraction: number | null }[] = [];
+    const points: {
+      tick: number;
+      meanVoltage: number | null;
+      spikeFraction: number | null;
+    }[] = [];
     const start = Math.max(1, endTick - windowTicks + 1);
     for (const chunk of this.chunks) {
       const end = Math.min(endTick, chunk.startTick + chunk.tickCount - 1);
@@ -380,6 +400,20 @@ export class FrameArchive {
   }
 
   frame(tick: number): AttemptFrame {
+    if (tick === 0)
+      return {
+        tick: 0,
+        neuralSteps: 0,
+        result: null,
+        flies: this.initialBodies.map((body, id) => ({
+          id,
+          inputPose: structuredClone(body.pose),
+          body: structuredClone(body),
+          sensory: null,
+          neural: null,
+          events: [],
+        })),
+      };
     require(integer(tick) && tick >= 1 && tick <= this.lastTick, "Tick has not been recorded");
     let low = 0,
       high = this.chunks.length - 1;

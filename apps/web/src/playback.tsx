@@ -100,17 +100,17 @@ function sample(run: Run): FlyPose[] {
   const tick = Math.floor(run.clock.cursorTick);
   if (tick !== run.cachedTick) {
     run.cachedTick = tick;
-    run.lower = tick > 0 ? run.archive.frame(tick) : undefined;
+    run.lower = run.archive.frame(tick);
     run.upper = undefined;
     run.trailHistory = run.archive.poseHistory(tick);
   }
   if (!run.upper && tick + 1 <= run.archive.computedTick) run.upper = run.archive.frame(tick + 1);
   const fraction = run.clock.cursorTick - tick;
   const motions = run.archive.motion(run.clock.cursorTick);
-  return run.info.level.spawnPoses.slice(0, run.info.spec.flyCount).map((initial, id) => {
+  return run.info.initialBodies.map((initial, id) => {
     const a = run.lower?.flies[id].body;
     const b = run.upper?.flies[id].body ?? a;
-    const from = a?.pose ?? initial,
+    const from = a?.pose ?? initial.pose,
       to = b?.pose ?? from;
     const angle = Math.atan2(
       Math.sin(to.heading - from.heading),
@@ -193,6 +193,7 @@ export function AttemptPlayback({
           reply.info.spec,
           reply.info.recordLayout,
           reply.info.archiveBytes,
+          reply.info.initialBodies,
         );
         const clock = new PlaybackClock(reply.info.spec.durationTicks);
         clock.play();
@@ -353,6 +354,7 @@ export function AttemptPlayback({
               ).memory?.usedJSHeapSize ?? null;
             const report = {
               spec: current.info.spec,
+              initialBodies: current.info.initialBodies,
               userAgent: navigator.userAgent,
               viewport: [innerWidth, innerHeight],
               devicePixelRatio,

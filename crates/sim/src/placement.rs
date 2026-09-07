@@ -204,9 +204,9 @@ pub fn resolve_placements(
             .reserved
             .iter()
             .any(|r| placement.position.distance(r.center) <= radius + r.radius)
-            || level.spawn_poses.iter().any(|p| {
-                placement.position.distance(p.position) <= radius + level.body_config.body_radius
-            })
+            || level
+                .spawn
+                .excludes(placement.position, radius + level.body_config.body_radius)
         {
             return Err("tool overlaps a reserved prop or spawn footprint".into());
         }

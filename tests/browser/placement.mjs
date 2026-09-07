@@ -95,7 +95,7 @@ try {
         session.step();
         const chunk = session.take_chunk();
         try {
-          const record = new FrameArchive(info.spec, info.recordLayout, info.archiveBytes);
+          const record = new FrameArchive(info.spec, info.recordLayout, info.archiveBytes, info.initialBodies);
           record.append({
             ...JSON.parse(chunk.header()),
             values: chunk.take_values(),
