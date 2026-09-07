@@ -1,0 +1,41 @@
+{
+  "posePreparation": {
+    "samples": 19,
+    "inclusiveMs": 28.579
+  },
+  "wasmMotionSample": {
+    "samples": 17,
+    "inclusiveMs": 25.578
+  },
+  "trailHistoryConversion": {
+    "samples": 1,
+    "inclusiveMs": 1.506
+  },
+  "trailGeometrySample": {
+    "samples": 22,
+    "inclusiveMs": 33.063
+  },
+  "setPosesIncludingAnimationGuard": {
+    "samples": 2,
+    "inclusiveMs": 3.014
+  },
+  "worldRenderInclusive": {
+    "samples": 756,
+    "inclusiveMs": 1129.978
+  },
+  "threeRenderInclusive": {
+    "samples": 702,
+    "inclusiveMs": 1049.36
+  },
+  "shadowRenderInclusive": {
+    "samples": 394,
+    "inclusiveMs": 589.752
+  },
+  "elapsedMs": 10056.507,
+  "profileSamples": 6687,
+  "notes": "Sampling estimates; nested categories overlap. Main renderer thread only; does not time GPU or Worker.",
+  "furnitureCutaway": {
+    "samples": 17,
+    "inclusiveMs": 25.599
+  }
+}
