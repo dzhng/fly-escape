@@ -1,5 +1,5 @@
 """Author one metre-scale sofa; preserve all existing Blender scenes/assets.
-GLB +Y up, +Z front, grounded origin at footprint centre. No production materials. Envelope comes from the existing seat scale fixture.
+GLB +Y up, +Z front, grounded origin at footprint centre. No production materials. Envelope comes from the shared house catalog.
 """
 from pathlib import Path
 import bpy, bmesh, json
@@ -9,11 +9,8 @@ OUT = Path(__file__).resolve().parent
 EVIDENCE = OUT.parents[2] / 'specs/help-the-fly-escape/assets/evidence/21/sofa-prepared'
 OUT.mkdir(parents=True, exist_ok=True)
 EVIDENCE.mkdir(parents=True, exist_ok=True)
-scale = json.loads((OUT.parents[1] / 'proportions/scale.json').read_text())
-seat = next(prop for prop in scale['geometry']['solids'] if prop['id'] == 2)
-width = seat['max']['x'] - seat['min']['x']
-depth = seat['max']['z'] - seat['min']['z']
-height = seat['height']
+catalog_size = json.loads((OUT.parent / 'catalog.json').read_text())['sofa']
+width, height, depth = catalog_size
 asset = bpy.data.scenes.new('Sofa-ClosedBase-Metres')
 asset.unit_settings.system = 'METRIC'
 asset.unit_settings.scale_length = 1
@@ -64,6 +61,19 @@ for side, x in [('Left', -seat_width/4), ('Right', seat_width/4)]:
     box(side+'SeatCushion', (x, 0.375, 0.08), (seat_width/2-0.008, 0.15, depth-0.23), 0.045)
     box(side+'BackCushion', (x, 0.635, -0.20), (seat_width/2-0.012, 0.37, 0.20), 0.045)
 
+def validate_envelope(objects):
+    # Blender is Z-up; compare to the catalog's GLB XYZ dimensions in metres.
+    corners = [obj.matrix_world @ Vector(corner) for obj in objects if obj.type == 'MESH' for corner in obj.bound_box]
+    bounds = [min(p.x for p in corners), min(p.z for p in corners), min(-p.y for p in corners),
+              max(p.x for p in corners), max(p.z for p in corners), max(-p.y for p in corners)]
+    expected = [-catalog_size[0]/2, 0, -catalog_size[2]/2, catalog_size[0]/2, catalog_size[1], catalog_size[2]/2]
+    if any(abs(actual-wanted) > 1e-6 for actual, wanted in zip(bounds, expected)):
+        raise ValueError(f'Authored/exported envelope {bounds} differs from catalog {expected}; re-author, never stretch')
+    return bounds
+
+asset.view_layers[0].update()
+validate_envelope(parts)
+
 for obj in parts:
     obj['asset_key'] = 'sofa-closed-base'
     obj['world_unit_metres'] = 1.0
@@ -73,6 +83,28 @@ with bpy.context.temp_override(scene=asset, view_layer=asset.view_layers[0]):
     bpy.ops.export_scene.gltf(filepath=str(OUT/'sofa.glb'), export_format='GLB',
         use_active_scene=True, use_selection=False, export_yup=True,
         export_animations=False, export_extras=True)
+
+
+# Re-import the GLB through Blender's glTF reader in an isolated scene.
+roundtrip = bpy.data.scenes.new('Sofa-ExportValidation')
+try:
+    with bpy.context.temp_override(scene=roundtrip, view_layer=roundtrip.view_layers[0], collection=roundtrip.collection):
+        bpy.ops.import_scene.gltf(filepath=str(OUT/'sofa.glb'))
+    roundtrip.view_layers[0].update()
+    print('sofa export bounds:', validate_envelope(roundtrip.objects))
+finally:
+    materials = set()
+    for obj in list(roundtrip.objects):
+        mesh = obj.data if obj.type == 'MESH' else None
+        if mesh:
+            materials.update(mesh.materials)
+        bpy.data.objects.remove(obj, do_unlink=True)
+        if mesh and mesh.users == 0:
+            bpy.data.meshes.remove(mesh)
+    for material in materials:
+        if material.users == 0:
+            bpy.data.materials.remove(material)
+    bpy.data.scenes.remove(roundtrip)
 
 # Separate neutral authoring stage. None of these lights, camera or floor enter the GLB.
 preview = bpy.data.scenes.new('Sofa-Neutral-AuthoringStage')
