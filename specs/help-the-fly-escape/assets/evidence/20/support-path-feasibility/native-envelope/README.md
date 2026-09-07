@@ -120,3 +120,7 @@ The browser evidence covers relevant and worst headings; the next decision
 requires actual moving-contact, body-collision, and WASM workload verification.
 A candidate's outward error is an intentional representation tradeoff, not a license to relax numerical contact
 tolerance. No candidate becomes accepted merely because it is faster.
+
+[Path comparison](path-comparison/README.md) measures the candidate against the
+fixed-orientation and wide-turn probes, including an unresolved reconstruction
+topology defect.
