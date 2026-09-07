@@ -1,0 +1,45 @@
+{
+  "active": true,
+  "activeEdges": 5245,
+  "adjacentFaces": [
+    {
+      "containsEdgeIncidence": true,
+      "edgeEndpointPlaneResidualMm": [
+        0.0,
+        0.0
+      ],
+      "face": 2147,
+      "maxPointHalfspaceViolationMm": 0.0,
+      "normal": [
+        -0.2758953345769812,
+        -0.9269304638821642,
+        -0.25432593160323125
+      ]
+    },
+    {
+      "containsEdgeIncidence": true,
+      "edgeEndpointPlaneResidualMm": [
+        2.220446049250313e-16,
+        0.0
+      ],
+      "face": 2148,
+      "maxPointHalfspaceViolationMm": 0.0,
+      "normal": [
+        -0.605560829835795,
+        -0.5671787853903374,
+        -0.5582152871175464
+      ]
+    }
+  ],
+  "asset": "assets/fly/contact-hull.json",
+  "coneTripleProduct": 0.5505907338645899,
+  "edgeId": 3717,
+  "edgeVertices": [
+    1084,
+    1312
+  ],
+  "library": "parry3d-f64 0.30.2",
+  "queryScale": 1000,
+  "storedEdges": 5490,
+  "sourceAssetSha256": "89286acfe04f7b3e871cb180282c8a1077278360c8c64f044a0b82d9e14566e1"
+}

@@ -109,3 +109,7 @@ complete moving solver. WASM and actual 20/100-fly workloads remain unmeasured.
 Scratch sources remain in `/tmp/fly-rotation-probe`: `envelope_compare`,
 `coverage_compare`, their unmerged variants, `feature_compare`, and
 `check_candidate_topology`; no research solver is shipped by this evidence pass.
+
+The [historical probe audit](../../edge-inventory-audit/README.md) distinguishes
+invalid raw-edge plane assumptions from conservative over-retention and checks
+the original retained edge/tie fixture independently.

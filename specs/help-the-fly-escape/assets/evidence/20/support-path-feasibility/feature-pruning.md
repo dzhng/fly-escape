@@ -1,7 +1,7 @@
 # Finite-interval feature pruning
 
-**Verdict: complete candidate pruning is useful for short intervals; long
-translation remains intractably broad in this prototype.**
+**Verdict: conservative candidate pruning is useful for short intervals; long
+translation remains broad in this stored-edge prototype.**
 [Numeric summary](feature-prune-summary.json) records counts, distance calls and
 native timings. Source and full pair lists remain in
 `/tmp/fly-rotation-probe/src/bin/feature_prune.rs` and
@@ -58,3 +58,9 @@ The pruner certifies exclusions for the specified proposed path. It neither
 validates the retained support feature nor prevents an included competitor from
 being hit. Event resolution, valid acquisition, unchanged geometry and actual
 forward progress remain the path owner's responsibility.
+
+The [edge inventory audit](edge-inventory-audit/README.md) identifies extra stored
+diagonals in the edge/edge enumeration. They increase retained pairs and work;
+the full-hull excursion exclusion remains conservative. Counts above are not
+active-boundary counts or a minimum required event workload. Derivative face
+topology needs independent validation before reusing the face-fan argument.

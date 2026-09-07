@@ -64,7 +64,10 @@ establish the transition between orientations.
 | SAT planes, 2D domain clipping | 1.3; `(0.7,sqrt(0.51),0)` | 50 | 13.36 ms | 7.67e-16 m |
 
 SAT candidates comprise the triangle normal, native hull facet normals and
-triangle-edge × hull-edge axes. Edge normal cones discard irrelevant candidates.
+triangle-edge × hull-edge axes. The historical code iterates stored edges,
+including deleted diagonals; its normal-cone/witness assumptions therefore do
+not establish correct halfspaces. The [edge inventory audit](edge-inventory-audit/README.md)
+qualifies these measurements and separates valid excursion math from topology assumptions.
 The scratch slice uses a ±1,000 mm vertical bracket enclosing this fixture;
 that bracket is not proposed as a world-wide support limit.
 Clipping their halfspaces in `(path fraction, root height)` directly avoids
@@ -152,7 +155,7 @@ a complete global validity check. Fast local arithmetic does not establish the
 Two actual boundary cases identify the next missing ownership:
 
 - At heading 0.7155 rad, the turn reaches triangle 201's edge `[122,82]`, with
-  hull edge `[1084,1312]`. The exact SAT oracle resolves this
+  hull edge `[1084,1312]`. The sampled SAT probe identifies this
   [edge/edge contact](transition-turn.json.gz); retaining only a triangle face
   cannot describe it.
 - At up-vector x component 0.4823, triangle 200 / hull vertex 46 overtakes the
@@ -168,7 +171,7 @@ Scratch implementations are `feature.rs`, `climb.rs` and `identify.rs` under the
 same temporary probe crate. No runtime feature schema or performance contract
 is adopted by this evidence.
 
-## Complete local feature coverage through the failing paths
+## Sampled local feature coverage through the failing paths
 
 The [coverage probe](coverage-results.json.gz) evaluates all SAT feature types
 for every apple triangle whose projected bounds intersect the native hull's
@@ -187,7 +190,8 @@ between samples or physical acquisition/loss.
 
 The candidate feature set includes triangle-face/hull-vertex,
 hull-face/triangle-vertex and edge/edge planes. The reconstructed hull contains
-1,832 vertices, 3,416 faces and 5,490 edges; reconstruction merges two of the
+1,832 vertices, 3,416 faces and 5,490 stored edges (5,245 active incidence
+edges); reconstruction merges two of the
 1,834 input points. Before normal-cone culling, the per-triangle axis bound is
 `2 + hull faces + 6 * hull edges`. The largest retained set in these runs contains
 127,566 planes. The search is bounded by mesh/hull sizes but does not yet have a
@@ -201,9 +205,10 @@ New neighbors can be discovered with the same conservative footprint query as
 root position changes; these runs keep root XZ fixed and do not validate moving
 footprint updates, BVH integration or retained-set invalidation.
 
-The source remains `/tmp/fly-rotation-probe/src/bin/coverage.rs`. This complete
-local-set implementation is a correctness oracle for reducing competing-feature
-work, not a proposed production replay function.
+The source remains `/tmp/fly-rotation-probe/src/bin/coverage.rs`. Its sampled
+comparisons remain useful, but the raw-edge implementation is not an accepted
+correctness oracle. See the [inventory audit](edge-inventory-audit/README.md)
+before using it to validate competing-feature reductions.
 
 ## Conservative exclusion over a finite rotating interval
 

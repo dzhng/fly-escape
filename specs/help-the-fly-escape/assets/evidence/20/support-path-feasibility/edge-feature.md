@@ -1,6 +1,6 @@
 # Edge-to-edge support feature
 
-This component evaluates the actual edge/edge feature found by the complete oracle at the turn boundary. It does not yet choose transitions or certify continuous motion. The scratch source is `/tmp/fly-rotation-probe/src/bin/edge.rs`; [raw measurements](edge-feature-results.json.gz) retain all domain checks near both ends.
+This component evaluates the actual edge/edge feature identified by the sampled SAT probe at the turn boundary. It does not yet choose transitions or certify continuous motion. The scratch source is `/tmp/fly-rotation-probe/src/bin/edge.rs`; [raw measurements](edge-feature-results.json.gz) retain all domain checks near both ends.
 
 ## Geometry and domain
 
@@ -27,3 +27,8 @@ Starting at the incoming face walk's heading0.7152927668385065 exposes a numeric
 The [incidence experiment](edge-events-incidence.json.gz) anchors only that known endpoint predicate to zero at entry, evaluating cosine-minus-one as−2sin²(half-angle) to avoid cancellation. It changes the scalar predicate by its bounded residual, not the root path or geometry. All other constraints remain unchanged. The local next exit is the third-triangle-vertex margin at heading0.7183536334028212, consistent with the independent sampled edge evaluation. No clearance is added.
 
 Independent mathematical review accepts this only as a proposed symbolic boundary identity. Production must carry the incoming event's triangle edge, hull endpoint and root/time bracket; an endpoint ID plus a small residual is insufficient proof of incidence. The residual is about2.47e-14 of the hull segment parameter. The coefficient-scaled threshold remains an arithmetic guard until event-time uncertainty is included. Require strictly positive `B`: even a tangent zero makes the height/segment formulas singular and must end the feature interval. The measured interval has no denominator root. This experiment does not yet establish a robust general transition policy or continuous global safety.
+
+The [independent edge check](edge-inventory-audit/README.md) confirms that this
+specific full-hull edge is active and both adjacent faces are supporting planes.
+The raw-edge inventory defect therefore does not invalidate this local edge/tie
+interpretation; broader SAT discovery remains unaccepted.

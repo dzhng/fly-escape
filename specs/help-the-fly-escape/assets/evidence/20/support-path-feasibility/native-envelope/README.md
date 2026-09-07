@@ -50,7 +50,7 @@ was not selected or banked as a candidate.
 [Corrected construction measurements](outer-raw-results.json.gz) include all
 budgets, native query observations and the original five aligned contact poses.
 The input has 1,834 points; native reconstruction retains 1,832 vertices,
-3,416 faces and 5,490 edges.
+3,416 faces and 5,490 stored edges (5,245 active incidence edges).
 
 | Supporting planes | Candidate vertices | Worst outward error | Maximum gap in original aligned poses |
 | ---: | ---: | ---: | ---: |
@@ -88,8 +88,10 @@ preserve every pose, not just the maximum. Query timing is a single native
 release run, excluding asset preparation; it does not establish WASM, 20/100-fly
 performance or complete movement cost.
 
-The expanded 48/64/128 shapes have respectively 48/65/135 query faces and
-267/360/729 edges. Compared with the full hull, those reduce the maximum SAT axis
+The expanded 48/64/128 shapes report respectively 48/65/135 query faces and
+267/360/729 stored edges. Stored edges include deleted triangulation diagonals;
+the 128-plane shape has 378 active incidence edges. See the
+[edge inventory audit](../edge-inventory-audit/README.md) for interpretation. Compared with the full hull, those reduce the maximum SAT axis
 work as well as support-map scans. Event workload is not accepted by that count.
 Directional checks report no substantive negative support gap: the smallest
 64/128 residuals are -4.44e-19/-8.88e-19 m, at floating-point roundoff.
