@@ -458,7 +458,7 @@ export function AttemptPlayback({
     link.click();
     URL.revokeObjectURL(url);
   };
-  const counts = { escaped: 0, starved: 0, zapped: 0, timedOut: 0 };
+  const counts = { escaped: 0, starved: 0, zapped: 0, caught: 0, timedOut: 0 };
   for (const frameFly of display.frame?.flies ?? [])
     if (frameFly.body.outcome) counts[frameFly.body.outcome]++;
   const terminalCount = Object.values(counts).reduce((a, b) => a + b, 0);

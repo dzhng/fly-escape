@@ -10,5 +10,6 @@ import wornShoes from "../household/worn-shoes/worn-shoes.glb?url";
 import dirtyDishes from "../household/dirty-dishes/dirty-dishes.glb?url";
 import laundry from "../household/crumpled-laundry/crumpled-laundry.glb?url";
 import bugZapper from "../household/bug-zapper/bug-zapper.glb?url";
+import spiderWeb from "../household/corner-spider/corner-spider.glb?url";
 import sleepingCat from "../household/sleeping-cat/sleeping-cat.glb?url";
-export const placementAssetUrls = { fruit, banana, crumbs, vinegar, fan, lamp, shade, wornShoes, dirtyDishes, laundry, sleepingCat, bugZapper } as const satisfies Record<ToolKind, string>;
+export const placementAssetUrls = { fruit, banana, crumbs, vinegar, fan, lamp, shade, wornShoes, dirtyDishes, laundry, sleepingCat, bugZapper, spiderWeb } as const satisfies Record<ToolKind, string>;

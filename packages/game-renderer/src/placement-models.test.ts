@@ -97,7 +97,7 @@ test("banana stays native sized after placement and rejects mismatched apple geo
 
 
 for (const [kind, folder] of [
-  ["bugZapper", "bug-zapper"], ["fan", "fan"], ["vinegar", "vinegar"], ["wornShoes", "worn-shoes"], ["dirtyDishes", "dirty-dishes"],
+  ["spiderWeb", "corner-spider"], ["bugZapper", "bug-zapper"], ["fan", "fan"], ["vinegar", "vinegar"], ["wornShoes", "worn-shoes"], ["dirtyDishes", "dirty-dishes"],
   ["laundry", "crumpled-laundry"], ["sleepingCat", "sleeping-cat"],
 ] as const) {
   test(`${kind} renders its exact native contact mesh without footprint scaling`, async () => {

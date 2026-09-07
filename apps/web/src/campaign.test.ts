@@ -12,7 +12,7 @@ test("one earned star unlocks only the next sequential level and a reset relocks
     attemptId: "earned",
     stars: 1,
     completedTick: 1,
-    outcomes: { escaped: 1, starved: 0, zapped: 0, timedOut: 19, score: 1 },
+    outcomes: { escaped: 1, starved: 0, zapped: 0, caught: 0, timedOut: 19, score: 1 },
   });
   expect(unlockedLevelCount(levels, progress)).toBe(2);
   progress.bestStars.b = 1;

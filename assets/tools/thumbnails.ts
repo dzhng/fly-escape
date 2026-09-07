@@ -10,5 +10,6 @@ import wornShoes from "./thumbnails/wornShoes.png?url";
 import dirtyDishes from "./thumbnails/dirtyDishes.png?url";
 import laundry from "./thumbnails/laundry.png?url";
 import bugZapper from "./thumbnails/bugZapper.png?url";
+import spiderWeb from "./thumbnails/spiderWeb.png?url";
 import sleepingCat from "./thumbnails/sleepingCat.png?url";
-export const objectThumbnails = { fruit, banana, crumbs, vinegar, fan, lamp, shade, wornShoes, dirtyDishes, laundry, sleepingCat, bugZapper } as const satisfies Record<ToolKind, string>;
+export const objectThumbnails = { fruit, banana, crumbs, vinegar, fan, lamp, shade, wornShoes, dirtyDishes, laundry, sleepingCat, bugZapper, spiderWeb } as const satisfies Record<ToolKind, string>;

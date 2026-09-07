@@ -83,6 +83,12 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
           "z": 1.65
         },
         "heading": 0
+      },
+      {
+        "id": 5,
+        "kind": "spiderWeb",
+        "position": { "x": 4.4, "z": 8.9 },
+        "heading": 0
       }
     ],
     "geometry": {
