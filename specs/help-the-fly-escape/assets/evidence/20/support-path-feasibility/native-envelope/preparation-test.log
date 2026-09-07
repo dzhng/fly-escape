@@ -1,0 +1,9 @@
+   Compiling sim v0.1.0 (/Users/david/dev/fly-escape/crates/sim)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.22s
+     Running unittests examples/export_fly_contact_envelope.rs (target/debug/examples/export_fly_contact_envelope-af0f826f217b6b2b)
+
+running 1 test
+test tests::derivative_preserves_native_containment_and_regenerates ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.58s
+

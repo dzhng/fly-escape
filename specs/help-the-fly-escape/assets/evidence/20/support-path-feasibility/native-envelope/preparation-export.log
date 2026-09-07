@@ -1,0 +1,4 @@
+{"input":"assets/fly/fly.glb","output":"/tmp/fly-envelope-integrated-full.json","vertices":1834}
+   Compiling sim v0.1.0 (/Users/david/dev/fly-escape/crates/sim)
+    Finished `release` profile [optimized] target(s) in 4.81s
+     Running `target/release/examples/export_fly_contact_envelope /tmp/fly-envelope-integrated-full.json assets/fly/fly.glb /tmp/fly-envelope-integrated-candidate.json`

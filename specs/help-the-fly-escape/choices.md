@@ -424,3 +424,32 @@ If an artist changes a sofa's intended size, Blender, the simulation and browser
 ### Sound — high confidence: templates own furniture resources by model
 
 When a cabinet model is replaced, all its placements use the new shared mesh, and the old cabinet resources are released. Sofa meshes remain alive. The plan left resource ownership unspecified. One template per required model supports repeated furniture without loading a copy per placement, while one shared loader serves both browser applications. Temporary loading boxes use the same existing solid footprint; they do not become alternate authored assets or collision owners.
+
+## Conservative native envelope preparation — 2026-09-07
+
+### Sound — medium confidence: numerical containment is an export rejection rule
+
+When the smaller shape is rebuilt, floating-point arithmetic can report a source
+point a vanishing distance outside it. Preparation allows only scale-dependent
+roundoff in this check; it never expands a plane or changes the contact query's
+clearance. The plan left numerical export validation unspecified. This avoids
+turning arithmetic noise into a visible gap, while retaining an explicit limit
+on claims of containment. It is numerical validation, not a formal exact proof.
+
+### Sound — high confidence: prepare a fixed reviewed candidate before adoption
+
+The same fly model can produce a detailed reference and a smaller collision
+candidate. Preparation records the 128-plane version and both source identities,
+so movement tests can compare the exact same shapes repeatedly. The plan required
+choosing a usable native representation but did not set the simplification
+budget. The candidate stays unused by the game until moving contact and cost
+pass; changing the budget regenerates a reviewable asset rather than silently
+altering every fly's physics.
+
+### Sound — high confidence: native geometry preparation shares the Rust dependency
+
+When the asset exporter requests the smaller shape, an offline Rust example uses
+the same geometry library as the simulation. The browser receives no extra
+geometry implementation or dependency. The plan left the preparation language
+open. This keeps the difficult hull operations with their existing library and
+lets the TypeScript animation exporter remain the owner of sampled source poses.
