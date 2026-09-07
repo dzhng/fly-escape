@@ -1,0 +1,7 @@
+   Compiling sim v0.1.0 (/Users/david/dev/fly-escape/crates/sim)
+    Finished `release` profile [optimized] target(s) in 2.34s
+     Running `target/release/examples/query_budget_repro_tmp`
+tick 20
+tick 40
+FAILED tick 58: numerical motion unresolved: query budget span [2.6341799586876142, 0.07454325579475889, 6.617922442047476] -> [2.634211198261246, 0.07373055085445787, 6.617923249227317]
+Error: "numerical motion unresolved: query budget span [2.6341799586876142, 0.07454325579475889, 6.617922442047476] -> [2.634211198261246, 0.07373055085445787, 6.617923249227317]"
