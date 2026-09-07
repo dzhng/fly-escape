@@ -1,0 +1,429 @@
+{
+  "scope": "Two-vertex maximum of continuous face heights, active set from original adjacency at a failed cone certificate. Outward binary64 arithmetic and Taylor sin/cos. Conditional on declared normalized start/axis plus binary64 angle; endpoint-to-shortest-path conversion not certified. Exact rounded-mm geometry, sole apple. Query discovers chart; supplied start root is not preserved exactly. No clearance or sampled nonintersection acceptance.",
+  "cases": [
+    {
+      "aabbPruned": 1515,
+      "acceptedIntervals": 1,
+      "activeVertices": [
+        25
+      ],
+      "axes": 135,
+      "certifiedPrefix": 1.0,
+      "denominatorInterval": [
+        15.843102840743484,
+        15.843102840743503
+      ],
+      "diagnosticSamples": 101,
+      "endpointHeightDifferenceIntervals": null,
+      "initialRootResidualMm": 1.2079226507921703e-12,
+      "maxSlerpRotationResidualMm": 3.1401849173675502e-15,
+      "maxSupportErrorMm": 7.30437932361383e-12,
+      "name": "short-turn",
+      "nodes": 1,
+      "oracleNone": 0,
+      "peakStack": 1,
+      "projections": 34679,
+      "reason": "",
+      "status": "complete-conditional-chart",
+      "theta": 0.01499999999999988,
+      "triangle": 201,
+      "triangleVisits": 1519,
+      "unresolvedInterval": null,
+      "vertex": 25,
+      "runs": 20,
+      "meanCertificateMs": 0.26535400000000003,
+      "minCertificateMs": 0.254791,
+      "maxCertificateMs": 0.295916
+    },
+    {
+      "aabbPruned": 1515,
+      "acceptedIntervals": 1,
+      "activeVertices": [
+        25
+      ],
+      "axes": 99,
+      "certifiedPrefix": 1.0,
+      "denominatorInterval": [
+        15.843102840743484,
+        15.843102840743503
+      ],
+      "diagnosticSamples": 101,
+      "endpointHeightDifferenceIntervals": null,
+      "initialRootResidualMm": 1.2079226507921703e-12,
+      "maxSlerpRotationResidualMm": 4.593694506022584e-15,
+      "maxSupportErrorMm": 5.9543481256696396e-12,
+      "name": "short-tilt",
+      "nodes": 1,
+      "oracleNone": 0,
+      "peakStack": 1,
+      "projections": 25499,
+      "reason": "",
+      "status": "complete-conditional-chart",
+      "theta": 0.005000020833567713,
+      "triangle": 201,
+      "triangleVisits": 1519,
+      "unresolvedInterval": null,
+      "vertex": 25,
+      "runs": 20,
+      "meanCertificateMs": 0.212125,
+      "minCertificateMs": 0.19270800000000002,
+      "maxCertificateMs": 0.260042
+    },
+    {
+      "aabbPruned": 1515,
+      "acceptedIntervals": 1,
+      "activeVertices": [
+        25
+      ],
+      "axes": 230,
+      "certifiedPrefix": 1.0,
+      "denominatorInterval": [
+        15.843102840743484,
+        15.843102840743503
+      ],
+      "diagnosticSamples": 101,
+      "endpointHeightDifferenceIntervals": null,
+      "initialRootResidualMm": 1.2079226507921703e-12,
+      "maxSlerpRotationResidualMm": 4.305604634972164e-15,
+      "maxSupportErrorMm": 6.323830348264892e-12,
+      "name": "short-mixed",
+      "nodes": 1,
+      "oracleNone": 0,
+      "peakStack": 1,
+      "projections": 58904,
+      "reason": "",
+      "status": "complete-conditional-chart",
+      "theta": 0.01581155792024972,
+      "triangle": 201,
+      "triangleVisits": 1519,
+      "unresolvedInterval": null,
+      "vertex": 25,
+      "runs": 20,
+      "meanCertificateMs": 0.4087293,
+      "minCertificateMs": 0.37675000000000003,
+      "maxCertificateMs": 0.563333
+    },
+    {
+      "aabbPruned": 4933,
+      "acceptedIntervals": 3,
+      "activeVertices": [
+        25,
+        24
+      ],
+      "axes": 3488,
+      "certifiedPrefix": 1.0,
+      "denominatorInterval": [
+        15.843102840743484,
+        15.843102840743503
+      ],
+      "diagnosticSamples": 101,
+      "endpointHeightDifferenceIntervals": [
+        [
+          -0.004641334094614536,
+          -0.004641334093676618
+        ],
+        [
+          0.0014600763896908118,
+          0.0014600763906713612
+        ]
+      ],
+      "initialRootResidualMm": 0.0,
+      "maxSlerpRotationResidualMm": 2.8457249041605285e-15,
+      "maxSupportErrorMm": 2.880540250771446e-11,
+      "name": "first-turn-handoff",
+      "nodes": 6,
+      "oracleNone": 0,
+      "peakStack": 2,
+      "projections": 890745,
+      "reason": "",
+      "status": "complete-conditional-chart",
+      "theta": 0.05999999999999995,
+      "triangle": 201,
+      "triangleVisits": 4961,
+      "unresolvedInterval": null,
+      "vertex": 25,
+      "runs": 20,
+      "meanCertificateMs": 4.830252,
+      "minCertificateMs": 4.783708,
+      "maxCertificateMs": 4.934333
+    },
+    {
+      "aabbPruned": 17869,
+      "acceptedIntervals": 11,
+      "activeVertices": [
+        25,
+        24
+      ],
+      "axes": 12879,
+      "certifiedPrefix": 1.0,
+      "denominatorInterval": [
+        15.843102840743484,
+        15.843102840743503
+      ],
+      "diagnosticSamples": 101,
+      "endpointHeightDifferenceIntervals": [
+        [
+          -0.04837696440236528,
+          -0.04837696440145577
+        ],
+        [
+          0.001631794787641638,
+          0.0016317947885937658
+        ]
+      ],
+      "initialRootResidualMm": 1.2079226507921703e-12,
+      "maxSlerpRotationResidualMm": 4.593694506022584e-15,
+      "maxSupportErrorMm": 5.172751116333529e-12,
+      "name": "first-tilt-handoff",
+      "nodes": 22,
+      "oracleNone": 0,
+      "peakStack": 4,
+      "projections": 3288559,
+      "reason": "",
+      "status": "complete-conditional-chart",
+      "theta": 0.4444927769358191,
+      "triangle": 201,
+      "triangleVisits": 17921,
+      "unresolvedInterval": null,
+      "vertex": 25,
+      "runs": 20,
+      "meanCertificateMs": 18.01262105,
+      "minCertificateMs": 17.802667,
+      "maxCertificateMs": 18.284959
+    },
+    {
+      "aabbPruned": 22892,
+      "acceptedIntervals": 15,
+      "activeVertices": [
+        25,
+        24
+      ],
+      "axes": 6261,
+      "certifiedPrefix": 0.6494220972526819,
+      "denominatorInterval": [
+        15.843102840743484,
+        15.843102840743503
+      ],
+      "diagnosticSamples": 101,
+      "endpointHeightDifferenceIntervals": [
+        [
+          -0.004641334094614536,
+          -0.004641334093676618
+        ],
+        [
+          0.001962715808673465,
+          0.001962715809611382
+        ]
+      ],
+      "initialRootResidualMm": 0.0,
+      "maxSlerpRotationResidualMm": 2.6651134375294657e-15,
+      "maxSupportErrorMm": 1.0606981959426776e-10,
+      "name": "cone-turn-handoff",
+      "nodes": 51,
+      "oracleNone": 0,
+      "peakStack": 21,
+      "projections": 1609244,
+      "reason": "triangle-domain:25:1",
+      "status": "unresolved",
+      "theta": 0.09999999999999994,
+      "triangle": 201,
+      "triangleVisits": 22987,
+      "unresolvedInterval": [
+        0.6494220972526819,
+        0.6494220974855125
+      ],
+      "vertex": 25,
+      "runs": 20,
+      "meanCertificateMs": 10.550775,
+      "minCertificateMs": 10.415958,
+      "maxCertificateMs": 10.69725
+    },
+    {
+      "aabbPruned": 42523,
+      "acceptedIntervals": 27,
+      "activeVertices": [
+        25,
+        24
+      ],
+      "axes": 15219,
+      "certifiedPrefix": 0.961900319904089,
+      "denominatorInterval": [
+        15.843102840743484,
+        15.843102840743503
+      ],
+      "diagnosticSamples": 101,
+      "endpointHeightDifferenceIntervals": [
+        [
+          -0.04837696440236528,
+          -0.04837696440145577
+        ],
+        [
+          0.0021614079580558605,
+          0.002161407959050621
+        ]
+      ],
+      "initialRootResidualMm": 1.2079226507921703e-12,
+      "maxSlerpRotationResidualMm": 4.593694506022584e-15,
+      "maxSupportErrorMm": 7.972289495228324e-12,
+      "name": "cone-tilt-handoff",
+      "nodes": 70,
+      "oracleNone": 0,
+      "peakStack": 15,
+      "projections": 3890691,
+      "reason": "vertex-cone:26",
+      "status": "unresolved",
+      "theta": 0.4667653390472964,
+      "triangle": 201,
+      "triangleVisits": 42629,
+      "unresolvedInterval": [
+        0.961900319904089,
+        0.9619003201369196
+      ],
+      "vertex": 25,
+      "runs": 20,
+      "meanCertificateMs": 22.67276865,
+      "minCertificateMs": 22.462833,
+      "maxCertificateMs": 22.862042
+    },
+    {
+      "aabbPruned": 46741,
+      "acceptedIntervals": 30,
+      "activeVertices": [
+        25,
+        24
+      ],
+      "axes": 19535,
+      "certifiedPrefix": 0.3432948049157858,
+      "denominatorInterval": [
+        15.843102840743484,
+        15.843102840743503
+      ],
+      "diagnosticSamples": 101,
+      "endpointHeightDifferenceIntervals": [
+        [
+          -0.04837696440236528,
+          -0.04837696440145577
+        ],
+        [
+          0.00196271556950478,
+          0.001962715570471119
+        ]
+      ],
+      "initialRootResidualMm": 1.2079226507921703e-12,
+      "maxSlerpRotationResidualMm": 3.940900794429958e-15,
+      "maxSupportErrorMm": 4.362732397567015e-12,
+      "name": "turn-event",
+      "nodes": 77,
+      "oracleNone": 0,
+      "peakStack": 16,
+      "projections": 4999775,
+      "reason": "work-budget",
+      "status": "unresolved",
+      "theta": 1.5,
+      "triangle": 201,
+      "triangleVisits": 46944,
+      "unresolvedInterval": [
+        0.3432948049157858,
+        0.34329480584710836
+      ],
+      "vertex": 25,
+      "runs": 20,
+      "meanCertificateMs": 29.16621255,
+      "minCertificateMs": 28.933584,
+      "maxCertificateMs": 29.640083
+    },
+    {
+      "aabbPruned": 42921,
+      "acceptedIntervals": 27,
+      "activeVertices": [
+        25,
+        24
+      ],
+      "axes": 18778,
+      "certifiedPrefix": 0.5790342770051211,
+      "denominatorInterval": [
+        15.843102840743484,
+        15.843102840743503
+      ],
+      "diagnosticSamples": 101,
+      "endpointHeightDifferenceIntervals": [
+        [
+          -0.04837696440236528,
+          -0.04837696440145577
+        ],
+        [
+          0.0021614079453229347,
+          0.002161407946275063
+        ]
+      ],
+      "initialRootResidualMm": 1.2079226507921703e-12,
+      "maxSlerpRotationResidualMm": 4.593694506022584e-15,
+      "maxSupportErrorMm": 4.604316927725449e-12,
+      "name": "tilt-event",
+      "nodes": 72,
+      "oracleNone": 0,
+      "peakStack": 18,
+      "projections": 4798715,
+      "reason": "vertex-cone:26",
+      "status": "unresolved",
+      "theta": 0.7753974966107531,
+      "triangle": 201,
+      "triangleVisits": 43033,
+      "unresolvedInterval": [
+        0.5790342770051211,
+        0.5790342772379518
+      ],
+      "vertex": 25,
+      "runs": 20,
+      "meanCertificateMs": 27.414281250000002,
+      "minCertificateMs": 27.133333999999998,
+      "maxCertificateMs": 27.841250000000002
+    },
+    {
+      "aabbPruned": 21836,
+      "acceptedIntervals": 13,
+      "activeVertices": [
+        26
+      ],
+      "axes": 19575,
+      "certifiedPrefix": 0.13525390625,
+      "denominatorInterval": [
+        15.843102840743484,
+        15.843102840743503
+      ],
+      "diagnosticSamples": 101,
+      "endpointHeightDifferenceIntervals": null,
+      "initialRootResidualMm": 1.4210854715202004e-14,
+      "maxSlerpRotationResidualMm": 2.7844251801988247e-15,
+      "maxSupportErrorMm": 7.531752999057062e-13,
+      "name": "edge-event",
+      "nodes": 34,
+      "oracleNone": 0,
+      "peakStack": 9,
+      "projections": 4999996,
+      "reason": "work-budget",
+      "status": "unresolved",
+      "theta": 0.029999999999999895,
+      "triangle": 201,
+      "triangleVisits": 21969,
+      "unresolvedInterval": [
+        0.13525390625,
+        0.1357421875
+      ],
+      "vertex": 26,
+      "runs": 20,
+      "meanCertificateMs": 27.1804104,
+      "minCertificateMs": 26.897291,
+      "maxCertificateMs": 27.5645
+    }
+  ],
+  "scratchSource": "/tmp/fly-rotation-probe/src/bin/chart_handoff.rs",
+  "scratchSourceSha256": "c6ea76268aad0e53096c84302d6596a463ddd153c94fa9d75ee5eca5ea7ce44b",
+  "budgets": {
+    "activeVertices": 2,
+    "nodes": 2048,
+    "depth": 32,
+    "scalarProjections": 5000000
+  },
+  "timingScope": "20 native release repetitions, certification only, excluding initial query/feature discovery, scene/hull preparation and diagnostic samples."
+}
