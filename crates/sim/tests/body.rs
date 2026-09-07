@@ -919,6 +919,8 @@ fn household_surfaces_support_walking_but_never_feed_even_with_proboscis_spikes(
         (NativeObjectShape::DirtyDishes, 0., 0.),
         (NativeObjectShape::Laundry, 0., 0.),
         (NativeObjectShape::SleepingCat, 0., 0.),
+        (NativeObjectShape::Fan, 0.09, 0.07),
+        (NativeObjectShape::Vinegar, 0., 0.),
     ] {
         let surfaces = shape
             .placed_surfaces(Point { x: 2., z: 2. }, 0., 7)
@@ -997,6 +999,8 @@ fn household_meshes_do_not_block_the_air_above_their_native_height() {
         NativeObjectShape::DirtyDishes,
         NativeObjectShape::Laundry,
         NativeObjectShape::SleepingCat,
+        NativeObjectShape::Fan,
+        NativeObjectShape::Vinegar,
     ] {
         let surfaces = shape
             .placed_surfaces(Point { x: 2., z: 2. }, 0., 7)

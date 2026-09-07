@@ -13,6 +13,8 @@ pub enum NativeObjectShape {
     DirtyDishes,
     Laundry,
     SleepingCat,
+    Fan,
+    Vinegar,
 }
 impl NativeObjectShape {
     fn native(self) -> &'static (Vec<ContactSurface>, f64) {
@@ -21,8 +23,18 @@ impl NativeObjectShape {
         static SHOES: OnceLock<(Vec<ContactSurface>, f64)> = OnceLock::new();
         static DISHES: OnceLock<(Vec<ContactSurface>, f64)> = OnceLock::new();
         static LAUNDRY: OnceLock<(Vec<ContactSurface>, f64)> = OnceLock::new();
+        static FAN: OnceLock<(Vec<ContactSurface>, f64)> = OnceLock::new();
+        static VINEGAR: OnceLock<(Vec<ContactSurface>, f64)> = OnceLock::new();
         static CAT: OnceLock<(Vec<ContactSurface>, f64)> = OnceLock::new();
         let (asset, source) = match self {
+            Self::Fan => (
+                &FAN,
+                include_str!("../../../assets/household/fan/contact.json"),
+            ),
+            Self::Vinegar => (
+                &VINEGAR,
+                include_str!("../../../assets/household/vinegar/contact.json"),
+            ),
             Self::Apple => (
                 &APPLE,
                 include_str!("../../../assets/food/apple/contact.json"),

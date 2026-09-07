@@ -54,7 +54,7 @@ pub struct ToolDef {
 /// Threat has no catalog entry until its circuit effect is measured.
 pub fn tool_def(kind: ToolKind) -> ToolDef {
     let source = |kind, radius, rate| ToolEffect::Source { kind, radius, rate };
-    let (contact, edible, fallback_radius, effect) = match kind {
+    let (contact, edible, minimum_radius, effect) = match kind {
         ToolKind::Fruit => (
             Some(NativeObjectShape::Apple),
             true,
@@ -99,7 +99,7 @@ pub fn tool_def(kind: ToolKind) -> ToolDef {
             source(SourceKind::AttractiveOdor, 0.75, 1.),
         ),
         ToolKind::Vinegar => (
-            None,
+            Some(NativeObjectShape::Vinegar),
             false,
             0.2,
             source(SourceKind::RepellentOdor, 0.75, 1.),
@@ -107,7 +107,7 @@ pub fn tool_def(kind: ToolKind) -> ToolDef {
         ToolKind::Lamp => (None, false, 0.25, source(SourceKind::Lamp, 1.5, 0.4)),
         ToolKind::Shade => (None, false, 0.25, source(SourceKind::Shade, 1.5, 0.2)),
         ToolKind::Fan => (
-            None,
+            Some(NativeObjectShape::Fan),
             false,
             0.25,
             ToolEffect::Fan {
@@ -119,7 +119,9 @@ pub fn tool_def(kind: ToolKind) -> ToolDef {
     };
     ToolDef {
         kind,
-        footprint_radius: contact.map_or(fallback_radius, NativeObjectShape::footprint_radius),
+        footprint_radius: contact.map_or(minimum_radius, |shape| {
+            shape.footprint_radius().max(minimum_radius)
+        }),
         effect,
         contact,
         edible,

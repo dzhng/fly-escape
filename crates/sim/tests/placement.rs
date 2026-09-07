@@ -427,6 +427,22 @@ fn fan_direction_is_owned_by_the_map_for_place_repeat_move_and_fixed_objects() {
     level.fixed_objects = vec![turned];
     let fixed = resolve_placements(&level, &[]).unwrap();
     assert_eq!(fixed.field_config.fans[0].heading, std::f64::consts::PI);
+    let expected = sim::native_object::NativeObjectShape::Fan
+        .placed_surfaces(Point { x: 1., z: 1. }, std::f64::consts::PI, 0)
+        .unwrap();
+    assert!(
+        fixed.state.objects == expected,
+        "the map heading rotates actual fan contact"
+    );
+    let moved_expected = sim::native_object::NativeObjectShape::Fan
+        .placed_surfaces(Point { x: 3., z: 3. }, std::f64::consts::PI, 0)
+        .unwrap();
+    assert!(
+        resolved.state.objects == moved_expected,
+        "moving keeps the map's physical fan heading"
+    );
+    assert!(fixed.state.food.is_empty(), "a fan is never edible");
+
     let mut ordinary = item(8, ToolKind::Banana, 3., 3.);
     ordinary.heading = 0.7;
     assert_eq!(

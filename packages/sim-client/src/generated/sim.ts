@@ -40,7 +40,7 @@ proboscisThreshold: number, };
 export type ContactRegion = { center: Point, radius: number, };
 export type FoodDef = { position: Point, heading: number, shape: FoodShape, };
 export type FoodShape = { "type": "apple" } | { "type": "banana" } | { "type": "patch", radius: number, };
-export type NativeObjectShape = "apple" | "banana" | "wornShoes" | "dirtyDishes" | "laundry" | "sleepingCat";
+export type NativeObjectShape = "apple" | "banana" | "wornShoes" | "dirtyDishes" | "laundry" | "sleepingCat" | "fan" | "vinegar";
 export type ContactSurface = { id: number, vertices: Array<[number, number, number]>, triangles: Array<[number, number, number]>, };
 export type SurfaceHit = { surfaceId: number, fraction: number, point: [number, number, number], normal: [number, number, number], };
 export type SupportSample = { surfaceId: number, root: [number, number, number], rotation: [number, number, number, number], point: [number, number, number], normal: [number, number, number], };
