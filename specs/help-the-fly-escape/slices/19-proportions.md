@@ -1,6 +1,6 @@
 # 19 — Physical proportions before detailed art
 
-Status: bounded neutral scale feasibility prepared; see [measurements, reviewed frames and preserved failures](../assets/evidence/19/proportions/README.md). Furnished/contact acceptance and parent integration remain pending. Dependencies: 18 for integration; neutral authoring may proceed independently.
+Status: integrated and accepted for neutral scale feasibility only. See [measurements, reviewed frames and preserved failures](../assets/evidence/19/proportions/README.md). Physical/contact adoption remains in25/20 and fruit occlusion/wide selection readability in24. Dependency: 18.
 
 ## Contract, seam and review surface
 
@@ -25,3 +25,7 @@ The neutral diagnostic declares one world unit as one metre, a 3 mm Drosophila b
 The first actual-browser pass measures the existing model body at 241.25 mm under that unit convention; its diagnostic uniform factor is 0.012435. Current Follow places the camera 41.55 mm away and Extra close 20.78 mm away, both inside the fixed 100 mm near plane. The 30 mm ring lift also exceeds the whole fly, and Overview's fixed 1 m vertical envelope crops 2.6 m walls. This pass may correct those measured presentation assumptions with a distance-relative near plane, model-height-relative ring offset, and actual replaced-house vertical bounds. It may not rescale core poses, alter physical contact, change lighting/materials, or promote the fixture to a level.
 
 Default context, selected macro Follow, further zoom and Overview are separate useful scales. A whole room and a detailed 3 mm fly cannot occupy one fixed view. The neutral single-room floor composition is explicitly diagnostic, loaded through its own workbench composition path; production house-kit bounds remain strict. Cabinet/seat/pot are current geometry-owned blocking envelopes, with distinct authored furniture deferred to20/21. Fruit/window have no new contact claim.
+
+## Integrated checkpoint
+
+Root integration b047456 uses authoritative initial bodies and the actual 0.1-second animation cadence. Typecheck, both app builds, 31 renderer tests and the real 20-fly/40-tick WASM fixture pass. Four reviewed frames were open in Preview from 03:32:07 to 03:38:50 UTC on 2026-09-07; no further user steering arrived. The non-blocking decision accepts scale feasibility only: clear-floor close views work, while fruit-adjacent occlusion and the subpixel Overview selection cue remain explicit24 failures. The review used the documented primed adversarial fallback because fresh reviewer capacity was exhausted.

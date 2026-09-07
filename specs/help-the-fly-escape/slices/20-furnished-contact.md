@@ -1,6 +1,6 @@
 # 20 — Authoritative furnishing and food contact
 
-Status: pending. Dependencies: 19,25.
+Status: pending. Dependencies: 19,25,26 and the measured physical-adapter verdict.
 
 ## Contract, seam and review surface
 
