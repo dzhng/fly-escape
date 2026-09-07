@@ -5,6 +5,12 @@
   top: 108px;
   bottom: 170px;
 }
+.playback-lab .game-world > .canvas {
+  top: 48px;
+}
+.game-world .playback-counters {
+  top: 18px;
+}
 .playback-counters {
   position: absolute;
   top: 78px;
@@ -67,6 +73,9 @@
   }
   .playback-lab .playback-world > .canvas {
     bottom: 190px;
+  }
+  .playback-lab .game-world > .canvas {
+    top: 66px;
   }
   .playback-counters {
     gap: 8px;

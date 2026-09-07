@@ -495,15 +495,14 @@ export function AttemptPlayback({
         {!input && <a href="/lab/lifecycle">Lifecycle lab</a>}
       </header>
       <section className="workspace">
-        <div className="world playback-world">
+        <div className={`world playback-world${input ? " game-world" : ""}`}>
           <div className="canvas" ref={container} />
-          <div className="world-note">
-            20 independent brains · shared environment
-            <span>
-              {!input && <>Seed 42 · </>}
-              {(input?.level.durationTicks ?? DURATION_TICKS) * TICK_SECONDS} game seconds
-            </span>
-          </div>
+          {!input && (
+            <div className="world-note">
+              20 independent brains · shared environment
+              <span>Seed 42 · {DURATION_TICKS * TICK_SECONDS} game seconds</span>
+            </div>
+          )}
           <div className="playback-counters" aria-label="Outcomes at playback time">
             <b data-testid="active-count">{FLY_COUNT - terminalCount} {error ? "paused" : "active"}</b>
             {Object.entries(counts).map(([name, count]) => (
