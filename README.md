@@ -36,3 +36,5 @@ The in-app About page explains data attribution and modeling limits and links to
 Browser applications live under `apps/`: `apps/web` is the game and [`apps/asset-lab`](apps/asset-lab/README.md) provides local model replacement and inspection. `packages/` holds the client and renderer; `crates/` owns simulation and its thin WASM boundary. The browser requires no application backend.
 
 Python is used only for offline graph preparation and faithful numerical reference evidence. Historical experiments and their interpretation remain in the [spike archive](specs/help-the-fly-escape/spikes/README.md); they are not runtime behavior or release guarantees. The [architecture contract](specs/help-the-fly-escape/CONTRACTS.md) defines the final shape and the [roadmap](specs/help-the-fly-escape/visualizations/roadmap.html) shows the remaining work.
+
+[Native fly contact](assets/fly/README.md) describes the physical envelope and its animation-sampling limits.
