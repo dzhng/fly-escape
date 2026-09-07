@@ -1,20 +1,18 @@
 # Help the Fly Escape — browser game
 
-Status: **implementation active — campaign validation and progression**. Last updated: 2026-09-07.
+Status: **implementation active — physical scale, furnished rooms and two levels**. Last updated: 2026-09-07.
 
 Build a local, fully 3D browser game in which the player places environmental tools and watches a real connectome-driven swarm attempt to escape. The [game contract](GAMEPLAY.md) owns user requirements; [architecture contracts](CONTRACTS.md) own runtime/data seams. This plan replaces the previous Python tech-demo scope.
 
 ## Next Agent Prompt
 
-The user reduced the campaign to **two carefully designed levels** and requested randomized clustered starting positions, varied headings, and mixed walking/flying initial states. The core spawn and recorded-start seam is integrated and verified in 18. Continue measured proportions in 19, then physical/sensory scale in25 before food contact and final calibration.
+The user wants **two carefully designed levels**, natural clustered starts, and a **photorealistic warm, lived-in house**. [18](slices/18-natural-starts.md) is integrated and verified, including exact tick-zero replay. Integrate the measured [19](slices/19-proportions.md) prototype next, then complete [25](slices/25-physical-scale.md): the old body envelope and antenna sampling do not match the measured fly size. Keep the existing detector cutoff frozen for that reproduction; report failures before proposing corrections.
 
-The user changed the final visual target to a **photorealistic, warm, lived-in house** with real materials, furniture, lights, plants, apples and bananas. Follow [the updated game contract](GAMEPLAY.md#visual-target-a-warm-lived-in-house). Integrate the measured [19](slices/19-proportions.md) proportion checkpoint, then resolve the measured physical/sensory scale mismatch in [25](slices/25-physical-scale.md) before 20–24 to establish one furnished room before expanding the look. Existing visual checkpoints remain foundation evidence; they no longer establish final art acceptance.
+Then resolve food/furnishing contact in 20 and the separate shape, material, light and readability passes through 24. Establish one real browser room before expanding into the five-room first level (15) and larger second level (16), followed by release gates (17). Existing 01–14 art is foundation evidence, not final realism acceptance. Follow GAMEPLAY.md and the single-owner contracts below.
 
-The old frozen first-level tuning and held-out evaluations are complete as bare-room baseline evidence. The isolated renderer-retention fix is integrated; prepared campaign UI ownership checks pass in its isolated build. Integrate campaign content only after the revised level acceptance gates. Do not start further campaign seed batches until the furnishing/collision contract is settled. Geometry and sensory changes require revalidation; previously accepted neural fidelity and twenty-fly performance requirements still hold.
+The old first-level tuning/holdout and bounded WASM checks are complete **bare-room, fixed-start baseline evidence**. Do not launch new campaign seed batches until physical geometry, sensory sampling, food and starts are settled. The renderer-retention patch is integrated and verified; remaining heap behavior is classified in its evidence, with final release measurements still open. Campaign progression has a tested isolated implementation awaiting accepted content; integrate it rather than rebuilding it. Preserve graph provenance, neural motor ownership, twenty flies and the established campaign criteria.
 
-Then author and accept the second and final level with progression in [16](slices/16-campaign.md), followed by final production/platform gates in [17](slices/17-static-release.md). [The remaining-work audit](assets/planning/maintenance-2026-09-07.md) distinguishes missing implementation from verification. Update this pickup, checklist and owning slice status together; completed experiments belong in evidence, not new pickup paragraphs.
-
-Slices 01–14 have foundation acceptance; the revised final-art scope remains open. Existing performance evidence is build-specific and does not replace final release measurements. The [retry investigation](assets/evidence/17/retry-resources/review.md) found renderer retention in Three.js; its isolated dependency fix must pass lifetime and unchanged-render checks before release. Preserve actual graph provenance, neural motor ownership and the established campaign criteria; no steering, reduced graph or silent sensitivity change. Reproduce ignored graph artifacts with the [exporter](../../scripts/connectome/README.md). A committed pass is a checkpoint, not completion.
+Use the checklist for dependencies. Update this prompt and owning statuses before ending each pass; keep experiment details with their evidence. A committed pass is a checkpoint, not completion.
 
 ## Global checklist and review map
 
