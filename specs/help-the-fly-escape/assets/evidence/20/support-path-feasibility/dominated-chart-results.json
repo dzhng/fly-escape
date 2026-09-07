@@ -1,0 +1,370 @@
+{
+  "scope": "Conditional declared normalized axis-angle path; exact rounded-mm coordinates; sole apple. Analytic root does not exactly preserve supplied core root. No core/body/replay adoption.",
+  "budgets": {
+    "activeVertices": 3,
+    "nodes": 2048,
+    "depth": 32,
+    "closestPointProposals": 8192
+  },
+  "timingScope": "Native certificate only; excludes immutable geometry preparation, start feature discovery and diagnostics. One-run baseline costs must not be treated as repeated means.",
+  "variants": [
+    {
+      "variant": "topology-axis-5m",
+      "projectionBudget": 5000000,
+      "runs": 1,
+      "scratchSource": "/tmp/fly-chart-domain-budget5m.rs",
+      "scratchSourceSha256": "22c3ee2ca5bd8dddc055ca56a907f99d5914caae3ac9b3ffcd0713d276cddcc5",
+      "cases": [
+        {
+          "name": "cone-turn-handoff",
+          "activeVertices": [
+            25,
+            24
+          ],
+          "certifiedPrefix": 1.0,
+          "reason": "",
+          "unresolvedInterval": null,
+          "nodes": 18,
+          "projections": 3181406,
+          "dominatedDomainTests": 15,
+          "elapsedMs": 17.258042,
+          "maxSupportErrorMm": 1.0061285138363019e-11
+        },
+        {
+          "name": "turn-event",
+          "activeVertices": [
+            25,
+            24
+          ],
+          "certifiedPrefix": 0.3427734375,
+          "reason": "work-budget",
+          "unresolvedInterval": [
+            0.3427734375,
+            0.34375
+          ],
+          "nodes": 39,
+          "projections": 4999842,
+          "dominatedDomainTests": 18,
+          "elapsedMs": 27.453833,
+          "maxSupportErrorMm": 2.7000623958883807e-12
+        },
+        {
+          "name": "tilt-event",
+          "activeVertices": [
+            25,
+            24,
+            26
+          ],
+          "certifiedPrefix": 0.5975346260238439,
+          "reason": "vertex-cone:16",
+          "unresolvedInterval": [
+            0.5975346260238439,
+            0.5975346262566745
+          ],
+          "nodes": 84,
+          "projections": 4884350,
+          "dominatedDomainTests": 41,
+          "elapsedMs": 28.366583000000002,
+          "maxSupportErrorMm": 4.803268893738277e-12
+        },
+        {
+          "name": "edge-event",
+          "activeVertices": [
+            26
+          ],
+          "certifiedPrefix": 0.13525390625,
+          "reason": "work-budget",
+          "unresolvedInterval": [
+            0.13525390625,
+            0.1357421875
+          ],
+          "nodes": 34,
+          "projections": 4999996,
+          "dominatedDomainTests": 0,
+          "elapsedMs": 26.985374999999998,
+          "maxSupportErrorMm": 7.531752999057062e-13
+        }
+      ]
+    },
+    {
+      "variant": "topology-axis-50m",
+      "projectionBudget": 50000000,
+      "runs": 1,
+      "scratchSource": "/tmp/fly-rotation-probe/src/bin/chart_domain.rs",
+      "scratchSourceSha256": "f0380b669b965ecb7cb02944cbc7bca8fd75fec11ad15ec03e842094b88a25a5",
+      "cases": [
+        {
+          "name": "cone-turn-handoff",
+          "activeVertices": [
+            25,
+            24
+          ],
+          "certifiedPrefix": 1.0,
+          "reason": "",
+          "unresolvedInterval": null,
+          "nodes": 18,
+          "projections": 3181406,
+          "dominatedDomainTests": 15,
+          "elapsedMs": 17.211458999999998,
+          "maxSupportErrorMm": 1.0061285138363019e-11
+        },
+        {
+          "name": "turn-event",
+          "activeVertices": [
+            25,
+            24,
+            26
+          ],
+          "certifiedPrefix": 0.41021728515625,
+          "reason": "work-budget",
+          "unresolvedInterval": [
+            0.41021728515625,
+            0.410247802734375
+          ],
+          "nodes": 263,
+          "projections": 49999787,
+          "dominatedDomainTests": 390,
+          "elapsedMs": 267.345375,
+          "maxSupportErrorMm": 2.1174173525650986e-12
+        },
+        {
+          "name": "tilt-event",
+          "activeVertices": [
+            25,
+            24,
+            26
+          ],
+          "certifiedPrefix": 0.5975346260238439,
+          "reason": "vertex-cone:16",
+          "unresolvedInterval": [
+            0.5975346260238439,
+            0.5975346262566745
+          ],
+          "nodes": 84,
+          "projections": 4884350,
+          "dominatedDomainTests": 41,
+          "elapsedMs": 28.599375,
+          "maxSupportErrorMm": 4.803268893738277e-12
+        },
+        {
+          "name": "edge-event",
+          "activeVertices": [
+            26
+          ],
+          "certifiedPrefix": 0.13631336041726172,
+          "reason": "competitor:202",
+          "unresolvedInterval": [
+            0.13631336041726172,
+            0.13631336065009236
+          ],
+          "nodes": 121,
+          "projections": 20698203,
+          "dominatedDomainTests": 0,
+          "elapsedMs": 111.025833,
+          "maxSupportErrorMm": 1.6342482922482304e-12
+        }
+      ]
+    },
+    {
+      "variant": "closest-point-proposal-5m",
+      "projectionBudget": 5000000,
+      "runs": 20,
+      "scratchSource": "/tmp/fly-rotation-probe/src/bin/chart_gjk.rs",
+      "scratchSourceSha256": "f22afacb863ce6bff495841f9fcfa770d49ba2bf56c0d6847838805ace4c048f",
+      "cases": [
+        {
+          "name": "short-turn",
+          "activeVertices": [
+            25
+          ],
+          "certifiedPrefix": 1.0,
+          "reason": "",
+          "unresolvedInterval": null,
+          "nodes": 1,
+          "projections": 1274,
+          "closestPointProposals": 4,
+          "dominatedDomainTests": 0,
+          "meanCertificateMs": 0.12522695,
+          "maxSupportErrorMm": 7.30437932361383e-12
+        },
+        {
+          "name": "short-tilt",
+          "activeVertices": [
+            25
+          ],
+          "certifiedPrefix": 1.0,
+          "reason": "",
+          "unresolvedInterval": null,
+          "nodes": 1,
+          "projections": 1274,
+          "closestPointProposals": 4,
+          "dominatedDomainTests": 0,
+          "meanCertificateMs": 0.10906045,
+          "maxSupportErrorMm": 5.9543481256696396e-12
+        },
+        {
+          "name": "short-mixed",
+          "activeVertices": [
+            25
+          ],
+          "certifiedPrefix": 1.0,
+          "reason": "",
+          "unresolvedInterval": null,
+          "nodes": 1,
+          "projections": 1274,
+          "closestPointProposals": 4,
+          "dominatedDomainTests": 0,
+          "meanCertificateMs": 0.10566465,
+          "maxSupportErrorMm": 6.323830348264892e-12
+        },
+        {
+          "name": "first-turn-handoff",
+          "activeVertices": [
+            25,
+            24
+          ],
+          "certifiedPrefix": 1.0,
+          "reason": "",
+          "unresolvedInterval": null,
+          "nodes": 6,
+          "projections": 652579,
+          "closestPointProposals": 28,
+          "dominatedDomainTests": 2,
+          "meanCertificateMs": 3.9558167,
+          "maxSupportErrorMm": 2.880540250771446e-11
+        },
+        {
+          "name": "first-tilt-handoff",
+          "activeVertices": [
+            25,
+            24
+          ],
+          "certifiedPrefix": 1.0,
+          "reason": "",
+          "unresolvedInterval": null,
+          "nodes": 22,
+          "projections": 2216541,
+          "closestPointProposals": 52,
+          "dominatedDomainTests": 0,
+          "meanCertificateMs": 13.05981455,
+          "maxSupportErrorMm": 5.172751116333529e-12
+        },
+        {
+          "name": "cone-turn-handoff",
+          "activeVertices": [
+            25,
+            24
+          ],
+          "certifiedPrefix": 1.0,
+          "reason": "",
+          "unresolvedInterval": null,
+          "nodes": 18,
+          "projections": 2323841,
+          "closestPointProposals": 89,
+          "dominatedDomainTests": 15,
+          "meanCertificateMs": 13.39691655,
+          "maxSupportErrorMm": 1.0061285138363019e-11
+        },
+        {
+          "name": "cone-tilt-handoff",
+          "activeVertices": [
+            25,
+            24,
+            26
+          ],
+          "certifiedPrefix": 0.9926333737093955,
+          "reason": "vertex-cone:16",
+          "unresolvedInterval": [
+            0.9926333737093955,
+            0.9926333739422262
+          ],
+          "nodes": 76,
+          "projections": 2662236,
+          "closestPointProposals": 112,
+          "dominatedDomainTests": 33,
+          "meanCertificateMs": 17.3410709,
+          "maxSupportErrorMm": 1.1453948900452815e-11
+        },
+        {
+          "name": "turn-event",
+          "activeVertices": [
+            25,
+            24
+          ],
+          "certifiedPrefix": 0.345703125,
+          "reason": "work-budget",
+          "unresolvedInterval": [
+            0.345703125,
+            0.34765625
+          ],
+          "nodes": 47,
+          "projections": 4999843,
+          "closestPointProposals": 182,
+          "dominatedDomainTests": 26,
+          "meanCertificateMs": 28.84595835,
+          "maxSupportErrorMm": 2.4016344468691386e-12
+        },
+        {
+          "name": "tilt-event",
+          "activeVertices": [
+            25,
+            24,
+            26
+          ],
+          "certifiedPrefix": 0.5975346260238439,
+          "reason": "vertex-cone:16",
+          "unresolvedInterval": [
+            0.5975346260238439,
+            0.5975346262566745
+          ],
+          "nodes": 84,
+          "projections": 3337265,
+          "closestPointProposals": 130,
+          "dominatedDomainTests": 41,
+          "meanCertificateMs": 21.41245835,
+          "maxSupportErrorMm": 4.803268893738277e-12
+        },
+        {
+          "name": "edge-event",
+          "activeVertices": [
+            26
+          ],
+          "certifiedPrefix": 0.13616943359375,
+          "reason": "work-budget",
+          "unresolvedInterval": [
+            0.13616943359375,
+            0.13623046875
+          ],
+          "nodes": 46,
+          "projections": 4999983,
+          "closestPointProposals": 194,
+          "dominatedDomainTests": 0,
+          "meanCertificateMs": 29.31985415,
+          "maxSupportErrorMm": 5.115907697472721e-13
+        }
+      ]
+    }
+  ],
+  "unacceptedBeyondEdgeDiagnostics": [
+    {
+      "fraction": 0.13631336041726172,
+      "queryMinusChartMm": 1.6342482922482304e-12
+    },
+    {
+      "fraction": 0.13631337041726171,
+      "queryMinusChartMm": -8.29913915367797e-12
+    },
+    {
+      "fraction": 0.13631436041726172,
+      "queryMinusChartMm": -1.4772609802093939e-09
+    },
+    {
+      "fraction": 0.1364133604172617,
+      "queryMinusChartMm": -1.9828873121241486e-07
+    },
+    {
+      "fraction": 0.13731336041726172,
+      "queryMinusChartMm": -1.982224105745445e-06
+    }
+  ]
+}
