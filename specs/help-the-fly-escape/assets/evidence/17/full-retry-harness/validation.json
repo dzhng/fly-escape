@@ -1,0 +1,12 @@
+{
+  "staticOrigin": "http://127.0.0.1:5322",
+  "simulationBuild": "267eb5b3ff0eee65931080a6aff751819178389a476bed71ced4a93f544cda27",
+  "harnessChecks": {
+    "recordedFullAttempt": "seed 13417148680701230168 passes at 1x through all-terminal result",
+    "defaultCancel": "same seed passes release/pause/cancel and returns to setup",
+    "doubleSpeedMutation": "scratch copy selects 2x; fails speed assertion with 2 != 1 and saves failure",
+    "invalidStabilityComparison": "two runs with stability flag rejected before browser launch",
+    "explicitNativeFailure": "seed 1744322718178062846 fails immediately with native refinement error, preserving diagnostics"
+  },
+  "releaseGate": "red: captured native refinement failure remains unresolved; successful single-seed harness validation is not release acceptance"
+}

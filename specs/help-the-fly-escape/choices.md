@@ -711,3 +711,7 @@ The user's one-fan maximum and rejection of chained-fan solutions supersede earl
 
 - **Use light tile in both kitchens — sound, medium confidence.** Entering the kitchen changes the floor from wood to warm ceramic, helping rooms feel like different parts of a lived-in home. The user requested real household colors and proportions but did not choose floor finishes. Grout is painted into a shared image, so it remains flat at close zoom; this reversible art choice leaves deeper material realism open.
 - **Keep finish separate from physical room shape — sound, high confidence.** Campaign content selects tile by the room's existing ID. Setup and replay pass that same choice to the renderer, which replaces the room's single floor mesh and releases only resources for that finish. Duplicating room rectangles or overlaying another floor would let appearance and collision drift. This adds a renderer appearance entry and one local asset, with no new dependency or simulation type.
+
+## Sustained retry verification — 2026-09-08
+
+- **Replay captured seeds through normal campaign setup — sound, high confidence.** When a random swarm fails, the browser harness can supply that recorded seed to the game's normal random-seed call and check the resulting attempt identity. The same harness still uses random seeds by default. A separate diagnostic level could miss the house or asset inputs that caused the failure. This adds test options only; players keep natural random starts and no runtime simulation rule changes.

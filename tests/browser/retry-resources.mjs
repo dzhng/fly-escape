@@ -2,14 +2,36 @@ import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
 import { chromium } from "playwright";
 
-const runs = Number(process.env.RETRY_RUNS ?? 20);
+const seeds = process.env.RETRY_SEEDS?.split(",");
+const runs = Number(process.env.RETRY_RUNS ?? seeds?.length ?? 20);
 const campaign = process.env.RETRY_CAMPAIGN;
+const fullAttempts = process.env.RETRY_FULL === "1";
 assert.ok(!campaign || campaign === "1" || campaign === "2", "RETRY_CAMPAIGN must be 1 or 2");
+assert.ok(!fullAttempts || campaign, "Full-attempt verification requires an actual campaign level");
+assert.ok(process.env.RETRY_ASSERT_STABLE !== "1" || runs >= 3, "Post-warm-up stability comparison requires at least three retries");
+assert.ok(Number.isInteger(runs) && runs >= 1 && runs <= 20, "RETRY_RUNS must be 1..20");
+if (seeds) {
+  assert.equal(seeds.length, runs, "provide one recorded seed per attempt");
+  assert.ok(seeds.every(seed => /^\d+$/.test(seed) && BigInt(seed) < 2n ** 64n), "seeds must be unsigned 64-bit integers");
+  assert.equal(new Set(seeds.map(seed => BigInt(seed).toString())).size, runs, "retry seeds must be distinct");
+}
 const browser = await chromium.launch({ channel: "chrome", headless: true });
 const output = process.env.RETRY_EVIDENCE ?? "/tmp/fly-retry-resources";
 await mkdir(output, { recursive: true });
+let activeRun = 0;
+let page;
 try {
-  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  if (seeds) await page.addInitScript(recordedSeeds => {
+    const random = crypto.getRandomValues.bind(crypto);
+    let next = 0;
+    crypto.getRandomValues = array => {
+      if (!(array instanceof BigUint64Array) || array.length !== 1) return random(array);
+      if (next >= recordedSeeds.length) throw new Error("Recorded attempt seeds exhausted");
+      array[0] = BigInt(recordedSeeds[next++]);
+      return array;
+    };
+  }, seeds);
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
   const cdp = await page.context().newCDPSession(page);
@@ -20,18 +42,49 @@ try {
   if (campaign === "2") await page.getByRole("button", { name: /2\. Turn the Corner/ }).click();
   const samples = [];
   for (let run = 0; run < runs; run++) {
+    activeRun = run + 1;
     await page.waitForFunction(() => document.querySelector(".run-setup")?.disabled === false);
     await page.getByRole("button", { name: "Release the flies", exact: true }).click();
     await page.waitForFunction(() => {
       const text = document.querySelector('[data-testid="playback-report"]')?.textContent;
       if (!text) return false;
       const report = JSON.parse(text);
-      return report.state === "playing" && report.cursorTick >= 10;
+      return report.state === "error" || (report.state === "playing" && report.cursorTick >= 10);
     }, undefined, { timeout: 90000 });
-    await page.getByRole("button", { name: "Pause", exact: true }).click();
-    await page.waitForFunction(() => JSON.parse(document.querySelector('[data-testid="playback-report"]').textContent).state === "paused");
+    const startedAt = performance.now();
+    const started = JSON.parse(await page.getByTestId("playback-report").textContent());
+    assert.equal(started.state, "playing", started.error ?? "attempt must enter playback");
+    if (seeds) assert.equal(BigInt(started.spec.rootSeed), BigInt(seeds[run]), "attempt must use its recorded seed");
+    const startedTick = started.cursorTick;
+    if (fullAttempts) {
+      await page.waitForFunction(() => {
+        const report = JSON.parse(document.querySelector('[data-testid="playback-report"]').textContent);
+        return report.state === "ended" || report.state === "error";
+      }, undefined, { timeout: 180000 });
+    } else {
+      await page.getByRole("button", { name: "Pause", exact: true }).click();
+      await page.waitForFunction(() => JSON.parse(document.querySelector('[data-testid="playback-report"]').textContent).state === "paused");
+    }
     const report = JSON.parse(await page.getByTestId("playback-report").textContent());
+    await writeFile(`${output}/attempt-${run + 1}.json`, JSON.stringify(report, null, 2) + "\n");
     assert.equal(report.spec.flyCount, 20);
+    if (fullAttempts) {
+      assert.equal(report.state, "ended", "the actual attempt must finish without an error");
+      assert.equal(report.complete, true);
+      assert.equal(report.cursorTick, report.result.completedTick);
+      assert.equal(report.computedTick, report.result.completedTick);
+      assert.ok(report.result.completedTick > 0 && report.result.completedTick <= report.spec.durationTicks);
+      const outcomes = report.result.outcomes;
+      assert.equal(outcomes.escaped + outcomes.starved + outcomes.zapped + outcomes.caught + outcomes.timedOut,
+        report.spec.flyCount, "every fly must have a terminal outcome before an attempt is complete");
+      assert.equal(report.speed, 1, "full attempts must play at normal speed without seeking");
+      assert.ok(performance.now() - startedAt >= (report.cursorTick - startedTick) * 100 - 100,
+        "playback must traverse the recorded interval at 1× without skipping ahead");
+      assert.equal(report.underruns, 0);
+      assert.ok(report.frameIntervals.count > 0 && Number.isFinite(report.frameIntervals.p95Ms),
+        "full attempts require measured frame intervals");
+      assert.ok(report.frameIntervals.p95Ms <= 25, "desktop frame interval p95 exceeds 25 ms");
+    }
     assert.equal(page.workers().length, 1, "retry must not accumulate live simulation Workers");
     await page.getByRole("button", { name: /Cancel attempt|Retry — edit setup/ }).click();
     await page.waitForFunction(() => document.querySelector(".run-setup")?.disabled === false);
@@ -57,10 +110,16 @@ try {
   const heaps = samples.map((s) => s.mainHeapAfterReturn.usedSize);
   await writeFile(`${output}/report.json`, JSON.stringify({ browser: browser.version(), samples,
     retainedMainHeapChangeBytes: heaps.at(-1) - heaps[0], errors,
-    scope: `${runs} real 20-fly Run/cancel/edit cycles on ${campaign ? `campaign level ${campaign}` : "diagnostic setup"}. Collected main heaps are observations, not process RSS or a proof that Worker/GPU memory cannot leak. Final release memory and sustained full-attempt gates remain separate.` }, null, 2) + "\n");
+    scope: `${runs} real 20-fly ${fullAttempts ? "complete 1× attempts and retries" : "Run/cancel/edit cycles"} on ${campaign ? `campaign level ${campaign}` : "diagnostic setup"}. Collected main heaps are observations, not process RSS or a proof that Worker/GPU memory cannot leak. Final combined memory, input latency, hidden-tab and platform gates remain separate.` }, null, 2) + "\n");
   if (process.env.RETRY_ASSERT_STABLE === "1") {
     assert.ok(samples.at(-1).dom.nodes <= samples[1].dom.nodes + 2, "detached DOM must not grow per retry after warm-up");
   }
+} catch (error) {
+  const report = await page?.getByTestId("playback-report").textContent({ timeout: 1000 }).catch(() => null);
+  await writeFile(`${output}/failure.json`, JSON.stringify({ run: activeRun, error: String(error),
+    report }, null, 2) + "\n");
+  await page?.screenshot({ path: `${output}/failure.png` }).catch(() => {});
+  throw error;
 } finally {
   await browser.close();
 }
