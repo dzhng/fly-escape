@@ -6,7 +6,7 @@ import bpy, bmesh, json
 
 OUT = Path(__file__).resolve().parent
 shared = run_path(str(OUT.parents[1] / 'house/authoring.py'))
-EVIDENCE = OUT.parents[2] / 'specs/help-the-fly-escape/assets/evidence/21/banana-prepared'
+EVIDENCE = OUT.parents[2] / 'specs/help-the-fly-escape/assets/evidence/21/banana-refined'
 EVIDENCE.mkdir(parents=True, exist_ok=True)
 scene = bpy.data.scenes.new('Banana-Metres')
 scene.unit_settings.system = 'METRIC'
@@ -19,9 +19,9 @@ neutral.node_tree.nodes['Principled BSDF'].inputs['Roughness'].default_value = 0
 
 # A swept bent skin with subdued longitudinal ribs, a narrow stalk at +X,
 # and a short blossom tip at -X. End poles close the surface without cap seams.
-profile = [(0,0),(.008,.003),(.025,.004),(.045,.004),(.09,.014),(.17,.019),
-           (.30,.020),(.48,.0205),(.65,.020),(.76,.017),(.82,.010),
-           (.87,.0045),(.975,.0045),(.992,.0038),(1,0)]
+profile = [(0,0),(.008,.003),(.025,.004),(.045,.004),(.11,.0125),(.20,.018),
+           (.30,.020),(.48,.0205),(.65,.020),(.76,.017),(.82,.0127),
+           (.87,.008),(.92,.0052),(.975,.0045),(.992,.0038),(1,0)]
 # Monotone cubic radii avoid artificial collars between profile samples.
 secants=[(b[1]-a[1])/(b[0]-a[0]) for a,b in zip(profile,profile[1:])]
 slopes=[secants[0]]+[0 if a*b<=0 else 2*a*b/(a+b) for a,b in zip(secants,secants[1:])]+[secants[-1]]
@@ -40,14 +40,16 @@ for j in range(rings+1):
             break
     angle = -1.0 + 2.0*t
     cx,cy = .13*sin(angle), .13*cos(angle)
+    stalk = max(0,(t-.86)/.14)
+    cz = .004*stalk*stalk*(3-2*stalk)
     if j in (0,rings):
-        vertices.append((cx,cy,0))
+        vertices.append((cx,cy,cz))
     else:
         for i in range(segments):
             phi = 2*pi*i/segments
             ribbed = radius*(1+.045*cos(5*phi))
             vertices.append((cx+sin(angle)*ribbed*cos(phi),
-                             cy+cos(angle)*ribbed*cos(phi), ribbed*sin(phi)))
+                             cy+cos(angle)*ribbed*cos(phi), cz+ribbed*sin(phi)))
 faces = []
 for i in range(segments): faces.append((0,1+(i+1)%segments,1+i))
 for j in range(rings-2):

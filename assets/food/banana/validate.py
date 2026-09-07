@@ -48,7 +48,7 @@ try:
         for material in materials:
             if material.users == 0: bpy.data.materials.remove(material)
     bpy.data.scenes.remove(native)
-    evidence = OUT.parents[2]/'specs/help-the-fly-escape/assets/evidence/21/banana-prepared'
+    evidence = OUT.parents[2]/'specs/help-the-fly-escape/assets/evidence/21/banana-refined'
     (evidence/'topology.json').write_text(json.dumps(report,indent=2)+'\n')
     print(report)
 finally:
