@@ -1,0 +1,179 @@
+{
+  "kind": "screenshot-scene-metrics",
+  "generatedAt": "2026-09-07T02:22:25.914Z",
+  "note": "Absolute per-image telemetry, no reference involved. Low values locate flat, sparse, or empty captures; they never accept or reject an image on their own.",
+  "imageCount": 9,
+  "results": [
+    {
+      "id": "first-exhausted-controls",
+      "image": "../../../../tmp/fly-campaign-ui/specs/help-the-fly-escape/assets/evidence/16/progression/first-exhausted-controls.png",
+      "dimensions": {
+        "width": 350,
+        "height": 860
+      },
+      "sceneMetrics": {
+        "colorBuckets": 55,
+        "colorEntropyBits": 1.64476,
+        "edgeDensity": 0.14093,
+        "dominantColorShare": 0.68908,
+        "transparentShare": 0,
+        "luminanceMean": 53.32445,
+        "luminanceP5": 33.7456,
+        "luminanceP95": 143.6246,
+        "luminanceContrast": 109.879
+      }
+    },
+    {
+      "id": "first-exhausted-navigation",
+      "image": "../../../../tmp/fly-campaign-ui/specs/help-the-fly-escape/assets/evidence/16/progression/first-exhausted-navigation.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 170
+      },
+      "sceneMetrics": {
+        "colorBuckets": 68,
+        "colorEntropyBits": 1.64271,
+        "edgeDensity": 0.0572,
+        "dominantColorShare": 0.58529,
+        "transparentShare": 0,
+        "luminanceMean": 113.19443,
+        "luminanceP5": 33.7456,
+        "luminanceP95": 242.9932,
+        "luminanceContrast": 209.2476
+      }
+    },
+    {
+      "id": "first-exhausted",
+      "image": "../../../../tmp/fly-campaign-ui/specs/help-the-fly-escape/assets/evidence/16/progression/first-exhausted.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sceneMetrics": {
+        "colorBuckets": 69,
+        "colorEntropyBits": 2.65065,
+        "edgeDensity": 0.172,
+        "dominantColorShare": 0.44,
+        "transparentShare": 0,
+        "luminanceMean": 144.46138,
+        "luminanceP5": 33.7456,
+        "luminanceP95": 242.4906,
+        "luminanceContrast": 208.745
+      }
+    },
+    {
+      "id": "second-unlocked-controls",
+      "image": "../../../../tmp/fly-campaign-ui/specs/help-the-fly-escape/assets/evidence/16/progression/second-unlocked-controls.png",
+      "dimensions": {
+        "width": 350,
+        "height": 860
+      },
+      "sceneMetrics": {
+        "colorBuckets": 60,
+        "colorEntropyBits": 1.57454,
+        "edgeDensity": 0.12057,
+        "dominantColorShare": 0.71868,
+        "transparentShare": 0,
+        "luminanceMean": 52.97378,
+        "luminanceP5": 33.7456,
+        "luminanceP95": 143.6246,
+        "luminanceContrast": 109.879
+      }
+    },
+    {
+      "id": "second-unlocked-navigation",
+      "image": "../../../../tmp/fly-campaign-ui/specs/help-the-fly-escape/assets/evidence/16/progression/second-unlocked-navigation.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 170
+      },
+      "sceneMetrics": {
+        "colorBuckets": 70,
+        "colorEntropyBits": 1.74317,
+        "edgeDensity": 0.05791,
+        "dominantColorShare": 0.58279,
+        "transparentShare": 0,
+        "luminanceMean": 113.39371,
+        "luminanceP5": 33.7456,
+        "luminanceP95": 242.4906,
+        "luminanceContrast": 208.745
+      }
+    },
+    {
+      "id": "second-unlocked",
+      "image": "../../../../tmp/fly-campaign-ui/specs/help-the-fly-escape/assets/evidence/16/progression/second-unlocked.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sceneMetrics": {
+        "colorBuckets": 62,
+        "colorEntropyBits": 2.63874,
+        "edgeDensity": 0.16642,
+        "dominantColorShare": 0.44,
+        "transparentShare": 0,
+        "luminanceMean": 144.44892,
+        "luminanceP5": 33.7456,
+        "luminanceP95": 242.4906,
+        "luminanceContrast": 208.745
+      }
+    },
+    {
+      "id": "storage-denied-controls",
+      "image": "../../../../tmp/fly-campaign-ui/specs/help-the-fly-escape/assets/evidence/16/progression/storage-denied-controls.png",
+      "dimensions": {
+        "width": 350,
+        "height": 860
+      },
+      "sceneMetrics": {
+        "colorBuckets": 57,
+        "colorEntropyBits": 1.64963,
+        "edgeDensity": 0.13983,
+        "dominantColorShare": 0.71056,
+        "transparentShare": 0,
+        "luminanceMean": 54.10844,
+        "luminanceP5": 33.7456,
+        "luminanceP95": 143.6246,
+        "luminanceContrast": 109.879
+      }
+    },
+    {
+      "id": "storage-denied-navigation",
+      "image": "../../../../tmp/fly-campaign-ui/specs/help-the-fly-escape/assets/evidence/16/progression/storage-denied-navigation.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 170
+      },
+      "sceneMetrics": {
+        "colorBuckets": 68,
+        "colorEntropyBits": 1.64271,
+        "edgeDensity": 0.0572,
+        "dominantColorShare": 0.58529,
+        "transparentShare": 0,
+        "luminanceMean": 113.19443,
+        "luminanceP5": 33.7456,
+        "luminanceP95": 242.9932,
+        "luminanceContrast": 209.2476
+      }
+    },
+    {
+      "id": "storage-denied",
+      "image": "../../../../tmp/fly-campaign-ui/specs/help-the-fly-escape/assets/evidence/16/progression/storage-denied.png",
+      "dimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sceneMetrics": {
+        "colorBuckets": 62,
+        "colorEntropyBits": 2.63877,
+        "edgeDensity": 0.17031,
+        "dominantColorShare": 0.44021,
+        "transparentShare": 0,
+        "luminanceMean": 144.83395,
+        "luminanceP5": 33.7456,
+        "luminanceP95": 242.4906,
+        "luminanceContrast": 208.745
+      }
+    }
+  ]
+}

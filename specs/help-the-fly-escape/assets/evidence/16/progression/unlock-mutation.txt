@@ -1,0 +1,22 @@
+bun test v1.3.14 (0d9b296a)
+
+apps/web/src/campaign.test.ts:
+3 | import { emptyProgress, awardResult } from "./progress";
+4 | 
+5 | test("one earned star unlocks only the next sequential level and a reset relocks later levels", () => {
+6 |   const levels = ["a", "b", "c"].map((id) => ({ level: { id } })) as CampaignLevel[];
+7 |   let progress = emptyProgress();
+8 |   expect(unlockedLevelCount(levels, progress)).toBe(1);
+                                                   ^
+error: expect(received).toBe(expected)
+
+Expected: 1
+Received: 3
+
+      at <anonymous> (/private/tmp/fly-campaign-ui/apps/web/src/campaign.test.ts:8:48)
+(fail) one earned star unlocks only the next sequential level and a reset relocks later levels [20.41ms]
+
+ 0 pass
+ 1 fail
+ 1 expect() calls
+Ran 1 test across 1 file. [309.00ms]
