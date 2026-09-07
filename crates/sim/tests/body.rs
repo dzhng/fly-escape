@@ -98,6 +98,7 @@ fn feeding_replenishes_within_capacity_then_contact_loss_allows_later_starvation
         .step(&neural(0., 0.5), &world, Point::default(), 1., 1)
         .unwrap();
     assert!(events
+        .events
         .iter()
         .any(|e| e.kind == BodyEventKind::FeedingStarted));
     assert!(b.state().reserve > 1.);
@@ -109,7 +110,10 @@ fn feeding_replenishes_within_capacity_then_contact_loss_allows_later_starvation
         b.step(&neural(0., 0.), &world, Point::default(), 1., tick)
             .unwrap();
     }
-    assert!(after_food < 4.);
+    assert!(
+        (3.8..4.3).contains(&after_food),
+        "receive only the early food-contact prefix"
+    );
     assert_eq!(b.state().reserve, 0.);
     assert_eq!(b.state().outcome, Some(TerminalOutcome::Starved));
 }
@@ -126,7 +130,7 @@ fn meal_plus_timeout_scores_zero_and_terminal_body_is_frozen() {
         .unwrap();
     assert!(b.state().reserve > 1.);
     assert_eq!(b.state().outcome, Some(TerminalOutcome::TimedOut));
-    assert!(events.iter().any(|e| e.kind
+    assert!(events.events.iter().any(|e| e.kind
         == BodyEventKind::Terminal {
             outcome: TerminalOutcome::TimedOut
         }));
@@ -134,6 +138,7 @@ fn meal_plus_timeout_scores_zero_and_terminal_body_is_frozen() {
     assert!(b
         .step(&neural(2., 1.), &world, Point { x: 8., z: 0. }, 1., 3)
         .unwrap()
+        .events
         .is_empty());
     assert_eq!(*b.state(), terminal);
     let counts = summarize_outcomes(&[terminal]);
@@ -152,6 +157,7 @@ fn swept_outward_exit_counts_once_and_adjacent_or_covering_wall_never_escapes() 
     assert_eq!(open.state().pose.position.x, 4.);
     assert_eq!(
         events
+            .events
             .iter()
             .filter(|e| matches!(e.kind, BodyEventKind::Terminal { .. }))
             .count(),
@@ -160,6 +166,7 @@ fn swept_outward_exit_counts_once_and_adjacent_or_covering_wall_never_escapes() 
     assert!(open
         .step(&neural(2., 0.), &world, Point::default(), 1., 2)
         .unwrap()
+        .events
         .is_empty());
     assert_eq!(summarize_outcomes(&[open.state().clone()]).score, 1);
     let mut adjacent = body(2., 0.5, 10.);
@@ -237,7 +244,7 @@ fn feeding_is_capped_and_cannot_restart_until_motor_resets() {
         let events = b
             .step(&neural(0., 0.5), &world, Point::default(), 1., tick)
             .unwrap();
-        ended |= events.iter().any(|e| {
+        ended |= events.events.iter().any(|e| {
             e.kind
                 == BodyEventKind::FeedingEnded {
                     reason: FeedingEnd::BoutLimit,
@@ -260,8 +267,11 @@ fn feeding_is_capped_and_cannot_restart_until_motor_resets() {
     let events = satiated
         .step(&neural(0., 0.5), &world, Point::default(), 1., 1)
         .unwrap();
-    assert_eq!(satiated.state().reserve, 20.);
-    assert!(events.iter().any(|e| e.kind
+    assert!(
+        (satiated.state().reserve - (20. - 0.2 * (1. - 0.1 / 2.8))).abs() < 1e-10,
+        "satiation ends feeding before the remaining idle cost"
+    );
+    assert!(events.events.iter().any(|e| e.kind
         == BodyEventKind::FeedingEnded {
             reason: FeedingEnd::Satiated
         }));
@@ -481,6 +491,116 @@ fn airborne_landing_is_latched_and_terminal_height_freezes_at_the_actual_time() 
 }
 
 #[test]
+fn native_fly_lands_on_authored_apple_before_it_can_feed() {
+    let g = geometry();
+    let apple = FoodDef {
+        position: Point { x: 2., z: 2. },
+        heading: 0.,
+        shape: FoodShape::Apple,
+    }
+    .surface(7)
+    .unwrap();
+    let world = BodyWorld::new(&g, &[apple], &[], exit(), 100).unwrap();
+    let mut b = Body::new_in_mode(
+        BodyPose {
+            position: Point { x: 2., z: 2. },
+            heading: 0.,
+        },
+        3.,
+        BodyConfig::default(),
+        BodyMode::Flying,
+    )
+    .unwrap();
+    let mut landing = neural(0., 1.);
+    landing.groups.push(GroupActivity {
+        id: "landingL".into(),
+        mean_voltage: 0.,
+        spike_fraction: 1.,
+    });
+    for tick in 1..=6 {
+        b.step(&landing, &world, Point::default(), 0.1, tick)
+            .unwrap();
+        assert_eq!(b.state().mode, BodyMode::Landing);
+        assert_eq!(b.state().support, None);
+        assert!(!b.contacts(&world).unwrap().food);
+    }
+    b.step(&landing, &world, Point::default(), 0.1, 7).unwrap();
+    assert_eq!(b.state().mode, BodyMode::Walking);
+    assert_eq!(b.state().support, Some(7));
+    assert!(
+        (0.07..0.09).contains(&b.state().height),
+        "land on fruit, not the floor"
+    );
+    assert!(b.contacts(&world).unwrap().food);
+    let reserve = b.state().reserve;
+    b.step(&neural(0., 1.), &world, Point::default(), 0.1, 8)
+        .unwrap();
+    assert_eq!(b.state().mode, BodyMode::Feeding);
+    assert!(b.state().reserve > reserve);
+}
+
+#[test]
+fn apple_support_follows_walking_and_is_lost_at_the_edge() {
+    let g = geometry();
+    let apple = FoodDef {
+        position: Point { x: 2., z: 2. },
+        heading: 0.,
+        shape: FoodShape::Apple,
+    }
+    .surface(7)
+    .unwrap();
+    let world = BodyWorld::new(&g, &[apple], &[], exit(), 1000).unwrap();
+    let mut b = Body::new_in_mode(
+        BodyPose {
+            position: Point { x: 2., z: 2. },
+            heading: 0.,
+        },
+        20.,
+        BodyConfig::default(),
+        BodyMode::Flying,
+    )
+    .unwrap();
+    let mut landing = neural(0., 0.);
+    landing.groups.push(GroupActivity {
+        id: "landingL".into(),
+        mean_voltage: 0.,
+        spike_fraction: 1.,
+    });
+    b.step(&landing, &world, Point::default(), 0.7, 1).unwrap();
+    assert_eq!(b.state().support, Some(7));
+    let start = b.state().clone();
+    let mut lost = false;
+    for tick in 2..=101 {
+        let previous = b.state().clone();
+        b.step(&neural(0.02, 0.), &world, Point::default(), 0.05, tick)
+            .unwrap_or_else(|error| panic!("tick {tick}, state {previous:?}: {error}"));
+        assert!(
+            (b.state().height - previous.height).abs() < 0.04,
+            "continuous height across support loss"
+        );
+        if b.state().support.is_none() {
+            assert_eq!(b.state().mode, BodyMode::Landing);
+            assert!(!b.contacts(&world).unwrap().food);
+            lost = true;
+            break;
+        }
+    }
+    assert!(lost, "walking should reach and leave the edge, not stall");
+    for tick in 102..=161 {
+        b.step(&neural(0.02, 0.), &world, Point::default(), 0.05, tick)
+            .unwrap_or_else(|error| panic!("post-edge tick {tick}: {error}"));
+    }
+    assert!(b.state().support.is_none());
+    assert_eq!(b.state().mode, BodyMode::Walking);
+
+    assert!(
+        (b.state().pose.position.x - start.pose.position.x)
+            .hypot(b.state().pose.position.z - start.pose.position.z)
+            > 0.02
+    );
+}
+
+#[test]
 fn recorded_orientation_tracks_turns_and_freezes_with_terminal_pose() {
     use parry3d_f64::math::{Rotation, Vector};
     let g = geometry();
@@ -501,4 +621,218 @@ fn recorded_orientation_tracks_turns_and_freezes_with_terminal_pose() {
     command.motor.turn = -0.7;
     b.step(&command, &world, Point::default(), 0.1, 2).unwrap();
     assert_eq!(b.state(), &terminal);
+}
+
+#[test]
+fn neighboring_apple_blocks_while_time_advances() {
+    let g = geometry();
+    let apple = FoodDef {
+        position: Point { x: 2., z: 2. },
+        heading: 0.,
+        shape: FoodShape::Apple,
+    }
+    .surface(7)
+    .unwrap();
+    let neighbor = FoodDef {
+        position: Point { x: 2.09, z: 2. },
+        heading: 0.,
+        shape: FoodShape::Apple,
+    }
+    .surface(8)
+    .unwrap();
+    let contact_scene =
+        sim::surface::ContactScene::new(&[apple.clone(), neighbor.clone()]).unwrap();
+    let asset: serde_json::Value =
+        serde_json::from_str(include_str!("../../../assets/fly/contact-hull.json")).unwrap();
+    let vertices: Vec<[f64; 3]> = serde_json::from_value(asset["vertices"].clone()).unwrap();
+    let hull = sim::surface::ContactHull::new(&vertices).unwrap();
+    let world = BodyWorld::new(&g, &[apple, neighbor], &[], exit(), 1000).unwrap();
+    let mut b = Body::new_in_mode(
+        BodyPose {
+            position: Point { x: 2., z: 2. },
+            heading: 0.,
+        },
+        20.,
+        BodyConfig::default(),
+        BodyMode::Flying,
+    )
+    .unwrap();
+    let mut landing = neural(0., 0.);
+    landing.groups.push(GroupActivity {
+        id: "landingL".into(),
+        mean_voltage: 0.,
+        spike_fraction: 1.,
+    });
+    b.step(&landing, &world, Point::default(), 0.7, 1).unwrap();
+    assert_eq!(b.state().support, Some(7));
+    let mut failure = None;
+    for tick in 2..=150 {
+        match b.step(&neural(0.02, 0.), &world, Point::default(), 0.05, tick) {
+            Err(error) => {
+                failure = Some(error);
+                break;
+            }
+            Ok(step) => {
+                for pair in step.motion.points.windows(2) {
+                    for t in [
+                        pair[0].fraction,
+                        (pair[0].fraction + pair[1].fraction) * 0.5,
+                        pair[1].fraction,
+                    ] {
+                        let p = step.motion.at(t).unwrap();
+                        assert!(
+                            contact_scene
+                                .penetration(
+                                    &hull,
+                                    [p.pose.position.x, p.height, p.pose.position.z],
+                                    p.rotation
+                                )
+                                .unwrap()
+                                <= 1e-8,
+                            "native hull must not enter neighboring food"
+                        );
+                    }
+                }
+            }
+        }
+    }
+    assert!(failure.is_none());
+    assert_eq!(b.state().support, None);
+    assert_eq!(b.state().mode, BodyMode::Walking);
+    assert!(
+        b.state().pose.position.x < 2.09,
+        "cannot walk through neighboring apple"
+    );
+    let stopped = b.state().pose.position;
+    let reserve = b.state().reserve;
+    for tick in 151..=155 {
+        b.step(&neural(0.02, 0.), &world, Point::default(), 0.05, tick)
+            .unwrap();
+    }
+    assert!((b.state().pose.position.x - stopped.x).abs() < 1e-8);
+    assert!(
+        b.state().reserve < reserve,
+        "blocking contact must still consume time"
+    );
+}
+
+#[test]
+fn feeding_prefix_energy_and_terminal_hold_share_the_motion_clock() {
+    let g = geometry();
+    let world = BodyWorld::new(&g, &[food_patch(2., 2., 1.)], &[], exit(), 100).unwrap();
+    let config = BodyConfig {
+        idle_cost: 1.,
+        feeding_rate: 0.1,
+        max_bout_seconds: 0.2,
+        ..BodyConfig::default()
+    };
+    let mut b = Body::new(
+        BodyPose {
+            position: Point { x: 2., z: 2. },
+            heading: 0.,
+        },
+        0.5,
+        config,
+    )
+    .unwrap();
+    let step = b
+        .step(&neural(0., 1.), &world, Point { x: 0.1, z: 0. }, 1., 1)
+        .unwrap();
+    assert_eq!(b.state().outcome, Some(TerminalOutcome::Starved));
+    assert!((b.state().pose.position.x - 2.052).abs() < 1e-8);
+    let terminal = step
+        .motion
+        .points
+        .iter()
+        .find(|p| (p.fraction - 0.52).abs() < 1e-10)
+        .expect("piecewise feeding delays starvation to0.52");
+    for t in [0.52, 0.7, 1.] {
+        let p = step.motion.at(t).unwrap();
+        assert_eq!(p.pose, terminal.pose);
+        assert_eq!(p.rotation, terminal.rotation);
+    }
+    assert!(step
+        .motion
+        .points
+        .windows(2)
+        .all(|p| p[1].fraction > p[0].fraction));
+}
+
+#[test]
+fn takeoff_from_tilted_apple_makes_progress() {
+    let g = geometry();
+    let apple = FoodDef {
+        position: Point { x: 2., z: 2. },
+        heading: 0.,
+        shape: FoodShape::Apple,
+    }
+    .surface(7)
+    .unwrap();
+    let world = BodyWorld::new(&g, &[apple], &[], exit(), 1000).unwrap();
+    let mut b = Body::new_in_mode(
+        BodyPose {
+            position: Point { x: 2., z: 2. },
+            heading: 0.,
+        },
+        20.,
+        BodyConfig::default(),
+        BodyMode::Flying,
+    )
+    .unwrap();
+    let mut landing = neural(0., 0.);
+    landing.groups.push(GroupActivity {
+        id: "landingL".into(),
+        mean_voltage: 0.,
+        spike_fraction: 1.,
+    });
+    b.step(&landing, &world, Point::default(), 0.7, 1).unwrap();
+    assert_eq!(b.state().support, Some(7));
+    for tick in 2..=25 {
+        b.step(&neural(0.01, 0.), &world, Point::default(), 0.05, tick)
+            .unwrap();
+    }
+    let from = b.state().clone();
+    assert!(from.support.is_some());
+    let mut takeoff = neural(0., 0.);
+    takeoff.motor.flight_thrust = 0.5;
+    let step = b.step(&takeoff, &world, Point::default(), 0.1, 26).unwrap();
+    assert_eq!(b.state().mode, BodyMode::Flying);
+    assert!(
+        b.state().height > from.height + 0.001,
+        "outward takeoff cannot freeze at initial contact: {:?}",
+        b.state()
+    );
+    assert!(step
+        .motion
+        .points
+        .windows(2)
+        .all(|p| p[1].fraction > p[0].fraction));
+    let mut turn = neural(0., 0.);
+    turn.motor.flight_turn = 2.;
+    b.step(&turn, &world, Point::default(), 1., 27).unwrap();
+    turn.motor.flight_turn = std::f64::consts::PI - 2.;
+    b.step(&turn, &world, Point::default(), 1., 28).unwrap();
+    b.step(&takeoff, &world, Point::default(), 0.1, 29).unwrap();
+    let mut return_landing = neural(0., 0.);
+    return_landing.groups.push(GroupActivity {
+        id: "landingL".into(),
+        mean_voltage: 0.,
+        spike_fraction: 1.,
+    });
+    b.step(&return_landing, &world, Point::default(), 1., 30)
+        .unwrap();
+    assert_eq!(
+        b.state().support,
+        Some(7),
+        "return flight must reacquire apple: {:?}",
+        b.state()
+    );
+    assert_eq!(b.state().mode, BodyMode::Walking);
+    b.step(&neural(0., 1.), &world, Point::default(), 0.1, 31)
+        .unwrap();
+    assert_eq!(
+        b.state().mode,
+        BodyMode::Feeding,
+        "legitimate revisit can feed"
+    );
 }

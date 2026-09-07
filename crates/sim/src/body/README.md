@@ -1,0 +1,9 @@
+# Motion belongs to the body
+
+A body step returns its events and one finalized trajectory together. Collision construction, intermediate event poses and replay sampling use the same timed knots. Sampling interpolates root and quaternion directly; it does not query or project onto food. Terminal motion retains its original tick fraction and holds the reached pose for the remainder.
+
+Supported movement is a bounded numerical approximation. It checks authored food, including closed-volume containment, and refines contact samples without clearance offsets. An absent upper support sample does not authorize dropping from a still-touching pose: the departure experiment first advances the requested planar motion and heading, then requires separation before descent. Remaining contact, missing interior support and exhausted work return explicit unresolved errors. They do not invent a physical obstacle or retry without advancing time.
+
+Grounded taste can start a neural feeding bout. Feeding stops at the detected contact-loss prefix, bout limit or satiation; energy before and after that boundary is integrated separately. Contact-loss bracketing is numerical and does not prove absence of a very narrow missed gap between checks. Floor-grounded contact with food remains edible; airborne contact does not become feeding support.
+
+The native reference hull remains the runtime owner. Candidate-hull request tests are comparison diagnostics. The query and knot limits are experimental bounds, not evidence that every authored wind or campaign request fits. Close-view error, retained-knot storage, actual swarm cost, WASM playback and general rotating contact coverage remain acceptance gates. In particular, the attempt currently consumes returned events while packed trajectory transport is still pending.

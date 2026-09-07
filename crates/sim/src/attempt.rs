@@ -368,9 +368,10 @@ impl Attempt {
                     .set_external_current(&currents.into_iter().collect::<Vec<_>>())?;
                 let output = fly.brain.step();
                 self.neural_steps += 1;
-                let events =
-                    fly.body
-                        .step(&output, world, sample.wind, GAME_TICK_SECONDS, self.tick)?;
+                let events = fly
+                    .body
+                    .step(&output, world, sample.wind, GAME_TICK_SECONDS, self.tick)?
+                    .events;
                 (Some(sample), Some(output), events)
             };
             frames.push(FlyFrame {

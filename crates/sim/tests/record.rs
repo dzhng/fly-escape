@@ -256,6 +256,7 @@ fn dense_real_body_transitions_fit_and_replay_in_order() {
         .unwrap();
     assert_eq!(
         landing_events
+            .events
             .iter()
             .map(|e| e.kind.clone())
             .collect::<Vec<_>>(),
@@ -275,7 +276,11 @@ fn dense_real_body_transitions_fit_and_replay_in_order() {
         .step(&neural, &world, Point::default(), 0.1, 3)
         .unwrap();
     assert_eq!(
-        events.iter().map(|e| e.kind.clone()).collect::<Vec<_>>(),
+        events
+            .events
+            .iter()
+            .map(|e| e.kind.clone())
+            .collect::<Vec<_>>(),
         vec![
             BodyEventKind::ModeChanged {
                 from: BodyMode::Walking,
@@ -304,7 +309,7 @@ fn dense_real_body_transitions_fit_and_replay_in_order() {
             body: body.state().clone(),
             sensory: None,
             neural: Some(neural),
-            events,
+            events: events.events,
         }],
         result: None,
     }];

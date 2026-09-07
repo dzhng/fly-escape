@@ -2,11 +2,19 @@
 //! approximations pending actual-graph feasibility probes, not biological units.
 use crate::{
     environment::{Geometry, Point},
-    surface::{ContactScene, ContactSurface},
+    surface::{support_rotation, ContactHull, ContactScene, ContactSurface},
     StepOutput,
 };
 use serde::{Deserialize, Serialize};
+use std::sync::OnceLock;
 use ts_rs::TS;
+mod motion;
+pub use motion::{MotionPoint, MotionTrace};
+#[derive(Debug)]
+pub struct BodyStep {
+    pub events: Vec<BodyEvent>,
+    pub motion: MotionTrace,
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
@@ -53,13 +61,13 @@ pub enum TerminalOutcome {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 pub struct BodyState {
-    /// Core orientation; local +Y points away from the support.
-    pub rotation: [f64; 4],
-    /// Edible surface supporting this body, when acquired by physical movement.
-    pub support: Option<u32>,
     pub pose: BodyPose,
     /// Native support-pivot height in metres, owned by physical movement.
     pub height: f64,
+    /// Core orientation; local +Y points away from the support.
+    pub rotation: [f64; 4],
+    /// Food support identity; None is floor for grounded modes, air otherwise.
+    pub support: Option<u32>,
     pub mode: BodyMode,
     pub reserve: f64,
     pub outcome: Option<TerminalOutcome>,
@@ -151,6 +159,7 @@ pub struct BodyEvent {
 pub struct BodyWorld {
     geometry: Geometry,
     food: ContactScene,
+    hull: &'static ContactHull,
     zappers: Vec<ContactRegion>,
     exit: ExitOpening,
     duration_ticks: u32,
@@ -167,6 +176,7 @@ impl BodyWorld {
         Ok(Self {
             geometry: geometry.clone(),
             food: ContactScene::new(food)?,
+            hull: native_hull()?,
             zappers: zappers.to_vec(),
             exit,
             duration_ticks,
@@ -236,12 +246,32 @@ impl BodyWorld {
         }
         Ok(())
     }
-    fn food_at(&self, position: Point, height: f64, radius: f64) -> Result<bool, String> {
+    fn food_at(&self, state: &BodyState) -> Result<bool, String> {
         Ok(self
             .food
-            .touching([position.x, height, position.z], radius)?
+            .touching_hull(
+                self.hull,
+                [state.pose.position.x, state.height, state.pose.position.z],
+                state.rotation,
+            )?
             .is_some())
     }
+}
+
+fn native_hull() -> Result<&'static ContactHull, String> {
+    #[derive(Deserialize)]
+    struct BakedHull {
+        vertices: Vec<[f64; 3]>,
+    }
+    static HULL: OnceLock<Result<ContactHull, String>> = OnceLock::new();
+    HULL.get_or_init(|| {
+        let baked: BakedHull =
+            serde_json::from_str(include_str!("../../../assets/fly/contact-hull.json"))
+                .map_err(|error| format!("invalid native contact hull: {error}"))?;
+        ContactHull::new(&baked.vertices)
+    })
+    .as_ref()
+    .map_err(Clone::clone)
 }
 
 const CRUISE_HEIGHT: f64 = 0.6;
@@ -293,10 +323,10 @@ impl Body {
         }
         Ok(Self {
             state: BodyState {
-                rotation: crate::surface::support_rotation(pose.heading, [0., 1., 0.])?,
-                support: None,
                 pose,
                 height: 0.,
+                rotation: support_rotation(pose.heading, [0., 1., 0.])?,
+                support: None,
                 mode: BodyMode::Walking,
                 reserve,
                 outcome: None,
@@ -330,11 +360,7 @@ impl Body {
     pub fn contacts(&self, world: &BodyWorld) -> Result<BodyContacts, String> {
         Ok(BodyContacts {
             food: matches!(self.state.mode, BodyMode::Walking | BodyMode::Feeding)
-                && world.food_at(
-                    self.state.pose.position,
-                    self.state.height,
-                    self.config.body_radius,
-                )?,
+                && world.food_at(&self.state)?,
             zapper: world
                 .zappers
                 .iter()
@@ -382,9 +408,12 @@ impl Body {
         wind: Point,
         dt: f64,
         tick: u32,
-    ) -> Result<Vec<BodyEvent>, String> {
+    ) -> Result<BodyStep, String> {
         if self.state.outcome.is_some() {
-            return Ok(vec![]);
+            return Ok(BodyStep {
+                events: vec![],
+                motion: MotionTrace::stationary(&self.state),
+            });
         }
         if tick == 0
             || self.last_tick.is_some_and(|last| tick <= last)
@@ -414,11 +443,18 @@ impl Body {
         let mut events = vec![];
         if self.state.reserve <= 0. {
             self.terminal(TerminalOutcome::Starved, tick, &mut events);
-            return Ok(events);
+            return Ok(BodyStep {
+                events,
+                motion: MotionTrace::stationary(&self.state),
+            });
         }
-        if self.contacts(world)?.zapper {
+        let contacts = self.contacts(world)?;
+        if contacts.zapper {
             self.terminal(TerminalOutcome::Zapped, tick, &mut events);
-            return Ok(events);
+            return Ok(BodyStep {
+                events,
+                motion: MotionTrace::stationary(&self.state),
+            });
         }
         // Avoid an extra dwell tick from decimal dt roundoff at the boundary.
         self.ground_dwell_remaining = if self.ground_dwell_remaining <= dt + 1e-12 {
@@ -428,7 +464,7 @@ impl Body {
         };
         let proboscis = spike_fraction(neural, "proboscis");
         let wants_food = proboscis > self.config.proboscis_threshold;
-        let on_food = self.contacts(world)?.food;
+        let on_food = contacts.food;
         if self.state.mode != BodyMode::Feeding && !wants_food {
             self.feeding_ready = true;
         }
@@ -447,7 +483,7 @@ impl Body {
             self.mode(BodyMode::Flying, tick, &mut events);
         }
         if self.state.mode == BodyMode::Walking
-            && self.contacts(world)?.food
+            && on_food
             && wants_food
             && self.feeding_ready
             && self.state.reserve < self.config.reserve_capacity
@@ -478,8 +514,6 @@ impl Body {
             ),
             BodyMode::Feeding => (0., 0., 0., self.config.idle_cost),
         };
-        let initial_height = self.state.height;
-        let from = self.state.pose.position;
         let desired = desired_pose(
             self.state.pose,
             Locomotion {
@@ -491,69 +525,118 @@ impl Body {
             wind,
             dt,
         );
-        let heading = desired.heading;
-        let to = world
-            .geometry
-            .sweep(from, desired.position, self.config.body_radius);
-        let food_after = self.state.mode == BodyMode::Feeding
-            && world.food_at(to, initial_height, self.config.body_radius)?;
-        let feed_seconds = if food_after {
-            dt.min((self.config.max_bout_seconds - self.bout_seconds).max(0.))
-        } else {
-            0.
-        };
-        let replenishment = self.config.feeding_rate * feed_seconds;
-        let mut terminal: Option<(f64, TerminalOutcome)> = None;
-        if let Some(t) = exit_crossing(from, to, world.exit, self.config.body_radius) {
-            terminal = Some((t, TerminalOutcome::Escaped));
-        }
-        for region in &world.zappers {
-            if let Some(t) = circle_crossing(from, to, *region, self.config.body_radius) {
-                if terminal.is_none_or(|(prior, _)| t <= prior) {
-                    terminal = Some((t, TerminalOutcome::Zapped));
+        let mut trace = motion::advance(world, &self.state, desired, dt, self.config.body_radius)?;
+        // A bout can end within a tick; it never restarts merely by touching food again.
+        let mut feed_fraction = 0.;
+        let mut feed_stops = false;
+        let mut feed_end = FeedingEnd::ContactLost;
+        if self.state.mode == BodyMode::Feeding {
+            feed_fraction = 1.;
+            let contact_at = |fraction: f64, trace: &mut MotionTrace| -> Result<bool, String> {
+                trace.queries += 1;
+                if trace.queries > 512 {
+                    return Err("numerical motion unresolved: contact timeline query budget".into());
+                }
+                let p = trace.at(fraction)?;
+                if !p.grounded {
+                    return Ok(false);
+                }
+                let mut state = self.state.clone();
+                p.apply(&mut state);
+                world.food_at(&state)
+            };
+            let fractions: Vec<_> = trace.points.iter().map(|p| p.fraction).collect();
+            for pair in fractions.windows(2) {
+                if !contact_at(pair[1], &mut trace)? {
+                    let (mut lo, mut hi) = (pair[0], pair[1]);
+                    for _ in 0..12 {
+                        let middle = (lo + hi) * 0.5;
+                        if contact_at(middle, &mut trace)? {
+                            lo = middle
+                        } else {
+                            hi = middle
+                        }
+                    }
+                    feed_fraction = lo;
+                    feed_stops = true;
+                    break;
+                }
+            }
+            let bout = (self.config.max_bout_seconds - self.bout_seconds).max(0.) / dt;
+            if bout <= feed_fraction {
+                feed_fraction = bout;
+                feed_stops = true;
+                feed_end = FeedingEnd::BoutLimit;
+            }
+            let net = self.config.feeding_rate - cost;
+            if net > 0. {
+                let full =
+                    ((self.config.reserve_capacity - self.state.reserve) / (net * dt)).max(0.);
+                if full <= feed_fraction {
+                    feed_fraction = full;
+                    feed_stops = true;
+                    feed_end = FeedingEnd::Satiated;
                 }
             }
         }
-        // Net energy loss can pre-empt a later crossing even during a meal.
-        let energy_loss = cost * dt - replenishment;
-        if energy_loss > 0. && self.state.reserve <= energy_loss {
-            let t = self.state.reserve / energy_loss;
+        let feed_seconds = feed_fraction * dt;
+        let mut terminal: Option<(f64, TerminalOutcome)> = None;
+        for pair in trace.points.windows(2) {
+            let from = pair[0].pose.position;
+            let to = pair[1].pose.position;
+            let time = |t: f64| pair[0].fraction + (pair[1].fraction - pair[0].fraction) * t;
+            if let Some(t) = exit_crossing(from, to, world.exit, self.config.body_radius) {
+                let t = time(t);
+                if terminal.is_none_or(|(prior, _)| t < prior) {
+                    terminal = Some((t, TerminalOutcome::Escaped));
+                }
+            }
+            for region in &world.zappers {
+                if let Some(t) = circle_crossing(from, to, *region, self.config.body_radius) {
+                    let t = time(t);
+                    if terminal.is_none_or(|(prior, _)| t <= prior) {
+                        terminal = Some((t, TerminalOutcome::Zapped));
+                    }
+                }
+            }
+        }
+        // Integrate the feeding prefix and subsequent loss separately.
+        let feeding_loss = (cost - self.config.feeding_rate) * feed_seconds;
+        let after_feed = self.state.reserve - feeding_loss;
+        let starved = if feeding_loss > 0. && self.state.reserve <= feeding_loss {
+            Some(self.state.reserve / ((cost - self.config.feeding_rate) * dt))
+        } else if cost > 0. && after_feed <= cost * (dt - feed_seconds) {
+            Some(feed_fraction + after_feed / (cost * dt))
+        } else {
+            None
+        };
+        if let Some(t) = starved {
             if terminal.is_none_or(|(prior, _)| t <= prior) {
                 terminal = Some((t, TerminalOutcome::Starved));
             }
         }
         let fraction = terminal.map_or(1., |(t, _)| t);
-        self.state.pose = BodyPose {
-            position: Point {
-                x: from.x + (to.x - from.x) * fraction,
-                z: from.z + (to.z - from.z) * fraction,
-            },
-            heading,
-        };
-        self.state.rotation = crate::surface::support_rotation(heading, [0., 1., 0.])?;
-        self.state.height = match self.state.mode {
-            BodyMode::Flying => {
-                (initial_height + VERTICAL_SPEED * dt * fraction).min(CRUISE_HEIGHT)
-            }
-            BodyMode::Landing => (initial_height - VERTICAL_SPEED * dt * fraction).max(0.),
-            BodyMode::Walking | BodyMode::Feeding => initial_height,
-        };
-        if self.state.mode == BodyMode::Landing && self.state.height <= 1e-12 {
-            self.state.height = 0.;
-            self.mode(BodyMode::Walking, tick, &mut events);
-            self.ground_dwell_remaining = self.config.landing_dwell_seconds;
-        }
-        self.state.reserve = (self.state.reserve + (replenishment - cost * dt) * fraction)
+        let reached = trace.at(fraction)?;
+        reached.apply(&mut self.state);
+        let actual_feed = dt * fraction.min(feed_fraction);
+        self.state.reserve = (self.state.reserve + self.config.feeding_rate * actual_feed
+            - cost * dt * fraction)
             .clamp(0., self.config.reserve_capacity);
         if self.state.mode == BodyMode::Feeding {
-            self.bout_seconds += feed_seconds * fraction;
-            if !food_after {
-                self.end_feeding(FeedingEnd::ContactLost, tick, &mut events);
-            } else if self.state.reserve >= self.config.reserve_capacity {
-                self.end_feeding(FeedingEnd::Satiated, tick, &mut events);
-            } else if self.bout_seconds >= self.config.max_bout_seconds {
-                self.end_feeding(FeedingEnd::BoutLimit, tick, &mut events);
+            self.bout_seconds += actual_feed;
+            if fraction >= feed_fraction && feed_stops {
+                self.end_feeding(feed_end, tick, &mut events);
             }
+        }
+
+        if self.state.mode == BodyMode::Landing && reached.grounded {
+            self.mode(BodyMode::Walking, tick, &mut events);
+            self.ground_dwell_remaining = self.config.landing_dwell_seconds;
+        } else if matches!(self.state.mode, BodyMode::Walking | BodyMode::Feeding)
+            && !reached.grounded
+        {
+            self.end_feeding(FeedingEnd::ContactLost, tick, &mut events);
+            self.mode(BodyMode::Landing, tick, &mut events);
         }
         if let Some((_, outcome)) = terminal {
             self.terminal(outcome, tick, &mut events);
@@ -562,7 +645,10 @@ impl Body {
         } else if tick >= world.duration_ticks {
             self.terminal(TerminalOutcome::TimedOut, tick, &mut events);
         }
-        Ok(events)
+        Ok(BodyStep {
+            events,
+            motion: trace.finish(fraction)?,
+        })
     }
 }
 fn spike_fraction(neural: &StepOutput, id: &str) -> f64 {
@@ -639,3 +725,6 @@ pub fn summarize_outcomes(states: &[BodyState]) -> OutcomeSummary {
     }
     summary
 }
+
+#[cfg(test)]
+mod motion_consumer;

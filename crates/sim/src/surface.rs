@@ -1,5 +1,6 @@
 //! Immutable contact geometry. Public coordinates are metres; query normalization
 //! avoids the measured millimetre-body departure failure in metre-scale GJK casts.
+use parry3d_f64::query::contact;
 use parry3d_f64::{
     bounding_volume::BoundingVolume,
     math::{Matrix, Pose, Rotation, Vector},
@@ -57,6 +58,19 @@ pub struct ContactHull {
     boundary: Option<ContactBoundary>,
 }
 impl ContactHull {
+    pub fn floor_height(&self, heading: f64, up: [f64; 3]) -> Result<f64, String> {
+        let pose = Pose {
+            translation: Vector::ZERO,
+            rotation: Rotation::from_array(support_rotation(heading, up)?),
+        };
+        let height = -self.shape.support_point(&pose, -Vector::Y).y / QUERY_UNITS;
+        Ok(if height.abs() <= PLANE_TOLERANCE / QUERY_UNITS {
+            0.
+        } else {
+            height
+        })
+    }
+
     /// Prepared plane incidence, in metres; point-only hulls cannot construct paths.
     pub fn from_boundary(mut boundary: ContactBoundary) -> Result<Self, String> {
         if !(4..=4096).contains(&boundary.vertices.len())
@@ -110,6 +124,64 @@ pub struct ContactScene {
     meshes: Vec<ContactMesh>,
 }
 impl ContactScene {
+    pub fn penetration(
+        &self,
+        hull: &ContactHull,
+        root: [f64; 3],
+        rotation: [f64; 4],
+    ) -> Result<f64, String> {
+        let pose = Pose {
+            translation: Vector::from_array(root) * QUERY_UNITS,
+            rotation: Rotation::from_array(rotation),
+        };
+        let mut deepest = 0f64;
+        let interior = pose
+            * (hull.shape.points().iter().copied().sum::<Vector>()
+                / hull.shape.points().len() as f64);
+        for entry in &self.meshes {
+            if entry.closed && entry.mesh.contains_local_point(interior) {
+                return Err(
+                    "numerical contact unresolved: hull interior is inside closed food".into(),
+                );
+            }
+            if let Some(c) = contact(&pose, &hull.shape, &Pose::IDENTITY, &entry.mesh, 0.)
+                .map_err(|_| "unsupported contact pair")?
+            {
+                deepest = deepest.max(-c.dist / QUERY_UNITS);
+            }
+        }
+        Ok(deepest)
+    }
+    pub fn touching_hull(
+        &self,
+        hull: &ContactHull,
+        position: [f64; 3],
+        rotation: [f64; 4],
+    ) -> Result<Option<u32>, String> {
+        if !bounded(position) {
+            return Err("hull contact requires a bounded finite position".into());
+        }
+        let pose = Pose {
+            translation: Vector::from_array(position) * QUERY_UNITS,
+            rotation: Rotation::from_array(rotation),
+        };
+        for entry in &self.meshes {
+            if contact(
+                &pose,
+                &hull.shape,
+                &Pose::IDENTITY,
+                &entry.mesh,
+                PLANE_TOLERANCE,
+            )
+            .map_err(|_| "unsupported contact shape pair")?
+            .is_some()
+            {
+                return Ok(Some(entry.id));
+            }
+        }
+        Ok(None)
+    }
+
     pub fn new(surfaces: &[ContactSurface]) -> Result<Self, String> {
         if surfaces.len() > 256
             || surfaces.iter().map(|s| s.vertices.len()).sum::<usize>() > MAX_SCENE_VERTICES
