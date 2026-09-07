@@ -1,0 +1,548 @@
+{
+  "browser": "152.0.7977.77",
+  "samples": [
+    {
+      "run": 0,
+      "attemptId": "59f0b3ef-2af1-42ca-90b0-274e5c654bbb",
+      "rootSeed": "2657582691135180504",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1300,
+        "triangles": 165560,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 13821348,
+        "totalSize": 17956864,
+        "embedderHeapUsedSize": 1754600,
+        "backingStorageSize": 3495330
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 103,
+        "jsEventListeners": 192
+      }
+    },
+    {
+      "run": 1,
+      "attemptId": "4788a7af-78b7-4afa-807e-90d1a1ff4dea",
+      "rootSeed": "14977275713069890792",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1297,
+        "triangles": 165476,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 14489232,
+        "totalSize": 17432576,
+        "embedderHeapUsedSize": 1793424,
+        "backingStorageSize": 3495598
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 105,
+        "jsEventListeners": 192
+      }
+    },
+    {
+      "run": 2,
+      "attemptId": "47ace4b5-9eaf-4646-881f-b65da0ee989c",
+      "rootSeed": "6007740449640173686",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1302,
+        "triangles": 165616,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 14837892,
+        "totalSize": 16121856,
+        "embedderHeapUsedSize": 1872568,
+        "backingStorageSize": 3495598
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 107,
+        "jsEventListeners": 192
+      }
+    },
+    {
+      "run": 3,
+      "attemptId": "279f54d0-115f-42ef-8738-b9591fd5fca8",
+      "rootSeed": "5368051914152054176",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1307,
+        "triangles": 165718,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 14390584,
+        "totalSize": 17170432,
+        "embedderHeapUsedSize": 1886656,
+        "backingStorageSize": 3495598
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 109,
+        "jsEventListeners": 192
+      }
+    },
+    {
+      "run": 4,
+      "attemptId": "5ab8eb37-4bbc-42cb-8355-8da258591ec7",
+      "rootSeed": "9984112956455683376",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1297,
+        "triangles": 165476,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 15495180,
+        "totalSize": 19267584,
+        "embedderHeapUsedSize": 1891928,
+        "backingStorageSize": 3495598
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 111,
+        "jsEventListeners": 192
+      }
+    },
+    {
+      "run": 5,
+      "attemptId": "accb328d-d152-482b-bc38-194470f0db45",
+      "rootSeed": "18438728047158532568",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1302,
+        "triangles": 165616,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 15619412,
+        "totalSize": 18743296,
+        "embedderHeapUsedSize": 1970440,
+        "backingStorageSize": 3495598
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 113,
+        "jsEventListeners": 192
+      }
+    },
+    {
+      "run": 6,
+      "attemptId": "3ecea242-8de0-4575-b35e-d3023e2e3bb9",
+      "rootSeed": "6197691255810244983",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1298,
+        "triangles": 165504,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 15834092,
+        "totalSize": 19267584,
+        "embedderHeapUsedSize": 1967336,
+        "backingStorageSize": 3495598
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 115,
+        "jsEventListeners": 192
+      }
+    },
+    {
+      "run": 7,
+      "attemptId": "34cecd64-e560-40e2-9b8b-9636f2efe37c",
+      "rootSeed": "3261407248986383008",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1298,
+        "triangles": 165504,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 15989016,
+        "totalSize": 19791872,
+        "embedderHeapUsedSize": 1922768,
+        "backingStorageSize": 3495598
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 117,
+        "jsEventListeners": 192
+      }
+    },
+    {
+      "run": 8,
+      "attemptId": "29c550a2-4b43-4b70-9e69-bde0b4d36cdb",
+      "rootSeed": "12367285235700487328",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1302,
+        "triangles": 165616,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 16226476,
+        "totalSize": 17956864,
+        "embedderHeapUsedSize": 1995584,
+        "backingStorageSize": 3495598
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 119,
+        "jsEventListeners": 192
+      }
+    },
+    {
+      "run": 9,
+      "attemptId": "1ee73bf7-baaf-45d6-b333-576500e4b4bb",
+      "rootSeed": "1815207645951801374",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1299,
+        "triangles": 165532,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 16540696,
+        "totalSize": 21102592,
+        "embedderHeapUsedSize": 1964344,
+        "backingStorageSize": 3495598
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 121,
+        "jsEventListeners": 192
+      }
+    },
+    {
+      "run": 10,
+      "attemptId": "a7276ed1-9996-41dc-97ce-1fe54a4adb06",
+      "rootSeed": "7092426587522702311",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1302,
+        "triangles": 165616,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 16632748,
+        "totalSize": 20054016,
+        "embedderHeapUsedSize": 2023856,
+        "backingStorageSize": 3495598
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 123,
+        "jsEventListeners": 192
+      }
+    },
+    {
+      "run": 11,
+      "attemptId": "0db3c03d-2b22-4023-988d-48416c0eedb5",
+      "rootSeed": "1204018916629123703",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1299,
+        "triangles": 165532,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 16785776,
+        "totalSize": 19529728,
+        "embedderHeapUsedSize": 2058528,
+        "backingStorageSize": 3495598
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 125,
+        "jsEventListeners": 192
+      }
+    },
+    {
+      "run": 12,
+      "attemptId": "57d1e456-9b28-4c21-af9f-3cc9b0f0828a",
+      "rootSeed": "14012121655275727514",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1303,
+        "triangles": 165644,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 16987924,
+        "totalSize": 20316160,
+        "embedderHeapUsedSize": 2025128,
+        "backingStorageSize": 3495598
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 127,
+        "jsEventListeners": 192
+      }
+    },
+    {
+      "run": 13,
+      "attemptId": "482a2f16-3080-40dc-b145-195b98015bca",
+      "rootSeed": "4783892795201952709",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1298,
+        "triangles": 165504,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 17160424,
+        "totalSize": 19791872,
+        "embedderHeapUsedSize": 2126040,
+        "backingStorageSize": 3495598
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 129,
+        "jsEventListeners": 192
+      }
+    },
+    {
+      "run": 14,
+      "attemptId": "7bf8e1c7-ce0e-4f31-a9a7-4e629e541215",
+      "rootSeed": "525337486483995332",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1298,
+        "triangles": 165504,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 17259460,
+        "totalSize": 22413312,
+        "embedderHeapUsedSize": 2202752,
+        "backingStorageSize": 3495598
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 131,
+        "jsEventListeners": 192
+      }
+    },
+    {
+      "run": 15,
+      "attemptId": "0137ea07-f855-4132-bbda-699d7f895ecb",
+      "rootSeed": "4398696443281635579",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1299,
+        "triangles": 165532,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 17448572,
+        "totalSize": 20316160,
+        "embedderHeapUsedSize": 2210440,
+        "backingStorageSize": 3495598
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 133,
+        "jsEventListeners": 192
+      }
+    },
+    {
+      "run": 16,
+      "attemptId": "560d8d20-f538-483b-8065-598c58a50064",
+      "rootSeed": "3442177779228363974",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1298,
+        "triangles": 165504,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 17581932,
+        "totalSize": 19529728,
+        "embedderHeapUsedSize": 2238808,
+        "backingStorageSize": 3495598
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 135,
+        "jsEventListeners": 192
+      }
+    },
+    {
+      "run": 17,
+      "attemptId": "24517965-4bf0-4439-95f0-c701e74117d6",
+      "rootSeed": "4807708402004050106",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1300,
+        "triangles": 165560,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 17776896,
+        "totalSize": 20316160,
+        "embedderHeapUsedSize": 2275840,
+        "backingStorageSize": 3495598
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 137,
+        "jsEventListeners": 192
+      }
+    },
+    {
+      "run": 18,
+      "attemptId": "940777f0-9291-41d3-b2b7-90d97352a840",
+      "rootSeed": "4451659440008898320",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1296,
+        "triangles": 165448,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 18005256,
+        "totalSize": 20578304,
+        "embedderHeapUsedSize": 2278008,
+        "backingStorageSize": 3495598
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 139,
+        "jsEventListeners": 192
+      }
+    },
+    {
+      "run": 19,
+      "attemptId": "29fa7f4d-ae1c-40d2-891c-d474c2b49e88",
+      "rootSeed": "7903142941781664112",
+      "simulationBuildId": "09b36e71a759093c3d2f267ed7b0e8fe37f6d8b3b3895770628c1fdcb66adf88",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1297,
+        "triangles": 165476,
+        "geometries": 45,
+        "textures": 764
+      },
+      "wasmBytes": 92340224,
+      "mainHeapAfterReturn": {
+        "usedSize": 18133648,
+        "totalSize": 20840448,
+        "embedderHeapUsedSize": 2322288,
+        "backingStorageSize": 3495598
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 141,
+        "jsEventListeners": 192
+      }
+    }
+  ],
+  "retainedMainHeapChangeBytes": 4312300,
+  "errors": [],
+  "scope": "Twenty real 20-fly Run/cancel/edit cycles. Collected main heaps are observations, not process RSS or a proof that Worker/GPU memory cannot leak. Final release memory and sustained full-attempt gates remain separate."
+}
