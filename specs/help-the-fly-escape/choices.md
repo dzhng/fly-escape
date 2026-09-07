@@ -54,7 +54,7 @@ A saved attempt carries a build identity computed from simulation source, depend
 
 ### Field overlays show the actual sampled grid (slice 03)
 
-When a fly senses odor in a grid cell, the colored floor comes from that same cell value exported by Rust. JavaScript does not draw a separate smooth approximation. The plan required agreement but left interpolation unspecified. This makes abrupt cell boundaries honest and lets numeric antenna samples explain what the brain actually received; future visual smoothing must not change the simulation.
+The diagnostic floor shows Rust's exported cell-centre field values. Following slice26, antenna readings interpolate up to four visible neighbouring centres, so a floor tile is a grid diagnostic rather than the exact value at every point within it. Walls and solids exclude hidden support. This corrects anatomical-scale aliasing without refining the transport grid; edge reconstruction is one-sided and does not claim continuous visibility at obstacle boundaries. Verdict: sound; confidence: high for numerical reconstruction, pending physical sensory calibration.
 
 ## Sound — medium confidence (lifecycle and records)
 

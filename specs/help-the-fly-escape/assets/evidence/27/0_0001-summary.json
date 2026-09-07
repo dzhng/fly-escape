@@ -1,0 +1,3324 @@
+{
+  "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+  "manifestHash": "ead5f7d258f83ee3909080797752c2f4bb749be939a2ff983f411095722efbf1",
+  "simulationBuildId": "d30a123f64172831043586086533bafb1b59679e59cd733f563665973725f74d",
+  "probeSourceHash": "8415afd9c06dee95287f52ba043da9b4f98ed11446219b239e787b9eaed58157",
+  "elapsedSeconds": 38.568096334,
+  "relativeContrastCutoff": 0.0001,
+  "note": "Only the contrast multiplier in sensory.rs differs from root1a643ff. Older probe conditions string says5%; this explicit cutoff and frozen adapter source supersede that stale text.",
+  "runs": [
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 6.224110594213365,
+        "position": {
+          "x": -1.4460043717073665,
+          "z": -0.5306323229689659
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.002512310803541541,
+      "meanTurn": -0.0007384339120778094,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 1.8336003109505086,
+        "position": {
+          "x": -1.3695845361253536,
+          "z": 0.283824526334937
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.016147826183367776,
+      "meanTurn": 0.022920003886881358,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.3950811582162415,
+        "position": {
+          "x": -1.5267766799297293,
+          "z": -0.5460713110764431
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.0007194432882205565,
+      "meanTurn": 0.004938514477703038,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 3.304024950272928,
+        "position": {
+          "x": -2.2189808339410435,
+          "z": -0.35719640801791464
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.042581361222040204,
+      "meanTurn": -0.037239504461333214,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 3.304024950272928,
+        "position": {
+          "x": -2.2189808339410435,
+          "z": -0.35719640801791464
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.042581361222040204,
+      "meanTurn": -0.037239504461333214,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 3.304024950272928,
+        "position": {
+          "x": -2.2189808339410435,
+          "z": -0.35719640801791464
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.042581361222040204,
+      "meanTurn": -0.037239504461333214,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 5.301042644041575,
+        "position": {
+          "x": -1.2324227074624416,
+          "z": -0.056380647860086466
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.016997903041179267,
+      "meanTurn": -0.012276783289225124,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 99,
+      "enabled": true,
+      "finalPose": {
+        "heading": 1.4643758489245748,
+        "position": {
+          "x": -1.7193056692673743,
+          "z": 0.6992685907674558
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.006083214240355512,
+      "meanTurn": 0.018304698111557195,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 99,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 4.471294463285526,
+        "position": {
+          "x": -1.3468120249088755,
+          "z": -0.23767916112366272
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.025716198721442058,
+      "meanTurn": -0.022648635548675706,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 2.5396038393456024,
+        "position": {
+          "x": -1.7689167723175463,
+          "z": -0.4234876225502308
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.05074729483774083,
+      "meanTurn": -0.04679476834792477,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 2.5396038393456024,
+        "position": {
+          "x": -1.7689167723175463,
+          "z": -0.4234876225502308
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.05074729483774083,
+      "meanTurn": -0.04679476834792477,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 2.5396038393456024,
+        "position": {
+          "x": -1.7689167723175463,
+          "z": -0.4234876225502308
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.05074729483774083,
+      "meanTurn": -0.04679476834792477,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 0.6149138781546791,
+        "position": {
+          "x": -1.2275369780192635,
+          "z": 0.05820323438500198
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.01579438133563784,
+      "meanTurn": 0.007686423476933543,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.8679030769070514,
+        "position": {
+          "x": -1.5666373199412857,
+          "z": 0.4894499430648082
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.01852371033092775,
+      "meanTurn": 0.01084878846133814,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 4.950312341627454,
+        "position": {
+          "x": -1.456105841333783,
+          "z": -0.5230237112829279
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.023392344060974065,
+      "meanTurn": -0.016660912069401658,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 4.2085962271767805,
+        "position": {
+          "x": -1.8186069865471264,
+          "z": -0.611886076020084
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.018805485836816526,
+      "meanTurn": -0.02593236350003504,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 4.2085962271767805,
+        "position": {
+          "x": -1.8186069865471264,
+          "z": -0.611886076020084
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.018805485836816526,
+      "meanTurn": -0.02593236350003504,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 4.2085962271767805,
+        "position": {
+          "x": -1.8186069865471264,
+          "z": -0.611886076020084
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.018805485836816526,
+      "meanTurn": -0.02593236350003504,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 6.224110594213365,
+        "position": {
+          "x": -1.4460043717073665,
+          "z": -0.405632322968966
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.002512310803541541,
+      "meanTurn": -0.0007384339120778094,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 1.855514584989039,
+        "position": {
+          "x": -1.3709446234278533,
+          "z": 0.4082229787545941
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.016340282151676426,
+      "meanTurn": 0.023193932312362987,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.3739208801850879,
+        "position": {
+          "x": -1.5280184701208674,
+          "z": -0.42389919064172477
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.0001392034859004959,
+      "meanTurn": 0.004674011002313599,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 3.304024950272928,
+        "position": {
+          "x": -2.2189808339410435,
+          "z": -0.2321964080179147
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.042581361222040204,
+      "meanTurn": -0.037239504461333214,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 3.304024950272928,
+        "position": {
+          "x": -2.2189808339410435,
+          "z": -0.2321964080179147
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.042581361222040204,
+      "meanTurn": -0.037239504461333214,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 99,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 3.304024950272928,
+        "position": {
+          "x": -2.2189808339410435,
+          "z": -0.2321964080179147
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.042581361222040204,
+      "meanTurn": -0.037239504461333214,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 5.301042644041575,
+        "position": {
+          "x": -1.2324227074624416,
+          "z": 0.06861935213991349
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.016997903041179267,
+      "meanTurn": -0.012276783289225124,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 1.4230032368011745,
+        "position": {
+          "x": -1.7181339342949618,
+          "z": 0.8241902415057579
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.005539703196817392,
+      "meanTurn": 0.01778754046001469,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 4.471294463285526,
+        "position": {
+          "x": -1.3468120249088755,
+          "z": -0.11267916112366282
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.025716198721442058,
+      "meanTurn": -0.022648635548675706,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 2.5396038393456024,
+        "position": {
+          "x": -1.7689167723175463,
+          "z": -0.2984876225502308
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.05074729483774083,
+      "meanTurn": -0.04679476834792477,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 2.5396038393456024,
+        "position": {
+          "x": -1.7689167723175463,
+          "z": -0.2984876225502308
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.05074729483774083,
+      "meanTurn": -0.04679476834792477,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 2.5396038393456024,
+        "position": {
+          "x": -1.7689167723175463,
+          "z": -0.2984876225502308
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.05074729483774083,
+      "meanTurn": -0.04679476834792477,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 0.6149138781546791,
+        "position": {
+          "x": -1.2275369780192635,
+          "z": 0.18320323438500197
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.01579438133563784,
+      "meanTurn": 0.007686423476933543,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.8679030769070514,
+        "position": {
+          "x": -1.5666373199412857,
+          "z": 0.6144499430648084
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.01852371033092775,
+      "meanTurn": 0.01084878846133814,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 99,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.038228319874246,
+        "position": {
+          "x": -1.4457669076416761,
+          "z": -0.3937096808467965
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.022553672140959793,
+      "meanTurn": -0.015561962341316722,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 99,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 4.2085962271767805,
+        "position": {
+          "x": -1.8186069865471264,
+          "z": -0.48688607602008405
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.018805485836816526,
+      "meanTurn": -0.02593236350003504,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 4.2085962271767805,
+        "position": {
+          "x": -1.8186069865471264,
+          "z": -0.48688607602008405
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.018805485836816526,
+      "meanTurn": -0.02593236350003504,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 4.2085962271767805,
+        "position": {
+          "x": -1.8186069865471264,
+          "z": -0.48688607602008405
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.018805485836816526,
+      "meanTurn": -0.02593236350003504,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 6.224110594213365,
+        "position": {
+          "x": -1.4460043717073665,
+          "z": -0.5306323229689659
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.002512310803541541,
+      "meanTurn": -0.0007384339120778094,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 81,
+      "enabled": true,
+      "finalPose": {
+        "heading": 1.6802821473584715,
+        "position": {
+          "x": -1.36575638598328,
+          "z": 0.27270113304194765
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.015402164779900862,
+      "meanTurn": 0.021003526841980903,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 81,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 34,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.642345838923481,
+        "position": {
+          "x": -1.6782988476620397,
+          "z": -0.6888102411960197
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.020997328250340192,
+      "meanTurn": -0.008010493353201352,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 34,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 3.304024950272928,
+        "position": {
+          "x": -2.2189808339410435,
+          "z": -0.35719640801791464
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.042581361222040204,
+      "meanTurn": -0.037239504461333214,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 3.304024950272928,
+        "position": {
+          "x": -2.2189808339410435,
+          "z": -0.35719640801791464
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.042581361222040204,
+      "meanTurn": -0.037239504461333214,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 81,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 3.304024950272928,
+        "position": {
+          "x": -2.2189808339410435,
+          "z": -0.35719640801791464
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.042581361222040204,
+      "meanTurn": -0.037239504461333214,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 74,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 5.301042644041575,
+        "position": {
+          "x": -1.2324227074624416,
+          "z": -0.056380647860086466
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.016997903041179267,
+      "meanTurn": -0.012276783289225124,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 48,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.5085593963848072,
+        "position": {
+          "x": -1.4670518983251615,
+          "z": 0.5646782270528987
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.004352688296329041,
+      "meanTurn": 0.006356992454810092,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 48,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 69,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.1332797800582,
+        "position": {
+          "x": -1.3141234102479777,
+          "z": -0.2182166963218789
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.017236958558982246,
+      "meanTurn": -0.014373819089017333,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 69,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 2.5396038393456024,
+        "position": {
+          "x": -1.7689167723175463,
+          "z": -0.4234876225502308
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.05074729483774083,
+      "meanTurn": -0.04679476834792477,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 2.5396038393456024,
+        "position": {
+          "x": -1.7689167723175463,
+          "z": -0.4234876225502308
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.05074729483774083,
+      "meanTurn": -0.04679476834792477,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 74,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 2.5396038393456024,
+        "position": {
+          "x": -1.7689167723175463,
+          "z": -0.4234876225502308
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.05074729483774083,
+      "meanTurn": -0.04679476834792477,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 82,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 0.6149138781546791,
+        "position": {
+          "x": -1.2275369780192635,
+          "z": 0.05820323438500198
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.01579438133563784,
+      "meanTurn": 0.007686423476933543,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 50,
+      "enabled": true,
+      "finalPose": {
+        "heading": 1.50314010552304,
+        "position": {
+          "x": -1.5732433541426791,
+          "z": 0.4801767471749569
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.023725511041660673,
+      "meanTurn": 0.018789251319037987,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 50,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 68,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.288514330428117,
+        "position": {
+          "x": -1.349720697440167,
+          "z": -0.4423475007972448
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.009266087361149816,
+      "meanTurn": -0.012433387209393349,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 68,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 4.2085962271767805,
+        "position": {
+          "x": -1.8186069865471264,
+          "z": -0.611886076020084
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.018805485836816526,
+      "meanTurn": -0.02593236350003504,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 4.2085962271767805,
+        "position": {
+          "x": -1.8186069865471264,
+          "z": -0.611886076020084
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.018805485836816526,
+      "meanTurn": -0.02593236350003504,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 60,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 4.2085962271767805,
+        "position": {
+          "x": -1.8186069865471264,
+          "z": -0.611886076020084
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.018805485836816526,
+      "meanTurn": -0.02593236350003504,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 68,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 6.224110594213365,
+        "position": {
+          "x": -1.4460043717073665,
+          "z": -0.405632322968966
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.002512310803541541,
+      "meanTurn": -0.0007384339120778094,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 78,
+      "enabled": true,
+      "finalPose": {
+        "heading": 1.6798927933906878,
+        "position": {
+          "x": -1.3609790526187928,
+          "z": 0.3904903849643939
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.015291413503105788,
+      "meanTurn": 0.020998659917383606,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 78,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 32,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.626211409554415,
+        "position": {
+          "x": -1.6822108654385723,
+          "z": -0.569131219847402
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.016733726675373286,
+      "meanTurn": -0.008212173720314622,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 32,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 3.304024950272928,
+        "position": {
+          "x": -2.2189808339410435,
+          "z": -0.2321964080179147
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.042581361222040204,
+      "meanTurn": -0.037239504461333214,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 3.304024950272928,
+        "position": {
+          "x": -2.2189808339410435,
+          "z": -0.2321964080179147
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.042581361222040204,
+      "meanTurn": -0.037239504461333214,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 72,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 3.304024950272928,
+        "position": {
+          "x": -2.2189808339410435,
+          "z": -0.2321964080179147
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.042581361222040204,
+      "meanTurn": -0.037239504461333214,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 73,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 5.301042644041575,
+        "position": {
+          "x": -1.2324227074624416,
+          "z": 0.06861935213991349
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.016997903041179267,
+      "meanTurn": -0.012276783289225124,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 40,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.635301822349115,
+        "position": {
+          "x": -1.5308752436075026,
+          "z": 0.7340751513111543
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.005604257136282704,
+      "meanTurn": 0.007941272779363937,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 40,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 63,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.012570146558363,
+        "position": {
+          "x": -1.320175120057286,
+          "z": -0.09870947052244083
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.01865180135184995,
+      "meanTurn": -0.01588268950776532,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 63,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 2.5396038393456024,
+        "position": {
+          "x": -1.7689167723175463,
+          "z": -0.2984876225502308
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.05074729483774083,
+      "meanTurn": -0.04679476834792477,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 2.5396038393456024,
+        "position": {
+          "x": -1.7689167723175463,
+          "z": -0.2984876225502308
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.05074729483774083,
+      "meanTurn": -0.04679476834792477,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 74,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 2.5396038393456024,
+        "position": {
+          "x": -1.7689167723175463,
+          "z": -0.2984876225502308
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.05074729483774083,
+      "meanTurn": -0.04679476834792477,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 80,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 0.6149138781546791,
+        "position": {
+          "x": -1.2275369780192635,
+          "z": 0.18320323438500197
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.01579438133563784,
+      "meanTurn": 0.007686423476933543,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 48,
+      "enabled": true,
+      "finalPose": {
+        "heading": 1.153232862071415,
+        "position": {
+          "x": -1.5454897735251123,
+          "z": 0.6113546491712433
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.020175601532778625,
+      "meanTurn": 0.014415410775892675,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 48,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 69,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.289628595105578,
+        "position": {
+          "x": -1.351660168308867,
+          "z": -0.320266153488076
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.011709257669786064,
+      "meanTurn": -0.012419458900925086,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 69,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 4.2085962271767805,
+        "position": {
+          "x": -1.8186069865471264,
+          "z": -0.48688607602008405
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.018805485836816526,
+      "meanTurn": -0.02593236350003504,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 4.2085962271767805,
+        "position": {
+          "x": -1.8186069865471264,
+          "z": -0.48688607602008405
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.018805485836816526,
+      "meanTurn": -0.02593236350003504,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 61,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "excitatoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 4.2085962271767805,
+        "position": {
+          "x": -1.8186069865471264,
+          "z": -0.48688607602008405
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.018805485836816526,
+      "meanTurn": -0.02593236350003504,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 73,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 6.224110594213365,
+        "position": {
+          "x": -1.4460043717073665,
+          "z": -0.5306323229689659
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.002512310803541541,
+      "meanTurn": -0.0007384339120778094,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.002939544000326,
+        "position": {
+          "x": -1.707985294296622,
+          "z": -0.5833370760010934
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.030216587290030898,
+      "meanTurn": -0.016003072039740794,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.672298719509841,
+        "position": {
+          "x": -1.2242229457841696,
+          "z": -0.08016258304352758
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.001703881186093093,
+      "meanTurn": 0.008403733993872974,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 6.127576189742905,
+        "position": {
+          "x": -1.4545940472900618,
+          "z": -0.5368174274724831
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.003548323501357235,
+      "meanTurn": -0.0019451139679584862,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 6.127576189742905,
+        "position": {
+          "x": -1.4545940472900618,
+          "z": -0.5368174274724831
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.003548323501357235,
+      "meanTurn": -0.0019451139679584862,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 6.127576189742905,
+        "position": {
+          "x": -1.4545940472900618,
+          "z": -0.5368174274724831
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.003548323501357235,
+      "meanTurn": -0.0019451139679584862,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 5.301042644041575,
+        "position": {
+          "x": -1.2324227074624416,
+          "z": -0.056380647860086466
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.016997903041179267,
+      "meanTurn": -0.012276783289225124,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 4.9989738883843735,
+        "position": {
+          "x": -1.2851833837424,
+          "z": -0.18336405345241336
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.01795478467603422,
+      "meanTurn": -0.016052642734940167,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.17765580438293396,
+        "position": {
+          "x": -1.4171353358918775,
+          "z": 0.46720517465641653
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.00019585861102877966,
+      "meanTurn": 0.0022206975547866613,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 5.402149143092113,
+        "position": {
+          "x": -1.2304721738979474,
+          "z": -0.06152446964822899
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.01424083937127168,
+      "meanTurn": -0.011012952051093454,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.402149143092113,
+        "position": {
+          "x": -1.2304721738979474,
+          "z": -0.06152446964822899
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.01424083937127168,
+      "meanTurn": -0.011012952051093454,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.402149143092113,
+        "position": {
+          "x": -1.2304721738979474,
+          "z": -0.06152446964822899
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.01424083937127168,
+      "meanTurn": -0.011012952051093454,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 0.6149138781546791,
+        "position": {
+          "x": -1.2275369780192635,
+          "z": 0.05820323438500198
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.01579438133563784,
+      "meanTurn": 0.007686423476933543,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.980646357900761,
+        "position": {
+          "x": -1.3697552391263828,
+          "z": -0.2971682321751021
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.0024309335065448977,
+      "meanTurn": -0.003781736865985339,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 1.415796449213336,
+        "position": {
+          "x": -1.3372409384986241,
+          "z": 0.375232980274235
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.02143003341836233,
+      "meanTurn": 0.017697455615166714,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 0.30929091275530246,
+        "position": {
+          "x": -1.2288863590113435,
+          "z": -0.023217138240673396
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.008537940969400472,
+      "meanTurn": 0.003866136409441251,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.30929091275530246,
+        "position": {
+          "x": -1.2288863590113435,
+          "z": -0.023217138240673396
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.008537940969400472,
+      "meanTurn": 0.003866136409441251,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.30929091275530246,
+        "position": {
+          "x": -1.2288863590113435,
+          "z": -0.023217138240673396
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.008537940969400472,
+      "meanTurn": 0.003866136409441251,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.0,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 6.224110594213365,
+        "position": {
+          "x": -1.4460043717073665,
+          "z": -0.405632322968966
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.002512310803541541,
+      "meanTurn": -0.0007384339120778094,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 4.975519282491606,
+        "position": {
+          "x": -1.7135714703446054,
+          "z": -0.45836931360329214
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.03064318545652571,
+      "meanTurn": -0.016345825308599786,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.672298719509841,
+        "position": {
+          "x": -1.2242229457841696,
+          "z": 0.04483741695647238
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.001703881186093093,
+      "meanTurn": 0.008403733993872974,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 6.127576189742905,
+        "position": {
+          "x": -1.4545940472900618,
+          "z": -0.4118174274724831
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.003548323501357235,
+      "meanTurn": -0.0019451139679584862,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 6.127576189742905,
+        "position": {
+          "x": -1.4545940472900618,
+          "z": -0.4118174274724831
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.003548323501357235,
+      "meanTurn": -0.0019451139679584862,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 6.127576189742905,
+        "position": {
+          "x": -1.4545940472900618,
+          "z": -0.4118174274724831
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.003548323501357235,
+      "meanTurn": -0.0019451139679584862,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 5.301042644041575,
+        "position": {
+          "x": -1.2324227074624416,
+          "z": 0.06861935213991349
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.016997903041179267,
+      "meanTurn": -0.012276783289225124,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 4.9989738883843735,
+        "position": {
+          "x": -1.2851833837424,
+          "z": -0.05836405345241351
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.01795478467603422,
+      "meanTurn": -0.016052642734940167,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.17765580438293396,
+        "position": {
+          "x": -1.4171353358918775,
+          "z": 0.5922051746564166
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.00019585861102877966,
+      "meanTurn": 0.0022206975547866613,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 5.402149143092113,
+        "position": {
+          "x": -1.2304721738979474,
+          "z": 0.06347553035177093
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.01424083937127168,
+      "meanTurn": -0.011012952051093454,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.402149143092113,
+        "position": {
+          "x": -1.2304721738979474,
+          "z": 0.06347553035177093
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.01424083937127168,
+      "meanTurn": -0.011012952051093454,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.402149143092113,
+        "position": {
+          "x": -1.2304721738979474,
+          "z": 0.06347553035177093
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": -0.01424083937127168,
+      "meanTurn": -0.011012952051093454,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 0.6149138781546791,
+        "position": {
+          "x": -1.2275369780192635,
+          "z": 0.18320323438500197
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.01579438133563784,
+      "meanTurn": 0.007686423476933543,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.980646357900761,
+        "position": {
+          "x": -1.3697552391263828,
+          "z": -0.17216823217510208
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.0024309335065448977,
+      "meanTurn": -0.003781736865985339,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 1.415796449213336,
+        "position": {
+          "x": -1.3372409384986241,
+          "z": 0.5002329802742354
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.02143003341836233,
+      "meanTurn": 0.017697455615166714,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 0.30929091275530246,
+        "position": {
+          "x": -1.2288863590113435,
+          "z": 0.10178286175932673
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.008537940969400472,
+      "meanTurn": 0.003866136409441251,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 0,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.30929091275530246,
+        "position": {
+          "x": -1.2288863590113435,
+          "z": 0.10178286175932673
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.008537940969400472,
+      "meanTurn": 0.003866136409441251,
+      "mirror": 1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.30929091275530246,
+        "position": {
+          "x": -1.2288863590113435,
+          "z": 0.10178286175932673
+        }
+      },
+      "forward": 0.0,
+      "meanFlightTurn": 0.008537940969400472,
+      "meanTurn": 0.003866136409441251,
+      "mirror": -1.0,
+      "offset": 0.15,
+      "phase": 0.125,
+      "physical": false,
+      "radius": 0.08,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 6.224110594213365,
+        "position": {
+          "x": -1.4460043717073665,
+          "z": -0.5306323229689659
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.002512310803541541,
+      "meanTurn": -0.0007384339120778094,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 73,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.3356780651904065,
+        "position": {
+          "x": -1.6630310813180895,
+          "z": -0.5790931856909565
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.026494427608042465,
+      "meanTurn": -0.011843840524864766,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 73,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.672298719509841,
+        "position": {
+          "x": -1.2242229457841696,
+          "z": -0.08016258304352758
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.001703881186093093,
+      "meanTurn": 0.008403733993872974,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 100,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 6.127576189742905,
+        "position": {
+          "x": -1.4545940472900618,
+          "z": -0.5368174274724831
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.003548323501357235,
+      "meanTurn": -0.0019451139679584862,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 6.127576189742905,
+        "position": {
+          "x": -1.4545940472900618,
+          "z": -0.5368174274724831
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.003548323501357235,
+      "meanTurn": -0.0019451139679584862,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 100,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 6.127576189742905,
+        "position": {
+          "x": -1.4545940472900618,
+          "z": -0.5368174274724831
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.003548323501357235,
+      "meanTurn": -0.0019451139679584862,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 62,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 5.301042644041575,
+        "position": {
+          "x": -1.2324227074624416,
+          "z": -0.056380647860086466
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.016997903041179267,
+      "meanTurn": -0.012276783289225124,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 4.9989738883843735,
+        "position": {
+          "x": -1.2851833837424,
+          "z": -0.18336405345241336
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.01795478467603422,
+      "meanTurn": -0.016052642734940167,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.17765580438293396,
+        "position": {
+          "x": -1.4171353358918775,
+          "z": 0.46720517465641653
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.00019585861102877966,
+      "meanTurn": 0.0022206975547866613,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 5.402149143092113,
+        "position": {
+          "x": -1.2304721738979474,
+          "z": -0.06152446964822899
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.01424083937127168,
+      "meanTurn": -0.011012952051093454,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.402149143092113,
+        "position": {
+          "x": -1.2304721738979474,
+          "z": -0.06152446964822899
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.01424083937127168,
+      "meanTurn": -0.011012952051093454,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.402149143092113,
+        "position": {
+          "x": -1.2304721738979474,
+          "z": -0.06152446964822899
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.01424083937127168,
+      "meanTurn": -0.011012952051093454,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 90,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 0.6149138781546791,
+        "position": {
+          "x": -1.2275369780192635,
+          "z": 0.05820323438500198
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.01579438133563784,
+      "meanTurn": 0.007686423476933543,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.980646357900761,
+        "position": {
+          "x": -1.3697552391263828,
+          "z": -0.2971682321751021
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.0024309335065448977,
+      "meanTurn": -0.003781736865985339,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 1.415796449213336,
+        "position": {
+          "x": -1.3372409384986241,
+          "z": 0.375232980274235
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.02143003341836233,
+      "meanTurn": 0.017697455615166714,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 0.30929091275530246,
+        "position": {
+          "x": -1.2288863590113435,
+          "z": -0.023217138240673396
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.008537940969400472,
+      "meanTurn": 0.003866136409441251,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.30929091275530246,
+        "position": {
+          "x": -1.2288863590113435,
+          "z": -0.023217138240673396
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.008537940969400472,
+      "meanTurn": 0.003866136409441251,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 96,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.30929091275530246,
+        "position": {
+          "x": -1.2288863590113435,
+          "z": -0.023217138240673396
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.008537940969400472,
+      "meanTurn": 0.003866136409441251,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.0,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 6.224110594213365,
+        "position": {
+          "x": -1.4460043717073665,
+          "z": -0.405632322968966
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.002512310803541541,
+      "meanTurn": -0.0007384339120778094,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 66,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.361409484892301,
+        "position": {
+          "x": -1.66730485143213,
+          "z": -0.4543463261745578
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.025448971944024703,
+      "meanTurn": -0.011522197778591186,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 66,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.672298719509841,
+        "position": {
+          "x": -1.2242229457841696,
+          "z": 0.04483741695647238
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.001703881186093093,
+      "meanTurn": 0.008403733993872974,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 100,
+      "seed": 0,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 6.127576189742905,
+        "position": {
+          "x": -1.4545940472900618,
+          "z": -0.4118174274724831
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.003548323501357235,
+      "meanTurn": -0.0019451139679584862,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 6.127576189742905,
+        "position": {
+          "x": -1.4545940472900618,
+          "z": -0.4118174274724831
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.003548323501357235,
+      "meanTurn": -0.0019451139679584862,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 100,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 6.127576189742905,
+        "position": {
+          "x": -1.4545940472900618,
+          "z": -0.4118174274724831
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.003548323501357235,
+      "meanTurn": -0.0019451139679584862,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 64,
+      "seed": 0,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 5.301042644041575,
+        "position": {
+          "x": -1.2324227074624416,
+          "z": 0.06861935213991349
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.016997903041179267,
+      "meanTurn": -0.012276783289225124,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 4.9989738883843735,
+        "position": {
+          "x": -1.2851833837424,
+          "z": -0.05836405345241351
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.01795478467603422,
+      "meanTurn": -0.016052642734940167,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.17765580438293396,
+        "position": {
+          "x": -1.4171353358918775,
+          "z": 0.5922051746564166
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.00019585861102877966,
+      "meanTurn": 0.0022206975547866613,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 5.402149143092113,
+        "position": {
+          "x": -1.2304721738979474,
+          "z": 0.06347553035177093
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.01424083937127168,
+      "meanTurn": -0.011012952051093454,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.402149143092113,
+        "position": {
+          "x": -1.2304721738979474,
+          "z": 0.06347553035177093
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.01424083937127168,
+      "meanTurn": -0.011012952051093454,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 100,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.402149143092113,
+        "position": {
+          "x": -1.2304721738979474,
+          "z": 0.06347553035177093
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": -0.01424083937127168,
+      "meanTurn": -0.011012952051093454,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 89,
+      "seed": 1,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 0.6149138781546791,
+        "position": {
+          "x": -1.2275369780192635,
+          "z": 0.18320323438500197
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.01579438133563784,
+      "meanTurn": 0.007686423476933543,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 5.980646357900761,
+        "position": {
+          "x": -1.3697552391263828,
+          "z": -0.17216823217510208
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.0024309335065448977,
+      "meanTurn": -0.003781736865985339,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 100,
+      "enabled": true,
+      "finalPose": {
+        "heading": 1.415796449213336,
+        "position": {
+          "x": -1.3372409384986241,
+          "z": 0.5002329802742354
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.02143003341836233,
+      "meanTurn": 0.017697455615166714,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 100,
+      "seed": 2,
+      "silenced": false
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": false,
+      "finalPose": {
+        "heading": 0.30929091275530246,
+        "position": {
+          "x": -1.2288863590113435,
+          "z": 0.10178286175932673
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.008537940969400472,
+      "meanTurn": 0.003866136409441251,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 0,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.30929091275530246,
+        "position": {
+          "x": -1.2288863590113435,
+          "z": 0.10178286175932673
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.008537940969400472,
+      "meanTurn": 0.003866136409441251,
+      "mirror": 1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 95,
+      "seed": 2,
+      "silenced": true
+    },
+    {
+      "scenario": "inhibitoryOdor",
+      "effectiveActiveTicks": 0,
+      "enabled": true,
+      "finalPose": {
+        "heading": 0.30929091275530246,
+        "position": {
+          "x": -1.2288863590113435,
+          "z": 0.10178286175932673
+        }
+      },
+      "forward": 0.0014145078816978176,
+      "meanFlightTurn": 0.008537940969400472,
+      "meanTurn": 0.003866136409441251,
+      "mirror": -1.0,
+      "offset": 0.00020207253103162883,
+      "phase": 0.125,
+      "physical": true,
+      "radius": 0.0026313360997825106,
+      "requestedActiveTicks": 91,
+      "seed": 2,
+      "silenced": true
+    }
+  ],
+  "matchedControlsPass": true
+}

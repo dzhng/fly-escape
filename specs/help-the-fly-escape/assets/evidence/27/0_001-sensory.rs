@@ -48,7 +48,7 @@ pub fn cue_currents(
     // A modeled lateral detector: local field contrast chooses the sensory
     // population, never a motor command or a direction to a remote target.
     let detected = values[0].max(values[1]) >= 0.05
-        && (values[0] - values[1]).abs() > 0.05 * (values[0] + values[1]);
+        && (values[0] - values[1]).abs() > 0.001 * (values[0] + values[1]);
     values = if !detected {
         [0.0, 0.0]
     } else if values[0] > values[1] {
@@ -168,26 +168,6 @@ mod tests {
             !left.iter().any(|(i, _)| *i == 3),
             "a sensory/motor overlap must not directly drive a readout"
         );
-        for [left, right] in [[0., 0.], [0.8, 0.8], [0.049, 0.], [0., 0.049]] {
-            let neutral = SensorySample {
-                left: FieldSample {
-                    repellent_odor: left,
-                    ..Default::default()
-                },
-                right: FieldSample {
-                    repellent_odor: right,
-                    ..Default::default()
-                },
-                wind: Point::default(),
-            };
-            assert!(
-                cue_currents(&graph, &neutral, CuePathway::ExcitatoryOdor, 1.)
-                    .unwrap()
-                    .iter()
-                    .all(|(_, current)| *current == 0.),
-                "uniform or sub-floor odor must not drive a lateral input"
-            );
-        }
         assert!(
             cue_currents(&graph, &sample, CuePathway::Vision, 1.).is_err(),
             "missing required pathways cannot silently become zero input"

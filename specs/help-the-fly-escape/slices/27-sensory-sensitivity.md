@@ -1,6 +1,6 @@
 # 27 — Measured sensory sensitivity at anatomical scale
 
-Status: diagnostic contract ready. Dependency: 26. Required before25 physical adoption and20.
+Status: three-seed odor/vision candidates banked;30-seed confirmation live. See [evidence](../assets/evidence/27/README.md). Production sensitivity unchanged. Dependency: 26. Required before25 physical adoption and20.
 
 ## Question and frozen inputs
 
