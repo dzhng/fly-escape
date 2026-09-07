@@ -34,8 +34,13 @@ The exporter delegates native geometry to the
 using the simulator's pinned Parry dependency without adding browser code.
 Supporting planes contain the source points; adaptive refinement reduces the
 largest outer-vertex distance. Polar triangle facets must remain unmerged during
-inversion, because merging can cut into the source. Incident axis planes retain
-exact source extrema, including floor height, without padding.
+refinement, because merging can cut into the source. Final vertices come from
+clipped plane-pair intersections, with edge incidence retained from those planes.
+This avoids reconstructing feature topology from almost coplanar points: a
+point-support hull can be valid while its reconstructed face inventory is not.
+There is one canonical vertex array; each edge references its two vertices and
+two incident planes. Plane offsets and vertices use metres. Incident axis planes
+retain exact source extrema, including floor height, without padding.
 
 All stored measurements use metres. Maximum outer-vertex distance bounds the
 outward support error of nested convex bodies over all directions, subject to the
@@ -43,3 +48,10 @@ reported numerical containment residual and projection accuracy. The validation
 roundoff allowance is only a rejection check; it never changes geometry or query
 clearance. This derivative inherits the finite-animation limitation above and
 still needs moving-contact acceptance before adoption.
+
+The generator validates halfspace feasibility, edge incidence and closed face
+cycles. Very short positive edges retain their identities; coordinate proximity
+never merges them. Floating-point validation and deterministic regeneration do
+not prove the exact signs of all near-zero clipping intervals. Exact offline
+plane audits must use the serialized units, since unit conversion can round plane
+offsets. The boundary remains a candidate pending those audits and moving cases.

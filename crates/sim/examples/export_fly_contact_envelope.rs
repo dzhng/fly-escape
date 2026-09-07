@@ -2,7 +2,11 @@
 use parry3d_f64::{math::Vector, query::PointQuery, shape::ConvexPolyhedron};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
-use std::{error::Error, path::Path};
+use std::{
+    collections::{BTreeMap, BTreeSet},
+    error::Error,
+    path::Path,
+};
 
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -17,9 +21,22 @@ struct Envelope {
     asset_sha256: String,
     source_hull_sha256: String,
     provenance: String,
-    supporting_planes: usize,
+    planes: Vec<Plane>,
+    edges: Vec<Edge>,
     measurements: Measurements,
     vertices: Vec<[f64; 3]>,
+}
+
+#[derive(Serialize, Deserialize)]
+struct Plane {
+    normal: [f64; 3],
+    offset: f64,
+}
+
+#[derive(Serialize, Deserialize)]
+struct Edge {
+    vertices: [usize; 2],
+    planes: [usize; 2],
 }
 
 #[derive(Serialize, Deserialize)]
@@ -87,6 +104,157 @@ fn farthest(outer: &ConvexPolyhedron, native: &ConvexPolyhedron) -> (f64, Vector
         .unwrap()
 }
 
+// Every boundary edge is a plane-pair line clipped by all other halfspaces.
+fn boundary(normals: &[Vector], offsets: &[f64]) -> (Vec<[f64; 3]>, Vec<Edge>) {
+    let mut vertices = Vec::new();
+    let mut edges = Vec::new();
+    let mut vertex_ids = BTreeMap::new();
+    for i in 0..normals.len() {
+        for j in i + 1..normals.len() {
+            let cross = normals[i].cross(normals[j]);
+            if cross.length_squared() == 0. {
+                continue;
+            }
+            let origin = (offsets[i] * normals[j].cross(cross)
+                + offsets[j] * cross.cross(normals[i]))
+                / cross.length_squared();
+            let direction = cross.normalize();
+            let mut lower = (f64::NEG_INFINITY, usize::MAX);
+            let mut upper = (f64::INFINITY, usize::MAX);
+            let mut valid = true;
+            for k in 0..normals.len() {
+                // Incidence is exact even when n·(n×m) rounds away from zero.
+                if k == i || k == j {
+                    continue;
+                }
+                let slope = normals[k].dot(direction);
+                let remaining = offsets[k] - normals[k].dot(origin);
+                if slope == 0. {
+                    if remaining < 0. {
+                        valid = false;
+                        break;
+                    }
+                } else {
+                    let t = remaining / slope;
+                    if slope > 0. && t < upper.0 {
+                        upper = (t, k);
+                    }
+                    if slope < 0. && t > lower.0 {
+                        lower = (t, k);
+                    }
+                }
+            }
+            if !valid || lower.0 >= upper.0 {
+                continue;
+            }
+            let mut ids = [0; 2];
+            for (endpoint, (t, limiting)) in [lower, upper].into_iter().enumerate() {
+                let mut planes = [i, j, limiting];
+                planes.sort();
+                ids[endpoint] = *vertex_ids.entry(planes).or_insert_with(|| {
+                    let mut point = origin + t * direction;
+                    for plane in planes {
+                        if plane < 6 {
+                            point[plane / 2] = if plane % 2 == 0 {
+                                offsets[plane]
+                            } else {
+                                -offsets[plane]
+                            };
+                        }
+                    }
+                    let id = vertices.len();
+                    vertices.push((point / 1000.).to_array());
+                    id
+                });
+            }
+            // Near-zero positive edges retain their plane identities; no snapping.
+            edges.push(Edge {
+                vertices: ids,
+                planes: [i, j],
+            });
+        }
+    }
+    (vertices, edges)
+}
+
+fn validate_boundary(
+    vertices: &[[f64; 3]],
+    planes: &[Plane],
+    edges: &[Edge],
+) -> Result<(), &'static str> {
+    let points: Vec<_> = vertices.iter().map(|p| Vector::from_array(*p)).collect();
+    if points.is_empty() || points.iter().any(|p| !p.is_finite()) {
+        return Err("invalid boundary vertices");
+    }
+    let bounds = extrema(&points);
+    let roundoff = 128. * f64::EPSILON * (bounds[1] - bounds[0]).length();
+    let mut used = BTreeSet::new();
+    for plane in planes {
+        let normal = Vector::from_array(plane.normal);
+        if !normal.is_finite()
+            || !plane.offset.is_finite()
+            || (normal.length() - 1.).abs() > 128. * f64::EPSILON
+            || points
+                .iter()
+                .any(|p| normal.dot(*p) - plane.offset > roundoff)
+        {
+            return Err("invalid supporting plane");
+        }
+    }
+    for edge in edges {
+        if edge.vertices[0] == edge.vertices[1]
+            || edge.planes[0] == edge.planes[1]
+            || edge.vertices.iter().any(|i| *i >= points.len())
+            || edge.planes.iter().any(|i| *i >= planes.len())
+        {
+            return Err("invalid boundary edge");
+        }
+        for vertex in edge.vertices {
+            used.insert(vertex);
+            for plane in edge.planes {
+                if (Vector::from_array(planes[plane].normal).dot(points[vertex])
+                    - planes[plane].offset)
+                    .abs()
+                    > roundoff
+                {
+                    return Err("edge leaves incident plane");
+                }
+            }
+        }
+    }
+    if used.len() != points.len() || points.len() + planes.len() != edges.len() + 2 {
+        return Err("boundary is not closed");
+    }
+    for plane in 0..planes.len() {
+        let face: Vec<_> = edges.iter().filter(|e| e.planes.contains(&plane)).collect();
+        let mut degrees = BTreeMap::new();
+        for edge in &face {
+            for v in edge.vertices {
+                *degrees.entry(v).or_insert(0) += 1;
+            }
+        }
+        if degrees.len() < 3 || degrees.values().any(|degree| *degree != 2) {
+            return Err("face is not a cycle");
+        }
+        let mut connected = BTreeSet::from([*degrees.keys().next().unwrap()]);
+        loop {
+            let before = connected.len();
+            for edge in &face {
+                if edge.vertices.iter().any(|v| connected.contains(v)) {
+                    connected.extend(edge.vertices);
+                }
+            }
+            if connected.len() == before {
+                break;
+            }
+        }
+        if connected.len() != degrees.len() {
+            return Err("face has disconnected cycles");
+        }
+    }
+    Ok(())
+}
+
 fn generate(source: &[u8], glb: &[u8]) -> Result<Envelope, Box<dyn Error>> {
     let input: NativeHull = serde_json::from_slice(source)?;
     if input.asset_sha256 != format!("{:x}", Sha256::digest(glb)) {
@@ -119,14 +287,41 @@ fn generate(source: &[u8], glb: &[u8]) -> Result<Envelope, Box<dyn Error>> {
         }
         normals.push(direction.normalize());
     }
-    let outer = outer_hull(&points, center, &normals);
+    let offsets: Vec<_> = normals
+        .iter()
+        .map(|n| {
+            points
+                .iter()
+                .map(|p| n.dot(*p))
+                .fold(f64::NEG_INFINITY, f64::max)
+        })
+        .collect();
+    let (vertices, edges) = boundary(&normals, &offsets);
+    let planes: Vec<_> = normals
+        .iter()
+        .zip(&offsets)
+        .map(|(n, c)| Plane {
+            normal: n.to_array(),
+            offset: c / 1000.,
+        })
+        .collect();
+    validate_boundary(&vertices, &planes, &edges)?;
+    let boundary_points: Vec<_> = vertices
+        .iter()
+        .map(|p| Vector::from_array(*p) * 1000.)
+        .collect();
+    let outer =
+        ConvexPolyhedron::from_convex_hull(&boundary_points).ok_or("degenerate boundary")?;
     let containment = points
         .iter()
         .map(|p| outer.distance_to_local_point(*p, true))
         .fold(0., f64::max);
-    let outward = farthest(&outer, &native).0;
+    let outward = boundary_points
+        .iter()
+        .map(|p| native.distance_to_local_point(*p, true))
+        .fold(0., f64::max);
     let native_extrema = extrema(&points);
-    let candidate_extrema = extrema(outer.points());
+    let candidate_extrema = extrema(&boundary_points);
     // Numerical validation only: this allowance never moves a plane or query.
     let roundoff = 128. * f64::EPSILON * (native_extrema[1] - native_extrema[0]).length();
     if containment > roundoff || candidate_extrema != native_extrema {
@@ -135,15 +330,16 @@ fn generate(source: &[u8], glb: &[u8]) -> Result<Envelope, Box<dyn Error>> {
     Ok(Envelope {
         asset_sha256: input.asset_sha256,
         source_hull_sha256: format!("{:x}", Sha256::digest(source)),
-        provenance: "adaptive supporting planes; unmerged polar triangles; exact incident axis extrema; Parry 0.30.2 enhanced-determinism; finite animation source; provisional candidate".into(),
-        supporting_planes: normals.len(),
+        provenance: "adaptive supporting planes; unmerged polar refinement; original-plane line clipping and triplet incidence; exact incident axis extrema; Parry 0.30.2 enhanced-determinism; finite animation source; provisional candidate".into(),
+        planes,
+        edges,
         measurements: Measurements {
             max_native_point_distance_metres: containment / 1000.,
             max_outer_vertex_distance_metres: outward / 1000.,
             native_axis_extrema_metres: native_extrema.map(|v| (v / 1000.).to_array()),
             candidate_axis_extrema_metres: candidate_extrema.map(|v| (v / 1000.).to_array()),
         },
-        vertices: outer.points().iter().map(|v| (*v / 1000.).to_array()).collect(),
+        vertices,
     })
 }
 
@@ -199,6 +395,34 @@ mod tests {
         assert_eq!(
             generated.measurements.native_axis_extrema_metres,
             generated.measurements.candidate_axis_extrema_metres
+        );
+    }
+    #[test]
+    fn boundary_rejects_planes_that_cut_vertices_and_incorrect_edge_incidence() {
+        let path = Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../../assets/fly/contact-envelope-candidate.json");
+        let bytes = std::fs::read(path).unwrap();
+        let mut candidate: Envelope = serde_json::from_slice(&bytes).unwrap();
+        candidate.planes[0].offset -= 0.0001;
+        assert!(
+            validate_boundary(&candidate.vertices, &candidate.planes, &candidate.edges).is_err()
+        );
+        let mut candidate: Envelope = serde_json::from_slice(&bytes).unwrap();
+        let plane = &candidate.planes[candidate.edges[0].planes[0]];
+        let normal = Vector::from_array(plane.normal);
+        candidate.edges[0].vertices[1] = candidate
+            .vertices
+            .iter()
+            .enumerate()
+            .max_by(|(_, a), (_, b)| {
+                (normal.dot(Vector::from_array(**a)) - plane.offset)
+                    .abs()
+                    .total_cmp(&(normal.dot(Vector::from_array(**b)) - plane.offset).abs())
+            })
+            .unwrap()
+            .0;
+        assert!(
+            validate_boundary(&candidate.vertices, &candidate.planes, &candidate.edges).is_err()
         );
     }
 }
