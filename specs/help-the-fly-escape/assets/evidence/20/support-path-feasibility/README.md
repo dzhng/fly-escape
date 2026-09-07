@@ -258,6 +258,10 @@ renewal, feature events and changed paths need measurement before an event-drive
 owner can be accepted. The scratch source is `src/bin/interval.rs` in the temporary
 probe crate; no core API or production cache is introduced.
 
+The [retained-feature domain event probe](domain-events.md) derives analytic
+crossing events instead of relying on sampled feature transitions. Its numerical
+ambiguity and global competitor gates remain explicit.
+
 ## Remaining gates
 
 - Retain an active feature and its exact domain; cross its boundary without
