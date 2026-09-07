@@ -1,9 +1,6 @@
 # Supported path feasibility
 
-**Verdict: research evidence for reslicing; no moving-contact acceptance.** A
-compact exact supported path exists at fixed orientation. Rotating motion,
-feature transitions, production cost and replay integration remain unproven.
-No production behavior changes in this evidence pass.
+**Verdict: use bounded numerical trajectories for the next consumer pass; no moving-contact acceptance.** [Actual body requests](actual-body-requests.md) reject the formal certificate route as the default production method. [Numerical trajectories](numerical-requests.md) complete those requests and converge under halved steps. Lifecycle, shared replay, visible contact and twenty-body WASM cost remain open. The certificate experiments below are retained research evidence, not prerequisites for further feature expansion.
 
 ## Tested geometry and query setup
 

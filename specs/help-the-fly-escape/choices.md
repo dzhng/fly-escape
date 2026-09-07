@@ -576,3 +576,7 @@ may suggest a direction to check, but cannot itself certify safety. Exhausting a
 cap produces an unresolved result, never a successful path or a gameplay stop.
 These are experiment limits, not final runtime budgets. General feature coverage,
 exact initial contact and browser performance must be established before adoption.
+
+### Numerical contact method after actual-request failure
+
+**Sound correction; numerical limits provisional.** Formal certificates were an agent-selected way to prove movement, not a user requirement. Actual neural requests make that method impractical, so use bounded numerical trajectories with independent dense checks and convergence evidence. Preserve10nm query regressions; provisionally cap additional path/replay error at3µm and visible maximum-close error at0.25CSSpixel. Target zero penetration. The128segment/512query diagnostic caps expose unresolved work rather than modifying neural intent or creating obstacles. Lifecycle, shared replay and twenty-fly measured cost still decide adoption.
