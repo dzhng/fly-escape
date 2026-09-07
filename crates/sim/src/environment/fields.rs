@@ -433,10 +433,49 @@ impl FieldSet {
         Some(i)
     }
     pub fn sample_point(&self, p: Point) -> FieldSample {
-        let Some(i) = self.cell_at(p) else {
+        if !self.geometry.contains_body(p, 0.) {
             return FieldSample::default();
-        };
-        let exit_cue = self
+        }
+        let x = (p.x - self.origin.x) / self.config.cell_size - 0.5;
+        let z = (p.z - self.origin.z) / self.config.cell_size - 0.5;
+        let x0 = x.floor() as isize;
+        let z0 = z.floor() as isize;
+        let tx = x - x.floor();
+        let tz = z - z.floor();
+        let mut sample = FieldSample::default();
+        let mut total = 0.;
+        // Reconstruct from at most four visible centres; renormalize at barriers and edges.
+        for (dz, wz) in [(0, 1. - tz), (1, tz)] {
+            for (dx, wx) in [(0, 1. - tx), (1, tx)] {
+                let (cx, cz) = (x0 + dx, z0 + dz);
+                let weight = wx * wz;
+                if weight <= 0.
+                    || cx < 0
+                    || cz < 0
+                    || cx >= self.width as isize
+                    || cz >= self.height as isize
+                {
+                    continue;
+                }
+                let i = cz as usize * self.width + cx as usize;
+                if !self.active[i] || !self.geometry.line_of_sight(p, self.center(i)) {
+                    continue;
+                }
+                total += weight;
+                sample.attractive_odor += weight * self.odors[0][i];
+                sample.repellent_odor += weight * self.odors[1][i];
+                sample.brightness += weight * self.brightness[i];
+                sample.shade += weight * self.shade[i];
+            }
+        }
+        if total == 0. {
+            return sample;
+        }
+        sample.attractive_odor /= total;
+        sample.repellent_odor /= total;
+        sample.brightness /= total;
+        sample.shade /= total;
+        sample.exit_cue = self
             .exit
             .as_ref()
             .filter(|e| {
@@ -446,13 +485,7 @@ impl FieldSet {
             .map_or(0., |e| {
                 e.strength * (1. - p.distance(e.position) / e.radius).max(0.)
             });
-        FieldSample {
-            attractive_odor: self.odors[0][i],
-            repellent_odor: self.odors[1][i],
-            brightness: self.brightness[i],
-            shade: self.shade[i],
-            exit_cue,
-        }
+        sample
     }
     /// Heading zero is +X; positive turns toward +Z (right), so left is -Z.
     /// tick is reserved for time-varying cues; static cues depend on advanced state.
@@ -489,5 +522,129 @@ impl FieldSet {
             wind: self.config.wind,
             wind_cells: self.wind.clone(),
         }
+    }
+}
+
+#[cfg(test)]
+mod reconstruction_tests {
+    use super::*;
+
+    fn fixture() -> FieldSet {
+        FieldSet::new(
+            Geometry {
+                rooms: vec![RectRoom {
+                    id: 1,
+                    min: Point { x: 0., z: 0. },
+                    max: Point { x: 4., z: 4. },
+                }],
+                walls: vec![],
+                solids: vec![],
+            },
+            FieldConfig {
+                cell_size: 1.,
+                ..FieldConfig::default()
+            },
+            vec![],
+            None,
+        )
+        .unwrap()
+    }
+    fn fill(f: &mut FieldSet, value: impl Fn(Point) -> f64) {
+        for i in 0..f.active.len() {
+            let v = value(f.center(i));
+            f.odors[0][i] = v;
+            f.odors[1][i] = 2. * v;
+            f.brightness[i] = 3. * v;
+            f.shade[i] = 4. * v;
+        }
+    }
+    fn assert_sample(s: FieldSample, v: f64) {
+        for (actual, expected) in [
+            (s.attractive_odor, v),
+            (s.repellent_odor, 2. * v),
+            (s.brightness, 3. * v),
+            (s.shade, 4. * v),
+        ] {
+            assert!((actual - expected).abs() < 1e-10, "{actual} != {expected}");
+        }
+    }
+    #[test]
+    fn constants_survive_domain_edges_and_invalid_points_return_zero() {
+        let mut f = fixture();
+        fill(&mut f, |_| 7.);
+        for p in [
+            Point { x: 0., z: 0. },
+            Point { x: 4., z: 4. },
+            Point { x: 0.1, z: 2.8 },
+        ] {
+            assert_sample(f.sample_point(p), 7.);
+        }
+        for p in [
+            Point { x: -0.001, z: 2. },
+            Point { x: f64::NAN, z: 2. },
+            Point {
+                x: 2.,
+                z: f64::INFINITY,
+            },
+        ] {
+            assert_eq!(f.sample_point(p), FieldSample::default());
+        }
+    }
+    #[test]
+    fn linear_fields_are_exact_through_centres_and_former_cell_boundaries() {
+        let mut f = fixture();
+        fill(&mut f, |p| 1. + 2. * p.x + 3. * p.z);
+        for step in 0..=3000 {
+            let p = Point {
+                x: 0.5 + step as f64 / 1000.,
+                z: 1.123,
+            };
+            assert_sample(f.sample_point(p), 1. + 2. * p.x + 3. * p.z);
+        }
+        for i in 0..f.active.len() {
+            assert_sample(f.sample_point(f.center(i)), f.odors[0][i]);
+        }
+    }
+    #[test]
+    fn visible_support_is_bounded_and_does_not_leak_through_walls_or_solids() {
+        for solid in [false, true] {
+            let mut f = fixture();
+            if solid {
+                f.geometry.solids.push(SolidProp {
+                    id: 1,
+                    min: Point { x: 1.1, z: 0. },
+                    max: Point { x: 1.2, z: 4. },
+                    height: 1.,
+                });
+            } else {
+                f.geometry.walls.push(Wall {
+                    a: Point { x: 1.1, z: 0. },
+                    b: Point { x: 1.1, z: 4. },
+                });
+            }
+            fill(&mut f, |p| if p.x < 1.1 { 2. } else { 100. });
+            // The containing centre at x=1.5 is hidden, but x=0.5 remains visible.
+            assert!(f.cell_at(Point { x: 1.05, z: 2. }).is_none());
+            assert_sample(f.sample_point(Point { x: 1.05, z: 2. }), 2.);
+            assert_sample(f.sample_point(Point { x: 1.25, z: 2. }), 100.);
+            assert_eq!(
+                f.sample_point(Point { x: 1.1, z: 2. }),
+                FieldSample::default()
+            );
+        }
+        let mut f = fixture();
+        fill(&mut f, |p| if p.x < 2. { 0. } else { 10. });
+        for n in 0..=100 {
+            let s = f.sample_point(Point {
+                x: 1.5 + n as f64 / 100.,
+                z: 1.8,
+            });
+            assert!((0. ..=10.).contains(&s.attractive_odor));
+        }
+        f.active.fill(false);
+        assert_eq!(
+            f.sample_point(Point { x: 2., z: 2. }),
+            FieldSample::default()
+        );
     }
 }

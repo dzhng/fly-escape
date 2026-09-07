@@ -1,6 +1,6 @@
 # 26 — Continuous field sampling
 
-Status: ready to implement. Dependency: 25 reproduction. Required before physical parameter adoption and 20.
+Status: implemented and verified; see [evidence](../assets/evidence/26/README.md). Aliasing corrected; physical detector calibration remains open. Dependency: 25 reproduction. Required before physical parameter adoption and 20.
 
 ## Contract and owner
 
