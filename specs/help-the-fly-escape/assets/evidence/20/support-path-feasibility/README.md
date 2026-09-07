@@ -315,9 +315,11 @@ The rotating experiments use that original geometry:
 - [Dominated charts](dominated-chart.md) exempt strictly losing witnesses from
   irrelevant domain checks and measure bounded separating-axis proposals.
 
-The next measured failure is a face-to-edge transition, rather than a newly
-winning triangle-face chart. Extend the local certificate only after identifying
-its actual original-plane features. Small excursion or height error does not
+The [shared-edge diagnosis](shared-edge-seam.md) identifies a face-to-edge
+transition rather than a newly winning triangle-face chart. Its [bounded
+certificate](face-edge-handoff.md) now covers the pinned fixed-XZ seam, including
+both adjacent triangles. The next experiment is actual body/recording requests
+using one shared evaluator, before expanding unrestricted feature coverage. Small excursion or height error does not
 prove continued ownership across a real gap; unresolved intervals remain explicit.
 Rotating certificates are conditional on the declared path and rounded geometry;
 exact caller-start preservation and runtime quaternion conversion are still open.
