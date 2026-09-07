@@ -1,12 +1,18 @@
 # 16 — Four more authored puzzles
 
-Status: planned. Dependencies: 15.
+Status: implementation pending Level 1 acceptance; additional content and campaign progression are not implemented. Dependencies: 15.
 
 ## Contract and seam
 
 Five sequentially unlocked levels grow in rooms and decisions; food sustains larger-map routes.
 
 Four additional LevelDefs using existing tool/geometry schema → campaign progression.
+
+## Implementation pickup
+
+After 15 passes, author one level at a time in the same authoritative content seam. Add a campaign selector and derive one-star unlocks from persisted best stars; the existing progress store already holds per-level stars and editable setups, so it remains the persistence owner. The current browser still starts the integration fixture and has no campaign navigation or unlock consumer. Do not create a second progress store or duplicate level geometry in TypeScript.
+
+The [game contract](../GAMEPLAY.md) owns increasing room counts, tool eligibility, topology and food-dependence requirements.
 
 ## Runnable review surface
 

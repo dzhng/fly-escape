@@ -1,20 +1,16 @@
 # Help the Fly Escape — browser game
 
-Status: **implementation active — campaign feasibility and remaining tool art**. Last updated: 2026-09-07.
+Status: **implementation active — tool integration gates and campaign validation**. Last updated: 2026-09-07.
 
 Build a local, fully 3D browser game in which the player places environmental tools and watches a real connectome-driven swarm attempt to escape. The [game contract](GAMEPLAY.md) owns user requirements; [architecture contracts](CONTRACTS.md) own runtime/data seams. This plan replaces the previous Python tech-demo scope.
 
-## Next Agent Prompt
+## Current pickup
 
-You are implementing the whole browser game. Current pickup: resolve the Level 1 navigation/placement-benefit gate while completing remaining tool art and release preparation in parallel. No campaign level is accepted. Native probes use the real graph and the same paired seeds; heading and gain brackets failed to improve placement benefit, so current diagnostics measure directional odor availability and isolate cold startup from field/neural settling. See [15 evidence](assets/evidence/15/README.md). Do not replace neural movement with steering or lower the campaign criteria.
+Finish slice 14's root integration readiness checks and human shot checkpoint for the complete six-tool presentation. The editor/attempt loop and authored tool assets are integrated; do not mark 14 accepted until those remaining gates are recorded. Slice 15's fan-assisted candidate has a positive three-seed pilot and is selected for frozen full validation. Its canonical candidate, acceptance requirements and integration work live in [15](slices/15-first-level.md); failed experiments remain linked there. No campaign level is accepted.
 
-Completed: 01–13. The authored house, shared palette and thin trails pass integrated source, browser and independent visual checks. Lighting passes its complete food/exit review and twenty-fly hardware profile. Slice 14's editor, fruit/crumb assets and combined model-readiness gate are integrated; remaining tool shapes are an explicitly bounded subpass. [17 cleanup](assets/evidence/17/cleanup.md) retires the Python runtime while preserving byte-identical offline reference oracles; [About/static-use preparation](assets/evidence/17/about/review.md) adds attribution and local serving guidance.
+Then author and accept each remaining level with progression in [16](slices/16-campaign.md), followed by final production/platform gates in [17](slices/17-static-release.md). [The remaining-work audit](assets/planning/maintenance-2026-09-07.md) distinguishes missing implementation from verification. Update this pickup, checklist and owning slice status together; completed experiments belong in evidence, not new pickup paragraphs.
 
-Priority order: finish 14 remaining-tool/readiness gates; resolve 15 with tuning and held-out evidence; author/validate 16; then run 17 release gates and whole-spec review. Keep prepared work separate from accepted dependent slices. Update this prompt, the checklist and slice status together after each pass.
-
-Performance evidence is build-specific: [ten full baseline attempts](assets/evidence/05/full-playback/review.md) passed without underruns, and a later setup/core build passes one full integration run plus a matching 250 MiB memory probe. Neither substitutes for final release validation. 100 flies remains a future capacity target. Browser apps live under `apps/`; neurons and measured circuit activity are explained separately from controls and game rules.
-
-Use the existing contract owners and preserve real graph provenance and Python-parity neural updates. No compatibility layer is required. CLI second-opinion review remains unavailable with the installed client/configured model; independent agent source/visual reviews are recorded instead. Reproduce ignored graph artifacts with the [exporter](../../scripts/connectome/README.md). Continue through all open items; a committed pass is a checkpoint, not completion.
+Slices 01–13 are accepted. Existing performance evidence is build-specific and does not replace final release measurements. Preserve actual graph provenance, neural motor ownership and the established campaign criteria; no steering, reduced graph or silent sensitivity change. Reproduce ignored graph artifacts with the [exporter](../../scripts/connectome/README.md). A committed pass is a checkpoint, not completion.
 
 ## Global checklist and review map
 
@@ -62,8 +58,4 @@ Before closing a substantive pass, review ownership with [refactor-clean](../../
 - [Discovery map](BROWSER_GAME_MAP.md): historical interview record, superseded by this plan.
 - [Planning validation](assets/planning/review.md): review results for this specification, not game acceptance.
 
-The open empirical questions are explicit: source availability/extraction group coverage (01), correct neural port and observed movement (02), effective cue mappings (03), graph-driven feeding (04), sustainable 20-fly production (05), close asset readability (07–12), and puzzle robustness (15–16). Their slices name the experiment and verdict. Ordinary tuning is delegated there; these unknowns are not reasons to invent extra architecture up front.
-
-## Native Level 1 preparation handoff
-
-[Slice 15 exploratory calibration](assets/evidence/15/README.md) adds authorable content and a real Graph/Attempt paired-seed probe. Current unfrozen sparse content fails its one-seed placement-effect pilot (3 reference escapes versus 5 poor and 6 empty). Heading, motor-gain and startup diagnostics also failed to establish useful placement effect. Actual sensory telemetry identifies low interior contrast; any next detector-sensitivity experiment requires explicit reslicing. No campaign promotion or 30+30 acceptance run; browser integration and performance remain separate gates.
+Remaining empirical gates are campaign reliability, useful placement effects and food dependence on larger maps, followed by final-build performance and platform coverage. Accepted component evidence stays with its owning slice; a newly measured regression reopens that contract explicitly.

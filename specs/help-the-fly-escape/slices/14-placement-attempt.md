@@ -1,6 +1,6 @@
 # 14 — Editable setup and attempt loop
 
-Status: core preparation implemented in isolation; setup UI planned. Dependencies: 05,06,10,13.
+Status: editor, attempt loop and six-tool art integrated; root readiness and human checkpoint pending. Dependencies: 05,06,10,13.
 
 ## Contract and seam
 
@@ -8,18 +8,11 @@ Players can place a fixed inventory, run, inspect results and retry with their s
 
 web attempt state machine + sim placement validation/AttemptSpec → Worker; result → local progress store.
 
-## Preparation passes
+## Integrated ownership and remaining gate
 
-The accepted diagnostic fixtures select one sensory pathway for an entire attempt. That cannot represent simultaneous fruit, repellent and light tools. Before placement integration, prepare these independently verifiable core passes; final slice acceptance retains the dependencies above.
+The core owns simultaneous odor/vision inputs, wall-aware transport and fan wind, placement validation, inventory and immutable attempt inputs. The web editor uses that seam for atomic edits and the run/result/retry lifecycle. [Mixed-sensory evidence](../assets/evidence/14/mixed-sensory.md), [placement evidence](../assets/evidence/14/placement.md) and [setup integration](../assets/evidence/14/setup/integrated/review.md) preserve the component and browser results. [Integrated performance](../assets/evidence/14/integrated-performance/review.md) is tied to its measured build, not final release.
 
-1. Separate attractive and repellent odor concentrations in the existing wall-aware solver. Both reuse its transport and geometry; neither becomes a direct steering vector. Export and record both antenna samples. Preserve the single-cue probe results and update the archive bound for the extra recorded values.
-2. Allow simultaneous sensory currents from the relevant odor and vision pathways. Map each odor channel using measured circuit responses, not the biological words “excitatory” and “inhibitory.” Verify each source alone, mixed sources, per-channel ablation and deterministic replay. This source-to-input mapping is an explicit modeling assumption in the science panel.
-3. Prepare local fan wind: the diagnostic ambient vector cannot represent a placed directional tool. Add bounded wall-occluded fan footprints to the shared field grid; both odor face advection and body samples consume this owner. Use a conservative per-cell outgoing-flux bound for solver subdivision. Preserve ambient-wind probes. This stylized jet is not a fluid simulation.
-4. Resolve tool placements into core sources, food contact regions and these local fans. Core edits validate the whole proposed setup before replacement and derive inventory from accepted placements, so invalid edits cannot spend an item. Export immutable resolved placements with attempt inputs. Food replenishment remains separate from food odor, so feeding ablation can preserve the cue. Then build setup UI against this validated seam.
-
-Changes to packed samples must regenerate the single Rust-owned layout and its TypeScript consumers together; no compatibility format survives in this unshipped app. Re-run the affected memory/performance gates before accepting mixed-tool attempts. Do this preparation in isolation from the sustained slice 05 benchmark so its build identity remains interpretable.
-
-Preparation passes 1–4 have core/API implementations in isolation, including local fans and placement resolution; see [mixed-sensory evidence](../assets/evidence/14/mixed-sensory.md) and [placement evidence](../assets/evidence/14/placement.md). Setup UI, campaign tuning and integrated release gates remain planned. Integration must rerun the affected browser memory/performance gates: a full 20-fly archive bound is now 80,104,384 bytes, still below 128 MiB. This does not close slice 14 or change its dependencies.
+All six catalog tools now use authored assets through one placement-model owner. [Food evidence](../assets/evidence/14/food-integrated/review.md) and [remaining-tool evidence](../assets/evidence/14/tools/review.md) retain rejected candidates, replacements and independent final full-frame/crop reviews. Root integration readiness/failure/delay coverage and the human shot checkpoint remain before slice acceptance. Campaign usefulness and difficulty are separate gates in 15–16.
 
 ## Runnable review surface
 
@@ -43,22 +36,10 @@ Human feedback that changes this slice: Placement friction can change reversible
 
 Must stay green: all accepted dependency contracts and their focused fixtures; neural motor ownership, real-data provenance, bounded work and the [global invariants](../README.md#standing-gates-and-ownership). Do not broaden testing without a new failure or changed consumer. Record evidence under `assets/evidence/14/` and update the README handoff before ending the pass. Unlisted material decisions require a spec update.
 
-The functional setup/attempt pass and its evidence are documented in [setup review](../assets/evidence/14/setup/README.md). This closes the editor lifecycle seam; it does not claim campaign balance or decorative-art acceptance.
+## Presentation contract
 
-## Bounded Level 1 tool-art preparation
+The authoritative catalog owns placement and contact footprints; renderer transforms consume placement centre and heading. Static, non-solid floor assets retain near-flush relief at or below 0.005 world units. They add no collider, movement height, light source, heading correction or field computation. Fruit provides edible contact; crumbs provide scent without food. Body-circle food contact may begin beyond the drawn footprint: verify recognizable food and grounded attached feeding, without promising literal mouth intersection or changing physics to conceal the boundary.
 
-Fruit and scent crumbs need recognizable Blender-authored shapes in setup and recorded playback; the colored cylinders are diagnostic placement markers, not final tool art. This subpass owns only these two silhouettes, their replaceable GLBs/.blend sources and their placement/food-context verification. Fruit remains an edible, non-solid floor contact surface; crumbs retain odor-only semantics. Later vinegar, lamp, shade and fan shapes are separate future art subpasses, not implicit work in this checkpoint.
+Vinegar is a shallow liquid saucer, fan a recessed rotor/grille with a direction mark, lamp a square pale-lens fixture, and shade a dark slatted cue tile. Shade marks a source; it is not a simulated canopy. Tool appearance does not establish a biological effect. Preserve separate Blender sources, static bounds, catalog scaling, ghost/replacement disposal, fan heading and paused/reverse identity.
 
-The authoritative catalog owns placement radius and food contact radius. Art is anchored to placement centre/heading and scaled from its footprint, without changing geometry, collision, neural movement, feeding heading, materials for rooms, or lighting. Near-flush relief at or below 0.005 world units preserves the existing ground-plane presentation rather than introducing a second surface-height simulation. Capture and document native asset bounds, the relief/foot-contact approximation and any boundary feeding mismatch: the core can register body-circle contact outside the visual footprint, which is not proof of mouth contact.
-
-Verification is separate from functional editor acceptance: preserved separate Blender source scenes and GLB round-trip; finite static bounds and replacement/disposal checks; same-state setup/playback before/after; actual recorded feeding context where available; fresh visual critique for shape readability, floor contact and body clearance. This prepared pass does not close 14, dependency 10, campaign 15 or the later tool-art breadth.
-
-Required presentation assets share setup readiness: house, food, and fly must all load before Run. Playback holds its presentation clock until that view's assets arrive, retaining requested pause/play intent. A failed required asset remains an explicit error; late results release resources when their view has retired. HTTP failure/delay tests run against the development asset transport because production bundling may inline small GLBs.
-
-## Remaining floor tool art, shared with campaign preparation
-
-Vinegar, fan, lamp and shade are separately reviewable authored sources under the same non-solid floor contract as food. First verify vinegar, then fan, lamp and shade; later-level availability and measured neural cue acceptance remain owned by campaign/content work. This art subpass cannot establish a biological effect.
-
-Delegated representations: vinegar is a shallow amber liquid/saucer with ripple marks; fan is a recessed rotor/grille with a forward direction mark; lamp is a square metal fixture with a pale lens; shade is a dark slatted cue tile. The shade is a readable source marker, not a simulated canopy or a promise of physical shadow casting. Every static GLB fits native radius one and Y=0…0.005, then scales in X/Z from its authoritative catalog footprint. No new collision, movement height, light source, heading correction or field computation is permitted.
-
-One placement-model owner and loader handles all six kinds, including replacements and ghosts. Separate Blender scenes and preserved source files remain required. Verify every authored shape close and at Overview scale, fan heading against recorded field direction, static bounds and shared disposal, valid/invalid replacement, actual setup/playback readiness, and paused/reverse identity. Fresh critique on all final full frames/crops must explicitly assess shade versus ordinary floor readability. This prepared art checkpoint does not close the later campaign cue/topology gates.
+Required house, placement models and fly share setup readiness before Run. Playback holds its presentation clock until its required assets arrive while retaining pause/play intent. Failures remain explicit; late results release resources after a view retires. Root's final integration gate must exercise failure/delay and lifecycle transitions against actual assets; transport-specific development tests remain relevant where production inlines small GLBs.
