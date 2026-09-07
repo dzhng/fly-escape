@@ -1,0 +1,509 @@
+{
+  "browser": "152.0.7977.77",
+  "spec": {
+    "schemaVersion": 1,
+    "attemptId": "feeding-3",
+    "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+    "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+    "simulationBuildId": "c8874644fcfa93fb312e8d3dff9c531dcd2b19882178644445ca9fac5ed61b5c",
+    "tuningHash": "57494ce984f5fea95122915827e428032eeabc9ef6ca86f57ef5072a32bc8d53",
+    "placements": [],
+    "levelHash": "2c531bc89add5bb0442d926801e627a33534c524d62466cacdf82246512e943f",
+    "levelId": "lifecycle-meal",
+    "rootSeed": "6",
+    "flyCount": 20,
+    "durationTicks": 300
+  },
+  "controlledFlatPatch": true,
+  "matchedInputsExceptFeedingRate": true,
+  "identicalFoodAndFields": true,
+  "activeNeuralSensoryAndInputPosesEqual": true,
+  "fedCount": 7,
+  "medianLifetimeDeltaTicks": 0,
+  "flies": [
+    {
+      "flyId": 0,
+      "enabled": {
+        "gain": 3.7489599609375004,
+        "starts": [
+          {
+            "tick": 56,
+            "support": null,
+            "spikeFraction": 0.25
+          }
+        ],
+        "terminal": {
+          "tick": 173,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [
+          {
+            "tick": 56,
+            "support": null,
+            "spikeFraction": 0.25
+          }
+        ],
+        "terminal": {
+          "tick": 111,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 62
+    },
+    {
+      "flyId": 1,
+      "enabled": {
+        "gain": 2.835029296875001,
+        "starts": [
+          {
+            "tick": 61,
+            "support": null,
+            "spikeFraction": 0.25
+          }
+        ],
+        "terminal": {
+          "tick": 158,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [
+          {
+            "tick": 61,
+            "support": null,
+            "spikeFraction": 0.25
+          }
+        ],
+        "terminal": {
+          "tick": 110,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 48
+    },
+    {
+      "flyId": 2,
+      "enabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 105,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 105,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 0
+    },
+    {
+      "flyId": 3,
+      "enabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 105,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 105,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 0
+    },
+    {
+      "flyId": 4,
+      "enabled": {
+        "gain": 2.386093750000001,
+        "starts": [
+          {
+            "tick": 57,
+            "support": null,
+            "spikeFraction": 0.25
+          }
+        ],
+        "terminal": {
+          "tick": 148,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [
+          {
+            "tick": 57,
+            "support": null,
+            "spikeFraction": 0.25
+          }
+        ],
+        "terminal": {
+          "tick": 107,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 41
+    },
+    {
+      "flyId": 5,
+      "enabled": {
+        "gain": 4.0865380859375,
+        "starts": [
+          {
+            "tick": 56,
+            "support": null,
+            "spikeFraction": 0.25
+          }
+        ],
+        "terminal": {
+          "tick": 180,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [
+          {
+            "tick": 56,
+            "support": null,
+            "spikeFraction": 0.25
+          }
+        ],
+        "terminal": {
+          "tick": 110,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 70
+    },
+    {
+      "flyId": 6,
+      "enabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 105,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 105,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 0
+    },
+    {
+      "flyId": 7,
+      "enabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 104,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 104,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 0
+    },
+    {
+      "flyId": 8,
+      "enabled": {
+        "gain": 2.6309814453125,
+        "starts": [
+          {
+            "tick": 57,
+            "support": null,
+            "spikeFraction": 0.25
+          }
+        ],
+        "terminal": {
+          "tick": 151,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [
+          {
+            "tick": 57,
+            "support": null,
+            "spikeFraction": 0.25
+          }
+        ],
+        "terminal": {
+          "tick": 107,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 44
+    },
+    {
+      "flyId": 9,
+      "enabled": {
+        "gain": 2.775659179687501,
+        "starts": [
+          {
+            "tick": 58,
+            "support": null,
+            "spikeFraction": 0.25
+          }
+        ],
+        "terminal": {
+          "tick": 155,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [
+          {
+            "tick": 58,
+            "support": null,
+            "spikeFraction": 0.25
+          }
+        ],
+        "terminal": {
+          "tick": 110,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 45
+    },
+    {
+      "flyId": 10,
+      "enabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 103,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 103,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 0
+    },
+    {
+      "flyId": 11,
+      "enabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 103,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 103,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 0
+    },
+    {
+      "flyId": 12,
+      "enabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 106,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 106,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 0
+    },
+    {
+      "flyId": 13,
+      "enabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 103,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 103,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 0
+    },
+    {
+      "flyId": 14,
+      "enabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 105,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 105,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 0
+    },
+    {
+      "flyId": 15,
+      "enabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 103,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 103,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 0
+    },
+    {
+      "flyId": 16,
+      "enabled": {
+        "gain": 4.75,
+        "starts": [
+          {
+            "tick": 53,
+            "support": null,
+            "spikeFraction": 0.25
+          }
+        ],
+        "terminal": {
+          "tick": 190,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [
+          {
+            "tick": 53,
+            "support": null,
+            "spikeFraction": 0.25
+          }
+        ],
+        "terminal": {
+          "tick": 111,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 79
+    },
+    {
+      "flyId": 17,
+      "enabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 103,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 103,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 0
+    },
+    {
+      "flyId": 18,
+      "enabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 103,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 103,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 0
+    },
+    {
+      "flyId": 19,
+      "enabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 103,
+          "outcome": "starved"
+        }
+      },
+      "disabled": {
+        "gain": 0,
+        "starts": [],
+        "terminal": {
+          "tick": 103,
+          "outcome": "starved"
+        }
+      },
+      "lifetimeDeltaTicks": 0
+    }
+  ]
+}
