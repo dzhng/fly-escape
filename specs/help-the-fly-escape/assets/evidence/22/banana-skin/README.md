@@ -21,3 +21,5 @@ Root integration passes 49 renderer tests, both exact contact export tests, type
 - **Exact native surface retained — sound, high confidence.** A fly following the banana must touch the same surface after a visual change. UV and color seams may duplicate exported vertices, so the shared canonical contact bake is compared exactly, including triangle order, rather than merely checking bounds. No new collision proxy or food area is introduced.
 
 The shared native thumbnail renderer regenerated the banana image. Actual second-house tray captures retain the 48 px object picture and readable name. The before thumbnail was supplied only for image requests; an initial scratch interception incorrectly returned PNG for Vite’s JavaScript image-import module and was corrected without app changes. Final setup visibly renders the house and objects.
+
+The merged context/close/prior-close shots were opened together in Preview for a non-blocking review. With no user response after five minutes, the independently reviewed bounded improvement was retained and Preview closed. Final realism remains open.
