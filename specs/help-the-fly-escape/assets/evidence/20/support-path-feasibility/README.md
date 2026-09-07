@@ -296,7 +296,10 @@ shows why the favorable original contact poses cannot select a hull alone.
 - Preserve the native geometry and established numerical tolerance. Neither
   clearance padding nor a more permissive penetration threshold is adopted here.
 
-The next bounded experiment is resolving feature-domain and competitor events
-inside the certified interval set, then measuring interval renewal and path-change
-frequency. Continuous accepted-path validity and browser work bounds remain
-separate gates.
+The current pickup is the [original-plane inventory](native-envelope/plane-inventory/README.md)
+and its bounded fixed-orientation path component under the existing query owner.
+Then resolve rotating feature-domain and global competitor events. The
+[affine trigonometric reduction](affine-trig-domains.md) is an independently
+reviewed mathematical direction for some translating-rotation constraints;
+numerical sign certification and actual path construction remain unimplemented.
+Continuous accepted-path validity and browser work bounds remain separate gates.
