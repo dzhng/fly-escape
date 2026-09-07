@@ -15,3 +15,9 @@ Use the production renderer in the existing asset workbench, with a representati
 For visual evidence, save full frames at default, close follow, further zoom and Overview plus the named crops. Use [compare-screenshots](../../../.agents/skills/compare-screenshots/SKILL.md) against the preceding pass/reference and run an unprimed [screenshot-critique](../../../.agents/skills/screenshot-critique/SKILL.md) as the last visual acceptance check. Open shots through [preview-shots](../../../.agents/skills/preview-shots/SKILL.md); the five-minute feedback window is non-blocking while independent work continues. Record the verdict and close shots.
 
 Delegated: reversible asset composition, implementation naming and measurements needed to resolve this slice's question. Record new physical assumptions before dependent implementation; do not silently change neuron dynamics, world scale, contact semantics or fidelity target. Update the global handoff and bank focused evidence under this slice's number. Deferred variables must remain frozen until their owning slice.
+
+## Prepared banana shape
+
+A bounded [banana study](../../../assets/food/banana/README.md) assumes a medium household fruit, approximately 22 cm long and 4 cm thick, resting on its side. Geometry is one closed baked skin including tapered ends; the grounded pivot and measured native-metre bounds survive export without stretching. Shared export/staging helpers remain the owner. This pass prepares authoring evidence only: runtime catalogue adoption, room framing and actual contact remain open gates; neutral material keeps slice 22 frozen.
+
+The [prepared evidence and review](../assets/evidence/21/banana-prepared/README.md) retain all rejected and final authoring views. Fresh critique drove end-shape refinement; the result is recognizable but still somewhat stylized at the shoulder/stalk. Browser replacement/disposal, room composition and physical food contact remain explicit integration gates.

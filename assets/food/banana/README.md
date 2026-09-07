@@ -1,0 +1,7 @@
+# Banana shape preparation
+
+One ordinary medium household banana is assumed: approximately 22 cm long and 4 cm thick, lying on its side. The asymmetric stalk and blossom end distinguish orientation. Its closed skin is a single baked surface in native metres, with a grounded envelope-centre pivot; it has no separate overlapping stalk collider.
+
+[The authoring source](author.py) owns dimensions and reuses the shared house export and neutral staging helpers. This is a neutral silhouette study: yellow skin, bruising and other material treatment belong to slice 22. The exported surface is prepared for future contact evaluation, not registered as runtime food. Closed topology does not establish walking, feeding, moving contact or gameplay acceptance.
+
+Run `author.py` through Blender, then [validate.py](validate.py) to inspect the reimported GLB and reload the saved native scene. The existing [contact baker](../../../apps/asset-lab/scripts/export-contact.ts) accepts this GLB; the baked triangles are evidence only. The durable topology validator checks welded manifold edges, winding, positive volume, triangle area and nonadjacent BVH overlaps. Its 10 nm weld applies only to the temporary GLB inspection mesh, joining attribute-split vertices; it never modifies the authored or exported asset. Bounds remain owned by the shared exporter, while this validator checks surface integrity. It is a bounded shape check, not an exact arithmetic collision proof.
