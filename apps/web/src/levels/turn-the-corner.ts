@@ -398,12 +398,12 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
             "quarterTurns": 1
           },
           "min": {
-            "x": 3.35,
-            "z": 3.55
+            "x": 5.3,
+            "z": 0.7
           },
           "max": {
-            "x": 4.2,
-            "z": 5.449999999999999
+            "x": 6.15,
+            "z": 2.6
           },
           "height": 0.85
         },
@@ -415,11 +415,11 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
           },
           "min": {
             "x": 5.0,
-            "z": 5.35
+            "z": 3.1
           },
           "max": {
             "x": 6.2,
-            "z": 5.8
+            "z": 3.55
           },
           "height": 0.85
         }
