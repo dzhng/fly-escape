@@ -1,4 +1,4 @@
-"""Native house-asset export; Blender and glTF round trips share catalog bounds."""
+"""Native house-asset export and neutral staging; asset sources own geometry/framing."""
 import bpy
 from mathutils import Vector
 
@@ -39,3 +39,47 @@ def export_static(scene, path, size):
             if material.users == 0:
                 bpy.data.materials.remove(material)
         bpy.data.scenes.remove(roundtrip)
+
+def neutral_stage(name, parts, neutral, *, ortho_scale, ground_extent):
+    """Shared white-light staging; framing stays with each authored asset."""
+    preview = bpy.data.scenes.new(name+'-Neutral-AuthoringStage')
+    for obj in parts: preview.collection.objects.link(obj)
+    preview.render.engine = 'CYCLES'
+    preview.cycles.device = 'CPU'
+    preview.cycles.samples = 32
+    preview.cycles.use_denoising = True
+    preview.render.resolution_x = 1200
+    preview.render.resolution_y = 900
+    preview.render.resolution_percentage = 100
+    preview.world = bpy.data.worlds.new(name+'-Neutral-World')
+    preview.world.use_nodes = True
+    preview.world.node_tree.nodes['Background'].inputs[0].default_value = (0.3,0.3,0.3,1)
+    preview.world.node_tree.nodes['Background'].inputs[1].default_value = 0.5
+    preview.view_settings.view_transform = 'AgX'
+    light = bpy.data.lights.new(name+'-White-Area', 'AREA')
+    light.energy = 450
+    light.shape = 'DISK'
+    light.size = 3
+    lamp = bpy.data.objects.new(light.name, light)
+    preview.collection.objects.link(lamp)
+    lamp.location = (-2,-3,4)
+    lamp.rotation_euler = (Vector((0,0,0.4))-lamp.location).to_track_quat('-Z','Y').to_euler()
+    mesh = bpy.data.meshes.new('AuthoringGround')
+    mesh.from_pydata([(-ground_extent,-ground_extent,-0.001),(ground_extent,-ground_extent,-0.001),(ground_extent,ground_extent,-0.001),(-ground_extent,ground_extent,-0.001)],[],[(0,1,2,3)])
+    ground = bpy.data.objects.new('AuthoringGround',mesh)
+    preview.collection.objects.link(ground)
+    mesh.materials.append(neutral)
+    camera_data = bpy.data.cameras.new(name+'-MeasurementCamera')
+    camera_data.type = 'ORTHO'
+    camera_data.ortho_scale = ortho_scale
+    camera = bpy.data.objects.new(camera_data.name,camera_data)
+    preview.collection.objects.link(camera)
+    preview.camera = camera
+    return preview
+
+def render_views(preview, directory, *, target, views):
+    for name, position in views:
+        preview.camera.location = position
+        preview.camera.rotation_euler = (Vector(target)-preview.camera.location).to_track_quat('-Z','Y').to_euler()
+        preview.render.filepath = str(directory/(name+'.png'))
+        bpy.ops.render.render(write_still=True, scene=preview.name)

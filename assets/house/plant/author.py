@@ -6,10 +6,10 @@ from pathlib import Path
 from runpy import run_path
 from math import sin, cos, pi
 import bpy, bmesh, json
-from mathutils import Vector
 
 OUT = Path(__file__).resolve().parent
-export_static = run_path(str(OUT.parent / 'authoring.py'))['export_static']
+authoring = run_path(str(OUT.parent / 'authoring.py'))
+export_static = authoring['export_static']
 EVIDENCE = OUT.parents[2] / 'specs/help-the-fly-escape/assets/evidence/21/plant-prepared'
 EVIDENCE.mkdir(parents=True, exist_ok=True)
 asset = bpy.data.scenes.new('Plant-Metres')
@@ -92,44 +92,8 @@ for i,(angle,length,lean,width) in enumerate([
 size = [0.3,1.05,0.3]
 bounds = export_static(asset, OUT/'plant.glb',size)
 (EVIDENCE/'roundtrip.json').write_text(json.dumps({'visualEnvelopeMetres':size,'bounds':bounds,'physicalPlanterMetres':[0.3,0.4,0.3],'integration':'not adopted'},indent=2)+'\n')
-# Separate neutral authoring stage. None of these lights, camera or floor enter the GLB.
-preview = bpy.data.scenes.new('Plant-Neutral-AuthoringStage')
-for obj in parts: preview.collection.objects.link(obj)
-preview.render.engine = 'CYCLES'
-preview.cycles.device = 'CPU'
-preview.cycles.samples = 32
-preview.cycles.use_denoising = True
-preview.render.resolution_x = 1200
-preview.render.resolution_y = 900
-preview.render.resolution_percentage = 100
-preview.world = bpy.data.worlds.new('Plant-Neutral-World')
-preview.world.use_nodes = True
-preview.world.node_tree.nodes['Background'].inputs[0].default_value = (0.3,0.3,0.3,1)
-preview.world.node_tree.nodes['Background'].inputs[1].default_value = 0.5
-preview.view_settings.view_transform = 'AgX'
-light = bpy.data.lights.new('Plant-White-Area', 'AREA')
-light.energy = 450
-light.shape = 'DISK'
-light.size = 3
-lamp = bpy.data.objects.new(light.name, light)
-preview.collection.objects.link(lamp)
-lamp.location = (-2,-3,4)
-lamp.rotation_euler = (Vector((0,0,0.4))-lamp.location).to_track_quat('-Z','Y').to_euler()
-mesh = bpy.data.meshes.new('AuthoringGround')
-mesh.from_pydata([(-200,-200,-0.001),(200,-200,-0.001),(200,200,-0.001),(-200,200,-0.001)],[],[(0,1,2,3)])
-ground = bpy.data.objects.new('AuthoringGround',mesh)
-preview.collection.objects.link(ground)
-mesh.materials.append(neutral)
-camera_data = bpy.data.cameras.new('Plant-MeasurementCamera')
-camera_data.type = 'ORTHO'
-camera_data.ortho_scale = 1.8
-camera = bpy.data.objects.new(camera_data.name,camera_data)
-preview.collection.objects.link(camera)
-preview.camera = camera
-for name, position in [('three-quarter',(1.8,-2.8,1.8)),('front',(0,-3,1.4)),('rear',(-1.8,2.8,1.8))]:
-    camera.location = position
-    camera.rotation_euler = (Vector((0,0,0.525))-camera.location).to_track_quat('-Z','Y').to_euler()
-    preview.render.filepath = str(EVIDENCE/(name+'.png'))
-    bpy.ops.render.render(write_still=True,scene=preview.name)
+preview = authoring['neutral_stage']('Plant', parts, neutral, ortho_scale=1.8, ground_extent=200)
+authoring['render_views'](preview, EVIDENCE, target=(0,0,0.525), views=[
+    ('three-quarter',(1.8,-2.8,1.8)),('front',(0,-3,1.4)),('rear',(-1.8,2.8,1.8))])
 bpy.data.libraries.write(str(OUT/'plant.blend'), {asset,preview}, fake_user=True, compress=True)
 print('Prepared plant:', len(parts), 'parts; separate asset and neutral stage scenes preserved')
