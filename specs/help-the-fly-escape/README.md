@@ -45,7 +45,7 @@ Open the [interactive roadmap](visualizations/roadmap.html) for dependency and m
 - [x] [29 — Curved-surface query feasibility](slices/29-surface-query.md) — prerequisite for20 contact integration.
 - [ ] [20 — Authoritative furnishing and food contact](slices/20-furnished-contact.md) — dependencies: 19,25.
 - [ ] [21 — Recognizable household shapes](slices/21-house-shapes.md) — dependencies: 19,20.
-- [ ] [22 — Natural authored materials](slices/22-house-surfaces.md) — dependencies: 21.
+- [ ] [22 — Natural authored materials](slices/22-house-surfaces.md) — includes a finite circular grass exterior and bounded rendering; dependencies: 21.
 - [ ] [23 — Daylight and household illumination](slices/23-house-illumination.md) — dependencies: 22.
 - [ ] [24 — Follow visibility in a furnished room](slices/24-furnished-readability.md) — dependencies: 23,18.
 - [ ] [15 — Level 1 is the tutorial](slices/15-first-level.md) — dependencies: 18–24 and the accepted foundations.

@@ -8,6 +8,16 @@ Preserve Blender-authored glTF PBR materials in production. Remove unconditional
 
 Visual variable: surface appearance. Judge wood grain scale, painted plaster, fabric, leaf surfaces and fruit skin at close range, with room-level real colors. Verify authored color/roughness survive import, texture disposal and replacement, and record texture/material/draw-call cost. Primary references are in RESEARCH.md. Lighting improvements are deferred to 23.
 
+## Exterior grass pass
+
+Implement the [exterior coverage requirement](../GAMEPLAY.md#visual-target-a-warm-lived-in-house) as a separate focused visual pass within this slice, keeping the accepted house appearance and fixed camera angle. Use a finite circular grassy ground surface around the house, with instanced blades at uniform detail. Natural color, height and clump variation should suit a domestic lawn at this game's physical scale. Mask the actual house footprint so blades do not protrude through interior floors or walls.
+
+Use `~/dev/game` as an implementation reference: its [production blade-field layer](../../../../game/packages/photoreal-renderer/src/battle/bladeFieldLayer.ts) uses instanced blades, distance-based detail tiers and GPU routing/culling; its [grass-field sampler](../../../../game/packages/game-renderer/src/battle/grassField.ts) supplies packed placement records. The [blade-field workbench](../../../../game/apps/renderer-lab/src/routes/bladeField.ts) demonstrates inspection and renderer statistics. Use its instancing and packed-data approach as the reference; do not carry over its distance-detail tiers or GPU routing machinery unless measurements here justify them. Adapt to this repository's Three.js renderer rather than importing the battle renderer or its terrain dimensions. Reference code is local research, not a runtime dependency or a mandate to change rendering backends.
+
+Bound blade records, draw calls, update work and retained resources. Avoid an object or CPU animation loop per blade; generate stable placement data and use GPU deformation if grass movement is included. Start with one grass detail level; no distance-based detail or streaming system is required. Size the circular ground and set zoom/pan bounds together so its finite edge stays outside the view at the fixed camera angle, including supported aspect ratios and pan extremes. Maximum zoom-out must still show the whole house.
+
+Verify actual browser captures at close exterior views, default framing, Overview, maximum zoom-out and pan limits. Inspect house/grass boundaries for clipping and confirm the circular cutoff stays offscreen without blank exterior ground, shimmer or bare bands. Record canvas-only before/after evidence and grass cost with twenty flies running; preserve existing frame/input/buffer budgets. Loading, repeated attempts and disposal must not accumulate grass resources. Final composed visibility and illumination remain with23–24.
+
 ## Standing verification and decision budget
 
 Use the production renderer in the existing asset workbench, with a representative room, fixed cameras and recorded attempt. This is a diagnostic fixture, not a third campaign level. Preserve twenty real-connectome flies, neural ownership, deterministic replay and the current performance budgets. Blender renders are authoring evidence; actual browser captures determine acceptance.

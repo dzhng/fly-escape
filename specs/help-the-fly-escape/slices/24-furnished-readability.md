@@ -8,6 +8,8 @@ Preserve selected-fly visibility, yellow circle and white trails around accepted
 
 Visual variable: occlusion/readability, judged at selected-fly/foreground-obstruction crops. Then run a separate compose acceptance using all previously accepted variables: twenty live flies, all-card panel, eating, seeking and repeated attempts. Measure final-room frame p95, input latency, buffer progress and retained resources. Failures return to their owning pass. Acceptance unlocks furnished five-room Level 1 and the larger second level; both need new frozen tuning/holdout evidence.
 
+Include the accepted [exterior grass](22-house-surfaces.md#exterior-grass-pass) in this composed gate for both levels. At maximum zoom-out/Overview and all allowed pan extremes, across supported viewport sizes, every visible exterior ground region must remain grassy without a blank plane or patch edge. Preserve fly/ring/trail readability against grass and verify smooth rendering with uniform grass detail. The circular grass area may have a physical cutoff: coordinate its radius and camera zoom/pan bounds to keep that edge offscreen while retaining whole-house Overview.
+
 ## Standing verification and decision budget
 
 Use the production renderer in the existing asset workbench, with a representative room, fixed cameras and recorded attempt. This is a diagnostic fixture, not a third campaign level. Preserve twenty real-connectome flies, neural ownership, deterministic replay and the current performance budgets. Blender renders are authoring evidence; actual browser captures determine acceptance.
