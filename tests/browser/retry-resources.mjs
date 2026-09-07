@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
 import { chromium } from "playwright";
 
+const runs = Number(process.env.RETRY_RUNS ?? 20);
 const browser = await chromium.launch({ channel: "chrome", headless: true });
 const output = process.env.RETRY_EVIDENCE ?? "/tmp/fly-retry-resources";
 await mkdir(output, { recursive: true });
@@ -12,7 +13,7 @@ try {
   const cdp = await page.context().newCDPSession(page);
   await page.goto(`${process.env.BRAIN_URL ?? "http://127.0.0.1:5184"}/lab/setup`);
   const samples = [];
-  for (let run = 0; run < 20; run++) {
+  for (let run = 0; run < runs; run++) {
     await page.waitForFunction(() => document.querySelector(".run-setup")?.disabled === false);
     await page.getByRole("button", { name: "Run · release flies", exact: true }).click();
     await page.waitForFunction(() => {
@@ -37,6 +38,11 @@ try {
       renderer: report.renderer, wasmBytes: report.memory.wasmBytes,
       mainHeapAfterReturn: heap, dom: await cdp.send("Memory.getDOMCounters") });
   }
+  await page.locator("canvas").screenshot({ path: `${output}/setup.png` });
+  const chunks = [];
+  cdp.on("HeapProfiler.addHeapSnapshotChunk", ({ chunk }) => chunks.push(chunk));
+  await cdp.send("HeapProfiler.takeHeapSnapshot", { reportProgress: false });
+  await writeFile(`${output}/clean.heapsnapshot`, chunks.join(""));
   assert.equal(new Set(samples.map((s) => s.attemptId)).size, samples.length);
   assert.equal(new Set(samples.map((s) => s.rootSeed)).size, samples.length);
   assert.equal(new Set(samples.map((s) => s.simulationBuildId)).size, 1);
@@ -45,7 +51,10 @@ try {
   const heaps = samples.map((s) => s.mainHeapAfterReturn.usedSize);
   await writeFile(`${output}/report.json`, JSON.stringify({ browser: browser.version(), samples,
     retainedMainHeapChangeBytes: heaps.at(-1) - heaps[0], errors,
-    scope: "Twenty real 20-fly Run/cancel/edit cycles. Collected main heaps are observations, not process RSS or a proof that Worker/GPU memory cannot leak. Final release memory and sustained full-attempt gates remain separate." }, null, 2) + "\n");
+    scope: `${runs} real 20-fly Run/cancel/edit cycles. Collected main heaps are observations, not process RSS or a proof that Worker/GPU memory cannot leak. Final release memory and sustained full-attempt gates remain separate.` }, null, 2) + "\n");
+  if (process.env.RETRY_ASSERT_STABLE === "1") {
+    assert.ok(samples.at(-1).dom.nodes <= samples[1].dom.nodes + 2, "detached DOM must not grow per retry after warm-up");
+  }
 } finally {
   await browser.close();
 }

@@ -1,0 +1,18 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: only the current renderer may retain a DFG LUT disposal listener
+
+13 !== 1
+
+    at file:///private/tmp/fly-renderer-memory/tests/browser/renderer-heap.mjs:35:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 13,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.14.0

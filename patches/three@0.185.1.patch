@@ -1,0 +1,108 @@
+diff --git a/build/three.cjs b/build/three.cjs
+index 8939a67dd76325ccd25ee8806fc4d22b1caea88a..7f28e72e7f5d3af523c36f0e4add71e0934d64d6 100644
+--- a/build/three.cjs
++++ b/build/three.cjs
+@@ -76265,6 +76265,7 @@ class WebGLRenderer {
+ 		const _this = this;
+ 
+ 		let _isContextLost = false;
++		let _dfgLUT = null;
+ 		let _nodesHandler = null;
+ 
+ 		let _scratchFramebuffer = null;
+@@ -77052,6 +77053,12 @@ class WebGLRenderer {
+ 			background.dispose();
+ 			renderLists.dispose();
+ 			renderStates.dispose();
++			if ( _dfgLUT !== null ) {
++
++				_dfgLUT.dispose();
++				_dfgLUT = null;
++
++			}
+ 			properties.dispose();
+ 			environments.dispose();
+ 			objects.dispose();
+@@ -78672,7 +78679,9 @@ class WebGLRenderer {
+ 			// Set DFG LUT for physically-based materials
+ 			if ( m_uniforms.dfgLUT !== undefined ) {
+ 
+-				m_uniforms.dfgLUT.value = getDFGLUT();
++				// Own the Texture listener lifetime while sharing immutable LUT data.
++				if ( _dfgLUT === null ) _dfgLUT = getDFGLUT().clone();
++				m_uniforms.dfgLUT.value = _dfgLUT;
+ 
+ 			}
+ 
+diff --git a/build/three.module.js b/build/three.module.js
+index ad13abf7d128bee607a7672646ca543327e258d3..356c9589f514d67bdd7337c41bd494f3896f7bf7 100644
+--- a/build/three.module.js
++++ b/build/three.module.js
+@@ -16287,6 +16287,7 @@ class WebGLRenderer {
+ 		const _this = this;
+ 
+ 		let _isContextLost = false;
++		let _dfgLUT = null;
+ 		let _nodesHandler = null;
+ 
+ 		let _scratchFramebuffer = null;
+@@ -17074,6 +17075,12 @@ class WebGLRenderer {
+ 			background.dispose();
+ 			renderLists.dispose();
+ 			renderStates.dispose();
++			if ( _dfgLUT !== null ) {
++
++				_dfgLUT.dispose();
++				_dfgLUT = null;
++
++			}
+ 			properties.dispose();
+ 			environments.dispose();
+ 			objects.dispose();
+@@ -18694,7 +18701,9 @@ class WebGLRenderer {
+ 			// Set DFG LUT for physically-based materials
+ 			if ( m_uniforms.dfgLUT !== undefined ) {
+ 
+-				m_uniforms.dfgLUT.value = getDFGLUT();
++				// Own the Texture listener lifetime while sharing immutable LUT data.
++				if ( _dfgLUT === null ) _dfgLUT = getDFGLUT().clone();
++				m_uniforms.dfgLUT.value = _dfgLUT;
+ 
+ 			}
+ 
+diff --git a/src/renderers/WebGLRenderer.js b/src/renderers/WebGLRenderer.js
+index cc2f156939863f3ce3d524ea92bf206a740a6cdb..b6de027122d51527eea5bbc27386ed1ccd9dfc82 100644
+--- a/src/renderers/WebGLRenderer.js
++++ b/src/renderers/WebGLRenderer.js
+@@ -293,6 +293,7 @@ class WebGLRenderer {
+ 		const _this = this;
+ 
+ 		let _isContextLost = false;
++		let _dfgLUT = null;
+ 		let _nodesHandler = null;
+ 
+ 		let _scratchFramebuffer = null;
+@@ -1080,6 +1081,12 @@ class WebGLRenderer {
+ 			background.dispose();
+ 			renderLists.dispose();
+ 			renderStates.dispose();
++			if ( _dfgLUT !== null ) {
++
++				_dfgLUT.dispose();
++				_dfgLUT = null;
++
++			}
+ 			properties.dispose();
+ 			environments.dispose();
+ 			objects.dispose();
+@@ -2700,7 +2707,9 @@ class WebGLRenderer {
+ 			// Set DFG LUT for physically-based materials
+ 			if ( m_uniforms.dfgLUT !== undefined ) {
+ 
+-				m_uniforms.dfgLUT.value = getDFGLUT();
++				// Own the Texture listener lifetime while sharing immutable LUT data.
++				if ( _dfgLUT === null ) _dfgLUT = getDFGLUT().clone();
++				m_uniforms.dfgLUT.value = _dfgLUT;
+ 
+ 			}
+ 

@@ -22,6 +22,10 @@ Use [compare-screenshots](../../../.agents/skills/compare-screenshots/SKILL.md) 
 
 Human checkpoint is non-blocking: open shots with [preview-shots](../../../.agents/skills/preview-shots/SKILL.md), allow about five minutes for feedback while continuing independent work, then decide from evidence if silent. Record the decision/rationale and close the opened shots. Silence is not approval for new scope.
 
+## Measured renderer lifetime repair
+
+The internally supplied lighting texture must have renderer-local listener/GPU ownership even when its immutable data is shared. Disposing one world must release its retired canvas and leave another live world unchanged. The version-specific dependency patch and [before/after evidence](../assets/evidence/17/renderer-lifetime/README.md) close that measured retainer defect; remaining main-heap growth and full release verification stay open.
+
 ## Decision budget
 
 Delegated: Packaging/compression and measured resource optimization with fidelity gates; no compat layers, PWA/offline cache or deployment service required.
