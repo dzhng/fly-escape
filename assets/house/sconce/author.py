@@ -102,6 +102,7 @@ bmesh.ops.create_uvsphere(bm,u_segments=32,v_segments=20,radius=1)
 for v in bm.verts:v.co=(v.co.x*.024,-.01+v.co.y*.024,.232+v.co.z*.034)
 finish('UnlitBulb',bm,True)
 size=[.22,.32,.16]
+run_path(str(OUT.parent / 'finish-details.py'))['apply_materials']('sconce', parts)
 bounds=shared['export_static'](asset,OUT/'sconce.glb',size)
 (EVIDENCE/'roundtrip.json').write_text(json.dumps({'sizeMetres':size,'bounds':bounds,'parts':topology,'runtimeAdoption':False},indent=2)+'\n')
 preview=shared['neutral_stage']('Sconce',parts,neutral,ortho_scale=.49,ground_extent=200)

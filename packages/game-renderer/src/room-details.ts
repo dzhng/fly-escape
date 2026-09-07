@@ -15,23 +15,6 @@ const assets = {
   sconce: { url: sconceUrl, size: [0.22, 0.32, 0.16] },
 } as const;
 
-function finishMaterials(root: THREE.Group, kind: RoomDetail["kind"]) {
-  const old = new Set<THREE.Material>();
-  const paint = new THREE.MeshStandardMaterial({ color: kind === "window" ? "#eee4d2" : "#bda583", roughness: 0.75 });
-  const metal = new THREE.MeshStandardMaterial({ color: "#9a7547", metalness: 0.7, roughness: 0.3 });
-  const accent = new THREE.MeshStandardMaterial(kind === "window"
-    ? { color: "#aec4c8", metalness: 0.12, roughness: 0.2 }
-    : { color: "#fff0d0", emissive: "#ffcb83", emissiveIntensity: 0.8, roughness: 0.55 });
-  root.traverse(object => {
-    if (!(object instanceof THREE.Mesh)) return;
-    for (const material of Array.isArray(object.material) ? object.material : [object.material]) old.add(material);
-    object.material = kind === "window"
-      ? object.name.startsWith("GlassPane") ? accent : object.name.startsWith("Handle") ? metal : paint
-      : object.name.startsWith("UnlitBulb") ? accent : object.name.startsWith("BoundEdgeShade") ? paint : metal;
-  });
-  old.forEach(material => material.dispose());
-}
-
 export class RoomDetails {
   readonly root = new THREE.Group();
   private readonly direction = new THREE.Vector3();
@@ -69,7 +52,6 @@ export async function loadRoomDetails(view: WorldView, details: readonly RoomDet
     if (!response.ok) throw new Error(`Room ${kind} request failed (${response.status})`);
     const [x, y, z] = assets[kind].size;
     const model = await loadStaticHouseModel(await response.arrayBuffer(), { name: kind, bounds: [-x / 2, 0, -z / 2, x / 2, y, z / 2] });
-    finishMaterials(model.root, kind);
     return { kind, model };
   }));
   const failure = results.find(result => result.status === "rejected");

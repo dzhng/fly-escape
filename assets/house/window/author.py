@@ -51,7 +51,7 @@ box('MeetingPost', (0, (height+.04-rail)/2, -.01), (.045, height-.04-rail, depth
 box('LowerRebate', (0, .055, -.02), (width-2*rail, .03, .032))
 box('UpperRebate', (0, height-rail-.015, -.02), (width-2*rail, .03, .032))
 
-# Separate closed panes/sashes preserve real reveals; glass treatment comes later.
+# Separate closed panes/sashes preserve real reveals.
 opening = (width-2*rail-.045)/2
 for side in (-1, 1):
     center = side*(.045+opening)/2
@@ -71,6 +71,7 @@ box('HandleNeck', (.065, .50, .027), (.010, .015, .012), .002)
 box('HandleLever', (.065, .455, .034), (.013, .105, .012), .004)
 
 size = [width, height, depth]
+run_path(str(OUT.parent / 'finish-details.py'))['apply_materials']('window', parts)
 bounds = shared['export_static'](scene, OUT/'window.glb', size)
 (EVIDENCE/'roundtrip.json').write_text(json.dumps({'envelopeMetres':size,
     'bounds':bounds, 'placement':'bottom-centred local sill; unregistered'}, indent=2)+'\n')
