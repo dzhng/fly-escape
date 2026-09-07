@@ -1,0 +1,27 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: rendered origin must use the supported body root, not its surface witness
++ actual - expected
+
+  [
++   -0.028437295085750477,
++   0.06719894158289202,
++   -0.000720979587640612
+-   -0.03,
+-   0.06719289605473927,
+-   0
+  ]
+
+    at shot (file:///Users/david/dev/fly-escape/tests/browser/contact.mjs:28:12)
+    at async file:///Users/david/dev/fly-escape/tests/browser/contact.mjs:45:7 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [ -0.028437295085750477, 0.06719894158289202, -0.000720979587640612 ],
+  expected: [ -0.03, 0.06719289605473927, 0 ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.14.0

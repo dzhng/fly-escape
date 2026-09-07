@@ -50,8 +50,8 @@ export async function contactWorkbench() {
   const control = (id: string) =>
     app.querySelector<HTMLInputElement | HTMLSelectElement>(`#${id}`)!;
   function pose() {
-    const sample = data.cases[Number(control('sample').value)];
-    const [x, y, z] = sample.support.point;
+    const sample = data.cases[Number(control('sample').value)][control('attachment').value as 'upright' | 'supported'];
+    const [x, y, z] = sample.root;
     const clip = control('clip').value;
     view.setPoses([
       {
@@ -59,10 +59,7 @@ export async function contactWorkbench() {
         y,
         z,
         heading: Math.PI / 2,
-        rotation:
-          control('attachment').value === 'supported'
-            ? [sample.rotation[0], sample.rotation[1], sample.rotation[2], sample.rotation[3]]
-            : undefined,
+        rotation: [sample.rotation[0], sample.rotation[1], sample.rotation[2], sample.rotation[3]],
         animation:
           clip === 'Static'
             ? undefined

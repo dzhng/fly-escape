@@ -24,10 +24,11 @@ try {
     const f = r.camera.flies[0];
     assert.ok(Math.abs(f.x - r.camera.width / 2) < 1);
     assert.ok(Math.abs(f.y - r.camera.height / 2) < 1);
-    assert.deepEqual(r.position, fixture.cases[r.sample].support.point);
+    const pose = fixture.cases[r.sample][r.attachment];
+    assert.deepEqual(r.position, pose.root, 'rendered origin must use the supported body root, not its surface witness');
     assert.deepEqual(
       r.rotation,
-      r.attachment === 'supported' ? fixture.cases[r.sample].rotation : [0, 0, 0, 1],
+      pose.rotation,
     );
     rows.push({ name, ...r });
     await page.screenshot({ path: `${out}/${name}.png` });
