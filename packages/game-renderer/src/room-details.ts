@@ -1,13 +1,14 @@
 import * as THREE from "three";
 import { loadStaticHouseModel } from "./house";
 import type { WorldView } from "./index";
+import doorwayUrl from "../../../assets/house/doorway/doorway.glb?url";
 import windowUrl from "../../../assets/house/window/window.glb?url";
 import plantUrl from "../../../assets/house/wall-plant/wall-plant.glb?url";
 import sconceUrl from "../../../assets/house/sconce/sconce.glb?url";
 
 /** Wall attachments in metres. Local +Z faces into the room; no core occupancy or sensory cue is added. */
 export type RoomDetail = {
-  kind: "window" | "sconce" | "plant";
+  kind: "window" | "sconce" | "plant" | "doorway";
   position: readonly [number, number, number];
   quarterTurns: 0 | 1 | 2 | 3;
 };
@@ -15,6 +16,7 @@ const assets = {
   window: { url: windowUrl, size: [1.4, 1.1, 0.08] },
   sconce: { url: sconceUrl, size: [0.22, 0.32, 0.16] },
   plant: { url: plantUrl, size: [0.34, 1.265, 0.38] },
+  doorway: { url: doorwayUrl, size: [1.02, 2.5, 0.16] },
 } as const;
 
 export class RoomDetails {
@@ -36,7 +38,7 @@ export class RoomDetails {
         mount.add(light);
       }
       this.root.add(mount);
-      this.attachments.push({ model, inward: new THREE.Vector3(0, 0, 1).applyAxisAngle(new THREE.Vector3(0, 1, 0), mount.rotation.y) });
+      if (detail.kind !== "doorway") this.attachments.push({ model, inward: new THREE.Vector3(0, 0, 1).applyAxisAngle(new THREE.Vector3(0, 1, 0), mount.rotation.y) });
     }
   }
   update(camera: THREE.Camera) {
