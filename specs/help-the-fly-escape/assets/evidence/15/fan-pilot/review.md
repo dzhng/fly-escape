@@ -29,3 +29,9 @@ All 30 tuning seeds (1000–1029) completed all three arms. Reference earned at 
 Native and browser build IDs are not interchangeable: build.rs includes compiler and target. core-source-identity.json confirms every core source/build-input byte equals the integrated root at the recorded commit, but does not establish cross-target numerical identity. Browser paired-seed verification remains required before accepting this level.
 
 [Browser transfer evidence](wasm/review.md) records all nine matching WASM/native comparisons on the first three tuning seeds. This closes the bounded content-transfer check, while production campaign UI, held-out reliability and human route review remain separate.
+
+## Completed bare-room holdout baseline
+
+All 30 held-out pairs completed with the frozen content, source, graph and executable identities matching tuning; seed sets are disjoint. Reference earns at least one star in 30/30, median escapes 10.5 versus 1 poor and 5 without fans; median paired benefits are +9.5 and +6.5. [The compact report](heldout-30.json) preserves every outcome and identity, with the raw report hash and omitted trace fields declared.
+
+This is **baseline calibration only**. The user subsequently requested natural randomized starts and furnished realistic rooms, so neither statistical success nor prior WASM transfer promotes this content to an accepted level. Freeze and evaluate the revised physical content afresh after slices 18–24.
