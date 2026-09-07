@@ -3,6 +3,8 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { chromium } from "playwright";
 
 const runs = Number(process.env.RETRY_RUNS ?? 20);
+const campaign = process.env.RETRY_CAMPAIGN;
+assert.ok(!campaign || campaign === "1" || campaign === "2", "RETRY_CAMPAIGN must be 1 or 2");
 const browser = await chromium.launch({ channel: "chrome", headless: true });
 const output = process.env.RETRY_EVIDENCE ?? "/tmp/fly-retry-resources";
 await mkdir(output, { recursive: true });
@@ -11,7 +13,11 @@ try {
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
   const cdp = await page.context().newCDPSession(page);
-  await page.goto(`${process.env.BRAIN_URL ?? "http://127.0.0.1:5184"}/lab/setup`);
+  if (campaign === "2") await page.addInitScript(() => {
+    localStorage.setItem("fly-escape-progress", JSON.stringify({ bestStars: { "open-window": 1 }, setups: {} }));
+  });
+  await page.goto(`${process.env.BRAIN_URL ?? "http://127.0.0.1:5184"}${campaign ? "/" : "/lab/setup"}`);
+  if (campaign === "2") await page.getByRole("button", { name: /2\. Turn the Corner/ }).click();
   const samples = [];
   for (let run = 0; run < runs; run++) {
     await page.waitForFunction(() => document.querySelector(".run-setup")?.disabled === false);
@@ -27,7 +33,7 @@ try {
     const report = JSON.parse(await page.getByTestId("playback-report").textContent());
     assert.equal(report.spec.flyCount, 20);
     assert.equal(page.workers().length, 1, "retry must not accumulate live simulation Workers");
-    await page.getByRole("button", { name: "Cancel attempt", exact: true }).click();
+    await page.getByRole("button", { name: /Cancel attempt|Retry — edit setup/ }).click();
     await page.waitForFunction(() => document.querySelector(".run-setup")?.disabled === false);
     await cdp.send("HeapProfiler.collectGarbage");
     const heap = await cdp.send("Runtime.getHeapUsage");
@@ -51,7 +57,7 @@ try {
   const heaps = samples.map((s) => s.mainHeapAfterReturn.usedSize);
   await writeFile(`${output}/report.json`, JSON.stringify({ browser: browser.version(), samples,
     retainedMainHeapChangeBytes: heaps.at(-1) - heaps[0], errors,
-    scope: `${runs} real 20-fly Run/cancel/edit cycles. Collected main heaps are observations, not process RSS or a proof that Worker/GPU memory cannot leak. Final release memory and sustained full-attempt gates remain separate.` }, null, 2) + "\n");
+    scope: `${runs} real 20-fly Run/cancel/edit cycles on ${campaign ? `campaign level ${campaign}` : "diagnostic setup"}. Collected main heaps are observations, not process RSS or a proof that Worker/GPU memory cannot leak. Final release memory and sustained full-attempt gates remain separate.` }, null, 2) + "\n");
   if (process.env.RETRY_ASSERT_STABLE === "1") {
     assert.ok(samples.at(-1).dom.nodes <= samples[1].dom.nodes + 2, "detached DOM must not grow per retry after warm-up");
   }

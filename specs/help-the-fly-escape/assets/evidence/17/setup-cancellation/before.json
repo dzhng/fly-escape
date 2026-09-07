@@ -1,0 +1,9 @@
+{
+  "errors": [],
+  "liveWorkers": [
+    "http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module",
+    "http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module"
+  ],
+  "workerEntries": 4,
+  "failure": "AssertionError [ERR_ASSERTION]: unmounted setup must not restart its disposed Worker\n\n2 !== 1\n"
+}

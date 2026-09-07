@@ -41,3 +41,5 @@ Must stay green: all accepted dependency contracts and their focused fixtures; n
 [Shared skeleton ownership](../assets/evidence/17/skeleton-sharing/README.md) removes duplicate bone textures within each cloned fly while retaining independent animation between flies. This closes a bounded resource amplification defect, not the final twenty-fly performance gate.
 
 [Failure-state recovery](../assets/evidence/17/failure-recovery/README.md) verifies retained scene redraw after producer failure, bounded renderer-error handling and a fresh attempt after either fault. [Native-trap recovery](../assets/evidence/17/wasm-recovery/README.md) retires a damaged Worker and verifies fresh setup/playback, including cleanup failures. Final platform, performance and repeated resource coverage remain separate gates.
+
+[Setup cancellation](../assets/evidence/17/setup-cancellation/README.md) prevents a pending placement-validation request from reviving its disposed Worker after a level switch. Six actual second-house release/cancel cycles preserve one Worker and stable DOM counts with the textured fruit; heap variability and final full-attempt coverage remain open.

@@ -85,6 +85,7 @@ export function SetupGame({
             placements: progress.setups[content.level.id] ?? [],
           });
         } catch {
+          if (!live) return;
           resolved = await client.setup({
             type: "resolve",
             level: content.level,
