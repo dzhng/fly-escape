@@ -28,7 +28,7 @@ try {
       });
       brain.startLifecycle(6,'mealThenStarvation');
     });
-    const {WorldView,loadFlyModel,flyAnimation}=await import(`${moduleRoot}/packages/game-renderer/src/index.ts`);
+    const {WorldView,loadFlyModel,flyAnimation,interpolateRotation}=await import(`${moduleRoot}/packages/game-renderer/src/index.ts`);
     const model=await loadFlyModel(await (await fetch(`${moduleRoot}/assets/fly/fly.glb`)).arrayBuffer());
     const view = new WorldView(document.getElementById('world'),records.info.level.geometry);
     view.setFlyModel(model);
@@ -53,7 +53,7 @@ try {
       const a=lower.flies[0].body.pose,b=upper.flies[0].body.pose,alpha=tick-Math.floor(tick);
       const motion=motionAt(tick);
       const y=lower.flies[0].body.height+(upper.flies[0].body.height-lower.flies[0].body.height)*alpha;
-      view.setPose({x:a.position.x+(b.position.x-a.position.x)*alpha,z:a.position.z+(b.position.z-a.position.z)*alpha,heading:a.heading+Math.atan2(Math.sin(b.heading-a.heading),Math.cos(b.heading-a.heading))*alpha,y,animation:flyAnimation(motion,0.1)});
+      view.setPose({x:a.position.x+(b.position.x-a.position.x)*alpha,z:a.position.z+(b.position.z-a.position.z)*alpha,heading:a.heading+Math.atan2(Math.sin(b.heading-a.heading),Math.cos(b.heading-a.heading))*alpha,y,rotation:interpolateRotation(lower.flies[0].body.rotation,upper.flies[0].body.rotation,alpha),animation:flyAnimation(motion,0.1)});
       view.render();
       document.getElementById('phase').textContent=` · tick ${tick.toFixed(2)} · ${motion.mode} · height ${y.toFixed(3)}`;
       return {...motion,y,animation:flyAnimation(motion,0.1)};

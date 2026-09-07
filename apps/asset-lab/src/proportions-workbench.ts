@@ -44,8 +44,9 @@ export async function proportionsWorkbench() {
     const frame = archive?.frame(tick);
     const motion = archive?.motion(tick);
     view.setPoses(initial.map((start, i) => {
-      const p = frame?.flies[i].body.pose ?? start;
-      return { x: p.position.x, z: p.position.z, heading: p.heading, y: frame?.flies[i].body.height ?? 0, animation: motion ? flyAnimation(motion[i], 0.1) : undefined };
+      const body = frame?.flies[i].body;
+      const p = body?.pose ?? start;
+      return { x: p.position.x, z: p.position.z, heading: p.heading, y: body?.height ?? 0, rotation: body?.rotation, animation: motion ? flyAnimation(motion[i], 0.1) : undefined };
     }));
   }
   pose();
