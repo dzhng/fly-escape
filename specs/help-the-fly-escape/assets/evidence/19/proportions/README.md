@@ -31,3 +31,9 @@ Independent parent source review approved the bounded camera/index/test changes.
 The parent coordinates the human Preview window after its active slice18 window; this branch opens no competing Preview set. Integration and that checkpoint remain with the parent.
 
 Decision audit: metre units and a biological-size body expose physics/sensory mismatches instead of hiding a giant invisible body. The temporary composite avoids anticipating a permanent furnishing API; closed-base envelopes avoid false under-furniture routes. The failed adjacent-fruit case is retained rather than moving the fruit to obtain a favorable image. Materials, lighting, core equations and thresholds stay fixed.
+
+## Root integration
+
+The diagnostic now uses explicit Fixed starts and the archive's authoritative initialBodies/tick-zero frame from18. Root also corrected its presentation tick duration from0.02 to the actual0.1 seconds. Frozen install, typecheck,31 renderer tests, both app builds and the actual built40-tick/20-fly Worker probe pass. No simulation parameters were changed.
+
+Eight integrated PNGs are byte-identical to the reviewed candidate. Four changed images and their hashes are retained under `integrated/`; root viewed all changed images and the other exact images were already inspected. Adversarial fallback: a new tick-zero pose could clip or displace the model, but both macro views retain the complete fly and ring; recorded playback could stop following, but the final recorded state remains centered with a valid20-fly neural frame. Known apple occlusion and subpixel wide-view selection remain24 failures. This is a disclosed primed review, not a fresh-agent claim.

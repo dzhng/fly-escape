@@ -42,11 +42,11 @@ export async function proportionsWorkbench() {
   let tick = 0;
   const initial = Array.from({ length: 20 }, (_, i) => ({ position: { x: spec.inspectFly.x + (i % 5) * 0.17, z: spec.inspectFly.z + Math.floor(i / 5) * 0.17 }, heading: i * 0.71 }));
   function pose() {
-    const frame = tick && archive ? archive.frame(tick) : undefined;
+    const frame = archive?.frame(tick);
     const motion = archive?.motion(tick);
     view.setPoses(initial.map((start, i) => {
       const p = frame?.flies[i].body.pose ?? start;
-      return { x: p.position.x, z: p.position.z, heading: p.heading, y: motion ? flyHeight(motion[i], 0.02) : 0, animation: motion ? flyAnimation(motion[i], 0.02) : undefined };
+      return { x: p.position.x, z: p.position.z, heading: p.heading, y: motion ? flyHeight(motion[i], 0.1) : 0, animation: motion ? flyAnimation(motion[i], 0.1) : undefined };
     }));
   }
   pose();
@@ -64,14 +64,14 @@ export async function proportionsWorkbench() {
     tick = Math.min(Number((event.target as HTMLInputElement).value), archive?.computedTick ?? 0); pose();
   };
   const client = new AttemptClient(reply => {
-    if (reply.type === "ready") { info = reply.info; archive = new FrameArchive(info.spec, info.recordLayout, info.archiveBytes); }
+    if (reply.type === "ready") { info = reply.info; archive = new FrameArchive(info.spec, info.recordLayout, info.archiveBytes, info.initialBodies); pose(); }
     else if (reply.type === "frames") archive!.append(reply.chunk);
     else if (reply.type === "error") { app.querySelector("#proportion-status")!.textContent = reply.message; app.dataset.error = reply.message; }
     else if (reply.type === "complete") { app.dataset.ready = "true"; app.querySelector("#proportion-status")!.textContent = "40 recorded ticks · 20 real-connectome flies · fixed diagnostic start · no path rescaling"; }
   });
   const fixture = await client.setup({ type: "fixture" });
   const level = structuredClone(fixture.level);
-  Object.assign(level, { id: "neutral-proportions-diagnostic", geometry: spec.geometry, spawnPoses: initial, durationTicks: 40, sources: [], food: [], zappers: [], exitCue: null, exit: { a: spec.geometry.walls[3].b, b: spec.geometry.walls[4].a, outward: { x: 1, z: 0 } } });
+  Object.assign(level, { id: "neutral-proportions-diagnostic", geometry: spec.geometry, spawn: { kind: "fixed", states: initial.map(pose => ({ pose, mode: "walking" })) }, durationTicks: 40, sources: [], food: [], zappers: [], exitCue: null, exit: { a: spec.geometry.walls[3].b, b: spec.geometry.walls[4].a, outward: { x: 1, z: 0 } } });
   client.start({ attemptId: "proportions-19", rootSeed: "1901", flyCount: 20, level, tuning: fixture.tuning, placements: [] });
   app.querySelector("#scale-sheet")!.textContent = `Authored body ${(nativeBodyLength * 1000).toFixed(1)} mm → ${(spec.flyBodyLength * 1000).toFixed(1)} mm. Uniform model factor ${scale.toFixed(6)}. Full fly bounds ${(modelSize.x * 1000).toFixed(2)} × ${(modelSize.y * 1000).toFixed(2)} × ${(modelSize.z * 1000).toFixed(2)} mm. Apple/body diameter ratio ${(0.08 / spec.flyBodyLength).toFixed(1)}:1.`;
   let alive = true;
