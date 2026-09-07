@@ -8,7 +8,7 @@ const out=process.env.GRASS_OUT??'/tmp/fly-exterior-production-evidence';await m
 const browser=await chromium.launch({channel:'chrome',headless:true});
 try {
  const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[];
- page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error'&&!m.location().url.endsWith('/favicon.ico'))errors.push(m.text())});
+ page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error'&&!m.location().url.endsWith('/favicon.ico'))errors.push(m.text()+' '+JSON.stringify(m.location()))});
  await page.addInitScript(()=>{const random=crypto.getRandomValues.bind(crypto);crypto.getRandomValues=array=>array instanceof BigUint64Array&&array.length===1?(array[0]=42n,array):random(array)});
  await page.goto(process.env.GRASS_URL??'http://127.0.0.1:5312/');
  await page.waitForFunction(()=>document.querySelector('.run-setup')?.disabled===false,{timeout:90000});
@@ -40,6 +40,6 @@ try {
   resizeResources.push({name,report:await read()});
  }
  samePixels(await page.locator('canvas').screenshot(),restoredPixels,'resize restores exact world pixels');
- assert.deepEqual(errors,[]);assert.equal(frames[0].report.spec.flyCount,20);assert.equal(frames[0].report.spec.rootSeed,'42');
  await writeFile(`${out}/report.json`,JSON.stringify({frames,resizeResources,errors},null,2));
+ assert.deepEqual(errors,[]);assert.equal(frames[0].report.spec.flyCount,20);assert.equal(frames[0].report.spec.rootSeed,'42');
 }finally{await browser.close()}

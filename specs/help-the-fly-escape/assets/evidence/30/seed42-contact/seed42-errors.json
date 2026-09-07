@@ -1,0 +1,79 @@
+[
+  {
+    "type": "error",
+    "text": "Failed to load resource: the server responded with a status of 404 (File not found)",
+    "location": {
+      "url": "http://127.0.0.1:5322/favicon.ico",
+      "line": 0,
+      "column": 0,
+      "lineNumber": 0,
+      "columnNumber": 0
+    }
+  },
+  {
+    "type": "info",
+    "text": "[Fly escape] attempt ready {schemaVersion: 1, attemptId: ae43851e-830c-4245-8a7e-8e0576a77b84, graphHash: 6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454, graphManifestHash: 3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5, simulationBuildId: 8f99dca579c059eb5f57f7e998bef00ea8e3ad415653a3c4f32caa9f891e8ac6}",
+    "location": {
+      "url": "http://127.0.0.1:5322/assets/index-uHlVbwgZ.js",
+      "line": 4122,
+      "column": 40151,
+      "lineNumber": 4122,
+      "columnNumber": 40151
+    }
+  },
+  {
+    "type": "info",
+    "text": "[Fly escape] playback {spec: Object, initialBodies: Array(20), userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap…ike Gecko) HeadlessChrome/152.0.0.0 Safari/537.36, viewport: Array(2), devicePixelRatio: 1}",
+    "location": {
+      "url": "http://127.0.0.1:5322/assets/index-uHlVbwgZ.js",
+      "line": 4122,
+      "column": 44345,
+      "lineNumber": 4122,
+      "columnNumber": 44345
+    }
+  },
+  {
+    "type": "info",
+    "text": "[Fly escape] playback {spec: Object, initialBodies: Array(20), userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap…ike Gecko) HeadlessChrome/152.0.0.0 Safari/537.36, viewport: Array(2), devicePixelRatio: 1}",
+    "location": {
+      "url": "http://127.0.0.1:5322/assets/index-uHlVbwgZ.js",
+      "line": 4122,
+      "column": 44345,
+      "lineNumber": 4122,
+      "columnNumber": 44345
+    }
+  },
+  {
+    "type": "error",
+    "text": "panicked at crates/sim/src/body/motion.rs:544:22:\ncalled `Option::unwrap()` on a `None` value",
+    "location": {
+      "url": "http://127.0.0.1:5322/assets/attempt-worker-BE2UgrH9.js",
+      "line": 0,
+      "column": 6433,
+      "lineNumber": 0,
+      "columnNumber": 6433
+    }
+  },
+  {
+    "type": "warning",
+    "text": "[Fly escape] failed attempt cleanup Error: attempted to take ownership of Rust value while it was borrowed\n    at __wbg___wbindgen_throw_bbadd78c1bac3a77 (http://127.0.0.1:5322/assets/attempt-worker-BE2UgrH9.js:1:6368)\n    at http://127.0.0.1:5322/assets/game_wasm_bg-CGbaHY_M.wasm:wasm-function[983]:0xff127\n    at http://127.0.0.1:5322/assets/game_wasm_bg-CGbaHY_M.wasm:wasm-function[90]:0x68030\n    at t.free (http://127.0.0.1:5322/assets/attempt-worker-BE2UgrH9.js:1:1637)\n    at Y (http://127.0.0.1:5322/assets/attempt-worker-BE2UgrH9.js:1:10581)\n    at X (http://127.0.0.1:5322/assets/attempt-worker-BE2UgrH9.js:1:10621)\n    at Z (http://127.0.0.1:5322/assets/attempt-worker-BE2UgrH9.js:1:11897)",
+    "location": {
+      "url": "http://127.0.0.1:5322/assets/attempt-worker-BE2UgrH9.js",
+      "line": 0,
+      "column": 10641,
+      "lineNumber": 0,
+      "columnNumber": 10641
+    }
+  },
+  {
+    "type": "error",
+    "text": "[Fly escape] attempt failed {message: RuntimeError: unreachable, spec: Object}",
+    "location": {
+      "url": "http://127.0.0.1:5322/assets/index-uHlVbwgZ.js",
+      "line": 4122,
+      "column": 39834,
+      "lineNumber": 4122,
+      "columnNumber": 39834
+    }
+  }
+]

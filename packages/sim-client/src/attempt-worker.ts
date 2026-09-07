@@ -57,11 +57,15 @@ const loadAssets = () =>
   }));
 const yieldToMessages = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
 function release() {
-  active?.core.free();
+  const previous = active;
   active = undefined;
+  previous?.core.free();
 }
 function fail(id: string, error: unknown) {
-  if (active?.id === id) release();
+  if (active?.id === id) {
+    try { release(); }
+    catch (cleanupError) { console.warn("[Fly escape] failed attempt cleanup", cleanupError); }
+  }
   if (currentAttemptId === id) currentAttemptId = undefined;
   send({ type: "error", attemptId: id, message: String(error) });
 }

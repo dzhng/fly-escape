@@ -5,6 +5,17 @@ use std::sync::Arc;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(js_namespace = console, js_name = error)]
+    fn report_panic(message: &str);
+}
+
+#[wasm_bindgen(start)]
+pub fn install_panic_diagnostics() {
+    std::panic::set_hook(Box::new(|info| report_panic(&info.to_string())));
+}
+
+#[wasm_bindgen]
 pub struct BrainSession {
     chamber: Chamber,
 }

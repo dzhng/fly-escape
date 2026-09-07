@@ -334,7 +334,7 @@ export function AttemptPlayback({
           if (!document.hidden) {
             if (lastFrameAt !== null) current.frameIntervals.add(now - lastFrameAt);
             lastFrameAt = now;
-            scene.current?.render();
+            scene.current?.render(current.clock.cursorTick * TICK_SECONDS);
             if (interactionAt.current !== null) {
               current.interactions.add(performance.now() - interactionAt.current);
               interactionAt.current = null;

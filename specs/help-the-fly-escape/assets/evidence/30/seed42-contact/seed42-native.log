@@ -1,0 +1,20 @@
+   Compiling sim v0.1.0 (/Users/david/dev/fly-escape/crates/sim)
+   Compiling seed42-repro v0.1.0 (/tmp/fly-seed42-repro)
+    Finished `release` profile [optimized] target(s) in 3.95s
+     Running `target/release/seed42-repro`
+tick 20
+tick 40
+tick 60
+tick 80
+tick 100
+tick 120
+tick 140
+tick 160
+tick 180
+tick 200
+tick 220
+ACQUIRED_BLOCK_PROBE {"desired":{"heading":4.407104520000254,"position":{"x":1.2471733660057605,"z":3.4228208699971105}},"dt":0.1,"radius":0.002632,"selected":23,"state":{"height":0.08771674077338905,"mode":"landing","outcome":null,"pose":{"heading":4.399346476517837,"position":{"x":1.2578213313793323,"z":3.456609356410463}},"reserve":4.240000000000105,"rotation":[0.027246698231292,0.987136465875288,-0.020078634067690088,-0.15625640348067352],"support":null}}
+
+thread 'main' (31326314) panicked at /Users/david/dev/fly-escape/crates/sim/src/body/motion.rs:547:22:
+called `Option::unwrap()` on a `None` value
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
