@@ -259,8 +259,10 @@ owner can be accepted. The scratch source is `src/bin/interval.rs` in the tempor
 probe crate; no core API or production cache is introduced.
 
 The [retained-feature domain event probe](domain-events.md) derives analytic
-crossing events instead of relying on sampled feature transitions. Its numerical
-ambiguity and global competitor gates remain explicit.
+crossing events instead of relying on sampled feature transitions. The
+[bounded face walk](face-walk.md) makes local progress through vertex changes to
+triangle boundaries. Numerical ambiguity and global competitor gates remain
+explicit.
 
 The complementary [edge-to-edge feature probe](edge-feature.md) evaluates the actual narrow turn handoff and its segment/cone domain. Continuous transition ownership remains open.
 
