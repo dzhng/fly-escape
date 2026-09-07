@@ -42,6 +42,8 @@ export interface FlyPose {
   /** Radians on the x/z floor: zero points +X, positive turns toward +Z. */
   heading: number;
   animation?: FlyAnimation;
+  /** Core-computed native glTF orientation for supported poses. */
+  rotation?: readonly [number, number, number, number];
 }
 
 /** A presentation-only fixture. The caller owns pose sampling and frame scheduling. */
@@ -374,7 +376,8 @@ export class WorldView {
       fly.visible = true;
       this.motions[index]?.sample(pose.animation);
       fly.position.set(pose.x, pose.y, pose.z);
-      fly.rotation.y = Math.PI / 2 - pose.heading;
+      if (pose.rotation) fly.quaternion.fromArray(pose.rotation);
+      else fly.rotation.set(0, Math.PI / 2 - pose.heading, 0);
     });
   }
 
@@ -501,7 +504,7 @@ export class WorldView {
     if (!fly || !fly.visible) throw new Error("Selected fly does not exist or is hidden");
     this.selectedFly = id;
     this.selectionRing.visible = true;
-    this.navigation.follow(fly.position.clone().add(new THREE.Vector3(0, this.subjectCenterY, 0)));
+    this.navigation.follow(this.flyCenter(fly, 1));
   }
 
   zoomClose(): void {
@@ -520,7 +523,7 @@ export class WorldView {
       flies: this.flies.map((fly, id) => ({
         id,
         ...this.navigation.project(
-          fly.position.clone().add(new THREE.Vector3(0, this.subjectCenterY * this.displayScale, 0)),
+          this.flyCenter(fly, this.displayScale),
         ),
       })),
     };
@@ -620,6 +623,10 @@ export class WorldView {
     this.fieldOverlay.visible = true;
   }
 
+  private flyCenter(fly: THREE.Object3D, scale: number): THREE.Vector3 {
+    return new THREE.Vector3(0, this.subjectCenterY * scale, 0).applyQuaternion(fly.quaternion).add(fly.position);
+  }
+
   private updateSelectionRing(): void {
     const { geometry, position } = this.selectionRing;
     const vertices = geometry.attributes.position;
@@ -629,7 +636,7 @@ export class WorldView {
     let projectedRadius = Infinity;
     // Sample the fixed outer rim through the shared camera, including ground foreshortening.
     for (let i = rimStart; i < vertices.count; i++) {
-      point.set(position.x + vertices.getX(i) * this.displayScale, position.y, position.z - vertices.getY(i) * this.displayScale);
+      point.set(vertices.getX(i), vertices.getY(i), 0).applyMatrix4(this.selectionRing.matrixWorld);
       const rim = this.navigation.project(point);
       projectedRadius = Math.min(projectedRadius, Math.hypot(rim.x - center.x, rim.y - center.y));
     }
@@ -663,9 +670,12 @@ export class WorldView {
     let selectedTarget: THREE.Vector3 | undefined;
     if (this.selectedFly !== null) {
       const fly = this.flies[this.selectedFly];
-      selectedTarget = fly.position.clone().add(new THREE.Vector3(0, this.subjectCenterY * this.displayScale, 0));
+      selectedTarget = this.flyCenter(fly, this.displayScale);
       this.navigation.track(selectedTarget);
-      this.selectionRing.position.set(fly.position.x, fly.position.y + this.subjectCenterY * this.displayScale * 0.12, fly.position.z);
+      const up = new THREE.Vector3(0, 1, 0).applyQuaternion(fly.quaternion);
+      this.selectionRing.position.copy(fly.position).addScaledVector(up, this.subjectCenterY * this.displayScale * 0.12);
+      this.selectionRing.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), up);
+      this.selectionRing.updateMatrixWorld(true);
       this.updateSelectionRing();
     }
     // Only visual occluders on the camera-to-subject ray cut away; floor/wall

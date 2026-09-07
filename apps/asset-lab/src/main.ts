@@ -8,7 +8,9 @@ import houseGeometry from "../../../assets/house/five-rooms.json";
 import wallUrl from "../../../assets/house/wall.glb?url";
 import floorUrl from "../../../assets/house/floor.glb?url";
 import { doorwayProbes } from "./house-probes";
-if (new URLSearchParams(location.search).get("fixture") === "proportions") {
+if (new URLSearchParams(location.search).get("fixture") === "contact") {
+  void import("./contact-workbench").then(module => module.contactWorkbench());
+} else if (new URLSearchParams(location.search).get("fixture") === "proportions") {
   void import("./proportions-workbench").then(module => module.proportionsWorkbench());
 } else {
 const house = new URLSearchParams(location.search).get("fixture") === "house";

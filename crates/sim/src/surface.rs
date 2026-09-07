@@ -113,21 +113,9 @@ impl ContactScene {
         if !bounded(position) || !bounded(displacement) || !heading.is_finite() || !bounded(up) {
             return Err("contact cast requires bounded finite pose and displacement".into());
         }
-        let up = Vector::from_array(up);
-        if (up.length_squared() - 1.).abs() > 1e-6 || up.y <= 0. {
-            return Err("support up must be a unit vector with positive height".into());
-        }
-        let up = up.normalize();
-        let forward = Vector::new(heading.cos(), 0., heading.sin());
-        let tangent = forward - up * forward.dot(up);
-        if tangent.length_squared() <= f64::EPSILON {
-            return Err("heading is parallel to the support normal".into());
-        }
-        let forward = tangent.normalize();
-        let right = up.cross(forward);
         let pose = Pose {
             translation: Vector::from_array(position) * QUERY_UNITS,
-            rotation: Rotation::from_mat3(&Matrix::from_cols(right, up, forward)),
+            rotation: Rotation::from_array(support_rotation(heading, up)?),
         };
         let mut first = None;
         for (id, mesh) in &self.meshes {
@@ -197,6 +185,25 @@ impl ContactScene {
         }
         Ok(first)
     }
+}
+/// Native glTF orientation: +Y is the support normal and +Z follows the projected heading.
+pub fn support_rotation(heading: f64, up: [f64; 3]) -> Result<[f64; 4], String> {
+    if !heading.is_finite() || !bounded(up) {
+        return Err("support orientation requires a finite heading and normal".into());
+    }
+    let up = Vector::from_array(up);
+    if (up.length_squared() - 1.).abs() > 1e-6 || up.y <= 0. {
+        return Err("support up must be a unit vector with positive height".into());
+    }
+    let up = up.normalize();
+    let forward = Vector::new(heading.cos(), 0., heading.sin());
+    let tangent = forward - up * forward.dot(up);
+    if tangent.length_squared() <= f64::EPSILON {
+        return Err("heading is parallel to the support normal".into());
+    }
+    let forward = tangent.normalize();
+    let right = up.cross(forward);
+    Ok(Rotation::from_mat3(&Matrix::from_cols(right, up, forward)).to_array())
 }
 fn bounded(p: [f64; 3]) -> bool {
     p.into_iter()
