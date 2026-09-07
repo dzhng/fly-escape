@@ -227,3 +227,100 @@ fn exported_float_vertices_survive_the_core_json_boundary_exactly() {
     assert_eq!(surface.vertices, restored.vertices);
     assert_eq!(surface.triangles, restored.triangles);
 }
+
+#[test]
+fn native_hull_fragment_can_slide_tangent_to_a_surface() {
+    // Four native vertices minimize the measured flat-floor GJK obstruction.
+    let points: [[f64; 3]; 4] = [
+        [
+            -0.0013943874510005116,
+            -1.288413542521738e-10,
+            0.0010241027921438217,
+        ],
+        [
+            -0.0014229806838557124,
+            0.00023601131397299469,
+            0.0012870709178969264,
+        ],
+        [
+            -0.00118330679833889,
+            0.0030070545617491007,
+            -0.0008651657262817025,
+        ],
+        [
+            -0.001153554068878293,
+            0.003025132231414318,
+            -0.0008651657844893634,
+        ],
+    ];
+    let hull = ContactHull::new(&points).unwrap();
+    let scene = ContactScene::new(&[floor(0, 0.)]).unwrap();
+    let height = -points.iter().map(|p| p[1]).fold(f64::INFINITY, f64::min);
+    assert!(scene
+        .cast(&hull, [0., height, 0.], 0., [0., 1., 0.], [0.001, 0., 0.])
+        .unwrap()
+        .is_none());
+}
+
+#[test]
+fn tangent_motion_still_hits_another_face_in_the_same_mesh() {
+    let mut surface = floor(7, 0.);
+    surface.vertices.extend([
+        [0.001, 0., -0.1],
+        [0.001, 0.1, -0.1],
+        [0.001, 0.1, 0.1],
+        [0.001, 0., 0.1],
+    ]);
+    surface.triangles.extend([[4, 5, 6], [4, 6, 7]]);
+    for reversed in [false, true] {
+        if reversed {
+            for triangle in &mut surface.triangles {
+                triangle.swap(0, 2);
+            }
+        }
+        let scene = ContactScene::new(std::slice::from_ref(&surface)).unwrap();
+        let hit = scene
+            .cast(&hull(), [-0.005, 0., 0.], 0., [0., 1., 0.], [0.01, 0., 0.])
+            .unwrap()
+            .unwrap();
+        assert_eq!(hit.surface_id, 7);
+        near(hit.fraction, 0.45);
+        near(hit.point[0], 0.001);
+        near(hit.normal[0], -1.);
+    }
+}
+
+#[test]
+fn supported_translation_is_not_tied_to_horizontal_world_axes() {
+    let mut surface = floor(2, 0.);
+    for vertex in &mut surface.vertices {
+        vertex[1] = -0.75 * vertex[0];
+    }
+    let scene = ContactScene::new(&[surface]).unwrap();
+    let hull = hull();
+    let up = [0.6, 0.8, 0.];
+    for heading in [0., 0.7, 2.4] {
+        let landing = scene
+            .cast(&hull, [0., 0.1, 0.], heading, up, [0., -0.2, 0.])
+            .unwrap()
+            .unwrap();
+        let root = [0., 0.1 - 0.2 * landing.fraction, 0.];
+        for delta in [
+            [0.0008, -0.0006, 0.],
+            [-0.0008, 0.0006, 0.],
+            [0., 0., 0.001],
+        ] {
+            assert!(
+                scene
+                    .cast(&hull, root, heading, up, delta)
+                    .unwrap()
+                    .is_none(),
+                "{heading}: {delta:?}"
+            );
+        }
+        assert!(scene
+            .cast(&hull, root, heading, up, [-0.0006, -0.0008, 0.])
+            .unwrap()
+            .is_some());
+    }
+}

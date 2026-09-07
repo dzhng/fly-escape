@@ -1,15 +1,18 @@
 //! Immutable contact geometry. Public coordinates are metres; query normalization
 //! avoids the measured millimetre-body departure failure in metre-scale GJK casts.
 use parry3d_f64::{
+    bounding_volume::BoundingVolume,
     math::{Matrix, Pose, Rotation, Vector},
     query::{cast_shapes, PointQuery, Ray, RayCast, ShapeCastOptions, ShapeCastStatus},
-    shape::{ConvexPolyhedron, Shape, TriMesh, TriMeshFlags},
+    shape::{ConvexPolyhedron, Shape, SupportMap, TriMesh, TriMeshFlags},
 };
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeSet;
 use ts_rs::TS;
 
 const QUERY_UNITS: f64 = 1000.;
+// Same 10nm positional precision as the native cast regressions; no geometry offset.
+const PLANE_TOLERANCE: f64 = 1e-8 * QUERY_UNITS;
 const MAX_COORDINATE: f64 = 1e6;
 const MAX_SCENE_VERTICES: usize = 262_144;
 const MAX_SCENE_TRIANGLES: usize = 524_288;
@@ -128,38 +131,64 @@ impl ContactScene {
             translation: Vector::from_array(position) * QUERY_UNITS,
             rotation: Rotation::from_array(support_rotation(heading, up)?),
         };
+        let velocity = Vector::from_array(displacement) * QUERY_UNITS;
+        let tangent_roundoff = 16. * f64::EPSILON * velocity.length();
+        let end = Pose {
+            translation: pose.translation + velocity,
+            ..pose
+        };
+        let swept = hull
+            .0
+            .compute_aabb(&pose)
+            .merged(&hull.0.compute_aabb(&end));
         let mut first = None;
         for (id, mesh) in &self.meshes {
-            let hit = cast_shapes(
-                &pose,
-                Vector::from_array(displacement) * QUERY_UNITS,
-                &hull.0,
-                &Pose::IDENTITY,
-                Vector::ZERO,
-                mesh,
-                ShapeCastOptions {
-                    max_time_of_impact: 1.,
-                    stop_at_penetration: false,
-                    ..Default::default()
-                },
-            )
-            .map_err(|_| "unsupported contact shape pair")?;
-            if let Some(hit) = hit {
-                if !matches!(
-                    hit.status,
-                    ShapeCastStatus::Converged | ShapeCastStatus::PenetratingOrWithinTargetDist
-                ) {
-                    return Err(format!("contact query did not converge: {:?}", hit.status));
+            for triangle_id in mesh.bvh().intersect_aabb(&swept) {
+                let triangle = mesh.triangle(triangle_id);
+                let normal = triangle.normal().expect("validated nondegenerate triangle");
+                let normal_velocity = normal.dot(velocity);
+                // A separating face plane cannot block tangent/outward translation.
+                // Test each triangle: another face in this same mesh may still block it.
+                let separated = |direction: Vector| {
+                    direction.dot(hull.0.support_point(&pose, -direction) - triangle.a)
+                        >= -PLANE_TOLERANCE
+                };
+                if (normal_velocity >= -tangent_roundoff && separated(normal))
+                    || (normal_velocity <= tangent_roundoff && separated(-normal))
+                {
+                    continue;
                 }
-                select(
-                    &mut first,
-                    checked_hit(
-                        *id,
-                        hit.time_of_impact,
-                        hit.witness2 / QUERY_UNITS,
-                        hit.normal2,
-                    )?,
-                );
+                let hit = cast_shapes(
+                    &pose,
+                    velocity,
+                    &hull.0,
+                    &Pose::IDENTITY,
+                    Vector::ZERO,
+                    &triangle,
+                    ShapeCastOptions {
+                        max_time_of_impact: 1.,
+                        stop_at_penetration: false,
+                        ..Default::default()
+                    },
+                )
+                .map_err(|_| "unsupported contact shape pair")?;
+                if let Some(hit) = hit {
+                    if !matches!(
+                        hit.status,
+                        ShapeCastStatus::Converged | ShapeCastStatus::PenetratingOrWithinTargetDist
+                    ) {
+                        return Err(format!("contact query did not converge: {:?}", hit.status));
+                    }
+                    select(
+                        &mut first,
+                        checked_hit(
+                            *id,
+                            hit.time_of_impact,
+                            hit.witness2 / QUERY_UNITS,
+                            hit.normal2,
+                        )?,
+                    );
+                }
             }
         }
         Ok(first)

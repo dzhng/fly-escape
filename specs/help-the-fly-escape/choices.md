@@ -344,3 +344,13 @@ Resolving a setup numbers fixed food first and then food placements sorted by pl
 ### Sound — high confidence: return food geometry with atomic setup state
 
 When a placement edit succeeds, its placement list, remaining inventory and resolved food triangles travel together. A rejected edit leaves that state unchanged. The attempt uses those same surfaces to prepare one shared query scene; authored floor patches render directly from them, while placed apples use the matching GLB at native scale. The plan did not specify where the resolved triangles belonged in the setup reply. Keeping them in the state avoids a second asynchronous geometry update and lets future editors render fixed food without reconstructing physics in TypeScript.
+
+
+### Triangle-plane classification for supported translation
+
+- **When:**20 native tangent-query correction.
+- **Choice:** Exclude only a triangle that cannot obstruct the requested translation. When a fly sits on a floor and moves sideways, tiny numerical errors previously made the collision query stop it. The query now checks each nearby triangle's flat plane first: if the whole fly stays on one side, that triangle is skipped, while a wall belonging to the same mesh can still stop the move. A plane-position tolerance of10nm matches the existing query regression precision; the model and its position are not lifted by that amount.
+- **Gap:** The plan required reliable native support but did not prescribe how to classify near-tangent numerical contacts.
+- **Reach:** Fixed-orientation translations use this check in the existing prepared query owner. It does not authorize skipping entire objects, tolerating visible penetration, or choosing a walking controller. Changing orientation still requires separate physical resolution.
+- **Verdict:** Sound — preserves nearby blocking faces and replaces the measured false obstruction without adding a clearance shell.
+- **Confidence:** High.
