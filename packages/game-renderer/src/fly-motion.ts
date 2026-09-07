@@ -47,3 +47,8 @@ export class FlyMotion {
     this.mixer.uncacheRoot(this.mixer.getRoot());
   }
 }
+
+/** Orientation-only interpolation; it does not establish a collision-safe curved position path. */
+export function interpolateRotation(a: readonly [number, number, number, number], b: readonly [number, number, number, number], fraction: number): [number, number, number, number] {
+  return new THREE.Quaternion().fromArray(a).slerp(new THREE.Quaternion().fromArray(b), fraction).toArray();
+}

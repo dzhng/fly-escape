@@ -73,7 +73,7 @@ export class FrameArchive {
       integer(spec.durationTicks) &&
       spec.durationTicks >= 1 &&
       spec.durationTicks <= 6000, "Invalid attempt horizon");
-    require(layout.schemaVersion === 2 &&
+    require(layout.schemaVersion === 3 && integer(layout.noSupport) && layout.noSupport <= 0xffffffff &&
       layout.groupIds.length <= 16, "Unsupported record layout");
     require(initialBodies.length === spec.flyCount &&
       initialBodies.every(
@@ -83,7 +83,7 @@ export class FrameArchive {
           [b.pose.position.x, b.pose.position.z, b.pose.heading, b.reserve, b.height].every(
             Number.isFinite,
           ) &&
-          b.reserve >= 0,
+          b.reserve >= 0 && validSupport(b.support, b.rotation, b.mode, layout.noSupport),
       ), "Invalid initial bodies");
     this.initialBodies = structuredClone(initialBodies) as BodyState[];
     this.spec = {
@@ -124,9 +124,10 @@ export class FrameArchive {
       "windX",
       "windZ",
       "height",
+      "rotationX", "rotationY", "rotationZ", "rotationW",
     ])
       require(name in this.valueOffsets, `Missing record field ${name}`);
-    for (const name of ["mode", "outcome", "presence", "spikeCount"])
+    for (const name of ["mode", "outcome", "presence", "spikeCount", "support"])
       require(name in this.stateOffsets, `Missing state field ${name}`);
     for (const name of ["tick", "flyId", "kind", "arg0", "arg1"])
       require(name in this.eventOffsets, `Missing event field ${name}`);
@@ -207,6 +208,11 @@ export class FrameArchive {
         chunk.states[s + this.stateOffsets.outcome] < this.layout.outcomes.length &&
         (chunk.states[s + this.stateOffsets.presence] & ~flags) ===
           0, "Invalid recorded state code");
+      const v = i * this.valueStride;
+      const support = chunk.states[s + this.stateOffsets.support];
+      require(validSupport(support === this.layout.noSupport ? null : support,
+        ["rotationX", "rotationY", "rotationZ", "rotationW"].map(name => chunk.values[v + this.valueOffsets[name]]),
+        this.layout.modes[chunk.states[s + this.stateOffsets.mode]], this.layout.noSupport), "Invalid recorded support or rotation");
     }
     const eventCounts = new Uint8Array(count);
     for (let i = 0; i < chunk.events.length; i += this.layout.eventFields.length) {
@@ -426,6 +432,8 @@ export class FrameArchive {
           heading: v("inputHeading"),
         },
         body: {
+          support: s("support") === this.layout.noSupport ? null : s("support"),
+          rotation: [v("rotationX"), v("rotationY"), v("rotationZ"), v("rotationW")] as BodyState["rotation"],
           height: v("height"),
           pose: { position: { x: v("x"), z: v("z") }, heading: v("heading") },
           mode: this.layout.modes[s("mode")],
@@ -507,4 +515,10 @@ export class FrameArchive {
         throw new Error("Unknown recorded event");
     }
   }
+}
+
+function validSupport(support: number | null, rotation: readonly number[], mode: BodyMode, sentinel: number): boolean {
+  return (support === null || (integer(support) && support <= 0xffffffff && support !== sentinel && (mode === "walking" || mode === "feeding"))) &&
+    Array.isArray(rotation) && rotation.length === 4 && rotation.every(Number.isFinite) &&
+    Math.abs(rotation.reduce((sum, v) => sum + v * v, 0) - 1) <= 1e-8;
 }

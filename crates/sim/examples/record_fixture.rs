@@ -47,6 +47,8 @@ fn main() {
                 id,
                 input_pose: pose,
                 body: BodyState {
+                    support: (tick != 4).then_some(id * 7),
+                    rotation: sim::surface::support_rotation(0.7, [0., 0.8, 0.6]).unwrap(),
                     height: f64::from(tick + id) / 137.,
                     pose: BodyPose {
                         position: Point {

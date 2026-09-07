@@ -11,7 +11,7 @@ export type SpawnMode = "walking" | "flying";
 export type BodyPose = { position: Point, heading: number, };
 export type BodyMode = "walking" | "flying" | "landing" | "feeding";
 export type TerminalOutcome = "escaped" | "starved" | "zapped" | "timedOut";
-export type BodyState = { pose: BodyPose,
+export type BodyState = { support: number | null, rotation: [number, number, number, number], pose: BodyPose,
 /**
  * Native support-pivot height in metres, owned by physical movement.
  */
@@ -72,7 +72,7 @@ export type AttemptFrame = { tick: number, neuralSteps: number, flies: Array<Fly
 export type LifecycleScenario = "mealThenStarvation" | "proboscisSilenced" | "openExit" | "blockedExit";
 export type LifecycleInfo = { scenario: LifecycleScenario, spec: AttemptSpec, level: LevelDef, food: Array<ContactSurface>, initialGrid: FieldGrid, initialBodies: Array<BodyState>, };
 export type LifecycleEvent = { flyId: number, event: BodyEvent, };
-export type RecordLayout = { schemaVersion: number, valueFields: Array<string>, stateFields: Array<string>, eventFields: Array<string>, groupIds: Array<string>, groupFields: Array<string>, modes: Array<BodyMode>, outcomes: Array<TerminalOutcome | null>, feedingEnds: Array<FeedingEnd>, eventKinds: Array<string>, sensoryPresentMask: number, neuralPresentMask: number, maxChunkTicks: number, maxEventsPerFlyTick: number, };
+export type RecordLayout = { schemaVersion: number, noSupport: number, valueFields: Array<string>, stateFields: Array<string>, eventFields: Array<string>, groupIds: Array<string>, groupFields: Array<string>, modes: Array<BodyMode>, outcomes: Array<TerminalOutcome | null>, feedingEnds: Array<FeedingEnd>, eventKinds: Array<string>, sensoryPresentMask: number, neuralPresentMask: number, maxChunkTicks: number, maxEventsPerFlyTick: number, };
 export type PackedChunk = { schemaVersion: number, attemptId: string, sequence: number, startTick: number, tickCount: number, flyCount: number, values: Array<number>, states: Array<number>, events: Array<number>, tickNeuralSteps: Array<number>, result: AttemptResult | null, };
 export type FieldScenario = "excitatoryOdor" | "inhibitoryOdor" | "lamp" | "shade" | "wind" | "exit";
 export type FieldLabInfo = { brain: BrainInfo, scenario: FieldScenario, grids: [FieldGrid, FieldGrid], };

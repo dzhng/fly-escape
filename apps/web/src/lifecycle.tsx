@@ -48,6 +48,7 @@ export function LifecycleLab() {
             y: reply.info.initialBodies[0].height,
             z: pose.position.z,
             heading: pose.heading,
+            rotation: reply.info.initialBodies[0].rotation,
           });
           scene.setContactGeometry(
             reply.info.food,
@@ -71,6 +72,7 @@ export function LifecycleLab() {
           z: body.pose.position.z,
           y: body.height,
           heading: body.pose.heading,
+          rotation: body.rotation,
         });
       } else if (reply.type === "error") setError(reply.message);
     });

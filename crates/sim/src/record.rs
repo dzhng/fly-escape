@@ -16,13 +16,15 @@ pub struct ChunkHeader {
     pub result: Option<AttemptResult>,
 }
 
-pub const RECORD_SCHEMA_VERSION: u32 = 2;
+pub const RECORD_SCHEMA_VERSION: u32 = 3;
 pub const MAX_CHUNK_TICKS: u32 = 10;
 pub const ARCHIVE_CAP_BYTES: u64 = 128 * 1024 * 1024;
 // Landing, starting/ending feeding and termination emit at most six events.
 // Eight slots keep the archive bound conservative; larger output is an error.
 pub const MAX_EVENTS_PER_FLY_TICK: usize = 8;
-const VALUE_FIELDS: [&str; 24] = [
+pub const NO_SUPPORT: u32 = u32::MAX;
+const STATE_STRIDE: usize = 5;
+const VALUE_FIELDS: [&str; 28] = [
     "inputX",
     "inputZ",
     "inputHeading",
@@ -47,12 +49,17 @@ const VALUE_FIELDS: [&str; 24] = [
     "windX",
     "windZ",
     "height",
+    "rotationX",
+    "rotationY",
+    "rotationZ",
+    "rotationW",
 ];
 
 #[derive(Clone, Debug, Serialize, TS)]
 #[serde(rename_all = "camelCase")]
 pub struct RecordLayout {
     schema_version: u32,
+    no_support: u32,
     value_fields: Vec<String>,
     state_fields: Vec<String>,
     event_fields: Vec<String>,
@@ -81,8 +88,9 @@ impl RecordLayout {
         }
         Ok(Self {
             schema_version: RECORD_SCHEMA_VERSION,
+            no_support: NO_SUPPORT,
             value_fields: VALUE_FIELDS.map(String::from).to_vec(),
-            state_fields: ["mode", "outcome", "presence", "spikeCount"]
+            state_fields: ["mode", "outcome", "presence", "spikeCount", "support"]
                 .map(String::from)
                 .to_vec(),
             event_fields: ["tick", "flyId", "kind", "arg0", "arg1"]
@@ -135,7 +143,9 @@ impl RecordLayout {
         }
         let bytes = u64::from(ticks)
             * (u64::from(fly_count)
-                * (self.value_stride() as u64 * 8 + 16 + MAX_EVENTS_PER_FLY_TICK as u64 * 20)
+                * (self.value_stride() as u64 * 8
+                    + STATE_STRIDE as u64 * 4
+                    + MAX_EVENTS_PER_FLY_TICK as u64 * 20)
                 + 4
                 + 1024)
             + 16384;
@@ -192,7 +202,7 @@ impl PackedChunk {
             tick_count: count as u32,
             fly_count: first.flies.len() as u32,
             values: Vec::with_capacity(count * first.flies.len() * layout.value_stride()),
-            states: Vec::with_capacity(count * first.flies.len() * 4),
+            states: Vec::with_capacity(count * first.flies.len() * STATE_STRIDE),
             events: vec![],
             tick_neural_steps: Vec::with_capacity(count),
             result: None,
@@ -211,6 +221,7 @@ impl PackedChunk {
                 }
                 let p = fly.input_pose;
                 let b = &fly.body;
+                validate_support(b.support, b.rotation, b.mode)?;
                 chunk.values.extend([
                     p.position.x,
                     p.position.z,
@@ -251,6 +262,7 @@ impl PackedChunk {
                     ]);
                 }
                 chunk.values.extend([sense.wind.x, sense.wind.z, b.height]);
+                chunk.values.extend(b.rotation);
                 if let Some(neural) = &fly.neural {
                     if neural
                         .groups
@@ -275,6 +287,7 @@ impl PackedChunk {
                     code(&layout.outcomes, &b.outcome)?,
                     u32::from(fly.sensory.is_some()) | (u32::from(fly.neural.is_some()) * 2),
                     fly.neural.as_ref().map_or(0, |n| n.spike_count),
+                    b.support.unwrap_or(NO_SUPPORT),
                 ]);
                 for event in &fly.events {
                     if event.tick != frame.tick {
@@ -323,7 +336,7 @@ impl PackedChunk {
         layout.archive_bytes(self.fly_count, self.start_tick + self.tick_count - 1)?;
         let records = self.tick_count as usize * self.fly_count as usize;
         if self.values.len() != records * layout.value_stride()
-            || self.states.len() != records * 4
+            || self.states.len() != records * STATE_STRIDE
             || self.tick_neural_steps.len() != self.tick_count as usize
             || !self.events.len().is_multiple_of(5)
             || self.events.len() > records * MAX_EVENTS_PER_FLY_TICK * 5
@@ -338,10 +351,13 @@ impl PackedChunk {
                 let index = tick * self.fly_count as usize + id;
                 let v = &self.values
                     [index * layout.value_stride()..(index + 1) * layout.value_stride()];
-                let s = &self.states[index * 4..index * 4 + 4];
+                let s = &self.states[index * STATE_STRIDE..(index + 1) * STATE_STRIDE];
                 if s[2] > 3 {
                     return Err("invalid presence flags".into());
                 }
+                let support = (s[4] != NO_SUPPORT).then_some(s[4]);
+                let rotation = [v[24], v[25], v[26], v[27]];
+                validate_support(support, rotation, at(&layout.modes, s[0])?)?;
                 let field = |i| FieldSample {
                     attractive_odor: v[i],
                     repellent_odor: v[i + 1],
@@ -353,6 +369,8 @@ impl PackedChunk {
                     id: id as u32,
                     input_pose: pose(v, 0),
                     body: BodyState {
+                        support,
+                        rotation,
                         height: v[23],
                         pose: pose(v, 3),
                         reserve: v[6],
@@ -454,4 +472,19 @@ fn pose(v: &[f64], i: usize) -> BodyPose {
         },
         heading: v[i + 2],
     }
+}
+
+fn validate_support(
+    support: Option<u32>,
+    rotation: [f64; 4],
+    mode: BodyMode,
+) -> Result<(), String> {
+    if support == Some(NO_SUPPORT)
+        || (support.is_some() && matches!(mode, BodyMode::Flying | BodyMode::Landing))
+        || rotation.iter().any(|v| !v.is_finite())
+        || (rotation.iter().map(|v| v * v).sum::<f64>() - 1.).abs() > 1e-8
+    {
+        return Err("invalid recorded support or rotation".into());
+    }
+    Ok(())
 }

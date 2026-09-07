@@ -9,7 +9,7 @@ import { HouseGeometry, cutAwayOccluders, type HousePart } from "./house";
 export { loadHousePart } from "./house";
 export type { HousePart } from "./house";
 import { FlyMotion, type FlyAnimation } from "./fly-motion";
-export { flyAnimation } from "./fly-motion";
+export { flyAnimation, interpolateRotation } from "./fly-motion";
 export type { FlyAnimation } from "./fly-motion";
 import { FlyModel } from "./fly-model";
 import { disposeObjectResources } from "./resources";
@@ -313,7 +313,8 @@ export class WorldView {
     this.flies[0].position.set(pose.x, pose.y, pose.z);
     this.contactCenter.position.set(pose.x, 0, pose.z);
     // The replaceable model is +Y up, +Z forward, with its pivot at foot contact.
-    this.flies[0].rotation.y = Math.PI / 2 - pose.heading;
+    if (pose.rotation) this.flies[0].quaternion.fromArray(pose.rotation);
+    else this.flies[0].rotation.set(0, Math.PI / 2 - pose.heading, 0);
   }
 
   /** Authored release region only; no speculative fly positions before Run. */

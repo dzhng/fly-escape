@@ -27,6 +27,8 @@ const initialBodies = [0, 1].map((id) => ({
   mode: "walking" as const,
   reserve: 10,
   height: 0,
+  support: null,
+  rotation: [0, 0, 0, 1] as [number, number, number, number],
   outcome: null,
 }));
 const archive = () =>
@@ -232,6 +234,7 @@ test("motion follows packed mode transitions across chunk boundaries and resets 
       const offset = t * 2 * fixture.layout.stateFields.length;
       chunk.states[offset + fixture.layout.stateFields.indexOf("mode")] =
         fixture.layout.modes.indexOf(tick < 3 ? "flying" : "walking");
+      if (tick < 3) chunk.states[offset + fixture.layout.stateFields.indexOf("support")] = fixture.layout.noSupport;
     }
     record.append(chunk);
   }
@@ -330,4 +333,21 @@ test("tick zero and rewind preserve immutable core initial poses and mixed modes
   expect(record.frame(0)).toEqual(zero);
   zero.flies[1].body.pose.heading = 99;
   expect(record.frame(0).flies[1].body.pose.heading).toBe(2.4);
+});
+
+test("support identity and quaternion corruption fail before archive mutation", () => {
+  for (const corrupt of [
+    (c: TransferChunk) => { c.values[fixture.layout.valueFields.indexOf("rotationW")] = 2; },
+    (c: TransferChunk) => { c.states[fixture.layout.stateFields.indexOf("mode")] = fixture.layout.modes.indexOf("flying"); },
+  ]) {
+    const record = archive();
+    const c = transfer(fixture.chunks[0]);
+    corrupt(c);
+    expect(() => record.append(c)).toThrow("support or rotation");
+    expect(record.computedTick).toBe(0);
+    expect(c.values.byteLength).toBeGreaterThan(0);
+  }
+  const bad = structuredClone(initialBodies);
+  bad[0].rotation = [0, 0, 0, 0];
+  expect(() => new FrameArchive({attemptId: "fixture", flyCount: 2, durationTicks: 4}, fixture.layout, fixture.archiveByteBound, bad)).toThrow("initial bodies");
 });

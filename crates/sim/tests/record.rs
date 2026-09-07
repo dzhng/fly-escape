@@ -16,6 +16,8 @@ fn frame(tick: u32) -> AttemptFrame {
             id: 0,
             input_pose: pose,
             body: BodyState {
+                support: Some(7),
+                rotation: sim::surface::support_rotation(0.7, [0., 0.8, 0.6]).unwrap(),
                 height: 0.,
                 pose: BodyPose {
                     position: Point { x: 2., z: 3. },
@@ -347,4 +349,31 @@ fn records_remain_tick_major_and_fly_major_across_a_full_chunk() {
             frame.flies[1].body.reserve
         );
     }
+}
+
+#[test]
+fn support_and_orientation_roundtrip_and_reject_invalid_payloads() {
+    let layout = RecordLayout::new(vec!["left".into(), "right".into()]).unwrap();
+    let mut frames = vec![frame(1), frame(2)];
+    frames[0].flies[0].body.support = Some(0);
+    frames[1].flies[0].body.support = None;
+    frames[1].flies[0].body.mode = BodyMode::Flying;
+    let chunk = PackedChunk::encode("a", 0, &layout, &frames).unwrap();
+    assert_eq!(chunk.decode(&layout).unwrap(), frames);
+    let metadata = serde_json::to_value(&layout).unwrap();
+    assert_eq!(metadata["noSupport"], NO_SUPPORT);
+    let rotation = metadata["valueFields"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .position(|v| v == "rotationW")
+        .unwrap();
+    let mut bad = chunk.clone();
+    bad.values[rotation] = 2.;
+    assert!(bad.decode(&layout).unwrap_err().contains("rotation"));
+    frames[0].flies[0].body.support = Some(NO_SUPPORT);
+    assert!(PackedChunk::encode("a", 0, &layout, &frames).is_err());
+    frames[0].flies[0].body.support = Some(0);
+    frames[0].flies[0].body.mode = BodyMode::Landing;
+    assert!(PackedChunk::encode("a", 0, &layout, &frames).is_err());
 }

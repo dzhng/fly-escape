@@ -1,0 +1,13 @@
+   Compiling sim v0.1.0 (/private/tmp/fly-support-recording/crates/sim)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.18s
+     Running tests/record.rs (target/debug/deps/record-eb79a97446b5a3c3)
+
+running 6 tests
+test horizon_and_event_budget_fail_explicitly_before_encoding ... ok
+test malformed_transport_buffers_are_errors_not_panics_or_partial_replays ... ok
+test support_and_orientation_roundtrip_and_reject_invalid_payloads ... ok
+test records_remain_tick_major_and_fly_major_across_a_full_chunk ... ok
+test replay_preserves_precision_optional_measurements_events_and_result ... ok
+test dense_real_body_transitions_fit_and_replay_in_order ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

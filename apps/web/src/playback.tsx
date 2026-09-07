@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   WorldView,
   flyAnimation,
+  interpolateRotation,
   recordedTrails,
   type FlyPose,
 } from "@fly-escape/game-renderer";
@@ -120,6 +121,8 @@ function sample(run: Run): FlyPose[] {
       z: from.position.z + (to.position.z - from.position.z) * fraction,
       heading: from.heading + angle * fraction,
       y: a.height + (b.height - a.height) * fraction,
+      // This blends recorded orientations; curved position paths still require core sampling.
+      rotation: interpolateRotation(a.rotation, b.rotation, fraction),
       animation: flyAnimation(motions[id], TICK_SECONDS),
     };
   });
