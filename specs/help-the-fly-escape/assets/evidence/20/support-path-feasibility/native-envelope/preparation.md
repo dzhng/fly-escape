@@ -29,10 +29,26 @@ reachable from the root README. No duplicate runtime geometry owner was found.
 The integrated [focused test](preparation-test.log) passes, including regenerated artifact equality,
 source-point containment, exact extrema and the sub-10-μm outward target.
 The outermost [export command](preparation-export.log) also regenerated both the full hull and derivative byte-identically on the integrated tree. The author confirmed deliberate inward shrink fails the containment check,
-and ran clean formatting/Clippy checks. Independent Codex CLI review could not
+and ran clean formatting checks. Integrated [release Clippy](preparation-clippy.log) also passes. Independent Codex CLI review could not
 run because the installed client rejects the configured model; this is a parent
 code review, not a successful independent CLI review.
 
 The fixed plane budget is a reviewed preparation target. Movement, continuous
 replay, WASM and twenty-fly cost still decide adoption. The numerical rejection
 allowance never moves the shape or becomes a physical clearance.
+
+## Follow-up topology finding
+
+The first fixed-orientation movement comparison exposed an additional limit:
+Parry's reconstructed candidate face topology is not a valid supporting boundary.
+A reported face excludes another candidate point by 3.27 mm. The constructor
+does not run its own `check_geometry` assertion. Its edge array also retains
+deleted internal diagonals; boundary incidence must select active edges.
+
+This does not invalidate the point-set support-map measurements above:
+`PointQuery::project_local_point` uses GJK support points, and the core downward
+casts still return support. It does invalidate using the candidate's reconstructed
+face witnesses or adjacency as an exact path oracle. Fixed-path comparison must
+resolve and validate its feature inventory before it can establish correctness
+or useful movement cost. Projecting every plane's offset over all points removes
+invalid halfspaces, but does not alone prove the direction inventory is complete.

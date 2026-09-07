@@ -51,3 +51,13 @@ remain visible. Sampled Walk frames look identical, while Feed and Land change
 posture; fixed-root captures do not establish walking, landing, departure, or
 moving contact. These are attachment-diagnostic observations, not gameplay
 acceptance or a continuous animation containment guarantee.
+
+## Parent review window
+
+Preview showed the matched full/candidate sample7 supported poses and the
+candidate sample6 upright pose from 2026-09-07 10:28:48 UTC to 10:34:02 UTC.
+No new user response was received in that non-blocking window. Root retains the
+visual-equivalence verdict for these frames and closed Preview; silence is not
+user approval of final art or moving contact. The representation remains a
+candidate, with the newly identified reconstructed-topology defect recorded in
+[preparation](../preparation.md).
