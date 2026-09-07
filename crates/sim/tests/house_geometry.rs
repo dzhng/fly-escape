@@ -125,6 +125,7 @@ fn solids_exclude_field_cells_and_tool_placement() {
     level.geometry = geometry;
     level.spawn = sim::spawn::SpawnDef::fixed(vec![]);
     level.placement_rules = PlacementRules {
+        fan_heading: 0.,
         inventory: vec![ToolStock {
             kind: ToolKind::Fruit,
             count: 1,

@@ -150,7 +150,10 @@ pub struct ToolStock {
     pub count: u32,
 }
 #[derive(Clone, Debug, Default, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
 pub struct PlacementRules {
+    /// Map-owned fan direction in canonical radians; placement edits cannot override it.
+    pub fan_heading: f64,
     pub inventory: Vec<ToolStock>,
     /// Solid prop interiors or authored reserved floor, in addition to spawn bodies and exit.
     pub reserved: Vec<ContactRegion>,
@@ -163,7 +166,10 @@ pub struct Placement {
     pub heading: f64,
 }
 impl Placement {
-    fn canonicalize(&mut self) -> Result<(), String> {
+    fn canonicalize(&mut self, fan_heading: f64) -> Result<(), String> {
+        if self.kind == ToolKind::Fan {
+            self.heading = fan_heading;
+        }
         if !self.position.finite() || !self.heading.is_finite() {
             return Err("placement position and heading must be finite".into());
         }
@@ -213,6 +219,10 @@ pub fn resolve_placements(
 ) -> Result<ResolvedSetup, String> {
     level.geometry.validate()?;
     let rules = &level.placement_rules;
+    if !rules.fan_heading.is_finite() || !(0. ..std::f64::consts::TAU).contains(&rules.fan_heading)
+    {
+        return Err("map fan heading must be finite canonical radians in [0, TAU)".into());
+    }
     if rules.inventory.len() > tool_catalog().len()
         || rules.reserved.len() > 256
         || placements.len() > 64
@@ -243,12 +253,12 @@ pub fn resolve_placements(
     let mut placements = placements.to_vec();
     placements.sort_by_key(|p| p.id);
     for p in &mut placements {
-        p.canonicalize()?;
+        p.canonicalize(rules.fan_heading)?;
     }
     let mut fixed = level.fixed_objects.clone();
     fixed.sort_by_key(|p| p.id);
     for p in &mut fixed {
-        p.canonicalize()?;
+        p.canonicalize(rules.fan_heading)?;
     }
     let all: Vec<_> = fixed.iter().chain(&placements).collect();
     for i in 0..all.len() {
@@ -391,7 +401,7 @@ pub fn edit_placements(
     let mut candidate = resolve_placements(level, current)?.state.placements;
     match edit {
         PlacementEdit::Place { mut placement } => {
-            placement.canonicalize()?;
+            placement.canonicalize(level.placement_rules.fan_heading)?;
             if let Some(existing) = candidate.iter().find(|p| p.id == placement.id) {
                 if existing != &placement {
                     return Err("placement ID is already in use".into());

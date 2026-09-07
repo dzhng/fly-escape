@@ -55,7 +55,11 @@ export type ToolKind = "fruit" | "banana" | "crumbs" | "vinegar" | "lamp" | "sha
 export type ToolEffect = { "type": "none" } | { "type": "source", kind: SourceKind, radius: number, rate: number, } | { "type": "fan", reach: number, halfWidth: number, speed: number, };
 export type ToolDef = { kind: ToolKind, footprintRadius: number, effect: ToolEffect, contact: NativeObjectShape | null, edible: boolean, };
 export type ToolStock = { kind: ToolKind, count: number, };
-export type PlacementRules = { inventory: Array<ToolStock>,
+export type PlacementRules = {
+/**
+ * Map-owned fan direction in canonical radians; placement edits cannot override it.
+ */
+fanHeading: number, inventory: Array<ToolStock>,
 /**
  * Solid prop interiors or authored reserved floor, in addition to spawn bodies and exit.
  */

@@ -50,6 +50,7 @@ pub fn fixture() -> Result<SetupFixture, String> {
             duration_ticks: 600,
             star_thresholds: [1, 10, 18],
             placement_rules: PlacementRules {
+                fan_heading: 0.,
                 inventory: tool_catalog()
                     .iter()
                     .map(|tool| ToolStock {

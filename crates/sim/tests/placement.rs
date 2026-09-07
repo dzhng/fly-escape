@@ -3,6 +3,7 @@ fn level() -> LevelDef {
     let mut level = sim::swarm_lab::level(1).unwrap();
     level.sources.clear();
     level.placement_rules = PlacementRules {
+        fan_heading: 0.,
         inventory: tool_catalog()
             .into_iter()
             .map(|t| ToolStock {
@@ -190,7 +191,7 @@ fn canonical_resolution_binds_each_tool_without_mixing_food_and_odor() {
     );
     assert_eq!(
         resolved.field_config.fans[0].heading,
-        std::f64::consts::FRAC_PI_2
+        level.placement_rules.fan_heading
     );
     assert!(resolved
         .state
@@ -205,7 +206,7 @@ fn canonical_resolution_binds_each_tool_without_mixing_food_and_odor() {
 }
 
 #[test]
-fn repeating_a_raw_heading_placement_is_idempotent() {
+fn repeating_a_fan_with_ignored_input_headings_is_idempotent() {
     let level = level();
     for heading in [-std::f64::consts::FRAC_PI_2, -1e-16, std::f64::consts::TAU] {
         let mut placement = item(1, ToolKind::Fan, 1., 1.);
@@ -380,4 +381,81 @@ fn household_native_contacts_keep_their_non_edible_role_and_modeled_odor_sources
         resolve_placements(&level, &reversed).unwrap().state,
         resolved.state
     );
+}
+
+#[test]
+fn fan_direction_is_owned_by_the_map_for_place_repeat_move_and_fixed_objects() {
+    let mut level = level();
+    level.placement_rules.fan_heading = std::f64::consts::PI;
+    let fan = item(7, ToolKind::Fan, 1., 1.);
+    let placed = edit_placements(
+        &level,
+        &[],
+        PlacementEdit::Place {
+            placement: fan.clone(),
+        },
+    )
+    .unwrap();
+    assert_eq!(placed.placements[0].heading, std::f64::consts::PI);
+    let mut turned = fan;
+    turned.heading = 1.23;
+    let repeated = edit_placements(
+        &level,
+        &placed.placements,
+        PlacementEdit::Place {
+            placement: turned.clone(),
+        },
+    )
+    .unwrap();
+    assert_eq!(placed, repeated);
+    let moved = edit_placements(
+        &level,
+        &placed.placements,
+        PlacementEdit::Move {
+            id: 7,
+            position: Point { x: 3., z: 3. },
+            heading: 0.,
+        },
+    )
+    .unwrap();
+    let resolved = resolve_placements(&level, &moved.placements).unwrap();
+    assert_eq!(resolved.field_config.fans[0].heading, std::f64::consts::PI);
+    assert_eq!(
+        resolved.field_config.fans[0].position,
+        Point { x: 3., z: 3. }
+    );
+    level.fixed_objects = vec![turned];
+    let fixed = resolve_placements(&level, &[]).unwrap();
+    assert_eq!(fixed.field_config.fans[0].heading, std::f64::consts::PI);
+    let mut ordinary = item(8, ToolKind::Banana, 3., 3.);
+    ordinary.heading = 0.7;
+    assert_eq!(
+        resolve_placements(&level, &[ordinary])
+            .unwrap()
+            .state
+            .placements[0]
+            .heading,
+        0.7
+    );
+}
+
+#[test]
+fn map_fan_rule_requires_a_finite_canonical_heading() {
+    assert!(serde_json::from_value::<PlacementRules>(
+        serde_json::json!({"inventory":[],"reserved":[]})
+    )
+    .is_err());
+    let mut level = level();
+    for heading in [f64::NAN, f64::INFINITY, -0.1, std::f64::consts::TAU] {
+        level.placement_rules.fan_heading = heading;
+        assert!(
+            resolve_placements(&level, &[]).is_err(),
+            "invalid map heading {heading}"
+        );
+    }
+    for heading in [0., std::f64::consts::PI] {
+        level.placement_rules.fan_heading = heading;
+        let resolved = resolve_placements(&level, &[item(1, ToolKind::Fan, 1., 1.)]).unwrap();
+        assert_eq!(resolved.state.placements[0].heading, heading);
+    }
 }

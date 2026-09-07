@@ -476,7 +476,9 @@ fn resolved_placements_preserve_surface_only_taste_local_wind_and_replay() {
     let make = |placements: &[Placement]| {
         let spec =
             Attempt::describe(&graph, &definition, &tuning, "placed", 11, 1, placements).unwrap();
-        assert_eq!(spec.placements, placements);
+        let mut expected = placements.to_vec();
+        expected[1].heading = definition.placement_rules.fan_heading;
+        assert_eq!(spec.placements, expected);
         Attempt::new(graph.clone(), definition.clone(), tuning.clone(), spec).unwrap()
     };
     let mut attempt = make(&placements);
@@ -492,14 +494,20 @@ fn resolved_placements_preserve_surface_only_taste_local_wind_and_replay() {
     let mut reversed = placements.clone();
     reversed[1].heading = std::f64::consts::PI;
     let other = make(&reversed).step().unwrap().unwrap();
-    assert_eq!(other.flies[0].sensory.unwrap().wind, Point::default());
+    assert_eq!(
+        other.flies[0].sensory.unwrap().wind,
+        frame.flies[0].sensory.unwrap().wind
+    );
     assert_eq!(frame.flies[0].neural, other.flies[0].neural);
     assert_eq!(
         frame.flies[0].body.pose.heading,
         other.flies[0].body.pose.heading
     );
     let drift = frame.flies[0].body.pose.position.x - other.flies[0].body.pose.position.x;
-    assert!((drift - frame.flies[0].sensory.unwrap().wind.x * GAME_TICK_SECONDS).abs() < 1e-12);
+    assert_eq!(
+        drift, 0.,
+        "caller-supplied fan rotation cannot change body motion"
+    );
     assert_eq!(Some(frame), replay.step().unwrap());
     for _ in 0..19 {
         assert_eq!(attempt.step().unwrap(), replay.step().unwrap());
@@ -507,7 +515,7 @@ fn resolved_placements_preserve_surface_only_taste_local_wind_and_replay() {
 }
 
 #[test]
-fn canonical_placement_headings_can_start_and_resolve_repeatedly() {
+fn map_owned_fan_headings_can_start_and_resolve_repeatedly() {
     use sim::placement::*;
     let graph = graph();
     let mut definition = level(1);
@@ -515,6 +523,7 @@ fn canonical_placement_headings_can_start_and_resolve_repeatedly() {
         kind: ToolKind::Fan,
         count: 1,
     }];
+    definition.placement_rules.fan_heading = std::f64::consts::PI;
     let tuning = AttemptTuning::default();
     for heading in [
         -1e-16,
@@ -549,7 +558,10 @@ fn canonical_placement_headings_can_start_and_resolve_repeatedly() {
         assert_eq!(attempt.resolved_setup().state.placements, spec.placements);
         let again = resolve_placements(&definition, &spec.placements).unwrap();
         assert_eq!(again.state.placements, spec.placements);
-        assert!((0. ..std::f64::consts::TAU).contains(&spec.placements[0].heading));
+        assert_eq!(
+            spec.placements[0].heading,
+            definition.placement_rules.fan_heading
+        );
     }
 }
 
