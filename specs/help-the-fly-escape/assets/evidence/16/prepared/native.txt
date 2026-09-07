@@ -1,9 +1,8 @@
    Compiling sim v0.1.0 (/private/tmp/fly-level2-prep/crates/sim)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.65s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.09s
      Running tests/level2_prepared.rs (target/debug/deps/level2_prepared-d5511d6596efc221)
 
 running 1 test
-catalog [{"kind":"fruit","footprintRadius":0.35,"effect":{"type":"source","kind":"attractiveOdor","radius":0.75,"rate":1.0,"foodRadius":0.4}},{"kind":"crumbs","footprintRadius":0.2,"effect":{"type":"source","kind":"attractiveOdor","radius":0.75,"rate":1.0,"foodRadius":null}},{"kind":"vinegar","footprintRadius":0.2,"effect":{"type":"source","kind":"repellentOdor","radius":0.75,"rate":1.0,"foodRadius":null}},{"kind":"lamp","footprintRadius":0.25,"effect":{"type":"source","kind":"lamp","radius":1.5,"rate":0.4,"foodRadius":null}},{"kind":"shade","footprintRadius":0.25,"effect":{"type":"source","kind":"shade","radius":1.5,"rate":0.2,"foodRadius":null}},{"kind":"fan","footprintRadius":0.25,"effect":{"type":"fan","reach":3.0,"halfWidth":0.75,"speed":0.5}}]
 links {(1, 2), (2, 3), (3, 4), (3, 5), (4, 6)}; route, dead end, placements and fork wind verified; no neural run
 test prepared_corner_has_real_fork_and_fan_crossing ... ok
 

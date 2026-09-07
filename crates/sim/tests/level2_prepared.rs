@@ -17,6 +17,7 @@ fn prepared_corner_has_real_fork_and_fan_crossing() {
         assert!(g.contains_body(pose.position, r));
     }
     let mut links = BTreeSet::new();
+    // Bounded scan for this prepared fixture, not a general campaign validator.
     for x in 0..65 {
         for z in 0..60 {
             let a = Point {
@@ -79,9 +80,8 @@ fn prepared_corner_has_real_fork_and_fan_crossing() {
             );
         }
     }
-    println!(
-        "catalog {}",
-        serde_json::to_string(&tool_catalog()).unwrap()
-    );
+    if let Ok(path) = std::env::var("GREYBOX_CATALOG_OUTPUT") {
+        std::fs::write(path, serde_json::to_string_pretty(&tool_catalog()).unwrap()).unwrap();
+    }
     println!("links {links:?}; route, dead end, placements and fork wind verified; no neural run");
 }
