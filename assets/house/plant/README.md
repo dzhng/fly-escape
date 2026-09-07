@@ -1,0 +1,7 @@
+# Potted plant shape proposal
+
+This original Blender study uses a closed square planter and individual cupped leaves to make a recognizable upright household plant. The planter fills the diagnostic solid's floor rectangle: no feet, tapered base or open floor passage imply space that flies cannot enter. The foliage stays inside that horizontal footprint.
+
+The [authoring source](author.py) uses the shared house export validator with a **proposed visual envelope**, separate from the production furniture catalogue. Its foliage rises above the existing physical planter; neither invisible collision through the leaf gaps nor nonphysical fly penetration is accepted by this study. Before integration, decide the foliage's collision and occlusion ownership and verify fly contact in the browser. The recessed soil also requires an explicit top-contact decision. Do not enlarge the existing solid to the full foliage envelope as an expedient.
+
+[Preparation evidence](../../../specs/help-the-fly-escape/assets/evidence/21/plant-prepared/README.md) records authoring views, export measurements and outstanding visual concerns. Neutral material is deliberate; leaf colour, soil and ceramic treatment belong to the later material pass. Blender scenes and source remain separate from the exported static model so staging lights and cameras cannot become game assets.

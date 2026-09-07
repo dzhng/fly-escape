@@ -5,3 +5,5 @@ Furniture is authored in metres at its native size. The [catalogue](catalog.json
 [Authoring validation](authoring.py) checks both the source scene and exported GLB against that contract. It rejects a mismatched envelope instead of stretching the model to conceal it. The [cabinet](cabinet/README.md) and [sofa](sofa/README.md) notes explain their authored shape constraints.
 
 Native geometry, material appearance and visibility have separate acceptance gates. A correctly sized mesh is not evidence of finished house art or readable fly contact. The active specification owns those remaining gates.
+
+The [potted plant study](plant/README.md) is a prepared appearance proposal with unresolved foliage contact ownership; it is not a catalogue entry.
