@@ -38,9 +38,11 @@ export function Campaign({ levels }: { levels: readonly CampaignLevel[] }) {
     void client
       .setup({ type: "catalog" })
       .then((value) => {
+        client.dispose();
         if (live) setCatalog(value);
       })
       .catch((e) => {
+        client.dispose();
         if (live) setError(String(e));
       });
     return () => {
@@ -112,9 +114,11 @@ export function DiagnosticSetup() {
     void client
       .setup({ type: "fixture" })
       .then((value) => {
+        client.dispose();
         if (live) setFixture(value);
       })
       .catch((e) => {
+        client.dispose();
         if (live) setError(String(e));
       });
     return () => {
@@ -135,9 +139,9 @@ export function DiagnosticSetup() {
   );
   return error ? (
     <p role="alert">{error}</p>
-  ) : fixture ? (
+  ) : content ? (
     <SetupGame
-      content={content!}
+      content={content}
       progress={progress}
       setProgress={setProgress}
       storageFailed={storageFailed}

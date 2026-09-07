@@ -108,7 +108,7 @@ export function SetupGame({
     return () => onAttemptChange?.(false);
   }, [input, onAttemptChange]);
   useEffect(() => {
-    if (!content || input || !container.current) return;
+    if (input || !container.current) return;
     const view = new WorldView(container.current, content.level.geometry, 20);
     world.current = view;
     const spawn = content.level.spawn;
@@ -139,7 +139,7 @@ export function SetupGame({
     };
   }, [content, input]);
   useEffect(() => {
-    if (!content || !setup) return;
+    if (!setup) return;
     world.current?.setContactGeometry(setup.food.slice(0, content.level.food.length), content.level.zappers, content.level.exit, false);
     world.current?.setPlacements(
       progress.preferences.showTools ? setup.placements : [],
@@ -148,7 +148,7 @@ export function SetupGame({
     );
   }, [content, setup, intent, valid, input, progress.preferences.showTools]);
   useEffect(() => {
-    if (!intent || checked.current === intent || busy || !content || !setup || input) return;
+    if (!intent || checked.current === intent || busy || !setup || input) return;
     checked.current = intent;
     setBusy(true);
     void client
@@ -183,7 +183,7 @@ export function SetupGame({
   const pointerDown = useRef<{ x: number; y: number } | undefined>(undefined);
   const propose = (event: { clientX: number; clientY: number }, commit: boolean) => {
     if (intentRef.current?.commit) return;
-    if (!setup || !content) return;
+    if (!setup) return;
     const position = world.current?.floorPoint(event.clientX, event.clientY);
     if (!position) return;
     const existing = setup.placements.find((p) => p.id === selected);
@@ -228,7 +228,7 @@ export function SetupGame({
       setValid(null);
     }
   };
-  if (input && content)
+  if (input)
     return (
       <AttemptPlayback
         input={input}
@@ -254,7 +254,7 @@ export function SetupGame({
           <span className="eyebrow">Fly escape</span>
           <h1>{content.title}</h1>
         </div>
-        <span>Best: {content ? (progress.bestStars[content.level.id] ?? 0) : 0} / 3 stars</span>
+        <span>Best: {progress.bestStars[content.level.id] ?? 0} / 3 stars</span>
       </header>
       {worldState !== "ready" && (
         <p role={worldState === "loading" ? "status" : "alert"}>
@@ -381,9 +381,9 @@ export function SetupGame({
           </label>
           <button
             className="run-setup"
-            disabled={!content || !setup || worldState !== "ready" || busy || !!intent?.commit}
+            disabled={!setup || worldState !== "ready" || busy || !!intent?.commit}
             onClick={() => {
-              if (!content || !setup) return;
+              if (!setup) return;
               setIntent(undefined);
               setInput({
                 level: content.level,
@@ -398,9 +398,8 @@ export function SetupGame({
             Run · release flies
           </button>
           <button
-            disabled={!content || busy || !!intent?.commit}
+            disabled={busy || !!intent?.commit}
             onClick={() => {
-              if (!content) return;
               setBusy(true);
               setIntent(undefined);
               void client

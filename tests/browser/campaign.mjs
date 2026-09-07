@@ -10,6 +10,24 @@ try {
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
+  await page.addInitScript(() => {
+    const NativeWorker = window.Worker;
+    window.liveWorkers = 0;
+    window.Worker = class extends NativeWorker {
+      constructor(...args) {
+        super(...args);
+        window.liveWorkers++;
+        this.retired = false;
+      }
+      terminate() {
+        if (!this.retired) {
+          this.retired = true;
+          window.liveWorkers--;
+        }
+        super.terminate();
+      }
+    };
+  });
   await page.route("**/campaign-check", (route) =>
     route.fulfill({
       contentType: "text/html",
@@ -22,6 +40,7 @@ try {
     );
   await page.goto(base + "/campaign-check");
   await ready();
+  assert.equal(await page.evaluate(() => window.liveWorkers), 1);
   const nav = page.getByRole("navigation", { name: "Campaign levels" });
   assert.equal(await nav.getByRole("button", { name: /Second/ }).isDisabled(), true);
   assert.equal(await page.locator(".tool-palette button").count(), 1);
@@ -33,6 +52,7 @@ try {
   await page.screenshot({ path: out + "/first-exhausted.png" });
   await page.reload();
   await ready();
+  assert.equal(await page.evaluate(() => window.liveWorkers), 1);
   await page.getByRole("button", { name: "Remove Fruit 1", exact: true }).waitFor();
   // Persisted completion is an explicit fixture input, not a simulated success claim.
   await page.evaluate(() => {
@@ -42,8 +62,10 @@ try {
   });
   await page.reload();
   await ready();
+  assert.equal(await page.evaluate(() => window.liveWorkers), 1);
   await nav.getByRole("button", { name: /Second/ }).click();
   await ready();
+  assert.equal(await page.evaluate(() => window.liveWorkers), 1);
   await page.getByRole("heading", { name: "Second", exact: true }).waitFor();
   assert.match(await page.locator(".tool-palette").innerText(), /Scent crumbs/);
   assert.equal(await page.locator(".placed-tools button").count(), 0);
@@ -55,9 +77,11 @@ try {
   await page.getByRole("button", { name: /Retry — edit setup/ }).waitFor({ timeout: 90000 });
   await page.getByRole("button", { name: /Retry — edit setup/ }).click();
   await ready();
+  assert.equal(await page.evaluate(() => window.liveWorkers), 1);
   assert.equal(await nav.getByRole("button", { name: /Third/ }).isDisabled(), true);
   await nav.getByRole("button", { name: /First/ }).click();
   await ready();
+  assert.equal(await page.evaluate(() => window.liveWorkers), 1);
   await page.getByRole("button", { name: "Remove Fruit 1", exact: true }).waitFor();
   await page.getByRole("button", { name: "Reset progress and setup", exact: true }).click();
   await page.waitForFunction(
@@ -72,6 +96,7 @@ try {
   });
   await page.reload();
   await ready();
+  assert.equal(await page.evaluate(() => window.liveWorkers), 1);
   await page
     .getByText(/could not save|cannot save|couldn.t save|storage/i)
     .first()
