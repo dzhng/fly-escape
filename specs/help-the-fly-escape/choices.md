@@ -485,3 +485,23 @@ plane coefficients and records the candidate's hash. The plan did not prescribe
 that audit boundary. This prevents a correct intermediate result from standing
 in for a differently rounded asset; a future replacement needs its own audit.
 No exact-integer calculation or new dependency is added to browser simulation.
+
+## Banana shape preparation — 2026-09-07
+
+### Sound — medium confidence: use a household-sized single closed banana
+
+A future room can contain a banana approximately 22 cm long and 4 cm thick, lying
+on its side. Its skin, stalk and blossom tip form one closed surface rather than
+separate overlapping collision pieces. The user requested bananas but did not
+choose their size or shape representation. These native dimensions give later
+contact and room composition a concrete starting point; the fruit remains an
+unregistered shape study, so this does not set food capacity or level difficulty.
+
+### Sound — high confidence: inspect GLB topology without changing the source mesh
+
+Export can duplicate a mesh vertex for different shading attributes. The banana
+validator temporarily welds vertices within 10 nm before checking manifold edges
+and self-overlap, then discards that inspection mesh. The plan required geometry
+integrity but left that inspection method open. The authored and exported models
+retain their exact vertices; this validation tolerance does not become collision
+clearance or an automatic asset repair.
