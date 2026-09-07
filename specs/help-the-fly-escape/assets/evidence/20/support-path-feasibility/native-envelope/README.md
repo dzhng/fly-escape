@@ -124,3 +124,6 @@ tolerance. No candidate becomes accepted merely because it is faster.
 [Path comparison](path-comparison/README.md) measures the candidate against the
 fixed-orientation and wide-turn probes, including an unresolved reconstruction
 topology defect.
+
+[Original-plane inventory](plane-inventory/README.md) tests boundary construction
+from the retained supporting planes, avoiding primal point-cloud reconstruction.
