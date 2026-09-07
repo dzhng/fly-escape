@@ -1,0 +1,41 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: paired native/WASM outcomes differ; investigate before accepting content transfer
++ actual - expected
+
+  {
+    attemptId: 'reference-1000',
+    completedTick: 800,
+    outcomes: {
++     escaped: 8,
+-     escaped: 0,
+      score: 8,
+      starved: 0,
+      timedOut: 12,
+      zapped: 0
+    },
+
+    at file:///Users/david/dev/fly-escape/tests/browser/campaign-wasm.mjs:62:14
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:472:9) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: {
+    attemptId: 'reference-1000',
+    completedTick: 800,
+    outcomes: { escaped: 8, starved: 0, zapped: 0, timedOut: 12, score: 8 },
+    stars: 2
+  },
+  expected: {
+    attemptId: 'reference-1000',
+    completedTick: 800,
+    outcomes: { escaped: 0, score: 8, starved: 0, timedOut: 12, zapped: 0 },
+    stars: 2
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.14.0

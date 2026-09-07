@@ -1,0 +1,9 @@
+# Browser transfer of the frozen first-level candidate
+
+The actual WASM Worker receives the same frozen authored level, tuning and placements as the native tuning report. All nine comparisons (the first three tuning seeds, each with reference, reversed fans and no fans) produce identical terminal outcomes and stars. Level, tuning, graph-manifest and placement metadata also match. The simulation build IDs differ by compilation target; source equality is recorded in the parent evidence. This observed agreement is not a promise of cross-platform bit identity.
+
+The browser harness consumes placements from each native attempt specification rather than reconstructing control arrangements. It requires the full passing frozen tuning report and leaves held-out seeds untouched. Worker output advances through the full authored horizon with bounded credits; every client is disposed on completion/error or a bounded timeout. The empty page intentionally isolates computation and transport. This is neither production UI acceptance nor a playback-performance measurement.
+
+The result comparison was falsified with a temporary copy of the native report claiming zero escapes for the first reference arm. The real browser produced eight, and the test failed at the outcome comparison. Restoring the real native report passed all nine cases with no page errors. The rejected expectation output is retained; the corrupted report itself was scratch. Source review uses the existing client/Worker owner and adds no runtime API or dependency.
+
+Independent source review found no blocker and requested explicit three-arm coverage and positive recorded neural work. Both checks are added and also pass against the recorded complete run. No new implementation choices beyond using the established Worker and paired native specifications were required.
