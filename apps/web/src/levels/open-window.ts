@@ -336,7 +336,11 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
       "inventory": [
         {
           "kind": "fruit",
-          "count": 2
+          "count": 1
+        },
+        {
+          "kind": "banana",
+          "count": 1
         },
         {
           "kind": "crumbs",
