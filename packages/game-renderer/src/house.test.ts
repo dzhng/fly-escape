@@ -4,22 +4,26 @@ import { HouseGeometry, cutAwayOccluders, loadHousePart } from "./house";
 import geometry from "../../../assets/house/five-rooms.json";
 import { doorwayProbes } from "../../../apps/asset-lab/src/house-probes";
 
-test("nested GLB cutaway retains a low segment base and restores full walls without an occluder query", async () => {
-  const house = new HouseGeometry({ solids: [], rooms: geometry.rooms, walls: [
-    { a: { x: 0, z: -1 }, b: { x: 0, z: 1 } },
-    { a: { x: 2, z: -1 }, b: { x: 2, z: 1 } },
-  ] });
+test("full-height walls expose rooms with a low solid base and a faint upper wall", async () => {
+  const house = new HouseGeometry(geometry);
   const asset = await loadHousePart(await Bun.file(new URL("../../../assets/house/wall.glb", import.meta.url)).arrayBuffer(), "wall");
   house.replace("wall", asset.root);
-  house.root.updateMatrixWorld(true);
-  const ray = new THREE.Raycaster(new THREE.Vector3(-1, 0.3, 0), new THREE.Vector3(1, 0, 0), 0, 1.5);
-  cutAwayOccluders(house.walls, ray);
-  expect(house.walls.children.map(w => new THREE.Box3().setFromObject(w).getSize(new THREE.Vector3()).y)).toEqual([expect.closeTo(0.06, 4), expect.closeTo(0.6, 4)]);
-  // Repeated queries must restore before intersecting, or the short base escapes the ray.
-  cutAwayOccluders(house.walls, ray);
-  expect(new THREE.Box3().setFromObject(house.walls.children[0]).max.y).toBeCloseTo(0.06, 4);
-  cutAwayOccluders(house.walls);
-  expect(house.walls.children.map(w => new THREE.Box3().setFromObject(w).max.y)).toEqual([expect.closeTo(0.6, 4), expect.closeTo(0.6, 4)]);
+  const camera = new THREE.PerspectiveCamera();
+  camera.position.set(10, 12, 10); camera.lookAt(0, 0, 0); camera.updateMatrixWorld(true);
+  house.updateWallVisibility(camera);
+  const cut = house.walls.children.filter(wall => wall.userData.cutaway);
+  expect(cut.length).toBeGreaterThan(0);
+  expect(cut.length).toBeLessThan(house.walls.children.length);
+  for (const wall of cut) {
+    expect(wall.children[0].visible).toBe(false);
+    expect(wall.children[1].visible).toBe(true);
+    expect(new THREE.Box3().setFromObject(wall.children[1]).max.y).toBeCloseTo(0.15, 5);
+    expect(new THREE.Box3().setFromObject(wall.children[2]).max.y).toBeCloseTo(2.5, 5);
+  }
+  const before = house.walls.children.map(wall => wall.userData.cutaway);
+  camera.position.set(-10, 12, -10); camera.lookAt(0, 0, 0); camera.updateMatrixWorld(true);
+  house.updateWallVisibility(camera);
+  expect(house.walls.children.map(wall => wall.userData.cutaway)).not.toEqual(before);
 });
 
 test("authored meshes leave every geometry doorway open and release replaced resources", async () => {

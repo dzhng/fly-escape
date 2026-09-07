@@ -1,0 +1,7 @@
+# Sims-inspired wall cutaway
+
+The user requested normal-height walls with transparent foreground sections and named The Sims as inspiration. The authored wall is2.5m high. Room adjacency and viewing direction choose foreground segments in setup and playback; those segments retain a15cm solid base and a6%-opaque upper portion. Back walls remain solid. Selection no longer owns wall visibility; furniture still uses selected-fly cutaway. The simulation geometry is unchanged.
+
+[Before](before.png) and [after](after.png) are the actual campaign setup at the same viewport. Changed source wall height also changes the whole-house fit. Renderer tests, TypeScript, production build and the browser RTS camera suite pass. The new test checks room visibility without selection, full height, base height and reversal of visible sides when viewing direction changes.
+
+Fresh agent critique remains unavailable at this session’s thread limit. Adversarial inspection: transparent wall overlap could cloud furniture; upper walls remain faint and cabinet/sofa silhouettes are readable. The base could be a hollow clipped slab; the initial clipped-base capture showed open edges, so the final base retains the capped authored wall mesh at low height. Back walls could hide the house behind the HUD; their top is partly covered by the setup heading, leaving all room floors and boundaries visible. Final HUD placement and lighting remain open.

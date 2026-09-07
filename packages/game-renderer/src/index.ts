@@ -125,6 +125,7 @@ export class WorldView {
     const center = this.bounds.getCenter(new THREE.Vector3());
     const radius = this.bounds.getSize(new THREE.Vector3()).length() / 2;
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
+    this.renderer.localClippingEnabled = true;
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFShadowMap;
@@ -184,7 +185,7 @@ export class WorldView {
   }
 
   get houseVisibility() {
-    return { segments: this.house.walls.children.length, cutaway: this.house.walls.children.filter(wall => wall.scale.y < 1).length, solids: this.house.solids.children.length, solidsCutaway: this.house.solids.children.filter(prop => prop.scale.y < 1).length };
+    return { segments: this.house.walls.children.length, cutaway: this.house.walls.children.filter(wall => wall.userData.cutaway).length, solids: this.house.solids.children.length, solidsCutaway: this.house.solids.children.filter(prop => prop.scale.y < 1).length };
   }
 
   get exteriorStats() { return { ...this.exterior.stats }; }
@@ -193,7 +194,6 @@ export class WorldView {
 
   setHousePart(part: HouseAsset, source: THREE.Group): void {
     this.house.replace(part, source);
-    cutAwayOccluders(this.house.walls);
     cutAwayOccluders(this.house.solids);
     this.bounds.max.y = Math.max(1, new THREE.Box3().setFromObject(this.house.root).max.y);
     this.navigation.resize(this.container.clientWidth, this.container.clientHeight);
@@ -709,17 +709,15 @@ export class WorldView {
       this.selectionRing.updateMatrixWorld(true);
       this.updateSelectionRing();
     }
-    // Only visual occluders on the camera-to-subject ray cut away; floor/wall
-    // collision geometry remains entirely owned by the simulation.
+    this.house.updateWallVisibility(this.navigation.camera);
+    // Furniture cutaway follows the selected fly; wall cutaway exposes rooms.
     if (selectedTarget && this.navigation.project(selectedTarget).visible) {
       const direction = selectedTarget.clone().sub(this.navigation.camera.position);
       this.raycaster.set(this.navigation.camera.position, direction.clone().normalize());
       this.raycaster.far = direction.length();
-      cutAwayOccluders(this.house.walls, this.raycaster);
       cutAwayOccluders(this.house.solids, this.raycaster);
       this.raycaster.far = Infinity;
     } else {
-      cutAwayOccluders(this.house.walls);
       cutAwayOccluders(this.house.solids);
     }
     if (this.trailSample) this.trails.sample(this.trailSample.paths, this.trailSample.cursorTick,

@@ -12,7 +12,7 @@ scenes = []
 house_material = runpy.run_path(str(OUT / 'materials.py'))['house_material']
 
 for name, dimensions, center in [
-    ('wall', (1, 0.12, 0.6), (0, 0, 0.3)),
+    ('wall', (1, 0.12, 2.5), (0, 0, 1.25)),
     ('floor', (1, 1, 0.25), (0, 0, -0.125)),
 ]:
     scene = bpy.data.scenes.new('HouseKit-'+name)
@@ -29,7 +29,7 @@ for name, dimensions, center in [
     if name == 'floor':
         edges = [e for e in bm.edges if all(abs(v.co.z+0.25)<1e-6 for v in e.verts)]
     else:
-        edges = [e for e in bm.edges if all(abs(v.co.z-0.6)<1e-6 for v in e.verts)
+        edges = [e for e in bm.edges if all(abs(v.co.z-2.5)<1e-6 for v in e.verts)
                  and abs(e.verts[0].co.x-e.verts[1].co.x)>0.9]
     bmesh.ops.bevel(bm, geom=edges, offset=0.018, segments=3, affect='EDGES')
     bm.normal_update()
@@ -42,7 +42,7 @@ for name, dimensions, center in [
     obj['world_units_per_blender_unit'] = 1.0
     obj['ground_contact_description'] = 'origin at floor-top center' if name=='floor' else 'origin at wall-base midpoint'
     obj['stretch_axes'] = 'X,Z' if name=='floor' else 'X'
-    obj['native_extent_xyz_gltf'] = [1,0.25,1] if name=='floor' else [1,0.6,0.12]
+    obj['native_extent_xyz_gltf'] = [1,0.25,1] if name=='floor' else [1,2.5,0.12]
     with bpy.context.temp_override(scene=scene, view_layer=scene.view_layers[0]):
         bpy.ops.export_scene.gltf(filepath=str(OUT/(name+'.glb')), export_format='GLB',
             use_active_scene=True, use_selection=False, export_yup=True,

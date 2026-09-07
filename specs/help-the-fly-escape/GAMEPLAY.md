@@ -67,3 +67,5 @@ Deferred: camera rotation, mobile layout, procedural levels, accounts, shop/curr
 At wide zoom, enlarge the 3D fly models dynamically so players can still see and select them. Return to native size at close zoom. The user explicitly prefers readability over exact visual proportions at wide zoom; this affects display size, not simulation physics.
 
 Camera navigation uses scroll-wheel zoom and RTS edge panning over the 3D viewport. There is no Overview button. Selecting a fly enters close follow; wheel zoom preserves follow, while panning releases it without clearing selection.
+
+Use The Sims as inspiration for room visibility: full-height domestic walls, foreground upper walls nearly transparent, and a short opaque bottom strip to preserve room boundaries. Cutaway works in setup and while panning without requiring a selected fly.

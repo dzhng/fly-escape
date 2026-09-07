@@ -39,10 +39,10 @@ try {
     await page.mouse.move(1050, 500, { steps: 5 }); await page.mouse.up();
   }
   await page.waitForFunction(() => !JSON.parse(document.querySelector("#app").dataset.houseCamera).flies[0].visible);
-  await page.waitForFunction(() => JSON.parse(document.querySelector("#app").dataset.houseVisibility).cutaway === 0);
+  await page.waitForFunction(() => JSON.parse(document.querySelector("#app").dataset.houseVisibility).cutaway > 0);
   await page.locator("#inspect-room").click();
   await zoomOut(page);
-  await page.waitForFunction(() => JSON.parse(document.querySelector("#app").dataset.houseVisibility).cutaway === 0);
+  await page.waitForFunction(() => JSON.parse(document.querySelector("#app").dataset.houseVisibility).cutaway > 0);
   await shot("restored-overview");
   for (const [value, name] of [["-1", "before"], ["0", "threshold"], ["1", "after"]]) {
     await page.locator("#doorway").selectOption("2");

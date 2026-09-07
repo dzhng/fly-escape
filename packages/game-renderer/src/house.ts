@@ -8,7 +8,7 @@ import catalog from "../../../assets/house/catalog.json";
 export type HousePart = "wall" | "floor" | "solid";
 export type HouseAsset = HousePart | FurnitureModel;
 const PART_BOUNDS = {
-  wall: [-0.5, 0, -0.06, 0.5, 0.6, 0.06],
+  wall: [-0.5, 0, -0.06, 0.5, 2.5, 0.06],
   floor: [-0.5, -0.25, -0.5, 0.5, 0, 0.5],
   solid: [-0.5, 0, -0.5, 0.5, 1, 0.5],
 } as const;
@@ -78,12 +78,14 @@ export class HouseGeometry {
   readonly walls = new THREE.Group();
   readonly floors = new THREE.Group();
   readonly solids = new THREE.Group();
+  private wallViews: { group: THREE.Group; full: THREE.Group; base: THREE.Group; upper: THREE.Group; segment: Geometry["walls"][number] }[] = [];
+  private readonly viewDirection = new THREE.Vector3();
   private readonly solidSources = new Map<"solid" | FurnitureModel, { source: THREE.Group; native: boolean }>();
   constructor(private readonly geometry: Geometry) {
     this.root.add(this.floors, this.walls, this.solids);
     const wall = new THREE.Group();
-    const wallMesh = new THREE.Mesh(new THREE.BoxGeometry(1, 0.6, 0.12), houseMaterial("wall"));
-    wallMesh.position.y = 0.3;
+    const wallMesh = new THREE.Mesh(new THREE.BoxGeometry(1, 2.5, 0.12), houseMaterial("wall"));
+    wallMesh.position.y = 1.25;
     wallMesh.castShadow = wallMesh.receiveShadow = true;
     wall.add(wallMesh);
     const floor = new THREE.Group();
@@ -102,6 +104,28 @@ export class HouseGeometry {
       this.solidSources.set(key, { source, native: false });
     }
     this.rebuildSolids();
+  }
+  /** Cut room-facing foreground walls even when no fly is selected. */
+  updateWallVisibility(camera: THREE.Camera): void {
+    camera.getWorldDirection(this.viewDirection);
+    for (const wall of this.wallViews) {
+      const { a, b } = wall.segment;
+      const vertical = Math.abs(a.x - b.x) < 1e-8;
+      const edge = vertical ? a.x : a.z;
+      const lo = Math.min(vertical ? a.z : a.x, vertical ? b.z : b.x);
+      const hi = Math.max(vertical ? a.z : a.x, vertical ? b.z : b.x);
+      const direction = vertical ? this.viewDirection.x : this.viewDirection.z;
+      const cut = this.geometry.rooms.some(room => {
+        const near = vertical ? room.min.x : room.min.z, far = vertical ? room.max.x : room.max.z;
+        const alongMin = vertical ? room.min.z : room.min.x, alongMax = vertical ? room.max.z : room.max.x;
+        return (Math.abs(near - edge) < 1e-8 || Math.abs(far - edge) < 1e-8)
+          && Math.min(hi, alongMax) > Math.max(lo, alongMin)
+          && ((near + far) / 2 - edge) * direction > 0;
+      });
+      wall.full.visible = !cut;
+      wall.base.visible = wall.upper.visible = cut;
+      wall.group.userData.cutaway = cut;
+    }
   }
   get assetKeys(): HouseAsset[] { return ["wall", "floor", ...this.solidSources.keys()]; }
   private rebuildSolids(): void {
@@ -134,9 +158,39 @@ export class HouseGeometry {
     disposeObjectResources(owner);
     owner.clear();
     if (part === "wall") {
+      this.wallViews = [];
+      const clipped = (normal: number, constant: number, opacity: number) => {
+        const template = source.clone(true);
+        const materials = new Map<THREE.Material, THREE.Material>();
+        template.traverse(object => {
+          if (!(object instanceof THREE.Mesh)) return;
+          const copy = (original: THREE.Material) => {
+            let material = materials.get(original);
+            if (!material) {
+              material = original.clone();
+              material.clippingPlanes = [new THREE.Plane(new THREE.Vector3(0, normal, 0), constant)];
+              material.clipShadows = true;
+              material.transparent = opacity < 1;
+              material.opacity = opacity;
+              material.depthWrite = opacity === 1;
+              materials.set(original, material);
+            }
+            return material;
+          };
+          object.material = Array.isArray(object.material) ? object.material.map(copy) : copy(object.material);
+          if (opacity < 1) object.castShadow = false;
+        });
+        return template;
+      };
+      const baseTemplate = source.clone(true);
+      baseTemplate.scale.y *= 0.15 / PART_BOUNDS.wall[4];
+      const upperTemplate = clipped(1, -0.15, 0.06);
       for (const { segment, dx, dz, length, start, end } of wallFootprints(this.geometry.walls)) {
         const placement = new THREE.Group();
-        placement.add(source.clone(true));
+        const full = source.clone(true), base = baseTemplate.clone(true), upper = upperTemplate.clone(true);
+        placement.add(full, base, upper);
+        base.visible = upper.visible = false;
+        this.wallViews.push({ group: placement, full, base, upper, segment });
         placement.scale.x = length + start + end;
         placement.position.set(
           (segment.a.x + segment.b.x) / 2 + (end - start) * dx / (2 * length),
