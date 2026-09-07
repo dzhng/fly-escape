@@ -1,6 +1,6 @@
 """Offline fruit skin materials; geometry stays owned by each fruit author."""
 import bpy
-from math import sin, atan2, pi, cos
+from math import sin, pi, cos
 
 def apply_skin(mesh, kind):
     material=bpy.data.materials.new(kind.title()+'-Skin')
@@ -9,28 +9,22 @@ def apply_skin(mesh, kind):
     bsdf=nodes.get('Principled BSDF')
     bsdf.inputs['Roughness'].default_value=0.38 if kind=='apple' else 0.58
     bsdf.inputs['Coat Weight'].default_value=0.18 if kind=='apple' else 0.03
+    mesh.materials.clear();mesh.materials.append(material)
+    if kind == 'apple':
+        return material
     attribute=nodes.new('ShaderNodeVertexColor');attribute.layer_name='Skin'
     material.node_tree.links.new(attribute.outputs['Color'],bsdf.inputs['Base Color'])
     colour=mesh.color_attributes.get('Skin') or mesh.color_attributes.new(name='Skin',type='FLOAT_COLOR',domain='POINT')
     xs=[v.co.x for v in mesh.vertices];lo,hi=min(xs),max(xs)
     for v in mesh.vertices:
         x,y,z=v.co
-        if kind=='apple':
-            angle=atan2(y,x)
-            stripe=(0.5+0.5*sin(angle*15+sin(z*95)*1.5))**5
-            blush=0.5+0.5*sin(angle-0.6)
-            gold=min(0.75,0.16*stripe+0.12*(1-blush))
-            fleck=0.5+0.5*sin(x*4200+y*3100+z*2800)
-            rgb=(0.42+0.16*gold+0.02*fleck,0.012+0.24*gold,0.009+0.025*gold)
-        else:
-            t=(x-lo)/(hi-lo)
-            terminal=max(0.,min(1.,(0.055-t)/0.035)) if t<0.055 else max(0.,min(1.,(t-0.91)/0.055))
-            variation=0.5+0.5*sin(x*290+y*520+z*210)
-            yellow=(0.72+0.025*variation,0.46+0.025*variation,0.025+0.006*variation)
-            brown=(0.10,0.043,0.012)
-            rgb=tuple(a*(1-terminal)+b*terminal for a,b in zip(yellow,brown))
+        t=(x-lo)/(hi-lo)
+        terminal=max(0.,min(1.,(0.055-t)/0.035)) if t<0.055 else max(0.,min(1.,(t-0.91)/0.055))
+        variation=0.5+0.5*sin(x*290+y*520+z*210)
+        yellow=(0.72+0.025*variation,0.46+0.025*variation,0.025+0.006*variation)
+        brown=(0.10,0.043,0.012)
+        rgb=tuple(a*(1-terminal)+b*terminal for a,b in zip(yellow,brown))
         colour.data[v.index].color=(*rgb,1)
-    mesh.materials.clear();mesh.materials.append(material)
     return material
 
 
@@ -97,3 +91,58 @@ def author_banana_detail(banana, side_rings, segments):
     links.new(texture.outputs['Color'], mixed.inputs[6])
     links.new(attribute.outputs['Color'], mixed.inputs[7])
     links.new(mixed.outputs[2], bsdf.inputs['Base Color'])
+
+def author_apple_detail(mesh, segments, rings):
+    """Unique spherical skin image: irregular blush and scattered pale lenticels."""
+    import numpy as np
+    uv = mesh.uv_layers.new(name='SkinUV')
+    bottom = len(mesh.vertices)-1
+    for polygon in mesh.polygons:
+        ids = [mesh.loops[i].vertex_index for i in polygon.loop_indices]
+        around = [(i-1)%segments for i in ids if i not in (0,bottom)]
+        seam = 0 in around and segments-1 in around
+        for loop_index, vertex in zip(polygon.loop_indices, ids):
+            if vertex in (0,bottom):
+                longitude = sum(segments if seam and i==0 else i for i in around)/len(around)
+                latitude = 0 if vertex==0 else rings
+            else:
+                longitude = (vertex-1)%segments
+                if seam and longitude==0: longitude=segments
+                latitude = (vertex-1)//segments+1
+            uv.data[loop_index].uv = (longitude/segments, latitude/rings)
+    width,height = 2048,1024
+    v,u = np.mgrid[0:height,0:width].astype(np.float32)
+    phi,theta = 2*pi*(u+.5)/width, pi*(v+.5)/height
+    x,y,z = np.sin(theta)*np.cos(phi),np.sin(theta)*np.sin(phi),np.cos(theta)
+    rng = np.random.default_rng(249)
+    broad = np.zeros((height,width), dtype=np.float32)
+    fine = np.zeros_like(broad)
+    # Waves are evaluated on the sphere, so the longitude seam stays continuous.
+    for _ in range(18):
+        axis = rng.normal(size=3);axis/=np.linalg.norm(axis)
+        phase = rng.uniform(0,2*pi)
+        broad += np.sin((x*axis[0]+y*axis[1]+z*axis[2])*rng.uniform(3,12)+phase)/18
+        fine += np.sin((x*axis[0]+y*axis[1]+z*axis[2])*rng.uniform(60,180)+phase)/18
+    gold = np.clip((x*.45+y*.2+broad*1.7-.15)*1.7,0,1)
+    gold = gold*gold*(3-2*gold)
+    pixels = np.ones((height,width,4),dtype=np.float32)
+    for channel,(red,yellow) in enumerate(zip((.34,.014,.012),(.64,.31,.055))):
+        pixels[:,:,channel] = (red*(1-gold)+yellow*gold)*(1+fine*.12+broad*.15)
+    # Small pale pores are irregularly scattered, with fewer near the poles.
+    for _ in range(2300):
+        cx = rng.uniform(0,width)
+        latitude = np.arccos(rng.uniform(-1,1))
+        cy = latitude/pi*height
+        ry = rng.uniform(.5,1.35)
+        rx = ry/max(.12,np.sin(latitude))
+        ix=np.arange(int(cx-3*rx),int(cx+3*rx)+1)
+        iy=np.arange(max(0,int(cy-3*ry)),min(height,int(cy+3*ry)+1))
+        if not len(iy):continue
+        weight=np.exp(-((ix[None,:]-cx)/rx)**2-((iy[:,None]-cy)/ry)**2)*rng.uniform(.12,.42)
+        region=pixels[iy[:,None],ix[None,:]%width,:3]
+        pixels[iy[:,None],ix[None,:]%width,:3]=region*(1-weight[:,:,None])+np.array((.72,.43,.18))*weight[:,:,None]
+    image=bpy.data.images.new('Apple-Skin-Colour',width=width,height=height,alpha=False)
+    image.pixels.foreach_set(pixels.ravel());image.update();image.pack()
+    material=mesh.materials[0]
+    texture=material.node_tree.nodes.new('ShaderNodeTexImage');texture.image=image
+    material.node_tree.links.new(texture.outputs['Color'],material.node_tree.nodes.get('Principled BSDF').inputs['Base Color'])

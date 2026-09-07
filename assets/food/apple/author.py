@@ -38,8 +38,10 @@ for polygon in mesh.polygons:
 apple = bpy.data.objects.new('Apple', mesh)
 scene.collection.objects.link(apple)
 from runpy import run_path
-run_path(str(OUT.parent/'skin.py'))['apply_skin'](mesh,'apple')
-apple['asset_units'] = 'metres; grounded centre pivot; vertex-colour skin'
+skin = run_path(str(OUT.parent/'skin.py'))
+skin['apply_skin'](mesh,'apple')
+skin['author_apple_detail'](mesh, segments, rings)
+apple['asset_units'] = 'metres; grounded centre pivot; baked colour skin'
 
 # No separate stem/leaf collider: this first contact asset is the edible body.
 previous = bpy.context.window.scene

@@ -1,6 +1,6 @@
 # Apple contact asset
 
-The Blender source uses metres with its support pivot on the floor. The apple body is both visible geometry and an edible contact surface; a separate invisible sphere must not replace it. Its red/yellow skin uses deterministic vertex colour and a restrained glossy finish. Material changes preserve the exact contact geometry; there is no separate non-colliding stem or leaf.
+The Blender source uses metres with its support pivot on the floor. The apple body is both visible geometry and an edible contact surface; a separate invisible sphere must not replace it. Its red/yellow skin uses a deterministic baked colour image and a restrained glossy finish. The shared skin author places irregular blush and pale pores on spherical coordinates; the exported material is ordinary glTF with a local embedded image. Material changes preserve the exact contact geometry; there is no separate non-colliding stem or leaf.
 
 Run [author.py](author.py) through Blender to export the active scene only. Bake the exported GLB through the workbench's [contact exporter](../../../apps/asset-lab/scripts/export-contact.ts):
 

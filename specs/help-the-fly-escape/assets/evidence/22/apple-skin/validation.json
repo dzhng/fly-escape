@@ -1,0 +1,32 @@
+{
+  "canonicalContactExactlyEqual": true,
+  "canonicalVertices": 762,
+  "triangles": 1520,
+  "exportedVertices": 859,
+  "glbBytes": 1019680,
+  "materialCount": 1,
+  "textureSize": [
+    2048,
+    1024
+  ],
+  "estimatedRgbaMipBytes": 11184810.666666666,
+  "material": {
+    "doubleSided": true,
+    "extensions": {
+      "KHR_materials_clearcoat": {
+        "clearcoatFactor": 0.18000000715255737
+      }
+    },
+    "name": "Apple-Skin.002",
+    "pbrMetallicRoughness": {
+      "baseColorTexture": {
+        "index": 0
+      },
+      "metallicFactor": 0,
+      "roughnessFactor": 0.3799999952316284
+    }
+  },
+  "rendererTests": 49,
+  "fruitContactExportTests": 2,
+  "typecheck": "passed"
+}
