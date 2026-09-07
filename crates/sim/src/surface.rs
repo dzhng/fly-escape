@@ -2,7 +2,7 @@
 //! avoids the measured millimetre-body departure failure in metre-scale GJK casts.
 use parry3d_f64::query::contact;
 use parry3d_f64::{
-    bounding_volume::BoundingVolume,
+    bounding_volume::{Aabb, BoundingVolume},
     math::{Matrix, Pose, Rotation, Vector},
     query::{cast_shapes, PointQuery, Ray, RayCast, ShapeCastOptions, ShapeCastStatus},
     shape::{ConvexPolyhedron, Shape, SupportMap, TriMesh, TriMeshFlags},
@@ -55,6 +55,7 @@ pub struct SupportSample {
 
 pub struct ContactHull {
     shape: ConvexPolyhedron,
+    bounds: Aabb,
     boundary: Option<ContactBoundary>,
 }
 impl ContactHull {
@@ -108,6 +109,7 @@ impl ContactHull {
                 volume.is_finite() && volume > 0.
             })
             .map(|shape| Self {
+                bounds: shape.compute_local_aabb(),
                 shape,
                 boundary: None,
             })
@@ -156,15 +158,14 @@ impl ContactScene {
             translation: Vector::from_array(root) * QUERY_UNITS,
             rotation: Rotation::from_array(rotation),
         };
+        let bounds = hull.bounds.transform_by(&pose).loosened(PLANE_TOLERANCE);
         let mut deepest = 0f64;
         let interior = pose
             * (hull.shape.points().iter().copied().sum::<Vector>()
                 / hull.shape.points().len() as f64);
-        for entry in self
-            .meshes
-            .iter()
-            .filter(|entry| Some(entry.id) != selected)
-        {
+        for entry in self.meshes.iter().filter(|entry| {
+            Some(entry.id) != selected && entry.mesh.local_aabb().intersects(&bounds)
+        }) {
             if entry.closed && entry.mesh.contains_local_point(interior) {
                 return Err(
                     "numerical contact unresolved: hull interior is inside closed food".into(),
@@ -191,7 +192,12 @@ impl ContactScene {
             translation: Vector::from_array(position) * QUERY_UNITS,
             rotation: Rotation::from_array(rotation),
         };
-        for entry in &self.meshes {
+        let bounds = hull.bounds.transform_by(&pose).loosened(PLANE_TOLERANCE);
+        for entry in self
+            .meshes
+            .iter()
+            .filter(|entry| entry.mesh.local_aabb().intersects(&bounds))
+        {
             if contact(
                 &pose,
                 &hull.shape,
@@ -436,6 +442,19 @@ fn cast_on<'a>(
         translation: pose.translation + velocity,
         ..pose
     };
+    // Transforming the cached box is conservative and constant work. Distant
+    // food must not require scanning every hull vertex for exact swept bounds.
+    let broad = hull
+        .bounds
+        .transform_by(&pose)
+        .merged(&hull.bounds.transform_by(&end))
+        .loosened(PLANE_TOLERANCE);
+    let mut meshes = meshes
+        .filter(|entry| entry.mesh.local_aabb().intersects(&broad))
+        .peekable();
+    if meshes.peek().is_none() {
+        return Ok(None);
+    }
     let swept = hull
         .shape
         .compute_aabb(&pose)
