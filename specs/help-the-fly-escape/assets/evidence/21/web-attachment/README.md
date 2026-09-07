@@ -32,3 +32,7 @@ All 35 Rust lib/placement tests, 19 renderer placement tests, TypeScript checkin
 ## Review and choices
 
 Shape review retained one source/export/contact path and replaced the oval instead of layering another web over it. Diff review found no actionable source or physical issue. Documentation records the remaining art gate without claiming completion. The delegated composition choice is an asymmetric fan; the delegated placement choice is the actual interior wall face. Silk radii, physical envelope, placement policy and simulation architecture remain unchanged. These decisions improve mounting without using thicker silk or invisible collision to conceal the visual limitation.
+
+## Root integration
+
+Merged typechecking,35 native lib/placement tests, the full renderer suite, WASM and both application builds pass. Both actual static houses load valid hazard roles without page errors. A full production first-house attempt with seed42 completes at tick311 with two escaped and eighteen starved, zero underruns and a clean return to one Worker/canvas. The harness records the actual canvas device as Apple M5 Pro through ANGLE Metal. These checks confirm integrated playback, not hazard effectiveness or campaign balance.

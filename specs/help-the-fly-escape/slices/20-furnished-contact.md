@@ -20,7 +20,7 @@ Core-generated timestamped motion knots and the WASM sampler serve body events a
 
 Runtime bounds and accepted workload are separate questions. Motion currently limits points and contact queries; the contact scene limits surfaces and the archive caps bytes. The general supported subdivision is coarser than the departure subdivision. Read `body/motion.rs`, `body.rs`, `surface.rs` and `packages/sim-client/src/record.ts` for current limits. Enforcing those limits is not evidence that representative twenty-fly sustained contact finishes within release budgets.
 
-A verified collision may stop motion. Specifically unresolved angular sweeps decline the turn while preserving the exact preceding orientation and still testing translation. Malformed queries and exhausted work budgets remain errors. This conservative policy is recorded in the [seed 42 regression](../assets/evidence/30/seed42-contact/README.md); it does not permit suppressing arbitrary errors as obstacles.
+A verified collision may stop motion. Specifically unresolved angular sweeps decline the turn while preserving the exact preceding orientation and still testing translation. Malformed queries remain errors. Query, segment, knot and substep exhaustion now discard provisional movement and retain an independently validated starting pose within the same fixed budget; see the [captured query failure](../assets/evidence/30/query-budget-contact/README.md). This conservative policy is recorded in the [seed 42 regression](../assets/evidence/30/seed42-contact/README.md); it does not permit suppressing arbitrary errors as obstacles.
 
 ## Evidence and its limits
 

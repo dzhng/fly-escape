@@ -1,0 +1,91 @@
+   Compiling sim v0.1.0 (/Users/david/dev/fly-escape/crates/sim)
+    Finished `release` profile [optimized] target(s) in 6.28s
+     Running unittests src/lib.rs (target/release/deps/sim-4e90414f9d34687b)
+
+running 26 tests
+test body::motion::coalescing_tests::collision_hold_and_support_boundaries_survive_coalescing ... ok
+test body::motion::coalescing_tests::straight_knots_coalesce_without_moving_any_intermediate_pose ... ok
+test body::motion::coalescing_tests::stopped_support_rejects_selected_surface_penetration_and_query_exhaustion ... ok
+test body::motion::coalescing_tests::recovery_requires_a_physically_valid_start_and_preserves_native_errors ... ok
+test body::motion_consumer::closed_food_containment_is_not_mistaken_for_surface_separation ... ok
+test environment::fields::reconstruction_tests::constants_survive_domain_edges_and_invalid_points_return_zero ... ok
+test environment::fields::reconstruction_tests::visible_support_is_bounded_and_does_not_leak_through_walls_or_solids ... ok
+test sensory::tests::mirrored_senses_swap_currents_without_stimulating_motor_readouts ... ok
+test environment::fields::reconstruction_tests::linear_fields_are_exact_through_centres_and_former_cell_boundaries ... ok
+test body::contact_hazards::starvation_before_native_impact_keeps_the_earlier_terminal_time ... ok
+test body::contact_hazards::native_zapper_leaves_overflight_and_lateral_misses_safe ... ok
+test surface::path::tests::adjacent_float_knots_do_not_bridge_an_uncovered_interval ... ok
+test surface::path::tests::merging_tiny_intervals_cannot_cut_a_steep_join ... ok
+test body::contact_hazards::native_zapper_stops_walking_and_flight_at_the_cast_contact_time ... ok
+test body::contact_hazards::native_web_empty_gap_and_overflight_remain_passable ... ok
+test body::contact_hazards::hazard_roles_reject_missing_edible_and_duplicate_surface_ids ... ok
+test body::contact_hazards::native_web_strands_catch_walk_and_flight_at_actual_contact_time ... ok
+test body::contact_hazards::native_web_initial_contact_catches_without_feeding ... ok
+test body::contact_hazards::native_zapper_initial_contact_and_acquired_support_cannot_feed ... ok
+test body::motion_consumer::numerical_producer_handles_actual_requests ... ok
+test body::motion_consumer::native_shoe_rim_blocks_supported_motion_without_aborting_the_tick ... ok
+test body::motion_consumer::query_exhaustion_after_partial_shoe_motion_restores_verified_start ... ok
+test body::motion_consumer::free_space_turns_remain_available_and_zero_time_landing_records_support ... ok
+test body::motion_consumer::free_rotation_cannot_push_a_blocked_fly_into_neighboring_shoe_mesh ... ok
+test body::motion_consumer::descending_shoe_rim_contact_keeps_a_verified_prefix ... ok
+test body::motion_consumer::motion_requests_advance_within_budget ... ok
+
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.49s
+
+     Running tests/body.rs (target/release/deps/body-2959af29df276c14)
+
+running 24 tests
+test recorded_orientation_tracks_turns_and_freezes_with_terminal_pose ... ok
+test oblique_wind_slides_at_actual_contact_time_and_a_corner_stops_both_axes ... ok
+test landing_spike_enforces_one_game_second_of_ground_dwell ... ok
+test swept_zapper_or_earlier_starvation_preempts_exit ... ok
+test swept_outward_exit_counts_once_and_adjacent_or_covering_wall_never_escapes ... ok
+test takeoff_and_landing_require_their_neural_readouts_and_flight_cannot_feed ... ok
+test airborne_landing_is_latched_and_terminal_height_freezes_at_the_actual_time ... ok
+test wind_is_world_space_without_a_hidden_turn_and_inward_crossing_is_not_escape ... ok
+test tonic_voltage_without_spikes_does_not_initiate_feeding_or_landing ... ok
+test feeding_does_not_exempt_a_body_from_net_energy_loss ... ok
+test household_meshes_do_not_block_the_air_above_their_native_height ... ok
+test feeding_prefix_energy_and_terminal_hold_share_the_motion_clock ... ok
+test household_surfaces_support_walking_but_never_feed_even_with_proboscis_spikes ... ok
+test native_fly_can_land_and_feed_on_the_authored_banana ... ok
+test a_new_bout_requires_motor_rearming_after_contact_loss ... ok
+test native_fly_lands_on_authored_apple_before_it_can_feed ... ok
+test food_contact_without_proboscis_motor_activity_never_starts_feeding ... ok
+test feeding_replenishes_within_capacity_then_contact_loss_allows_later_starvation ... ok
+test a_proboscis_spike_starts_a_bout_that_stays_latched_between_pulses ... ok
+test meal_plus_timeout_scores_zero_and_terminal_body_is_frozen ... ok
+test apple_support_follows_walking_and_is_lost_at_the_edge ... ok
+test takeoff_from_tilted_apple_makes_progress ... ok
+test neighboring_apple_blocks_while_time_advances ... ok
+test feeding_is_capped_and_cannot_restart_until_motor_resets ... ok
+
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.75s
+
+     Running tests/food.rs (target/release/deps/food-edead9052577e8a0)
+
+running 4 tests
+test floor_patches_share_the_surface_query_and_stable_contact_identity ... ok
+test edible_contact_uses_actual_transformed_surface_not_a_planar_or_solid_volume ... ok
+test native_food_keeps_exact_baked_vertex_and_triangle_order ... ok
+test banana_contact_preserves_native_curved_surface_and_rotated_footprint ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/placement.rs (target/release/deps/placement-e1c5636891ed0af0)
+
+running 11 tests
+test placement_rejects_walls_spawn_props_exit_and_overlap ... ok
+test map_fan_rule_requires_a_finite_canonical_heading ... ok
+test invalid_edits_do_not_spend_inventory_and_removal_refunds_it ... ok
+test banana_spends_its_own_stock_and_resolves_native_edible_geometry ... ok
+test fan_direction_is_owned_by_the_map_for_place_repeat_move_and_fixed_objects ... ok
+test repeating_a_fan_with_ignored_input_headings_is_idempotent ... ok
+test canonical_resolution_binds_each_tool_without_mixing_food_and_odor ... ok
+test fixed_objects_keep_effects_and_space_without_spending_editable_stock ... ok
+test native_zapper_resolves_only_non_edible_contact_hazards ... ok
+test native_web_resolves_only_non_edible_contact_hazards ... ok
+test household_native_contacts_keep_their_non_edible_role_and_modeled_odor_sources ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+

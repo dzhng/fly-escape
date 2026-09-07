@@ -1,0 +1,18 @@
+    Finished `release` profile [optimized] target(s) in 0.03s
+     Running `/tmp/fly-dm1-transmission/target/release/examples/query_repro /tmp/query-budget-request.json`
+tick 20
+tick 40
+tick 60
+tick 80
+tick 100
+tick 120
+tick 140
+tick 160
+tick 180
+tick 200
+tick 220
+tick 240
+tick 260
+tick 280
+tick 300
+{"attemptId":"query-budget-reproduction","completedTick":310,"outcomes":{"escaped":0,"starved":20,"zapped":0,"caught":0,"timedOut":0,"score":0},"stars":0}

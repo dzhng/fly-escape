@@ -54,6 +54,11 @@ try {
     const startedAt = performance.now();
     const started = JSON.parse(await page.getByTestId("playback-report").textContent());
     assert.equal(started.state, "playing", started.error ?? "attempt must enter playback");
+    const rendererDevice = await page.evaluate(() => {
+      const gl = document.querySelector('[data-testid="playback-lab"] canvas')?.getContext("webgl2");
+      const extension = gl?.getExtension("WEBGL_debug_renderer_info");
+      return extension ? gl.getParameter(extension.UNMASKED_RENDERER_WEBGL) : null;
+    });
     if (seeds) assert.equal(BigInt(started.spec.rootSeed), BigInt(seeds[run]), "attempt must use its recorded seed");
     const startedTick = started.cursorTick;
     if (fullAttempts) {
@@ -66,9 +71,12 @@ try {
       await page.waitForFunction(() => JSON.parse(document.querySelector('[data-testid="playback-report"]').textContent).state === "paused");
     }
     const report = JSON.parse(await page.getByTestId("playback-report").textContent());
+    report.rendererDevice = rendererDevice;
     await writeFile(`${output}/attempt-${run + 1}.json`, JSON.stringify(report, null, 2) + "\n");
     assert.equal(report.spec.flyCount, 20);
     if (fullAttempts) {
+      assert.ok(rendererDevice && !/SwiftShader|Software|llvmpipe/i.test(rendererDevice),
+        "frame timing acceptance requires an identified hardware renderer");
       assert.equal(report.state, "ended", "the actual attempt must finish without an error");
       assert.equal(report.complete, true);
       assert.equal(report.cursorTick, report.result.completedTick);
@@ -94,6 +102,7 @@ try {
     assert.equal(await page.locator("canvas").count(), 1, "retry must show one setup world");
     samples.push({ run, attemptId: report.spec.attemptId, rootSeed: report.spec.rootSeed,
       simulationBuildId: report.spec.simulationBuildId, graphHash: report.spec.graphHash,
+      rendererDevice,
       renderer: report.renderer, wasmBytes: report.memory.wasmBytes,
       mainHeapAfterReturn: heap, dom: await cdp.send("Memory.getDOMCounters") });
   }

@@ -1,0 +1,22 @@
+   Compiling sim v0.1.0 (/private/tmp/fly-refinement-fix/crates/sim)
+    Finished `release` profile [optimized] target(s) in 4.24s
+     Running unittests src/lib.rs (/tmp/fly-dm1-transmission/target/release/deps/sim-4e90414f9d34687b)
+
+running 1 test
+test body::motion_consumer::query_exhaustion_after_partial_shoe_motion_restores_verified_start ... FAILED
+
+failures:
+
+---- body::motion_consumer::query_exhaustion_after_partial_shoe_motion_restores_verified_start stdout ----
+
+thread 'body::motion_consumer::query_exhaustion_after_partial_shoe_motion_restores_verified_start' (32403749) panicked at crates/sim/src/body/motion_consumer.rs:604:73:
+called `Result::unwrap()` on an `Err` value: "numerical motion unresolved: query budget span [2.6341799586876142, 0.07454325579475889, 6.617922442047476] -> [2.634211198261246, 0.07373055085445787, 6.617923249227317]"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    body::motion_consumer::query_exhaustion_after_partial_shoe_motion_restores_verified_start
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 24 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `-p sim --lib`

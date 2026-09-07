@@ -1,0 +1,36 @@
+{
+  "browser": "152.0.7977.77",
+  "samples": [
+    {
+      "run": 0,
+      "attemptId": "3cb60753-b419-4767-9de4-ad06dc755f94",
+      "rootSeed": "42",
+      "simulationBuildId": "8f2c7c4ad2e189d5d655571d5576f57b985faec270d87a07fa35e111ea5bcd97",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1173,
+        "triangles": 237642,
+        "geometries": 304,
+        "textures": 28
+      },
+      "wasmBytes": 102825984,
+      "mainHeapAfterReturn": {
+        "usedSize": 30296244,
+        "totalSize": 36978688,
+        "embedderHeapUsedSize": 2043600,
+        "backingStorageSize": 131104681
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 140,
+        "jsEventListeners": 202
+      }
+    }
+  ],
+  "retainedMainHeapChangeBytes": 0,
+  "errors": [],
+  "scope": "1 real 20-fly complete 1× attempts and retries on campaign level 1. Collected main heaps are observations, not process RSS or a proof that Worker/GPU memory cannot leak. Final combined memory, input latency, hidden-tab and platform gates remain separate."
+}

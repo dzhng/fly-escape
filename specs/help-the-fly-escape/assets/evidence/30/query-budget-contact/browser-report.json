@@ -1,0 +1,64 @@
+{
+  "browser": "152.0.7977.77",
+  "samples": [
+    {
+      "run": 0,
+      "attemptId": "17836f4f-588f-4f8b-94c7-9cc742e2243d",
+      "rootSeed": "10488929867879453175",
+      "simulationBuildId": "3f9e267884c2735e3b618c097f89cf8fea5f8aa45f78641dae4231489328eaed",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1246,
+        "triangles": 434498,
+        "geometries": 369,
+        "textures": 27
+      },
+      "wasmBytes": 106102784,
+      "mainHeapAfterReturn": {
+        "usedSize": 26913348,
+        "totalSize": 28704768,
+        "embedderHeapUsedSize": 2173504,
+        "backingStorageSize": 34832490
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 160,
+        "jsEventListeners": 208
+      }
+    },
+    {
+      "run": 1,
+      "attemptId": "344d1f35-5c4e-4627-a650-4c8e3296e530",
+      "rootSeed": "1744322718178062846",
+      "simulationBuildId": "3f9e267884c2735e3b618c097f89cf8fea5f8aa45f78641dae4231489328eaed",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1247,
+        "triangles": 522974,
+        "geometries": 366,
+        "textures": 27
+      },
+      "wasmBytes": 106102784,
+      "mainHeapAfterReturn": {
+        "usedSize": 32573060,
+        "totalSize": 40386560,
+        "embedderHeapUsedSize": 2117864,
+        "backingStorageSize": 132625035
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 160,
+        "jsEventListeners": 208
+      }
+    }
+  ],
+  "retainedMainHeapChangeBytes": 5659712,
+  "errors": [],
+  "scope": "2 real 20-fly complete 1× attempts and retries on campaign level 2. Collected main heaps are observations, not process RSS or a proof that Worker/GPU memory cannot leak. Final combined memory, input latency, hidden-tab and platform gates remain separate."
+}
