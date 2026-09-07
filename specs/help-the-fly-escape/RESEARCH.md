@@ -54,3 +54,7 @@ Scale, supported fruit contact and furnished occlusion are local reproduction qu
 ## Anatomical sampling at household scale
 
 The millimetre-scale reproduction must revisit physical sampling, not assume the original spike's antenna offset is anatomy. Primary studies of [bilateral olfactory tracking in flight](https://pmc.ncbi.nlm.nih.gov/articles/PMC2726901/), [rapid odor lateralization](https://pmc.ncbi.nlm.nih.gov/articles/PMC3590906/) and [walking olfactory navigation](https://elifesciences.org/articles/37815) provide experimental context for a targeted source review in 25. They do not validate our adapter cutoff, field grid or motor gains. Keep those model parameters distinct from measured biological anatomy and prove any correction through the actual graph and controls.
+
+## Physical sensory calibration limits
+
+[Álvarez-Salvado et al. (2018)](https://elifesciences.org/articles/37815), abstract and introduction inspected2026-09-07, describes walking odor navigation using odor history and wind sensation, and discusses bilateral odor cues. It does not establish a5%,0.1% or0.01% detector cutoff for this game. Slice27's sensitivity candidates are explicit model calibration choices. Reading the Gaudry PMC page was blocked by its browser challenge, so no new quantitative claim is drawn from it. The existing binary lateral adapter remains a declared simplification; this research does not justify replacing neural motor ownership with the paper's behavioral controller.
