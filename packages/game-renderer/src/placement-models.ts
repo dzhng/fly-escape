@@ -7,13 +7,14 @@ import dishesSurface from "../../../assets/household/dirty-dishes/contact.json";
 import laundrySurface from "../../../assets/household/crumpled-laundry/contact.json";
 import fanSurface from "../../../assets/household/fan/contact.json";
 import vinegarSurface from "../../../assets/household/vinegar/contact.json";
+import zapperSurface from "../../../assets/household/bug-zapper/contact.json";
 import catSurface from "../../../assets/household/sleeping-cat/contact.json";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import type { Placement, ToolDef } from "@fly-escape/sim-client";
 import { disposeObjectResources } from "./resources";
 export type PlacementKind = Placement["kind"];
 const nativeSurfaces: Partial<Record<PlacementKind, typeof appleSurface>> = {
-  fan: fanSurface, vinegar: vinegarSurface, fruit: appleSurface, banana: bananaSurface, wornShoes: shoesSurface,
+  bugZapper: zapperSurface, fan: fanSurface, vinegar: vinegarSurface, fruit: appleSurface, banana: bananaSurface, wornShoes: shoesSurface,
   dirtyDishes: dishesSurface, laundry: laundrySurface, sleepingCat: catSurface,
 };
 

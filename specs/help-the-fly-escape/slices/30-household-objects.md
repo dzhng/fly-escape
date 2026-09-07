@@ -11,7 +11,7 @@ Status: active. The user's object-discovery direction supersedes fan-route accep
 
 Fixed objects are authored level conditions, not a second editable inventory. Rendering consumes the same definitions that generate effects. Do not introduce a parallel steering controller or invisible oversized food/hazard regions.
 
-Fixed-object ownership is integrated with [native and production-browser evidence](../assets/evidence/30/fixed-objects/README.md). Both authored houses contain fixed fruit, with one editable fan each. Native shoes, dishes, laundry and the sleeping cat now share physical contact; zapper and spider hazards remain open.
+Fixed-object ownership is integrated with [native and production-browser evidence](../assets/evidence/30/fixed-objects/README.md). Both authored houses contain fixed fruit, with one editable fan each. Native shoes, dishes, laundry and the sleeping cat now share physical contact; [native zapper contact](../assets/evidence/30/native-zapper/report.md) is integrated; spider-web contact remains open.
 
 [Cold-start odor evidence](../assets/evidence/30/cold-odor/README.md) supports enabling the existing excitatory-odor repellent pathway at gain two. It does **not** establish reliable attraction through the current inhibitory-odor binding. Both campaign tunings enable the measured repellent pathway; strong vinegar is a modeled acidic source. Final cue combinations and useful attraction remain open gates.
 

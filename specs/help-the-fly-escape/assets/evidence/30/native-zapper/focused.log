@@ -1,0 +1,13 @@
+   Compiling sim v0.1.0 (/private/tmp/fly-native-zapper/crates/sim)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.84s
+     Running unittests src/lib.rs (/tmp/fly-household-contact/target/debug/deps/sim-8a0e59084a05a3e9)
+
+running 5 tests
+test body::contact_hazards::starvation_before_native_impact_keeps_the_earlier_terminal_time ... ok
+test body::contact_hazards::native_zapper_leaves_overflight_and_lateral_misses_safe ... ok
+test body::contact_hazards::native_zapper_stops_walking_and_flight_at_the_cast_contact_time ... ok
+test body::contact_hazards::hazard_roles_reject_missing_edible_and_duplicate_surface_ids ... ok
+test body::contact_hazards::native_zapper_initial_contact_and_acquired_support_cannot_feed ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 12 filtered out; finished in 0.05s
+

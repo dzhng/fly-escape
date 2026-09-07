@@ -101,6 +101,12 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
           "z": 1.6
         },
         "heading": 0
+      },
+      {
+        "id": 7,
+        "kind": "bugZapper",
+        "position": { "x": 6.8, "z": 5.2 },
+        "heading": 0
       }
     ],
     "geometry": {

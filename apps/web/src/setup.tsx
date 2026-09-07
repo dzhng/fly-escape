@@ -32,6 +32,7 @@ const names: Record<ToolKind, string> = {
   dirtyDishes: "Dirty dishes",
   laundry: "Damp laundry",
   sleepingCat: "Sleeping cat",
+  bugZapper: "Bug zapper",
 };
 export function SetupGame({
   content,

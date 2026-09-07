@@ -1,0 +1,28 @@
+
+running 1 test
+test body::contact_hazards::native_zapper_stops_walking_and_flight_at_the_cast_contact_time ... FAILED
+
+failures:
+
+---- body::contact_hazards::native_zapper_stops_walking_and_flight_at_the_cast_contact_time stdout ----
+
+thread 'body::contact_hazards::native_zapper_stops_walking_and_flight_at_the_cast_contact_time' (31319916) panicked at crates/sim/src/body/contact_hazards.rs:86:9:
+assertion `left == right` failed
+  left: None
+ right: Some(Zapped)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    body::contact_hazards::native_zapper_stops_walking_and_flight_at_the_cast_contact_time
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 16 filtered out; finished in 0.04s
+
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling sim v0.1.0 (/private/tmp/fly-native-zapper/crates/sim)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.56s
+     Running unittests src/lib.rs (/tmp/fly-household-contact/target/debug/deps/sim-8a0e59084a05a3e9)
+error: test failed, to rerun pass `-p sim --lib`
