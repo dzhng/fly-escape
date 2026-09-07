@@ -298,34 +298,18 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
         {
           "id": 2,
           "furnishing": {
-            "model": "cabinet",
+            "model": "kitchen",
             "quarterTurns": 0
           },
           "min": {
-            "x": 6,
+            "x": 5.3,
             "z": 0.2
           },
           "max": {
-            "x": 7.2,
-            "z": 0.65
+            "x": 7.7,
+            "z": 0.85
           },
-          "height": 0.85
-        },
-        {
-          "id": 3,
-          "furnishing": {
-            "model": "cabinet",
-            "quarterTurns": 0
-          },
-          "min": {
-            "x": 0.2,
-            "z": 9.75
-          },
-          "max": {
-            "x": 1.4,
-            "z": 10.2
-          },
-          "height": 0.85
+          "height": 2.1
         },
         {
           "id": 4,
@@ -342,6 +326,54 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
             "z": 10.2
           },
           "height": 0.85
+        },
+        {
+          "id": 5,
+          "furnishing": {
+            "model": "desk",
+            "quarterTurns": 2
+          },
+          "min": {
+            "x": 0.4,
+            "z": 9.55
+          },
+          "max": {
+            "x": 1.8,
+            "z": 10.25
+          },
+          "height": 1.05
+        },
+        {
+          "id": 6,
+          "furnishing": {
+            "model": "chair",
+            "quarterTurns": 0
+          },
+          "min": {
+            "x": 0.8,
+            "z": 8.45
+          },
+          "max": {
+            "x": 1.4,
+            "z": 9.1
+          },
+          "height": 0.95
+        },
+        {
+          "id": 7,
+          "furnishing": {
+            "model": "bed",
+            "quarterTurns": 2
+          },
+          "min": {
+            "x": 4,
+            "z": 8.15
+          },
+          "max": {
+            "x": 5.6,
+            "z": 10.25
+          },
+          "height": 1.05
         }
       ]
     },

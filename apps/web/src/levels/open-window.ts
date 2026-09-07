@@ -267,50 +267,66 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
         {
           "id": 2,
           "furnishing": {
-            "model": "cabinet",
+            "model": "kitchen",
             "quarterTurns": 0
           },
           "min": {
-            "x": 6,
+            "x": 5.3,
             "z": 0.2
           },
           "max": {
-            "x": 7.2,
-            "z": 0.65
+            "x": 7.7,
+            "z": 0.85
           },
-          "height": 0.85
+          "height": 2.1
         },
         {
-          "id": 3,
+          "id": 5,
           "furnishing": {
-            "model": "cabinet",
+            "model": "desk",
+            "quarterTurns": 2
+          },
+          "min": {
+            "x": 0.4,
+            "z": 8.35
+          },
+          "max": {
+            "x": 1.8,
+            "z": 9.05
+          },
+          "height": 1.05
+        },
+        {
+          "id": 6,
+          "furnishing": {
+            "model": "chair",
             "quarterTurns": 0
           },
           "min": {
-            "x": 0.2,
-            "z": 8.55
+            "x": 0.8,
+            "z": 7.25
           },
           "max": {
             "x": 1.4,
-            "z": 9.0
+            "z": 7.9
           },
-          "height": 0.85
+          "height": 0.95
         },
         {
-          "id": 4,
+          "id": 7,
           "furnishing": {
-            "model": "cabinet",
-            "quarterTurns": 0
+            "model": "bed",
+            "quarterTurns": 2
           },
           "min": {
-            "x": 6.8,
-            "z": 8.55
+            "x": 5.65,
+            "z": 6.95
           },
           "max": {
-            "x": 8.0,
-            "z": 9.0
+            "x": 7.25,
+            "z": 9.05
           },
-          "height": 0.85
+          "height": 1.05
         }
       ]
     },
