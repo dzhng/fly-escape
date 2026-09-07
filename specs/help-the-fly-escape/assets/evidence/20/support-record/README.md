@@ -25,12 +25,20 @@ fixture frames exactly, and verified successful buffer transfer detached the
 sender's buffers. The fixture includes food IDs0 and7, null support, and a
 non-flat core quaternion. Existing browser harness coverage is unchanged.
 
-These gates used a temporary, uncommitted BodyState seam in an isolated worktree
-(initial support null, initial rotation from the existing core support_rotation).
-The consumer commit intentionally excludes body.rs. Physical movement integration
-must regenerate types and rerun the native/browser transport gates before this
-can be banked as integrated behavior. The Chrome probe verifies decoding, not
-physical movement or production rendering.
+The integrated core now writes upright orientation from the authoritative heading
+at spawn and after motion; support remains null until physical acquisition is
+accepted. Generated types and the actual release WASM have been rebuilt.
+The integrated native body/record tests, client/renderer tests, TypeScript and
+focused strict Clippy pass. A body regression checks a nonzero turn and terminal
+freeze; removing the orientation update makes it fail.
+
+[integrated-transport.json](integrated-transport.json) records the existing Chrome
+Worker transport gate against the rebuilt WASM: all repeated-seed frames agree,
+transferred buffers detach, hidden production stops within its existing credit
+bound, and cancellation/reentrant restart checks pass. This establishes actual
+transport integration, not curved physical motion or visual contact acceptance.
+The proportions workbench and motion-context capture also consume recorded
+orientation; fractional capture uses the shared client interpolation helper.
 
 Review: kept the existing packed-buffer owner; added no retained frame history,
 new dependency, compatibility reader, or parallel simulation. The archive-bound

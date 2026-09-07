@@ -479,3 +479,26 @@ fn airborne_landing_is_latched_and_terminal_height_freezes_at_the_actual_time() 
     dying.step(&quiet, &world, Point::default(), 1., 2).unwrap();
     assert_eq!(*dying.state(), terminal);
 }
+
+#[test]
+fn recorded_orientation_tracks_turns_and_freezes_with_terminal_pose() {
+    use parry3d_f64::math::{Rotation, Vector};
+    let g = geometry();
+    let world = BodyWorld::new(&g, &[], &[], exit(), 1).unwrap();
+    let mut b = body(2., 2., 10.);
+    let initial = b.state().rotation;
+    let mut command = neural(0.2, 0.);
+    command.motor.turn = 0.7;
+    b.step(&command, &world, Point::default(), 0.1, 1).unwrap();
+    assert_ne!(b.state().rotation, initial);
+    let q = Rotation::from_array(b.state().rotation);
+    let forward = q * Vector::Z;
+    assert!((forward.x - b.state().pose.heading.cos()).abs() < 1e-12);
+    assert!((forward.z - b.state().pose.heading.sin()).abs() < 1e-12);
+    assert!((q * Vector::Y - Vector::Y).length() < 1e-12);
+    let terminal = b.state().clone();
+    assert_eq!(terminal.outcome, Some(TerminalOutcome::TimedOut));
+    command.motor.turn = -0.7;
+    b.step(&command, &world, Point::default(), 0.1, 2).unwrap();
+    assert_eq!(b.state(), &terminal);
+}

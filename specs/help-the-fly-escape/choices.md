@@ -364,3 +364,45 @@ When a placement edit succeeds, its placement list, remaining inventory and reso
 - **Reach:** Body movement and future buffered path generation can share this query. Runtime replay strategy, orientation policy and hull adoption remain open; no main-thread physics path is implied.
 - **Verdict:** Sound — keeps one geometry owner while preventing a valid destination from masquerading as a physically valid transition.
 - **Confidence:** High.
+
+
+## Support record and native asset preparation — 2026-09-07
+
+### Sound — medium confidence: retain the measured native animation envelope as a candidate
+
+When a fly animates, its legs and wings occupy different positions. The prepared
+contact asset retains the full convex envelope of the sampled native animation,
+without reducing its vertices yet. A convex envelope fills the spaces between
+parts, so this is a candidate physical shape, not a claim of exact insect anatomy
+or guaranteed coverage between animation samples. The plan left the final hull
+open. Actual moving contact and measured cost must decide whether this candidate
+is adopted; detailed geometry alone is not a reason to keep an unsuitable shape.
+
+### Sound — medium confidence: reject invalid recorded rotations at the archive boundary
+
+A quaternion is four numbers describing the fly's orientation. If a transferred
+record contains a nonfinite value or a quaternion whose squared length differs
+from one by more than one hundred-millionth, decoding rejects the chunk before
+retaining its buffers. Silently using it could distort the model or camera. The
+plan did not specify a numeric validation tolerance. This preserves ordinary
+floating-point roundoff while requiring both native and browser readers to agree;
+it does not authorize geometric penetration or a replay position tolerance.
+
+### Sound — high confidence: reserve one packed integer for absent support
+
+Food ID zero must remain a usable identity. Packed records therefore reserve the
+largest unsigned 32-bit integer for no support and export that marker beside the
+field offsets. A grounded floor fly and an airborne fly both have no food ID;
+their recorded mode distinguishes them. The plan required identity but did not
+choose its binary encoding. This avoids an extra nullable buffer and keeps the
+existing bounded archive owner responsible for all recorded state.
+
+### Sound — medium confidence: interpolate recorded orientation along the short arc
+
+Between two recorded frames, the browser turns the fly along the shorter rotation
+between their quaternions, using the existing shared interpolation owner. This
+prevents a small heading change across a full-turn boundary from making the model
+spin the long way around. The plan required smooth recorded orientation but did
+not choose the interpolation rule. This rule only describes orientation: it does
+not prove that a straight root path remains outside curved fruit. Supported replay
+must carry an accepted continuous path before its contact can be approved.

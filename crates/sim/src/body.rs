@@ -53,6 +53,10 @@ pub enum TerminalOutcome {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 pub struct BodyState {
+    /// Core orientation; local +Y points away from the support.
+    pub rotation: [f64; 4],
+    /// Edible surface supporting this body, when acquired by physical movement.
+    pub support: Option<u32>,
     pub pose: BodyPose,
     /// Native support-pivot height in metres, owned by physical movement.
     pub height: f64,
@@ -289,6 +293,8 @@ impl Body {
         }
         Ok(Self {
             state: BodyState {
+                rotation: crate::surface::support_rotation(pose.heading, [0., 1., 0.])?,
+                support: None,
                 pose,
                 height: 0.,
                 mode: BodyMode::Walking,
@@ -524,6 +530,7 @@ impl Body {
             },
             heading,
         };
+        self.state.rotation = crate::surface::support_rotation(heading, [0., 1., 0.])?;
         self.state.height = match self.state.mode {
             BodyMode::Flying => {
                 (initial_height + VERTICAL_SPEED * dt * fraction).min(CRUISE_HEIGHT)

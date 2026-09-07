@@ -11,7 +11,15 @@ export type SpawnMode = "walking" | "flying";
 export type BodyPose = { position: Point, heading: number, };
 export type BodyMode = "walking" | "flying" | "landing" | "feeding";
 export type TerminalOutcome = "escaped" | "starved" | "zapped" | "timedOut";
-export type BodyState = { support: number | null, rotation: [number, number, number, number], pose: BodyPose,
+export type BodyState = {
+/**
+ * Core orientation; local +Y points away from the support.
+ */
+rotation: [number, number, number, number],
+/**
+ * Edible surface supporting this body, when acquired by physical movement.
+ */
+support: number | null, pose: BodyPose,
 /**
  * Native support-pivot height in metres, owned by physical movement.
  */
