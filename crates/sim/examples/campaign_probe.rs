@@ -561,7 +561,7 @@ fn acceptance(
         .is_some_and(|n| n >= 27);
     json!({"diagnosticOnly":!full || diagnostic,"completeSeedSet":full,
         "seedSetPassed":full && frozen && !diagnostic && enough_stars && benefit("poor") && (!require_no_fans || benefit("no-fans")),
-        "foodEnergyPassed":full && frozen && !diagnostic && summaries.get("no-food-energy").is_some_and(|s| s["medianReferenceMinusThis"].as_f64().is_some_and(|v|v>0.) && s["medianStarvationIncreaseOverReference"].as_f64().is_some_and(|v|v>0.)),
+        "foodEnergyPassed":full && frozen && !diagnostic && summaries.get("no-food-energy").zip(summaries.get("reference")).is_some_and(|(ablation, reference)| [ (reference["medianEscapes"].as_f64(), ablation["medianEscapes"].as_f64()), (ablation["medianStarved"].as_f64(), reference["medianStarved"].as_f64()) ].iter().all(|(higher, lower)| higher.zip(*lower).is_some_and(|(a,b)| a>b))),
         "campaignAccepted":false,
         "remaining":"Need matching frozen 30-seed tuning and disjoint 30-seed heldout reports, plus integration/human gates; one partial or individual report cannot accept campaign content"})
 }
@@ -576,7 +576,10 @@ mod tests {
     #[test]
     fn diagnostic_or_missing_control_cannot_accept_a_seed_set() {
         let mut summaries = serde_json::Map::from_iter([
-            ("reference".into(), json!({"oneStarAttempts":30})),
+            (
+                "reference".into(),
+                json!({"oneStarAttempts":30,"medianEscapes":10,"medianStarved":1}),
+            ),
             ("poor".into(), json!({"medianReferenceMinusThis":8})),
             ("no-fans".into(), json!({"medianReferenceMinusThis":5})),
         ]);
@@ -607,22 +610,22 @@ mod tests {
     #[test]
     fn food_energy_evidence_has_a_separate_paired_gate() {
         let mut summaries = serde_json::Map::from_iter([
-            ("reference".into(), json!({"oneStarAttempts":30})),
+            (
+                "reference".into(),
+                json!({"oneStarAttempts":30,"medianEscapes":10,"medianStarved":1}),
+            ),
             ("poor".into(), json!({"medianReferenceMinusThis":8})),
             (
                 "no-food-energy".into(),
-                json!({"medianReferenceMinusThis":2,"medianStarvationIncreaseOverReference":3}),
+                json!({"medianReferenceMinusThis":2,"medianStarvationIncreaseOverReference":3,"medianEscapes":8,"medianStarved":4}),
             ),
         ]);
         let gate = acceptance(&summaries, true, true, false, false);
         assert_eq!(gate["seedSetPassed"], true);
         assert_eq!(gate["foodEnergyPassed"], true);
-        for field in [
-            "medianReferenceMinusThis",
-            "medianStarvationIncreaseOverReference",
-        ] {
+        for (field, equal) in [("medianEscapes", 10), ("medianStarved", 1)] {
             let original = summaries["no-food-energy"][field].clone();
-            summaries.get_mut("no-food-energy").unwrap()[field] = json!(0);
+            summaries.get_mut("no-food-energy").unwrap()[field] = json!(equal);
             let gate = acceptance(&summaries, true, true, false, false);
             assert_eq!(gate["seedSetPassed"], true);
             assert_eq!(gate["foodEnergyPassed"], false);
@@ -634,6 +637,26 @@ mod tests {
         );
         assert_eq!(
             acceptance(&summaries, true, false, false, false)["foodEnergyPassed"],
+            false
+        );
+    }
+    #[test]
+    fn positive_paired_medians_do_not_substitute_for_marginal_food_benefit() {
+        // Escapes [0,10,20] vs [10,9,19]: paired benefit +1, both medians 10.
+        // Starvation [0,10,20] vs [10,11,1]: paired increase +1, both medians 10.
+        let summaries = serde_json::Map::from_iter([
+            (
+                "reference".into(),
+                json!({"oneStarAttempts":30,"medianEscapes":median(vec![0.,10.,20.]),"medianStarved":median(vec![0.,10.,20.])}),
+            ),
+            ("poor".into(), json!({"medianReferenceMinusThis":8})),
+            (
+                "no-food-energy".into(),
+                json!({"medianReferenceMinusThis":median(vec![-10.,1.,1.]),"medianStarvationIncreaseOverReference":median(vec![10.,1.,-19.]),"medianEscapes":median(vec![10.,9.,19.]),"medianStarved":median(vec![10.,11.,1.])}),
+            ),
+        ]);
+        assert_eq!(
+            acceptance(&summaries, true, true, false, false)["foodEnergyPassed"],
             false
         );
     }
