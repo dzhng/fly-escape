@@ -1,16 +1,16 @@
 # Help the Fly Escape — browser game
 
-Status: **implementation active — tool integration gates and campaign validation**. Last updated: 2026-09-07.
+Status: **implementation active — campaign validation and progression**. Last updated: 2026-09-07.
 
 Build a local, fully 3D browser game in which the player places environmental tools and watches a real connectome-driven swarm attempt to escape. The [game contract](GAMEPLAY.md) owns user requirements; [architecture contracts](CONTRACTS.md) own runtime/data seams. This plan replaces the previous Python tech-demo scope.
 
 ## Current pickup
 
-Finish slice 14's root integration readiness checks and human shot checkpoint for the complete six-tool presentation. The editor/attempt loop and authored tool assets are integrated; do not mark 14 accepted until those remaining gates are recorded. Slice 15's fan-assisted candidate has a positive three-seed pilot and is selected for frozen full validation. Its canonical candidate, acceptance requirements and integration work live in [15](slices/15-first-level.md); failed experiments remain linked there. No campaign level is accepted.
+Validate slice 15's frozen fan-assisted first level on its held-out seeds, then verify the same content in the browser. Its complete 30-seed tuning set passes; the separate held-out evaluation is running. The [frozen candidate and tuning evidence](assets/evidence/15/fan-pilot/review.md) record exact identities and gates. No campaign level is accepted yet. Campaign UI and the next level's greybox can be prepared independently, with unvalidated content kept out of the release registry.
 
 Then author and accept each remaining level with progression in [16](slices/16-campaign.md), followed by final production/platform gates in [17](slices/17-static-release.md). [The remaining-work audit](assets/planning/maintenance-2026-09-07.md) distinguishes missing implementation from verification. Update this pickup, checklist and owning slice status together; completed experiments belong in evidence, not new pickup paragraphs.
 
-Slices 01–13 are accepted. Existing performance evidence is build-specific and does not replace final release measurements. Preserve actual graph provenance, neural motor ownership and the established campaign criteria; no steering, reduced graph or silent sensitivity change. Reproduce ignored graph artifacts with the [exporter](../../scripts/connectome/README.md). A committed pass is a checkpoint, not completion.
+Slices 01–14 are accepted. Existing performance evidence is build-specific and does not replace final release measurements. Preserve actual graph provenance, neural motor ownership and the established campaign criteria; no steering, reduced graph or silent sensitivity change. Reproduce ignored graph artifacts with the [exporter](../../scripts/connectome/README.md). A committed pass is a checkpoint, not completion.
 
 ## Global checklist and review map
 
@@ -29,7 +29,7 @@ Open the [interactive roadmap](visualizations/roadmap.html) for dependency and m
 - [x] [11 — House materials and color](slices/11-house-palette.md) — dependencies: 07,10.
 - [x] [12 — Depth and exit lighting](slices/12-house-lighting.md) — dependencies: 11.
 - [x] [13 — All-fly science and explanations](slices/13-science-panel.md) — dependencies: 05,06.
-- [ ] [14 — Editable setup and attempt loop](slices/14-placement-attempt.md) — dependencies: 05,06,10,13.
+- [x] [14 — Editable setup and attempt loop](slices/14-placement-attempt.md) — dependencies: 05,06,10,13.
 - [ ] [15 — Level 1 is the tutorial](slices/15-first-level.md) — dependencies: 03,04,09,12,14.
 - [ ] [16 — Four more authored puzzles](slices/16-campaign.md) — dependencies: 15.
 - [ ] [17 — Browser release and clean cutover](slices/17-static-release.md) — dependencies: 16.

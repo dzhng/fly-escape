@@ -1,6 +1,6 @@
 # 14 — Editable setup and attempt loop
 
-Status: editor, attempt loop and six-tool art integrated; root readiness and human checkpoint pending. Dependencies: 05,06,10,13.
+Status: complete — editor, attempt loop, six-tool art and required-asset readiness verified. Dependencies: 05,06,10,13.
 
 ## Contract and seam
 
@@ -43,3 +43,7 @@ The authoritative catalog owns placement and contact footprints; renderer transf
 Vinegar is a shallow liquid saucer, fan a recessed rotor/grille with a direction mark, lamp a square pale-lens fixture, and shade a dark slatted cue tile. Shade marks a source; it is not a simulated canopy. Tool appearance does not establish a biological effect. Preserve separate Blender sources, static bounds, catalog scaling, ghost/replacement disposal, fan heading and paused/reverse identity.
 
 Required house, placement models and fly share setup readiness before Run. Playback holds its presentation clock until its required assets arrive while retaining pause/play intent. Failures remain explicit; late results release resources after a view retires. Root's final integration gate must exercise failure/delay and lifecycle transitions against actual assets; transport-specific development tests remain relevant where production inlines small GLBs.
+
+## Integrated acceptance
+
+The setup lifecycle, authored sources, asset failures/delays and replacement ownership pass their linked evidence. Root reran the merged TypeScript/renderer/build gates and the actual production placement replay; the tool-art Preview checkpoint concluded without new feedback. [Final integrated review](../assets/evidence/14/tools/review.md) records the decision. Campaign content and final release performance remain the explicit gates of 15–17.
