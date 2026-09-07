@@ -11,6 +11,7 @@ import type {
   AttemptEnvelope,
   SetupCommand,
   SetupReply,
+  WorkerFailure,
 } from "./attempt-protocol";
 
 /** Transfers bounded production credits independently of the playback cursor. */
@@ -49,7 +50,11 @@ export class AttemptClient {
     const worker = new Worker(new URL("./attempt-worker.ts", import.meta.url), {
       type: "module",
     });
-    worker.onmessage = (event: MessageEvent<AttemptEnvelope | SetupReply>) => {
+    worker.onmessage = (event: MessageEvent<AttemptEnvelope | SetupReply | WorkerFailure>) => {
+      if ("type" in event.data && event.data.type === "fatal") {
+        this.retireWorker(worker, event.data.message);
+        return;
+      }
       if ("type" in event.data && event.data.type === "setup") {
         const pending = this.setupPending;
         if (!pending || pending.id !== event.data.requestId) return;
@@ -83,23 +88,21 @@ export class AttemptClient {
       else if (reply.type === "frames") this.pendingCredits++;
       this.flushCredits();
     };
-    worker.onerror = (event) => {
-      if (this.worker !== worker) return;
-      this.setupPending?.reject(new Error(event.message));
-      this.setupPending = undefined;
-      worker.terminate();
-      this.worker = undefined;
-      this.ready = false;
-      this.finished = true;
-      this.pendingCredits = 0;
-      if (this.attemptId)
-        this.receive({
-          type: "error",
-          attemptId: this.attemptId,
-          message: event.message,
-        });
-    };
+    worker.onerror = (event) => this.retireWorker(worker, event.message);
     return worker;
+  }
+  private retireWorker(worker: Worker, message: string) {
+    if (this.worker !== worker) return;
+    this.setupPending?.reject(new Error(message));
+    this.setupPending = undefined;
+    worker.terminate();
+    this.worker = undefined;
+    this.ready = false;
+    this.finished = true;
+    this.pendingCredits = 0;
+    const attemptId = this.attemptId;
+    this.attemptId = undefined;
+    if (attemptId) this.receive({ type: "error", attemptId, message });
   }
   private send(message: AttemptCommand) {
     this.worker?.postMessage({ ...message, generation: this.generation });

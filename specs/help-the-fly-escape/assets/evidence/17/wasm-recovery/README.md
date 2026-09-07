@@ -1,0 +1,13 @@
+# Retire a damaged simulation Worker
+
+A native panic can leave Rust ownership checks locked even after the JavaScript exception is caught. Calling the session destructor then fails too. Continuing to reuse that Worker preserves the damaged WASM instance. The Worker now reports a fatal boundary error and closes; the client terminates it and creates a fresh instance on the next setup or attempt. Ordinary recoverable input errors still reuse a healthy Worker.
+
+The historical core identified in `fixture.json` reproduces a real `RuntimeError: unreachable` followed by the borrowed-value destructor error. That collision defect is already repaired in the current core; this test deliberately substitutes its historical WASM module only on the first Worker load. The unchanged production player displays interruption, and its New attempt action loads the current core and resumes playback. The replay sampler independently loads WASM on the main thread, so total requests are not the same as Worker creations.
+
+`before/` retains the failing native test: one Worker created, none terminated. `native.json` records the direct native reproduction. `rejected-request-count/` preserves an incorrect harness expectation that forgot the separate replay sampler. `after/` records the final real-panic recovery. No memory reclamation timing or final release-performance claim follows from Worker termination alone.
+
+`cleanup-before.json` reproduces stranded cancellation against the previous implementation. `cleanup-after.json` covers destructor failure during cancellation, replacement and completion, plus errors while reading initial metadata and extracting a chunk. These tests inject faults at generated WASM API methods while running the actual Worker/client, then require successful setup and completion using a fresh healthy Worker. Original extraction errors must survive a second cleanup failure; completion must not be reported after failed disposal.
+
+Reproduce with the existing `tests/browser/wasm-recovery.mjs` and `tests/browser/worker-cleanup.mjs` against the development server using BRAIN_URL. The native test additionally requires TRAP_WASM_PATH pointing at a WASM build of fixture.json's historical revision. Build that revision in a separate worktree with wasm-pack, preserving the current generated runtime files.
+
+Review consolidated disposal into one Worker function and fatal handling into the client's existing platform-error retirement owner. Independent review identified cancellation/completion and primary-error preservation gaps; the final review found no remaining actionable findings. Client tests and typecheck pass. This changes failure recovery only; camera, neural control, visuals and campaign calibration are unaffected.

@@ -1,0 +1,224 @@
+[
+  {
+    "scenario": "cancel",
+    "console": [
+      "[vite] connecting...",
+      "[vite] connected.",
+      "[vite] connecting...",
+      "[vite] connected.",
+      "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+      "[Fly escape] failed attempt cleanup Error: cleanup fault\n    at AttemptSession.free (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:2:47)\n    at dispose (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:49:9)\n    at release (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:60:22)\n    at self.onmessage (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:221:8)"
+    ],
+    "errors": [],
+    "result": {
+      "failed": {
+        "created": 1,
+        "terminated": 1
+      },
+      "recovered": {
+        "created": 2,
+        "terminated": 1
+      },
+      "catalogSize": 13,
+      "messages": [
+        {
+          "type": "ready",
+          "id": "fault"
+        },
+        {
+          "type": "ready",
+          "id": "retry"
+        },
+        {
+          "type": "frames",
+          "id": "retry"
+        },
+        {
+          "type": "complete",
+          "id": "retry"
+        }
+      ]
+    },
+    "passed": true
+  },
+  {
+    "scenario": "replace",
+    "console": [
+      "[vite] connecting...",
+      "[vite] connected.",
+      "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+      "[Fly escape] failed attempt cleanup Error: cleanup fault\n    at AttemptSession.free (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:2:47)\n    at dispose (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:49:9)\n    at release (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:60:22)\n    at self.onmessage (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:179:8)"
+    ],
+    "errors": [],
+    "result": {
+      "failed": {
+        "created": 1,
+        "terminated": 1
+      },
+      "recovered": {
+        "created": 2,
+        "terminated": 1
+      },
+      "catalogSize": 13,
+      "messages": [
+        {
+          "type": "ready",
+          "id": "fault"
+        },
+        {
+          "type": "error",
+          "id": "replacement",
+          "message": "Error: cleanup fault"
+        },
+        {
+          "type": "ready",
+          "id": "retry"
+        },
+        {
+          "type": "frames",
+          "id": "retry"
+        },
+        {
+          "type": "complete",
+          "id": "retry"
+        }
+      ]
+    },
+    "passed": true
+  },
+  {
+    "scenario": "complete",
+    "console": [
+      "[vite] connecting...",
+      "[vite] connected.",
+      "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+      "[Fly escape] failed attempt cleanup Error: cleanup fault\n    at AttemptSession.free (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:2:47)\n    at dispose (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:49:9)\n    at release (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:60:22)\n    at pump (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:133:10)"
+    ],
+    "errors": [],
+    "result": {
+      "failed": {
+        "created": 1,
+        "terminated": 1
+      },
+      "recovered": {
+        "created": 2,
+        "terminated": 1
+      },
+      "catalogSize": 13,
+      "messages": [
+        {
+          "type": "ready",
+          "id": "fault"
+        },
+        {
+          "type": "frames",
+          "id": "fault"
+        },
+        {
+          "type": "error",
+          "id": "fault",
+          "message": "Error: cleanup fault"
+        },
+        {
+          "type": "ready",
+          "id": "retry"
+        },
+        {
+          "type": "frames",
+          "id": "retry"
+        },
+        {
+          "type": "complete",
+          "id": "retry"
+        }
+      ]
+    },
+    "passed": true
+  },
+  {
+    "scenario": "info",
+    "console": [
+      "[vite] connecting...",
+      "[vite] connected.",
+      "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+      "[Fly escape] failed attempt cleanup Error: cleanup fault\n    at AttemptSession.free (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:2:47)\n    at dispose (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:49:9)\n    at self.onmessage (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:194:10)"
+    ],
+    "errors": [],
+    "result": {
+      "failed": {
+        "created": 1,
+        "terminated": 1
+      },
+      "recovered": {
+        "created": 2,
+        "terminated": 1
+      },
+      "catalogSize": 13,
+      "messages": [
+        {
+          "type": "error",
+          "id": "fault",
+          "message": "RuntimeError: primary info fault"
+        },
+        {
+          "type": "ready",
+          "id": "retry"
+        },
+        {
+          "type": "frames",
+          "id": "retry"
+        },
+        {
+          "type": "complete",
+          "id": "retry"
+        }
+      ]
+    },
+    "passed": true
+  },
+  {
+    "scenario": "chunk",
+    "console": [
+      "[vite] connecting...",
+      "[vite] connected.",
+      "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+      "[Fly escape] failed attempt cleanup Error: cleanup fault\n    at FaultChunk.free (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:2:148)\n    at dispose (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:49:9)\n    at pump (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:106:10)"
+    ],
+    "errors": [],
+    "result": {
+      "failed": {
+        "created": 1,
+        "terminated": 1
+      },
+      "recovered": {
+        "created": 2,
+        "terminated": 1
+      },
+      "catalogSize": 13,
+      "messages": [
+        {
+          "type": "ready",
+          "id": "fault"
+        },
+        {
+          "type": "error",
+          "id": "fault",
+          "message": "RuntimeError: primary chunk fault"
+        },
+        {
+          "type": "ready",
+          "id": "retry"
+        },
+        {
+          "type": "frames",
+          "id": "retry"
+        },
+        {
+          "type": "complete",
+          "id": "retry"
+        }
+      ]
+    },
+    "passed": true
+  }
+]

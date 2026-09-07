@@ -687,3 +687,8 @@ The user's one-fan maximum and rejection of chained-fan solutions supersede earl
 ## Selection circle contrast — 2026-09-08
 
 - **A thin dark outer edge within the yellow circle — sound, medium confidence.** On yellow fruit the yellow circle blends into its background. The existing ring material now shades its outer edge dark while keeping the yellow inner band, so selection remains a single circle without another box or badge. The user specified a yellow circle but did not prescribe how to retain contrast on yellow surfaces. The edge shares the same geometry, depth test and camera sizing, adding no draw call or resource owner. A double-edge candidate was rejected as too visually heavy; the narrower single edge can be adjusted without changing physics or selection behavior.
+
+## Damaged simulation recovery — 2026-09-08
+
+- **Replace the Worker after a native trap or failed destructor — sound, high confidence.** A simulation crash can leave its Rust objects locked, so attempting another run in the same browser background task can reuse damaged state. Fatal errors now retire that whole task; the next setup creates a fresh one. Ordinary rejected input keeps its healthy task. The plan required usable retry without specifying this boundary. This adds one internal fatal message, with no automatic replay, changed physics or new dependency.
+- **Preserve the original cause when cleanup also fails — sound, high confidence.** If reading simulation data fails and releasing that data fails too, the console retains the first failure and separately logs cleanup. The player still receives one interruption. This makes the actual cause diagnosable without exposing technical details in the game interface.

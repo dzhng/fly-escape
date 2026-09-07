@@ -1,0 +1,96 @@
+{
+  "console": [
+    {
+      "type": "debug",
+      "message": "[vite] connecting..."
+    },
+    {
+      "type": "debug",
+      "message": "[vite] connected."
+    },
+    {
+      "type": "info",
+      "message": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"
+    },
+    {
+      "type": "info",
+      "message": "[Fly escape] attempt ready {schemaVersion: 1, attemptId: ae43851e-830c-4245-8a7e-8e0576a77b84, graphHash: 6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454, graphManifestHash: 3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5, simulationBuildId: 36b826cb5cf21a23c468f1826d64f4e77a9a9fdb1bc3bc3d1d78bd53de032669}"
+    },
+    {
+      "type": "info",
+      "message": "[Fly escape] playback {spec: Object, initialBodies: Array(20), userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap…ike Gecko) HeadlessChrome/152.0.0.0 Safari/537.36, viewport: Array(2), devicePixelRatio: 1}"
+    },
+    {
+      "type": "info",
+      "message": "[Fly escape] playback {spec: Object, initialBodies: Array(20), userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap…ike Gecko) HeadlessChrome/152.0.0.0 Safari/537.36, viewport: Array(2), devicePixelRatio: 1}"
+    },
+    {
+      "type": "info",
+      "message": "[Fly escape] playback {spec: Object, initialBodies: Array(20), userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap…ike Gecko) HeadlessChrome/152.0.0.0 Safari/537.36, viewport: Array(2), devicePixelRatio: 1}"
+    },
+    {
+      "type": "error",
+      "message": "panicked at crates/sim/src/body/motion.rs:562:22:\ncalled `Option::unwrap()` on a `None` value"
+    },
+    {
+      "type": "warning",
+      "message": "[Fly escape] failed attempt cleanup Error: attempted to take ownership of Rust value while it was borrowed\n    at __wbg___wbindgen_throw_bbadd78c1bac3a77 (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/wasm/game_wasm.js?t=1788804479974:620:19)\n    at http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/wasm/game_wasm_bg.wasm:wasm-function[985]:0x100182\n    at http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/wasm/game_wasm_bg.wasm:wasm-function[88]:0x644ef\n    at AttemptSession.free (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/wasm/game_wasm.js?t=1788804479974:116:14)\n    at dispose (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:47:9)\n    at release (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:58:22)\n    at fail (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:61:28)\n    at pump (http://127.0.0.1:5320/@fs/Users/david/dev/fly-escape/packages/sim-client/src/attempt-worker.ts?worker_file&type=module:142:30)"
+    },
+    {
+      "type": "error",
+      "message": "[Fly escape] attempt failed {message: RuntimeError: unreachable, spec: Object}"
+    },
+    {
+      "type": "info",
+      "message": "[Fly escape] attempt ready {schemaVersion: 1, attemptId: ae43851e-830c-4245-8a7e-8e0576a77b84, graphHash: 6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454, graphManifestHash: 3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5, simulationBuildId: c8874644fcfa93fb312e8d3dff9c531dcd2b19882178644445ca9fac5ed61b5c}"
+    },
+    {
+      "type": "info",
+      "message": "[Fly escape] playback {spec: Object, initialBodies: Array(20), userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap…ike Gecko) HeadlessChrome/152.0.0.0 Safari/537.36, viewport: Array(2), devicePixelRatio: 1}"
+    },
+    {
+      "type": "info",
+      "message": "[Fly escape] playback {spec: Object, initialBodies: Array(20), userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap…ike Gecko) HeadlessChrome/152.0.0.0 Safari/537.36, viewport: Array(2), devicePixelRatio: 1}"
+    }
+  ],
+  "errors": [],
+  "wasmRequests": 3,
+  "spec": {
+    "schemaVersion": 1,
+    "attemptId": "ae43851e-830c-4245-8a7e-8e0576a77b84",
+    "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+    "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+    "simulationBuildId": "36b826cb5cf21a23c468f1826d64f4e77a9a9fdb1bc3bc3d1d78bd53de032669",
+    "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb",
+    "placements": [],
+    "levelHash": "882ceb424005446aada0126e7e4aa4d36bc8eb3236f0595d4f91230b6a6bd4ef",
+    "levelId": "open-window",
+    "rootSeed": "42",
+    "flyCount": 20,
+    "durationTicks": 800
+  },
+  "failedWasmRequests": 2,
+  "failed": {
+    "created": 1,
+    "terminated": 1
+  },
+  "retried": {
+    "created": 2,
+    "terminated": 1
+  },
+  "retriedSpec": {
+    "schemaVersion": 1,
+    "attemptId": "ae43851e-830c-4245-8a7e-8e0576a77b84",
+    "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+    "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+    "simulationBuildId": "c8874644fcfa93fb312e8d3dff9c531dcd2b19882178644445ca9fac5ed61b5c",
+    "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb",
+    "placements": [],
+    "levelHash": "882ceb424005446aada0126e7e4aa4d36bc8eb3236f0595d4f91230b6a6bd4ef",
+    "levelId": "open-window",
+    "rootSeed": "42",
+    "flyCount": 20,
+    "durationTicks": 800
+  },
+  "passed": true
+}

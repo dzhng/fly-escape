@@ -33,6 +33,8 @@ export type AttemptReply =
   | { type: "complete"; attemptId: string; result: AttemptResult }
   | { type: "error"; attemptId: string; message: string };
 
+export type WorkerFailure = { type: "fatal"; message: string };
+
 /** Transport generation is independent of persisted attempt identity. */
 export type AttemptEnvelope = { generation: number; reply: AttemptReply };
 

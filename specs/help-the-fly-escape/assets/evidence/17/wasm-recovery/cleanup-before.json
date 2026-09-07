@@ -1,0 +1,18 @@
+[
+  {
+    "scenario": "cancel",
+    "console": [
+      "[vite] connecting...",
+      "[vite] connected.",
+      "[vite] connecting...",
+      "[vite] connected.",
+      "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"
+    ],
+    "errors": [
+      "cleanup fault"
+    ]
+  },
+  {
+    "failure": "Error: page.evaluate: Error: Cleanup test timed out: {\"lifetime\":{\"created\":1,\"terminated\":0},\"messages\":[{\"type\":\"ready\",\"id\":\"fault\"}]}\n    at until (eval at evaluate (:311:30), <anonymous>:24:51)\n    at async eval (eval at evaluate (:311:30), <anonymous>:30:9)\n    at async <anonymous>:337:30"
+  }
+]

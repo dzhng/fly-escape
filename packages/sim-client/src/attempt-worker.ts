@@ -9,7 +9,7 @@ import init, {
 } from "./wasm/game_wasm";
 import type { AttemptInfo, AttemptStep } from "./generated/sim";
 import type { TransferChunk } from "./record";
-import type { AttemptRequest, AttemptReply, SetupRequest } from "./attempt-protocol";
+import type { AttemptRequest, AttemptReply, SetupRequest, WorkerFailure } from "./attempt-protocol";
 
 let generation = 0;
 let currentAttemptId: string | undefined;
@@ -56,18 +56,34 @@ const loadAssets = () =>
     throw error;
   }));
 const yieldToMessages = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
-function release() {
+function retire(error: unknown) {
+  generation++;
+  active = undefined;
+  currentAttemptId = undefined;
+  self.postMessage({ type: "fatal", message: String(error) } satisfies WorkerFailure);
+  self.close();
+}
+function dispose(value: { free(): void }, primaryError?: unknown): boolean {
+  try {
+    value.free();
+    return true;
+  } catch (cleanupError) {
+    console.warn("[Fly escape] failed attempt cleanup", cleanupError);
+    retire(primaryError ?? cleanupError);
+    return false;
+  }
+}
+function release(primaryError?: unknown): boolean {
   const previous = active;
   active = undefined;
-  previous?.core.free();
+  return !previous || dispose(previous.core, primaryError);
 }
 function fail(id: string, error: unknown) {
-  if (active?.id === id) {
-    try { release(); }
-    catch (cleanupError) { console.warn("[Fly escape] failed attempt cleanup", cleanupError); }
-  }
+  if (active?.id === id && !release(error)) return;
   if (currentAttemptId === id) currentAttemptId = undefined;
-  send({ type: "error", attemptId: id, message: String(error) });
+  // A trap can strand a borrowed Rust value; retire the whole instance.
+  if (error instanceof WebAssembly.RuntimeError) retire(error);
+  else send({ type: "error", attemptId: id, message: String(error) });
 }
 async function pump() {
   if (pumping) return;
@@ -101,9 +117,11 @@ async function pump() {
           events: packed.take_events(),
           tickNeuralSteps: packed.take_tick_neural_steps(),
         };
-      } finally {
-        packed.free();
+      } catch (error) {
+        if (!dispose(packed, error)) return;
+        throw error;
       }
+      if (!dispose(packed)) return;
       run.outstanding++;
       const metrics = {
         activeNeuralSteps: run.neuralSteps - priorSteps,
@@ -126,8 +144,8 @@ async function pump() {
       if (status.complete) {
         const result = chunk.result;
         if (!result) throw new Error("Completed attempt has no result");
+        if (!release()) return;
         send({ type: "complete", attemptId: run.id, result });
-        release();
         currentAttemptId = undefined;
         return;
       }
@@ -165,6 +183,10 @@ self.onmessage = async (event: MessageEvent<AttemptRequest | SetupRequest>) => {
         value: JSON.parse(value),
       });
     } catch (error) {
+      if (error instanceof WebAssembly.RuntimeError) {
+        retire(error);
+        return;
+      }
       self.postMessage({
         type: "setup",
         requestId: message.requestId,
@@ -175,7 +197,7 @@ self.onmessage = async (event: MessageEvent<AttemptRequest | SetupRequest>) => {
   }
   if (message.type === "start" || message.type === "startLab") {
     const ticket = ++generation;
-    release();
+    if (!release()) return;
     const id = message.type === "start" ? message.input.attemptId : message.attemptId;
     currentAttemptId = id;
     currentClientGeneration = message.generation;
@@ -193,7 +215,7 @@ self.onmessage = async (event: MessageEvent<AttemptRequest | SetupRequest>) => {
       try {
         info = JSON.parse(core.info()) as AttemptInfo;
       } catch (error) {
-        core.free();
+        if (!dispose(core, error)) return;
         throw error;
       }
       active = {
@@ -221,7 +243,7 @@ self.onmessage = async (event: MessageEvent<AttemptRequest | SetupRequest>) => {
     if (currentAttemptId !== message.attemptId || currentClientGeneration !== message.generation)
       return;
     generation++;
-    release();
+    if (!release()) return;
     currentAttemptId = undefined;
   } else if (active?.id === message.attemptId && active.clientGeneration === message.generation) {
     const count = message.count;
