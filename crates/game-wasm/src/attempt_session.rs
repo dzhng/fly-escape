@@ -59,6 +59,7 @@ impl AttemptSession {
         let attempt = Attempt::new(graph.clone(), request.level, request.tuning, spec.clone())?;
         let info = AttemptInfo {
             initial_bodies: attempt.initial_bodies(),
+            initial_sensory_points: attempt.initial_sensory_points(),
             spec: spec.clone(),
             level,
             resolved_setup: attempt.resolved_setup().clone(),

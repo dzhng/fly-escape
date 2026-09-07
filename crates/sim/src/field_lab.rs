@@ -114,6 +114,9 @@ pub fn fixture(scenario: FieldScenario, mirror: f64) -> Result<(FieldSet, CuePat
         ],
     };
     let mut config = FieldConfig {
+        // Controlled historical chamber span; campaign defaults use authored anatomy.
+        antenna_offset: 0.15,
+        antenna_forward: 0.,
         baseline_brightness: 0.2,
         ..FieldConfig::default()
     };

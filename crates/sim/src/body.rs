@@ -86,7 +86,7 @@ impl Default for BodyConfig {
             flying_cost: 0.8,
             feeding_rate: 3.,
             max_bout_seconds: 3.,
-            body_radius: 0.08,
+            body_radius: 0.002632,
             walk_speed: 1.,
             flight_speed: 2.,
             turn_gain: 1.,

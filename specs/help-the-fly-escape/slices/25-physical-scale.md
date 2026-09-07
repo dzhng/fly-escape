@@ -1,6 +1,6 @@
 # 25 — Physical scale and sensory sampling
 
-Status: measured reproduction failed; separate sampling correction required. Dependency: 19. Required before 20 and final campaign calibration.
+Status: physical adoption verified. See [adoption evidence](../assets/evidence/25/adoption/README.md). User follow-up requests zoom-dependent display enlargement in28; native physics remain unchanged.
 
 ## Contract and seam
 
@@ -18,11 +18,11 @@ Visual variable, if captured: physical envelope and sample-point alignment only;
 
 Delegated: measuring the authored anatomy, conservative collision representation and bounded experiment implementation. Exact revised physical parameters require evidence in this slice before downstream use. Sensory cutoff changes, new anatomy assumptions or a failed reproduction require an explicit spec update, not an unlisted implementation choice. Bank evidence under `assets/evidence/25/` and update the global handoff.
 
-## Bounded reproduction underway
+## Historical bounded reproduction (superseded by26/27)
 
 Measure 101 absolute phases of each existing Walk/Fly/Land/Feed clip through posed vertices, preserving the GLB and production motion mapping. The measured anatomy has a 0.404145 mm antenna-tip separation and a 1.414508 mm forward offset; the frozen adapter samples a 300 mm span at the body centre. First compare current versus anatomical positions through canonical sample_point and cue_currents, without changing production defaults. A nearest-cell phase scan must distinguish within-cell sampling from the old z=0 grid-boundary start. Then use three paired seeds, scientific-only 60 stationary brain warmup ticks and 100 measured moving ticks in the existing mirrored odor fixtures; retain neutral and bilateral pathway-silenced controls, with their own matched neutral controls. Body motion calls the existing desired_pose and Geometry sweep owners. No field interpolation or five-percent cutoff change is part of this reproduction.
 
-[Measured reproduction](../assets/evidence/25/README.md): at anatomical span,4090/4097 phase positions have identical cell samples, and all twelve cell-centre mirrored runs match neutral motor/body trajectories exactly. Keep the five-percent cutoff frozen. Next isolate wall-aware continuous field sampling before any sensory-adapter correction; no production parameters are accepted by this failure report.
+[Measured reproduction](../assets/evidence/25/README.md): at anatomical span,4090/4097 phase positions have identical cell samples, and all twelve cell-centre mirrored runs match neutral motor/body trajectories exactly. That reproduction kept the five-percent cutoff frozen. Slices26/27 subsequently resolved reconstruction and sensitivity before physical adoption.
 
 The reproduction is integrated as e77c79b. Continuous reconstruction is separately specified in [26](26-continuous-field-sampling.md); production parameter adoption remains open pending its measured result.
 
@@ -30,7 +30,7 @@ The reproduction is integrated as e77c79b. Continuous reconstruction is separate
 
 The sensitivity gate now passes. Adopt the measured 3 mm body by exporting the existing Blender fly at metre scale, preserving its local geometry, animation and grounded pivot. Update the reproducible authoring source and remove the diagnostic workbench's second rescaling step when it becomes redundant. The model's native bounds become the camera's existing size input; do not add a renderer-only physics multiplier.
 
-Set BodyConfig's default collision radius to the measured conservative 0.0026313360997825106 m. Add `antenna_forward` to FieldConfig alongside its existing lateral `antenna_offset`; default them to 0.0014145078816978175 m and 0.00020207253103162883 m respectively. Preserve all locomotion/energy coefficients in this pass. Existing scientific fixtures that intentionally use other dimensions must state them explicitly; migrate all active serialized consumers with no compatibility fallback. Archived evidence remains historical.
+Set BodyConfig's default collision radius to the conservative 0.002632 m (measured envelope rounded upward to the next micrometre, avoiding float export roundoff). Add `antenna_forward` to FieldConfig alongside its existing lateral `antenna_offset`; default them to 0.0014145078816978175 m and 0.00020207253103162883 m respectively. Preserve all locomotion/energy coefficients in this pass. Existing scientific fixtures that intentionally use other dimensions must state them explicitly; migrate all active serialized consumers with no compatibility fallback. Archived evidence remains historical.
 
 FieldSet owns the forward/lateral sample geometry. Export actual left/right points for diagnostic markers rather than adding another offset formula in JavaScript. Record the planar approximation explicitly: sampled fields have no height dimension, and the measured antenna height is an alignment reference, not a claim of airborne plume accuracy. Keep vision's already-tested bilateral planar approximation explicit.
 

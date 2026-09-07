@@ -53,6 +53,7 @@ pub struct BrainFrame {
     pub neural: StepOutput,
     pub sensory: SensorySample,
     pub sensory_pose: Pose,
+    pub sensory_points: [Point; 2],
 }
 
 #[derive(Serialize, TS)]
@@ -63,7 +64,7 @@ pub struct BrainInfo {
     pub graph_hash: String,
     pub graph_bytes: u32,
     pub geometry: Geometry,
-    pub antenna_offset: f64,
+    pub initial_sensory_points: [Point; 2],
     pub initial_pose: Pose,
     pub groups: Vec<Group>,
     pub group_links: Vec<GroupLink>,
@@ -113,7 +114,13 @@ impl Chamber {
             graph_hash: self.graph.manifest.graph_hash.clone(),
             graph_bytes: self.graph.storage_bytes() as u32,
             geometry: self.fields.geometry().clone(),
-            antenna_offset: self.fields.antenna_offset(),
+            initial_sensory_points: self.fields.sample_points(
+                Point {
+                    x: self.pose.x,
+                    z: self.pose.z,
+                },
+                self.pose.heading,
+            ),
             initial_pose: self.pose.clone(),
             groups: self.graph.manifest.groups.clone(),
             group_links: self.graph.manifest.group_links.clone(),
@@ -178,6 +185,13 @@ impl Chamber {
             pose: self.pose.clone(),
             neural,
             sensory,
+            sensory_points: self.fields.sample_points(
+                Point {
+                    x: sensory_pose.x,
+                    z: sensory_pose.z,
+                },
+                sensory_pose.heading,
+            ),
             sensory_pose,
         })
     }

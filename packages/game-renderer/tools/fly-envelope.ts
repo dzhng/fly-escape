@@ -8,8 +8,10 @@ const bytes = await readFile("assets/fly/fly.glb");
 const model = await loadFlyModel(
   bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength),
 );
-const scale = 0.003 / 0.24124998398198225;
-model.root.scale.setScalar(scale);
+const body = new THREE.Box3();
+model.root.traverse(o => { if (/^(Head|Thorax|Abdomen)/.test(o.name)) body.union(new THREE.Box3().setFromObject(o)); });
+const bodyLengthMetres = body.getSize(new THREE.Vector3()).z;
+if (Math.abs(bodyLengthMetres - 0.003) > 1e-8) throw new Error("Native fly body must measure 3 mm");
 const motion = new FlyMotion(model.root, model.clips);
 const rows = [];
 for (const clip of model.clips) {
@@ -57,8 +59,8 @@ for (const clip of model.clips) {
 }
 const maximumSampledRadius = Math.max(...rows.map((r) => r.radius));
 const restCornerRadius = Math.hypot(
-  Math.max(Math.abs(model.bounds.min.x), Math.abs(model.bounds.max.x)) * scale,
-  Math.max(Math.abs(model.bounds.min.z), Math.abs(model.bounds.max.z)) * scale,
+  Math.max(Math.abs(model.bounds.min.x), Math.abs(model.bounds.max.x)),
+  Math.max(Math.abs(model.bounds.min.z), Math.abs(model.bounds.max.z)),
 );
 const diagnosticRadius = Math.max(maximumSampledRadius * 1.1, restCornerRadius);
 await writeFile(
@@ -66,8 +68,7 @@ await writeFile(
   JSON.stringify(
     {
       assetSha256: createHash("sha256").update(bytes).digest("hex"),
-      scale,
-      bodyLengthMetres: 0.003,
+      bodyLengthMetres,
       sampling:
         "101 absolute FlyMotion phases per clip; posed getVertexPosition then matrixWorld after skeleton update. Looping endpoint returns phase0 per production mapping. No extra flight height translation changes floor-plane radius.",
       maximumSampledRadius,

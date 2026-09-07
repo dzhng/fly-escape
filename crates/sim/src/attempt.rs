@@ -31,6 +31,7 @@ pub struct AttemptInfo {
     pub level: LevelDef,
     pub resolved_setup: ResolvedSetup,
     pub initial_bodies: Vec<BodyState>,
+    pub initial_sensory_points: Vec<[Point; 2]>,
     pub groups: Vec<Group>,
     pub group_links: Vec<GroupLink>,
     pub record_layout: RecordLayout,
@@ -286,6 +287,15 @@ impl Attempt {
     }
     pub fn initial_bodies(&self) -> Vec<BodyState> {
         self.initial_bodies.clone()
+    }
+    pub fn initial_sensory_points(&self) -> Vec<[Point; 2]> {
+        self.initial_bodies
+            .iter()
+            .map(|body| {
+                self.fields
+                    .sample_points(body.pose.position, body.pose.heading)
+            })
+            .collect()
     }
     pub fn spec(&self) -> &AttemptSpec {
         &self.spec

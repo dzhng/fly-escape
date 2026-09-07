@@ -1,0 +1,17 @@
+# Native physical dimensions adopted
+
+The Blender source now measures the body landmarks and exports a native 3 mm fly, retaining its local meshes, four clips and grounded pivot. The workbench no longer applies a second visual scaling transform. The conservative body radius is 2.632 mm: the measured rest-envelope corner rounded upward to the next micrometre. The fresh posed-vertex scan finds maximum sampled radius2.294840 mm and rest corner2.631336 mm across101 phases of Walk/Fly/Land/Feed. This is a conservative finite-sampling bound, not a proof of all continuous animation poses.
+
+FieldConfig now owns lateral half-span0.202072531 mm and forward offset1.414507882 mm. FieldSet exports actual sample points; BrainInfo/BrainFrame carry them to diagnostic markers, and AttemptInfo carries initial points for comparison with the rendered asset. JavaScript no longer derives sensor positions from a separate heading formula. Fields remain planar; antenna height is an asset reference. Mesh suffixes do not determine neural side: core heading defines left/right.
+
+The actual built browser records20 real-connectome flies over40 ticks. At tick zero its rendered antenna centres agree with exported core sample points within1e-8 m; native body length measures3.000000308 mm and modelScale is1. Same-seed starts, changed-seed positions, mixed initial modes and tick-zero transport pass. Field browser checks retain mirrored odor, deterministic reset, light/shade orientation, local exit and wind without errors. Both apps and fresh release WASM build; typecheck, the full sim test suite and31 renderer tests pass.
+
+Two synthetic attempt tests had implicitly relied on the former80 mm radius to intersect a wall or food region. They now state that controlled radius explicitly and retain their original assertions. The historical second-level geometry fixture supplies its original zero forward offset when reading frozen evidence; production parsing has no compatibility fallback. Rotated forward/lateral sample positions are pinned at three headings; removing forward displacement makes that test fail and restoring it returns green.
+
+## Visual scope and user feedback
+
+Close-up and Overview were opened together at04:31:11 UTC on2026-09-07. The user responded by requesting zoom-dependent model enlargement at wide views; Preview was closed when proceeding with that direction. Slice28 owns the requested display behavior. This accepts physical alignment, not final visual proportions or house realism.
+
+Root used the documented primed adversarial critique fallback after worker usage exhaustion. Strongest broken case: a millimetre model is effectively invisible in Overview/context, and nearby fruit still hides it in macro Follow. Both are preserved rather than claimed fixed. The close frame retains a legible complete model and yellow circle; native export introduces no visible new clipping. Against19, mean RGB crop differences are0.01093/255 at extra close and0.00242/255 at Follow; the Overview crop is identical. Thus native export preserves the reviewed close appearance while correcting physical ownership. User-authorized enlargement now replaces the former true-scale-only wide-view requirement.
+
+`browser.json` retains core and rendered measurements; `comparison.json` records crop telemetry. The full new envelope is compressed with its summary beside it. Food remains visual-only in this diagnostic room, with authoritative support/contact work next after28.

@@ -520,18 +520,17 @@ export class WorldView {
     };
   }
 
-  /** Visual anchors for the recorded input pose, using the core's antenna offset. */
-  setSensoryMarkers(pose: FlyPose, antennaOffset: number): void {
-    const dx = Math.sin(pose.heading) * antennaOffset;
-    const dz = -Math.cos(pose.heading) * antennaOffset;
+  /** Core-exported sample points keep diagnostics aligned with the actual sensory input. */
+  setSensoryMarkers(points: [Point, Point], height: number): void {
+    const dx = points[0].x - points[1].x;
+    const dz = points[0].z - points[1].z;
     const cameraRight = new THREE.Vector3().setFromMatrixColumn(
       this.navigation.camera.matrixWorld,
       0,
     );
     const leftOnScreenRight = dx * cameraRight.x + dz * cameraRight.z >= 0;
     this.sensorMarkers.forEach((marker, i) => {
-      const side = i === 0 ? 1 : -1;
-      marker.position.set(pose.x + side * dx, pose.y, pose.z + side * dz);
+      marker.position.set(points[i].x, height, points[i].z);
       marker.visible = true;
       for (const child of marker.children) {
         if (child instanceof THREE.Sprite) child.center.x = (i === 0) === leftOnScreenRight ? 0 : 1;

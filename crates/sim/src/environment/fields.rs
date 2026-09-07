@@ -10,6 +10,7 @@ pub struct FieldConfig {
     pub decay: f64,
     pub baseline_brightness: f64,
     pub antenna_offset: f64,
+    pub antenna_forward: f64,
     /// Uniform ambient velocity, combined with local fans for advection and body physics.
     pub wind: Point,
     pub fans: Vec<FanField>,
@@ -21,7 +22,8 @@ impl Default for FieldConfig {
             diffusion: 0.2,
             decay: 0.1,
             baseline_brightness: 1.,
-            antenna_offset: 0.15,
+            antenna_offset: 0.00020207253103162883,
+            antenna_forward: 0.0014145078816978175,
             wind: Point::default(),
             fans: vec![],
         }
@@ -153,6 +155,7 @@ impl FieldSet {
                 config.decay,
                 config.baseline_brightness,
                 config.antenna_offset,
+                config.antenna_forward,
             ]
             .iter()
             .any(|v| !v.is_finite() || *v < 0.)
@@ -364,9 +367,6 @@ impl FieldSet {
             self.edges.push((a, b, wind));
         }
     }
-    pub fn antenna_offset(&self) -> f64 {
-        self.config.antenna_offset
-    }
     pub fn geometry(&self) -> &Geometry {
         &self.geometry
     }
@@ -488,19 +488,29 @@ impl FieldSet {
         sample
     }
     /// Heading zero is +X; positive turns toward +Z (right), so left is -Z.
-    /// tick is reserved for time-varying cues; static cues depend on advanced state.
-    pub fn sample(&self, position: Point, heading: f64, _tick: u32) -> SensorySample {
+    pub fn sample_points(&self, position: Point, heading: f64) -> [Point; 2] {
+        let centre = Point {
+            x: position.x + heading.cos() * self.config.antenna_forward,
+            z: position.z + heading.sin() * self.config.antenna_forward,
+        };
         let dx = heading.sin() * self.config.antenna_offset;
         let dz = -heading.cos() * self.config.antenna_offset;
+        [
+            Point {
+                x: centre.x + dx,
+                z: centre.z + dz,
+            },
+            Point {
+                x: centre.x - dx,
+                z: centre.z - dz,
+            },
+        ]
+    }
+    pub fn sample(&self, position: Point, heading: f64, _tick: u32) -> SensorySample {
+        let [left, right] = self.sample_points(position, heading);
         SensorySample {
-            left: self.sample_point(Point {
-                x: position.x + dx,
-                z: position.z + dz,
-            }),
-            right: self.sample_point(Point {
-                x: position.x - dx,
-                z: position.z - dz,
-            }),
+            left: self.sample_point(left),
+            right: self.sample_point(right),
             wind: self
                 .cell_at(position)
                 .map_or(Point::default(), |i| self.wind[i]),

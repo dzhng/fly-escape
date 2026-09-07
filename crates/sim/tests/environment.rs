@@ -496,3 +496,32 @@ fn local_fans_advect_odor_conservatively_without_global_drift() {
     };
     assert!(centroid(&blowing) > centroid(&still) + 0.5);
 }
+
+#[test]
+fn forward_and_lateral_sample_points_rotate_with_the_body() {
+    let fields = FieldSet::new(
+        chambers(true),
+        FieldConfig {
+            antenna_offset: 0.2,
+            antenna_forward: 0.4,
+            ..FieldConfig::default()
+        },
+        vec![],
+        None,
+    )
+    .unwrap();
+    let position = Point { x: 2., z: 2. };
+    for (heading, expected) in [
+        (0., [(2.4, 1.8), (2.4, 2.2)]),
+        (std::f64::consts::FRAC_PI_2, [(2.2, 2.4), (1.8, 2.4)]),
+        (std::f64::consts::PI, [(1.6, 2.2), (1.6, 1.8)]),
+    ] {
+        let points = fields.sample_points(position, heading);
+        for (point, (x, z)) in points.iter().zip(expected) {
+            assert!((point.x - x).abs() < 1e-12 && (point.z - z).abs() < 1e-12);
+        }
+        let sample = fields.sample(position, heading, 0);
+        assert_eq!(sample.left, fields.sample_point(points[0]));
+        assert_eq!(sample.right, fields.sample_point(points[1]));
+    }
+}

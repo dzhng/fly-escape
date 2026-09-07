@@ -1,0 +1,9 @@
+{
+  "assetSha256": "775e7ce610229c9aec74d0b6c004a810c6bb13c5519d7288ccd97c32042c4246",
+  "bodyLengthMetres": 0.003000000308054639,
+  "sampling": "101 absolute FlyMotion phases per clip; posed getVertexPosition then matrixWorld after skeleton update. Looping endpoint returns phase0 per production mapping. No extra flight height translation changes floor-plane radius.",
+  "maximumSampledRadius": 0.002294839844340178,
+  "restCornerRadius": 0.0026313363507211875,
+  "diagnosticRadius": 0.0026313363507211875,
+  "margin": "At least10% above finite sampled radius and no smaller than rest AABB corner radius; not a continuous animation bound or accepted collision choice"
+}

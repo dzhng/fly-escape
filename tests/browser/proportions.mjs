@@ -32,6 +32,15 @@ try {
  const replay=JSON.parse(await page.locator('#app').getAttribute('data-measurements'));
  assert.equal(replay.recordedFrame.flies.length,20);assert.ok(replay.recordedFrame.neuralSteps>0);
  await page.screenshot({path:`${out}/recorded.png`});
+ const initial=measurements[0];
+ assert.ok(Math.abs(initial.nativeBodyLength-0.003)<1e-8);
+ assert.equal(initial.modelScale,1);
+ assert.equal(initial.coreBodyRadius,0.002632);
+ assert.equal(initial.renderedAntennae.length,2);
+ const actual=initial.renderedAntennae.map(([x,y,z])=>({x,z})).sort((a,b)=>a.z-b.z);
+ const sampled=[...initial.initialSensoryPoints[0]].sort((a,b)=>a.z-b.z);
+ for(let i=0;i<2;i++) assert.ok(Math.hypot(actual[i].x-sampled[i].x,actual[i].z-sampled[i].z)<1e-8,
+   "core sampling points agree with rendered antenna centres at tick zero");
  assert.deepEqual(errors,[]);
  await writeFile(`${out}/report.json`,JSON.stringify({measurements,replay,errors},null,2));
 }finally{await browser.close()}

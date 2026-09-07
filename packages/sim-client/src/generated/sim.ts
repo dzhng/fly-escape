@@ -2,7 +2,7 @@
 
 export type SetupFixture = { level: LevelDef, tuning: AttemptTuning, catalog: Array<ToolDef>, };
 export type StartAttempt = { attemptId: string, rootSeed: string, flyCount: number, level: LevelDef, tuning: AttemptTuning, placements: Array<Placement>, };
-export type AttemptInfo = { spec: AttemptSpec, level: LevelDef, resolvedSetup: ResolvedSetup, initialBodies: Array<BodyState>, groups: Array<Group>, groupLinks: Array<GroupLink>, recordLayout: RecordLayout, archiveBytes: number, graphBytes: number, brainStateBytes: number, };
+export type AttemptInfo = { spec: AttemptSpec, level: LevelDef, resolvedSetup: ResolvedSetup, initialBodies: Array<BodyState>, initialSensoryPoints: Array<[Point, Point]>, groups: Array<Group>, groupLinks: Array<GroupLink>, recordLayout: RecordLayout, archiveBytes: number, graphBytes: number, brainStateBytes: number, };
 export type AttemptStep = { tick: number, neuralSteps: number, bufferedTicks: number, complete: boolean, };
 export type ChunkHeader = { schemaVersion: number, attemptId: string, sequence: number, startTick: number, tickCount: number, flyCount: number, result: AttemptResult | null, };
 export type SpawnDef = { "kind": "fixed", states: Array<SpawnState>, } | { "kind": "cluster", min: Point, max: Point, flyingCount: number, };
@@ -82,7 +82,7 @@ diffusion: number,
 /**
  * Fractional loss per game second.
  */
-decay: number, baselineBrightness: number, antennaOffset: number,
+decay: number, baselineBrightness: number, antennaOffset: number, antennaForward: number,
 /**
  * Uniform ambient velocity, combined with local fans for advection and body physics.
  */
@@ -109,5 +109,5 @@ export type MotorOutput = { thrust: number, turn: number, flightThrust: number, 
 export type GroupActivity = { id: string, meanVoltage: number, spikeFraction: number, };
 export type StepOutput = { motor: MotorOutput, groups: Array<GroupActivity>, spikeCount: number, };
 export type Pose = { x: number, y: number, z: number, heading: number, };
-export type BrainFrame = { tick: number, pose: Pose, neural: StepOutput, sensory: SensorySample, sensoryPose: Pose, };
-export type BrainInfo = { neuronCount: number, edgeCount: number, graphHash: string, graphBytes: number, geometry: Geometry, antennaOffset: number, initialPose: Pose, groups: Array<Group>, groupLinks: Array<GroupLink>, prngId: string, };
+export type BrainFrame = { tick: number, pose: Pose, neural: StepOutput, sensory: SensorySample, sensoryPose: Pose, sensoryPoints: [Point, Point], };
+export type BrainInfo = { neuronCount: number, edgeCount: number, graphHash: string, graphBytes: number, geometry: Geometry, initialSensoryPoints: [Point, Point], initialPose: Pose, groups: Array<Group>, groupLinks: Array<GroupLink>, prngId: string, };

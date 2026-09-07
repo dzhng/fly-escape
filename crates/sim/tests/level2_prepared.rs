@@ -16,6 +16,8 @@ fn prepared_corner_has_real_fork_and_fan_crossing() {
         .remove("spawnPoses")
         .unwrap();
     data["level"]["spawn"] = serde_json::json!({"kind":"fixed","states":poses.as_array().unwrap().iter().map(|pose|serde_json::json!({"pose":pose,"mode":"walking"})).collect::<Vec<_>>()});
+    // Historical evidence keeps its original schema; this fixture supplies its original zero forward offset.
+    data["level"]["fieldConfig"]["antennaForward"] = serde_json::json!(0.0);
     let level: LevelDef = serde_json::from_value(data["level"].clone()).unwrap();
     let g = &level.geometry;
     let r = level.body_config.body_radius;

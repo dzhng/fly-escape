@@ -265,6 +265,7 @@ fn invalid_spawn_footprints_and_capacity_are_rejected_before_simulation() {
         Point { x: 3.95, z: 0.96 },
     ] {
         let mut definition = level(1);
+        definition.body_config.body_radius = 0.08; // Explicit footprint for these boundary probes.
         fixed(&mut definition)[0].pose.position = position;
         let error =
             Attempt::describe(&graph, &definition, &tuning, "spawn", 0, 1, &[]).unwrap_err();
@@ -440,6 +441,7 @@ fn resolved_placements_reach_taste_and_local_body_wind_and_replay() {
     use sim::placement::*;
     let graph = graph();
     let mut definition = level(1);
+    definition.body_config.body_radius = 0.08; // Fixed overlap with the authored contact region.
     definition.sources.clear();
     definition.placement_rules.inventory = vec![
         ToolStock {

@@ -110,8 +110,13 @@ meshes=[o for o in scene.objects if o.type=='MESH']
 minimum=min((o.matrix_world@v.co).z for o in meshes for v in o.data.vertices)
 for obj in meshes:
     obj.location.z-=minimum
-# Authored world size matches the simulation body; camera framing uses exported bounds.
-root.scale = (0.25, 0.25, 0.25)
+# Native GLB units are metres; measure body landmarks rather than the wider wing envelope.
+bpy.context.view_layer.update()
+body_vertices = [(o.matrix_world @ v.co).y for o in meshes
+                 if o.name.startswith(("Head", "Thorax", "Abdomen")) for v in o.data.vertices]
+body_length = max(body_vertices) - min(body_vertices)
+root.scale = (0.003 / body_length,) * 3
+root["body_length_metres"] = 0.003
 bpy.context.view_layer.update()
 bpy.ops.object.select_all(action='DESELECT')
 root.select_set(True)

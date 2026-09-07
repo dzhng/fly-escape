@@ -6,7 +6,7 @@ Build a local, fully 3D browser game in which the player places environmental to
 
 ## Next Agent Prompt
 
-The user wants **two carefully designed levels**, natural clustered starts, and a **photorealistic warm, lived-in house**. [18](slices/18-natural-starts.md) and the neutral scale feasibility prototype [19](slices/19-proportions.md) are integrated and verified. [25](slices/25-physical-scale.md) reproduced a real sampling failure: anatomical antennae usually receive the same nearest-cell value. [26](slices/26-continuous-field-sampling.md) now removes that aliasing, with native and browser gates passing. Anatomical contrast remains below the frozen detector threshold. [27](slices/27-sensory-sensitivity.md) now validates a 0.01% model cutoff across 30 paired seeds for odor and vision. Complete [25](slices/25-physical-scale.md) physical dimension adoption next: put measured sampling coordinates and body size into their existing owners and verify their browser alignment before food/contact work.
+The user wants **two carefully designed levels**, natural clustered starts, and a **photorealistic warm, lived-in house**. [18](slices/18-natural-starts.md) and the neutral scale feasibility prototype [19](slices/19-proportions.md) are integrated and verified. [25](slices/25-physical-scale.md) reproduced a real sampling failure: anatomical antennae usually receive the same nearest-cell value. [26](slices/26-continuous-field-sampling.md) now removes that aliasing, with native and browser gates passing. Anatomical contrast remains below the frozen detector threshold. [27](slices/27-sensory-sensitivity.md) now validates a 0.01% model cutoff across 30 paired seeds for odor and vision. [25](slices/25-physical-scale.md) now adopts native 3 mm assets and measured physical/sensory dimensions with browser alignment verified. Implement [28](slices/28-zoom-readable-flies.md) next: the user requests zoom-dependent model enlargement so flies remain visible in Overview.
 
 Then resolve food/furnishing contact in 20 and the separate shape, material, light and readability passes through 24. Establish one real browser room before expanding into the five-room first level (15) and larger second level (16), followed by release gates (17). Existing 01–14 art is foundation evidence, not final realism acceptance. Follow GAMEPLAY.md and the single-owner contracts below.
 
@@ -34,9 +34,10 @@ Open the [interactive roadmap](visualizations/roadmap.html) for dependency and m
 - [x] [14 — Editable setup and attempt loop](slices/14-placement-attempt.md) — dependencies: 05,06,10,13.
 - [x] [18 — A natural starting swarm](slices/18-natural-starts.md) — dependencies: 05,14; required before final campaign calibration.
 - [x] [19 — Physical proportions before detailed art](slices/19-proportions.md) — dependencies: 18 for integration; neutral authoring may proceed independently.
-- [ ] [25 — Physical scale and sensory sampling](slices/25-physical-scale.md) — reproduction integrated; physical adoption awaits 26 and measured adapter verdict.
+- [x] [25 — Physical scale and sensory sampling](slices/25-physical-scale.md) — physical adoption verified after26/27.
 - [x] [26 — Continuous field sampling](slices/26-continuous-field-sampling.md) — dependency: 25 reproduction; required before physical adoption and 20.
 - [x] [27 — Sensory sensitivity at anatomical scale](slices/27-sensory-sensitivity.md) — dependency: 26; diagnostic comparison before physical adoption.
+- [ ] [28 — Zoom-readable fly models](slices/28-zoom-readable-flies.md) — dependency:25; user-requested visual enlargement, physics unchanged.
 - [ ] [20 — Authoritative furnishing and food contact](slices/20-furnished-contact.md) — dependencies: 19,25.
 - [ ] [21 — Recognizable household shapes](slices/21-house-shapes.md) — dependencies: 19,20.
 - [ ] [22 — Natural authored materials](slices/22-house-surfaces.md) — dependencies: 21.

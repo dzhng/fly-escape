@@ -29,7 +29,6 @@ export function FieldsLab() {
   const containers = [useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null)];
   const views = useRef<WorldView[]>([]);
   const client = useRef<BrainClient | undefined>(undefined);
-  const antennaOffset = useRef(0);
   const scenarioRef = useRef<FieldScenario>("inhibitoryOdor");
   const [scenario, setScenario] = useState<FieldScenario>("inhibitoryOdor");
   const [info, setInfo] = useState<FieldLabInfo>();
@@ -46,13 +45,12 @@ export function FieldsLab() {
     const brain = new BrainClient((reply) => {
       if (reply.type === "fieldsReady") {
         setInfo(reply.info);
-        antennaOffset.current = reply.info.brain.antennaOffset;
         try {
           views.current.forEach((v) => v.dispose());
           views.current = containers.map((container, i) => {
             const view = new WorldView(container.current!, reply.info.brain.geometry);
             view.setPose(reply.info.brain.initialPose);
-            view.setSensoryMarkers(reply.info.brain.initialPose, reply.info.brain.antennaOffset);
+            view.setSensoryMarkers(reply.info.brain.initialSensoryPoints, reply.info.brain.initialPose.y);
             view.setWind(reply.info.brain.initialPose, reply.info.grids[i].wind);
             view.setFieldGrid(reply.info.grids[i], channelFor(reply.info.scenario));
             return view;
@@ -64,7 +62,7 @@ export function FieldsLab() {
         setFrame(reply.frame);
         views.current.forEach((v, i) => {
           v.setPose(reply.frame.flies[i].pose);
-          v.setSensoryMarkers(reply.frame.flies[i].sensoryPose, antennaOffset.current);
+          v.setSensoryMarkers(reply.frame.flies[i].sensoryPoints, reply.frame.flies[i].sensoryPose.y);
           v.setWind(reply.frame.flies[i].pose, reply.frame.flies[i].sensory.wind);
           v.setFieldGrid(reply.frame.grids[i], channelFor(scenarioRef.current));
         });
