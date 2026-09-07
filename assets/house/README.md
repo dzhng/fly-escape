@@ -7,3 +7,6 @@ Furniture is authored in metres at its native size. The [catalogue](catalog.json
 Native geometry, material appearance and visibility have separate acceptance gates. A correctly sized mesh is not evidence of finished house art or readable fly contact. The active specification owns those remaining gates.
 
 The [potted plant study](plant/README.md) is a prepared appearance proposal with unresolved foliage contact ownership; it is not a catalogue entry.
+
+The [closed window study](window/README.md) preserves the room-scale fixture's
+native dimensions; wall installation, glass and daylight remain separate gates.

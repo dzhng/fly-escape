@@ -28,6 +28,14 @@ A bounded refinement keeps the existing 0.3 × 1.05 × 0.3 m visual envelope and
 
 [Refinement evidence](../assets/evidence/21/plant-refined/README.md) retains the original comparison and rejected candidates. Fresh critique identified leaf-overlap patches and lower planter kinks; the final prepared shape separates the leaves and confines rounding to the rim. Remaining needle-like/edge-on tips and squared leaf bases remain realism refinements, not completed slice acceptance.
 
+## Prepared closed window
+
+The [window preparation](../assets/evidence/21/window-prepared/README.md) preserves
+the existing room-scale envelope and provides closed panes, backed sash reveals
+and an asymmetric handle. Neutral authoring and export checks pass; the model
+remains unregistered until wall placement, glass/light treatment and production
+replacement/occlusion are verified. It does not create a new physical opening.
+
 ## Banana end-shape refinement
 
 Refine the broad blossom shoulder and flat-looking stalk neck through gradual authored radius transitions along the existing curved skin. Preserve the medium household size, continuous closed mesh, neutral material and shared fixed stage; measure gross-dimension drift rather than stretching the asset. Before/after close views and export/topology validation judge this bounded silhouette change. Runtime food adoption, contact behavior and material treatment remain outside it.
