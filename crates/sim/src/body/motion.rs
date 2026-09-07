@@ -33,6 +33,7 @@ impl MotionPoint {
 }
 #[derive(Debug)]
 pub struct MotionTrace {
+    pub contact_hazard: Option<(f64, ContactHazardKind)>,
     pub queries: usize,
     pub points: Vec<MotionPoint>,
 }
@@ -50,6 +51,7 @@ impl MotionTrace {
         end.fraction = 1.;
         Self {
             points: vec![point, end],
+            contact_hazard: None,
             queries: 0,
         }
     }
@@ -97,6 +99,9 @@ impl MotionTrace {
         }
     }
     pub fn finish(mut self, fraction: f64) -> Result<Self, String> {
+        if self.contact_hazard.is_some_and(|(time, _)| time > fraction) {
+            self.contact_hazard = None;
+        }
         let mut end = self.at(fraction)?;
         self.points.retain(|p| p.fraction < fraction);
         self.points.push(end.clone());
@@ -177,6 +182,7 @@ pub(super) fn advance(
     };
     let mut trace = MotionTrace {
         points: vec![point.clone()],
+        contact_hazard: None,
         queries: 0,
     };
     let mut work = Work::default();
@@ -387,6 +393,18 @@ pub(super) fn advance(
             point.rotation = rotation;
             elapsed += used;
             point.fraction = elapsed / dt;
+            if let Some(kind) = world.contact_hazards.get(&hit.surface_id) {
+                trace.contact_hazard = Some((point.fraction, *kind));
+                if point.fraction > trace.end().fraction {
+                    append_point(&mut trace.points, point.clone())?;
+                }
+                if point.fraction < 1. {
+                    point.fraction = 1.;
+                    append_point(&mut trace.points, point)?;
+                }
+                trace.queries = work.queries;
+                return Ok(trace);
+            }
             if descending && hit.normal[1] > 0. {
                 if used <= 1e-12 && previous_support == Some(hit.surface_id) {
                     return Err("support loss immediately reacquires the same surface without advancing time".into());
@@ -678,10 +696,15 @@ mod coalescing_tests {
             })
             .collect();
         let original = MotionTrace {
+            contact_hazard: None,
             queries: 5,
             points: points.clone(),
         };
-        let mut retained = MotionTrace { queries: 5, points };
+        let mut retained = MotionTrace {
+            contact_hazard: None,
+            queries: 5,
+            points,
+        };
         retained.coalesce_free();
         assert_eq!(retained.points.len(), 2);
         for i in 0..=1000 {
@@ -696,6 +719,7 @@ mod coalescing_tests {
     #[test]
     fn collision_hold_and_support_boundaries_survive_coalescing() {
         let mut trace = MotionTrace {
+            contact_hazard: None,
             queries: 0,
             points: vec![point(0., 0.), point(0.4, 0.4), point(1., 0.4)],
         };
@@ -705,6 +729,7 @@ mod coalescing_tests {
         let mut middle = point(0.5, 0.5);
         middle.support = Some(7);
         let mut trace = MotionTrace {
+            contact_hazard: None,
             queries: 0,
             points: vec![point(0., 0.), middle, point(1., 1.)],
         };

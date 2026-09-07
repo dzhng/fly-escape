@@ -26,6 +26,8 @@ fn main() {
         BodyState::decl(),
         BodyConfig::decl(),
         ContactRegion::decl(),
+        ContactHazardKind::decl(),
+        ContactHazard::decl(),
         sim::food::FoodDef::decl(),
         sim::food::FoodShape::decl(),
         sim::native_object::NativeObjectShape::decl(),

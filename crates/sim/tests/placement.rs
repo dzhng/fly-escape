@@ -475,3 +475,38 @@ fn map_fan_rule_requires_a_finite_canonical_heading() {
         assert_eq!(resolved.state.placements[0].heading, heading);
     }
 }
+
+#[test]
+fn native_zapper_resolves_only_non_edible_contact_hazards() {
+    let level = level();
+    let resolved = resolve_placements(&level, &[item(1, ToolKind::BugZapper, 2., 2.)]).unwrap();
+    assert!(resolved.state.food.is_empty());
+    assert!(
+        resolved.sources.is_empty(),
+        "no unmeasured light or odor attraction"
+    );
+    assert!(resolved.state.objects.len() > 1);
+    assert_eq!(
+        resolved.state.objects.len(),
+        resolved.state.contact_hazards.len()
+    );
+    assert!(resolved
+        .state
+        .objects
+        .iter()
+        .zip(&resolved.state.contact_hazards)
+        .all(|(surface, hazard)| surface.id == hazard.surface_id
+            && hazard.kind == sim::body::ContactHazardKind::Zapper));
+    sim::body::BodyWorld::new(
+        &level.geometry,
+        &resolved.state.food,
+        &resolved.state.objects,
+        &level.zappers,
+        level.exit,
+        level.duration_ticks,
+    )
+    .unwrap()
+    .with_contact_hazards(&resolved.state.contact_hazards)
+    .unwrap();
+    assert!(serde_json::from_str::<sim::body::ContactHazardKind>("\"starved\"").is_err());
+}

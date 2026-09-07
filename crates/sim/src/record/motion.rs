@@ -154,7 +154,12 @@ pub fn sample_motion(
             &values[a * VALUE_FIELDS.len()..b * VALUE_FIELDS.len()],
             &states[a * STATE_FIELDS.len()..b * STATE_FIELDS.len()],
         )?;
-        let p = MotionTrace { points, queries: 0 }.at(fraction)?;
+        let p = MotionTrace {
+            contact_hazard: None,
+            points,
+            queries: 0,
+        }
+        .at(fraction)?;
         output.extend([
             p.pose.position.x,
             p.pose.position.z,

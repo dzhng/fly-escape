@@ -17,6 +17,7 @@ pub enum ToolKind {
     Lamp,
     Shade,
     Fan,
+    BugZapper,
     WornShoes,
     DirtyDishes,
     Laundry,
@@ -49,6 +50,7 @@ pub struct ToolDef {
     pub effect: ToolEffect,
     pub contact: Option<NativeObjectShape>,
     pub edible: bool,
+    pub contact_hazard: Option<crate::body::ContactHazardKind>,
 }
 /// Shared calibration for palette descriptions and physical/sensory resolution.
 /// Threat has no catalog entry until its circuit effect is measured.
@@ -106,6 +108,12 @@ pub fn tool_def(kind: ToolKind) -> ToolDef {
         ),
         ToolKind::Lamp => (None, false, 0.25, source(SourceKind::Lamp, 1.5, 0.4)),
         ToolKind::Shade => (None, false, 0.25, source(SourceKind::Shade, 1.5, 0.2)),
+        ToolKind::BugZapper => (
+            Some(NativeObjectShape::BugZapper),
+            false,
+            0.,
+            ToolEffect::None,
+        ),
         ToolKind::Fan => (
             Some(NativeObjectShape::Fan),
             false,
@@ -125,6 +133,8 @@ pub fn tool_def(kind: ToolKind) -> ToolDef {
         effect,
         contact,
         edible,
+        contact_hazard: (kind == ToolKind::BugZapper)
+            .then_some(crate::body::ContactHazardKind::Zapper),
     }
 }
 
@@ -137,6 +147,7 @@ pub fn tool_catalog() -> Vec<ToolDef> {
         ToolKind::Lamp,
         ToolKind::Shade,
         ToolKind::Fan,
+        ToolKind::BugZapper,
         ToolKind::WornShoes,
         ToolKind::DirtyDishes,
         ToolKind::Laundry,
@@ -206,6 +217,8 @@ pub struct PlacementState {
     pub remaining: Vec<ToolStock>,
     pub food: Vec<ContactSurface>,
     pub objects: Vec<ContactSurface>,
+    #[serde(rename = "contactHazards")]
+    pub contact_hazards: Vec<crate::body::ContactHazard>,
 }
 #[derive(Clone, Debug, Serialize, TS)]
 #[serde(rename_all = "camelCase")]
@@ -338,6 +351,7 @@ pub fn resolve_placements(
         .map(|(id, food)| food.surface(id as u32))
         .collect::<Result<Vec<_>, _>>()?;
     let mut objects = vec![];
+    let mut contact_hazards = vec![];
     let mut surface_id = food.len() as u32;
     let mut field_config = level.field_config.clone();
     for placement in all {
@@ -346,6 +360,12 @@ pub fn resolve_placements(
             let surfaces =
                 shape.placed_surfaces(placement.position, placement.heading, surface_id)?;
             surface_id += surfaces.len() as u32;
+            if let Some(kind) = definition.contact_hazard {
+                contact_hazards.extend(surfaces.iter().map(|s| crate::body::ContactHazard {
+                    surface_id: s.id,
+                    kind,
+                }));
+            }
             if definition.edible {
                 food.extend(surfaces);
             } else {
@@ -383,6 +403,7 @@ pub fn resolve_placements(
             placements,
             food,
             objects,
+            contact_hazards,
             remaining: remaining
                 .into_iter()
                 .map(|(kind, count)| ToolStock { kind, count })

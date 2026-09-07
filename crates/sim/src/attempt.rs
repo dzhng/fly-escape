@@ -219,7 +219,8 @@ impl Attempt {
             &level.zappers,
             level.exit,
             level.duration_ticks,
-        )?;
+        )?
+        .with_contact_hazards(&resolved.state.contact_hazards)?;
         let fields = FieldSet::new(
             level.geometry.clone(),
             resolved.field_config.clone(),

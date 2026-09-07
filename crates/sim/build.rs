@@ -31,6 +31,7 @@ fn main() {
         root.join("../../assets/household/crumpled-laundry/contact.json"),
         root.join("../../assets/household/sleeping-cat/contact.json"),
         root.join("../../assets/household/fan/contact.json"),
+        root.join("../../assets/household/bug-zapper/contact.json"),
         root.join("../../assets/household/vinegar/contact.json"),
         root.join("../../assets/fly/contact-hull.json"),
         root.join("../../assets/house/catalog.json"),

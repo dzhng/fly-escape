@@ -155,11 +155,33 @@ pub struct BodyEvent {
     pub kind: BodyEventKind,
 }
 
+/// Contact roles refer to exact native surfaces, independently of visual appearance.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+pub enum ContactHazardKind {
+    Zapper,
+}
+impl ContactHazardKind {
+    fn outcome(self) -> TerminalOutcome {
+        match self {
+            Self::Zapper => TerminalOutcome::Zapped,
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+pub struct ContactHazard {
+    pub surface_id: u32,
+    pub kind: ContactHazardKind,
+}
+
 /// Prepared immutable world shared by all bodies for the lifetime of an attempt.
 pub struct BodyWorld {
     geometry: Geometry,
     surfaces: ContactScene,
     edible_ids: std::collections::BTreeSet<u32>,
+    object_ids: std::collections::BTreeSet<u32>,
+    contact_hazards: std::collections::BTreeMap<u32, ContactHazardKind>,
     hull: &'static ContactHull,
     zappers: Vec<ContactRegion>,
     exit: ExitOpening,
@@ -179,11 +201,47 @@ impl BodyWorld {
             geometry: geometry.clone(),
             surfaces: ContactScene::new(&food.iter().chain(objects).cloned().collect::<Vec<_>>())?,
             edible_ids: food.iter().map(|surface| surface.id).collect(),
+            object_ids: objects.iter().map(|surface| surface.id).collect(),
+            contact_hazards: Default::default(),
             hull: native_hull()?,
             zappers: zappers.to_vec(),
             exit,
             duration_ticks,
         })
+    }
+    pub fn with_contact_hazards(mut self, hazards: &[ContactHazard]) -> Result<Self, String> {
+        if hazards.len() > 256 {
+            return Err("at most 256 contact hazards are supported".into());
+        }
+        let mut roles = std::collections::BTreeMap::new();
+        for hazard in hazards {
+            if !self.object_ids.contains(&hazard.surface_id)
+                || self.edible_ids.contains(&hazard.surface_id)
+            {
+                return Err(
+                    "contact hazard must reference an existing nonedible object surface".into(),
+                );
+            }
+            if roles.insert(hazard.surface_id, hazard.kind).is_some() {
+                return Err("duplicate contact hazard surface ID".into());
+            }
+        }
+        self.contact_hazards = roles;
+        Ok(self)
+    }
+    fn contact_hazard_at(&self, state: &BodyState) -> Result<Option<ContactHazardKind>, String> {
+        if let Some(kind) = state.support.and_then(|id| self.contact_hazards.get(&id)) {
+            return Ok(Some(*kind));
+        }
+        Ok(self
+            .surfaces
+            .touching_hull(
+                self.hull,
+                [state.pose.position.x, state.height, state.pose.position.z],
+                state.rotation,
+                |id| self.contact_hazards.contains_key(&id),
+            )?
+            .and_then(|id| self.contact_hazards.get(&id).copied()))
     }
     pub fn validate(
         geometry: &Geometry,
@@ -365,10 +423,11 @@ impl Body {
         Ok(BodyContacts {
             food: matches!(self.state.mode, BodyMode::Walking | BodyMode::Feeding)
                 && world.food_at(&self.state)?,
-            zapper: world
-                .zappers
-                .iter()
-                .any(|r| contact(self.state.pose.position, *r, self.config.body_radius)),
+            zapper: world.contact_hazard_at(&self.state)?.is_some()
+                || world
+                    .zappers
+                    .iter()
+                    .any(|r| contact(self.state.pose.position, *r, self.config.body_radius)),
         })
     }
     fn mode(&mut self, to: BodyMode, tick: u32, events: &mut Vec<BodyEvent>) {
@@ -585,7 +644,7 @@ impl Body {
         }
         trace.coalesce_free();
         let feed_seconds = feed_fraction * dt;
-        let mut terminal: Option<(f64, TerminalOutcome)> = None;
+        let mut terminal = trace.contact_hazard.map(|(t, kind)| (t, kind.outcome()));
         for pair in trace.points.windows(2) {
             let from = pair[0].pose.position;
             let to = pair[1].pose.position;
@@ -733,3 +792,6 @@ pub fn summarize_outcomes(states: &[BodyState]) -> OutcomeSummary {
 
 #[cfg(test)]
 mod motion_consumer;
+
+#[cfg(test)]
+mod contact_hazards;
