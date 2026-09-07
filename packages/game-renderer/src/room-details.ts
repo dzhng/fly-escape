@@ -2,17 +2,19 @@ import * as THREE from "three";
 import { loadStaticHouseModel } from "./house";
 import type { WorldView } from "./index";
 import windowUrl from "../../../assets/house/window/window.glb?url";
+import plantUrl from "../../../assets/house/wall-plant/wall-plant.glb?url";
 import sconceUrl from "../../../assets/house/sconce/sconce.glb?url";
 
 /** Wall attachments in metres. Local +Z faces into the room; no core occupancy or sensory cue is added. */
 export type RoomDetail = {
-  kind: "window" | "sconce";
+  kind: "window" | "sconce" | "plant";
   position: readonly [number, number, number];
   quarterTurns: 0 | 1 | 2 | 3;
 };
 const assets = {
   window: { url: windowUrl, size: [1.4, 1.1, 0.08] },
   sconce: { url: sconceUrl, size: [0.22, 0.32, 0.16] },
+  plant: { url: plantUrl, size: [0.34, 1.265, 0.38] },
 } as const;
 
 export class RoomDetails {
