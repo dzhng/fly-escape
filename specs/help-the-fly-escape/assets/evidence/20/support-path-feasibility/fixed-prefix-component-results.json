@@ -1,0 +1,57 @@
+{
+  "scope": "Native release, same prepared scene/hull reused, one authored apple, 6mm Z translation at X=20mm; 20 repeats per fixed orientation. No moving rotation or WASM measurement.",
+  "budget": {
+    "work": 2000000,
+    "items": 16384
+  },
+  "rows": [
+    {
+      "chargedWork": 288598,
+      "heading": 0.0,
+      "meanConstructionMs": 0.84918125,
+      "peakItems": 1292,
+      "planes": 4647,
+      "runs": 20,
+      "segments": 21,
+      "spanPairs": 38226,
+      "tilt": 0.0,
+      "triangles": 22
+    },
+    {
+      "chargedWork": 330578,
+      "heading": 1.5,
+      "meanConstructionMs": 0.9952542,
+      "peakItems": 1286,
+      "planes": 6194,
+      "runs": 20,
+      "segments": 29,
+      "spanPairs": 38503,
+      "tilt": 0.0,
+      "triangles": 30
+    },
+    {
+      "chargedWork": 162707,
+      "heading": 0.0,
+      "meanConstructionMs": 0.43765205000000007,
+      "peakItems": 986,
+      "planes": 3171,
+      "runs": 20,
+      "segments": 11,
+      "spanPairs": 18721,
+      "tilt": 0.7,
+      "triangles": 16
+    },
+    {
+      "chargedWork": 169057,
+      "heading": 1.5,
+      "meanConstructionMs": 0.4777873,
+      "peakItems": 890,
+      "planes": 4448,
+      "runs": 20,
+      "segments": 7,
+      "spanPairs": 13041,
+      "tilt": 0.7,
+      "triangles": 22
+    }
+  ]
+}

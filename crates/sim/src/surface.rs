@@ -7,8 +7,16 @@ use parry3d_f64::{
     shape::{ConvexPolyhedron, Shape, SupportMap, TriMesh, TriMeshFlags},
 };
 use serde::{Deserialize, Serialize};
-use std::collections::BTreeSet;
+use std::collections::{BTreeMap, BTreeSet};
 use ts_rs::TS;
+
+mod boundary;
+mod path;
+pub use boundary::{validate_boundary, ContactBoundary, ContactEdge, ContactPlane};
+pub use path::{
+    FixedSupportRequest, SupportPath, SupportPathBudget, SupportPathError, SupportPathSegment,
+    SupportPathStop, SupportPathWork,
+};
 
 const QUERY_UNITS: f64 = 1000.;
 // Same 10nm positional precision as the native cast regressions; no geometry offset.
@@ -44,8 +52,33 @@ pub struct SupportSample {
     pub normal: [f64; 3],
 }
 
-pub struct ContactHull(ConvexPolyhedron);
+pub struct ContactHull {
+    shape: ConvexPolyhedron,
+    boundary: Option<ContactBoundary>,
+}
 impl ContactHull {
+    /// Prepared plane incidence, in metres; point-only hulls cannot construct paths.
+    pub fn from_boundary(mut boundary: ContactBoundary) -> Result<Self, String> {
+        if !(4..=4096).contains(&boundary.vertices.len())
+            || boundary.planes.len() > 4096
+            || boundary.edges.len() > 12288
+        {
+            return Err("contact boundary exceeds its geometry budget".into());
+        }
+        validate_boundary(&boundary.vertices, &boundary.planes, &boundary.edges)?;
+        let mut hull = Self::new(&boundary.vertices)?;
+        for point in &mut boundary.vertices {
+            for coordinate in point {
+                *coordinate *= QUERY_UNITS;
+            }
+        }
+        for plane in &mut boundary.planes {
+            plane.offset *= QUERY_UNITS;
+        }
+        hull.boundary = Some(boundary);
+        Ok(hull)
+    }
+
     /// Points are relative to the native model's support pivot, not its bounds centre.
     pub fn new(points: &[[f64; 3]]) -> Result<Self, String> {
         if !(4..=4096).contains(&points.len()) || points.iter().any(|p| !bounded(*p)) {
@@ -60,13 +93,21 @@ impl ContactHull {
                 let volume = hull.mass_properties(1.).mass();
                 volume.is_finite() && volume > 0.
             })
-            .map(Self)
+            .map(|shape| Self {
+                shape,
+                boundary: None,
+            })
             .ok_or_else(|| "contact hull must enclose a nonzero volume".into())
     }
 }
 
+struct ContactMesh {
+    id: u32,
+    mesh: TriMesh,
+    closed: bool,
+}
 pub struct ContactScene {
-    meshes: Vec<(u32, TriMesh)>,
+    meshes: Vec<ContactMesh>,
 }
 impl ContactScene {
     pub fn new(surfaces: &[ContactSurface]) -> Result<Self, String> {
@@ -103,15 +144,73 @@ impl ContactScene {
                     return Err("contact triangles must have numerically resolvable area".into());
                 }
             }
+            let mut edges = BTreeMap::<_, (Vec<usize>, i32)>::new();
+            let mut volume = 0.;
+            for (face_id, triangle) in surface.triangles.iter().enumerate() {
+                let [a, b, c] = triangle.map(|i| vertices[i as usize]);
+                volume += (a - vertices[0]).dot((b - vertices[0]).cross(c - vertices[0]));
+                for j in 0..3 {
+                    let (a, b) = (triangle[j], triangle[(j + 1) % 3]);
+                    let entry = edges.entry((a.min(b), a.max(b))).or_default();
+                    entry.0.push(face_id);
+                    entry.1 += if a < b { 1 } else { -1 };
+                }
+            }
+            if edges.values().any(|pair| pair.0.len() > 2) {
+                return Err("contact surfaces require manifold edges".into());
+            }
+            // Components use shared edges, so a dangling open fin cannot hide a
+            // closed food boundary merely by sharing one vertex with it.
+            let mut seen = vec![false; surface.triangles.len()];
+            let mut components = 0;
+            let mut has_closed_component = false;
+            for seed in 0..surface.triangles.len() {
+                if seen[seed] {
+                    continue;
+                }
+                components += 1;
+                let mut pending = vec![seed];
+                seen[seed] = true;
+                let mut component_closed = true;
+                while let Some(face) = pending.pop() {
+                    let t = surface.triangles[face];
+                    for j in 0..3 {
+                        let (a, b) = (t[j], t[(j + 1) % 3]);
+                        let adjacent = &edges[&(a.min(b), a.max(b))].0;
+                        component_closed &= adjacent.len() == 2;
+                        for &neighbor in adjacent {
+                            if !seen[neighbor] {
+                                seen[neighbor] = true;
+                                pending.push(neighbor);
+                            }
+                        }
+                    }
+                }
+                has_closed_component |= component_closed;
+            }
+            if has_closed_component && components != 1 {
+                return Err("closed contact surfaces require one connected food boundary".into());
+            }
+            let closed = edges.values().all(|pair| pair.0.len() == 2);
+            if closed && edges.values().any(|pair| pair.1 != 0) {
+                return Err("closed contact surfaces require consistent winding".into());
+            }
+            if closed && volume <= 0. {
+                return Err("closed contact surfaces require outward nonzero volume".into());
+            }
             let mesh = TriMesh::with_flags(
                 vertices,
                 surface.triangles.clone(),
                 TriMeshFlags::ORIENTED | TriMeshFlags::FIX_INTERNAL_EDGES,
             )
             .map_err(|e| format!("invalid contact mesh: {e}"))?;
-            meshes.push((surface.id, mesh));
+            meshes.push(ContactMesh {
+                id: surface.id,
+                mesh,
+                closed,
+            });
         }
-        meshes.sort_by_key(|(id, _)| *id);
+        meshes.sort_by_key(|entry| entry.id);
         Ok(Self { meshes })
     }
 
@@ -121,8 +220,9 @@ impl ContactScene {
             return Err("contact requires a bounded position and nonnegative finite radius".into());
         }
         let position = Vector::from_array(position) * QUERY_UNITS;
-        Ok(self.meshes.iter().find_map(|(id, mesh)| {
-            (mesh.distance_to_local_point(position, false) <= radius * QUERY_UNITS).then_some(*id)
+        Ok(self.meshes.iter().find_map(|entry| {
+            (entry.mesh.distance_to_local_point(position, false) <= radius * QUERY_UNITS)
+                .then_some(entry.id)
         }))
     }
 
@@ -162,15 +262,15 @@ impl ContactScene {
         let rotation = support_rotation(heading, up)?;
         let index = self
             .meshes
-            .binary_search_by_key(&surface_id, |(id, _)| *id)
+            .binary_search_by_key(&surface_id, |entry| entry.id)
             .map_err(|_| "support surface is absent from this scene")?;
         let entry = &self.meshes[index];
         let orientation = Pose {
             translation: Vector::ZERO,
             rotation: Rotation::from_array(rotation),
         };
-        let body_bounds = hull.0.compute_aabb(&orientation);
-        let surface_bounds = entry.1.local_aabb();
+        let body_bounds = hull.shape.compute_aabb(&orientation);
+        let surface_bounds = entry.mesh.local_aabb();
         let body_height = body_bounds.maxs.y - body_bounds.mins.y;
         let top = surface_bounds.maxs.y - body_bounds.mins.y + body_height;
         let bottom = surface_bounds.mins.y - body_bounds.maxs.y - body_height;
@@ -211,12 +311,12 @@ impl ContactScene {
             -Vector::Y * distance * QUERY_UNITS,
         );
         let mut first = None;
-        for (id, mesh) in &self.meshes {
-            if let Some(hit) = mesh.cast_local_ray_and_get_normal(&ray, 1., false) {
+        for entry in &self.meshes {
+            if let Some(hit) = entry.mesh.cast_local_ray_and_get_normal(&ray, 1., false) {
                 select(
                     &mut first,
                     checked_hit(
-                        *id,
+                        entry.id,
                         hit.time_of_impact,
                         ray.point_at(hit.time_of_impact) / QUERY_UNITS,
                         hit.normal,
@@ -231,7 +331,7 @@ fn cast_on<'a>(
     hull: &ContactHull,
     pose: Pose,
     velocity: Vector,
-    meshes: impl Iterator<Item = &'a (u32, TriMesh)>,
+    meshes: impl Iterator<Item = &'a ContactMesh>,
 ) -> Result<Option<SurfaceHit>, String> {
     let tangent_roundoff = 16. * f64::EPSILON * velocity.length();
     let end = Pose {
@@ -239,19 +339,19 @@ fn cast_on<'a>(
         ..pose
     };
     let swept = hull
-        .0
+        .shape
         .compute_aabb(&pose)
-        .merged(&hull.0.compute_aabb(&end));
+        .merged(&hull.shape.compute_aabb(&end));
     let mut first = None;
-    for (id, mesh) in meshes {
-        for triangle_id in mesh.bvh().intersect_aabb(&swept) {
-            let triangle = mesh.triangle(triangle_id);
+    for entry in meshes {
+        for triangle_id in entry.mesh.bvh().intersect_aabb(&swept) {
+            let triangle = entry.mesh.triangle(triangle_id);
             let normal = triangle.normal().expect("validated nondegenerate triangle");
             let normal_velocity = normal.dot(velocity);
             // A separating face plane cannot block tangent/outward translation.
             // Test each triangle: another face in this same mesh may still block it.
             let separated = |direction: Vector| {
-                direction.dot(hull.0.support_point(&pose, -direction) - triangle.a)
+                direction.dot(hull.shape.support_point(&pose, -direction) - triangle.a)
                     >= -PLANE_TOLERANCE
             };
             if (normal_velocity >= -tangent_roundoff && separated(normal))
@@ -262,7 +362,7 @@ fn cast_on<'a>(
             let hit = cast_shapes(
                 &pose,
                 velocity,
-                &hull.0,
+                &hull.shape,
                 &Pose::IDENTITY,
                 Vector::ZERO,
                 &triangle,
@@ -283,7 +383,7 @@ fn cast_on<'a>(
                 select(
                     &mut first,
                     checked_hit(
-                        *id,
+                        entry.id,
                         hit.time_of_impact,
                         hit.witness2 / QUERY_UNITS,
                         hit.normal2,

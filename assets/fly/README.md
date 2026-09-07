@@ -55,3 +55,6 @@ never merges them. Floating-point validation and deterministic regeneration do
 not prove the exact signs of all near-zero clipping intervals. Exact offline
 plane audits must use the serialized units, since unit conversion can round plane
 offsets. The boundary remains a candidate pending those audits and moving cases.
+
+The [core contact boundary](../../crates/sim/src/surface/README.md) owns validation
+and the bounded fixed-orientation support query; body adoption remains separate.
