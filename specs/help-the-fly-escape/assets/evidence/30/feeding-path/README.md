@@ -1,0 +1,9 @@
+# Food encounter and landing audit
+
+Root verified a concrete historical difference: `ae754b0:src/landing_feeding.py` injects an approaching-fruit signal directly into landing-output neurons. Current `sensory.rs` excludes those neurons from sensory injection, and `attempt.rs` provides odor/brightness inputs and contact-triggered taste, but no corresponding approaching-food input. The old landing mechanism was therefore not carried over under the newer sensory-only contract. No replacement is implemented yet.
+
+The [Claude audit](claude-audit.md) also compares taste and hunger inputs. Its recommendations are hypotheses, not accepted biological or gameplay claims. A graph path does not establish that stimulating the existing loom group will cause useful landing; the group's exact identity and response need verification. Directly restoring historical motor-neuron injection would change the current contract and must be disclosed, not silently ported.
+
+The pilot confirms that feeding can happen, but rarely among its completed runs. Snapshots taken immediately before13 failing attempts cannot establish overall landing direction, encounter rates or a population-wide feeding bottleneck. Distances to object positions and approximate base-radius bands are not exact full 3D hull contact measurements. A negative single-gain loom experiment would not eliminate every sensory/circuit explanation.
+
+Next, after contact failures are repaired: rerun the fixed actual campaign pilot, then test one approaching-food sensory input against unchanged controls if landing remains the limiting mechanic. Measure actual landing onset, edible contact, feeding and reserve benefit; nearest-food distance alone is insufficient. Keep the neural readout exclusion unless an explicitly disclosed alternative is chosen. Broader edible surfaces and reachable level placement are legitimate content approaches, but an invisible enlargement of existing food is not.
