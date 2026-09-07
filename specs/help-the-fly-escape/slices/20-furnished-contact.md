@@ -55,4 +55,4 @@ The [authored apple preparation](../assets/evidence/20/authored-apple/README.md)
 
 These are checkpoints within20, not smaller substitutes for its original scope. Retain the two-level game and later art, visibility, difficulty and release gates.
 
-[Matched feeding benefit](../assets/evidence/20/feeding-benefit/README.md) confirms the current actual graph and production client extend lifetime through replenishment on the controlled flat patch. Seven of twenty independent streams feed and benefit; the others remain unchanged. Native curved-fruit meal opportunity and campaign attraction remain unverified.
+[Matched feeding benefit](../assets/evidence/20/feeding-benefit/README.md) confirms the current actual graph and production client extend lifetime through replenishment on the controlled flat patch. Seven of twenty independent streams feed and benefit; the others remain unchanged. The [native banana comparison](../assets/evidence/20/native-banana-meal/README.md) now verifies a controlled curved-fruit meal and lifetime benefit, with production playback through departure. Close-contact visual acceptance, revisit and campaign attraction remain open.

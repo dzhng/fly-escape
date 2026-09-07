@@ -3,12 +3,14 @@ import { chromium } from 'playwright';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 const output = process.env.FEEDING_OUTPUT ?? '/tmp/feeding-benefit-evidence';
+const surface = process.env.FEEDING_SURFACE ?? 'flat';
+assert.ok(['flat', 'banana'].includes(surface), 'FEEDING_SURFACE must be flat or banana');
 await mkdir(output, {recursive:true});
 const browser = await chromium.launch({headless:true,channel:'chrome'});
 const page = await browser.newPage();
 try {
   await page.goto((process.env.BRAIN_URL ?? 'http://127.0.0.1:5173') + '/@fs'+fileURLToPath(new URL('./feeding-benefit.html',import.meta.url)));
-  const report = await page.evaluate(async ({root,count}) => {
+  const report = await page.evaluate(async ({root,count,surface}) => {
     const {BrainClient} = await import(`${root}/index.ts`);
     const {AttemptClient} = await import(`${root}/attempt-client.ts`);
     const {FrameArchive} = await import(`${root}/record.ts`);
@@ -24,6 +26,10 @@ try {
     for(const feedingRate of [3,0]) {
       const level=structuredClone(info.level);
       level.bodyConfig.feedingRate=feedingRate;
+      if(surface==='banana') {
+        level.food=[];
+        level.fixedObjects=[{id:1,kind:'banana',position:{x:0.33,z:0.18},heading:0}];
+      }
       level.spawn.states=Array.from({length:count},()=>structuredClone(info.level.spawn.states[0]));
       const input={attemptId:`feeding-${feedingRate}`,rootSeed:'6',flyCount:count,level,tuning:{cues:[],tasteGain:1,silencedNeurons:[]},placements:[]};
       const arm = await new Promise((resolve,reject)=> {
@@ -47,7 +53,7 @@ try {
       arms.push(arm);
     }
     return {fixture:info,arms};
-  }, {root:'/@fs'+fileURLToPath(new URL('../../packages/sim-client/src',import.meta.url)),count:Number(process.env.FLY_COUNT ?? 1)});
+  }, {root:'/@fs'+fileURLToPath(new URL('../../packages/sim-client/src',import.meta.url)),count:Number(process.env.FLY_COUNT ?? 1),surface});
   await writeFile(output+'/browser.json',JSON.stringify({browser:browser.version(),...report}));
   const [enabled,disabled]=report.arms;
   assert.equal(enabled.error,null); assert.equal(disabled.error,null);
@@ -68,7 +74,11 @@ try {
             // Coplanar food can be touched while the floor remains support (null).
             assert.equal(fly.body.mode,'feeding');
             assert.ok(arm.ready.resolvedSetup.state.food.length>0);
-            starts.push({tick:frame.tick,support:fly.body.support,spikeFraction});
+            if(surface==='banana') {
+              assert.ok(arm.ready.resolvedSetup.state.food.some(food=>food.id===fly.body.support));
+              assert.ok(fly.body.height>0, 'the meal occurs on the raised native fruit');
+            }
+            starts.push({tick:frame.tick,support:fly.body.support,height:fly.body.height,spikeFraction});
           }
           if(event.kind.type==='terminal') terminal={tick:frame.tick,outcome:event.kind.outcome};
         }
@@ -89,7 +99,7 @@ try {
   }
   assert.ok(rows[0].enabled.gain>0.5,'selected seed6 demonstrates an actual neural meal');
   const deltas=rows.map(r=>r.lifetimeDeltaTicks).sort((a,b)=>a-b);
-  const summary={browser:browser.version(),spec:enabled.ready.spec,controlledFlatPatch:true,
+  const summary={browser:browser.version(),spec:enabled.ready.spec,foodSurface:surface,
     matchedInputsExceptFeedingRate:true,identicalFoodAndFields:true,activeNeuralSensoryAndInputPosesEqual:true,
     fedCount:rows.filter(r=>r.enabled.starts.length).length,
     medianLifetimeDeltaTicks:(deltas[Math.floor((deltas.length-1)/2)]+deltas[Math.floor(deltas.length/2)])/2,flies:rows};
