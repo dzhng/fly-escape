@@ -25,3 +25,13 @@ Measure 101 absolute phases of each existing Walk/Fly/Land/Feed clip through pos
 [Measured reproduction](../assets/evidence/25/README.md): at anatomical span,4090/4097 phase positions have identical cell samples, and all twelve cell-centre mirrored runs match neutral motor/body trajectories exactly. Keep the five-percent cutoff frozen. Next isolate wall-aware continuous field sampling before any sensory-adapter correction; no production parameters are accepted by this failure report.
 
 The reproduction is integrated as e77c79b. Continuous reconstruction is separately specified in [26](26-continuous-field-sampling.md); production parameter adoption remains open pending its measured result.
+
+## Physical adoption contract after 27
+
+The sensitivity gate now passes. Adopt the measured 3 mm body by exporting the existing Blender fly at metre scale, preserving its local geometry, animation and grounded pivot. Update the reproducible authoring source and remove the diagnostic workbench's second rescaling step when it becomes redundant. The model's native bounds become the camera's existing size input; do not add a renderer-only physics multiplier.
+
+Set BodyConfig's default collision radius to the measured conservative 0.0026313360997825106 m. Add `antenna_forward` to FieldConfig alongside its existing lateral `antenna_offset`; default them to 0.0014145078816978175 m and 0.00020207253103162883 m respectively. Preserve all locomotion/energy coefficients in this pass. Existing scientific fixtures that intentionally use other dimensions must state them explicitly; migrate all active serialized consumers with no compatibility fallback. Archived evidence remains historical.
+
+FieldSet owns the forward/lateral sample geometry. Export actual left/right points for diagnostic markers rather than adding another offset formula in JavaScript. Record the planar approximation explicitly: sampled fields have no height dimension, and the measured antenna height is an alignment reference, not a claim of airborne plume accuracy. Keep vision's already-tested bilateral planar approximation explicit.
+
+Verify rotated sample coordinates at multiple headings, conservative body clearance, default/exported type and serialized consumer consistency, deterministic starts/replay, and actual browser alignment of the native 3 mm model with the collision envelope and sensory points. Re-run the measured envelope over all animation modes after Blender export. Existing wider-camera/fruit-occlusion failures remain in24; this slice does not claim them fixed. Native size and numeric coordinates must agree before contact geometry in20 proceeds.
