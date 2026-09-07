@@ -1,0 +1,93 @@
+{
+  "historicalLeafMatches": 3986,
+  "uniqueCompleteFrames": 12000,
+  "maximumDecoderError": 0.0,
+  "discoverySeeds": [
+    0,
+    14
+  ],
+  "heldOutSeeds": [
+    15,
+    29
+  ],
+  "directionalVoltage": {
+    "discoveryRms": 0.01899780178212207,
+    "heldOutRms": 0.016166523091454926,
+    "crossHalfMeanProduct": 5.52030087527558e-05,
+    "cosine": 0.1797391857526277,
+    "oneSidedExactSignFlipP": 0.076416015625,
+    "heldOutPositiveContributions": 8,
+    "heldOutNegativeContributions": 7
+  },
+  "decoderProjection": {
+    "discoveryRms": 0.002229026620870147,
+    "heldOutRms": 0.002363433929755535,
+    "crossHalfMeanProduct": -7.380288934427463e-07,
+    "cosine": -0.14009242188041235,
+    "oneSidedExactSignFlipP": 0.821990966796875,
+    "heldOutPositiveContributions": 7,
+    "heldOutNegativeContributions": 8
+  },
+  "decoderOrthogonalResidual": {
+    "discoveryRms": 0.018866581907601935,
+    "heldOutRms": 0.015992831172942007,
+    "crossHalfMeanProduct": 5.5941037646198535e-05,
+    "cosine": 0.1854009434248121,
+    "oneSidedExactSignFlipP": 0.07275390625,
+    "heldOutPositiveContributions": 8,
+    "heldOutNegativeContributions": 7
+  },
+  "timeAveragedNeuronPattern": {
+    "discoveryRms": 0.002294477066619422,
+    "heldOutRms": 0.0019722132697893003,
+    "crossHalfMeanProduct": 9.642757894686896e-07,
+    "cosine": 0.21309029225263532,
+    "oneSidedExactSignFlipP": 0.113677978515625,
+    "heldOutPositiveContributions": 8,
+    "heldOutNegativeContributions": 7
+  },
+  "sourceArms": {
+    "-1": {
+      "discoveryRms": 0.020835854818346718,
+      "heldOutRms": 0.022496681369173207,
+      "crossHalfMeanProduct": 0.00014715729530395295,
+      "cosine": 0.3139438769490022,
+      "oneSidedExactSignFlipP": 9.1552734375e-05,
+      "heldOutPositiveContributions": 14,
+      "heldOutNegativeContributions": 1
+    },
+    "1": {
+      "discoveryRms": 0.02845612307534558,
+      "heldOutRms": 0.023794246888869223,
+      "crossHalfMeanProduct": 0.0002266422735437895,
+      "cosine": 0.3347289105967752,
+      "oneSidedExactSignFlipP": 0.001678466796875,
+      "heldOutPositiveContributions": 11,
+      "heldOutNegativeContributions": 4
+    }
+  },
+  "decoderHeldOutMeanDirectionalContrast": {
+    "mean": 0.0001992606126167885,
+    "ci95": [
+      -0.0012531329384594682,
+      0.001651654163693045
+    ]
+  },
+  "directionalSpikes": {
+    "discoveryRms": 0.0139204086785474,
+    "heldOutRms": 0.014173527750312866,
+    "crossHalfMeanProduct": -6.2222222222222215e-06,
+    "cosine": -0.03153665111778568,
+    "oneSidedExactSignFlipP": 0.705078125,
+    "heldOutPositiveContributions": 5,
+    "heldOutNegativeContributions": 6
+  },
+  "signFlipInterpretation": {
+    "directional": "Held-out seed sign flips exchange mirrored source labels within each active-minus-control contrast; fixed discovery template.",
+    "sourceArms": "Separate descriptive held-out seed sign flips exchange active/control labels for that source. Not a directional test; symmetry/exchangeability is an assumption."
+  },
+  "checks": {
+    "graphSha256": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+    "manifestSha256": "b44df25643d0574347088330ff5dc45275087de12d3ce82ab16f46489b40ff4d"
+  }
+}
