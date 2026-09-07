@@ -262,6 +262,8 @@ The [retained-feature domain event probe](domain-events.md) derives analytic
 crossing events instead of relying on sampled feature transitions. Its numerical
 ambiguity and global competitor gates remain explicit.
 
+The complementary [edge-to-edge feature probe](edge-feature.md) evaluates the actual narrow turn handoff and its segment/cone domain. Continuous transition ownership remains open.
+
 ## Remaining gates
 
 - Retain an active feature and its exact domain; cross its boundary without
