@@ -20,7 +20,8 @@ import "./setup.css";
 
 type Intent = { edit: PlacementEdit; placement?: Placement; commit: boolean };
 const names: Record<ToolKind, string> = {
-  fruit: "Fruit",
+  fruit: "Apple",
+  banana: "Banana",
   crumbs: "Scent crumbs",
   vinegar: "Vinegar",
   lamp: "Lamp",
@@ -29,6 +30,7 @@ const names: Record<ToolKind, string> = {
 };
 const descriptions: Record<ToolKind, string> = {
   fruit: "Attractive odor and an edible landing surface",
+  banana: "Attractive odor and an edible landing surface",
   crumbs: "Attractive odor, without food",
   vinegar: "Repellent odor",
   lamp: "A local bright cue",

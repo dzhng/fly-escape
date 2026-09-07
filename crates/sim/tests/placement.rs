@@ -192,7 +192,11 @@ fn canonical_resolution_binds_each_tool_without_mixing_food_and_odor() {
         resolved.field_config.fans[0].heading,
         std::f64::consts::FRAC_PI_2
     );
-    assert!(resolved.state.remaining.iter().all(|s| s.count == 0));
+    assert!(resolved
+        .state
+        .remaining
+        .iter()
+        .all(|s| s.count == u32::from(s.kind == ToolKind::Banana)));
     let mut no_replenishment = level;
     no_replenishment.body_config.feeding_rate = 0.;
     let ablated = resolve_placements(&no_replenishment, &placements).unwrap();
@@ -221,4 +225,31 @@ fn repeating_a_raw_heading_placement_is_idempotent() {
         )
         .is_err());
     }
+}
+
+#[test]
+fn banana_spends_its_own_stock_and_resolves_native_edible_geometry() {
+    let level = level();
+    let placed = resolve_placements(
+        &level,
+        &[
+            item(1, ToolKind::Banana, 1., 1.),
+            item(2, ToolKind::Crumbs, 2., 1.),
+        ],
+    )
+    .unwrap();
+    assert_eq!(left(&placed.state, ToolKind::Banana), 0);
+    assert_eq!(left(&placed.state, ToolKind::Fruit), 1);
+    let native = sim::food::FoodDef {
+        position: Point { x: 1., z: 1. },
+        heading: 0.,
+        shape: sim::food::FoodShape::Banana,
+    }
+    .surface(0)
+    .unwrap();
+    assert_eq!(
+        placed.state.food,
+        vec![native],
+        "scent crumbs remain odor-only"
+    );
 }

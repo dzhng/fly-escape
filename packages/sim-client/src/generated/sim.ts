@@ -39,7 +39,7 @@ landingDwellSeconds: number,
 proboscisThreshold: number, };
 export type ContactRegion = { center: Point, radius: number, };
 export type FoodDef = { position: Point, heading: number, shape: FoodShape, };
-export type FoodShape = { "type": "apple" } | { "type": "patch", radius: number, };
+export type FoodShape = { "type": "apple" } | { "type": "banana" } | { "type": "patch", radius: number, };
 export type ContactSurface = { id: number, vertices: Array<[number, number, number]>, triangles: Array<[number, number, number]>, };
 export type SurfaceHit = { surfaceId: number, fraction: number, point: [number, number, number], normal: [number, number, number], };
 export type SupportSample = { surfaceId: number, root: [number, number, number], rotation: [number, number, number, number], point: [number, number, number], normal: [number, number, number], };
@@ -50,7 +50,7 @@ export type BodyEventKind = { "type": "modeChanged", from: BodyMode, to: BodyMod
 export type BodyEvent = { tick: number, kind: BodyEventKind, };
 export type OutcomeSummary = { escaped: number, starved: number, zapped: number, timedOut: number, score: number, };
 export type LevelDef = { id: string, geometry: Geometry, spawn: SpawnDef, exit: ExitOpening, exitCue: ExitCue | null, food: Array<FoodDef>, zappers: Array<ContactRegion>, sources: Array<Source>, fieldConfig: FieldConfig, bodyConfig: BodyConfig, initialReserve: number, durationTicks: number, starThresholds: [number, number, number], placementRules: PlacementRules, };
-export type ToolKind = "fruit" | "crumbs" | "vinegar" | "lamp" | "shade" | "fan";
+export type ToolKind = "fruit" | "banana" | "crumbs" | "vinegar" | "lamp" | "shade" | "fan";
 export type ToolEffect = { "type": "source", kind: SourceKind, radius: number, rate: number, food: FoodShape | null, } | { "type": "fan", reach: number, halfWidth: number, speed: number, };
 export type ToolDef = { kind: ToolKind, footprintRadius: number, effect: ToolEffect, };
 export type ToolStock = { kind: ToolKind, count: number, };

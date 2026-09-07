@@ -62,3 +62,32 @@ fn floor_patches_share_the_surface_query_and_stable_contact_identity() {
     assert!(scene.touching([1., 0., 2.], -1.).is_err());
     assert!(scene.touching([f64::NAN, 0., 2.], 0.002).is_err());
 }
+
+#[test]
+fn banana_contact_preserves_native_curved_surface_and_rotated_footprint() {
+    let local = FoodDef {
+        position: Point::default(),
+        heading: 0.,
+        shape: FoodShape::Banana,
+    }
+    .surface(7)
+    .unwrap();
+    let placed = FoodDef {
+        position: Point { x: 2., z: 3. },
+        heading: std::f64::consts::FRAC_PI_2,
+        shape: FoodShape::Banana,
+    }
+    .surface(7)
+    .unwrap();
+    for (a, b) in local.vertices.iter().zip(&placed.vertices) {
+        assert!((b[0] - (2. - a[2])).abs() < 1e-12);
+        assert_eq!(a[1], b[1]);
+        assert!((b[2] - (3. + a[0])).abs() < 1e-12);
+        assert!(a[0].hypot(a[2]) <= FoodShape::Banana.footprint_radius());
+    }
+    let scene = ContactScene::new(&[placed]).unwrap();
+    let top = scene.below([2., 0.2, 3.], 0.3).unwrap().unwrap();
+    assert!((0.02..0.05).contains(&top.point[1]));
+    assert_eq!(scene.touching(top.point, 1e-6).unwrap(), Some(7));
+    assert_eq!(scene.touching([2.2, 0., 3.], 0.002).unwrap(), None);
+}

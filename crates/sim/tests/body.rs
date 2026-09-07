@@ -867,3 +867,46 @@ fn oblique_wind_slides_at_actual_contact_time_and_a_corner_stops_both_axes() {
         assert!(g.contains_body(p, radius));
     }
 }
+
+#[test]
+fn native_fly_can_land_and_feed_on_the_authored_banana() {
+    let g = geometry();
+    let banana = FoodDef {
+        position: Point { x: 2., z: 2. },
+        heading: 0.,
+        shape: FoodShape::Banana,
+    }
+    .surface(7)
+    .unwrap();
+    let world = BodyWorld::new(&g, &[banana], &[], exit(), 100).unwrap();
+    let mut b = Body::new_in_mode(
+        BodyPose {
+            position: Point { x: 2., z: 2. },
+            heading: 0.,
+        },
+        3.,
+        BodyConfig::default(),
+        BodyMode::Flying,
+    )
+    .unwrap();
+    let mut landing = neural(0., 0.);
+    landing.groups.push(GroupActivity {
+        id: "landingL".into(),
+        mean_voltage: 0.,
+        spike_fraction: 1.,
+    });
+    let mut tick = 0;
+    while b.state().mode != BodyMode::Walking && tick < 10 {
+        tick += 1;
+        b.step(&landing, &world, Point::default(), 0.1, tick)
+            .unwrap();
+    }
+    assert_eq!(b.state().support, Some(7));
+    assert!((0.02..0.05).contains(&b.state().height));
+    assert!(b.contacts(&world).unwrap().food);
+    let reserve = b.state().reserve;
+    b.step(&neural(0., 1.), &world, Point::default(), 0.1, tick + 1)
+        .unwrap();
+    assert_eq!(b.state().mode, BodyMode::Feeding);
+    assert!(b.state().reserve > reserve);
+}

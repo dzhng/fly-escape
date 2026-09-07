@@ -14,6 +14,7 @@ use ts_rs::TS;
 #[serde(rename_all = "camelCase")]
 pub enum ToolKind {
     Fruit,
+    Banana,
     Crumbs,
     Vinegar,
     Lamp,
@@ -60,6 +61,15 @@ pub fn tool_def(kind: ToolKind) -> ToolDef {
             FoodShape::Apple.footprint_radius(),
             source(SourceKind::AttractiveOdor, 0.75, 1., Some(FoodShape::Apple)),
         ),
+        ToolKind::Banana => (
+            FoodShape::Banana.footprint_radius(),
+            source(
+                SourceKind::AttractiveOdor,
+                0.75,
+                1.,
+                Some(FoodShape::Banana),
+            ),
+        ),
         ToolKind::Crumbs => (0.2, source(SourceKind::AttractiveOdor, 0.75, 1., None)),
         ToolKind::Vinegar => (0.2, source(SourceKind::RepellentOdor, 0.75, 1., None)),
         ToolKind::Lamp => (0.25, source(SourceKind::Lamp, 1.5, 0.4, None)),
@@ -82,6 +92,7 @@ pub fn tool_def(kind: ToolKind) -> ToolDef {
 pub fn tool_catalog() -> Vec<ToolDef> {
     [
         ToolKind::Fruit,
+        ToolKind::Banana,
         ToolKind::Crumbs,
         ToolKind::Vinegar,
         ToolKind::Lamp,
@@ -160,7 +171,10 @@ pub fn resolve_placements(
 ) -> Result<ResolvedSetup, String> {
     level.geometry.validate()?;
     let rules = &level.placement_rules;
-    if rules.inventory.len() > 6 || rules.reserved.len() > 256 || placements.len() > 64 {
+    if rules.inventory.len() > tool_catalog().len()
+        || rules.reserved.len() > 256
+        || placements.len() > 64
+    {
         return Err("setup exceeds inventory, reserved-region or placement limits".into());
     }
     let mut remaining = BTreeMap::new();

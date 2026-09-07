@@ -8,6 +8,7 @@ use ts_rs::TS;
 #[serde(tag = "type", rename_all = "camelCase")]
 pub enum FoodShape {
     Apple,
+    Banana,
     /// Controlled floor-food probes use this same triangle contact path.
     Patch {
         radius: f64,
@@ -20,27 +21,36 @@ pub struct FoodDef {
     pub heading: f64,
     pub shape: FoodShape,
 }
-fn apple() -> &'static ContactSurface {
-    static APPLE: OnceLock<ContactSurface> = OnceLock::new();
-    APPLE.get_or_init(|| {
-        serde_json::from_str(include_str!("../../../assets/food/apple/contact.json"))
-            .expect("authored apple must pass contact export validation")
-    })
-}
 impl FoodShape {
+    fn native(&self) -> Option<&'static (ContactSurface, f64)> {
+        static APPLE: OnceLock<(ContactSurface, f64)> = OnceLock::new();
+        static BANANA: OnceLock<(ContactSurface, f64)> = OnceLock::new();
+        let (asset, source) = match self {
+            Self::Apple => (
+                &APPLE,
+                include_str!("../../../assets/food/apple/contact.json"),
+            ),
+            Self::Banana => (
+                &BANANA,
+                include_str!("../../../assets/food/banana/contact.json"),
+            ),
+            Self::Patch { .. } => return None,
+        };
+        Some(asset.get_or_init(|| {
+            let surface: ContactSurface = serde_json::from_str(source)
+                .expect("authored food must pass contact export validation");
+            let radius = surface
+                .vertices
+                .iter()
+                .map(|p| p[0].hypot(p[2]))
+                .fold(0., f64::max);
+            (surface, radius)
+        }))
+    }
     pub fn footprint_radius(&self) -> f64 {
         match self {
-            Self::Apple => {
-                static RADIUS: OnceLock<f64> = OnceLock::new();
-                *RADIUS.get_or_init(|| {
-                    apple()
-                        .vertices
-                        .iter()
-                        .map(|p| p[0].hypot(p[2]))
-                        .fold(0., f64::max)
-                })
-            }
             Self::Patch { radius } => *radius,
+            _ => self.native().unwrap().1,
         }
     }
 }
@@ -56,7 +66,7 @@ impl FoodDef {
             return Err("food requires a finite pose and positive bounded dimensions".into());
         }
         let mut surface = match self.shape {
-            FoodShape::Apple => apple().clone(),
+            FoodShape::Apple | FoodShape::Banana => self.shape.native().unwrap().0.clone(),
             FoodShape::Patch { radius } => {
                 const SEGMENTS: u32 = 128;
                 let mut vertices = vec![[0.; 3]];

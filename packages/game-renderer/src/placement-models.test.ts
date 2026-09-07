@@ -40,13 +40,13 @@ test("edible assets preserve native metres while floor cues retain catalog scali
   food.dispose();
 });
 
-for (const kind of ["fruit", "crumbs", "vinegar", "fan", "lamp", "shade"] as const)
+for (const kind of ["fruit", "banana", "crumbs", "vinegar", "fan", "lamp", "shade"] as const)
   test(`${kind} shared geometry survives edits and is released once when replaced`, async () => {
     const food = new PlacementModels();
     const load = () =>
       Bun.file(
         new URL(
-          `../../../assets/${kind === "fruit" || kind === "crumbs" ? "food" : "tools"}/${kind === "fruit" ? "apple/apple" : kind}.glb`,
+          `../../../assets/${kind === "fruit" || kind === "banana" || kind === "crumbs" ? "food" : "tools"}/${kind === "fruit" ? "apple/apple" : kind === "banana" ? "banana/banana" : kind}.glb`,
           import.meta.url,
         ),
       )
@@ -110,5 +110,19 @@ test("authored fan direction follows placement heading and restores after editin
   expect(turned.z).toBeGreaterThan(0.1);
   expect(Math.abs(turned.x)).toBeLessThan(1e-6);
   expect(direction(0).equals(initial)).toBe(true);
+  models.dispose();
+});
+
+test("banana stays native sized after placement and rejects mismatched apple geometry", async () => {
+  const bytes = await Bun.file(new URL("../../../assets/food/banana/banana.glb", import.meta.url)).arrayBuffer();
+  await expect(loadPlacementModel(bytes, "fruit")).rejects.toThrow("baked core contact surface");
+  const model = await loadPlacementModel(bytes, "banana");
+  const models = new PlacementModels();
+  models.replace("banana", model.root);
+  models.setPlacements([{ id: 1, kind: "banana", position: { x: 2, z: 3 }, heading: Math.PI / 2 }], [{ kind: "banana", footprintRadius: 0.12, effect: { type: "source", kind: "attractiveOdor", radius: 0.75, rate: 1, food: { type: "banana" } } }]);
+  const bounds = new THREE.Box3().setFromObject(models.root);
+  expect(bounds.max.z - bounds.min.z).toBeCloseTo(model.bounds.max.x - model.bounds.min.x, 6);
+  expect(bounds.max.z - bounds.min.z).toBeGreaterThan(0.22);
+  expect(bounds.max.y).toBeCloseTo(model.bounds.max.y, 6);
   models.dispose();
 });
