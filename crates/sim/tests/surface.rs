@@ -158,3 +158,81 @@ fn malformed_contact_inputs_fail_before_querying() {
     assert!(scene.below([0.; 3], 0.).is_err());
     assert!(scene.below([f64::NAN; 3], 1.).is_err());
 }
+
+#[test]
+fn authored_apple_has_closed_outward_geometry_and_queryable_metres() {
+    use std::collections::BTreeMap;
+    let apple: ContactSurface =
+        serde_json::from_str(include_str!("../../../assets/food/apple/contact.json")).unwrap();
+    let mut edges = BTreeMap::new();
+    let mut volume = 0.;
+    for face in &apple.triangles {
+        for (a, b) in [(face[0], face[1]), (face[1], face[2]), (face[2], face[0])] {
+            *edges.entry((a, b)).or_insert(0) += 1;
+        }
+        let [a, b, c] = face.map(|i| apple.vertices[i as usize]);
+        volume += (a[0] * (b[1] * c[2] - b[2] * c[1])
+            + a[1] * (b[2] * c[0] - b[0] * c[2])
+            + a[2] * (b[0] * c[1] - b[1] * c[0]))
+            / 6.;
+    }
+    for ((a, b), count) in &edges {
+        assert_eq!(*count, 1, "non-manifold edge");
+        assert_eq!(edges.get(&(*b, *a)), Some(&1), "open or reversed face");
+    }
+    assert!(volume > 0., "inward triangle winding");
+    assert!(apple.vertices.iter().all(|p| p[1] >= 0.));
+    // Broad anatomical bounds catch unit/axis errors without pinning the art's silhouette.
+    let height = apple.vertices.iter().map(|p| p[1]).fold(0., f64::max);
+    assert!((0.05..0.1).contains(&height));
+    let scene = ContactScene::new(&[apple, floor(8, 0.)]).unwrap();
+    let hull = hull();
+    for x in [-0.03, -0.015, 0., 0.015, 0.03] {
+        let ray = scene.below([x, 0.2, 0.], 0.4).unwrap().unwrap();
+        assert_eq!(ray.surface_id, 0);
+        assert!(ray.normal[1] > 0.5);
+        let hit = scene
+            .cast(&hull, [x, 0.2, 0.], 0., [0., 1., 0.], [0., -0.4, 0.])
+            .unwrap()
+            .unwrap();
+        assert_eq!(hit.surface_id, 0);
+        let root = [x, 0.2 - hit.fraction * 0.4, 0.];
+        assert!(root[1] >= ray.point[1] - 1e-8);
+        assert!(
+            scene
+                .cast(&hull, root, 0., [0., 1., 0.], [0., 0.2, 0.])
+                .unwrap()
+                .is_none(),
+            "apple departure at {x}"
+        );
+    }
+    assert_eq!(
+        scene
+            .below([0.1, 0.2, 0.], 0.4)
+            .unwrap()
+            .unwrap()
+            .surface_id,
+        8
+    );
+}
+
+#[test]
+fn exported_float_vertices_survive_the_core_json_boundary_exactly() {
+    let coordinate: f64 = serde_json::from_str("-0.0019336363766342402").unwrap();
+    assert_eq!(coordinate, f64::from(-0.0019336363766342402_f32));
+    let surface: ContactSurface =
+        serde_json::from_str(include_str!("../../../assets/food/apple/contact.json")).unwrap();
+    for p in &surface.vertices {
+        for &v in p {
+            assert_eq!(
+                v,
+                f64::from(v as f32),
+                "Blender position no longer exactly represents its exported float"
+            );
+        }
+    }
+    let restored: ContactSurface =
+        serde_json::from_str(&serde_json::to_string(&surface).unwrap()).unwrap();
+    assert_eq!(surface.vertices, restored.vertices);
+    assert_eq!(surface.triangles, restored.triangles);
+}

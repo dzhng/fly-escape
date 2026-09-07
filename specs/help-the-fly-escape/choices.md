@@ -324,3 +324,9 @@ The floor meal probe now includes0.3m more food radius because a fly can travel 
 ### Native-scale and vertical trails (slice20 integration) — sound, high confidence
 
 When a millimetre fly rises, a world-space minimum trail width can become a broad stripe at close zoom. Trail ribbons now ask the shared camera to offset each edge by pixels at that endpoint's depth. Their centre follows the recorded three-dimensional path, including pure ascent/descent; a depth bias keeps ground cues readable without the old12mm height lift. The plan required readable white trails but did not select this representation. This removes world-size clamps and a second projection estimate while retaining depth-tested world geometry, bounded history and the existing1.5px target width.
+
+## Authored food geometry preparation — 2026-09-07
+
+### Sound — medium confidence: preserve exported coordinates exactly through JSON
+
+When Blender exports a vertex, the browser reads its binary coordinate. Rust reads a generated text copy for contact queries. Its default JSON parser changed the final binary digit of some coordinates, so the two sides did not receive precisely the same surface. Enable the existing JSON library's exact floating-point parsing feature rather than weakening the equality check. The plan required shared geometry but did not specify parsing mode. This applies to core JSON inputs and constrains future asset baking to preserve their numeric values; no new library is added. The cost is the parser's exact conversion work during loading, with no extra per-tick conversion.

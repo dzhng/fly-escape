@@ -1,16 +1,8 @@
 //! Fixed geometry and core-computed support poses for the model workbench, not an attempt.
-use parry3d_f64::shape::Ball;
 use sim::surface::{support_rotation, ContactScene, ContactSurface};
 fn main() {
-    let (vertices, triangles) = Ball::new(0.04).to_trimesh(32, 16);
-    let surface = ContactSurface {
-        id: 7,
-        vertices: vertices
-            .into_iter()
-            .map(|v| [v.x, v.y + 0.04, v.z])
-            .collect(),
-        triangles,
-    };
+    let surface: ContactSurface =
+        serde_json::from_str(include_str!("../../../assets/food/apple/contact.json")).unwrap();
     let scene = ContactScene::new(std::slice::from_ref(&surface)).unwrap();
     let cases: Vec<_> = [-0.03, -0.015, 0., 0.015, 0.03]
         .into_iter()

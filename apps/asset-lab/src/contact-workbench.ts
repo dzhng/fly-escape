@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import appleUrl from '../../../assets/food/apple/apple.glb?url';
 import { WorldView, loadFlyModel } from '@fly-escape/game-renderer';
 import data from '../../../assets/proportions/contact-fixture.json';
 import flyUrl from '../../../assets/fly/fly.glb?url';
@@ -6,7 +8,7 @@ import flyUrl from '../../../assets/fly/fly.glb?url';
 /** Fixed core query output isolates model attachment from neural motion and food behavior. */
 export async function contactWorkbench() {
   const app = document.querySelector<HTMLDivElement>('#app')!;
-  app.innerHTML = `<header><div><p>Diagnostic · surface attachment</p><h1>A fly on a curved surface</h1></div><a href="?">Fly workbench</a></header><main><div class="world"></div><aside><h2>Native contact pose</h2><p>Fixed Rust contact queries, not a game attempt. The mesh and contact points come from the same geometry. This checks attachment only; food behavior and final fruit art remain separate.</p><label>Surface position <select id="sample">${data.cases.map((_, i) => `<option value="${i}"${i === 4 ? ' selected' : ''}>Sample ${i + 1}</option>`).join('')}</select></label><label>Attachment <select id="attachment"><option value="supported">Surface aligned</option><option value="upright">Upright comparison</option></select></label><label>Animation <select id="clip"><option>Static</option><option>Walk</option><option>Feed</option><option>Land</option></select></label><label>Clip time <input id="time" type="range" min="0" max="2" step="0.025" value="0"></label><nav><button data-view="follow">Follow</button><button data-view="close">Extra close</button><button data-view="overview">Overview</button></nav><p id="contact-state"></p></aside></main>`;
+  app.innerHTML = `<header><div><p>Diagnostic · surface attachment</p><h1>A fly on an authored apple</h1></div><a href="?">Fly workbench</a></header><main><div class="world"></div><aside><h2>Native contact pose</h2><p>Fixed Rust contact queries, not a game attempt. The visible Blender apple and core contact queries use identical exported triangles. This checks attachment only; food behavior and final fruit art remain separate.</p><label>Surface position <select id="sample">${data.cases.map((_, i) => `<option value="${i}"${i === 4 ? ' selected' : ''}>Sample ${i + 1}</option>`).join('')}</select></label><label>Attachment <select id="attachment"><option value="supported">Surface aligned</option><option value="upright">Upright comparison</option></select></label><label>Animation <select id="clip"><option>Static</option><option>Walk</option><option>Feed</option><option>Land</option></select></label><label>Clip time <input id="time" type="range" min="0" max="2" step="0.025" value="0"></label><nav><button data-view="follow">Follow</button><button data-view="close">Extra close</button><button data-view="overview">Overview</button></nav><p id="contact-state"></p></aside></main>`;
   const world = app.querySelector<HTMLElement>('.world')!;
   const view = new WorldView(world, {
     rooms: [{ id: 1, min: { x: -0.5, z: -0.5 }, max: { x: 0.5, z: 0.5 } }],
@@ -20,18 +22,26 @@ export async function contactWorkbench() {
   );
   floor.position.y = -0.005;
   scene.add(floor);
-  const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute(
-    'position',
-    new THREE.Float32BufferAttribute(data.surface.vertices.flat(), 3),
-  );
-  geometry.setIndex(data.surface.triangles.flat());
-  geometry.computeVertexNormals();
-  const fruit = new THREE.Mesh(
-    geometry,
-    new THREE.MeshStandardMaterial({ color: 0x888888, roughness: 0.7 }),
-  );
-  fruit.castShadow = fruit.receiveShadow = true;
+  const { scene: fruit } = await new GLTFLoader().loadAsync(appleUrl);
+  fruit.updateMatrixWorld(true);
+  const vertices: number[][] = [];
+  const triangles: number[][] = [];
+  fruit.traverse(object => {
+    if (!(object instanceof THREE.Mesh)) return;
+    const offset = vertices.length;
+    const positions = object.geometry.getAttribute('position');
+    for (let i = 0; i < positions.count; i++)
+      vertices.push(new THREE.Vector3().fromBufferAttribute(positions, i)
+        .applyMatrix4(object.matrixWorld).toArray());
+    const index = object.geometry.index;
+    const count = index?.count ?? positions.count;
+    for (let i = 0; i < count; i += 3)
+      triangles.push([0, 1, 2].map(j => offset + (index ? index.getX(i + j) : i + j)));
+    object.castShadow = object.receiveShadow = true;
+  });
+  if (JSON.stringify(vertices) !== JSON.stringify(data.surface.vertices) ||
+      JSON.stringify(triangles) !== JSON.stringify(data.surface.triangles))
+    throw new Error('Apple GLB differs from the core contact fixture. Regenerate its contact export.');
   scene.add(fruit);
   view.setHousePart('floor', scene);
   const model = await loadFlyModel(await (await fetch(flyUrl)).arrayBuffer());
@@ -80,6 +90,7 @@ export async function contactWorkbench() {
     const camera = view.cameraState;
     app.dataset.report = JSON.stringify({
       camera,
+      surfaceTriangles: triangles.length,
       position: model.root.position.toArray(),
       rotation: model.root.quaternion.toArray(),
       sample: Number(control('sample').value),

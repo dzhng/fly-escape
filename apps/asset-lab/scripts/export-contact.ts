@@ -1,0 +1,50 @@
+/** Bake a static Blender GLB into the exact metre-space triangles queried by Rust. */
+import { readFile, writeFile } from 'node:fs/promises';
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+const [input, output] = process.argv.slice(2);
+if (!input || !output) throw new Error('Usage: bun apps/asset-lab/scripts/export-contact.ts input.glb output.json');
+const bytes = await readFile(input);
+const gltf = await new GLTFLoader().parseAsync(
+  bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '',
+);
+if (gltf.scenes.length !== 1 || gltf.animations.length)
+  throw new Error('Contact assets require one static scene. Export only the active Blender scene.');
+gltf.scene.updateMatrixWorld(true);
+const vertices: number[][] = [];
+const triangles: number[][] = [];
+const point = new THREE.Vector3();
+gltf.scene.traverse(object => {
+  if (object instanceof THREE.Camera || object instanceof THREE.Light)
+    throw new Error('Contact assets cannot include cameras or lights.');
+  if (!(object instanceof THREE.Mesh)) return;
+  if (object instanceof THREE.SkinnedMesh || Object.keys(object.geometry.morphAttributes).length)
+    throw new Error('Contact assets cannot deform.');
+  if (object.matrixWorld.determinant() <= 0)
+    throw new Error('Apply reflected or singular object transforms before exporting contact geometry.');
+  const positions = object.geometry.getAttribute('position');
+  const offset = vertices.length;
+  for (let i = 0; i < positions.count; i++) {
+    point.fromBufferAttribute(positions, i).applyMatrix4(object.matrixWorld);
+    if (!point.toArray().every(v => Number.isFinite(v) && Math.abs(v) <= 1e6))
+      throw new Error('Contact vertices must be bounded finite metres.');
+    vertices.push(point.toArray());
+  }
+  const index = object.geometry.index;
+  const count = index?.count ?? positions.count;
+  if (count % 3) throw new Error('Contact mesh must contain complete triangles.');
+  for (let i = 0; i < count; i += 3) {
+    const face = [0, 1, 2].map(j => offset + (index ? index.getX(i + j) : i + j));
+    if (face.some(i => !Number.isInteger(i) || i < offset || i >= vertices.length))
+      throw new Error('Contact triangle index is outside its mesh.');
+    const [a, b, c] = face.map(i => new THREE.Vector3().fromArray(vertices[i]));
+    if (b.sub(a).cross(c.sub(a)).lengthSq() <= Number.EPSILON / 1e12)
+      throw new Error('Contact triangle has numerically unresolvable area.');
+    triangles.push(face);
+  }
+});
+if (!vertices.length || vertices.length > 262144 || !triangles.length || triangles.length > 524288)
+  throw new Error('Contact mesh exceeds the core vertex/triangle bounds.');
+await writeFile(output, JSON.stringify({ id: 0, vertices, triangles }) + '\n');
+console.log(JSON.stringify({ input, output, vertices: vertices.length, triangles: triangles.length }));
