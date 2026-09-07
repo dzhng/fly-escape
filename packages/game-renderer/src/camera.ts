@@ -43,6 +43,7 @@ export class WorldCamera {
     this.apply();
   }
   overview() {
+    this.backward.set(1, 1.8, 1).normalize();
     this.overviewMode = true;
     this.followed = false;
     this.target.copy(this.bounds.getCenter(new THREE.Vector3()));
@@ -50,10 +51,20 @@ export class WorldCamera {
     this.apply();
   }
   follow(position: THREE.Vector3) {
+    this.backward.set(1, 1.8, 1).normalize();
     this.overviewMode = false;
     this.followed = true;
     this.target.copy(position);
     this.distance = this.closeDistance;
+    this.apply();
+  }
+  /** Named diagnostic views only; ordinary navigation restores the game elevation. */
+  inspect(position: THREE.Vector3, distance: number, viewpoint: "rts" | "mounting" = "rts") {
+    this.backward.set(1, viewpoint === "mounting" ? 0.35 : 1.8, 1).normalize();
+    this.overviewMode = false;
+    this.followed = false;
+    this.target.copy(position);
+    this.distance = THREE.MathUtils.clamp(distance, this.closeDistance / 2, this.requiredFit(position));
     this.apply();
   }
   track(position: THREE.Vector3) {

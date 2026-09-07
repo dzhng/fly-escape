@@ -92,3 +92,31 @@ test("zoom compensation grows continuously at wide views and retains native clos
   camera.zoomClose();
   expect(camera.displayScale(0.00386)).toBe(1);
 });
+
+test("inspection focus preserves fixed camera orientation and ignores fly tracking", () => {
+  const camera = new WorldCamera(new THREE.Box3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(4, 2.6, 4)), 0.003);
+  camera.resize(1120, 900);
+  camera.inspect(new THREE.Vector3(2.5, 1.51, 0.14), 0.864);
+  const state = camera.state;
+  camera.track(new THREE.Vector3(3, 0, 2));
+  expect(camera.state).toEqual(state);
+  expect(camera.project({ x: 2.5, y: 1.51, z: 0.14 }).x).toBeCloseTo(560);
+  expect(camera.project({ x: 2.5, y: 1.51, z: 0.14 }).y).toBeCloseTo(450);
+});
+
+test("diagnostic mounting elevation never leaks into follow or Overview", () => {
+  const camera = new WorldCamera(new THREE.Box3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(4, 2.6, 4)), 0.003);
+  camera.resize(1120, 900);
+  const ordinary = camera.camera.quaternion.clone();
+  const subject = new THREE.Vector3(2.5, 1.51, 0.14);
+  camera.inspect(subject, 0.864, "mounting");
+  expect(camera.camera.quaternion.angleTo(ordinary)).toBeGreaterThan(0.5);
+  camera.follow(subject);
+  expect(camera.camera.quaternion.angleTo(ordinary)).toBeLessThan(1e-7);
+  camera.inspect(subject, 0.864, "mounting");
+  camera.overview();
+  expect(camera.camera.quaternion.angleTo(ordinary)).toBeLessThan(1e-7);
+  camera.inspect(subject, 0.864, "mounting");
+  camera.inspect(subject, 0.864);
+  expect(camera.camera.quaternion.angleTo(ordinary)).toBeLessThan(1e-7);
+});

@@ -1,6 +1,7 @@
+import { houseInspection } from "./house-inspection";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { WorldView, loadFlyModel, flyAnimation, loadHouseAssets } from "@fly-escape/game-renderer";
+import { WorldView, loadFlyModel, flyAnimation, loadHouseAssets, disposeObjectResources } from "@fly-escape/game-renderer";
 import { AttemptClient, FrameArchive, type AttemptInfo, type Geometry } from "@fly-escape/sim-client";
 import spec from "../../../assets/proportions/scale.json";
 import flyUrl from "../../../assets/fly/fly.glb?url";
@@ -9,20 +10,34 @@ import floorUrl from "../../../assets/proportions/neutral-floor.glb?url";
 /** Scale diagnostic using native furnishings with a neutral room composite. */
 export async function proportionsWorkbench() {
   const app = document.querySelector<HTMLDivElement>("#app")!;
-  app.innerHTML = `<header><div><p>Diagnostic · proportions only</p><h1>A fly in a human room</h1></div><a href="?">Fly workbench</a></header><main><div class="world"></div><aside><h2>1 world unit = 1 metre</h2><p>Neutral geometry; house materials and composition are unfinished. Furniture envelopes are core solids. Fruit and window are visual-only: feeding/contact is unvalidated.</p><label>Recorded subject <select id="subject">${Array.from({ length: 20 }, (_, i) => `<option value="${i}"${i === 5 ? " selected" : ""}>Fly ${i + 1}${i === 5 ? " · clear floor" : i === 0 ? " · beside apple" : ""}</option>`).join("")}</select></label><nav><button data-view="context">Context</button><button data-view="follow">Follow</button><button data-view="close">Extra close</button><button data-view="overview">Overview</button></nav><p role="status" id="proportion-status">Loading physical-size fly and recording 20 real neural bodies…</p><label>Recorded tick <input id="recorded-tick" type="range" min="0" max="40" value="0" step="1"></label><p id="scale-sheet"></p><p id="camera-measures"></p><p>Room 4 × 4 × 2.6 m; doorway 0.9 × 2.1 m; cabinet 1.2 × 0.45 × 0.85 m; seat envelope 1.9 × 0.85 × 0.85 m; pot envelope 0.3 × 0.3 × 0.4 m. Apple Ø80 mm; banana 180 mm.</p><p><strong>Physical dimensions:</strong> native 3 mm model and measured collision/sensory dimensions. Food surface contact remains unvalidated. Fields are planar; the measurements expose their horizontal sample positions.</p></aside></main>`;
+  app.innerHTML = `<header><div><p>Diagnostic · proportions only</p><h1>A fly in a human room</h1></div><a href="?">Fly workbench</a></header><main><div class="world"></div><aside><h2>1 world unit = 1 metre</h2><p>Neutral geometry; house materials and composition are unfinished. Furniture envelopes are core solids. Fruit and window are visual-only: feeding/contact is unvalidated.</p><label>Recorded subject <select id="subject">${Array.from({ length: 20 }, (_, i) => `<option value="${i}"${i === 5 ? " selected" : ""}>Fly ${i + 1}${i === 5 ? " · clear floor" : i === 0 ? " · beside apple" : ""}</option>`).join("")}</select></label><nav><button data-view="context">Context</button><button data-view="follow">Follow</button><button data-view="close">Extra close</button><button data-view="overview">Overview</button></nav><p role="status" id="proportion-status">Loading physical-size fly and recording 20 real neural bodies…</p><label>Recorded tick <input id="recorded-tick" type="range" min="0" max="40" value="0" step="1"></label><p id="scale-sheet"></p><p id="camera-measures"></p><p>Room 4 × 4 × 2.6 m; doorway 0.9 × 2.1 m; cabinet 1.2 × 0.45 × 0.85 m; seat envelope 1.9 × 0.85 × 0.85 m; pot envelope 0.3 × 0.3 × 0.4 m. Proxy apple Ø80 mm; proxy banana 180 mm.</p><p><strong>Physical dimensions:</strong> native 3 mm model and measured collision/sensory dimensions. Food surface contact remains unvalidated. Fields are planar; the measurements expose their horizontal sample positions.</p></aside></main>`;
   const world = app.querySelector<HTMLElement>(".world")!;
   const view = new WorldView(world, spec.geometry as Geometry, 20);
-  await loadHouseAssets(view, () => true, ["cabinet", "sofa"]);
+  let alive = true;
+  let stopInspection = () => {};
+  let client: AttemptClient | undefined;
+  addEventListener("pagehide", () => { alive = false; stopInspection(); client?.dispose(); view.dispose(); }, { once: true });
+  await loadHouseAssets(view, () => alive, ["cabinet", "sofa"]);
+  if (!alive) return;
   let selected = 5;
   view.enableSelection(id => { selected = id; app.querySelector<HTMLSelectElement>("#subject")!.value = String(id); view.selectFly(id); });
   // This one-room composition uses the existing scene owner, without relaxing any GLB kit bounds.
   const { scene: floor } = await new GLTFLoader().parseAsync(await (await fetch(floorUrl)).arrayBuffer(), "");
+  if (!alive) { disposeObjectResources(floor); return; }
+  // The prepared inspection model owns window appearance; the composite supplies floor/food context.
+  const windowProxies: THREE.Object3D[] = [];
+  floor.traverse(object => { if (object.name.startsWith("Window")) windowProxies.push(object); });
+  for (const proxy of windowProxies) { proxy.removeFromParent(); }
+  // The original composite shares its neutral material; only removed geometry is retired here.
+  for (const proxy of windowProxies) if (proxy instanceof THREE.Mesh) proxy.geometry.dispose();
   view.setHousePart("floor", floor);
+  stopInspection = houseInspection(view, app.querySelector("aside")!);
   const wall = new THREE.Group();
   const panel = new THREE.Mesh(new THREE.BoxGeometry(1, spec.wallHeight, 0.12), new THREE.MeshStandardMaterial());
   panel.position.y = spec.wallHeight / 2; panel.castShadow = panel.receiveShadow = true; wall.add(panel);
   view.setHousePart("wall", wall);
   const native = await loadFlyModel(await (await fetch(flyUrl)).arrayBuffer());
+  if (!alive) { native.dispose(); return; }
   native.root.updateMatrixWorld(true);
   const body = new THREE.Box3();
   native.root.traverse(object => { if (/^(Head|Thorax|Abdomen)/.test(object.name)) body.union(new THREE.Box3().setFromObject(object)); });
@@ -64,18 +79,18 @@ export async function proportionsWorkbench() {
   app.querySelector<HTMLInputElement>("#recorded-tick")!.oninput = event => {
     tick = Math.min(Number((event.target as HTMLInputElement).value), archive?.computedTick ?? 0); pose();
   };
-  const client = new AttemptClient(reply => {
+  client = new AttemptClient(reply => {
     if (reply.type === "ready") { info = reply.info; archive = new FrameArchive(info.spec, info.recordLayout, info.archiveBytes, info.initialBodies); pose(); }
     else if (reply.type === "frames") archive!.append(reply.chunk);
     else if (reply.type === "error") { app.querySelector("#proportion-status")!.textContent = reply.message; app.dataset.error = reply.message; }
     else if (reply.type === "complete") { app.dataset.ready = "true"; app.querySelector("#proportion-status")!.textContent = "40 recorded ticks · 20 real-connectome flies · fixed diagnostic start · no path rescaling"; }
   });
   const fixture = await client.setup({ type: "fixture" });
+  if (!alive) return;
   const level = structuredClone(fixture.level);
   Object.assign(level, { id: "neutral-proportions-diagnostic", geometry: spec.geometry, spawn: { kind: "fixed", states: initial.map(pose => ({ pose, mode: "walking" })) }, durationTicks: 40, sources: [], food: [], zappers: [], exitCue: null, exit: { a: spec.geometry.walls[3].b, b: spec.geometry.walls[4].a, outward: { x: 1, z: 0 } } });
   client.start({ attemptId: "proportions-19", rootSeed: "1901", flyCount: 20, level, tuning: fixture.tuning, placements: [] });
   app.querySelector("#scale-sheet")!.textContent = `Native authored body ${(nativeBodyLength * 1000).toFixed(1)} mm. Full fly bounds ${(modelSize.x * 1000).toFixed(2)} × ${(modelSize.y * 1000).toFixed(2)} × ${(modelSize.z * 1000).toFixed(2)} mm. Apple/body diameter ratio ${(0.08 / spec.flyBodyLength).toFixed(1)}:1.`;
-  let alive = true;
   function draw() {
     if (!alive) return;
     view.render();
@@ -89,5 +104,4 @@ export async function proportionsWorkbench() {
     requestAnimationFrame(draw);
   }
   draw();
-  addEventListener("pagehide", () => { alive = false; client.dispose(); view.dispose(); }, { once: true });
 }

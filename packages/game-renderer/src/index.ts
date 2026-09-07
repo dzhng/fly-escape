@@ -6,7 +6,7 @@ export type { PlacementKind } from "./placement-models";
 import { FlyTrails, type TrailPoint } from "./trails";
 export { recordedTrails } from "./trails";
 import { HouseGeometry, cutAwayOccluders, type HouseAsset } from "./house";
-export { loadHousePart } from "./house";
+export { loadHousePart, loadStaticHouseModel } from "./house";
 export { loadHouseAssets } from "./house-assets";
 export type { HousePart, HouseAsset } from "./house";
 import { FlyMotion, type FlyAnimation } from "./fly-motion";
@@ -14,6 +14,7 @@ export { flyAnimation, interpolateRotation } from "./fly-motion";
 export type { FlyAnimation } from "./fly-motion";
 import { FlyModel } from "./fly-model";
 import { disposeObjectResources } from "./resources";
+export { disposeObjectResources } from "./resources";
 export { loadFlyModel, FlyModel } from "./fly-model";
 import { WorldCamera } from "./camera";
 import { cameraInput } from "./camera-input";
@@ -50,6 +51,7 @@ export interface FlyPose {
 /** A presentation-only fixture. The caller owns pose sampling and frame scheduling. */
 export class WorldView {
   private readonly scene = new THREE.Scene();
+  private inspectionModel?: THREE.Group;
   private spawnArea: THREE.LineLoop<THREE.BufferGeometry, THREE.LineBasicMaterial> | null = null;
   private readonly placementModels = new PlacementModels();
   private readonly trails: FlyTrails;
@@ -189,6 +191,20 @@ export class WorldView {
     cutAwayOccluders(this.house.solids);
     this.bounds.max.y = Math.max(1, new THREE.Box3().setFromObject(this.house.root).max.y);
     this.navigation.resize(this.container.clientWidth, this.container.clientHeight);
+  }
+
+  /** Diagnostic appearance only: no core occupancy, cutaway, palette or placement semantics. */
+  setInspectionModel(source?: THREE.Group): void {
+    if (this.inspectionModel) {
+      this.scene.remove(this.inspectionModel);
+      disposeObjectResources(this.inspectionModel);
+    }
+    this.inspectionModel = source;
+    if (source) this.scene.add(source);
+  }
+
+  inspectModel(bounds: THREE.Box3, distance: number, viewpoint: "rts" | "mounting" = "rts"): void {
+    this.navigation.inspect(bounds.getCenter(new THREE.Vector3()), distance, viewpoint);
   }
 
   /** Takes ownership of the model and all its shared resources. */

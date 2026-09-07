@@ -11,31 +11,40 @@ const PART_BOUNDS = {
   wall: [-0.5, 0, -0.06, 0.5, 0.6, 0.06],
   floor: [-0.5, -0.25, -0.5, 0.5, 0, 0.5],
   solid: [-0.5, 0, -0.5, 0.5, 1, 0.5],
-};
+} as const;
 
-/** Replacement bounds keep the native pivot and declared world scale. */
-export async function loadHousePart(bytes: ArrayBuffer, part: HouseAsset) {
+/** Catalogue placement contracts stay separate from static GLB validation. */
+export function loadHousePart(bytes: ArrayBuffer, part: HouseAsset) {
+  const expected = part in PART_BOUNDS ? PART_BOUNDS[part as HousePart] : (() => {
+    const [x, y, z] = catalog[part as FurnitureModel];
+    return [-x / 2, 0, -z / 2, x / 2, y, z / 2] as const;
+  })();
+  return loadStaticHouseModel(bytes, {
+    name: part, bounds: expected, tolerance: part in PART_BOUNDS ? 0.001 : 1e-6,
+    castShadow: part !== "floor",
+  });
+}
+
+/** Native inspection uses this same loader without registering a physical furnishing. */
+export async function loadStaticHouseModel(bytes: ArrayBuffer, contract: {
+  name: string; bounds: readonly [number, number, number, number, number, number]; tolerance?: number; castShadow?: boolean;
+}) {
   const gltf = await new GLTFLoader().parseAsync(bytes, "");
   try {
     const box = new THREE.Box3().setFromObject(gltf.scene);
     const bounds = [...box.min, ...box.max];
-    const expected = part in PART_BOUNDS ? PART_BOUNDS[part as HousePart] : (() => {
-      const [x, y, z] = catalog[part as FurnitureModel];
-      return [-x / 2, 0, -z / 2, x / 2, y, z / 2];
-    })();
-    const tolerance = part in PART_BOUNDS ? 0.001 : 1e-6;
-    if (gltf.animations.length || bounds.some((v, i) => !Number.isFinite(v) || Math.abs(v - expected[i]) > tolerance))
-      throw new Error(`${part} must be static and preserve its kit bounds and pivot.`);
+    if (gltf.animations.length || bounds.some((v, i) => !Number.isFinite(v) || Math.abs(v - contract.bounds[i]) > (contract.tolerance ?? 1e-6)))
+      throw new Error(`${contract.name} must be static and preserve its kit bounds and pivot.`);
     let triangles = 0;
     gltf.scene.traverse((object) => {
       if (!(object instanceof THREE.Mesh)) return;
       if (object instanceof THREE.SkinnedMesh) throw new Error("House parts must be static meshes.");
       triangles += (object.geometry.index?.count ?? object.geometry.attributes.position?.count ?? 0) / 3;
-      object.castShadow = part !== "floor";
+      object.castShadow = contract.castShadow ?? true;
       object.receiveShadow = true;
     });
     if (triangles <= 0 || triangles > 20_000) throw new Error("House part must contain 1–20,000 triangles.");
-    return { root: gltf.scene, dispose: () => disposeObjectResources(gltf.scene) };
+    return { root: gltf.scene, bounds: box, triangles, dispose: () => disposeObjectResources(gltf.scene) };
   } catch (error) {
     disposeObjectResources(gltf.scene);
     throw error;

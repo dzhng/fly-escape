@@ -120,3 +120,23 @@ test("native furnishings match core footprints through rotation and independent 
   checkBounds();
   await expect(loadHousePart(sofaBytes, "cabinet")).rejects.toThrow("bounds");
 });
+
+test("prepared household shapes retain native envelopes and reject mismatched replacements", async () => {
+  const { loadStaticHouseModel } = await import("./house");
+  const cases = [
+    ["window", 1.4, 1.1, 0.08], ["sconce", 0.22, 0.32, 0.16], ["plant", 0.3, 1.05, 0.3],
+  ] as const;
+  for (const [key, x, y, z] of cases) {
+    const bytes = await Bun.file(new URL(`../../../assets/house/${key}/${key}.glb`, import.meta.url)).arrayBuffer();
+    const model = await loadStaticHouseModel(bytes, { name: key, bounds: [-x / 2, 0, -z / 2, x / 2, y, z / 2] });
+    expect(model.root.scale.toArray()).toEqual([1, 1, 1]);
+    expect(model.bounds.min.y).toBeCloseTo(0, 6);
+    const resources = new Set<THREE.BufferGeometry>();
+    model.root.traverse(object => { if (object instanceof THREE.Mesh) resources.add(object.geometry); });
+    let retired = 0;
+    for (const geometry of resources) geometry.addEventListener("dispose", () => retired++);
+    model.dispose();
+    expect(retired).toBe(resources.size);
+    await expect(loadStaticHouseModel(bytes, { name: key, bounds: [-x, 0, -z, x, y, z] })).rejects.toThrow("bounds");
+  }
+});
