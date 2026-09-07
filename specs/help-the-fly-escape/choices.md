@@ -505,3 +505,14 @@ and self-overlap, then discards that inspection mesh. The plan required geometry
 integrity but left that inspection method open. The authored and exported models
 retain their exact vertices; this validation tolerance does not become collision
 clearance or an automatic asset repair.
+
+## Plant shape refinement — 2026-09-07
+
+### Sound — medium confidence: bury leaf bases slightly in the authored soil
+
+When viewing the plant close up, each leaf now enters the visible soil by 1 mm
+instead of ending above it. The plan specified a realistic houseplant but left
+this attachment detail open. This makes the leaf and soil look connected while
+preserving separate editable meshes. It is an art overlap, not a fly collision
+allowance; foliage and recessed-soil contact still need their own integration.
+The sparse blade arrangement and softened planter rim are delegated shape work.
