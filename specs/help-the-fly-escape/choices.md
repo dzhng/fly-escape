@@ -310,3 +310,17 @@ The query-only Parry dependency is now adopted in sim, with the proven internal 
 ### Supported model orientation (slice20 component) — sound, high confidence
 
 When a fly rests on a slope, the core exports the model rotation as four quaternion components. The renderer applies that rotation to the model, its selection ring and followed centre instead of independently deriving slope angles. The plan required matching support normals without selecting the transport representation. This gives collision and display the same native asset orientation; future recorded supported poses must use this owner. Fixed query output in the workbench is diagnostic evidence only and does not replace a recorded attempt.
+
+### Physical floor landing (slice20 component) — sound, medium confidence
+
+A neural landing pulse now begins an airborne descent instead of instantly declaring the body grounded while its animation is still above the floor. Landing retains the flight steering and energy cost until touchdown; only then can the next neural/body step start feeding. The plan required physical contact but did not specify the intermediate mode or vertical speed. The provisional envelope retains the former0.6m visual flight height and0.8s full descent duration, using linear0.75m/s ascent/descent. These are game-model values, not biological measurements. This changes timing and potentially campaign outcomes; final level calibration must use the new body behavior. Adjusting this envelope belongs to the core, never a second renderer-height rule.
+
+Record schema2 carries native height as a64-bit value and adds Landing to its mode table. A paused or rewound fly and its white trail read the same height; animation moves limbs only. The old schema is rejected because this unshipped game has no saved-replay compatibility requirement. Setup shows the authored spawn area without manufacturing fixed-state fly heights before an attempt exists.
+
+### Meal diagnostic runway (slice20 component) — sound, high confidence
+
+The floor meal probe now includes0.3m more food radius because a fly can travel up to0.272m horizontally during the newly physical full descent. With the old patch, the original seed began landing over food but touched down past its edge and starved without a meal. The plan did not specify how controlled probes adapt when contact timing changes. Both ordinary and proboscis-silenced arms keep the same enlarged patch, seed and gains; the unchanged gate still requires a real meal, later contact loss and starvation, and no meal under silencing. This is controlled flat diagnostic content, not the size of a campaign fruit or final level evidence.
+
+### Native-scale and vertical trails (slice20 integration) — sound, high confidence
+
+When a millimetre fly rises, a world-space minimum trail width can become a broad stripe at close zoom. Trail ribbons now ask the shared camera to offset each edge by pixels at that endpoint's depth. Their centre follows the recorded three-dimensional path, including pure ascent/descent; a depth bias keeps ground cues readable without the old12mm height lift. The plan required readable white trails but did not select this representation. This removes world-size clamps and a second projection estimate while retaining depth-tested world geometry, bounded history and the existing1.5px target width.

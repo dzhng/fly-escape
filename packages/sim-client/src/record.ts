@@ -23,15 +23,14 @@ export type RecordedPose = {
   tick: number;
   x: number;
   z: number;
+  height: number;
   inputX: number;
   inputZ: number;
   mode: BodyMode;
   terminal: boolean;
-  motion: RecordedMotion;
 };
 export type RecordedMotion = {
   mode: BodyMode;
-  previousMode: BodyMode;
   startedTick: number;
   cursorTick: number;
 };
@@ -74,14 +73,14 @@ export class FrameArchive {
       integer(spec.durationTicks) &&
       spec.durationTicks >= 1 &&
       spec.durationTicks <= 6000, "Invalid attempt horizon");
-    require(layout.schemaVersion === 1 &&
+    require(layout.schemaVersion === 2 &&
       layout.groupIds.length <= 16, "Unsupported record layout");
     require(initialBodies.length === spec.flyCount &&
       initialBodies.every(
         (b) =>
           (b.mode === "walking" || b.mode === "flying") &&
           b.outcome === null &&
-          [b.pose.position.x, b.pose.position.z, b.pose.heading, b.reserve].every(
+          [b.pose.position.x, b.pose.position.z, b.pose.heading, b.reserve, b.height].every(
             Number.isFinite,
           ) &&
           b.reserve >= 0,
@@ -124,6 +123,7 @@ export class FrameArchive {
       "rightExitCue",
       "windX",
       "windZ",
+      "height",
     ])
       require(name in this.valueOffsets, `Missing record field ${name}`);
     for (const name of ["mode", "outcome", "presence", "spikeCount"])
@@ -263,10 +263,10 @@ export class FrameArchive {
     const tick = Math.floor(cursorTick);
     if (tick < this.motionTick || this.motionCache.length === 0) {
       this.motionTick = 0;
-      this.motionCache = new Uint16Array(this.spec.flyCount * 4);
+      this.motionCache = new Uint16Array(this.spec.flyCount * 3);
 
       for (let id = 0; id < this.spec.flyCount; id++) {
-        this.motionCache[id * 4] = this.motionCache[id * 4 + 1] = this.layout.modes.indexOf(
+        this.motionCache[id * 3] = this.layout.modes.indexOf(
           this.initialBodies[id].mode,
         );
       }
@@ -287,15 +287,14 @@ export class FrameArchive {
             const offset =
               ((t - chunk.startTick) * chunk.flyCount + id) * this.layout.stateFields.length;
             const mode = chunk.states[offset + this.stateOffsets.mode];
-            const base = id * 4;
-            if (this.motionCache[base + 3] !== 0) continue;
+            const base = id * 3;
+            if (this.motionCache[base + 2] !== 0) continue;
             if (mode !== this.motionCache[base]) {
-              this.motionCache[base + 1] = this.motionCache[base];
               this.motionCache[base] = mode;
-              this.motionCache[base + 2] = t;
+              this.motionCache[base + 1] = t;
             }
             if (this.layout.outcomes[chunk.states[offset + this.stateOffsets.outcome]] !== null)
-              this.motionCache[base + 3] = t;
+              this.motionCache[base + 2] = t;
           }
         }
         if (end === tick) break;
@@ -303,10 +302,9 @@ export class FrameArchive {
       this.motionTick = tick;
     }
     return Array.from({ length: this.spec.flyCount }, (_, id) => ({
-      mode: this.layout.modes[this.motionCache[id * 4]],
-      previousMode: this.layout.modes[this.motionCache[id * 4 + 1]],
-      startedTick: this.motionCache[id * 4 + 2],
-      cursorTick: this.motionCache[id * 4 + 3] || cursorTick,
+      mode: this.layout.modes[this.motionCache[id * 3]],
+      startedTick: this.motionCache[id * 3 + 1],
+      cursorTick: this.motionCache[id * 3 + 2] || cursorTick,
     }));
   }
 
@@ -318,12 +316,6 @@ export class FrameArchive {
       windowTicks <= 40, "Pose window exceeds 40 ticks");
     const histories: RecordedPose[][] = Array.from({ length: this.spec.flyCount }, () => []);
     const start = Math.max(1, endTick - windowTicks + 1);
-    const motions: RecordedMotion[] = Array.from({ length: this.spec.flyCount }, () => ({
-      mode: "walking",
-      previousMode: "walking",
-      startedTick: 0,
-      cursorTick: 0,
-    }));
     for (const chunk of this.chunks) {
       const end = Math.min(endTick, chunk.startTick + chunk.tickCount - 1);
       if (end < start) continue;
@@ -334,23 +326,14 @@ export class FrameArchive {
           const base = record * this.valueStride;
           const state = record * this.layout.stateFields.length;
           const mode = this.layout.modes[chunk.states[state + this.stateOffsets.mode]];
-          const motion = motions[id];
-          if (tick === start && start > 1) {
-            motion.mode = motion.previousMode = mode;
-          } else if (mode !== motion.mode) {
-            motion.previousMode = motion.mode;
-            motion.mode = mode;
-            motion.startedTick = tick;
-          }
-          motion.cursorTick = tick;
           histories[id].push({
             tick,
             x: chunk.values[base + this.valueOffsets.x],
             z: chunk.values[base + this.valueOffsets.z],
+            height: chunk.values[base + this.valueOffsets.height],
             inputX: chunk.values[base + this.valueOffsets.inputX],
             inputZ: chunk.values[base + this.valueOffsets.inputZ],
             mode,
-            motion: { ...motion },
             terminal:
               this.layout.outcomes[chunk.states[state + this.stateOffsets.outcome]] !== null,
           });
@@ -443,6 +426,7 @@ export class FrameArchive {
           heading: v("inputHeading"),
         },
         body: {
+          height: v("height"),
           pose: { position: { x: v("x"), z: v("z") }, heading: v("heading") },
           mode: this.layout.modes[s("mode")],
           reserve: v("reserve"),

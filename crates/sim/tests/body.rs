@@ -215,7 +215,16 @@ fn takeoff_and_landing_require_their_neural_readouts_and_flight_cannot_feed() {
             spike_fraction: 0.5,
         },
     ]);
+    let airborne_reserve = b.state().reserve;
     b.step(&command, &world, Point::default(), 0.1, 3).unwrap();
+    assert_eq!(b.state().mode, BodyMode::Landing);
+    assert!(b.state().height > 0.);
+    assert!(!b.contacts(&world).food);
+    assert!(b.state().reserve < airborne_reserve);
+    b.step(&command, &world, Point::default(), 0.1, 4).unwrap();
+    assert_eq!(b.state().mode, BodyMode::Walking);
+    assert_eq!(b.state().height, 0.);
+    b.step(&command, &world, Point::default(), 0.1, 5).unwrap();
     assert_eq!(b.state().mode, BodyMode::Feeding);
     assert!(b.contacts(&world).food);
 }
@@ -441,4 +450,52 @@ fn tonic_voltage_without_spikes_does_not_initiate_feeding_or_landing() {
     b.step(&quiet, &world, Point::default(), 0.1, 2).unwrap();
     b.step(&quiet, &world, Point::default(), 0.1, 3).unwrap();
     assert_eq!(b.state().mode, BodyMode::Flying);
+}
+
+#[test]
+fn airborne_landing_is_latched_and_terminal_height_freezes_at_the_actual_time() {
+    let g = geometry();
+    let foods = [ContactRegion {
+        center: Point { x: 2., z: 2. },
+        radius: 1.,
+    }];
+    let world = BodyWorld::new(&g, &foods, &[], exit(), 100).unwrap();
+    let start = BodyPose {
+        position: Point { x: 2., z: 2. },
+        heading: 0.,
+    };
+    let mut pulse = neural(0., 1.);
+    pulse.groups.push(GroupActivity {
+        id: "landingL".into(),
+        mean_voltage: 0.,
+        spike_fraction: 1.,
+    });
+    let mut b = Body::new_in_mode(start, 10., BodyConfig::default(), BodyMode::Flying).unwrap();
+    let initial_height = b.state().height;
+    b.step(&pulse, &world, Point::default(), 0.1, 1).unwrap();
+    assert_eq!(b.state().mode, BodyMode::Landing);
+    assert!(b.state().height > 0. && b.state().height < initial_height);
+    assert!(!b.contacts(&world).food);
+    let quiet = neural(0., 0.);
+    for tick in 2..8 {
+        let before = b.state().height;
+        b.step(&quiet, &world, Point::default(), 0.1, tick).unwrap();
+        assert_eq!(b.state().mode, BodyMode::Landing);
+        assert!(b.state().height > 0. && b.state().height < before);
+        assert!(!b.contacts(&world).food);
+    }
+    b.step(&quiet, &world, Point::default(), 0.1, 8).unwrap();
+    assert_eq!(b.state().height, 0.);
+    assert_eq!(b.state().mode, BodyMode::Walking);
+    assert!(b.contacts(&world).food);
+
+    let mut dying =
+        Body::new_in_mode(start, 0.04, BodyConfig::default(), BodyMode::Flying).unwrap();
+    dying.step(&pulse, &world, Point::default(), 1., 1).unwrap();
+    // Reserve lasts0.05s, so descent stops after0.0375m even though dt spans touchdown.
+    assert_eq!(dying.state().outcome, Some(TerminalOutcome::Starved));
+    assert!((dying.state().height - 0.5625).abs() < 1e-12);
+    let terminal = dying.state().clone();
+    dying.step(&quiet, &world, Point::default(), 1., 2).unwrap();
+    assert_eq!(*dying.state(), terminal);
 }

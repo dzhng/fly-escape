@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   WorldView,
   flyAnimation,
-  flyHeight,
   recordedTrails,
   type FlyPose,
 } from "@fly-escape/game-renderer";
@@ -108,10 +107,10 @@ function sample(run: Run): FlyPose[] {
   const fraction = run.clock.cursorTick - tick;
   const motions = run.archive.motion(run.clock.cursorTick);
   return run.info.initialBodies.map((initial, id) => {
-    const a = run.lower?.flies[id].body;
+    const a = run.lower?.flies[id].body ?? initial;
     const b = run.upper?.flies[id].body ?? a;
-    const from = a?.pose ?? initial.pose,
-      to = b?.pose ?? from;
+    const from = a.pose,
+      to = b.pose;
     const angle = Math.atan2(
       Math.sin(to.heading - from.heading),
       Math.cos(to.heading - from.heading),
@@ -120,7 +119,7 @@ function sample(run: Run): FlyPose[] {
       x: from.position.x + (to.position.x - from.position.x) * fraction,
       z: from.position.z + (to.position.z - from.position.z) * fraction,
       heading: from.heading + angle * fraction,
-      y: flyHeight(motions[id], TICK_SECONDS),
+      y: a.height + (b.height - a.height) * fraction,
       animation: flyAnimation(motions[id], TICK_SECONDS),
     };
   });
@@ -325,7 +324,6 @@ export function AttemptPlayback({
               current.trailHistory ?? [],
               current.clock.cursorTick,
               poses,
-              TICK_SECONDS,
             ),
             current.clock.cursorTick,
           );

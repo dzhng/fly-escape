@@ -3,6 +3,7 @@ import { mkdir, writeFile, realpath, readFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 const moduleRoot = `/@fs${await realpath('.')}`;
 const foodContext=process.env.FOOD_CONTEXT==='1';
+const landingOnly=process.env.MOTION_SCOPE==='landing';
 const output = process.env.MOTION_EVIDENCE_DIR ?? (foodContext?'specs/help-the-fly-escape/assets/evidence/14/food/context':'specs/help-the-fly-escape/assets/evidence/08/context');
 await mkdir(output, {recursive:true});
 const browser = await chromium.launch({channel:'chrome',headless:true});
@@ -28,7 +29,7 @@ try {
       });
       brain.startLifecycle(6,'mealThenStarvation');
     });
-    const {WorldView,loadFlyModel,loadPlacementModel,flyAnimation,flyHeight}=await import(`${moduleRoot}/packages/game-renderer/src/index.ts`);
+    const {WorldView,loadFlyModel,loadPlacementModel,flyAnimation}=await import(`${moduleRoot}/packages/game-renderer/src/index.ts`);
     const model=await loadFlyModel(await (await fetch(`${moduleRoot}/assets/fly/fly.glb`)).arrayBuffer());
     const view = new WorldView(document.getElementById('world'),records.info.level.geometry);
     view.setFlyModel(model);
@@ -47,45 +48,45 @@ try {
 
     // Captures sample actual resulting modes and poses; no injected motor inputs.
     const motionAt = tick=>{
-      let mode='walking',previousMode='walking',startedTick=0,terminal;
+      let mode='walking',startedTick=0,terminal;
       for(const frame of records.frames){
         if(frame.tick>tick)break;
         const body=frame.flies[0].body;
-        if(body.mode!==mode){previousMode=mode;mode=body.mode;startedTick=frame.tick;}
+        if(body.mode!==mode){mode=body.mode;startedTick=frame.tick;}
         if(body.outcome && terminal===undefined) terminal=frame.tick;
       }
-      return {mode,previousMode,startedTick,cursorTick:Math.min(tick,terminal??tick)};
+      return {mode,startedTick,cursorTick:Math.min(tick,terminal??tick)};
     };
     window.context={records,view,motionAt};
-    window.draw=(tick,before=false)=>{
+    window.draw=(tick)=>{
       const lower=records.frames.find(f=>f.tick===Math.floor(tick));
       const upper=records.frames.find(f=>f.tick===Math.floor(tick)+1)??lower;
       const a=lower.flies[0].body.pose,b=upper.flies[0].body.pose,alpha=tick-Math.floor(tick);
       const motion=motionAt(tick);
-      const y=before?(motion.mode==='flying'?0.6:0):flyHeight(motion,0.1);
+      const y=lower.flies[0].body.height+(upper.flies[0].body.height-lower.flies[0].body.height)*alpha;
       view.setPose({x:a.position.x+(b.position.x-a.position.x)*alpha,z:a.position.z+(b.position.z-a.position.z)*alpha,heading:a.heading+Math.atan2(Math.sin(b.heading-a.heading),Math.cos(b.heading-a.heading))*alpha,y,animation:flyAnimation(motion,0.1)});
       view.render();
       document.getElementById('phase').textContent=` · tick ${tick.toFixed(2)} · ${motion.mode} · height ${y.toFixed(3)}`;
       return {...motion,y,animation:flyAnimation(motion,0.1)};
     };
     const food=records.frames.find(f=>f.flies[0].body.mode==='feeding');
-    window.draw(food.tick);view.selectFly(0);view.zoomClose();view.render();
+    window.draw((food ?? records.frames[0]).tick);view.selectFly(0);view.zoomClose();view.render();
     return records;
   },{moduleRoot,foodContext});
   await writeFile(`${output}/recorded-lifecycle.json`,JSON.stringify(recorded,null,2));
   const feeding=recorded.frames.filter(f=>f.flies[0].body.mode==='feeding');
-  assert.ok(feeding.length>0,'actual lifecycle produces feeding');
-  const transitions=recorded.frames.filter((f,i)=>i>0&&f.flies[0].body.mode==='walking'&&recorded.frames[i-1].flies[0].body.mode==='flying');
-  const completeLanding=transitions.find(f=>recorded.frames.filter(next=>next.tick>=f.tick&&next.tick<=f.tick+8).every(next=>next.flies[0].body.mode==='walking'));
+  if(!landingOnly) assert.ok(feeding.length>0,'actual lifecycle produces feeding');
+  const transitions=recorded.frames.filter((f,i)=>i>0&&f.flies[0].body.mode==='landing'&&recorded.frames[i-1].flies[0].body.mode==='flying');
+  const completeLanding=transitions.find(f=>recorded.frames.some(next=>next.tick>f.tick&&next.tick<=f.tick+9&&next.flies[0].body.mode==='walking'));
   assert.ok(completeLanding,'actual lifecycle contains uninterrupted landing');
   const captures=[];
-  for(const [name,start] of (foodContext?[['feed',feeding[0].tick]]:[['feed',feeding[0].tick],['land',completeLanding.tick],['interrupted-land',transitions[0].tick]])){
+  for(const [name,start] of (landingOnly?[['land',completeLanding.tick]]:foodContext?[['feed',feeding[0].tick]]:[['feed',feeding[0].tick],['land',completeLanding.tick]])){
     for(const delta of [-0.1,0,1,2,4,6,8]){
       const tick=start+delta;
       if(tick>recorded.frames.at(-1).tick)continue;
-      for(const before of (foodContext?[false]:[true,false])){
-        const state=await page.evaluate(({tick,before})=>window.draw(tick,before),{tick,before});
-        const stem=`${name}-${delta}-${before?'before':'after'}`;
+      {
+        const state=await page.evaluate(tick=>window.draw(tick),tick);
+        const stem=`${name}-${delta}-recorded`;
         await page.screenshot({path:`${output}/${stem}.png`});
         await page.screenshot({path:`${output}/${stem}-crop.png`,clip:{x:520,y:320,width:420,height:460}});
         captures.push({stem,tick,state});
@@ -101,12 +102,12 @@ try {
     assert.deepEqual(await page.locator('canvas').screenshot(),expected,'reverse');
   }
   const strip=await browser.newPage({viewport:{width:2940,height:490}});
-  for(const name of (foodContext?['feed']:['feed','land','interrupted-land']))for(const version of (foodContext?['after']:['before','after'])){
+  for(const name of (landingOnly?['land']:foodContext?['feed']:['feed','land']))for(const version of ['recorded']){
     const cells=await Promise.all(captures.filter(c=>c.stem.startsWith(`${name}-`) && c.stem.endsWith(`-${version}`)).map(async c=>`<div><label>tick ${c.tick} · ${c.state.animation.clip} · y=${c.state.y.toFixed(3)}</label><img src="data:image/png;base64,${(await readFile(`${output}/${c.stem}-crop.png`)).toString('base64')}"></div>`));
     await strip.setContent(`<style>body{margin:0;display:flex;background:#f6f5eb;font:18px system-ui}div{width:420px;flex-shrink:0}label{display:block;height:30px}img{display:block}</style>${cells.join('')}`);
     await strip.screenshot({path:`${output}/sequence-${name}-${version}.jpg`});
   }
   await strip.close();
   assert.deepEqual(errors,[]);
-  await writeFile(`${output}/report.json`,JSON.stringify({provenance:'BrainClient LifecycleSession seed 6 mealThenStarvation, unchanged graph/WASM',pauseAndReverseCanvasIdentical:true,captures,landingTransitions:transitions.map(f=>f.tick),errors},null,2));
+  await writeFile(`${output}/report.json`,JSON.stringify({provenance:'BrainClient LifecycleSession seed 6 mealThenStarvation, real graph, core-recorded vertical movement',pauseAndReverseCanvasIdentical:true,captures,landingTransitions:transitions.map(f=>f.tick),errors},null,2));
 }finally{await browser.close();}

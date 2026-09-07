@@ -26,6 +26,7 @@ const initialBodies = [0, 1].map((id) => ({
   pose: { position: { x: id, z: 0 }, heading: 0 },
   mode: "walking" as const,
   reserve: 10,
+  height: 0,
   outcome: null,
 }));
 const archive = () =>
@@ -214,7 +215,6 @@ test("motion phase freezes at terminal and reverse seek restores the prior phase
   for (const chunk of fixture.chunks) record.append(transfer(chunk));
   expect(record.motion(2.5)[0]).toEqual({
     mode: "walking",
-    previousMode: "walking",
     startedTick: 0,
     cursorTick: 2.5,
   });
@@ -237,13 +237,11 @@ test("motion follows packed mode transitions across chunk boundaries and resets 
   }
   expect(record.motion(2.5)[0]).toEqual({
     mode: "flying",
-    previousMode: "walking",
     startedTick: 1,
     cursorTick: 2.5,
   });
   expect(record.motion(4)[0]).toEqual({
     mode: "walking",
-    previousMode: "flying",
     startedTick: 3,
     cursorTick: 3,
   });
@@ -252,7 +250,6 @@ test("motion follows packed mode transitions across chunk boundaries and resets 
   record.clear();
   expect(record.motion(0)[0]).toEqual({
     mode: "walking",
-    previousMode: "walking",
     startedTick: 0,
     cursorTick: 0,
   });
@@ -293,6 +290,7 @@ test("pose-only windows preserve recorded positions and terminal states across c
           tick: f.tick,
           x: f.flies[id].body.pose.position.x,
           z: f.flies[id].body.pose.position.z,
+          height: f.flies[id].body.height,
           inputX: f.flies[id].inputPose.position.x,
           inputZ: f.flies[id].inputPose.position.z,
           mode: f.flies[id].body.mode,
@@ -300,7 +298,7 @@ test("pose-only windows preserve recorded positions and terminal states across c
         })),
     );
   const values = (end: number, count = 40) =>
-    record.poseHistory(end, count).map((h) => h.map(({ motion, ...pose }) => pose));
+    record.poseHistory(end, count);
   expect(values(4, 3)).toEqual(expected(4, 3));
   expect(values(2, 2)).toEqual(expected(2, 2));
   expect(values(4, 1)).toEqual(expected(4, 1));
@@ -309,14 +307,12 @@ test("pose-only windows preserve recorded positions and terminal states across c
   expect(() => record.poseHistory(4, 41)).toThrow("40 ticks");
   record.poseHistory(4)[0][0].x = 999;
   expect(values(4)).toEqual(expected(4, 40));
-  for (const history of record.poseHistory(4)) {
-    for (const pose of history) expect(pose.motion.mode).toBe(pose.mode);
-  }
 });
 
 test("tick zero and rewind preserve immutable core initial poses and mixed modes", () => {
   const bodies = structuredClone(initialBodies) as import("./generated/sim").BodyState[];
   bodies[1].mode = "flying";
+  bodies[1].height = 0.6;
   bodies[1].pose.heading = 2.4;
   const record = new FrameArchive(
     { attemptId: "fixture", flyCount: 2, durationTicks: 4 },

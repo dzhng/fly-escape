@@ -9,7 +9,7 @@ import { HouseGeometry, cutAwayOccluders, type HousePart } from "./house";
 export { loadHousePart } from "./house";
 export type { HousePart } from "./house";
 import { FlyMotion, type FlyAnimation } from "./fly-motion";
-export { flyAnimation, flyHeight } from "./fly-motion";
+export { flyAnimation } from "./fly-motion";
 export type { FlyAnimation } from "./fly-motion";
 import { FlyModel } from "./fly-model";
 import { disposeObjectResources } from "./resources";
@@ -94,8 +94,6 @@ export class WorldView {
       throw new Error("Scene requires 1..100 flies");
     while (this.flies.length < flyCount) this.flies.push(this.flies[0].clone(true));
     this.house = new HouseGeometry(geometry);
-    this.trails = new FlyTrails(flyCount, p => this.navigation.project(new THREE.Vector3(p.x, p.y, p.z)));
-    this.scene.add(this.trails.mesh);
     this.bounds = new THREE.Box3();
     for (const room of geometry.rooms) {
       this.bounds.expandByPoint(new THREE.Vector3(room.min.x, 0, room.min.z));
@@ -115,6 +113,8 @@ export class WorldView {
       }),
     );
     this.navigation = new WorldCamera(this.bounds, modelBounds.getSize(new THREE.Vector3()).y);
+    this.trails = new FlyTrails(flyCount, this.navigation);
+    this.scene.add(this.trails.mesh);
     const center = this.bounds.getCenter(new THREE.Vector3());
     const radius = this.bounds.getSize(new THREE.Vector3()).length() / 2;
     this.renderer = new THREE.WebGLRenderer({ antialias: true });

@@ -91,13 +91,20 @@ export class WorldCamera {
     const unitsPerPixel = 2 * this.distance * Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2)) / this.height;
     return Math.max(1, 24 * unitsPerPixel / nativeSpan);
   }
-  project(position: THREE.Vector3) {
-    const p = position.clone().project(this.camera);
+  project(position: { x: number; y: number; z: number }) {
+    const p = new THREE.Vector3(position.x, position.y, position.z).project(this.camera);
     return {
       x: ((p.x + 1) * this.width) / 2,
       y: ((1 - p.y) * this.height) / 2,
       visible: p.z >= -1 && p.z <= 1 && Math.abs(p.x) <= 1 && Math.abs(p.y) <= 1,
     };
+  }
+  /** Move a presentation vertex by CSS pixels while preserving its camera depth. */
+  offset(position: { x: number; y: number; z: number }, x: number, y: number): THREE.Vector3 {
+    const p = new THREE.Vector3(position.x, position.y, position.z).project(this.camera);
+    p.x += 2 * x / this.width;
+    p.y -= 2 * y / this.height;
+    return p.unproject(this.camera);
   }
   get state() {
     return {

@@ -69,7 +69,7 @@ export function LifecycleLab() {
         view.current?.setPose({
           x: body.pose.position.x,
           z: body.pose.position.z,
-          y: body.mode === "flying" ? 0.6 : 0.1,
+          y: body.height,
           heading: body.pose.heading,
         });
       } else if (reply.type === "error") setError(reply.message);

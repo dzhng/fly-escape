@@ -47,6 +47,7 @@ fn main() {
                 id,
                 input_pose: pose,
                 body: BodyState {
+                    height: f64::from(tick + id) / 137.,
                     pose: BodyPose {
                         position: Point {
                             x: pose.position.x + 0.25,

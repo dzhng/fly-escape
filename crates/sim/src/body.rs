@@ -1,4 +1,4 @@
-//! Planar body decoding and finite-life outcomes. Gains/thresholds are modeled
+//! Neural body decoding, bounded vertical movement and finite-life outcomes. Gains/thresholds are modeled
 //! approximations pending actual-graph feasibility probes, not biological units.
 use crate::{
     environment::{Geometry, Point},
@@ -38,6 +38,7 @@ pub fn desired_pose(pose: BodyPose, motion: Locomotion, wind: Point, dt: f64) ->
 pub enum BodyMode {
     Walking,
     Flying,
+    Landing,
     Feeding,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, TS)]
@@ -52,6 +53,8 @@ pub enum TerminalOutcome {
 #[serde(rename_all = "camelCase")]
 pub struct BodyState {
     pub pose: BodyPose,
+    /// Native support-pivot height in metres, owned by physical movement.
+    pub height: f64,
     pub mode: BodyMode,
     pub reserve: f64,
     pub outcome: Option<TerminalOutcome>,
@@ -223,6 +226,9 @@ impl<'a> BodyWorld<'a> {
     }
 }
 
+const CRUISE_HEIGHT: f64 = 0.6;
+const VERTICAL_SPEED: f64 = 0.75;
+
 pub struct Body {
     state: BodyState,
     config: BodyConfig,
@@ -270,6 +276,7 @@ impl Body {
         Ok(Self {
             state: BodyState {
                 pose,
+                height: 0.,
                 mode: BodyMode::Walking,
                 reserve,
                 outcome: None,
@@ -292,6 +299,9 @@ impl Body {
         }
         let mut body = Self::new(pose, reserve, config)?;
         body.state.mode = mode;
+        if mode == BodyMode::Flying {
+            body.state.height = CRUISE_HEIGHT;
+        }
         Ok(body)
     }
     pub fn state(&self) -> &BodyState {
@@ -299,7 +309,8 @@ impl Body {
     }
     pub fn contacts(&self, world: &BodyWorld) -> BodyContacts {
         BodyContacts {
-            food: self.state.mode != BodyMode::Flying
+            food: matches!(self.state.mode, BodyMode::Walking | BodyMode::Feeding)
+                && self.state.height == 0.
                 && world
                     .food
                     .iter()
@@ -407,8 +418,7 @@ impl Body {
         let landing =
             (spike_fraction(neural, "landingL") + spike_fraction(neural, "landingR")) / 2.;
         if self.state.mode == BodyMode::Flying && landing > self.config.landing_threshold {
-            self.mode(BodyMode::Walking, tick, &mut events);
-            self.ground_dwell_remaining = self.config.landing_dwell_seconds;
+            self.mode(BodyMode::Landing, tick, &mut events);
         } else if self.state.mode == BodyMode::Walking
             && self.ground_dwell_remaining == 0.
             && neural.motor.flight_thrust > self.config.takeoff_threshold
@@ -430,7 +440,7 @@ impl Body {
             });
         }
         let (thrust, turn, speed, cost) = match self.state.mode {
-            BodyMode::Flying => (
+            BodyMode::Flying | BodyMode::Landing => (
                 neural.motor.flight_thrust,
                 neural.motor.flight_turn,
                 self.config.flight_speed,
@@ -448,6 +458,7 @@ impl Body {
             ),
             BodyMode::Feeding => (0., 0., 0., self.config.idle_cost),
         };
+        let initial_height = self.state.height;
         let from = self.state.pose.position;
         let desired = desired_pose(
             self.state.pose,
@@ -502,6 +513,18 @@ impl Body {
             },
             heading,
         };
+        self.state.height = match self.state.mode {
+            BodyMode::Flying => {
+                (initial_height + VERTICAL_SPEED * dt * fraction).min(CRUISE_HEIGHT)
+            }
+            BodyMode::Landing => (initial_height - VERTICAL_SPEED * dt * fraction).max(0.),
+            BodyMode::Walking | BodyMode::Feeding => initial_height,
+        };
+        if self.state.mode == BodyMode::Landing && self.state.height <= 1e-12 {
+            self.state.height = 0.;
+            self.mode(BodyMode::Walking, tick, &mut events);
+            self.ground_dwell_remaining = self.config.landing_dwell_seconds;
+        }
         self.state.reserve = (self.state.reserve + (replenishment - cost * dt) * fraction)
             .clamp(0., self.config.reserve_capacity);
         if self.state.mode == BodyMode::Feeding {

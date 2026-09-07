@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { WorldView, loadFlyModel, flyAnimation, flyHeight } from "@fly-escape/game-renderer";
+import { WorldView, loadFlyModel, flyAnimation } from "@fly-escape/game-renderer";
 import { AttemptClient, FrameArchive, type AttemptInfo } from "@fly-escape/sim-client";
 import spec from "../../../assets/proportions/scale.json";
 import flyUrl from "../../../assets/fly/fly.glb?url";
@@ -45,7 +45,7 @@ export async function proportionsWorkbench() {
     const motion = archive?.motion(tick);
     view.setPoses(initial.map((start, i) => {
       const p = frame?.flies[i].body.pose ?? start;
-      return { x: p.position.x, z: p.position.z, heading: p.heading, y: motion ? flyHeight(motion[i], 0.1) : 0, animation: motion ? flyAnimation(motion[i], 0.1) : undefined };
+      return { x: p.position.x, z: p.position.z, heading: p.heading, y: frame?.flies[i].body.height ?? 0, animation: motion ? flyAnimation(motion[i], 0.1) : undefined };
     }));
   }
   pose();

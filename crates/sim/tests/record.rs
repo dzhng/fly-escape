@@ -15,6 +15,7 @@ fn frame(tick: u32) -> AttemptFrame {
             id: 0,
             input_pose: pose,
             body: BodyState {
+                height: 0.,
                 pose: BodyPose {
                     position: Point { x: 2., z: 3. },
                     heading: 4.,
@@ -200,7 +201,7 @@ fn dense_real_body_transitions_fit_and_replay_in_order() {
             b: Point { x: 4., z: 3. },
             outward: Point { x: 1., z: 0. },
         },
-        2,
+        3,
     )
     .unwrap();
     let mut body = Body::new(
@@ -244,17 +245,32 @@ fn dense_real_body_transitions_fit_and_replay_in_order() {
     for g in &mut neural.groups {
         g.spike_fraction = 1.;
     }
+    let landing_events = body
+        .step(&neural, &world, Point::default(), 0.1, 2)
+        .unwrap();
+    assert_eq!(
+        landing_events
+            .iter()
+            .map(|e| e.kind.clone())
+            .collect::<Vec<_>>(),
+        vec![
+            BodyEventKind::ModeChanged {
+                from: BodyMode::Flying,
+                to: BodyMode::Landing
+            },
+            BodyEventKind::ModeChanged {
+                from: BodyMode::Landing,
+                to: BodyMode::Walking
+            },
+        ]
+    );
     let input_pose = body.state().pose;
     let events = body
-        .step(&neural, &world, Point::default(), 0.1, 2)
+        .step(&neural, &world, Point::default(), 0.1, 3)
         .unwrap();
     assert_eq!(
         events.iter().map(|e| e.kind.clone()).collect::<Vec<_>>(),
         vec![
-            BodyEventKind::ModeChanged {
-                from: BodyMode::Flying,
-                to: BodyMode::Walking
-            },
             BodyEventKind::ModeChanged {
                 from: BodyMode::Walking,
                 to: BodyMode::Feeding
@@ -274,8 +290,8 @@ fn dense_real_body_transitions_fit_and_replay_in_order() {
     );
     let layout = RecordLayout::new(neural.groups.iter().map(|g| g.id.clone()).collect()).unwrap();
     let frames = vec![AttemptFrame {
-        tick: 2,
-        neural_steps: 2,
+        tick: 3,
+        neural_steps: 3,
         flies: vec![FlyFrame {
             id: 0,
             input_pose,

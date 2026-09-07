@@ -156,7 +156,8 @@ fn fixture(scenario: LifecycleScenario) -> LevelDef {
         } else {
             vec![ContactRegion {
                 center: p(-1., 0.),
-                radius: 1.2,
+                // Covers the floor approach plus bounded horizontal travel during descent.
+                radius: 1.5,
             }]
         },
         zappers: vec![],

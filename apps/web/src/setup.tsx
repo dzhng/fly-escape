@@ -10,7 +10,7 @@ import {
   type StartAttempt,
   type ToolKind,
 } from "@fly-escape/sim-client";
-import { WorldView, flyHeight } from "@fly-escape/game-renderer";
+import { WorldView } from "@fly-escape/game-renderer";
 import { AttemptPlayback } from "./playback";
 import { loadProgress, saveProgress, awardResult, emptyProgress } from "./progress";
 import "./setup.css";
@@ -95,15 +95,6 @@ export function SetupGame() {
     world.current = view;
     const spawn = fixture.level.spawn;
     if (spawn.kind === "cluster") view.setSpawnArea(spawn.min, spawn.max);
-    else
-      view.setPoses(
-        spawn.states.map(({ pose: p, mode }) => ({
-          x: p.position.x,
-          z: p.position.z,
-          heading: p.heading,
-          y: flyHeight({ mode, previousMode: mode, startedTick: 0, cursorTick: 0 }, 0.1),
-        })),
-      );
     view.setContactRegions([], [], fixture.level.exit);
     view.overview();
     view.enableCamera();

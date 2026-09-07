@@ -9,9 +9,13 @@ export type SpawnDef = { "kind": "fixed", states: Array<SpawnState>, } | { "kind
 export type SpawnState = { pose: BodyPose, mode: SpawnMode, };
 export type SpawnMode = "walking" | "flying";
 export type BodyPose = { position: Point, heading: number, };
-export type BodyMode = "walking" | "flying" | "feeding";
+export type BodyMode = "walking" | "flying" | "landing" | "feeding";
 export type TerminalOutcome = "escaped" | "starved" | "zapped" | "timedOut";
-export type BodyState = { pose: BodyPose, mode: BodyMode, reserve: number, outcome: TerminalOutcome | null, };
+export type BodyState = { pose: BodyPose,
+/**
+ * Native support-pivot height in metres, owned by physical movement.
+ */
+height: number, mode: BodyMode, reserve: number, outcome: TerminalOutcome | null, };
 export type BodyConfig = { reserveCapacity: number, idleCost: number, walkingCost: number, flyingCost: number, feedingRate: number, maxBoutSeconds: number, bodyRadius: number, walkSpeed: number, flightSpeed: number, turnGain: number, takeoffThreshold: number,
 /**
  * Emitted spike fraction, averaged across the two landing groups.

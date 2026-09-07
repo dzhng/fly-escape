@@ -16,13 +16,13 @@ pub struct ChunkHeader {
     pub result: Option<AttemptResult>,
 }
 
-pub const RECORD_SCHEMA_VERSION: u32 = 1;
+pub const RECORD_SCHEMA_VERSION: u32 = 2;
 pub const MAX_CHUNK_TICKS: u32 = 10;
 pub const ARCHIVE_CAP_BYTES: u64 = 128 * 1024 * 1024;
 // Landing, starting/ending feeding and termination emit at most six events.
 // Eight slots keep the archive bound conservative; larger output is an error.
 pub const MAX_EVENTS_PER_FLY_TICK: usize = 8;
-const VALUE_FIELDS: [&str; 23] = [
+const VALUE_FIELDS: [&str; 24] = [
     "inputX",
     "inputZ",
     "inputHeading",
@@ -46,6 +46,7 @@ const VALUE_FIELDS: [&str; 23] = [
     "rightExitCue",
     "windX",
     "windZ",
+    "height",
 ];
 
 #[derive(Clone, Debug, Serialize, TS)]
@@ -89,7 +90,12 @@ impl RecordLayout {
                 .to_vec(),
             group_ids,
             group_fields: ["meanVoltage", "spikeFraction"].map(String::from).to_vec(),
-            modes: vec![BodyMode::Walking, BodyMode::Flying, BodyMode::Feeding],
+            modes: vec![
+                BodyMode::Walking,
+                BodyMode::Flying,
+                BodyMode::Feeding,
+                BodyMode::Landing,
+            ],
             outcomes: vec![
                 None,
                 Some(TerminalOutcome::Escaped),
@@ -244,7 +250,7 @@ impl PackedChunk {
                         side.exit_cue,
                     ]);
                 }
-                chunk.values.extend([sense.wind.x, sense.wind.z]);
+                chunk.values.extend([sense.wind.x, sense.wind.z, b.height]);
                 if let Some(neural) = &fly.neural {
                     if neural
                         .groups
@@ -347,6 +353,7 @@ impl PackedChunk {
                     id: id as u32,
                     input_pose: pose(v, 0),
                     body: BodyState {
+                        height: v[23],
                         pose: pose(v, 3),
                         reserve: v[6],
                         mode: at(&layout.modes, s[0])?,
@@ -371,8 +378,8 @@ impl PackedChunk {
                             .enumerate()
                             .map(|(g, id)| GroupActivity {
                                 id: id.clone(),
-                                mean_voltage: v[23 + g * 2],
-                                spike_fraction: v[24 + g * 2],
+                                mean_voltage: v[VALUE_FIELDS.len() + g * 2],
+                                spike_fraction: v[VALUE_FIELDS.len() + 1 + g * 2],
                             })
                             .collect(),
                     }),

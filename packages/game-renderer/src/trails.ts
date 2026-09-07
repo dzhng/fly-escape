@@ -1,14 +1,13 @@
 import * as THREE from "three";
+import type { WorldCamera } from "./camera";
 import type { RecordedPose } from "@fly-escape/sim-client";
-import { flyHeight } from "./fly-motion";
 
 export type TrailPoint = { x: number; y: number; z: number; tick: number; breakBefore?: boolean };
-/** Ten warm-up ticks cover the longest presentation transition before the visible tail. */
+/** Trail height is recorded physical movement, including airborne transitions. */
 export function recordedTrails(
   histories: readonly (readonly RecordedPose[])[],
   cursorTick: number,
   heads: readonly { x: number; y: number; z: number }[],
-  tickSeconds: number,
 ): TrailPoint[][] {
   return histories.map((history, id) => {
     let previous: RecordedPose | undefined;
@@ -21,7 +20,7 @@ export function recordedTrails(
       points.push({
         x: pose.x,
         z: pose.z,
-        y: flyHeight(pose.motion, tickSeconds),
+        y: pose.height,
         tick: pose.tick,
         breakBefore,
       });
@@ -46,10 +45,7 @@ export class FlyTrails {
   private readonly colors: THREE.BufferAttribute;
   constructor(
     private readonly flyCount: number,
-    private readonly project: (point: { x: number; y: number; z: number }) => {
-      x: number;
-      y: number;
-    },
+    private readonly projection: Pick<WorldCamera, "project" | "offset">,
   ) {
     const geometry = new THREE.BufferGeometry();
     this.positions = new THREE.BufferAttribute(
@@ -70,6 +66,9 @@ export class FlyTrails {
         vertexColors: true,
         transparent: true,
         depthWrite: false,
+        polygonOffset: true,
+        polygonOffsetFactor: -1,
+        polygonOffsetUnits: -1,
         side: THREE.DoubleSide,
       }),
     );
@@ -89,7 +88,7 @@ export class FlyTrails {
         if (b.breakBefore || b.tick <= cursorTick - SEGMENTS) break;
         const dx = b.x - a.x,
           dz = b.z - a.z;
-        const distance = Math.hypot(dx, dz);
+        const distance = Math.hypot(dx, b.y - a.y, dz);
         if (distance < 1e-7) continue;
         const near = Math.max(0, (gap - length) / distance);
         const far = Math.min(
@@ -107,22 +106,16 @@ export class FlyTrails {
         });
         const start = at(far),
           end = at(near);
-        const perpendicular = { x: -dz / distance, z: dx / distance };
-        const screen = this.project(end);
-        const probe = this.project({
-          x: end.x + perpendicular.x * 0.01,
-          y: end.y,
-          z: end.z + perpendicular.z * 0.01,
-        });
-        const pixels = Math.hypot(probe.x - screen.x, probe.y - screen.y);
-        const width = Math.min(
-          0.08,
-          Math.max(0.001, (PIXEL_WIDTH * 0.01) / Math.max(pixels, 1e-6)),
-        );
-        const nx = (perpendicular.x * width) / 2,
-          nz = (perpendicular.z * width) / 2;
+        const screenStart = this.projection.project(start);
+        const screenEnd = this.projection.project(end);
+        const sx = screenEnd.x - screenStart.x, sy = screenEnd.y - screenStart.y;
+        const screenLength = Math.hypot(sx, sy);
+        if (screenLength < 1e-7) continue;
+        const nx = -sy / screenLength * PIXEL_WIDTH / 2;
+        const ny = sx / screenLength * PIXEL_WIDTH / 2;
         const add = (p: TrailPoint, side: number) => {
-          this.positions.setXYZ(vertex, p.x + nx * side, p.y + 0.012, p.z + nz * side);
+          const vertexPosition = this.projection.offset(p, nx * side, ny * side);
+          this.positions.setXYZ(vertex, vertexPosition.x, vertexPosition.y, vertexPosition.z);
           const age = Math.max(0, (cursorTick - p.tick) / SEGMENTS);
           this.colors.setXYZW(vertex++, 1, 1, 1, 1 - Math.min(1, age));
         };

@@ -34,7 +34,7 @@ struct SeedResult {
     proboscis_above_threshold_fraction: f64,
     landing_above_threshold_fraction: f64,
     flight_above_threshold_fraction: f64,
-    mode_ticks: [usize; 3],
+    mode_ticks: [usize; 4],
     mode_transitions: usize,
     feeding_starts: usize,
     final_reserve: f64,
@@ -130,7 +130,7 @@ fn run(
         proboscis_above_threshold_fraction: 0.,
         landing_above_threshold_fraction: 0.,
         flight_above_threshold_fraction: 0.,
-        mode_ticks: [0; 3],
+        mode_ticks: [0; 4],
         mode_transitions: 0,
         feeding_starts: 0,
         final_reserve: 0.,
@@ -176,6 +176,7 @@ fn run(
             result.mode_ticks[match body.state().mode {
                 BodyMode::Walking => 0,
                 BodyMode::Flying => 1,
+                BodyMode::Landing => 3,
                 BodyMode::Feeding => 2,
             }] += 1;
             if body.state().outcome.is_some() {
@@ -335,7 +336,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         )
     })
     .collect();
-    let evidence = json!({"graphHash":graph.manifest.graph_hash,"manifestHash":format!("{:x}",Sha256::digest(manifest.as_bytes())),"graphProvenance":graph.manifest.provenance,"sourceHashes":source_hashes,"prng":PRNG_ID,"rootSeeds":(0..N).collect::<Vec<_>>(),"flyId":0,"warmupTicks":WARMUP,"measurementTicks":MEASURE,"lifParams":sim::LifParams::default(),"bodyConfig":BodyConfig::default(),"gainOneOnly":gain_one_only,"discreteReadout":"Emitted spike fraction for proboscis/landing; latched feeding; one-second minimum post-landing ground dwell","metricOrder":METRICS,"modeOrder":["walking","flying","feeding"],"stimulatedIndices":inputs,"tasteIndices":taste,"excludedReadoutIndices":taste.iter().filter(|i|readouts.contains(i)).collect::<Vec<_>>(),"baseline":{"means":summary(&baseline,None),"seeds":baseline},"conditions":"All arms have matched noise streams and 60 unstimulated warmup ticks. Current/ablation begins afterward for 100 neural ticks. Taste group receives fixed positive input, excluding every locomotion/proboscis/landing readout. Ablation clamps neurons to zero including external/synaptic input. No field feedback. Body starts with reserve 5 on a large food disk; receives actual StepOutput at dt=.1, with zero wind. Contact does not choose current in this intervention; zero-current baseline has identical contact. Body mode/reserve observations are provisional decoder feasibility, not a feeding behavioral acceptance claim. Neural measurement independently continues to its fixed 100-tick window; terminal body state is frozen and excluded from subsequent mode-tick counts.","uncertainty":"Paired seed means, two-sided Student t(29) 95% interval. Descriptive sweep without multiple-comparison correction. Trace contains seed zero only; each seed retains mean/range and threshold fractions.","elapsedSeconds":start.elapsed().as_secs_f64(),"runtimeBudgetSeconds":240,"budgetStopped":budget_stopped,"results":rows});
+    let evidence = json!({"graphHash":graph.manifest.graph_hash,"manifestHash":format!("{:x}",Sha256::digest(manifest.as_bytes())),"graphProvenance":graph.manifest.provenance,"sourceHashes":source_hashes,"prng":PRNG_ID,"rootSeeds":(0..N).collect::<Vec<_>>(),"flyId":0,"warmupTicks":WARMUP,"measurementTicks":MEASURE,"lifParams":sim::LifParams::default(),"bodyConfig":BodyConfig::default(),"gainOneOnly":gain_one_only,"discreteReadout":"Emitted spike fraction for proboscis/landing; latched feeding; one-second minimum post-landing ground dwell","metricOrder":METRICS,"modeOrder":["walking","flying","feeding","landing"],"stimulatedIndices":inputs,"tasteIndices":taste,"excludedReadoutIndices":taste.iter().filter(|i|readouts.contains(i)).collect::<Vec<_>>(),"baseline":{"means":summary(&baseline,None),"seeds":baseline},"conditions":"All arms have matched noise streams and 60 unstimulated warmup ticks. Current/ablation begins afterward for 100 neural ticks. Taste group receives fixed positive input, excluding every locomotion/proboscis/landing readout. Ablation clamps neurons to zero including external/synaptic input. No field feedback. Body starts with reserve 5 on a large food disk; receives actual StepOutput at dt=.1, with zero wind. Contact does not choose current in this intervention; zero-current baseline has identical contact. Body mode/reserve observations are provisional decoder feasibility, not a feeding behavioral acceptance claim. Neural measurement independently continues to its fixed 100-tick window; terminal body state is frozen and excluded from subsequent mode-tick counts.","uncertainty":"Paired seed means, two-sided Student t(29) 95% interval. Descriptive sweep without multiple-comparison correction. Trace contains seed zero only; each seed retains mean/range and threshold fractions.","elapsedSeconds":start.elapsed().as_secs_f64(),"runtimeBudgetSeconds":240,"budgetStopped":budget_stopped,"results":rows});
     std::fs::write(output, serde_json::to_string_pretty(&evidence)?)?;
     Ok(())
 }
