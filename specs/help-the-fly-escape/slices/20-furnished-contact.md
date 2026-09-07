@@ -29,7 +29,7 @@ A verified collision may stop motion. Specifically unresolved angular sweeps dec
 - [Furniture identity](../assets/evidence/20/furniture-identity/README.md) verifies catalogue dimensions, rotated placement, model loading and resource ownership. Shape/material/light/furnished-visibility acceptance belongs to 21–24.
 - [Flat feeding comparison](../assets/evidence/20/feeding-benefit/README.md) and [native banana meal](../assets/evidence/20/native-banana-meal/README.md) establish actual-graph replenishment benefit. The banana capture includes landing, feeding and departure; only one of twenty streams eats. This selected opportunity is not attraction or campaign calibration.
 
-The renderer currently uses a planar selection circle aligned with body orientation and adjusted for pixel width. It does not conform to curved fruit. Prior apple-indentation clipping and the banana's weak yellow-on-yellow contrast remain visual findings, alongside unclear mouth contact, competing trails and missing close surface detail. Do not claim those resolved from native contact assertions.
+The renderer currently uses a planar selection circle aligned with body orientation and adjusted for pixel width. It does not conform to curved fruit. The [outer-edge contrast correction](../assets/evidence/20/ring-contrast/README.md) makes the yellow circle readable on banana. Prior apple-indentation clipping remains open, alongside unclear mouth contact, competing trails and missing close surface detail. Do not claim those resolved from native contact assertions.
 
 ## Remaining reviewable gates
 

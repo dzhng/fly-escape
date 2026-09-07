@@ -43,3 +43,5 @@ Source shape/diff review found no new resource lifetime or contact owner. Local
 Codex CLI review could not run: the configured model requires a newer CLI. No
 upgrade or model substitution was made; direct code review and independent visual
 review cover this pass.
+
+Root integration passes the renderer suite and TypeScript checking. All eight merged-player screenshots are byte-identical to the independently reviewed candidate, and reverse seek restores the canvas exactly. Full before/after capture sets are retained; raw production reports are compressed as `report.json.gz`.
