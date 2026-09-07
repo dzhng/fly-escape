@@ -232,16 +232,28 @@ fn start_mismatch_point_only_hull_and_exhaustion_are_explicit() {
 }
 
 #[test]
-fn a_root_supported_inside_closed_food_is_blocked() {
-    let mut apple: ContactSurface =
-        serde_json::from_str(include_str!("../../../assets/food/apple/contact.json")).unwrap();
-    apple.id = 2;
-    let scene = ContactScene::new(&[patch(1, -0.1, 0.1, 0.04), apple]).unwrap();
+fn a_root_supported_inside_authored_closed_food_is_blocked() {
     let hull = hull();
-    let input = request(&scene, &hull, 1, [0., 0.], [0.001, 0.], 0., [0., 1., 0.]);
-    let path = scene.fixed_support_path(&hull, input, budget()).unwrap();
-    assert_eq!(path.stop, SupportPathStop::OtherSurface(2));
-    assert!(path.segments.is_empty());
+    for (source, height, position) in [
+        (
+            include_str!("../../../assets/food/apple/contact.json"),
+            0.04,
+            [0., 0.],
+        ),
+        (
+            include_str!("../../../assets/food/banana/contact.json"),
+            0.02,
+            [0., -0.02],
+        ),
+    ] {
+        let mut food: ContactSurface = serde_json::from_str(source).unwrap();
+        food.id = 2;
+        let scene = ContactScene::new(&[patch(1, -0.1, 0.1, height), food]).unwrap();
+        let input = request(&scene, &hull, 1, position, [0.001, 0.], 0., [0., 1., 0.]);
+        let path = scene.fixed_support_path(&hull, input, budget()).unwrap();
+        assert_eq!(path.stop, SupportPathStop::OtherSurface(2));
+        assert!(path.segments.is_empty());
+    }
 }
 
 #[test]

@@ -538,3 +538,16 @@ work but did not prescribe these counters. Existing geometry-kernel calls are
 charged conservatively by triangle count; their internal iterations and allocator
 capacity are not measured by these counters. The limits help compare candidate
 paths, while browser timing and final archive limits still need direct evidence.
+
+## Contact geometry across shading seams — 2026-09-07
+
+### Sound — medium confidence: exactly coincident rendered positions share contact identity
+
+A flat banana cut face needs different shading normals from its curved skin, so
+the GLB can store the same position more than once. The contact exporter now gives
+those identical transformed positions one vertex identity while retaining every
+triangle. The plan required matching visible and physical surfaces but did not
+specify how shading splits map to topology. This prevents a closed fruit from
+being mistaken for an open surface. It applies across primitive boundaries, uses
+no distance tolerance, and does not repair overlapping components; invalid face
+arrangements still fail the existing contact validation.
