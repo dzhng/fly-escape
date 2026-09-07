@@ -2,7 +2,7 @@
 
 A local browser game where a fly connectome drives the flies and the player shapes their environment to help them escape.
 
-The home route opens the setup fixture, where placements precede a buffered attempt. Diagnostic views include a neural observation chamber at `/lab/brain`, matched sensory chambers at `/lab/fields`, finite-life probes at `/lab/lifecycle`, and buffered swarm replay at `/lab/playback`: the real neural graph runs in Rust/WASM in a Worker, while the 3D view and measured activity stay responsive. The two-level game is still being built, with a warm photorealistic furnished-house target and randomized starting swarms. Follow the [active specification](specs/help-the-fly-escape/README.md) for completed gates and the next checkpoint.
+The home route opens the in-progress two-level campaign, where placements precede a buffered attempt. Diagnostic views include a neural observation chamber at `/lab/brain`, matched sensory chambers at `/lab/fields`, finite-life probes at `/lab/lifecycle`, and buffered swarm replay at `/lab/playback`: the real neural graph runs in Rust/WASM in a Worker, while the 3D view and measured activity stay responsive. Randomized starting swarms and furnished houses are integrated; reliable food-seeking, puzzle calibration and the final warm photorealistic target remain under development. Follow the [active specification](specs/help-the-fly-escape/README.md) for completed gates and the next checkpoint.
 
 ## Run locally
 
