@@ -13,3 +13,9 @@ The exact full swarm completes at tick 304 with 20 starved and no escapes. Tempo
 Manual and parent review retained the existing motion owner and removed an unnecessary public diagnostic flag. Independent CLI review was attempted but the installed CLI rejected the configured model as requiring an update. No replacement model or dependencies were installed.
 
 To reproduce, use `request.json` at the scratch input path named by `reproduce.rs`; temporarily copy that source into the sim crate's examples directory and run it with `cargo run --release -p sim --example refinement_repro` from the repository workspace, then remove the temporary example. This preserves Cargo.lock rather than allowing an independent scratch package to select newer patch dependencies. Focused gates: `cargo test --release -p sim --lib --test body --test food --test placement`.
+
+## Rebuilt browser integration
+
+The merged tree passes all 63 native gates and rebuilds WASM plus both browser applications. The production browser replays exact seed `1744322718178062846` with 20 flies and finishes at tick 304, matching native outcomes: 20 starved, no escapes. The new build identity is `4234737e8ce1a55779cfcd5ba016fdeb9260dfb984a778c580293113db90bf33`. It has zero underruns, 17 ms frame p95 and a 1.336 s initial wait; isolated maximum frame interval is 366.6 ms, so this is not an all-frames latency guarantee. Returning to setup passes the one-Worker/one-canvas checks. `browser-attempt-1.json` and `browser-report.json` preserve the measurements.
+
+This resolves the captured native/browser abort. Repeated complete attempts and final memory/platform gates remain separate; food-seeking and campaign balance remain unresolved.

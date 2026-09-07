@@ -33,3 +33,5 @@ node tests/browser/retry-resources.mjs
 ```
 
 The single completed-run heap passes the existing offline renderer-retainer check: one attached world canvas, no detached world canvas, and one current lighting-texture disposal listener. This is a retainer check, not a repeated-memory plateau.
+
+The captured shoe-rim error is now resolved by the [bounded support stop](../../30/refinement-contact/README.md), including the rebuilt exact-seed browser gate. The earlier red evidence remains; final repeated-attempt release acceptance is separate.

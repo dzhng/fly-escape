@@ -715,3 +715,7 @@ The user's one-fan maximum and rejection of chained-fan solutions supersede earl
 ## Sustained retry verification — 2026-09-08
 
 - **Replay captured seeds through normal campaign setup — sound, high confidence.** When a random swarm fails, the browser harness can supply that recorded seed to the game's normal random-seed call and check the resulting attempt identity. The same harness still uses random seeds by default. A separate diagnostic level could miss the house or asset inputs that caused the failure. This adds test options only; players keep natural random starts and no runtime simulation rule changes.
+
+## Supported-motion refinement — 2026-09-08
+
+- **Stop an unresolved supported move at its verified safe prefix — sound, medium confidence.** At a steep shoe rim, increasingly small horizontal steps still caused a sharp height change. Instead of aborting the whole swarm or accepting an unverified path, the body keeps the portion already checked and remains at its last safe pose for the rest of that tick. The next tick still advances the neural model, time and reserve, and can make a new request. This preserves existing precision/work limits and checks the retained pose against the complete contact scene. The cost is conservative blocking: the captured run includes 106 blocked body-ticks, so this is not a claim of recovered rim traversal. Other invalid-contact and exhausted-query errors remain errors.
