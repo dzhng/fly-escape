@@ -1,0 +1,284 @@
+diff --git a/crates/sim/examples/campaign_warmup_probe.rs b/crates/sim/examples/campaign_warmup_probe.rs
+new file mode 100644
+index 0000000..16e4bf8
+--- /dev/null
++++ b/crates/sim/examples/campaign_warmup_probe.rs
+@@ -0,0 +1,252 @@
++//! TEMPORARY EXPERIMENT ONLY (worktree /tmp/fly-claude-odor-response).
++//! Bounded first-house escape probe: four frozen player-placement plans x six frozen root
++//! seeds, run to an actual terminal result or the authored horizon. Warmup is compiled into
++//! `Attempt::new` (see `attempt::BRAIN_WARMUP_TICKS`); this probe only reports it, so cold and
++//! warm are separate binaries over identical content, seeds, bodies, reserve and fields.
++use serde::Deserialize;
++use serde_json::{json, Value};
++use sha2::{Digest, Sha256};
++use sim::{
++    attempt::*,
++    body::{BodyEventKind, TerminalOutcome},
++    environment::Point,
++    placement::{Placement, ToolKind},
++    Graph,
++};
++use std::{sync::Arc, time::Instant};
++
++#[derive(Clone, Deserialize)]
++#[serde(rename_all = "camelCase")]
++struct Content {
++    level: LevelDef,
++    tuning: AttemptTuning,
++}
++
++/// Frozen before any outcome was observed. Positions come from authored geometry only:
++/// spawn cluster is x 3.00..3.45, z 2.00..2.70; the exit opening is x = 0, z 1.80..2.70.
++/// `apple` sits on the spawn-to-exit line; `vinegar` sits behind the spawn, away from the exit.
++fn plans() -> Vec<(&'static str, Vec<Placement>)> {
++    let apple = Placement {
++        id: 10,
++        kind: ToolKind::Fruit,
++        position: Point { x: 1.6, z: 2.3 },
++        heading: 0.,
++    };
++    let vinegar = Placement {
++        id: 11,
++        kind: ToolKind::Vinegar,
++        position: Point { x: 4.2, z: 2.35 },
++        heading: 0.,
++    };
++    vec![
++        ("empty", vec![]),
++        ("apple", vec![apple.clone()]),
++        ("vinegar", vec![vinegar.clone()]),
++        ("apple-vinegar", vec![apple, vinegar]),
++    ]
++}
++const SEEDS: [u64; 6] = [100, 101, 102, 103, 104, 105];
++const FLY_COUNT: u32 = 20;
++
++fn outcome_name(outcome: Option<TerminalOutcome>) -> &'static str {
++    match outcome {
++        Some(TerminalOutcome::Escaped) => "escaped",
++        Some(TerminalOutcome::Starved) => "starved",
++        Some(TerminalOutcome::Zapped) => "zapped",
++        Some(TerminalOutcome::Caught) => "caught",
++        Some(TerminalOutcome::TimedOut) => "timedOut",
++        None => "running",
++    }
++}
++
++/// One complete attempt at its actual terminal state or the authored horizon. A failed tick is
++/// reported, never retried: a partially advanced attempt is not a comparable observation.
++fn run(
++    graph: &Arc<Graph>,
++    content: &Content,
++    plan: &str,
++    seed: u64,
++    placements: &[Placement],
++) -> Result<Value, String> {
++    let attempt_id = format!("warmup-{plan}-{seed}");
++    let start = Instant::now();
++    let spec = Attempt::describe(
++        graph,
++        &content.level,
++        &content.tuning,
++        &attempt_id,
++        seed,
++        FLY_COUNT,
++        placements,
++    )?;
++    let mut attempt = Attempt::new(
++        graph.clone(),
++        content.level.clone(),
++        content.tuning.clone(),
++        spec.clone(),
++    )?;
++    let construct_seconds = start.elapsed().as_secs_f64();
++    let initial = attempt.initial_bodies();
++    let mut meals = vec![0u32; FLY_COUNT as usize];
++    let mut fed_seconds = vec![0u32; FLY_COUNT as usize];
++    let mut peak_reserve: Vec<f64> = initial.iter().map(|b| b.reserve).collect();
++    let mut terminal_tick = vec![Value::Null; FLY_COUNT as usize];
++    let mut last = None;
++    loop {
++        // A failed tick is fatal to the attempt. Report where it stopped and the last verified
++        // pose of every fly, so a structural error is diagnosable instead of just a lost cell.
++        let frame = match attempt.step() {
++            Ok(Some(frame)) => frame,
++            Ok(None) => break,
++            Err(error) => {
++                let tick = last.as_ref().map_or(0, |f: &AttemptFrame| f.tick);
++                return Err(format!(
++                    "{error} | failedAtTick {} | lastVerified {}",
++                    tick + 1,
++                    serde_json::to_string(&last.map(|f: AttemptFrame| f
++                        .flies
++                        .iter()
++                        .map(|fly| json!({
++                            "id": fly.id,
++                            "position": fly.body.pose.position,
++                            "heading": fly.body.pose.heading,
++                            "height": fly.body.height,
++                            "support": fly.body.support,
++                            "mode": format!("{:?}", fly.body.mode),
++                            "reserve": fly.body.reserve,
++                            "outcome": outcome_name(fly.body.outcome),
++                        }))
++                        .collect::<Vec<_>>()))
++                    .map_err(|e| e.to_string())?
++                ));
++            }
++        };
++        for fly in &frame.flies {
++            let id = fly.id as usize;
++            peak_reserve[id] = peak_reserve[id].max(fly.body.reserve);
++            for event in &fly.events {
++                match event.kind {
++                    BodyEventKind::FeedingStarted => meals[id] += 1,
++                    BodyEventKind::Terminal { .. } => {
++                        terminal_tick[id] = json!(event.tick);
++                    }
++                    _ => {}
++                }
++            }
++            if fly.body.mode == sim::body::BodyMode::Feeding {
++                fed_seconds[id] += 1;
++            }
++        }
++        last = Some(frame);
++    }
++    let frame = last.ok_or("attempt produced no frame")?;
++    let result = frame
++        .result
++        .clone()
++        .ok_or("attempt ended without a terminal result")?;
++    let flies: Vec<Value> = frame
++        .flies
++        .iter()
++        .map(|fly| {
++            let id = fly.id as usize;
++            json!({
++                "id": fly.id,
++                "outcome": outcome_name(fly.body.outcome),
++                "terminalTick": terminal_tick[id],
++                "initialMode": format!("{:?}", initial[id].mode),
++                "meals": meals[id],
++                "feedingTicks": fed_seconds[id],
++                "peakReserve": peak_reserve[id],
++                "finalReserve": fly.body.reserve,
++            })
++        })
++        .collect();
++    Ok(json!({
++        "plan": plan,
++        "seed": seed,
++        "spec": spec,
++        "completedTick": result.completed_tick,
++        "outcomes": result.outcomes,
++        "stars": result.stars,
++        "meals": meals.iter().sum::<u32>(),
++        "feedingTicks": fed_seconds.iter().sum::<u32>(),
++        "peakReserveSum": peak_reserve.iter().sum::<f64>(),
++        "flies": flies,
++        "constructSeconds": construct_seconds,
++        "wallSeconds": start.elapsed().as_secs_f64(),
++    }))
++}
++
++fn main() -> Result<(), Box<dyn std::error::Error>> {
++    let args: Vec<_> = std::env::args().collect();
++    let graph_dir = args.get(1).ok_or("Pass graph directory")?;
++    let content_path = args.get(2).ok_or("Pass level content JSON")?;
++    let output = args.get(3).ok_or("Pass output JSON")?;
++    let bytes = std::fs::read(format!("{graph_dir}/graph.bin"))?;
++    let manifest = std::fs::read_to_string(format!("{graph_dir}/manifest.json"))?;
++    let content_text = std::fs::read_to_string(content_path)?;
++    let content: Content = serde_json::from_str(&content_text)?;
++    let graph = Arc::new(Graph::from_bytes(&bytes, &manifest)?);
++
++    // Every declared plan must validate through the production placement owner before any
++    // attempt runs; an invalid plan is a stop, not a silently dropped arm.
++    let plans = plans();
++    let mut described = vec![];
++    for (name, placements) in &plans {
++        let resolved = sim::placement::resolve_placements(&content.level, placements)?;
++        described.push(json!({
++            "plan": name,
++            "placements": placements,
++            "resolvedPlacements": resolved.state.placements,
++            "remainingInventory": resolved.state.remaining,
++            "sources": resolved.sources,
++            "foodSurfaces": resolved.state.food.len(),
++            "objectSurfaces": resolved.state.objects.len(),
++        }));
++    }
++
++    let start = Instant::now();
++    let mut runs = vec![];
++    let mut errors = vec![];
++    for (name, placements) in &plans {
++        for seed in SEEDS {
++            match run(&graph, &content, name, seed, placements) {
++                Ok(value) => runs.push(value),
++                Err(error) => errors.push(json!({"plan": name, "seed": seed, "error": error})),
++            }
++            // Partial data survives a later failure or an interrupted run.
++            std::fs::write(
++                output,
++                serde_json::to_vec_pretty(&json!({
++                    "warmupTicks": BRAIN_WARMUP_TICKS,
++                    "simulationBuildId": SIMULATION_BUILD_ID,
++                    "graphHash": graph.manifest.graph_hash,
++                    "levelContentSha256": format!("{:x}", Sha256::digest(content_text.as_bytes())),
++                    "probeSourceSha256": format!("{:x}", Sha256::digest(include_str!("campaign_warmup_probe.rs").as_bytes())),
++                    "attemptSourceSha256": format!("{:x}", Sha256::digest(include_str!("../src/attempt.rs").as_bytes())),
++                    "flyCount": FLY_COUNT,
++                    "durationTicks": content.level.duration_ticks,
++                    "seeds": SEEDS,
++                    "plans": described,
++                    "tuning": content.tuning,
++                    "complete": runs.len() + errors.len() == plans.len() * SEEDS.len(),
++                    "runs": runs,
++                    "errors": errors,
++                    "elapsedSeconds": start.elapsed().as_secs_f64(),
++                }))?,
++            )?;
++        }
++    }
++    println!(
++        "warmup {} : {} runs, {} errors, {:.1}s -> {output}",
++        BRAIN_WARMUP_TICKS,
++        runs.len(),
++        errors.len(),
++        start.elapsed().as_secs_f64()
++    );
++    if !errors.is_empty() {
++        return Err(format!("{} attempt(s) failed", errors.len()).into());
++    }
++    Ok(())
++}
++
+diff --git a/crates/sim/src/attempt.rs b/crates/sim/src/attempt.rs
+index 74c92d7..3558e93 100644
+--- a/crates/sim/src/attempt.rs
++++ b/crates/sim/src/attempt.rs
+@@ -50,6 +50,10 @@ pub struct AttemptStep {
+ }
+ 
+ pub const GAME_TICK_SECONDS: f64 = 0.1;
++/// TEMPORARY EXPERIMENT ONLY (worktree /tmp/fly-claude-odor-response, not for production).
++/// Unstimulated brain ticks run inside `Attempt::new` after silencing and before the first
++/// `step()`. Cold binary compiles 0, warm binary compiles 60. Nothing else differs.
++pub const BRAIN_WARMUP_TICKS: u32 = 0;
+ pub const SIMULATION_BUILD_ID: &str = env!("SIM_BUILD_ID");
+ #[derive(Clone, Debug, Serialize, Deserialize, TS)]
+ #[serde(rename_all = "camelCase")]
+@@ -266,6 +270,10 @@ impl Attempt {
+             .map(|(id, initial)| {
+                 let mut brain = Brain::new(graph.clone(), Brain::seed_for_fly(seed, id as u32));
+                 brain.set_silenced_neurons(&tuning.silenced_neurons)?;
++                // TEMPORARY EXPERIMENT ONLY: unstimulated warmup, external currents still zero.
++                for _ in 0..BRAIN_WARMUP_TICKS {
++                    brain.step();
++                }
+                 Ok(Fly {
+                     brain,
+                     body: Body::new_in_mode(

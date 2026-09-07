@@ -1,0 +1,38 @@
+BALANCED SUBSET: the 13 plan-seed cells that completed in BOTH arms
+
+  plan            seed   cold  warm60   warm-cold
+  empty          100      0       2         +2
+  empty          101      1       0         -1
+  empty          102      0       1         +1
+  empty          103      1       2         +1
+  empty          104      0       2         +2
+  apple          102      1       2         +1
+  apple          103      0       5         +5
+  apple          105      2       0         -2
+  vinegar        100      2       3         +1
+  vinegar        101      2       3         +1
+  apple-vinegar  100      2       2         +0
+  apple-vinegar  101      1       2         +1
+  apple-vinegar  104      2       3         +1
+
+  warm60 - cold over all 13 balanced cells: mean +1.00, 10+ / 10 / 2-
+  pooled: cold 14/260 = 0.054   warm60 27/260 = 0.104
+
+
+PLAN EFFECT restricted to seeds where BOTH the plan cell and the empty cell completed,
+computed separately inside each arm (this is the primary comparison the experiment asked for)
+
+  cold
+    apple          n=5  mean +0.40  signs 3+/00/2-   s100:+1 s101:-1 s102:+1 s103:-1 s104:+2
+    vinegar        n=3  mean +2.00  signs 3+/00/0-   s100:+2 s101:+1 s104:+3
+    apple-vinegar  n=4  mean +2.25  signs 3+/10/0-   s100:+2 s101:+0 s102:+5 s104:+2
+
+  warm60
+    apple          n=2  mean +2.00  signs 2+/00/0-   s102:+1 s103:+3
+    vinegar        n=3  mean +2.00  signs 3+/00/0-   s100:+1 s101:+3 s103:+2
+    apple-vinegar  n=4  mean +2.00  signs 3+/10/0-   s100:+0 s101:+2 s103:+5 s104:+1
+
+
+STAR THRESHOLDS for this level: [1, 8, 15] escapes of 20.
+  Best single swarm observed anywhere: 7/20 escapes (warm60, apple-vinegar, seed 103) -> 1 star.
+  No cell in this pilot reached the 2-star threshold of 8.
