@@ -46,17 +46,16 @@ def finish(obj, name, mat):
     return obj
 
 
-def ellipsoid(name, position, scale, mat=shell, facets=False):
-    if facets:
+def ellipsoid(name, position, scale, mat=shell, icosphere=False):
+    if icosphere:
         bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=3, radius=1, location=position)
     else:
         bpy.ops.mesh.primitive_uv_sphere_add(segments=24, ring_count=12, location=position)
     obj = finish(bpy.context.object, name, mat)
     obj.scale = scale
     bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
-    if not facets:
-        for face in obj.data.polygons:
-            face.use_smooth = True
+    for face in obj.data.polygons:
+        face.use_smooth = True
     return obj
 
 
@@ -76,7 +75,7 @@ ellipsoid('AbdomenMiddle', (0, 0.33, 0.335), (0.155, 0.16, 0.13))
 ellipsoid('AbdomenTip', (0, 0.435, 0.32), (0.115, 0.14, 0.10))
 ellipsoid('Head', (0, -0.245, 0.415), (0.155, 0.145, 0.14))
 for sign, side in [(-1, 'L'), (1, 'R')]:
-    ellipsoid('Eye.'+side, (sign*0.115, -0.293, 0.445), (0.095, 0.12, 0.12), eye, True)
+    ellipsoid('Eye.'+side, (sign*0.115, -0.293, 0.445), (0.095, 0.12, 0.12), eye, icosphere=True)
     rod('Antenna.'+side, (sign*0.042,-0.365,0.46), (sign*0.065,-0.455,0.48), 0.012)
     ellipsoid('AntennaTip.'+side, (sign*0.065,-0.455,0.48), (0.017,0.025,0.017))
     for index, (attach_y,knee_y,toe_y) in enumerate([(-0.13,-0.22,-0.36),(0,-0.015,0.055),(0.14,0.25,0.43)]):
