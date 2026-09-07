@@ -33,6 +33,17 @@ pub struct SurfaceHit {
     pub normal: [f64; 3],
 }
 
+/// A geometric support candidate, not permission to move or land there.
+#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+pub struct SupportSample {
+    pub surface_id: u32,
+    pub root: [f64; 3],
+    pub rotation: [f64; 4],
+    pub point: [f64; 3],
+    pub normal: [f64; 3],
+}
+
 pub struct ContactHull(ConvexPolyhedron);
 impl ContactHull {
     /// Points are relative to the native model's support pivot, not its bounds centre.
@@ -132,66 +143,56 @@ impl ContactScene {
             rotation: Rotation::from_array(support_rotation(heading, up)?),
         };
         let velocity = Vector::from_array(displacement) * QUERY_UNITS;
-        let tangent_roundoff = 16. * f64::EPSILON * velocity.length();
-        let end = Pose {
-            translation: pose.translation + velocity,
-            ..pose
-        };
-        let swept = hull
-            .0
-            .compute_aabb(&pose)
-            .merged(&hull.0.compute_aabb(&end));
-        let mut first = None;
-        for (id, mesh) in &self.meshes {
-            for triangle_id in mesh.bvh().intersect_aabb(&swept) {
-                let triangle = mesh.triangle(triangle_id);
-                let normal = triangle.normal().expect("validated nondegenerate triangle");
-                let normal_velocity = normal.dot(velocity);
-                // A separating face plane cannot block tangent/outward translation.
-                // Test each triangle: another face in this same mesh may still block it.
-                let separated = |direction: Vector| {
-                    direction.dot(hull.0.support_point(&pose, -direction) - triangle.a)
-                        >= -PLANE_TOLERANCE
-                };
-                if (normal_velocity >= -tangent_roundoff && separated(normal))
-                    || (normal_velocity <= tangent_roundoff && separated(-normal))
-                {
-                    continue;
-                }
-                let hit = cast_shapes(
-                    &pose,
-                    velocity,
-                    &hull.0,
-                    &Pose::IDENTITY,
-                    Vector::ZERO,
-                    &triangle,
-                    ShapeCastOptions {
-                        max_time_of_impact: 1.,
-                        stop_at_penetration: false,
-                        ..Default::default()
-                    },
-                )
-                .map_err(|_| "unsupported contact shape pair")?;
-                if let Some(hit) = hit {
-                    if !matches!(
-                        hit.status,
-                        ShapeCastStatus::Converged | ShapeCastStatus::PenetratingOrWithinTargetDist
-                    ) {
-                        return Err(format!("contact query did not converge: {:?}", hit.status));
-                    }
-                    select(
-                        &mut first,
-                        checked_hit(
-                            *id,
-                            hit.time_of_impact,
-                            hit.witness2 / QUERY_UNITS,
-                            hit.normal2,
-                        )?,
-                    );
-                }
-            }
+        cast_on(hull, pose, velocity, self.meshes.iter())
+    }
+
+    /// Find the upper supporting root at a requested planar position/orientation.
+    /// The caller must still constrain acquisition and the path between samples.
+    pub fn support_at(
+        &self,
+        hull: &ContactHull,
+        surface_id: u32,
+        position: [f64; 2],
+        heading: f64,
+        up: [f64; 3],
+    ) -> Result<Option<SupportSample>, String> {
+        if !bounded([position[0], 0., position[1]]) {
+            return Err("support sampling requires a bounded finite planar position".into());
         }
-        Ok(first)
+        let rotation = support_rotation(heading, up)?;
+        let index = self
+            .meshes
+            .binary_search_by_key(&surface_id, |(id, _)| *id)
+            .map_err(|_| "support surface is absent from this scene")?;
+        let entry = &self.meshes[index];
+        let orientation = Pose {
+            translation: Vector::ZERO,
+            rotation: Rotation::from_array(rotation),
+        };
+        let body_bounds = hull.0.compute_aabb(&orientation);
+        let surface_bounds = entry.1.local_aabb();
+        let body_height = body_bounds.maxs.y - body_bounds.mins.y;
+        let top = surface_bounds.maxs.y - body_bounds.mins.y + body_height;
+        let bottom = surface_bounds.mins.y - body_bounds.maxs.y - body_height;
+        let pose = Pose {
+            translation: Vector::new(position[0] * QUERY_UNITS, top, position[1] * QUERY_UNITS),
+            ..orientation
+        };
+        let velocity = Vector::new(0., bottom - top, 0.);
+        let Some(hit) = cast_on(hull, pose, velocity, std::iter::once(entry))? else {
+            return Ok(None);
+        };
+        let root = ((pose.translation + velocity * hit.fraction) / QUERY_UNITS).to_array();
+        if !bounded(root) {
+            return Err("support root is outside the bounded world".into());
+        }
+        Ok(Some(SupportSample {
+            surface_id,
+            root,
+            rotation,
+            point: hit.point,
+            normal: hit.normal,
+        }))
     }
 
     /// Locate a support point below a root; the body owner decides whether to land on it.
@@ -225,6 +226,73 @@ impl ContactScene {
         }
         Ok(first)
     }
+}
+fn cast_on<'a>(
+    hull: &ContactHull,
+    pose: Pose,
+    velocity: Vector,
+    meshes: impl Iterator<Item = &'a (u32, TriMesh)>,
+) -> Result<Option<SurfaceHit>, String> {
+    let tangent_roundoff = 16. * f64::EPSILON * velocity.length();
+    let end = Pose {
+        translation: pose.translation + velocity,
+        ..pose
+    };
+    let swept = hull
+        .0
+        .compute_aabb(&pose)
+        .merged(&hull.0.compute_aabb(&end));
+    let mut first = None;
+    for (id, mesh) in meshes {
+        for triangle_id in mesh.bvh().intersect_aabb(&swept) {
+            let triangle = mesh.triangle(triangle_id);
+            let normal = triangle.normal().expect("validated nondegenerate triangle");
+            let normal_velocity = normal.dot(velocity);
+            // A separating face plane cannot block tangent/outward translation.
+            // Test each triangle: another face in this same mesh may still block it.
+            let separated = |direction: Vector| {
+                direction.dot(hull.0.support_point(&pose, -direction) - triangle.a)
+                    >= -PLANE_TOLERANCE
+            };
+            if (normal_velocity >= -tangent_roundoff && separated(normal))
+                || (normal_velocity <= tangent_roundoff && separated(-normal))
+            {
+                continue;
+            }
+            let hit = cast_shapes(
+                &pose,
+                velocity,
+                &hull.0,
+                &Pose::IDENTITY,
+                Vector::ZERO,
+                &triangle,
+                ShapeCastOptions {
+                    max_time_of_impact: 1.,
+                    stop_at_penetration: false,
+                    ..Default::default()
+                },
+            )
+            .map_err(|_| "unsupported contact shape pair")?;
+            if let Some(hit) = hit {
+                if !matches!(
+                    hit.status,
+                    ShapeCastStatus::Converged | ShapeCastStatus::PenetratingOrWithinTargetDist
+                ) {
+                    return Err(format!("contact query did not converge: {:?}", hit.status));
+                }
+                select(
+                    &mut first,
+                    checked_hit(
+                        *id,
+                        hit.time_of_impact,
+                        hit.witness2 / QUERY_UNITS,
+                        hit.normal2,
+                    )?,
+                );
+            }
+        }
+    }
+    Ok(first)
 }
 /// Native glTF orientation: +Y is the support normal and +Z follows the projected heading.
 pub fn support_rotation(heading: f64, up: [f64; 3]) -> Result<[f64; 4], String> {

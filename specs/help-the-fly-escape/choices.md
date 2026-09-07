@@ -354,3 +354,13 @@ When a placement edit succeeds, its placement list, remaining inventory and reso
 - **Reach:** Fixed-orientation translations use this check in the existing prepared query owner. It does not authorize skipping entire objects, tolerating visible penetration, or choosing a walking controller. Changing orientation still requires separate physical resolution.
 - **Verdict:** Sound — preserves nearby blocking faces and replaces the measured false obstruction without adding a clearance shell.
 - **Confidence:** High.
+
+
+### Support sampling does not choose physical movement
+
+- **When:**20 native support-sampling preparation.
+- **Choice:** Keep geometric placement separate from permission to move. On a sloping apple, the point where a foot touches can lie sideways from the fly's origin. The shared Rust sampler now returns both the supported origin and the touching point, plus the core orientation. It considers the named surface only. The body must first establish that the fly can reach that configuration; calling this sampler does not itself land the fly or let a floor walker jump onto food.
+- **Gap:** The spec required authoritative supported roots and replay but did not define the geometric sampling operation or its relationship to acquisition.
+- **Reach:** Body movement and future buffered path generation can share this query. Runtime replay strategy, orientation policy and hull adoption remain open; no main-thread physics path is implied.
+- **Verdict:** Sound — keeps one geometry owner while preventing a valid destination from masquerading as a physically valid transition.
+- **Confidence:** High.

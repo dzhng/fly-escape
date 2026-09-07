@@ -324,3 +324,62 @@ fn supported_translation_is_not_tied_to_horizontal_world_axes() {
             .is_some());
     }
 }
+
+#[test]
+fn support_sampling_preserves_the_root_instead_of_snapping_to_the_witness() {
+    let mut slope = floor(12, 0.);
+    for p in &mut slope.vertices {
+        p[1] = -0.75 * p[0];
+    }
+    let scene = ContactScene::new(&[slope, floor(2, -0.5)]).unwrap();
+    let hull = hull();
+    let upright = scene
+        .support_at(&hull, 12, [0., 0.], 0., [0., 1., 0.])
+        .unwrap()
+        .unwrap();
+    assert_eq!(upright.surface_id, 12);
+    near(upright.root[0], 0.);
+    near(upright.root[1], 0.001125);
+    near(upright.root[2], 0.);
+    assert!((upright.point[0] - upright.root[0]).abs() > 0.001);
+    let aligned = scene
+        .support_at(&hull, 12, [0., 0.], 0., [0.6, 0.8, 0.])
+        .unwrap()
+        .unwrap();
+    near(aligned.root[1], 0.);
+    assert_eq!(
+        aligned.rotation,
+        sim::surface::support_rotation(0., [0.6, 0.8, 0.]).unwrap()
+    );
+    assert!(scene
+        .support_at(&hull, 12, [2., 0.], 0., [0., 1., 0.])
+        .unwrap()
+        .is_none());
+    assert!(scene
+        .support_at(&hull, 99, [0., 0.], 0., [0., 1., 0.])
+        .is_err());
+}
+
+#[test]
+fn support_sampling_uses_surface_bounds_and_rejects_invalid_pose_inputs() {
+    let scene = ContactScene::new(&[floor(7, 500.)]).unwrap();
+    let hull = hull();
+    let sample = scene
+        .support_at(&hull, 7, [0.1, -0.2], 0.4, [0., 1., 0.])
+        .unwrap()
+        .unwrap();
+    near(sample.root[0], 0.1);
+    near(sample.root[1], 500.);
+    near(sample.root[2], -0.2);
+    for position in [[f64::NAN, 0.], [0., f64::INFINITY]] {
+        assert!(scene
+            .support_at(&hull, 7, position, 0., [0., 1., 0.])
+            .is_err());
+    }
+    assert!(scene
+        .support_at(&hull, 7, [0., 0.], f64::NAN, [0., 1., 0.])
+        .is_err());
+    assert!(scene
+        .support_at(&hull, 7, [0., 0.], 0., [0., -1., 0.])
+        .is_err());
+}

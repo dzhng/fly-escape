@@ -30,6 +30,7 @@ fn main() {
         sim::food::FoodShape::decl(),
         sim::surface::ContactSurface::decl(),
         sim::surface::SurfaceHit::decl(),
+        sim::surface::SupportSample::decl(),
         ExitOpening::decl(),
         BodyContacts::decl(),
         FeedingEnd::decl(),
