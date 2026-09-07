@@ -1,0 +1,141 @@
+{
+  "before": {
+    "height": 0.08816780470482011,
+    "mode": "flying",
+    "outcome": null,
+    "pose": {
+      "heading": 4.591304066780186,
+      "position": {
+        "x": 1.2578663807494694,
+        "z": 3.456808803950721
+      }
+    },
+    "reserve": 5.800000000000106,
+    "rotation": [
+      0.025199154720995532,
+      0.9975620655081161,
+      -0.022595059457293367,
+      -0.0610277916088221
+    ],
+    "support": null
+  },
+  "desired": {
+    "heading": 4.564267411386064,
+    "position": {
+      "x": 1.253090143632047,
+      "z": 3.424799585182792
+    }
+  },
+  "dt": 0.1,
+  "invalid": {
+    "depth": 6.789076869065322e-6,
+    "fraction": 1.0,
+    "height": 0.08816780470482011,
+    "pose": {
+      "heading": 4.585896735701361,
+      "position": {
+        "x": 1.2578663807494694,
+        "z": 3.456808803950721
+      }
+    },
+    "rotation": [
+      0.025260119462822833,
+      0.9973935131062133,
+      -0.022526883389745976,
+      -0.06372319752738917
+    ],
+    "support": null
+  },
+  "neural": {
+    "groups": [
+      {
+        "id": "odorExcL",
+        "meanVoltage": 0.8294559277002496,
+        "spikeFraction": 0.0
+      },
+      {
+        "id": "odorExcR",
+        "meanVoltage": 0.8075423286391719,
+        "spikeFraction": 0.1
+      },
+      {
+        "id": "odorInhL",
+        "meanVoltage": 0.7640605636042035,
+        "spikeFraction": 0.0
+      },
+      {
+        "id": "odorInhR",
+        "meanVoltage": 0.7535321101419923,
+        "spikeFraction": 0.0
+      },
+      {
+        "id": "visionL",
+        "meanVoltage": 0.6817065090040356,
+        "spikeFraction": 0.00819672131147541
+      },
+      {
+        "id": "visionR",
+        "meanVoltage": 0.7182305892853464,
+        "spikeFraction": 0.015625
+      },
+      {
+        "id": "turnL",
+        "meanVoltage": 0.7324602645923817,
+        "spikeFraction": 0.0
+      },
+      {
+        "id": "turnR",
+        "meanVoltage": 0.6711844798733166,
+        "spikeFraction": 0.0
+      },
+      {
+        "id": "flightL",
+        "meanVoltage": 0.6346051046714215,
+        "spikeFraction": 0.0
+      },
+      {
+        "id": "flightR",
+        "meanVoltage": 0.6895650356242472,
+        "spikeFraction": 0.1111111111111111
+      },
+      {
+        "id": "landingL",
+        "meanVoltage": 0.5413158395559876,
+        "spikeFraction": 0.0
+      },
+      {
+        "id": "landingR",
+        "meanVoltage": 0.6764526323910874,
+        "spikeFraction": 0.0
+      },
+      {
+        "id": "taste",
+        "meanVoltage": 0.7570982747891423,
+        "spikeFraction": 0.0
+      },
+      {
+        "id": "feeding",
+        "meanVoltage": 0.7755088570026365,
+        "spikeFraction": 0.0
+      },
+      {
+        "id": "proboscis",
+        "meanVoltage": 0.8089207223449724,
+        "spikeFraction": 0.0
+      },
+      {
+        "id": "loom",
+        "meanVoltage": 0.7273433814006011,
+        "spikeFraction": 0.007936507936507936
+      }
+    ],
+    "motor": {
+      "flightThrust": 1.3484832832352387,
+      "flightTurn": -0.033795819242652236,
+      "thrust": 0.7007186503962863,
+      "turn": -0.06127578471906503
+    },
+    "spikeCount": 976
+  },
+  "tick": 201
+}

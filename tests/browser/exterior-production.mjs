@@ -1,7 +1,8 @@
 import { zoomOut } from "./zoom-out.mjs";
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-const samePixels=(actual,expected,label)=>assert.ok(actual.equals(expected),`${label}: ${createHash('sha256').update(actual).digest('hex')} vs ${createHash('sha256').update(expected).digest('hex')}`);
+const pixelChecks=[];
+const samePixels=(actual,expected,label)=>pixelChecks.push({label,equal:actual.equals(expected),actual:createHash('sha256').update(actual).digest('hex'),expected:createHash('sha256').update(expected).digest('hex')});
 import { chromium } from 'playwright';
 import { mkdir,writeFile } from 'node:fs/promises';
 const out=process.env.GRASS_OUT??'/tmp/fly-exterior-production-evidence';await mkdir(out,{recursive:true});
@@ -12,6 +13,7 @@ try {
  await page.addInitScript(()=>{const random=crypto.getRandomValues.bind(crypto);crypto.getRandomValues=array=>array instanceof BigUint64Array&&array.length===1?(array[0]=42n,array):random(array)});
  await page.goto(process.env.GRASS_URL??'http://127.0.0.1:5312/');
  await page.waitForFunction(()=>document.querySelector('.run-setup')?.disabled===false,{timeout:90000});
+ const gpu=await page.evaluate(()=>{const gl=document.querySelector('canvas').getContext('webgl2');const ext=gl?.getExtension('WEBGL_debug_renderer_info');const renderer=ext?gl.getParameter(ext.UNMASKED_RENDERER_WEBGL):null;return{renderer,timingsValid:!!renderer&&!/SwiftShader|Software/i.test(renderer)}});
  await page.mouse.move(1400,50);await page.waitForTimeout(200);
  await page.screenshot({path:`${out}/setup.png`});await page.locator('canvas').screenshot({path:`${out}/setup-canvas.png`});
  await page.getByRole('button',{name:'Release the flies'}).click();
@@ -40,6 +42,10 @@ try {
   resizeResources.push({name,report:await read()});
  }
  samePixels(await page.locator('canvas').screenshot(),restoredPixels,'resize restores exact world pixels');
- await writeFile(`${out}/report.json`,JSON.stringify({frames,resizeResources,errors},null,2));
- assert.deepEqual(errors,[]);assert.equal(frames[0].report.spec.flyCount,20);assert.equal(frames[0].report.spec.rootSeed,'42');
+ await page.getByRole('button',{name:'Play',exact:true}).click();
+ await page.waitForFunction(()=>{try{return JSON.parse(document.querySelector('[data-testid=playback-report]')?.textContent).state==='ended'}catch{return false}},{timeout:90000});
+ const final=await read();
+ await writeFile(`${out}/report.json`,JSON.stringify({frames,resizeResources,errors,pixelChecks,gpu,final},null,2));
+ assert.equal(final.complete,true);assert.equal(final.underruns,0);assert.ok(final.result);
+ assert.deepEqual(errors,[]);assert.ok(pixelChecks.every(check=>check.equal),JSON.stringify(pixelChecks));assert.equal(frames[0].report.spec.flyCount,20);assert.equal(frames[0].report.spec.rootSeed,'42');
 }finally{await browser.close()}

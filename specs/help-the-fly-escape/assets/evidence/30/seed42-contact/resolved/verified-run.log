@@ -1,0 +1,20 @@
+   Compiling sim v0.1.0 (/tmp/fly-native-zapper/crates/sim)
+   Compiling seed42-repro v0.1.0 (/tmp/fly-seed42-native-repro)
+    Finished `release` profile [optimized] target(s) in 3.95s
+     Running `/tmp/fly-household-contact/target/release/seed42-repro`
+tick 20
+tick 40
+tick 60
+tick 80
+tick 100
+tick 120
+tick 140
+tick 160
+tick 180
+tick 200
+tick 220
+tick 240
+tick 260
+tick 280
+tick 300
+{"attemptId":"ae43851e-830c-4245-8a7e-8e0576a77b84","completedTick":311,"outcomes":{"escaped":2,"starved":18,"zapped":0,"timedOut":0,"score":2},"stars":1}
