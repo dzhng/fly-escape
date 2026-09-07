@@ -69,3 +69,26 @@ test("millimetre subjects stay in the frustum at follow and extra-close househol
   for (const x of [0, 4]) for (const y of [0, 2.6]) for (const z of [0, 4])
     expect(rig.project(new THREE.Vector3(x, y, z)).visible).toBe(true);
 });
+
+test("zoom compensation grows continuously at wide views and retains native close size", () => {
+  const camera = new WorldCamera(new THREE.Box3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(4, 2.6, 4)), 0.0018);
+  camera.resize(1120, 794);
+  camera.follow(new THREE.Vector3(2, 0.0009, 2));
+  expect(camera.displayScale(0.00386)).toBe(1);
+  let previous = 1;
+  for (let i = 0; i < 60; i++) {
+    camera.zoom(70);
+    const scale = camera.displayScale(0.00386);
+    expect(scale).toBeGreaterThanOrEqual(previous);
+    expect(scale / previous).toBeLessThanOrEqual(Math.exp(70 * 0.0015) + 1e-10);
+    expect(camera.displayScale(0.00386)).toBe(scale);
+    previous = scale;
+  }
+  expect(previous).toBeGreaterThan(10);
+  camera.resize(1120, 397);
+  expect(camera.displayScale(0.00386)).toBeCloseTo(previous);
+  camera.resize(1120, 794);
+  expect(camera.displayScale(0.00386)).toBeCloseTo(previous);
+  camera.zoomClose();
+  expect(camera.displayScale(0.00386)).toBe(1);
+});

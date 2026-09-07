@@ -292,3 +292,7 @@ The planar non-solid tool contract favors near-flush sources: vinegar saucer, in
 ### Sensitivity at physical fly scale (slice 27)
 
 The detector responds to a left/right difference above0.01% of their sum, keeping its existing minimum intensity and sensory-only current strength. The old5% threshold missed the resolved signal across the authored antennae; the intermediate 0.1% candidate also failed. The 0.01% candidate preserves paired odor and light/shade turn responses across 30 seeds and loses them under pathway silencing. This is a deliberate game-model sensitivity choice, not a measured biological threshold. Confidence: medium; final campaign efficacy and three-dimensional sensing remain separate limits.
+
+### Fly visibility at wide zoom (slice28)
+
+User-authorized visual exaggeration uses a common zoom-derived scale with a reversible24 CSS-pixel target span and a native-size floor. Camera projection owns the scale; rendered meshes, yellow ring, follow centre and trail gap consume it. Physics and recorded trajectories retain native dimensions. Confidence: medium; browser readability is improved and close crops unchanged, but compact swarms overlap and final furnishing contrast remains open.

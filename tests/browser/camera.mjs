@@ -76,11 +76,18 @@ try {
   assert.equal(close.camera.following, true);
   assert.equal(close.camera.distance * 2, close.camera.closeDistance);
   centered(close.camera);
+  assert.equal(close.camera.displayScale, 1, "extra-close retains native size");
   await page.screenshot({ path: `${output}/extra-close.png` });
+  await page.mouse.wheel(0, 3000);
+  await page.waitForFunction(() => JSON.parse(document.querySelector('[data-testid="playback-report"]').textContent).camera.displayScale > 1);
+  const zoomedFollow = await report();
+  assert.equal(zoomedFollow.camera.following, true);
+  centered(zoomedFollow.camera);
   await page.getByRole("button", { name: "Overview", exact: true }).click();
   await released();
   const overview = await report();
   assert.equal(overview.camera.distance, overview.camera.maxDistance);
+  assert.ok(overview.camera.displayScale > 1, "Overview compensates fly size");
   await page.screenshot({ path: `${output}/overview.png` });
   const target = overview.camera.flies[19];
   await page.mouse.click(box.x + target.x, box.y + target.y);

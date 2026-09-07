@@ -20,6 +20,26 @@ try {
   const bounds=await page.locator('canvas').boundingBox();
   await page.screenshot({path:`${out}/${mode}-crop.png`,clip:{x:bounds.x+bounds.width/2-160,y:bounds.y+bounds.height/2-160,width:320,height:320}});
  }
+ const read = async () => JSON.parse(await page.locator('#app').getAttribute('data-measurements'));
+ const wide = await read();
+ assert.ok(wide.camera.displayScale > 1);
+ assert.equal(measurements.find(row => row.mode === 'close').camera.displayScale, 1);
+ await page.waitForTimeout(200);
+ assert.equal((await read()).camera.displayScale, wide.camera.displayScale, 'frames do not compound display scale');
+ await page.locator('[data-view="context"]').click(); await page.waitForTimeout(100);
+ const contextBefore = await read();
+ const canvas = await page.locator('canvas').boundingBox();
+ const target = contextBefore.camera.flies[5];
+ await page.mouse.click(canvas.x + target.x, canvas.y + target.y);
+ await page.waitForTimeout(100);
+ const picked = await read();
+ assert.equal(picked.camera.selectedFlyId, 5);
+ assert.equal(picked.camera.displayScale, 1);
+ assert.ok(picked.camera.following);
+ await page.locator('[data-view="context"]').click(); await page.waitForTimeout(100);
+ const restored = await read();
+ assert.deepEqual(restored.camera, contextBefore.camera, 'zoom return restores display scale and centring');
+ assert.deepEqual(restored.spec, contextBefore.spec, 'zoom does not mutate the attempt');
  await page.locator('#subject').selectOption('0');
  for (const mode of ['context','follow','close']) {
   await page.locator(`[data-view="${mode}"]`).click(); await page.waitForTimeout(100);
@@ -32,7 +52,7 @@ try {
  const replay=JSON.parse(await page.locator('#app').getAttribute('data-measurements'));
  assert.equal(replay.recordedFrame.flies.length,20);assert.ok(replay.recordedFrame.neuralSteps>0);
  await page.screenshot({path:`${out}/recorded.png`});
- const initial=measurements[0];
+ const initial=measurements.find(row=>row.mode==="close");
  assert.ok(Math.abs(initial.nativeBodyLength-0.003)<1e-8);
  assert.equal(initial.modelScale,1);
  assert.equal(initial.coreBodyRadius,0.002632);
@@ -41,6 +61,13 @@ try {
  const sampled=[...initial.initialSensoryPoints[0]].sort((a,b)=>a.z-b.z);
  for(let i=0;i<2;i++) assert.ok(Math.hypot(actual[i].x-sampled[i].x,actual[i].z-sampled[i].z)<1e-8,
    "core sampling points agree with rendered antenna centres at tick zero");
+ await page.locator('#recorded-tick').fill('0'); await page.locator('#recorded-tick').dispatchEvent('input');
+ await page.waitForTimeout(100);
+ await page.locator('#recorded-tick').fill('40'); await page.locator('#recorded-tick').dispatchEvent('input');
+ await page.waitForTimeout(100);
+ const rewound = await read();
+ assert.deepEqual(rewound.recordedFrame, replay.recordedFrame);
+ assert.deepEqual(rewound.camera, replay.camera);
  assert.deepEqual(errors,[]);
  await writeFile(`${out}/report.json`,JSON.stringify({measurements,replay,errors},null,2));
 }finally{await browser.close()}

@@ -82,7 +82,7 @@ export async function proportionsWorkbench() {
       if (/^AntennaTip/.test(object.name)) renderedAntennae.push(new THREE.Box3().setFromObject(object).getCenter(new THREE.Vector3()).toArray());
     });
     const camera = view.cameraState;
-    app.querySelector("#camera-measures")!.textContent = `Camera distance ${(camera.distance * 1000).toFixed(1)} mm · near ${(camera.near * 1000).toFixed(3)} mm · selected centre ${camera.flies[selected].visible ? "in frustum" : "outside frustum"}`;
+    app.querySelector("#camera-measures")!.textContent = `Display ${camera.displayScale.toFixed(1)}× · camera distance ${(camera.distance * 1000).toFixed(1)} mm · near ${(camera.near * 1000).toFixed(3)} mm · selected centre ${camera.flies[selected].visible ? "in frustum" : "outside frustum"}`;
     app.dataset.measurements = JSON.stringify({ tick, camera, nativeBodyLength, modelScale: 1, modelBounds: modelSize.toArray(), modelMin: model.bounds.min.toArray(), modelMax: model.bounds.max.toArray(), anatomy, coreAntennaOffset: level.fieldConfig.antennaOffset, coreAntennaForward: level.fieldConfig.antennaForward, initialSensoryPoints: info?.initialSensoryPoints, renderedAntennae, coreFieldSpacing: level.fieldConfig.cellSize, bodyLength: spec.flyBodyLength, worldUnitMetres: 1, statistics: view.statistics, spec: info?.spec, coreBodyRadius: level.bodyConfig.bodyRadius, recordedFrame: tick && archive ? archive.frame(tick) : null });
     requestAnimationFrame(draw);
   }

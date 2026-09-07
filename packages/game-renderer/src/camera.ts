@@ -87,6 +87,10 @@ export class WorldCamera {
     this.target.z = THREE.MathUtils.clamp(this.target.z, this.bounds.min.z, this.bounds.max.z);
     this.apply();
   }
+  displayScale(nativeSpan: number): number {
+    const unitsPerPixel = 2 * this.distance * Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2)) / this.height;
+    return Math.max(1, 24 * unitsPerPixel / nativeSpan);
+  }
   project(position: THREE.Vector3) {
     const p = position.clone().project(this.camera);
     return {

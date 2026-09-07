@@ -64,6 +64,9 @@ export class WorldView {
   private readonly flies: THREE.Object3D[] = [createPlaceholderFly()];
   private motions: FlyMotion[] = [];
   private subjectCenterY = 0.35;
+  private nativeSpan = 1;
+  private readonly nativeScale = new THREE.Vector3(1, 1, 1);
+  private displayScale = 1;
   private modelKind: "placeholder" | "glb" = "placeholder";
   private readonly observer: ResizeObserver;
   private readonly sensorMarkers = [createPointMarker("L"), createPointMarker("R")];
@@ -201,8 +204,10 @@ export class WorldView {
     this.motions = replacements.map((fly) => new FlyMotion(fly, model.clips));
     disposeObjectResources(removed);
     this.modelKind = "glb";
+    this.nativeScale.copy(model.root.scale);
     this.subjectCenterY = model.bounds.getCenter(new THREE.Vector3()).y;
     const size = model.bounds.getSize(new THREE.Vector3());
+    this.nativeSpan = Math.max(size.x, size.y, size.z);
     this.navigation.setSubjectHeight(size.y);
     const radius = Math.max(size.x, size.z) * 0.6;
     this.selectionRing.geometry.dispose();
@@ -511,10 +516,11 @@ export class WorldView {
     return {
       ...this.navigation.state,
       selectedFlyId: this.selectedFly,
+      displayScale: this.displayScale,
       flies: this.flies.map((fly, id) => ({
         id,
         ...this.navigation.project(
-          fly.position.clone().add(new THREE.Vector3(0, this.subjectCenterY, 0)),
+          fly.position.clone().add(new THREE.Vector3(0, this.subjectCenterY * this.displayScale, 0)),
         ),
       })),
     };
@@ -623,7 +629,7 @@ export class WorldView {
     let projectedRadius = Infinity;
     // Sample the fixed outer rim through the shared camera, including ground foreshortening.
     for (let i = rimStart; i < vertices.count; i++) {
-      point.set(position.x + vertices.getX(i), position.y, position.z - vertices.getY(i));
+      point.set(position.x + vertices.getX(i) * this.displayScale, position.y, position.z - vertices.getY(i) * this.displayScale);
       const rim = this.navigation.project(point);
       projectedRadius = Math.min(projectedRadius, Math.hypot(rim.x - center.x, rim.y - center.y));
     }
@@ -651,12 +657,15 @@ export class WorldView {
 
   render(): void {
     this.controls?.update(performance.now());
+    this.displayScale = this.navigation.displayScale(this.nativeSpan);
+    for (const fly of this.flies) fly.scale.copy(this.nativeScale).multiplyScalar(this.displayScale);
+    this.selectionRing.scale.setScalar(this.displayScale);
     let selectedTarget: THREE.Vector3 | undefined;
     if (this.selectedFly !== null) {
       const fly = this.flies[this.selectedFly];
-      selectedTarget = fly.position.clone().add(new THREE.Vector3(0, this.subjectCenterY, 0));
+      selectedTarget = fly.position.clone().add(new THREE.Vector3(0, this.subjectCenterY * this.displayScale, 0));
       this.navigation.track(selectedTarget);
-      this.selectionRing.position.set(fly.position.x, fly.position.y + this.subjectCenterY * 0.12, fly.position.z);
+      this.selectionRing.position.set(fly.position.x, fly.position.y + this.subjectCenterY * this.displayScale * 0.12, fly.position.z);
       this.updateSelectionRing();
     }
     // Only visual occluders on the camera-to-subject ray cut away; floor/wall
@@ -673,7 +682,7 @@ export class WorldView {
       cutAwayOccluders(this.house.solids);
     }
     if (this.trailSample) this.trails.sample(this.trailSample.paths, this.trailSample.cursorTick,
-      this.selectionRing.geometry.parameters.outerRadius);
+      this.selectionRing.geometry.parameters.outerRadius * this.displayScale);
     this.renderer.render(this.scene, this.navigation.camera);
   }
 
