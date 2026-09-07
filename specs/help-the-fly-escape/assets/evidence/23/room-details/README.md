@@ -1,0 +1,9 @@
+# Room windows and lights
+
+Both campaign levels load native wall-mounted windows and sconces through the same setup and replay asset owner. Their local materials come from Blender; importing does not repaint them. Mounts hide with foreground wall cutaways while their bounded, shadowless point lights remain in the room. The authored meshes and envelopes are unchanged. No simulation obstacle or sensory cue was added.
+
+The [root production capture](home.png) differs from the preceding [Sims-wall frame](../../24/sims-walls/after.png). Both actual levels pass the home smoke: mixed twenty-fly release, recorded playback and return to editing without browser errors. TypeScript and41renderer checks pass. The smoke unlocks level two with an explicit saved-star fixture; it is not evidence of earned campaign completion.
+
+Integration review: source geometry/materials are shared by installed instances and disposed by the existing view owner on replacement or teardown. Failed/stale loads dispose their sources. No new per-frame asset work is introduced; visibility uses the fixed camera direction.
+
+The prepared pass received independent visual critique for mounting, scale and perspective. No new reviewer was available for root integration after the agent-thread limit. Adversarial root inspection: the windows could read as blank panels rather than glass because their opaque blue-grey panes show no exterior; they remain below final glass realism. Sconce pools could read as painted circles because their bright yellow falloff lacks detailed shadowing; final daylight/illumination remains open. Mounts could float away from the wall, but their frames and fixtures visibly attach at coherent wall height and perspective. The spawn label still obscures a cabinet. These limitations remain in slices22–24; this pass does not claim final photorealism.

@@ -607,3 +607,7 @@ Campaign integration preserves each prepared room topology, inventory, duration,
 ### Initial warm household materials and placement
 
 **Sound; medium confidence.** Use locally embedded CC0 photographic oak maps, ivory walls, walnut/brass cabinets and sage upholstery as the first warm-house treatment. Room-scaled floor UVs preserve real board width while sharing the textures. Place native cabinets along rear walls and sofas in side rooms, leaving the main passage and initial swarm clear. The user chose a warm lived-in house but delegated individual finishes and furniture positions; these are reversible art and level-design choices. Final fabric/plaster detail, decoration, lighting and puzzle balance remain open.
+
+## Household light integration
+
+- **When:** room-detail integration after27d42ac. **Choice:** wall lamps use small point lights without individual shadow maps. When a foreground wall fades, its lamp model disappears with it but the light stays, so the room does not suddenly darken. **Gap:** the visual contract asked for household lights without specifying shadow allocation or cutaway light behavior. **Reach:** lights remain decorative; they do not add neural light cues. Final lighting can add shadows if measured browser cost permits. **Verdict:** sound, provisional for final illumination. **Confidence:** medium; stable room lighting helps camera readability, but unshadowed pools still need art review.
