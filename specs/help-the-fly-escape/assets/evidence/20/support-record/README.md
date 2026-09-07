@@ -63,3 +63,9 @@ a committed runtime loader. Neural work and path construction remain in the
 attempt Worker. Descriptor shape, archive bounds, main-thread evaluation cost
 and cancellation/replacement lifetime still need actual diagnostic measurements
 before implementation is selected. No production sampling changes in this note.
+
+## Numerical knot storage constraint
+
+A read-only layout audit at20flies ×6,000ticks reserves52.13MiB with no neural groups or81.43MiB with16groups under the existing128MiB archive cap. A conservative stored knot (fraction, root, heading, quaternion, support and flags) costs80bytes. With per-record offsets, the16-group case leaves room for about604,000knots, approximately five additional knots per fly-tick. A per-trace diagnostic cap cannot establish the total archive bound.
+
+Keep FrameArchive as the sole retained-buffer owner and the Rust record layout as the budget owner. Reuse existing tick endpoints when identical and store only necessary interior/transition knots. Body events and playback must sample the same retained trajectory, including event-clipped endpoints and terminal holds at original tick fractions. A pure batched Rust sampler exposed through existing WASM can consume the requested tick or a bounded chunk cache without loading another brain or contact scene. Actual produced knot counts and sampler cost must be measured before choosing the final packed format. Any simplification belongs to the producer and must pass the contact/error contract before both body and replay consume it. A cumulative byte limit must reject overflow explicitly; it cannot silently truncate or simplify history.
