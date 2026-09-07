@@ -53,6 +53,49 @@ impl MotionTrace {
             queries: 0,
         }
     }
+    /// Remove only stationary-orientation free-space joins whose whole original
+    /// polyline agrees with one timed line to floating-point roundoff.
+    pub(super) fn coalesce_free(&mut self) {
+        let original = std::mem::take(&mut self.points);
+        if original.len() < 3 {
+            self.points = original;
+            return;
+        }
+        let mut from = 0;
+        self.points.push(original[0].clone());
+        while from + 1 < original.len() {
+            let mut to = from + 1;
+            for candidate in from + 2..original.len() {
+                let a = &original[from];
+                let b = &original[candidate];
+                if original[from..=candidate].iter().any(|p| {
+                    p.support.is_some()
+                        || p.grounded != a.grounded
+                        || p.rotation != a.rotation
+                        || p.pose.heading != a.pose.heading
+                }) {
+                    break;
+                }
+                let magnitude = original[from..=candidate]
+                    .iter()
+                    .flat_map(|p| p.root())
+                    .map(f64::abs)
+                    .fold(1., f64::max);
+                let allowance = (64. * f64::EPSILON * magnitude).min(MOTION_ERROR / 1024.);
+                if original[from + 1..candidate].iter().any(|p| {
+                    let t = (p.fraction - a.fraction) / (b.fraction - a.fraction);
+                    let line = mix(a, b, t);
+                    (Vector::from_array(p.root()) - Vector::from_array(line.root())).length()
+                        > allowance
+                }) {
+                    break;
+                }
+                to = candidate;
+            }
+            self.points.push(original[to].clone());
+            from = to;
+        }
+    }
     pub fn finish(mut self, fraction: f64) -> Result<Self, String> {
         let mut end = self.at(fraction)?;
         self.points.retain(|p| p.fraction < fraction);
@@ -479,4 +522,65 @@ fn supported_knots(
         }
     }
     Ok(())
+}
+
+#[cfg(test)]
+mod coalescing_tests {
+    use super::*;
+    fn point(t: f64, x: f64) -> MotionPoint {
+        MotionPoint {
+            fraction: t,
+            pose: BodyPose {
+                position: Point { x, z: 0. },
+                heading: 0.,
+            },
+            height: 0.,
+            rotation: support_rotation(0., [0., 1., 0.]).unwrap(),
+            support: None,
+            grounded: true,
+        }
+    }
+    #[test]
+    fn straight_knots_coalesce_without_moving_any_intermediate_pose() {
+        let points: Vec<_> = (0..=5)
+            .map(|i| {
+                let t = i as f64 / 5.;
+                point(t, 2. + 0.05 * t)
+            })
+            .collect();
+        let original = MotionTrace {
+            queries: 5,
+            points: points.clone(),
+        };
+        let mut retained = MotionTrace { queries: 5, points };
+        retained.coalesce_free();
+        assert_eq!(retained.points.len(), 2);
+        for i in 0..=1000 {
+            let t = i as f64 / 1000.;
+            let a = original.at(t).unwrap();
+            let b = retained.at(t).unwrap();
+            assert!((a.pose.position.x - b.pose.position.x).abs() < 1e-12);
+            assert_eq!(a.support, b.support);
+            assert_eq!(a.grounded, b.grounded);
+        }
+    }
+    #[test]
+    fn collision_hold_and_support_boundaries_survive_coalescing() {
+        let mut trace = MotionTrace {
+            queries: 0,
+            points: vec![point(0., 0.), point(0.4, 0.4), point(1., 0.4)],
+        };
+        trace.coalesce_free();
+        assert_eq!(trace.points.len(), 3);
+        assert_eq!(trace.at(0.7).unwrap().pose.position.x, 0.4);
+        let mut middle = point(0.5, 0.5);
+        middle.support = Some(7);
+        let mut trace = MotionTrace {
+            queries: 0,
+            points: vec![point(0., 0.), middle, point(1., 1.)],
+        };
+        trace.coalesce_free();
+        assert_eq!(trace.points.len(), 3);
+        assert_eq!(trace.at(0.5).unwrap().support, Some(7));
+    }
 }

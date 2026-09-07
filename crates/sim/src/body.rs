@@ -579,6 +579,7 @@ impl Body {
                 }
             }
         }
+        trace.coalesce_free();
         let feed_seconds = feed_fraction * dt;
         let mut terminal: Option<(f64, TerminalOutcome)> = None;
         for pair in trace.points.windows(2) {

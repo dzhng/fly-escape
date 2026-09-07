@@ -1,0 +1,2244 @@
+{
+  "before": {
+    "cases": [
+      {
+        "elapsedMs": 0.049708,
+        "end": {
+          "height": 0.0,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.98,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 6,
+        "mode": "floor",
+        "queries": 5,
+        "thrust": 0.0,
+        "wind": 0.0
+      },
+      {
+        "elapsedMs": 0.0395,
+        "end": {
+          "height": 0.0,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0064,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.98,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 6,
+        "mode": "floor",
+        "queries": 5,
+        "thrust": 0.0,
+        "wind": 0.064
+      },
+      {
+        "elapsedMs": 0.0395,
+        "end": {
+          "height": 0.0,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.05,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.98,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 6,
+        "mode": "floor",
+        "queries": 5,
+        "thrust": 0.0,
+        "wind": 0.5
+      },
+      {
+        "elapsedMs": 0.045459,
+        "end": {
+          "height": 0.0,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.002,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.96,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 6,
+        "mode": "floor",
+        "queries": 5,
+        "thrust": 0.02,
+        "wind": 0.0
+      },
+      {
+        "elapsedMs": 0.042042,
+        "end": {
+          "height": 0.0,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.008400000000000001,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.96,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 6,
+        "mode": "floor",
+        "queries": 5,
+        "thrust": 0.02,
+        "wind": 0.064
+      },
+      {
+        "elapsedMs": 0.041749999999999995,
+        "end": {
+          "height": 0.0,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.052000000000000005,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.96,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 6,
+        "mode": "floor",
+        "queries": 5,
+        "thrust": 0.02,
+        "wind": 0.5
+      },
+      {
+        "elapsedMs": 0.041875,
+        "end": {
+          "height": 0.0,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.2,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.96,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 6,
+        "mode": "floor",
+        "queries": 5,
+        "thrust": 2.0,
+        "wind": 0.0
+      },
+      {
+        "elapsedMs": 0.04475,
+        "end": {
+          "height": 0.0,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.20640000000000003,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.96,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 6,
+        "mode": "floor",
+        "queries": 5,
+        "thrust": 2.0,
+        "wind": 0.064
+      },
+      {
+        "elapsedMs": 0.042874999999999996,
+        "end": {
+          "height": 0.0,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.25,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.96,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 6,
+        "mode": "floor",
+        "queries": 5,
+        "thrust": 2.0,
+        "wind": 0.5
+      },
+      {
+        "elapsedMs": 0.044625,
+        "end": {
+          "height": 0.6,
+          "mode": "flying",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.92,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 6,
+        "mode": "flight",
+        "queries": 5,
+        "thrust": 0.0,
+        "wind": 0.0
+      },
+      {
+        "elapsedMs": 0.041916999999999996,
+        "end": {
+          "height": 0.6,
+          "mode": "flying",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0064,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.92,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 6,
+        "mode": "flight",
+        "queries": 5,
+        "thrust": 0.0,
+        "wind": 0.064
+      },
+      {
+        "elapsedMs": 0.041832999999999995,
+        "end": {
+          "height": 0.6,
+          "mode": "flying",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.05,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.92,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 6,
+        "mode": "flight",
+        "queries": 5,
+        "thrust": 0.0,
+        "wind": 0.5
+      },
+      {
+        "elapsedMs": 0.041749999999999995,
+        "end": {
+          "height": 0.6,
+          "mode": "flying",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.004,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.92,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 6,
+        "mode": "flight",
+        "queries": 5,
+        "thrust": 0.02,
+        "wind": 0.0
+      },
+      {
+        "elapsedMs": 0.041749999999999995,
+        "end": {
+          "height": 0.6,
+          "mode": "flying",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.010400000000000001,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.92,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 6,
+        "mode": "flight",
+        "queries": 5,
+        "thrust": 0.02,
+        "wind": 0.064
+      },
+      {
+        "elapsedMs": 0.041792,
+        "end": {
+          "height": 0.6,
+          "mode": "flying",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.054000000000000006,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.92,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 6,
+        "mode": "flight",
+        "queries": 5,
+        "thrust": 0.02,
+        "wind": 0.5
+      },
+      {
+        "elapsedMs": 0.041792,
+        "end": {
+          "height": 0.6,
+          "mode": "flying",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.4,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.92,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 6,
+        "mode": "flight",
+        "queries": 5,
+        "thrust": 2.0,
+        "wind": 0.0
+      },
+      {
+        "elapsedMs": 0.041791,
+        "end": {
+          "height": 0.6,
+          "mode": "flying",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40640000000000004,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.92,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 6,
+        "mode": "flight",
+        "queries": 5,
+        "thrust": 2.0,
+        "wind": 0.064
+      },
+      {
+        "elapsedMs": 0.041832999999999995,
+        "end": {
+          "height": 0.6,
+          "mode": "flying",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.45,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.92,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 6,
+        "mode": "flight",
+        "queries": 5,
+        "thrust": 2.0,
+        "wind": 0.5
+      },
+      {
+        "elapsedMs": 228.221792,
+        "end": {
+          "height": 0.07712952486822901,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.42,
+          "rotation": [
+            -0.0016162125487789972,
+            0.7068727360117691,
+            0.01819162123714493,
+            0.7071049341201044
+          ],
+          "support": 7
+        },
+        "knots": 41,
+        "mode": "apple",
+        "queries": 235,
+        "thrust": 0.0,
+        "wind": 0.0
+      },
+      {
+        "elapsedMs": 382.04933400000004,
+        "error": "numerical motion unresolved: query budget",
+        "mode": "apple",
+        "thrust": 0.0,
+        "wind": 0.064
+      },
+      {
+        "elapsedMs": 386.64475,
+        "error": "numerical motion unresolved: query budget",
+        "mode": "apple",
+        "thrust": 0.0,
+        "wind": 0.5
+      },
+      {
+        "elapsedMs": 313.30537499999997,
+        "end": {
+          "height": 0.0771156616353425,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.002,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.400000000000002,
+          "rotation": [
+            -0.006552803736135321,
+            0.7069024323498866,
+            0.01699856281613337,
+            0.7070764179091222
+          ],
+          "support": 7
+        },
+        "knots": 63,
+        "mode": "apple",
+        "queries": 367,
+        "thrust": 0.02,
+        "wind": 0.0
+      },
+      {
+        "elapsedMs": 379.66141700000003,
+        "error": "numerical motion unresolved: query budget",
+        "mode": "apple",
+        "thrust": 0.02,
+        "wind": 0.064
+      },
+      {
+        "elapsedMs": 378.39108300000004,
+        "error": "numerical motion unresolved: query budget",
+        "mode": "apple",
+        "thrust": 0.02,
+        "wind": 0.5
+      },
+      {
+        "elapsedMs": 369.585625,
+        "error": "numerical motion unresolved: query budget",
+        "mode": "apple",
+        "thrust": 2.0,
+        "wind": 0.0
+      },
+      {
+        "elapsedMs": 370.99170799999996,
+        "error": "numerical motion unresolved: query budget",
+        "mode": "apple",
+        "thrust": 2.0,
+        "wind": 0.064
+      },
+      {
+        "elapsedMs": 369.676708,
+        "error": "numerical motion unresolved: query budget",
+        "mode": "apple",
+        "thrust": 2.0,
+        "wind": 0.5
+      }
+    ],
+    "fanCatalogSpeed": 0.5,
+    "scope": "One native full-hull Body tick per fixture, no brain, no WASM. Same source commands, no gain or wind changes."
+  },
+  "after": {
+    "cases": [
+      {
+        "elapsedMs": 0.057791,
+        "end": {
+          "height": 0.0,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.98,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 2,
+        "mode": "floor",
+        "queries": 5,
+        "thrust": 0.0,
+        "wind": 0.0
+      },
+      {
+        "elapsedMs": 0.058041,
+        "end": {
+          "height": 0.0,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0064,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.98,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 2,
+        "mode": "floor",
+        "queries": 5,
+        "thrust": 0.0,
+        "wind": 0.064
+      },
+      {
+        "elapsedMs": 0.05575,
+        "end": {
+          "height": 0.0,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.05,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.98,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 2,
+        "mode": "floor",
+        "queries": 5,
+        "thrust": 0.0,
+        "wind": 0.5
+      },
+      {
+        "elapsedMs": 0.055708999999999995,
+        "end": {
+          "height": 0.0,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.002,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.96,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 2,
+        "mode": "floor",
+        "queries": 5,
+        "thrust": 0.02,
+        "wind": 0.0
+      },
+      {
+        "elapsedMs": 0.05450000000000001,
+        "end": {
+          "height": 0.0,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.008400000000000001,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.96,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 2,
+        "mode": "floor",
+        "queries": 5,
+        "thrust": 0.02,
+        "wind": 0.064
+      },
+      {
+        "elapsedMs": 0.055708,
+        "end": {
+          "height": 0.0,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.052000000000000005,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.96,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 2,
+        "mode": "floor",
+        "queries": 5,
+        "thrust": 0.02,
+        "wind": 0.5
+      },
+      {
+        "elapsedMs": 0.053208000000000005,
+        "end": {
+          "height": 0.0,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.2,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.96,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 2,
+        "mode": "floor",
+        "queries": 5,
+        "thrust": 2.0,
+        "wind": 0.0
+      },
+      {
+        "elapsedMs": 0.055666,
+        "end": {
+          "height": 0.0,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.20640000000000003,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.96,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 2,
+        "mode": "floor",
+        "queries": 5,
+        "thrust": 2.0,
+        "wind": 0.064
+      },
+      {
+        "elapsedMs": 0.053041000000000005,
+        "end": {
+          "height": 0.0,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.25,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.96,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 2,
+        "mode": "floor",
+        "queries": 5,
+        "thrust": 2.0,
+        "wind": 0.5
+      },
+      {
+        "elapsedMs": 0.056499999999999995,
+        "end": {
+          "height": 0.6,
+          "mode": "flying",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.92,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 2,
+        "mode": "flight",
+        "queries": 5,
+        "thrust": 0.0,
+        "wind": 0.0
+      },
+      {
+        "elapsedMs": 0.053125,
+        "end": {
+          "height": 0.6,
+          "mode": "flying",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0064,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.92,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 2,
+        "mode": "flight",
+        "queries": 5,
+        "thrust": 0.0,
+        "wind": 0.064
+      },
+      {
+        "elapsedMs": 0.055667,
+        "end": {
+          "height": 0.6,
+          "mode": "flying",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.05,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.92,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 2,
+        "mode": "flight",
+        "queries": 5,
+        "thrust": 0.0,
+        "wind": 0.5
+      },
+      {
+        "elapsedMs": 0.053042,
+        "end": {
+          "height": 0.6,
+          "mode": "flying",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.004,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.92,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 2,
+        "mode": "flight",
+        "queries": 5,
+        "thrust": 0.02,
+        "wind": 0.0
+      },
+      {
+        "elapsedMs": 0.055624999999999994,
+        "end": {
+          "height": 0.6,
+          "mode": "flying",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.010400000000000001,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.92,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 2,
+        "mode": "flight",
+        "queries": 5,
+        "thrust": 0.02,
+        "wind": 0.064
+      },
+      {
+        "elapsedMs": 0.053083,
+        "end": {
+          "height": 0.6,
+          "mode": "flying",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.054000000000000006,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.92,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 2,
+        "mode": "flight",
+        "queries": 5,
+        "thrust": 0.02,
+        "wind": 0.5
+      },
+      {
+        "elapsedMs": 0.055624999999999994,
+        "end": {
+          "height": 0.6,
+          "mode": "flying",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.4,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.92,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 2,
+        "mode": "flight",
+        "queries": 5,
+        "thrust": 2.0,
+        "wind": 0.0
+      },
+      {
+        "elapsedMs": 0.053125,
+        "end": {
+          "height": 0.6,
+          "mode": "flying",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40640000000000004,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.92,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 2,
+        "mode": "flight",
+        "queries": 5,
+        "thrust": 2.0,
+        "wind": 0.064
+      },
+      {
+        "elapsedMs": 0.055916,
+        "end": {
+          "height": 0.6,
+          "mode": "flying",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.45,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.92,
+          "rotation": [
+            0.0,
+            0.7071067811865475,
+            0.0,
+            0.7071067811865475
+          ],
+          "support": null
+        },
+        "knots": 2,
+        "mode": "flight",
+        "queries": 5,
+        "thrust": 2.0,
+        "wind": 0.5
+      },
+      {
+        "elapsedMs": 214.516792,
+        "end": {
+          "height": 0.07712952486822901,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.42,
+          "rotation": [
+            -0.0016162125487789972,
+            0.7068727360117691,
+            0.01819162123714493,
+            0.7071049341201044
+          ],
+          "support": 7
+        },
+        "knots": 41,
+        "mode": "apple",
+        "queries": 235,
+        "thrust": 0.0,
+        "wind": 0.0
+      },
+      {
+        "elapsedMs": 382.740125,
+        "error": "numerical motion unresolved: query budget",
+        "mode": "apple",
+        "thrust": 0.0,
+        "wind": 0.064
+      },
+      {
+        "elapsedMs": 383.664291,
+        "error": "numerical motion unresolved: query budget",
+        "mode": "apple",
+        "thrust": 0.0,
+        "wind": 0.5
+      },
+      {
+        "elapsedMs": 314.905958,
+        "end": {
+          "height": 0.0771156616353425,
+          "mode": "walking",
+          "outcome": null,
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.002,
+              "z": 0.0
+            }
+          },
+          "reserve": 19.400000000000002,
+          "rotation": [
+            -0.006552803736135321,
+            0.7069024323498866,
+            0.01699856281613337,
+            0.7070764179091222
+          ],
+          "support": 7
+        },
+        "knots": 63,
+        "mode": "apple",
+        "queries": 367,
+        "thrust": 0.02,
+        "wind": 0.0
+      },
+      {
+        "elapsedMs": 382.243292,
+        "error": "numerical motion unresolved: query budget",
+        "mode": "apple",
+        "thrust": 0.02,
+        "wind": 0.064
+      },
+      {
+        "elapsedMs": 382.26158399999997,
+        "error": "numerical motion unresolved: query budget",
+        "mode": "apple",
+        "thrust": 0.02,
+        "wind": 0.5
+      },
+      {
+        "elapsedMs": 374.775375,
+        "error": "numerical motion unresolved: query budget",
+        "mode": "apple",
+        "thrust": 2.0,
+        "wind": 0.0
+      },
+      {
+        "elapsedMs": 373.984459,
+        "error": "numerical motion unresolved: query budget",
+        "mode": "apple",
+        "thrust": 2.0,
+        "wind": 0.064
+      },
+      {
+        "elapsedMs": 374.854333,
+        "error": "numerical motion unresolved: query budget",
+        "mode": "apple",
+        "thrust": 2.0,
+        "wind": 0.5
+      }
+    ],
+    "fanCatalogSpeed": 0.5,
+    "scope": "One native full-hull Body tick per fixture, no brain, no WASM. Same source commands, no gain or wind changes."
+  },
+  "candidateInitial": [
+    {
+      "elapsedMs": 15.532583,
+      "knots": 81,
+      "name": "upright-seam-turn",
+      "result": {
+        "Ok": null
+      },
+      "state": {
+        "height": 0.07456982640124585,
+        "mode": "walking",
+        "outcome": null,
+        "pose": {
+          "heading": 0.7041000000000001,
+          "position": {
+            "x": 0.02,
+            "z": -0.003
+          }
+        },
+        "reserve": 9.98,
+        "rotation": [
+          0.05142709830860775,
+          0.39348940772229996,
+          -0.19184316464771822,
+          0.8976177024479066
+        ],
+        "support": 0
+      }
+    },
+    {
+      "elapsedMs": 15.567084,
+      "knots": 81,
+      "name": "upright-ordinary-turn",
+      "result": {
+        "Ok": null
+      },
+      "state": {
+        "height": 0.0745695062959079,
+        "mode": "walking",
+        "outcome": null,
+        "pose": {
+          "heading": 0.7240800000000001,
+          "position": {
+            "x": 0.02,
+            "z": -0.003
+          }
+        },
+        "reserve": 9.98,
+        "rotation": [
+          0.04935083328772031,
+          0.38464859761897113,
+          -0.19241975626769178,
+          0.9014347391805181
+        ],
+        "support": 0
+      }
+    },
+    {
+      "elapsedMs": 12.413958,
+      "knots": 81,
+      "name": "upright-walk-turn",
+      "result": {
+        "Ok": null
+      },
+      "state": {
+        "height": 0.07381471209919466,
+        "mode": "walking",
+        "outcome": null,
+        "pose": {
+          "heading": 0.7240800000000001,
+          "position": {
+            "x": 0.02149821837944484,
+            "z": -0.001675106914693235
+          }
+        },
+        "reserve": 9.96,
+        "rotation": [
+          0.057815557458102185,
+          0.3843529828083812,
+          -0.1900706824167429,
+          0.9015560335374295
+        ],
+        "support": 0
+      }
+    },
+    {
+      "elapsedMs": 0.7689170000000001,
+      "knots": 6,
+      "name": "aligned-idle",
+      "result": {
+        "Ok": null
+      },
+      "state": {
+        "height": 0.07434399587941411,
+        "mode": "walking",
+        "outcome": null,
+        "pose": {
+          "heading": 0.70408,
+          "position": {
+            "x": 0.02,
+            "z": -0.003
+          }
+        },
+        "reserve": 9.98,
+        "rotation": [
+          0.07252257528613085,
+          0.37657879245215997,
+          -0.24127860325514486,
+          0.8914670631943656
+        ],
+        "support": 0
+      }
+    },
+    {
+      "elapsedMs": 0.762041,
+      "knots": 6,
+      "name": "aligned-turn",
+      "result": {
+        "Ok": null
+      },
+      "state": {
+        "height": 0.07434399587941412,
+        "mode": "walking",
+        "outcome": null,
+        "pose": {
+          "heading": 0.7240800000000001,
+          "position": {
+            "x": 0.02,
+            "z": -0.003
+          }
+        },
+        "reserve": 9.98,
+        "rotation": [
+          0.07015162110924232,
+          0.36781345132832277,
+          -0.24197859072783837,
+          0.8951191969269021
+        ],
+        "support": 0
+      }
+    },
+    {
+      "elapsedMs": 10.14575,
+      "knots": 73,
+      "name": "aligned-walk",
+      "result": {
+        "Ok": null
+      },
+      "state": {
+        "height": 0.07358253473661072,
+        "mode": "walking",
+        "outcome": null,
+        "pose": {
+          "heading": 0.70408,
+          "position": {
+            "x": 0.021524414840974292,
+            "z": -0.0017053342544821363
+          }
+        },
+        "reserve": 9.96,
+        "rotation": [
+          0.07033843401344997,
+          0.3769931108843322,
+          -0.2408869969833372,
+          0.8915728538547137
+        ],
+        "support": 0
+      }
+    }
+  ],
+  "samePoseFine": [
+    {
+      "elapsedMs": 87.595917,
+      "error": null,
+      "hull": "native",
+      "knots": 81,
+      "name": "upright-seam-turn",
+      "queries": 475,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 88.224458,
+      "error": null,
+      "hull": "native",
+      "knots": 81,
+      "name": "upright-ordinary-turn",
+      "queries": 475,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 63.865916999999996,
+      "error": null,
+      "hull": "native",
+      "knots": 81,
+      "name": "upright-walk-turn",
+      "queries": 475,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 4.4095,
+      "error": null,
+      "hull": "native",
+      "knots": 6,
+      "name": "aligned-idle",
+      "queries": 25,
+      "settlementTicks": 4
+    },
+    {
+      "elapsedMs": 4.312334,
+      "error": null,
+      "hull": "native",
+      "knots": 6,
+      "name": "aligned-turn",
+      "queries": 25,
+      "settlementTicks": 4
+    },
+    {
+      "elapsedMs": 55.505709,
+      "error": null,
+      "hull": "native",
+      "knots": 73,
+      "name": "aligned-walk",
+      "queries": 427,
+      "settlementTicks": 4
+    },
+    {
+      "elapsedMs": 12.293541999999999,
+      "error": null,
+      "hull": "candidate",
+      "knots": 81,
+      "name": "upright-seam-turn",
+      "queries": 475,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 12.501833,
+      "error": null,
+      "hull": "candidate",
+      "knots": 81,
+      "name": "upright-ordinary-turn",
+      "queries": 475,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 9.584041999999998,
+      "error": null,
+      "hull": "candidate",
+      "knots": 81,
+      "name": "upright-walk-turn",
+      "queries": 475,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 0.6057089999999999,
+      "error": null,
+      "hull": "candidate",
+      "knots": 6,
+      "name": "aligned-idle",
+      "queries": 25,
+      "settlementTicks": 1
+    },
+    {
+      "elapsedMs": 0.606125,
+      "error": null,
+      "hull": "candidate",
+      "knots": 6,
+      "name": "aligned-turn",
+      "queries": 25,
+      "settlementTicks": 1
+    },
+    {
+      "elapsedMs": 9.088917,
+      "error": null,
+      "hull": "candidate",
+      "knots": 73,
+      "name": "aligned-walk",
+      "queries": 427,
+      "settlementTicks": 1
+    }
+  ],
+  "samePose3umFineSeed": [
+    {
+      "elapsedMs": 41.66725,
+      "error": null,
+      "hull": "native",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 0.6440691105809138,
+      "maxRootErrorMicrometres": 0.7377228637833744,
+      "name": "upright-seam-turn",
+      "queries": 185,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 44.446209,
+      "error": null,
+      "hull": "native",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 0.6446771291097488,
+      "maxRootErrorMicrometres": 0.7384192940163015,
+      "name": "upright-ordinary-turn",
+      "queries": 185,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 33.917042,
+      "error": null,
+      "hull": "native",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 0.6446771295068278,
+      "maxRootErrorMicrometres": 0.7384192939885459,
+      "name": "upright-walk-turn",
+      "queries": 185,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 4.316166,
+      "error": null,
+      "hull": "native",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 2.6241386398197658e-06,
+      "maxRootErrorMicrometres": 4.255248930995492e-06,
+      "name": "aligned-idle",
+      "queries": 25,
+      "settlementTicks": 4
+    },
+    {
+      "elapsedMs": 4.3532090000000006,
+      "error": null,
+      "hull": "native",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 2.624071602708816e-06,
+      "maxRootErrorMicrometres": 4.101011197299442e-06,
+      "name": "aligned-turn",
+      "queries": 25,
+      "settlementTicks": 4
+    },
+    {
+      "elapsedMs": 27.403875000000003,
+      "error": null,
+      "hull": "native",
+      "independentChecks": 102,
+      "knots": 7,
+      "maxPenetrationMicrometres": 2.624071602708816e-06,
+      "maxRootErrorMicrometres": 2.411050152098526,
+      "name": "aligned-walk",
+      "queries": 193,
+      "settlementTicks": 4
+    },
+    {
+      "elapsedMs": 5.702209,
+      "error": null,
+      "hull": "candidate",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 0.6425756914200852,
+      "maxRootErrorMicrometres": 0.7358104361088191,
+      "name": "upright-seam-turn",
+      "queries": 185,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 6.9572080000000005,
+      "error": null,
+      "hull": "candidate",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 0.632300738631243,
+      "maxRootErrorMicrometres": 0.7240506563060967,
+      "name": "upright-ordinary-turn",
+      "queries": 185,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 5.550709,
+      "error": null,
+      "hull": "candidate",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 0.6475920374678169,
+      "maxRootErrorMicrometres": 0.7417580571295046,
+      "name": "upright-walk-turn",
+      "queries": 185,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 0.618875,
+      "error": null,
+      "hull": "candidate",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 4.592534535816462e-11,
+      "maxRootErrorMicrometres": 2.7755575615628914e-11,
+      "name": "aligned-idle",
+      "queries": 25,
+      "settlementTicks": 1
+    },
+    {
+      "elapsedMs": 0.605833,
+      "error": null,
+      "hull": "candidate",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 6.706038914479186e-11,
+      "maxRootErrorMicrometres": 2.7755575615628914e-11,
+      "name": "aligned-turn",
+      "queries": 25,
+      "settlementTicks": 1
+    },
+    {
+      "elapsedMs": 4.168666,
+      "error": null,
+      "hull": "candidate",
+      "independentChecks": 102,
+      "knots": 7,
+      "maxPenetrationMicrometres": 0.0,
+      "maxRootErrorMicrometres": 2.3780140356727264,
+      "name": "aligned-walk",
+      "queries": 193,
+      "settlementTicks": 1
+    }
+  ],
+  "halfMmSeed": [
+    {
+      "elapsedMs": 10.748166999999999,
+      "error": null,
+      "hull": "native",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 0.6440691105809138,
+      "maxRootErrorMicrometres": 0.7377228637833744,
+      "name": "upright-seam-turn",
+      "queries": 45,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 10.54775,
+      "error": null,
+      "hull": "native",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 0.6446771291097488,
+      "maxRootErrorMicrometres": 0.7384192940163015,
+      "name": "upright-ordinary-turn",
+      "queries": 45,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 7.953999999999999,
+      "error": null,
+      "hull": "native",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 0.6446771295068278,
+      "maxRootErrorMicrometres": 0.7384192939885459,
+      "name": "upright-walk-turn",
+      "queries": 45,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 4.316916,
+      "error": null,
+      "hull": "native",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 2.6241386398197658e-06,
+      "maxRootErrorMicrometres": 4.255248930995492e-06,
+      "name": "aligned-idle",
+      "queries": 25,
+      "settlementTicks": 4
+    },
+    {
+      "elapsedMs": 4.2110840000000005,
+      "error": null,
+      "hull": "native",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 2.624071602708816e-06,
+      "maxRootErrorMicrometres": 4.101011197299442e-06,
+      "name": "aligned-turn",
+      "queries": 25,
+      "settlementTicks": 4
+    },
+    {
+      "elapsedMs": 4.213125,
+      "error": null,
+      "hull": "native",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 2.624071602708816e-06,
+      "maxRootErrorMicrometres": 3.3027238169336393,
+      "name": "aligned-walk",
+      "queries": 25,
+      "settlementTicks": 4
+    },
+    {
+      "elapsedMs": 1.4517090000000001,
+      "error": null,
+      "hull": "candidate",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 0.6425756914200852,
+      "maxRootErrorMicrometres": 0.7358104361088191,
+      "name": "upright-seam-turn",
+      "queries": 45,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 1.5306250000000001,
+      "error": null,
+      "hull": "candidate",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 0.632300738631243,
+      "maxRootErrorMicrometres": 0.7240506563060967,
+      "name": "upright-ordinary-turn",
+      "queries": 45,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 1.19675,
+      "error": null,
+      "hull": "candidate",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 0.6475920374678169,
+      "maxRootErrorMicrometres": 0.7417580571295046,
+      "name": "upright-walk-turn",
+      "queries": 45,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 0.602,
+      "error": null,
+      "hull": "candidate",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 4.592534535816462e-11,
+      "maxRootErrorMicrometres": 2.7755575615628914e-11,
+      "name": "aligned-idle",
+      "queries": 25,
+      "settlementTicks": 1
+    },
+    {
+      "elapsedMs": 0.601375,
+      "error": null,
+      "hull": "candidate",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 6.706038914479186e-11,
+      "maxRootErrorMicrometres": 2.7755575615628914e-11,
+      "name": "aligned-turn",
+      "queries": 25,
+      "settlementTicks": 1
+    },
+    {
+      "elapsedMs": 0.636459,
+      "error": null,
+      "hull": "candidate",
+      "independentChecks": 85,
+      "knots": 6,
+      "maxPenetrationMicrometres": 0.0,
+      "maxRootErrorMicrometres": 3.3027812930963574,
+      "name": "aligned-walk",
+      "queries": 25,
+      "settlementTicks": 1
+    }
+  ],
+  "halfMmWind": [
+    {
+      "elapsedMs": 16.158125,
+      "error": null,
+      "hull": "native",
+      "independentChecks": 170,
+      "knots": 11,
+      "maxPenetrationMicrometres": 1.8989265382277682,
+      "maxRootErrorMicrometres": 2.1725677854245173,
+      "name": "upright-wind6mm",
+      "queries": 89,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 68.806541,
+      "error": null,
+      "hull": "native",
+      "independentChecks": 1241,
+      "knots": 74,
+      "maxPenetrationMicrometres": 2.078228835358195,
+      "maxRootErrorMicrometres": 174.13478850694665,
+      "name": "upright-fan",
+      "queries": 452,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 66.708167,
+      "error": null,
+      "hull": "native",
+      "independentChecks": 1326,
+      "knots": 79,
+      "maxPenetrationMicrometres": 2.075629888053671,
+      "maxRootErrorMicrometres": 535.3541364064642,
+      "name": "aligned-fan",
+      "queries": 464,
+      "settlementTicks": 4
+    },
+    {
+      "elapsedMs": 140.19970800000002,
+      "error": "numerical motion unresolved: query budget",
+      "hull": "native",
+      "independentChecks": 0,
+      "knots": null,
+      "maxPenetrationMicrometres": 0.0,
+      "maxRootErrorMicrometres": 0.0,
+      "name": "center-fan",
+      "queries": null,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 137.699333,
+      "error": "numerical motion unresolved: query budget",
+      "hull": "native",
+      "independentChecks": 0,
+      "knots": null,
+      "maxPenetrationMicrometres": 0.0,
+      "maxRootErrorMicrometres": 0.0,
+      "name": "center-aligned-fan",
+      "queries": null,
+      "settlementTicks": 12
+    },
+    {
+      "elapsedMs": 135.48825,
+      "error": "numerical motion unresolved: query budget",
+      "hull": "native",
+      "independentChecks": 0,
+      "knots": null,
+      "maxPenetrationMicrometres": 0.0,
+      "maxRootErrorMicrometres": 0.0,
+      "name": "max-neural",
+      "queries": null,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 2.358917,
+      "error": null,
+      "hull": "candidate",
+      "independentChecks": 170,
+      "knots": 11,
+      "maxPenetrationMicrometres": 0.4803642288714824,
+      "maxRootErrorMicrometres": 0.6216128213692995,
+      "name": "upright-wind6mm",
+      "queries": 89,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 10.54125,
+      "error": null,
+      "hull": "candidate",
+      "independentChecks": 1309,
+      "knots": 78,
+      "maxPenetrationMicrometres": 1.8963759551230113,
+      "maxRootErrorMicrometres": 174.13478815780925,
+      "name": "upright-fan",
+      "queries": 464,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 10.295874999999999,
+      "error": null,
+      "hull": "candidate",
+      "independentChecks": 1326,
+      "knots": 79,
+      "maxPenetrationMicrometres": 2.8726255676815184,
+      "maxRootErrorMicrometres": 535.3541339741599,
+      "name": "aligned-fan",
+      "queries": 476,
+      "settlementTicks": 1
+    },
+    {
+      "elapsedMs": 21.243250000000003,
+      "error": "numerical motion unresolved: query budget",
+      "hull": "candidate",
+      "independentChecks": 0,
+      "knots": null,
+      "maxPenetrationMicrometres": 0.0,
+      "maxRootErrorMicrometres": 0.0,
+      "name": "center-fan",
+      "queries": null,
+      "settlementTicks": 0
+    },
+    {
+      "elapsedMs": 20.743916000000002,
+      "error": "numerical motion unresolved: query budget",
+      "hull": "candidate",
+      "independentChecks": 0,
+      "knots": null,
+      "maxPenetrationMicrometres": 0.0,
+      "maxRootErrorMicrometres": 0.0,
+      "name": "center-aligned-fan",
+      "queries": null,
+      "settlementTicks": 12
+    },
+    {
+      "elapsedMs": 20.532958999999998,
+      "error": "numerical motion unresolved: query budget",
+      "hull": "candidate",
+      "independentChecks": 0,
+      "knots": null,
+      "maxPenetrationMicrometres": 0.0,
+      "maxRootErrorMicrometres": 0.0,
+      "name": "max-neural",
+      "queries": null,
+      "settlementTicks": 0
+    }
+  ],
+  "midpointGuard": [
+    [
+      {
+        "elapsedMs": 6.222875,
+        "error": null,
+        "hull": "native",
+        "independentChecks": 85,
+        "knots": 6,
+        "maxPenetrationMicrometres": 0.6440691105809138,
+        "maxRootErrorMicrometres": 0.7377228637833744,
+        "name": "upright-seam-turn",
+        "queries": 25,
+        "settlementTicks": 0
+      },
+      {
+        "elapsedMs": 6.4045,
+        "error": null,
+        "hull": "native",
+        "independentChecks": 85,
+        "knots": 6,
+        "maxPenetrationMicrometres": 0.6446771291097488,
+        "maxRootErrorMicrometres": 0.7384192940163015,
+        "name": "upright-ordinary-turn",
+        "queries": 25,
+        "settlementTicks": 0
+      },
+      {
+        "elapsedMs": 4.771916,
+        "error": null,
+        "hull": "native",
+        "independentChecks": 85,
+        "knots": 6,
+        "maxPenetrationMicrometres": 0.6446771295068278,
+        "maxRootErrorMicrometres": 0.7384192939885459,
+        "name": "upright-walk-turn",
+        "queries": 25,
+        "settlementTicks": 0
+      },
+      {
+        "elapsedMs": 4.453792,
+        "error": null,
+        "hull": "native",
+        "independentChecks": 85,
+        "knots": 6,
+        "maxPenetrationMicrometres": 2.6241386398197658e-06,
+        "maxRootErrorMicrometres": 4.255248930995492e-06,
+        "name": "aligned-idle",
+        "queries": 25,
+        "settlementTicks": 4
+      },
+      {
+        "elapsedMs": 5.139042,
+        "error": null,
+        "hull": "native",
+        "independentChecks": 85,
+        "knots": 6,
+        "maxPenetrationMicrometres": 2.624071602708816e-06,
+        "maxRootErrorMicrometres": 4.101011197299442e-06,
+        "name": "aligned-turn",
+        "queries": 25,
+        "settlementTicks": 4
+      },
+      {
+        "elapsedMs": 6.590459,
+        "error": null,
+        "hull": "native",
+        "independentChecks": 119,
+        "knots": 8,
+        "maxPenetrationMicrometres": 2.624071602708816e-06,
+        "maxRootErrorMicrometres": 1.4786789430953906,
+        "name": "aligned-walk",
+        "queries": 39,
+        "settlementTicks": 4
+      },
+      {
+        "elapsedMs": 0.8639169999999999,
+        "error": null,
+        "hull": "candidate",
+        "independentChecks": 85,
+        "knots": 6,
+        "maxPenetrationMicrometres": 0.6425756914200852,
+        "maxRootErrorMicrometres": 0.7358104361088191,
+        "name": "upright-seam-turn",
+        "queries": 25,
+        "settlementTicks": 0
+      },
+      {
+        "elapsedMs": 0.930917,
+        "error": null,
+        "hull": "candidate",
+        "independentChecks": 85,
+        "knots": 6,
+        "maxPenetrationMicrometres": 0.632300738631243,
+        "maxRootErrorMicrometres": 0.7240506563060967,
+        "name": "upright-ordinary-turn",
+        "queries": 25,
+        "settlementTicks": 0
+      },
+      {
+        "elapsedMs": 0.7184999999999999,
+        "error": null,
+        "hull": "candidate",
+        "independentChecks": 85,
+        "knots": 6,
+        "maxPenetrationMicrometres": 0.6475920374678169,
+        "maxRootErrorMicrometres": 0.7417580571295046,
+        "name": "upright-walk-turn",
+        "queries": 25,
+        "settlementTicks": 0
+      },
+      {
+        "elapsedMs": 0.6326250000000001,
+        "error": null,
+        "hull": "candidate",
+        "independentChecks": 85,
+        "knots": 6,
+        "maxPenetrationMicrometres": 4.592534535816462e-11,
+        "maxRootErrorMicrometres": 2.7755575615628914e-11,
+        "name": "aligned-idle",
+        "queries": 25,
+        "settlementTicks": 1
+      },
+      {
+        "elapsedMs": 0.614833,
+        "error": null,
+        "hull": "candidate",
+        "independentChecks": 85,
+        "knots": 6,
+        "maxPenetrationMicrometres": 6.706038914479186e-11,
+        "maxRootErrorMicrometres": 2.7755575615628914e-11,
+        "name": "aligned-turn",
+        "queries": 25,
+        "settlementTicks": 1
+      },
+      {
+        "elapsedMs": 0.987375,
+        "error": null,
+        "hull": "candidate",
+        "independentChecks": 119,
+        "knots": 8,
+        "maxPenetrationMicrometres": 0.0,
+        "maxRootErrorMicrometres": 1.505581810487544,
+        "name": "aligned-walk",
+        "queries": 39,
+        "settlementTicks": 1
+      }
+    ],
+    [
+      {
+        "elapsedMs": 14.222624999999999,
+        "error": null,
+        "hull": "native",
+        "independentChecks": 204,
+        "knots": 13,
+        "maxPenetrationMicrometres": 1.4657436542024798,
+        "maxRootErrorMicrometres": 1.7066411540922477,
+        "name": "upright-wind6mm",
+        "queries": 76,
+        "settlementTicks": 0
+      },
+      {
+        "elapsedMs": 56.850167,
+        "error": null,
+        "hull": "native",
+        "independentChecks": 1156,
+        "knots": 69,
+        "maxPenetrationMicrometres": 2.0364741209543653,
+        "maxRootErrorMicrometres": 174.13478850694665,
+        "name": "upright-fan",
+        "queries": 342,
+        "settlementTicks": 0
+      },
+      {
+        "elapsedMs": 54.519334,
+        "error": null,
+        "hull": "native",
+        "independentChecks": 1275,
+        "knots": 76,
+        "maxPenetrationMicrometres": 2.075626986742772,
+        "maxRootErrorMicrometres": 535.3541364064642,
+        "name": "aligned-fan",
+        "queries": 367,
+        "settlementTicks": 4
+      },
+      {
+        "elapsedMs": 150.169458,
+        "error": "numerical motion unresolved: query budget",
+        "hull": "native",
+        "independentChecks": 0,
+        "knots": null,
+        "maxPenetrationMicrometres": 0.0,
+        "maxRootErrorMicrometres": 0.0,
+        "name": "center-fan",
+        "queries": null,
+        "settlementTicks": 0
+      },
+      {
+        "elapsedMs": 152.798834,
+        "error": "numerical motion unresolved: query budget",
+        "hull": "native",
+        "independentChecks": 0,
+        "knots": null,
+        "maxPenetrationMicrometres": 0.0,
+        "maxRootErrorMicrometres": 0.0,
+        "name": "center-aligned-fan",
+        "queries": null,
+        "settlementTicks": 12
+      },
+      {
+        "elapsedMs": 144.50975,
+        "error": "numerical motion unresolved: query budget",
+        "hull": "native",
+        "independentChecks": 0,
+        "knots": null,
+        "maxPenetrationMicrometres": 0.0,
+        "maxRootErrorMicrometres": 0.0,
+        "name": "max-neural",
+        "queries": null,
+        "settlementTicks": 0
+      },
+      {
+        "elapsedMs": 2.084458,
+        "error": null,
+        "hull": "candidate",
+        "independentChecks": 204,
+        "knots": 13,
+        "maxPenetrationMicrometres": 0.4478953531863472,
+        "maxRootErrorMicrometres": 0.5795966423055576,
+        "name": "upright-wind6mm",
+        "queries": 76,
+        "settlementTicks": 0
+      },
+      {
+        "elapsedMs": 9.924042,
+        "error": null,
+        "hull": "candidate",
+        "independentChecks": 1326,
+        "knots": 79,
+        "maxPenetrationMicrometres": 2.3219811438879185,
+        "maxRootErrorMicrometres": 174.13478815780925,
+        "name": "upright-fan",
+        "queries": 398,
+        "settlementTicks": 0
+      },
+      {
+        "elapsedMs": 9.321459,
+        "error": null,
+        "hull": "candidate",
+        "independentChecks": 1343,
+        "knots": 80,
+        "maxPenetrationMicrometres": 1.44421993456126,
+        "maxRootErrorMicrometres": 535.3541339741599,
+        "name": "aligned-fan",
+        "queries": 409,
+        "settlementTicks": 1
+      },
+      {
+        "elapsedMs": 22.207333,
+        "error": "numerical motion unresolved: query budget",
+        "hull": "candidate",
+        "independentChecks": 0,
+        "knots": null,
+        "maxPenetrationMicrometres": 0.0,
+        "maxRootErrorMicrometres": 0.0,
+        "name": "center-fan",
+        "queries": null,
+        "settlementTicks": 0
+      },
+      {
+        "elapsedMs": 21.843708,
+        "error": "numerical motion unresolved: query budget",
+        "hull": "candidate",
+        "independentChecks": 0,
+        "knots": null,
+        "maxPenetrationMicrometres": 0.0,
+        "maxRootErrorMicrometres": 0.0,
+        "name": "center-aligned-fan",
+        "queries": null,
+        "settlementTicks": 12
+      },
+      {
+        "elapsedMs": 21.793042,
+        "error": "numerical motion unresolved: query budget",
+        "hull": "candidate",
+        "independentChecks": 0,
+        "knots": null,
+        "maxPenetrationMicrometres": 0.0,
+        "maxRootErrorMicrometres": 0.0,
+        "name": "max-neural",
+        "queries": null,
+        "settlementTicks": 0
+      }
+    ]
+  ]
+}
