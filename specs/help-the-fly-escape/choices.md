@@ -288,3 +288,7 @@ The planar non-solid tool contract favors near-flush sources: vinegar saucer, in
 - **High confidence:** Show only the authored spawn area before Run rather than inventing a preview swarm. The actual attempt exports the starting bodies once; initial rendering and replay share those values.
 - **Medium confidence:** Resolve realistic scale in a neutral representative room before detailed furniture and materials. Its room is a diagnostic fixture, not additional campaign content. Exact physical scale remains a measured decision in 19, not an accepted silent change to movement.
 - **High confidence:** Keep only explicit fixed-start scientific fixtures alongside clustered campaign starts. Those tests sometimes intentionally overlap bodies or begin at a hazard to isolate behavior; campaign sampling instead enforces a legal separated swarm.
+
+### Sensitivity at physical fly scale (slice 27)
+
+The detector responds to a left/right difference above0.01% of their sum, keeping its existing minimum intensity and sensory-only current strength. The old5% threshold missed the resolved signal across the authored antennae; the intermediate 0.1% candidate also failed. The 0.01% candidate preserves paired odor and light/shade turn responses across 30 seeds and loses them under pathway silencing. This is a deliberate game-model sensitivity choice, not a measured biological threshold. Confidence: medium; final campaign efficacy and three-dimensional sensing remain separate limits.

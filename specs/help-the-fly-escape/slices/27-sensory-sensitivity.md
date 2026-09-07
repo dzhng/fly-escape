@@ -1,6 +1,6 @@
 # 27 — Measured sensory sensitivity at anatomical scale
 
-Status: three-seed odor/vision candidates banked;30-seed confirmation live. See [evidence](../assets/evidence/27/README.md). Production sensitivity unchanged. Dependency: 26. Required before25 physical adoption and20.
+Status: complete. The 0.01% candidate passes the 30-seed odor/vision confirmation and is adopted. See [evidence](../assets/evidence/27/README.md). Dependency: 26; physical dimension adoption remains in 25.
 
 ## Question and frozen inputs
 
@@ -14,6 +14,6 @@ First use the26 probe with exactly the same three paired seeds, anatomical coord
 
 A candidate needs consistent opposite signed early-turn differences for mirrored odor inputs, loss of those differences with pathway silencing, and preserved opposite lamp/shade orientation under visual ablation controls. Choose based on paired distributions, then run the existing30-seed sensory confirmation protocol at the declared physical sampling coordinates. Retain failed candidates. No campaign seed batches or food tuning here. If shared sensitivity cannot satisfy odor and vision, report the failing pathway and specify separate channel semantics before implementation; do not adjust multiple gains or dynamics until tests happen to pass.
 
-Bank source fingerprints, compact paired summaries and compressed raw evidence under `assets/evidence/27/`. Record exact chosen cutoff and limits in CONTRACTS/choices before production adoption. Anatomical forward/lateral sampling and collision defaults remain25's final adoption step after this verdict. Height remains an explicitly planar approximation; this slice does not validate airborne odor plumes.
+Bank source fingerprints, compact paired summaries and compressed raw evidence under `assets/evidence/27/`. Record exact chosen cutoff and limits in CONTRACTS/choices before production adoption. Anatomical forward/lateral sampling and collision defaults remain 25's final adoption step after this verdict. Height remains an explicitly planar approximation; this slice does not validate airborne odor plumes.
 
 Delegated: experiment automation and report formatting. Threshold candidates, controls and frozen inputs are fixed above. This numerical pass has no visual acceptance claim; any introduced visual inherits standing critique gates.

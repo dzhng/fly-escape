@@ -47,8 +47,9 @@ pub fn cue_currents(
     };
     // A modeled lateral detector: local field contrast chooses the sensory
     // population, never a motor command or a direction to a remote target.
+    // The 0.01% contrast floor is calibrated at anatomical spacing, not a biological threshold.
     let detected = values[0].max(values[1]) >= 0.05
-        && (values[0] - values[1]).abs() > 0.05 * (values[0] + values[1]);
+        && (values[0] - values[1]).abs() > 0.0001 * (values[0] + values[1]);
     values = if !detected {
         [0.0, 0.0]
     } else if values[0] > values[1] {
@@ -167,6 +168,22 @@ mod tests {
         assert!(
             !left.iter().any(|(i, _)| *i == 3),
             "a sensory/motor overlap must not directly drive a readout"
+        );
+        let anatomical = SensorySample {
+            left: FieldSample {
+                repellent_odor: 0.5002,
+                ..Default::default()
+            },
+            right: FieldSample {
+                repellent_odor: 0.5,
+                ..Default::default()
+            },
+            wind: Point::default(),
+        };
+        assert_eq!(
+            cue_currents(&graph, &anatomical, CuePathway::ExcitatoryOdor, 1.).unwrap(),
+            vec![(0, 1.), (1, 0.), (2, 1.)],
+            "resolved anatomical-scale gradient remains detectable"
         );
         for [left, right] in [[0., 0.], [0.8, 0.8], [0.049, 0.], [0., 0.049]] {
             let neutral = SensorySample {

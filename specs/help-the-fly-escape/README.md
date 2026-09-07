@@ -6,8 +6,7 @@ Build a local, fully 3D browser game in which the player places environmental to
 
 ## Next Agent Prompt
 
-The user wants **two carefully designed levels**, natural clustered starts, and a **photorealistic warm, lived-in house**. [18](slices/18-natural-starts.md) and the neutral scale feasibility prototype [19](slices/19-proportions.md) are integrated and verified. [25](slices/25-physical-scale.md) reproduced a real sampling failure: anatomical antennae usually receive the same nearest-cell value. [26](slices/26-continuous-field-sampling.md) now removes that aliasing, with native and browser gates passing. Anatomical contrast remains below the frozen detector threshold. [27](slices/27-sensory-sensitivity.md) has a promising0.01% diagnostic candidate; its30-seed odor/vision confirmation runs are live (sessions11442/80353; paths in its evidence README). Poll those existing handles and review paired results before production adoption. Do not tune campaigns around inactive sensing.
-Parallel workers stopped at an account usage limit; continue locally. A prepared Blender cabinet is banked under assets/house/cabinet, with round-trip measurements but no production shape acceptance.
+The user wants **two carefully designed levels**, natural clustered starts, and a **photorealistic warm, lived-in house**. [18](slices/18-natural-starts.md) and the neutral scale feasibility prototype [19](slices/19-proportions.md) are integrated and verified. [25](slices/25-physical-scale.md) reproduced a real sampling failure: anatomical antennae usually receive the same nearest-cell value. [26](slices/26-continuous-field-sampling.md) now removes that aliasing, with native and browser gates passing. Anatomical contrast remains below the frozen detector threshold. [27](slices/27-sensory-sensitivity.md) now validates a 0.01% model cutoff across 30 paired seeds for odor and vision. Complete [25](slices/25-physical-scale.md) physical dimension adoption next: put measured sampling coordinates and body size into their existing owners and verify their browser alignment before food/contact work.
 
 Then resolve food/furnishing contact in 20 and the separate shape, material, light and readability passes through 24. Establish one real browser room before expanding into the five-room first level (15) and larger second level (16), followed by release gates (17). Existing 01–14 art is foundation evidence, not final realism acceptance. Follow GAMEPLAY.md and the single-owner contracts below.
 
@@ -37,7 +36,7 @@ Open the [interactive roadmap](visualizations/roadmap.html) for dependency and m
 - [x] [19 — Physical proportions before detailed art](slices/19-proportions.md) — dependencies: 18 for integration; neutral authoring may proceed independently.
 - [ ] [25 — Physical scale and sensory sampling](slices/25-physical-scale.md) — reproduction integrated; physical adoption awaits 26 and measured adapter verdict.
 - [x] [26 — Continuous field sampling](slices/26-continuous-field-sampling.md) — dependency: 25 reproduction; required before physical adoption and 20.
-- [ ] [27 — Sensory sensitivity at anatomical scale](slices/27-sensory-sensitivity.md) — dependency: 26; diagnostic comparison before physical adoption.
+- [x] [27 — Sensory sensitivity at anatomical scale](slices/27-sensory-sensitivity.md) — dependency: 26; diagnostic comparison before physical adoption.
 - [ ] [20 — Authoritative furnishing and food contact](slices/20-furnished-contact.md) — dependencies: 19,25.
 - [ ] [21 — Recognizable household shapes](slices/21-house-shapes.md) — dependencies: 19,20.
 - [ ] [22 — Natural authored materials](slices/22-house-surfaces.md) — dependencies: 21.
