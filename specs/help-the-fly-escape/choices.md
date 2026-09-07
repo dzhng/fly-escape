@@ -692,3 +692,7 @@ The user's one-fan maximum and rejection of chained-fan solutions supersede earl
 
 - **Replace the Worker after a native trap or failed destructor — sound, high confidence.** A simulation crash can leave its Rust objects locked, so attempting another run in the same browser background task can reuse damaged state. Fatal errors now retire that whole task; the next setup creates a fresh one. Ordinary rejected input keeps its healthy task. The plan required usable retry without specifying this boundary. This adds one internal fatal message, with no automatic replay, changed physics or new dependency.
 - **Preserve the original cause when cleanup also fails — sound, high confidence.** If reading simulation data fails and releasing that data fails too, the console retains the first failure and separately logs cleanup. The player still receives one interruption. This makes the actual cause diagnosable without exposing technical details in the game interface.
+
+## Banana peel detail — 2026-09-08
+
+- **Repeat a small authored detail image — sound, medium confidence.** Close fly views magnify a tiny part of the peel. A small repeating image resolves speckles while existing vertex colors retain the broad yellow and dark ends. A unique larger image would reduce repeated groups at greater memory cost. Standard model materials own this detail, with no runtime shader override. This is a reversible art choice; soft spots and repeated clusters remain below the final realism target.
