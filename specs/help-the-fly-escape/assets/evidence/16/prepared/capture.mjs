@@ -1,0 +1,5 @@
+import assert from 'node:assert/strict';
+import {writeFile} from 'node:fs/promises';
+import {chromium} from 'playwright';
+const browser=await chromium.launch({headless:true,channel:'chrome'});const page=await browser.newPage({viewport:{width:1440,height:900}});const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
+try {await page.goto('http://127.0.0.1:5278/specs/help-the-fly-escape/assets/evidence/16/prepared/greybox.html');await page.waitForFunction(()=>document.body.dataset.ready==='true',{timeout:15000});for(const [button,name] of [['#overview','overview'],['#junction','junction'],['#poor','junction-poor']]){await page.locator(button).click();await page.waitForTimeout(150);await page.screenshot({path:new URL(`${name}.png`,import.meta.url).pathname});}await writeFile(new URL('browser.json',import.meta.url),JSON.stringify({errors,neuralCalibration:false,renderer:'shared WorldView; candidate JSON only'},null,2));assert.deepEqual(errors,[]);}finally{await browser.close();}

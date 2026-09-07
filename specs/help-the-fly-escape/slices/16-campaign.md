@@ -35,3 +35,7 @@ Delegated: Authored topology, names, inventory, timing and thresholds within GAM
 Human feedback that changes this slice: Human difficulty feedback may reshape a level; failed cue evidence sends work to slice 03.
 
 Must stay green: all accepted dependency contracts and their focused fixtures; neural motor ownership, real-data provenance, bounded work and the [global invariants](../README.md#standing-gates-and-ownership). Do not broaden testing without a new failure or changed consumer. Record evidence under `assets/evidence/16/` and update the README handoff before ending the pass. Unlisted material decisions require a spec update.
+
+## Prepared six-room greybox
+
+Prepare Turn the Corner with main route 1→2→3→4→6 and a straight-ahead, one-door dead end 5 at the fork in room 3. Inherit the frozen Level 1 body/tuning, spawn and duration; add one existing fan for the required bend. Reference and poor use the same legal placements with different junction/upper-route fan headings. Validate actual Geometry sweeps and wall-aware fan crossing, then inspect overview and junction through the existing renderer. Candidate and evidence stay under `assets/evidence/16/prepared/`; no neural calibration or acceptance batch before 15 acceptance.
