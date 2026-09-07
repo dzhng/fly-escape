@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { houseMaterial, applyHousePalette } from "./house-materials";
+import { houseMaterial } from "./house-materials";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import type { Geometry, FurnitureModel } from "@fly-escape/sim-client";
 import { disposeObjectResources } from "./resources";
@@ -120,9 +120,8 @@ export class HouseGeometry {
     }
   }
 
-  /** Takes ownership of source resources. Clones share geometry/materials. */
+  /** Owns imported materials; floor instances copy UV geometry to preserve grain scale. */
   replace(part: HouseAsset, source: THREE.Group): void {
-    applyHousePalette(source, part === "wall" || part === "floor" ? part : "solid");
     if (part !== "wall" && part !== "floor") {
       const old = this.solidSources.get(part);
       if (!old) { disposeObjectResources(source); return; }
@@ -150,13 +149,24 @@ export class HouseGeometry {
     } else if (part === "floor") {
       for (const room of this.geometry.rooms) {
         const placement = new THREE.Group();
-        placement.add(source.clone(true));
+        const instance = source.clone(true);
+        instance.traverse(object => {
+          if (!(object instanceof THREE.Mesh)) return;
+          object.geometry = object.geometry.clone();
+          const uv = object.geometry.getAttribute("uv");
+          if (uv) for (let i = 0; i < uv.count; i++)
+            uv.setXY(i, uv.getX(i) * (room.max.x - room.min.x), uv.getY(i) * (room.max.z - room.min.z));
+        });
+        placement.add(instance);
         placement.scale.set(room.max.x - room.min.x, 1, room.max.z - room.min.z);
         placement.position.set((room.min.x + room.max.x) / 2, 0, (room.min.z + room.max.z) / 2);
         owner.add(placement);
       }
     }
     if (!owner.children.length) disposeObjectResources(source);
+    else if (part === "floor") source.traverse(object => {
+      if (object instanceof THREE.Mesh) object.geometry.dispose();
+    });
   }
 }
 

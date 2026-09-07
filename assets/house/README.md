@@ -12,3 +12,5 @@ The [closed window study](window/README.md) preserves the room-scale fixture's
 native dimensions; wall installation, glass and daylight remain separate gates.
 
 The [wall sconce](sconce/README.md) is a prepared household fixture, separate from the gameplay floor-light cue.
+
+The [material finishing pass](finish-materials.py) applies production surfaces after shape authoring and saves the exported GLBs and individual blend files. Imported materials remain authoritative in the browser; semantic colors only serve temporary geometry while assets load. Floor UVs use a physical texture scale and are expanded with room dimensions, while textures remain shared. [Oak texture provenance](textures/wood-floor/source.json) records the local Poly Haven CC0 inputs. Fabric detail, plant/fruit surfaces and final lighting remain in progress.

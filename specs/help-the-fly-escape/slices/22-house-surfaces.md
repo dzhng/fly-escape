@@ -31,3 +31,5 @@ Delegated: reversible asset composition, implementation naming and measurements 
 The camera bounds the circular lawn independently of house geometry. Normal maximum zoom uses the centred whole-house fit; following keeps the fly centred, and edge panning lets the player inspect opposite rooms. There is no game Overview button. Uniform grass uses static spatial batches and ordinary frustum culling; floors and rendered wall joins exclude blades. No simulation geometry changes.
 
 [Exterior evidence](../assets/evidence/22/exterior-grass/README.md) records the prepared comparisons and close-range limitations. Root integration additionally passes production setup, follow, wheel zoom and wide/portrait resize restoration without browser errors. Final household materials and composed readability remain open.
+
+The [warm-house integration](../assets/evidence/22/warm-house/README.md) retains authored materials and brings the first finished surfaces and native furnishings into both actual campaign levels. Detailed decoration, surface realism and lighting remain open.

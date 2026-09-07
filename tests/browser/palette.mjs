@@ -12,11 +12,11 @@ const browser = await chromium.launch({
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 const errors = [];
 page.on("pageerror", (error) => errors.push(error.message));
-const report = { geometryBuffers: {} };
+const report = { assetBuffers: {} };
 for (const part of ["floor", "wall", "solid"]) {
   const glb = await readFile(new URL(`../../assets/house/${part}.glb`, import.meta.url));
   const binOffset = 20 + glb.readUInt32LE(12);
-  report.geometryBuffers[part] = createHash("sha256")
+  report.assetBuffers[part] = createHash("sha256")
     .update(glb.subarray(binOffset + 8))
     .digest("hex");
 }

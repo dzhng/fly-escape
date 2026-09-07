@@ -6,11 +6,11 @@ Build a local, fully 3D browser game in which the player places environmental to
 
 ## Next Agent Prompt
 
-Prioritize the playable two-level game. The user explicitly requested faster visible progress after excessive contact refinement. Integrate the prepared campaign UI from `/tmp/fly-campaign-integrate`, then furnish and light both authored levels and verify their complete setup → attempt → result → retry/progression loop. Do not hold independent game/content work behind further precision experiments.
+Prioritize the playable two-level game. The user explicitly requested faster visible progress after excessive contact refinement. Both authored levels are now on the home route with mixed starts and initial native furnishings. Complete their successful setup → attempt → result → retry/progression loop and puzzle balance, while finishing room decoration and lighting. Do not hold independent game/content work behind further precision experiments.
 
 Numerical body motion and [shared packed replay](assets/evidence/20/numerical-replay/README.md) are integrated. Full fan and maximum motor fixtures now complete within the existing query budget; focused lifecycle, neighbor and replay tests pass. Contact browser acceptance and twenty-brain production cost remain open. Fix visible clipping, broken feeding, stalled attempts and measured performance in the real levels; the earlier formal certificate program is rejected as the production prerequisite.
 
-The prepared [exterior grass](assets/evidence/22/exterior-grass/README.md) is integrated with wheel zoom and edge panning. Household assets pass [browser replacement and inspection](assets/evidence/21/browser-shapes/README.md), but furnished-game placement/materials/lighting remain open. Finish those and the two levels, then the release checks. Preserve existing neural tuning while testing actual level viability.
+The prepared [exterior grass](assets/evidence/22/exterior-grass/README.md) is integrated with wheel zoom and edge panning. The [first warm-house surfaces and furniture placements](assets/evidence/22/warm-house/README.md) are integrated. Plants, household lights/windows, fruit appearance and composed realism remain open. Finish those and the two levels, then the release checks. Preserve existing neural tuning while testing actual level viability.
 
 The target remains exactly two crafted levels in a photorealistic warm, lived-in house with natural mixed walking/flying starts and twenty real brains. Preserve native scale, neural gains and provenance. Camera navigation uses wheel zoom and RTS panning with no game Overview button. Final-build/platform performance remains open;100-fly optimization is future work, not a release gate.
 

@@ -105,7 +105,56 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
           }
         }
       ],
-      "solids": [],
+      "solids": [
+        {
+          "id": 1,
+          "furnishing": {
+            "model": "cabinet",
+            "quarterTurns": 0
+          },
+          "min": {
+            "x": 0.2,
+            "z": 0.15
+          },
+          "max": {
+            "x": 1.4,
+            "z": 0.6
+          },
+          "height": 0.85
+        },
+        {
+          "id": 2,
+          "furnishing": {
+            "model": "cabinet",
+            "quarterTurns": 0
+          },
+          "min": {
+            "x": 3.4,
+            "z": 0.15
+          },
+          "max": {
+            "x": 4.6,
+            "z": 0.6
+          },
+          "height": 0.85
+        },
+        {
+          "id": 3,
+          "furnishing": {
+            "model": "sofa",
+            "quarterTurns": 1
+          },
+          "min": {
+            "x": 1.95,
+            "z": 3.05
+          },
+          "max": {
+            "x": 2.8,
+            "z": 4.949999999999999
+          },
+          "height": 0.85
+        }
+      ],
       "walls": [
         {
           "a": {
