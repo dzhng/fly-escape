@@ -18,3 +18,5 @@ The [material finishing pass](finish-materials.py) applies production surfaces a
 The [open doorway](doorway/README.md) frames an ordinary clear passage beneath a lintel. Its posts sit outside the core wall gap, so dressing does not narrow traversal. The [wall-mounted plant](wall-plant/README.md) adds greenery above floor circulation space.
 
 The [study and bedroom furnishings](author-study-bedroom.py) use native-sized closed bases so their visible floor occupancy agrees with the existing rectangular collision contract. The [kitchen run](kitchen/README.md) combines appliances and counter space under one placed footprint.
+
+The [open French window](exit-window/README.md) dresses a floor-level escape opening with outward-facing leaves; its clear passage must agree with the simulation exit.
