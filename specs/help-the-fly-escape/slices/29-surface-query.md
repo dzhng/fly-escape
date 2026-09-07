@@ -6,7 +6,7 @@ Status: replication accepted. The query module is now implemented under20; follo
 
 Replicate Parry's continuous shape casting first in a standalone native probe. Candidate dependency: parry3d-f64 0.30.2 with scalar enhanced-determinism, no rigid-body world or solver. Its time-of-impact query is a geometric constraint; it does not generate fly behavior. Use actual metre scales, a curved apple fixture and indexed triangle floor. Confirm misses, first contact, start-touching departure, revisit, initial penetration and stable ordering when multiple surfaces overlap a query. Native and WASM values now agree; see [evidence29](../assets/evidence/29/README.md). The accepted candidate normalizes queries internally to millimetres, preserving metre inputs/outputs; no clearance is required.
 
-The probe ball is a query subject, not an accepted new fly collision shape. The existing body radius is a planar footprint and must not silently become a sphere: the render model's support pivot and vertical extent need a measured contact-shape decision before20 integration. Preserve this unresolved boundary in the verdict. Likewise, successful casts do not prove walking adhesion, bounded slope transitions, feeding or replay; those remain20's body/record/browser gate.
+The probe ball establishes query feasibility; it is not the production fly shape. Slice20 now owns the measured native fly hull and its body/record integration. Successful casts alone do not prove walking adhesion, bounded slope transitions, feeding or replay; use slice20's current evidence and remaining gates for those claims.
 
 ## Proposed seam
 
