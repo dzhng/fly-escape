@@ -1,6 +1,6 @@
 # 29 — Curved-surface query feasibility
 
-Status: replication accepted; production adoption remains in20. Parent:20; dependencies:25. One question: can a bounded f64 geometry query find the first contact on curved fruit without a fast moving body crossing through it, while allowing departure and return?
+Status: replication accepted. The query module is now implemented under20; follow20 for body/record integration. Parent:20; dependencies:25. One question: can a bounded f64 geometry query find the first contact on curved fruit without a fast moving body crossing through it, while allowing departure and return?
 
 ## Candidate and limits
 

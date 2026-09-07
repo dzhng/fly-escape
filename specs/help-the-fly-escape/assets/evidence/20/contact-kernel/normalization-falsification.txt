@@ -1,0 +1,22 @@
+
+running 1 test
+test curved_contact_allows_departure_and_does_not_tunnel_at_fly_scale ... FAILED
+
+failures:
+
+---- curved_contact_allows_departure_and_does_not_tunnel_at_fly_scale stdout ----
+
+thread 'curved_contact_allows_departure_and_does_not_tunnel_at_fly_scale' (28066804) panicked at crates/sim/tests/surface.rs:75:9:
+departure at 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    curved_contact_allows_departure_and_does_not_tunnel_at_fly_scale
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.02s
+
+   Compiling sim v0.1.0 (/Users/david/dev/fly-escape/crates/sim)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.74s
+     Running tests/surface.rs (target/debug/deps/surface-33e46ea8f4f87078)
+error: test failed, to rerun pass `-p sim --test surface`

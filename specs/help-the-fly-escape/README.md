@@ -6,7 +6,7 @@ Build a local, fully 3D browser game in which the player places environmental to
 
 ## Next Agent Prompt
 
-Continue [20 — furnishing and food contact](slices/20-furnished-contact.md), using the accepted [29 — curved-surface query feasibility](slices/29-surface-query.md) result. The missing seam is authoritative contact height/identity: today food is a planar overlap and landing height is renderer-only. Parry f64 casts pass after internal millimetre normalization; native/WASM values match. Next measure the actual fly support shape and materialize the body/record seam before detailed fruit assets.
+Continue [20 — furnishing and food contact](slices/20-furnished-contact.md), using the accepted [29 — curved-surface query feasibility](slices/29-surface-query.md) result. The missing seam is authoritative contact height/identity: today food is a planar overlap and landing height is renderer-only. The authoritative contact-query module in `crates/sim/src/surface.rs` now passes native/WASM checks. A measured native-hull candidate still needs browser validation of support-normal alignment and animated feet. Next verify that shape visually, then connect authoritative height/normal/contact identity through body state and records. Do not rebuild the query layer or adopt the test ball as a fly body.
 
 Then complete20, the separate shape/material/light/readability passes21–24, the five-room first level15 and larger second level16, and release17. The user wants exactly two crafted levels in a photorealistic warm, lived-in house, with natural mixed walking/flying starts. Keep actual neural motor ownership, graph provenance, twenty flies and the established campaign criteria.
 

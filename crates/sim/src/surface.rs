@@ -1,0 +1,235 @@
+//! Immutable contact geometry. Public coordinates are metres; query normalization
+//! avoids the measured millimetre-body departure failure in metre-scale GJK casts.
+use parry3d_f64::{
+    math::{Matrix, Pose, Rotation, Vector},
+    query::{cast_shapes, Ray, RayCast, ShapeCastOptions, ShapeCastStatus},
+    shape::{ConvexPolyhedron, Shape, TriMesh, TriMeshFlags},
+};
+use serde::{Deserialize, Serialize};
+use std::collections::BTreeSet;
+use ts_rs::TS;
+
+const QUERY_UNITS: f64 = 1000.;
+const MAX_COORDINATE: f64 = 1e6;
+const MAX_SCENE_VERTICES: usize = 262_144;
+const MAX_SCENE_TRIANGLES: usize = 524_288;
+
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+pub struct ContactSurface {
+    pub id: u32,
+    pub vertices: Vec<[f64; 3]>,
+    pub triangles: Vec<[u32; 3]>,
+}
+#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+pub struct SurfaceHit {
+    pub surface_id: u32,
+    pub fraction: f64,
+    pub point: [f64; 3],
+    pub normal: [f64; 3],
+}
+
+pub struct ContactHull(ConvexPolyhedron);
+impl ContactHull {
+    /// Points are relative to the native model's support pivot, not its bounds centre.
+    pub fn new(points: &[[f64; 3]]) -> Result<Self, String> {
+        if !(4..=4096).contains(&points.len()) || points.iter().any(|p| !bounded(*p)) {
+            return Err("contact hull requires 4..4096 bounded finite vertices".into());
+        }
+        let points: Vec<_> = points
+            .iter()
+            .map(|p| Vector::from_array(*p) * QUERY_UNITS)
+            .collect();
+        ConvexPolyhedron::from_convex_hull(&points)
+            .filter(|hull| {
+                let volume = hull.mass_properties(1.).mass();
+                volume.is_finite() && volume > 0.
+            })
+            .map(Self)
+            .ok_or_else(|| "contact hull must enclose a nonzero volume".into())
+    }
+}
+
+pub struct ContactScene {
+    meshes: Vec<(u32, TriMesh)>,
+}
+impl ContactScene {
+    pub fn new(surfaces: &[ContactSurface]) -> Result<Self, String> {
+        if surfaces.len() > 256
+            || surfaces.iter().map(|s| s.vertices.len()).sum::<usize>() > MAX_SCENE_VERTICES
+            || surfaces.iter().map(|s| s.triangles.len()).sum::<usize>() > MAX_SCENE_TRIANGLES
+        {
+            return Err("contact scene exceeds its surface or mesh budget".into());
+        }
+        let mut ids = BTreeSet::new();
+        let mut meshes = Vec::with_capacity(surfaces.len());
+        for surface in surfaces {
+            if !ids.insert(surface.id)
+                || surface.vertices.is_empty()
+                || surface.triangles.is_empty()
+                || surface.vertices.iter().any(|p| !bounded(*p))
+            {
+                return Err(
+                    "contact surfaces require unique IDs and nonempty bounded finite geometry"
+                        .into(),
+                );
+            }
+            let vertices: Vec<_> = surface
+                .vertices
+                .iter()
+                .map(|p| Vector::from_array(*p) * QUERY_UNITS)
+                .collect();
+            for face in &surface.triangles {
+                if face.iter().any(|i| *i as usize >= vertices.len()) {
+                    return Err("contact triangle index is outside its vertex array".into());
+                }
+                let [a, b, c] = face.map(|i| vertices[i as usize]);
+                if (b - a).cross(c - a).length_squared() <= f64::EPSILON {
+                    return Err("contact triangles must have numerically resolvable area".into());
+                }
+            }
+            let mesh = TriMesh::with_flags(
+                vertices,
+                surface.triangles.clone(),
+                TriMeshFlags::ORIENTED | TriMeshFlags::FIX_INTERNAL_EDGES,
+            )
+            .map_err(|e| format!("invalid contact mesh: {e}"))?;
+            meshes.push((surface.id, mesh));
+        }
+        meshes.sort_by_key(|(id, _)| *id);
+        Ok(Self { meshes })
+    }
+
+    /// Constrain a requested translation; this query never chooses a destination.
+    pub fn cast(
+        &self,
+        hull: &ContactHull,
+        position: [f64; 3],
+        heading: f64,
+        up: [f64; 3],
+        displacement: [f64; 3],
+    ) -> Result<Option<SurfaceHit>, String> {
+        if !bounded(position) || !bounded(displacement) || !heading.is_finite() || !bounded(up) {
+            return Err("contact cast requires bounded finite pose and displacement".into());
+        }
+        let up = Vector::from_array(up);
+        if (up.length_squared() - 1.).abs() > 1e-6 || up.y <= 0. {
+            return Err("support up must be a unit vector with positive height".into());
+        }
+        let up = up.normalize();
+        let forward = Vector::new(heading.cos(), 0., heading.sin());
+        let tangent = forward - up * forward.dot(up);
+        if tangent.length_squared() <= f64::EPSILON {
+            return Err("heading is parallel to the support normal".into());
+        }
+        let forward = tangent.normalize();
+        let right = up.cross(forward);
+        let pose = Pose {
+            translation: Vector::from_array(position) * QUERY_UNITS,
+            rotation: Rotation::from_mat3(&Matrix::from_cols(right, up, forward)),
+        };
+        let mut first = None;
+        for (id, mesh) in &self.meshes {
+            let hit = cast_shapes(
+                &pose,
+                Vector::from_array(displacement) * QUERY_UNITS,
+                &hull.0,
+                &Pose::IDENTITY,
+                Vector::ZERO,
+                mesh,
+                ShapeCastOptions {
+                    max_time_of_impact: 1.,
+                    stop_at_penetration: false,
+                    ..Default::default()
+                },
+            )
+            .map_err(|_| "unsupported contact shape pair")?;
+            if let Some(hit) = hit {
+                if !matches!(
+                    hit.status,
+                    ShapeCastStatus::Converged | ShapeCastStatus::PenetratingOrWithinTargetDist
+                ) {
+                    return Err(format!("contact query did not converge: {:?}", hit.status));
+                }
+                select(
+                    &mut first,
+                    checked_hit(
+                        *id,
+                        hit.time_of_impact,
+                        hit.witness2 / QUERY_UNITS,
+                        hit.normal2,
+                    )?,
+                );
+            }
+        }
+        Ok(first)
+    }
+
+    /// Locate a support point below a root; the body owner decides whether to land on it.
+    pub fn below(&self, position: [f64; 3], distance: f64) -> Result<Option<SurfaceHit>, String> {
+        if !bounded(position)
+            || !distance.is_finite()
+            || distance <= 0.
+            || distance > MAX_COORDINATE
+        {
+            return Err(
+                "support query requires a bounded finite position and positive distance".into(),
+            );
+        }
+        let ray = Ray::new(
+            Vector::from_array(position) * QUERY_UNITS,
+            -Vector::Y * distance * QUERY_UNITS,
+        );
+        let mut first = None;
+        for (id, mesh) in &self.meshes {
+            if let Some(hit) = mesh.cast_local_ray_and_get_normal(&ray, 1., false) {
+                select(
+                    &mut first,
+                    checked_hit(
+                        *id,
+                        hit.time_of_impact,
+                        ray.point_at(hit.time_of_impact) / QUERY_UNITS,
+                        hit.normal,
+                    )?,
+                );
+            }
+        }
+        Ok(first)
+    }
+}
+fn bounded(p: [f64; 3]) -> bool {
+    p.into_iter()
+        .all(|v| v.is_finite() && v.abs() <= MAX_COORDINATE)
+}
+fn checked_hit(
+    id: u32,
+    fraction: f64,
+    point: Vector,
+    normal: Vector,
+) -> Result<SurfaceHit, String> {
+    if !fraction.is_finite()
+        || !(0. ..=1.).contains(&fraction)
+        || !bounded(point.to_array())
+        || !normal.is_finite()
+        || (normal.length_squared() - 1.).abs() > 1e-5
+    {
+        return Err("contact query returned invalid geometry".into());
+    }
+    Ok(SurfaceHit {
+        surface_id: id,
+        fraction,
+        point: point.to_array(),
+        normal: normal.normalize().to_array(),
+    })
+}
+fn select(first: &mut Option<SurfaceHit>, hit: SurfaceHit) {
+    if first.is_none_or(|prior| {
+        hit.fraction
+            .total_cmp(&prior.fraction)
+            .then(hit.surface_id.cmp(&prior.surface_id))
+            .is_lt()
+    }) {
+        *first = Some(hit);
+    }
+}

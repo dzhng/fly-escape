@@ -1,6 +1,6 @@
 # 20 — Authoritative furnishing and food contact
 
-Status: in progress; query replication29 accepted. Dependencies: 19,25,26 and the measured physical-adapter verdict.
+Status: in progress. Query replication29 and the authoritative contact-query kernel pass; body/record/browser food integration remains open. Dependencies: 19,25,26 and the measured physical-adapter verdict.
 
 ## Contract, seam and review surface
 
@@ -23,3 +23,9 @@ Delegated: reversible asset composition, implementation naming and measurements 
 `BodyState` currently records planar pose, mode, reserve and outcome. `Body::contacts` reduces food circles to a grounded overlap boolean; taste injection consumes that same boolean before advancing the brain. `flyHeight` currently invents display-only flight/landing height. Therefore contact cannot be fixed solely in the renderer: the proposed support identity/height must originate in body state, flow through `record.rs` and the client archive, and replace the corresponding display-height inference. Keep this as the next unresolved seam, not an accepted food-surface implementation.
 
 [29](29-surface-query.md) accepts normalized Parry f64 casts for the prototype: metre inputs/outputs with internal millimetre geometry, no extra clearance. Preserve the curved-mesh departure regression. This does not yet choose the fly support shape or change production contact.
+
+## Implemented query boundary and next gate
+
+`crates/sim/src/surface.rs` owns `ContactSurface`, `ContactHull`, `ContactScene` and `SurfaceHit`. Casts constrain a requested hull translation from its native pivot and support orientation; downward queries identify possible support. Rust exports the surface/hit data to TypeScript. The caller still owns actual landing, walking, feeding and outcomes. [Kernel evidence](../assets/evidence/20/contact-kernel/README.md) includes native/WASM agreement and the production normalization regression.
+
+The [native shape candidate](../assets/evidence/20/contact-shape/README.md) is measured but not adopted. Its upright envelope can leave a visible resting-model gap on a sloped apple; support-normal alignment reduces the measured gap. Next prove this alignment in a browser close-up, including animated feet, before choosing the final hull. Then carry root height, support normal and food-contact identity through `BodyState`, packed records and playback, replacing display-only height inference. Do not leave the new query boundary as an alternate unused physics path at20 closeout.

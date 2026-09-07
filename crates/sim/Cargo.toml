@@ -9,5 +9,7 @@ serde_json = "1"
 sha2 = "0.10"
 ts-rs = { version = "11", features = ["serde-compat"] }
 
+parry3d-f64 = { version = "=0.30.2", default-features = false, features = ["required-features", "std", "alloc", "enhanced-determinism"] }
+
 [build-dependencies]
 sha2 = "0.10"

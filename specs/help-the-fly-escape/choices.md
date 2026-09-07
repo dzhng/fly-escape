@@ -300,3 +300,9 @@ User-authorized visual exaggeration uses a common zoom-derived scale with a reve
 ### Curved contact queries (slice29) — sound, medium confidence
 
 Use a collision-query library to constrain proposed movement instead of creating a second physics controller. Parry f64 is the accepted prototype candidate; its shape queries run internally in millimetres because metre-scale curved-mesh departure produced an incorrect blocking normal. Public coordinates stay in metres. This is a numerical representation choice; production dependency adoption and the fly's actual support shape remain20's responsibility.
+
+### Contact-query ownership (slice20 component) — sound, medium confidence
+
+Use stable numeric surface IDs and resolve exact equal-time hits by ID so input ordering cannot change the chosen contact. The core owns immutable, bounded mesh construction and rejects invalid shapes or unconverged query results. A convex hull is positioned relative to the native support pivot and oriented using the support normal and planar heading; this avoids silently turning the existing horizontal radius into a spherical body. The native all-animation hull remains a measured candidate until its feet/contact are inspected in the browser.
+
+The query-only Parry dependency is now adopted in sim, with the proven internal normalization. Scene and hull budgets bound preparation work; they are generous authoring limits, not a measured100-fly performance guarantee. Existing body decisions remain authoritative and must consume this boundary during20 integration; a parallel controller is not an accepted final state.

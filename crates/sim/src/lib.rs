@@ -24,3 +24,5 @@ pub mod placement;
 pub mod setup_fixture;
 
 pub mod spawn;
+
+pub mod surface;
