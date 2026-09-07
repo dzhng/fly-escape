@@ -20,6 +20,7 @@ fn graph() -> Arc<Graph> {
 }
 fn level(count: usize) -> LevelDef {
     LevelDef {
+        fixed_objects: vec![],
         id: "fixture".into(),
         geometry: Geometry {
             solids: vec![],

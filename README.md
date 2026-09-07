@@ -42,3 +42,5 @@ Python is used only for offline graph preparation and faithful numerical referen
 [House assets](assets/house/README.md) describes the shared native furniture envelope and authoring contract.
 
 [Food assets](assets/food/README.md) separates edible geometry, scent cues and unregistered shape studies.
+
+[Household assets](assets/household/README.md) describes native room props; runtime integration follows the active specification.

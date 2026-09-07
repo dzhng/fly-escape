@@ -278,8 +278,9 @@ export class WorldView {
     placements: Placement[],
     catalog: ToolDef[],
     ghost?: { placement: Placement; valid: boolean | null },
+    fixed: Placement[] = [],
   ): void {
-    this.placementModels.setPlacements(placements, catalog, ghost);
+    this.placementModels.setPlacements([...fixed, ...placements], catalog, ghost);
     disposeObjectResources(this.placementMarkers);
     this.placementMarkers.clear();
     if (!this.placementMarkers.parent) this.scene.add(this.placementMarkers);

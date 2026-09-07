@@ -60,6 +60,7 @@ pub struct LevelDef {
     pub exit: ExitOpening,
     pub exit_cue: Option<ExitCue>,
     pub food: Vec<FoodDef>,
+    pub fixed_objects: Vec<Placement>,
     pub zappers: Vec<ContactRegion>,
     pub sources: Vec<Source>,
     pub field_config: FieldConfig,

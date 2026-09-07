@@ -16,6 +16,7 @@ pub fn fixture() -> Result<SetupFixture, String> {
     let point = |x, z| Point { x, z };
     let fixture = SetupFixture {
         level: LevelDef {
+            fixed_objects: vec![],
             id: "five-room-setup".into(),
             geometry,
             spawn: crate::spawn::SpawnDef::Cluster {

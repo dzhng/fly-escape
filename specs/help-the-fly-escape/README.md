@@ -8,7 +8,9 @@ Build a local, fully 3D browser game in which the player places environmental ob
 
 Finish the two-level game, prioritizing reliable routes and meaningful eating. Both furnished houses, ordinary 90 cm doorways, Sims-inspired foreground cutaway, open French-window exits, mixed random starts and earned campaign progression are integrated. The user requested faster visible progress; do not return to the rejected microscopic contact-certificate program.
 
-Current gameplay pickup: the centered second-level swarm and four-crumb/six-fan diagnostic earns 2/5/4 escapes on three seeds, versus zero empty. Both levels now offer one native apple and one native banana. [Native fruit integration](assets/evidence/21/banana-game/README.md) verifies banana contact and actual browser completion, but its matched food-energy-off result is unchanged. Apples can trigger real neural eating; airflow can end contact too quickly. Find a reachable weaker-wind meal on the route, then establish food benefit and freeze paired tuning/holdout validation. Do not make scent crumbs edible, enlarge invisible fruit contact or change neural outputs to obtain success.
+Current gameplay pickup: redesign the two puzzles around discovering attraction and repulsion with varied objects. The user limits each level to **one fan maximum** and rejects chained-fan solutions. Previous fan-route measurements remain historical diagnostics, not campaign acceptance. Finish fixed-object composition, integrate effectful household mess and visible avoidable hazards, then calibrate object-mediated escape and meaningful eating. Household examples include worn shoes, dirty dishes, leftovers, damp laundry, pet food and a spider web. An unpleasant human smell does not by itself establish fly repulsion. Keep biological evidence and model assumptions distinct.
+
+Fixed household objects belong to the level, persist through setup/replay and do not spend the player's inventory. Their effects use the same simulation owner as placed objects. Blender household assets are being integrated; source renders alone do not establish gameplay visibility or effects. The immediate seam and gates are in [30 — Household objects and hazards](slices/30-household-objects.md). Do not make scent crumbs edible, enlarge invisible food contact or change neural outputs to obtain success.
 
 Core motion, packed replay and timed wall sliding are integrated. Native/renderer contact gates pass; bounded distant-food culling preserves complete attempt frames and offers only a modest native CPU saving. The [isolated production fruit run](assets/evidence/17/fruit-cost/README.md) starts in 1.40 seconds, produces at 2.05× playback and has zero underruns; the earlier slower development run was confounded by concurrent work. Preserve actual native geometry, neural gains and existing work limits.
 
@@ -48,6 +50,7 @@ Open the [interactive roadmap](visualizations/roadmap.html) for dependency and m
 - [ ] [22 — Natural authored materials](slices/22-house-surfaces.md) — includes a finite circular grass exterior and bounded rendering; dependencies: 21.
 - [ ] [23 — Daylight and household illumination](slices/23-house-illumination.md) — dependencies: 22.
 - [ ] [24 — Follow visibility in a furnished room](slices/24-furnished-readability.md) — dependencies: 23,18.
+- [ ] [30 — Household objects and hazards](slices/30-household-objects.md) — required before final 15/16 calibration.
 - [ ] [15 — Level 1 is the tutorial](slices/15-first-level.md) — dependencies: 18–24 and the accepted foundations.
 - [ ] [16 — A carefully designed second level](slices/16-campaign.md) — dependencies: 15.
 - [ ] [17 — Browser release and clean cutover](slices/17-static-release.md) — dependencies: 16.

@@ -174,6 +174,7 @@ pub fn resolve_placements(
     if rules.inventory.len() > tool_catalog().len()
         || rules.reserved.len() > 256
         || placements.len() > 64
+        || level.fixed_objects.len() > 64
     {
         return Err("setup exceeds inventory, reserved-region or placement limits".into());
     }
@@ -202,13 +203,19 @@ pub fn resolve_placements(
     for p in &mut placements {
         p.canonicalize()?;
     }
-    for i in 0..placements.len() {
-        let placement = &placements[i];
-        if i > 0 && placements[i - 1].id == placement.id {
+    let mut fixed = level.fixed_objects.clone();
+    fixed.sort_by_key(|p| p.id);
+    for p in &mut fixed {
+        p.canonicalize()?;
+    }
+    let all: Vec<_> = fixed.iter().chain(&placements).collect();
+    for i in 0..all.len() {
+        let placement = all[i];
+        if i > 0 && i != fixed.len() && all[i - 1].id == placement.id {
             return Err("placement IDs must be unique".into());
         }
         let radius = tool_def(placement.kind).footprint_radius;
-        // A tool's conservative square footprint must fit a room and clear walls and solids.
+        // An object's conservative square footprint must fit a room and clear walls and solids.
         if !level.geometry.rooms.iter().any(|r| {
             placement.position.x - radius >= r.min.x
                 && placement.position.x + radius <= r.max.x
@@ -247,17 +254,19 @@ pub fn resolve_placements(
         {
             return Err("object overlaps the exit opening".into());
         }
-        if placements[..i].iter().any(|p| {
+        if all[..i].iter().any(|p| {
             placement.position.distance(p.position) <= radius + tool_def(p.kind).footprint_radius
         }) {
             return Err("object footprints must not overlap".into());
         }
-        let count = remaining
-            .get_mut(&placement.kind)
-            .ok_or("object is not available in this level")?;
-        *count = count
-            .checked_sub(1)
-            .ok_or("no inventory remains for this object")?;
+        if i >= fixed.len() {
+            let count = remaining
+                .get_mut(&placement.kind)
+                .ok_or("object is not available in this level")?;
+            *count = count
+                .checked_sub(1)
+                .ok_or("no inventory remains for this object")?;
+        }
     }
     let mut sources = level.sources.clone();
     let mut food_defs = level.food.clone();
@@ -269,7 +278,7 @@ pub fn resolve_placements(
         return Err("food requires floor positions and at most 256 surfaces".into());
     }
     let mut field_config = level.field_config.clone();
-    for placement in &placements {
+    for placement in all {
         match tool_def(placement.kind).effect {
             ToolEffect::Source {
                 kind,

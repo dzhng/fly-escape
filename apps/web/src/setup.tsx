@@ -149,6 +149,7 @@ export function SetupGame({
       progress.preferences.showTools ? setup.placements : [],
       content.catalog,
       intent?.placement ? { placement: intent.placement, valid } : undefined,
+      content.level.fixedObjects,
     );
   }, [content, setup, intent, valid, input, progress.preferences.showTools]);
   useEffect(() => {

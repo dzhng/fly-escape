@@ -253,3 +253,33 @@ fn banana_spends_its_own_stock_and_resolves_native_edible_geometry() {
         "scent crumbs remain odor-only"
     );
 }
+
+#[test]
+fn fixed_objects_keep_effects_and_space_without_spending_editable_stock() {
+    let mut level = level();
+    level.fixed_objects = vec![
+        item(2, ToolKind::Vinegar, 3., 1.),
+        item(1, ToolKind::Banana, 1., 1.),
+    ];
+    let fixed = resolve_placements(&level, &[]).unwrap();
+    assert!(fixed.state.placements.is_empty());
+    assert_eq!(left(&fixed.state, ToolKind::Banana), 1);
+    assert_eq!(fixed.state.food, vec![sim::food::FoodDef { position: Point { x: 1., z: 1. }, heading: 0., shape: sim::food::FoodShape::Banana }.surface(0).unwrap()]);
+    assert_eq!(fixed.sources.iter().map(|s| s.kind).collect::<Vec<_>>(),
+        vec![SourceKind::AttractiveOdor, SourceKind::RepellentOdor]);
+    assert_eq!(edit_placements(&level, &[], PlacementEdit::Remove { id: 1 }).unwrap(), fixed.state);
+    assert!(edit_placements(&level, &[], PlacementEdit::Move {
+        id: 1, position: Point { x: 4., z: 1. }, heading: 0.,
+    }).is_err());
+    assert!(resolve_placements(&level, &[item(1, ToolKind::Fruit, 1., 1.)])
+        .unwrap_err().contains("overlap"));
+    let editable = resolve_placements(&level, &[item(1, ToolKind::Banana, 4., 3.)]).unwrap();
+    assert_eq!(editable.state.placements.len(), 1);
+    assert_eq!(editable.state.food.len(), 2);
+    assert_eq!(left(&editable.state, ToolKind::Banana), 0);
+    level.fixed_objects.reverse();
+    assert_eq!(serde_json::to_value(resolve_placements(&level, &[]).unwrap()).unwrap(),
+        serde_json::to_value(fixed).unwrap());
+    level.fixed_objects[1].id = level.fixed_objects[0].id;
+    assert!(resolve_placements(&level, &[]).unwrap_err().contains("IDs"));
+}

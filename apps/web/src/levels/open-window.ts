@@ -47,6 +47,7 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
       "antennaForward": 0.0014145078816978176
     },
     "food": [],
+    "fixedObjects": [{"id": 1, "kind": "fruit", "position": {"x": 7.4, "z": 3.2}, "heading": 0.3}, {"id": 2, "kind": "banana", "position": {"x": 2.5, "z": 8}, "heading": 0.8}],
     "geometry": {
       "rooms": [
         {
@@ -348,7 +349,7 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
         },
         {
           "kind": "fan",
-          "count": 2
+          "count": 1
         }
       ],
       "reserved": []

@@ -225,7 +225,7 @@ export function AttemptPlayback({
           reply.info.level.exit,
           false,
         );
-        scene.current.setPlacements(reply.info.spec.placements, catalog);
+        scene.current.setPlacements(reply.info.spec.placements, catalog, undefined, reply.info.level.fixedObjects);
         scene.current.setPoses(sample(run.current));
         scene.current.enableSelection(selectFly);
         scene.current.selectFly(0);

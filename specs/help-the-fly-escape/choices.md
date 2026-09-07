@@ -639,3 +639,10 @@ Campaign integration preserves each prepared room topology, inventory, duration,
 ## Distant-food work
 
 - **Choice — conservative cached bounds before exact contact.** For a fly far from an apple or banana, the body first checks an enclosing box saved with its immutable hull. Only clearly disjoint food is skipped; nearby food still uses the existing precise queries. The plan required bounded work but did not prescribe this inexpensive early rejection. **Verdict: sound, high confidence.** All recorded frames remain identical, and future geometry changes rebuild the box with the hull instead of maintaining a separate cache.
+
+## Household-object foundation — 2026-09-07
+
+- **Fixed objects share placement effects — sound, high confidence.** A banana already in the house emits odor and provides the same edible surface as one the player places. It belongs to the level, so removing inventory item #1 cannot remove household item #1; each list has its own IDs. The plan did not choose a schema. A required fixed-object list avoids separate effect logic and preserves authored conditions across retries. It also reserves space without spending player stock.
+- **Household source assets are provisional art — sound, medium confidence.** Native shoes, laundry, dishes, cat, zapper and web have bounded local meshes with no external textures. They are recognizable authored forms, not photorealistic scans. Accept their reusable source geometry for integration, while keeping final house-camera realism open; especially the cat's raised stripes and toy-like proportions require polish. Source renders cannot establish hazard contact or gameplay effects.
+
+The user's one-fan maximum and rejection of chained-fan solutions supersede earlier multi-fan campaign choices. Historical fan probes do not establish the final puzzle's acceptance.

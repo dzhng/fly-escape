@@ -134,6 +134,7 @@ fn fixture(scenario: LifecycleScenario) -> LevelDef {
         });
     }
     LevelDef {
+        fixed_objects: vec![],
         id: if exit_case {
             "lifecycle-exit"
         } else {
