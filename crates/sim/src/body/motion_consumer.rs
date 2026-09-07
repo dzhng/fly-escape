@@ -627,3 +627,67 @@ fn query_exhaustion_after_partial_shoe_motion_restores_verified_start() {
         }
     }
 }
+
+#[test]
+fn unresolved_shoe_rim_landing_declines_support_at_the_verified_pose() {
+    let state: BodyState = serde_json::from_str(r#"{"height":0.12772274883536788,"mode":"landing","outcome":null,"pose":{"heading":5.533412896370883,"position":{"x":2.601077926533136,"z":6.593480566087955}},"reserve":13.960000000000088,"rotation":[7.746681504404701e-14,0.9169166314048016,-1.7693246061555225e-13,0.39907880306184046],"support":null}"#).unwrap();
+    let desired: BodyPose = serde_json::from_str(
+        r#"{"heading":5.677330636512726,"position":{"x":2.627205032953626,"z":6.57538058512456}}"#,
+    )
+    .unwrap();
+    let objects = crate::native_object::NativeObjectShape::WornShoes
+        .placed_surfaces(Point { x: 2.6, z: 6.7 }, 0.8, 2)
+        .unwrap();
+    let geometry = Geometry {
+        rooms: vec![crate::environment::RectRoom {
+            id: 1,
+            min: Point { x: 0., z: 0. },
+            max: Point { x: 10., z: 10. },
+        }],
+        walls: vec![],
+        solids: vec![],
+    };
+    let world = BodyWorld::new(
+        &geometry,
+        &[],
+        &objects,
+        &[],
+        ExitOpening {
+            a: Point { x: 10., z: 1. },
+            b: Point { x: 10., z: 2. },
+            outward: Point { x: 1., z: 0. },
+        },
+        1000,
+    )
+    .unwrap();
+    let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
+    assert_eq!(trace.end().fraction, 1.);
+    assert_eq!(trace.points.len(), 2);
+    assert!(trace.end().pose.position.distance(desired.position) > 0.01);
+    // The landing is declined, not snapped onto the rim it grazed.
+    for point in &trace.points {
+        assert_eq!(point.support, None);
+        assert!(!point.grounded);
+        assert_eq!(point.pose, state.pose);
+        assert_eq!(point.height, state.height);
+        assert_eq!(point.rotation, state.rotation);
+    }
+    for pair in trace.points.windows(2) {
+        for i in 0..=100 {
+            let t = pair[0].fraction + (pair[1].fraction - pair[0].fraction) * i as f64 / 100.;
+            let p = trace.at(t).unwrap();
+            let depth = world
+                .surfaces
+                .penetration(
+                    world.hull,
+                    [p.pose.position.x, p.height, p.pose.position.z],
+                    p.rotation,
+                )
+                .unwrap();
+            assert!(
+                depth <= 3e-6,
+                "declined landing penetrates by {depth} at {t}"
+            );
+        }
+    }
+}

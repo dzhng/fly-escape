@@ -574,7 +574,12 @@ fn advance_bounded(
                     return Err("support loss immediately reacquires the same surface without advancing time".into());
                 }
                 work.query()?;
-                let sample = world
+                // Support is acquired only by resting on this contact's own
+                // root. A near-vertical rim answers the downward projection
+                // with a root the verified impact does not reach; moving onto
+                // it is unproven, so the landing is declined here and the
+                // impact blocks the tick like any other contact.
+                let acquired = world
                     .surfaces
                     .support_at(
                         world.hull,
@@ -583,19 +588,20 @@ fn advance_bounded(
                         heading,
                         next_up,
                     )?
-                    .ok_or("landing contact has no supporting root")?;
-                if (sample.root[1] - point.height).abs() > CONTACT_PRECISION {
-                    return Err("landing would jump to a different support root".into());
+                    .is_some_and(|sample| {
+                        (sample.root[1] - point.height).abs() <= CONTACT_PRECISION
+                    });
+                if acquired {
+                    point.support = Some(hit.surface_id);
+                    point.grounded = true;
+                    if point.fraction == trace.end().fraction {
+                        *trace.points.last_mut().unwrap() = point.clone();
+                    }
+                    if point.fraction > trace.end().fraction {
+                        append_point(&mut trace.points, point.clone())?;
+                    }
+                    continue;
                 }
-                point.support = Some(hit.surface_id);
-                point.grounded = true;
-                if point.fraction == trace.end().fraction {
-                    *trace.points.last_mut().unwrap() = point.clone();
-                }
-                if point.fraction > trace.end().fraction {
-                    append_point(&mut trace.points, point.clone())?;
-                }
-                continue;
             }
             // Preserve impact time before the stationary remainder, so terminal
             // crossings cannot be delayed by stretching the approach over the tick.

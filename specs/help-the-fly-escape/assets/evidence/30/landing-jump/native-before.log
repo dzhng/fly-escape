@@ -1,0 +1,9 @@
+   Compiling sim v0.1.0 (/private/tmp/fly-refinement-fix/crates/sim)
+    Finished `release` profile [optimized] target(s) in 5.43s
+     Running `/tmp/fly-dm1-transmission/target/release/examples/landing_repro`
+tick 20
+tick 40
+tick 60
+tick 80
+FAILED tick 81: landing would jump to a different support root
+Error: "landing would jump to a different support root"
