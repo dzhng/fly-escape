@@ -6,9 +6,9 @@ Build a local, fully 3D browser game in which the player places environmental to
 
 ## Next Agent Prompt
 
-The user reduced the campaign to **two carefully designed levels** and requested randomized clustered starting positions, varied headings, and mixed walking/flying initial states. Update the core spawn and recorded-start seam before further campaign calibration.
+The user reduced the campaign to **two carefully designed levels** and requested randomized clustered starting positions, varied headings, and mixed walking/flying initial states. The core spawn and recorded-start seam is integrated and verified in 18. Continue measured proportions in 19, then physical/sensory scale in25 before food contact and final calibration.
 
-The user changed the final visual target to a **photorealistic, warm, lived-in house** with real materials, furniture, lights, plants, apples and bananas. Follow [the updated game contract](GAMEPLAY.md#visual-target-a-warm-lived-in-house). Start [19](slices/19-proportions.md) alongside [18](slices/18-natural-starts.md), then resolve the measured physical/sensory scale mismatch in [25](slices/25-physical-scale.md) before 20–24 to establish one furnished room before expanding the look. Existing visual checkpoints remain foundation evidence; they no longer establish final art acceptance.
+The user changed the final visual target to a **photorealistic, warm, lived-in house** with real materials, furniture, lights, plants, apples and bananas. Follow [the updated game contract](GAMEPLAY.md#visual-target-a-warm-lived-in-house). Integrate the measured [19](slices/19-proportions.md) proportion checkpoint, then resolve the measured physical/sensory scale mismatch in [25](slices/25-physical-scale.md) before 20–24 to establish one furnished room before expanding the look. Existing visual checkpoints remain foundation evidence; they no longer establish final art acceptance.
 
 The old frozen first-level tuning and held-out evaluations are complete as bare-room baseline evidence. The isolated renderer-retention fix is integrated; prepared campaign UI ownership checks pass in its isolated build. Integrate campaign content only after the revised level acceptance gates. Do not start further campaign seed batches until the furnishing/collision contract is settled. Geometry and sensory changes require revalidation; previously accepted neural fidelity and twenty-fly performance requirements still hold.
 
@@ -34,7 +34,7 @@ Open the [interactive roadmap](visualizations/roadmap.html) for dependency and m
 - [x] [12 — Depth and exit lighting](slices/12-house-lighting.md) — dependencies: 11.
 - [x] [13 — All-fly science and explanations](slices/13-science-panel.md) — dependencies: 05,06.
 - [x] [14 — Editable setup and attempt loop](slices/14-placement-attempt.md) — dependencies: 05,06,10,13.
-- [ ] [18 — A natural starting swarm](slices/18-natural-starts.md) — dependencies: 05,14; required before final campaign calibration.
+- [x] [18 — A natural starting swarm](slices/18-natural-starts.md) — dependencies: 05,14; required before final campaign calibration.
 - [ ] [19 — Physical proportions before detailed art](slices/19-proportions.md) — dependencies: 18 for integration; neutral authoring may proceed independently.
 - [ ] [25 — Physical scale and sensory sampling](slices/25-physical-scale.md) — dependency: 19; required before 20.
 - [ ] [20 — Authoritative furnishing and food contact](slices/20-furnished-contact.md) — dependencies: 19,25.

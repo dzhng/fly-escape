@@ -1,6 +1,6 @@
 # 18 — A natural, reproducible starting swarm
 
-Status: implementation active. Dependency: 05 and 14. Required before final 15/16 calibration.
+Status: accepted initialization foundation; final realistic scale and furnished readability remain later gates. Dependency: 05 and 14. Required before final 15/16 calibration.
 
 ## Contract and seam
 
@@ -19,3 +19,7 @@ Visual variable: starting arrangement and mode only. Compare fixed default/follo
 ## Decision budget
 
 Delegated: internal naming, legal authored cluster dimensions and a balanced initial 10 walking / 10 flying split for the first candidate. The ratio is a planner choice, not a user-specified number. Do not guarantee an escape-facing heading or inject warmed brain state. New starts invalidate prior campaign difficulty acceptance. Bank evidence under `assets/evidence/18/` and update the global handoff.
+
+## Integrated evidence
+
+[Recorded source, transport and visual review](../assets/evidence/18/README.md) establish the seeded start seam. Root reran fourteen native Attempt tests, typecheck, client/renderer checks, the WASM/web build, real Worker transport and the built setup/release/rewind workflow after integration. These pass; no new campaign acceptance is claimed.
