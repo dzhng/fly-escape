@@ -24,12 +24,12 @@ try {
   await page.screenshot({ path: output + "/invalid.png" });
   await page.mouse.click(80, 300);
   await page.waitForTimeout(150);
-  assert.equal(await page.getByRole("button", { name: "Remove Fruit 1", exact: true }).count(), 0);
+  assert.equal(await page.getByRole("button", { name: "Remove Apple 1", exact: true }).count(), 0);
   await page.mouse.move(680, 520);
   await page.getByTestId("placement-feedback").filter({ hasText: "Valid placement" }).waitFor();
   await page.screenshot({ path: output + "/ghost.png" });
   await page.mouse.click(680, 520);
-  await page.getByRole("button", { name: "Remove Fruit 1", exact: true }).waitFor();
+  await page.getByRole("button", { name: "Remove Apple 1", exact: true }).waitFor();
   await page.getByRole("button", { name: "Fan 2 left", exact: true }).click();
   await page.mouse.click(560, 440);
   await page.getByRole("button", { name: "Remove Fan 2", exact: true }).waitFor();
@@ -41,7 +41,7 @@ try {
       1,
   );
   const stored = await page.evaluate(() => JSON.parse(localStorage.getItem("fly-escape-progress")));
-  await page.getByRole("button", { name: "Fruit #1", exact: true }).click();
+  await page.getByRole("button", { name: "Apple #1", exact: true }).click();
   await page.mouse.click(760, 600);
   await page.waitForFunction(
     (old) =>
@@ -68,7 +68,7 @@ try {
   await page.getByTestId("playback-lab").waitFor();
   await page.reload();
   await run.waitFor();
-  await page.getByRole("button", { name: "Remove Fruit 1", exact: true }).waitFor();
+  await page.getByRole("button", { name: "Remove Apple 1", exact: true }).waitFor();
   assert.equal(await page.getByTestId("playback-lab").count(), 0);
   await run.click();
   await page.waitForFunction(
@@ -96,14 +96,14 @@ try {
   );
   await page.screenshot({ path: output + "/result.png" });
   await page.getByRole("button", { name: "Retry — edit setup", exact: true }).click();
-  await page.getByRole("button", { name: "Remove Fruit 1", exact: true }).waitFor();
-  await page.getByLabel("Show placed tools").uncheck();
+  await page.getByRole("button", { name: "Remove Apple 1", exact: true }).waitFor();
+  await page.getByLabel("Show placed objects").uncheck();
   await page.reload();
-  await page.getByRole("button", { name: "Remove Fruit 1", exact: true }).waitFor();
-  assert.equal(await page.getByLabel("Show placed tools").isChecked(), false);
+  await page.getByRole("button", { name: "Remove Apple 1", exact: true }).waitFor();
+  assert.equal(await page.getByLabel("Show placed objects").isChecked(), false);
   await page.getByRole("button", { name: "Reset progress and setup", exact: true }).click();
-  await page.getByRole("button", { name: "Fruit 2 left", exact: true }).waitFor();
-  assert.equal(await page.getByRole("button", { name: "Remove Fruit 1", exact: true }).count(), 0);
+  await page.getByRole("button", { name: "Apple 2 left", exact: true }).waitFor();
+  assert.equal(await page.getByRole("button", { name: "Remove Apple 1", exact: true }).count(), 0);
   const broken = await browser.newPage();
   await broken.addInitScript(() => {
     Storage.prototype.setItem = () => {

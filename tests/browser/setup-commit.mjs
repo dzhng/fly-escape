@@ -46,13 +46,13 @@ try {
     680,
     520,
     page.getByRole("button", { name: "Fan 2 left", exact: true }),
-    "Remove Fruit 1",
+    "Remove Apple 1",
   );
   await page.getByRole("button", { name: "Fan 2 left", exact: true }).click();
   await commitThenSelect(
     560,
     440,
-    page.getByRole("button", { name: "Fruit #1", exact: true }),
+    page.getByRole("button", { name: "Apple #1", exact: true }),
     "Remove Fan 2",
   );
   const placements = await page.evaluate(
@@ -62,7 +62,7 @@ try {
     placements.map(({ kind }) => kind),
     ["fruit", "fan"],
   );
-  console.log("Delayed committed edits survive palette and placed-tool selection attempts.");
+  console.log("Delayed committed edits survive palette and placed-object selection attempts.");
 } finally {
   await browser.close();
 }

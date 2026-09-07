@@ -183,11 +183,11 @@ pub fn resolve_placements(
             || stock.count > 64
             || remaining.insert(stock.kind, stock.count).is_some()
         {
-            return Err("inventory needs unique tools and counts in 1..64".into());
+            return Err("inventory needs unique objects and counts in 1..64".into());
         }
     }
     if remaining.values().sum::<u32>() > 64 {
-        return Err("inventory limit is 64 total tools".into());
+        return Err("inventory limit is 64 total objects".into());
     }
     if rules.reserved.iter().any(|r| {
         !r.center.finite()
@@ -217,7 +217,7 @@ pub fn resolve_placements(
         }) || !level.geometry.contains_body(placement.position, radius)
         {
             return Err(
-                "tool footprint must fit open floor in one room and clear walls and solids".into(),
+                "object footprint must fit open floor in one room and clear walls and solids".into(),
             );
         }
         if rules
@@ -228,7 +228,7 @@ pub fn resolve_placements(
                 .spawn
                 .excludes(placement.position, radius + level.body_config.body_radius)
         {
-            return Err("tool overlaps a reserved prop or spawn footprint".into());
+            return Err("object overlaps a reserved prop or spawn footprint".into());
         }
         let exit = level.exit;
         let dx = exit.b.x - exit.a.x;
@@ -245,19 +245,19 @@ pub fn resolve_placements(
             z: exit.a.z + t * dz,
         }) <= radius
         {
-            return Err("tool overlaps the exit opening".into());
+            return Err("object overlaps the exit opening".into());
         }
         if placements[..i].iter().any(|p| {
             placement.position.distance(p.position) <= radius + tool_def(p.kind).footprint_radius
         }) {
-            return Err("tool footprints must not overlap".into());
+            return Err("object footprints must not overlap".into());
         }
         let count = remaining
             .get_mut(&placement.kind)
-            .ok_or("tool is not available in this level")?;
+            .ok_or("object is not available in this level")?;
         *count = count
             .checked_sub(1)
-            .ok_or("no inventory remains for this tool")?;
+            .ok_or("no inventory remains for this object")?;
     }
     let mut sources = level.sources.clone();
     let mut food_defs = level.food.clone();

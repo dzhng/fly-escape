@@ -71,7 +71,7 @@ export function SetupGame({
   const checked = useRef<Intent | undefined>(undefined);
   const [busy, setBusy] = useState(false);
   const [valid, setValid] = useState<boolean | null>(null);
-  const [message, setMessage] = useState("Loading placement tools…");
+  const [message, setMessage] = useState("Loading placement objects…");
   const [worldState, setWorldState] = useState("loading");
   const world = useRef<WorldView | undefined>(undefined);
   const container = useRef<HTMLDivElement>(null);
@@ -96,7 +96,7 @@ export function SetupGame({
         }
         if (live) {
           setSetup(resolved.state);
-          setMessage("Choose a tool, then click open floor.");
+          setMessage("Choose an object, then click open floor.");
         }
       } catch (error) {
         if (live) setMessage(String(error));
@@ -301,7 +301,7 @@ export function SetupGame({
         <aside>
           <h2>Shape the environment</h2>
           <p>
-            Choose a tool and click open floor. Select a placed tool below to move it. Drag the view
+            Choose an object and click open floor. Select a placed object below to move it. Drag the view
             to pan; scroll to zoom.
           </p>
           <div className="tool-palette">
@@ -328,7 +328,7 @@ export function SetupGame({
                 </button>
               ))}
           </div>
-          <p>{tool ? descriptions[tool] : "This level has no placement tools."}</p>
+          <p>{tool ? descriptions[tool] : "This level has no placement objects."}</p>
           <button
             onClick={rotate}
             disabled={
@@ -339,7 +339,7 @@ export function SetupGame({
           >
             Rotate fan 90°
           </button>
-          <h3>Placed tools</h3>
+          <h3>Placed objects</h3>
           <div className="placed-tools">
             {setup?.placements.map((p) => (
               <div key={p.id}>
@@ -351,7 +351,7 @@ export function SetupGame({
                     setTool(p.kind);
                     setHeading(p.heading);
                     setIntent(undefined);
-                    setMessage("Click open floor to move this tool.");
+                    setMessage("Click open floor to move this object.");
                   }}
                 >
                   {names[p.kind]} #{p.id}
@@ -382,7 +382,7 @@ export function SetupGame({
                 }))
               }
             />{" "}
-            Show placed tools
+            Show placed objects
           </label>
           <button
             className="run-setup"

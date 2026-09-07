@@ -87,7 +87,7 @@ export function Campaign({ levels }: { levels: readonly CampaignLevel[] }) {
       {error ? (
         <p role="alert">{error}</p>
       ) : !content ? (
-        <p role="status">Loading tools…</p>
+        <p role="status">Loading objects…</p>
       ) : (
         <SetupGame
           key={current.level.id}

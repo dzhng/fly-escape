@@ -100,7 +100,7 @@ export class PlacementModels {
       const source = this.sources.get(p.kind);
       if (!source) continue;
       const tool = this.catalog.find((tool) => tool.kind === p.kind);
-      if (!tool) throw new Error(`Missing tool definition: ${p.kind}`);
+      if (!tool) throw new Error(`Missing object definition: ${p.kind}`);
       const instance = source.clone(true);
       instance.position.set(p.position.x, 0, p.position.z);
       instance.rotation.y = -p.heading;
