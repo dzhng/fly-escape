@@ -1,4 +1,7 @@
 import * as THREE from "three";
+import type { RoomDetails } from "./room-details";
+export { loadRoomDetails } from "./room-details";
+export type { RoomDetail } from "./room-details";
 import { housePalette } from "./house-materials";
 import { PlacementModels, type PlacementKind } from "./placement-models";
 export { loadPlacementModel } from "./placement-models";
@@ -53,6 +56,7 @@ export interface FlyPose {
 export class WorldView {
   private readonly scene = new THREE.Scene();
   private inspectionModel?: THREE.Group;
+  private roomDetails?: RoomDetails;
   private spawnArea: THREE.LineLoop<THREE.BufferGeometry, THREE.LineBasicMaterial> | null = null;
   private readonly placementModels = new PlacementModels();
   private readonly trails: FlyTrails;
@@ -197,6 +201,15 @@ export class WorldView {
     cutAwayOccluders(this.house.solids);
     this.bounds.max.y = Math.max(1, new THREE.Box3().setFromObject(this.house.root).max.y);
     this.navigation.resize(this.container.clientWidth, this.container.clientHeight);
+  }
+
+  setRoomDetails(details: RoomDetails): void {
+    if (this.roomDetails) {
+      this.scene.remove(this.roomDetails.root);
+      disposeObjectResources(this.roomDetails.root);
+    }
+    this.roomDetails = details;
+    this.scene.add(details.root);
   }
 
   /** Diagnostic appearance only: no core occupancy, cutaway, palette or placement semantics. */
@@ -723,6 +736,7 @@ export class WorldView {
     if (this.trailSample) this.trails.sample(this.trailSample.paths, this.trailSample.cursorTick,
       this.selectionRing.geometry.parameters.outerRadius * this.displayScale);
     this.exterior.update(this.navigation.exteriorGroundCircle());
+    this.roomDetails?.update(this.navigation.camera);
     this.renderer.render(this.scene, this.navigation.camera);
   }
 

@@ -1,3 +1,4 @@
+import type { RoomDetail } from "@fly-escape/game-renderer";
 import { loadWorldAssets } from "./world-assets";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -42,6 +43,7 @@ export function SetupGame({
   onAttemptChange,
 }: {
   content: {
+    roomDetails?: readonly RoomDetail[];
     level: LevelDef;
     tuning: AttemptTuning;
     catalog: ToolDef[];
@@ -118,7 +120,7 @@ export function SetupGame({
     view.enableCamera();
     let live = true;
     setWorldState("loading");
-    void loadWorldAssets(view, () => live)
+    void loadWorldAssets(view, () => live, content.roomDetails)
       .then(() => {
         if (live) setWorldState("ready");
       })
@@ -234,6 +236,7 @@ export function SetupGame({
         input={input}
         client={client}
         catalog={content.catalog}
+        roomDetails={content.roomDetails}
         onReturn={() => {
           client.cancel();
           setInput(undefined);

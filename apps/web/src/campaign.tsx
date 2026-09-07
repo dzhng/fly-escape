@@ -1,3 +1,4 @@
+import type { RoomDetail } from "@fly-escape/game-renderer";
 import React, { useEffect, useMemo, useState } from "react";
 import {
   AttemptClient,
@@ -10,6 +11,7 @@ import { SetupGame } from "./setup";
 import { loadProgress, saveProgress, type Progress } from "./progress";
 
 export type CampaignLevel = {
+  roomDetails?: readonly RoomDetail[];
   title: string;
   description: string;
   level: LevelDef;

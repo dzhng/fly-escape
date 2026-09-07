@@ -1,3 +1,4 @@
+import type { RoomDetail } from "@fly-escape/game-renderer";
 import { loadWorldAssets } from "./world-assets";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -126,12 +127,14 @@ export function AttemptPlayback({
   input,
   client,
   catalog = [],
+  roomDetails,
   onReturn,
   onResult,
 }: {
   input?: StartAttempt;
   client?: AttemptClient;
   catalog?: ToolDef[];
+  roomDetails?: readonly RoomDetail[];
   onReturn?: () => void;
   onResult?: (result: AttemptResult) => void;
 }) {
@@ -229,7 +232,7 @@ export function AttemptPlayback({
         const target = scene.current;
         setWorldReady(false);
         void Promise.all([
-          loadWorldAssets(target, () => scene.current === target),
+          loadWorldAssets(target, () => scene.current === target, roomDetails),
           loadMotionSampler(),
         ]).then(([, sampler]) => {
           if (scene.current === target && run.current) {

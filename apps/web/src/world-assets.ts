@@ -1,11 +1,12 @@
-import { loadFlyModel, loadHouseAssets, type WorldView } from "@fly-escape/game-renderer";
+import { loadFlyModel, loadHouseAssets, loadRoomDetails, type RoomDetail, type WorldView } from "@fly-escape/game-renderer";
 import flyModelUrl from "../../../assets/fly/fly.glb?url";
 import { loadPlacementAssets } from "./placement-assets";
 
 /** Required presentation resources share one gate; each loader releases stale results. */
-export async function loadWorldAssets(view: WorldView, isCurrent: () => boolean): Promise<void> {
+export async function loadWorldAssets(view: WorldView, isCurrent: () => boolean, details: readonly RoomDetail[] = []): Promise<void> {
   await Promise.all([
     loadHouseAssets(view, isCurrent),
+    loadRoomDetails(view, details, isCurrent),
     loadPlacementAssets(view, isCurrent),
     (async () => {
       const response = await fetch(flyModelUrl);
