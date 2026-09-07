@@ -101,7 +101,7 @@ fn closed_food_containment_is_not_mistaken_for_surface_separation() {
 }
 
 #[test]
-fn authored_fan_and_maximum_motor_requests_advance_within_budget() {
+fn motion_requests_advance_within_budget() {
     let geometry = Geometry {
         rooms: vec![crate::environment::RectRoom {
             id: 1,
@@ -138,12 +138,20 @@ fn authored_fan_and_maximum_motor_requests_advance_within_budget() {
             native_hull().unwrap()
         };
 
+        let crate::placement::ToolEffect::Fan { speed, .. } =
+            crate::placement::tool_def(crate::placement::ToolKind::Fan).effect
+        else {
+            panic!("fan catalog entry must resolve to wind");
+        };
+        // Experimental hull comparisons use a fixed load; production covers the actual catalog wind.
+        let fan_speed = if candidate_enabled { 0.5 } else { speed };
+
         for (name, heading, thrust, turn, aligned, wind, center) in [
             ("upright-wind6mm", 0.70408, 0., 0., false, 0.064, false),
-            ("upright-fan", 0.70408, 0., 0., false, 0.5, false),
-            ("aligned-fan", 0.70408, 0., 0., true, 0.5, false),
-            ("center-fan", 0., 0., 0., false, 0.5, true),
-            ("center-aligned-fan", 0., 0., 0., true, 0.5, true),
+            ("upright-fan", 0.70408, 0., 0., false, fan_speed, false),
+            ("aligned-fan", 0.70408, 0., 0., true, fan_speed, false),
+            ("center-fan", 0., 0., 0., false, fan_speed, true),
+            ("center-aligned-fan", 0., 0., 0., true, fan_speed, true),
             ("max-neural", 0., 2., 0., false, 0., true),
         ] {
             let (x, z) = if center { (0., 0.) } else { (0.02, -0.003) };

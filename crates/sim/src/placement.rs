@@ -69,7 +69,7 @@ pub fn tool_def(kind: ToolKind) -> ToolDef {
             ToolEffect::Fan {
                 reach: 3.,
                 half_width: 0.75,
-                speed: 0.5,
+                speed: 3.,
             },
         ),
     };
