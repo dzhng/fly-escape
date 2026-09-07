@@ -266,7 +266,7 @@ Each fly's trail uses up to four seconds of recorded positions, with the oldest 
 | Apply existing low-base selected visibility to solids | sound | high | Full-height contact screenshot hid the fly. The generic owner-based rule preserves the footprint and collider, restores full height, and fixes the same issue across camera modes. |
 | Local mesh replacement validates bounds rather than arbitrary shape solidity | sound | medium | Appropriate bounded developer workbench contract; supplied mesh is explicitly collider-matched. A bounds check is not proof that any imported sculpted object fills its footprint. |
 
-## House palette — sound, high confidence
+## House palette — superseded by the realistic-art revision
 
 A single sRGB JSON registry owns home surface roles for procedural production geometry, imported house replacements and Blender export. The task requested one palette reaching both routes without choosing the cross-language owner. Imported house meshes retain their geometry but receive canonical role color/roughness, preventing a local shape replacement from silently reverting the home palette. Blender converts that same sRGB input to linear values; a baked/runtime parity test catches stale exports. Food and fly materials remain separate semantic assets.
 
@@ -278,6 +278,13 @@ Load the three house roles as one settled batch per view, then transfer them thr
 
 The About surface uses a query on the origin root rather than an additional path, so a basic static file server can serve it without an index fallback. A composition footer links to it after the game, preserving the existing camera viewport and avoiding concurrent setup/playback edits. It is keyboard reachable but below the game; future navigation design can relocate the link without changing attribution content or the serving contract.
 
-## Remaining tool source representation
+## Remaining tool source representation — foundation only, revised by 20–23
 
 The planar non-solid tool contract favors near-flush sources: vinegar saucer, inset fan vent, recessed lamp lens and slatted shade tile. Their geometry identifies catalog sources without adding obstacles or actual scene lights. Shade expresses the measured visual-cue source, not a physical canopy or computed cast shadow. All six tools share placement model ownership; food-only names are retired as the shared static contract expands.
+
+## Natural starts and realistic-room planning — provisional choices
+
+- **Medium confidence:** Start the first candidate with ten walking and ten flying flies, assigned by a seeded shuffle. The user asked for both modes without choosing a ratio. Keep the ratio authored and evaluate whether it reads naturally; no neural behavior changes after initialization.
+- **High confidence:** Show only the authored spawn area before Run rather than inventing a preview swarm. The actual attempt exports the starting bodies once; initial rendering and replay share those values.
+- **Medium confidence:** Resolve realistic scale in a neutral representative room before detailed furniture and materials. Its room is a diagnostic fixture, not additional campaign content. Exact physical scale remains a measured decision in 19, not an accepted silent change to movement.
+- **High confidence:** Keep only explicit fixed-start scientific fixtures alongside clustered campaign starts. Those tests sometimes intentionally overlap bodies or begin at a hazard to isolate behavior; campaign sampling instead enforces a legal separated swarm.
