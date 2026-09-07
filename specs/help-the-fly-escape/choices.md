@@ -584,3 +584,7 @@ exact initial contact and browser performance must be established before adoptio
 ### Shared skeletons within each cloned fly
 
 **Sound; high confidence.** Preserve the original model's shared skeleton when cloning its meshes, but give every fly independent bones and texture storage. Implement this in the existing pinned Three.js patch, where cloning already belongs, rather than adding an application clone/disposal wrapper. Remove the patch when upstream passes the real-model ownership and animation regression.
+
+### Native household shape inspection
+
+**Sound; medium-high confidence.** Give the existing asset workbench a disposable appearance-only slot for reviewing native household models before their physical placement rules are accepted. This does not register new gameplay obstacles or lights. A named lower mounting view exposes hardware hidden by the RTS angle; leaving that view restores the ordinary game camera. Remove the dedicated inspection composition once accepted physical placement can supply the same review fixture. Diagnostic mounting positions are reversible review assumptions.
