@@ -1,6 +1,6 @@
 import { About } from "./about";
 import { Campaign, DiagnosticSetup } from "./campaign";
-import { acceptedCampaign } from "./campaign-content";
+import { campaignLevels } from "./campaign-content";
 import { PlaybackLab } from "./playback";
 import { LifecycleLab } from "./lifecycle";
 import React, { useEffect, useRef, useState } from "react";
@@ -252,7 +252,7 @@ createRoot(document.getElementById("root")!).render(
   ) : (
     <>
       {location.pathname === "/" ? (
-        <Campaign levels={acceptedCampaign} />
+        <Campaign levels={campaignLevels} />
       ) : location.pathname === "/lab/setup" ? (
         <DiagnosticSetup />
       ) : location.pathname === "/lab/playback" ? (
