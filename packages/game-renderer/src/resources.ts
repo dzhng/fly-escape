@@ -15,6 +15,7 @@ export function disposeObjectResources(root: THREE.Object3D): void {
       )
     )
       return;
+    if (object instanceof THREE.InstancedMesh) object.dispose();
     if (object instanceof THREE.SkinnedMesh) object.skeleton.dispose();
     geometries.add(object.geometry);
     for (const material of Array.isArray(object.material) ? object.material : [object.material]) {

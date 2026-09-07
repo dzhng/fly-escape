@@ -47,7 +47,62 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
       "antennaForward": 0.0014145078816978176
     },
     "food": [],
-    "fixedObjects": [{"id": 1, "kind": "banana", "position": {"x": 3.4, "z": 3.3}, "heading": 0.5}, {"id": 2, "kind": "fruit", "position": {"x": 8.7, "z": 8.2}, "heading": 0.2}],
+    "fixedObjects": [
+      {
+        "id": 1,
+        "kind": "banana",
+        "position": {
+          "x": 3.4,
+          "z": 3.3
+        },
+        "heading": 0.5
+      },
+      {
+        "id": 2,
+        "kind": "fruit",
+        "position": {
+          "x": 8.7,
+          "z": 8.2
+        },
+        "heading": 0.2
+      },
+      {
+        "id": 3,
+        "kind": "wornShoes",
+        "position": {
+          "x": 2.6,
+          "z": 6.7
+        },
+        "heading": 0.8
+      },
+      {
+        "id": 4,
+        "kind": "laundry",
+        "position": {
+          "x": 5.6,
+          "z": 6.7
+        },
+        "heading": 0.3
+      },
+      {
+        "id": 5,
+        "kind": "dirtyDishes",
+        "position": {
+          "x": 7.3,
+          "z": 8.6
+        },
+        "heading": 0
+      },
+      {
+        "id": 6,
+        "kind": "sleepingCat",
+        "position": {
+          "x": 2,
+          "z": 1.6
+        },
+        "heading": 0
+      }
+    ],
     "geometry": {
       "rooms": [
         {
@@ -391,15 +446,28 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
           "count": 1
         },
         {
-          "kind": "crumbs",
-          "count": 4
+          "kind": "dirtyDishes",
+          "count": 1
+        },
+        {
+          "kind": "wornShoes",
+          "count": 1
+        },
+        {
+          "kind": "laundry",
+          "count": 1
+        },
+        {
+          "kind": "vinegar",
+          "count": 2
         },
         {
           "kind": "fan",
           "count": 1
         }
       ],
-      "reserved": []
+      "reserved": [],
+      "fanHeading": 0
     },
     "sources": [],
     "starThresholds": [
@@ -423,6 +491,10 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
   },
   "tuning": {
     "cues": [
+      {
+        "gain": 2,
+        "pathway": "excitatoryOdor"
+      },
       {
         "gain": 2,
         "pathway": "inhibitoryOdor"

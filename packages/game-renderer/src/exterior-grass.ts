@@ -1,13 +1,14 @@
 import * as THREE from "three";
 import type { Geometry } from "@fly-escape/sim-client";
 import { wallFootprints } from "./house";
+import { meadowDetails } from "./meadow-details";
 import { disposeObjectResources } from "./resources";
 
 export interface GrassCircle { x: number; z: number; radius: number }
 const CELL_LIMIT = 1024;
 const BATCH_CELLS = 64;
-const DISK_SEGMENTS = 128;
 const WIDTH_SCALE_MAX = 1.25;
+const WIND_REACH = 0.12;
 function hash(x: number, z: number, salt: number) {
   let value = Math.imul(x ^ salt, 374761393) ^ Math.imul(z, 668265263);
   value = Math.imul(value ^ (value >>> 13), 1274126177);
@@ -31,6 +32,18 @@ export function grassBlocked(mask: ReturnType<typeof grassMask>, x: number, z: n
     Math.abs(-(x - r.x) * r.uz + (z - r.z) * r.ux) <= r.halfZ + margin);
 }
 
+/** Keep the foundation and exit approaches flat; hills begin beyond the house. */
+export function meadowHeight(mask: ReturnType<typeof grassMask>, x: number, z: number) {
+  let distance = Infinity;
+  for (const r of mask) {
+    const dx = Math.max(0, Math.abs((x-r.x)*r.ux+(z-r.z)*r.uz)-r.halfX);
+    const dz = Math.max(0, Math.abs(-(x-r.x)*r.uz+(z-r.z)*r.ux)-r.halfZ);
+    distance = Math.min(distance, Math.hypot(dx, dz));
+  }
+  const t = Math.min(1, Math.max(0, (distance - 0.8) / 5));
+  return t*t*(3-2*t) * (0.45 + 0.3*Math.sin(x*0.31+z*0.19) + 0.15*Math.cos(z*0.43-x*0.12));
+}
+
 /** Uniform deterministic cells: capacity never truncates a row and leaves a bare sector. */
 export function grassRecords(circle: GrassCircle, mask: ReturnType<typeof grassMask>, reach: number) {
   const count = Math.min(CELL_LIMIT, Math.ceil(circle.radius * 2 / 0.055));
@@ -43,7 +56,7 @@ export function grassRecords(circle: GrassCircle, mask: ReturnType<typeof grassM
     if (Math.hypot(px - circle.x, pz - circle.z) > circle.radius - reach || grassBlocked(mask, px, pz, reach)) continue;
     const tint = hash(x >> 2, z >> 2, 83) * 0.5 + hash(x, z, 91) * 0.5;
     records.set([px, pz, hash(x, z, 47) * Math.PI * 2, 0.6 + hash(x, z, 59) * 0.8,
-      0.75 + hash(x, z, 71) * 0.5, 0.035 + tint * 0.055, 0.105 + tint * 0.09, 0.015 + tint * 0.025], accepted++ * 8);
+      0.75 + hash(x, z, 71) * 0.5, 0.065 + tint * 0.11, 0.14 + tint * 0.16, 0.018 + tint * 0.035], accepted++ * 8);
   }
   return { records: records.slice(0, accepted * 8), candidateCells: count * count, spacing, count };
 }
@@ -55,9 +68,9 @@ function bladeGeometry() {
     const cx = Math.sin(angle) * 0.024, cz = Math.cos(angle) * 0.024;
     const offset = positions.length / 3;
     for (let row = 0; row < 3; row++) {
-      const t = row / 2, width = 0.004 * (1 - t);
-      for (const side of [-1, 1]) positions.push(cx + Math.cos(angle) * width * side + Math.sin(angle) * 0.028 * t * t,
-        0.07 * t, cz - Math.sin(angle) * width * side + Math.cos(angle) * 0.028 * t * t);
+      const t = row / 2, width = 0.008 * (1 - t);
+      for (const side of [-1, 1]) positions.push(cx + Math.cos(angle) * width * side + Math.sin(angle) * 0.06 * t * t,
+        0.32 * t, cz - Math.sin(angle) * width * side + Math.cos(angle) * 0.06 * t * t);
     }
     indices.push(offset, offset + 1, offset + 2, offset + 1, offset + 3, offset + 2,
       offset + 2, offset + 3, offset + 4);
@@ -67,13 +80,14 @@ function bladeGeometry() {
   geometry.setIndex(indices); geometry.computeVertexNormals();
   let reach = 0;
   for (let i = 0; i < positions.length; i += 3) reach = Math.max(reach, Math.hypot(positions[i], positions[i + 2]) * WIDTH_SCALE_MAX);
-  return { geometry, reach };
+  return { geometry, reach: reach + WIND_REACH };
 }
 
 /** One appearance owner, static uploads, one blade detail level. No simulation state. */
 export class ExteriorGrass {
   readonly root = new THREE.Group();
   private circle?: GrassCircle;
+  private readonly windTime = { value: 0 };
   private readonly mask: ReturnType<typeof grassMask>;
   stats = { batches: 0, clumps: 0, candidateCells: 0, packedBytes: 0, spacing: 0, radius: 0 };
   constructor(geometry: Geometry) {
@@ -81,7 +95,8 @@ export class ExteriorGrass {
     // Stable opaque ordering preserves antialiased wall edges across field rebuilds.
     this.root.renderOrder = -1;
   }
-  update(circle: GrassCircle) {
+  update(circle: GrassCircle, timeSeconds = 0) {
+    this.windTime.value = timeSeconds;
     // Round outward to avoid allocation churn from tiny tracked-centre differences.
     const radius = Math.ceil((circle.radius + 0.1) * 2) / 2;
     if (this.circle?.radius === radius && this.circle.x === circle.x && this.circle.z === circle.z) return;
@@ -90,9 +105,10 @@ export class ExteriorGrass {
     const sampled = grassRecords(this.circle, this.mask, reach);
     const material = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.95, side: THREE.DoubleSide });
     material.onBeforeCompile = shader => {
-      shader.vertexShader = "attribute vec4 grassPlacement; attribute vec4 grassStyle; varying vec3 grassTint;\n" + shader.vertexShader;
+      shader.uniforms.meadowTime = this.windTime;
+      shader.vertexShader = "uniform float meadowTime; attribute float grassElevation; attribute vec4 grassPlacement; attribute vec4 grassStyle; varying vec3 grassTint;\n" + shader.vertexShader;
       shader.vertexShader = shader.vertexShader.replace("#include <beginnormal_vertex>", `vec3 objectNormal = vec3(normal); float cy=cos(grassPlacement.z), sy=sin(grassPlacement.z); objectNormal/=vec3(grassStyle.x,grassPlacement.w,grassStyle.x); objectNormal.xz=mat2(cy,-sy,sy,cy)*objectNormal.xz;`);
-      shader.vertexShader = shader.vertexShader.replace("#include <begin_vertex>", `vec3 transformed=position; transformed.xz*=grassStyle.x; transformed.y*=grassPlacement.w; transformed.xz=mat2(cy,-sy,sy,cy)*transformed.xz+grassPlacement.xy; grassTint=grassStyle.yzw*(0.65+0.35*clamp(position.y/0.07,0.0,1.0));`);
+      shader.vertexShader = shader.vertexShader.replace("#include <begin_vertex>", `vec3 transformed=position; transformed.xz*=grassStyle.x; transformed.y*=grassPlacement.w; transformed.xz=mat2(cy,-sy,sy,cy)*transformed.xz+grassPlacement.xy; float tip=position.y/0.32; float breeze=sin(meadowTime*1.7+grassPlacement.x*0.65+grassPlacement.y*0.43)*0.065+sin(meadowTime*2.8+grassPlacement.y*1.2)*0.025; transformed.xz+=vec2(breeze,breeze*0.45)*tip*tip; transformed.y+=grassElevation; grassTint=grassStyle.yzw*(0.55+0.45*tip);`);
       shader.fragmentShader = "varying vec3 grassTint;\n" + shader.fragmentShader;
       shader.fragmentShader = shader.fragmentShader.replace("#include <color_fragment>", "#include <color_fragment>\ndiffuseColor.rgb *= grassTint;");
     };
@@ -117,7 +133,10 @@ export class ExteriorGrass {
       instances.setAttribute("grassPlacement", new THREE.InterleavedBufferAttribute(data, 4, 0));
       instances.setAttribute("grassStyle", new THREE.InterleavedBufferAttribute(data, 4, 4));
       instances.instanceCount = batch.count;
-      batch.bounds.expandByScalar(reach); batch.bounds.max.y = 0.1;
+      const elevations = new Float32Array(batch.count);
+      for (let i = 0; i < batch.count; i++) elevations[i] = meadowHeight(this.mask, batch.data[i*8], batch.data[i*8+1]);
+      instances.setAttribute("grassElevation", new THREE.InstancedBufferAttribute(elevations, 1));
+      batch.bounds.expandByScalar(reach); batch.bounds.max.y = 1.4;
       instances.boundingBox = batch.bounds;
       instances.boundingSphere = batch.bounds.getBoundingSphere(new THREE.Sphere());
       const blades = new THREE.Mesh(instances, material); blades.receiveShadow = true;
@@ -127,7 +146,8 @@ export class ExteriorGrass {
     const groundMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1 });
     // The base extends invisibly beneath wall thickness so two antialiased edges
     // cannot expose the background. Blades still exclude the full wall footprint.
-    const maskCode = this.mask.filter(r => !r.wall).map(r => `if(abs(dot(grassWorld-vec2(${r.x.toFixed(8)},${r.z.toFixed(8)}),vec2(${r.ux.toFixed(8)},${r.uz.toFixed(8)})))<=${r.halfX.toFixed(8)} && abs(dot(grassWorld-vec2(${r.x.toFixed(8)},${r.z.toFixed(8)}),vec2(${(-r.uz).toFixed(8)},${r.ux.toFixed(8)})))<=${r.halfZ.toFixed(8)}) discard;`).join("\n");
+    const boundaryCode = `if(distance(grassWorld, vec2(${circle.x.toFixed(8)},${circle.z.toFixed(8)})) > ${radius.toFixed(8)}) discard;`;
+    const maskCode = boundaryCode + this.mask.filter(r => !r.wall).map(r => `if(abs(dot(grassWorld-vec2(${r.x.toFixed(8)},${r.z.toFixed(8)}),vec2(${r.ux.toFixed(8)},${r.uz.toFixed(8)})))<=${r.halfX.toFixed(8)} && abs(dot(grassWorld-vec2(${r.x.toFixed(8)},${r.z.toFixed(8)}),vec2(${(-r.uz).toFixed(8)},${r.ux.toFixed(8)})))<=${r.halfZ.toFixed(8)}) discard;`).join("\n");
     groundMaterial.onBeforeCompile = shader => {
       shader.vertexShader = "varying vec2 grassWorld;\n" + shader.vertexShader;
       shader.vertexShader = shader.vertexShader.replace("#include <begin_vertex>", "#include <begin_vertex>\ngrassWorld=(modelMatrix*vec4(position,1.0)).xz;");
@@ -135,11 +155,16 @@ export class ExteriorGrass {
       shader.fragmentShader = shader.fragmentShader.replace("#include <color_fragment>", `#include <color_fragment>\n${maskCode}\nfloat coarse=lawnNoise(grassWorld*3.0); float fine=lawnNoise(grassWorld*450.0); float detail=1.0-smoothstep(0.001,0.008,length(fwidth(grassWorld))); float tone=mix(0.5,fine,detail)*0.55+coarse*0.45; diffuseColor.rgb*=mix(vec3(0.022,0.068,0.012),vec3(0.05,0.12,0.022),tone);`);
     };
     groundMaterial.customProgramCacheKey = () => maskCode;
-    // Circumscribe the coverage circle; polygon chords must not cut inside it.
-    const groundGeometry = new THREE.CircleGeometry(radius / Math.cos(Math.PI / DISK_SEGMENTS), DISK_SEGMENTS); groundGeometry.rotateX(-Math.PI / 2);
+    // A bounded grid covers the camera footprint, with shared terrain heights for plants and props.
+    const groundGeometry = new THREE.PlaneGeometry(radius*2, radius*2, 160, 160);
+    groundGeometry.rotateX(-Math.PI/2);
+    const vertices = groundGeometry.getAttribute("position");
+    for (let i=0; i<vertices.count; i++) vertices.setY(i, meadowHeight(this.mask, vertices.getX(i)+circle.x, vertices.getZ(i)+circle.z));
+    vertices.needsUpdate = true; groundGeometry.computeVertexNormals();
     const ground = new THREE.Mesh(groundGeometry, groundMaterial);
     ground.position.set(circle.x, 0, circle.z); ground.receiveShadow = true;
     this.root.add(ground);
+    this.root.add(meadowDetails(this.circle, (x,z) => meadowHeight(this.mask,x,z), (x,z,margin) => grassBlocked(this.mask,x,z,margin), this.windTime));
     this.stats = { batches: buffers.size, clumps: sampled.records.length / 8, candidateCells: sampled.candidateCells, packedBytes: sampled.records.byteLength, spacing: sampled.spacing, radius };
   }
 }

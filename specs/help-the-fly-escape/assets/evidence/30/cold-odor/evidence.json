@@ -1,0 +1,3733 @@
+{
+  "arms": [
+    {
+      "activeMinusMatchedNoCurrent": {
+        "distanceReduction": {
+          "ci95": [
+            -0.10368848303178038,
+            -0.03932176070101998
+          ],
+          "mean": -0.07150512186640018,
+          "negativeSeeds": 24,
+          "positiveSeeds": 6
+        },
+        "finalAlignment": {
+          "ci95": [
+            -0.05553432275887303,
+            0.15664490464639175
+          ],
+          "mean": 0.050555290943759365,
+          "negativeSeeds": 9,
+          "positiveSeeds": 21
+        },
+        "meanFlightTurn": {
+          "ci95": [
+            -0.004371724746647242,
+            0.0021916708035648446
+          ],
+          "mean": -0.0010900269715411989,
+          "negativeSeeds": 14,
+          "positiveSeeds": 16
+        },
+        "meanTurn": {
+          "ci95": [
+            -0.0013400698727317616,
+            0.0028402571832339698
+          ],
+          "mean": 0.0007500936552511041,
+          "negativeSeeds": 14,
+          "positiveSeeds": 16
+        },
+        "sourceSignedMeanTurn": {
+          "ci95": [
+            -0.0028402571832339698,
+            0.0013400698727317616
+          ],
+          "mean": -0.0007500936552511041,
+          "negativeSeeds": 16,
+          "positiveSeeds": 14
+        }
+      },
+      "observations": [
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.23058244552854346,
+            "finalAlignment": -0.18050296767950375,
+            "finalHeading": 5.7962476729995505,
+            "finalX": -1.2373355986767864,
+            "finalZ": -0.03424839311688693,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0009678659807423836,
+            "meanTurn": -0.006086720427250421,
+            "sourceSignedMeanTurn": 0.006086720427250421
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.0466185612270007,
+            "finalAlignment": 0.14874367206322217,
+            "finalHeading": 5.391622259646343,
+            "finalX": -1.2925286852771916,
+            "finalZ": -0.22870579442779562,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.006349031969079621,
+            "meanTurn": -0.011144538094165584,
+            "sourceSignedMeanTurn": 0.011144538094165584
+          },
+          "seed": 0
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.16171675722574852,
+            "finalAlignment": -0.07226298225336805,
+            "finalHeading": 5.664291030350917,
+            "finalX": -1.259431288663232,
+            "finalZ": -0.10493362938377152,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.003950989906194023,
+            "meanTurn": -0.0077361784603583806,
+            "sourceSignedMeanTurn": 0.0077361784603583806
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.14476311773148498,
+            "finalAlignment": -0.5504454957598442,
+            "finalHeading": 6.14560667736047,
+            "finalX": -1.2447508378306913,
+            "finalZ": -0.1397202206486155,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0018045645565498362,
+            "meanTurn": -0.0017197328727389426,
+            "sourceSignedMeanTurn": 0.0017197328727389426
+          },
+          "seed": 1
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.24252552634548907,
+            "finalAlignment": 0.17777225723542717,
+            "finalHeading": 5.487267382808549,
+            "finalX": -1.2808876660745951,
+            "finalZ": 0.013285317576689014,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0021383480485669395,
+            "meanTurn": -0.009948974054637924,
+            "sourceSignedMeanTurn": 0.009948974054637924
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.1309972316234853,
+            "finalAlignment": -0.27267062202988357,
+            "finalHeading": 5.872931290235946,
+            "finalX": -1.2832040234564213,
+            "finalZ": -0.1251524327341791,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.008625167833907618,
+            "meanTurn": -0.005128175211795493,
+            "sourceSignedMeanTurn": 0.005128175211795493
+          },
+          "seed": 2
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 67,
+            "distanceReduction": -0.5312812030267784,
+            "finalAlignment": -0.9639847946895428,
+            "finalHeading": 0.9350131435204346,
+            "finalX": -1.4511419296328218,
+            "finalZ": 0.42953731722398747,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.005703739654035299,
+            "meanTurn": 0.011687664294005425,
+            "sourceSignedMeanTurn": -0.011687664294005425
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 77,
+            "distanceReduction": -0.43440081002677133,
+            "finalAlignment": -0.9730593836759529,
+            "finalHeading": 0.8685422087128722,
+            "finalX": -1.3508828405476514,
+            "finalZ": 0.2791218069871108,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006998016251013739,
+            "meanTurn": 0.010856777608910899,
+            "sourceSignedMeanTurn": -0.010856777608910899
+          },
+          "seed": 3
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 65,
+            "distanceReduction": -0.4362721209168092,
+            "finalAlignment": -0.9733026243431792,
+            "finalHeading": 1.4684931969623864,
+            "finalX": -1.5292993583409287,
+            "finalZ": 0.35695191928992387,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.025023580288275445,
+            "meanTurn": 0.01835616496202987,
+            "sourceSignedMeanTurn": -0.01835616496202987
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 66,
+            "distanceReduction": -0.3802402016614408,
+            "finalAlignment": -0.9971221531765992,
+            "finalHeading": 1.0341160086674501,
+            "finalX": -1.3862609199410052,
+            "finalZ": 0.23627964307868207,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.021705342919575835,
+            "meanTurn": 0.012926450108343118,
+            "sourceSignedMeanTurn": -0.012926450108343118
+          },
+          "seed": 4
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.15667105558799244,
+            "finalAlignment": 0.4438702931707572,
+            "finalHeading": 5.198509465993912,
+            "finalX": -1.3234575490875227,
+            "finalZ": -0.06182184903485473,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.03064070382083046,
+            "meanTurn": -0.013558448014820972,
+            "sourceSignedMeanTurn": 0.013558448014820972
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.06847297271615038,
+            "finalAlignment": 0.4127319103575233,
+            "finalHeading": 5.167720227327567,
+            "finalX": -1.3198658864100565,
+            "finalZ": -0.17595383566446401,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.020424747103612244,
+            "meanTurn": -0.013943313498150237,
+            "sourceSignedMeanTurn": 0.013943313498150237
+          },
+          "seed": 5
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 86,
+            "distanceReduction": -0.463143488848923,
+            "finalAlignment": -0.2639992013790824,
+            "finalHeading": 6.0935450763750705,
+            "finalX": -1.3546305091699866,
+            "finalZ": 0.313121125131573,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.024715778176647846,
+            "meanTurn": -0.0023705028850564357,
+            "sourceSignedMeanTurn": 0.0023705028850564357
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 88,
+            "distanceReduction": -0.5183008171801999,
+            "finalAlignment": -0.6002041106829316,
+            "finalHeading": 0.17912592837925975,
+            "finalX": -1.3196609981992962,
+            "finalZ": 0.35734159815386357,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.011129976057915532,
+            "meanTurn": 0.0022390741047407458,
+            "sourceSignedMeanTurn": -0.0022390741047407458
+          },
+          "seed": 6
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 68,
+            "distanceReduction": -0.510962705309975,
+            "finalAlignment": -0.5298959389548813,
+            "finalHeading": 0.11280691958391814,
+            "finalX": -1.3486793123326961,
+            "finalZ": 0.3633743648221601,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.002878728029602075,
+            "meanTurn": 0.0014100864947989712,
+            "sourceSignedMeanTurn": -0.0014100864947989712
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 84,
+            "distanceReduction": -0.3893499327605634,
+            "finalAlignment": -0.12368062715081883,
+            "finalHeading": 5.869608774759527,
+            "finalX": -1.288577453219751,
+            "finalZ": 0.1933864401753886,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0063273186093068135,
+            "meanTurn": -0.005169706655250735,
+            "sourceSignedMeanTurn": 0.005169706655250735
+          },
+          "seed": 7
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 80,
+            "distanceReduction": -0.4218492895713042,
+            "finalAlignment": -0.8680027150750022,
+            "finalHeading": 0.5315048881475585,
+            "finalX": -1.2939297465322717,
+            "finalZ": 0.23414755982517743,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.005389583538162351,
+            "meanTurn": 0.006643811101844468,
+            "sourceSignedMeanTurn": -0.006643811101844468
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 88,
+            "distanceReduction": -0.34822652631419104,
+            "finalAlignment": -0.8833785128170525,
+            "finalHeading": 0.5130113622145653,
+            "finalX": -1.2724407600341623,
+            "finalZ": 0.13506489620530637,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.004644719046893705,
+            "meanTurn": 0.0064126420276820586,
+            "sourceSignedMeanTurn": -0.0064126420276820586
+          },
+          "seed": 8
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.2529480862921245,
+            "finalAlignment": -0.8409244034580688,
+            "finalHeading": 0.36785172060120286,
+            "finalX": -1.2606811040129198,
+            "finalZ": 0.011576233894184457,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.004470343309933505,
+            "meanTurn": 0.004598146507515049,
+            "sourceSignedMeanTurn": -0.004598146507515049
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 99,
+            "distanceReduction": -0.19969013436652805,
+            "finalAlignment": -0.9299661547393877,
+            "finalHeading": 0.5321885911167662,
+            "finalX": -1.26243066727013,
+            "finalZ": -0.05382459453186353,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0008597183924669997,
+            "meanTurn": 0.006652357388959541,
+            "sourceSignedMeanTurn": -0.006652357388959541
+          },
+          "seed": 9
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 50,
+            "distanceReduction": -0.5707247369446553,
+            "finalAlignment": -0.9928569621722118,
+            "finalHeading": 1.0748891499558857,
+            "finalX": -1.4227702607569657,
+            "finalZ": 0.4608155350294148,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0060372183332089956,
+            "meanTurn": 0.013436114374448577,
+            "sourceSignedMeanTurn": -0.013436114374448577
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 79,
+            "distanceReduction": -0.4850828912447671,
+            "finalAlignment": -0.9701014512990006,
+            "finalHeading": 0.8419360520126408,
+            "finalX": -1.3093341575750752,
+            "finalZ": 0.314706008191712,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 3.864583774676783e-05,
+            "meanTurn": 0.01052420065015801,
+            "sourceSignedMeanTurn": -0.01052420065015801
+          },
+          "seed": 10
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.34189942337062673,
+            "finalAlignment": -0.130890133365059,
+            "finalHeading": 5.8194939162157056,
+            "finalX": -1.2479001056327468,
+            "finalZ": 0.1113234503668079,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.008349653478758092,
+            "meanTurn": -0.005796142387048513,
+            "sourceSignedMeanTurn": 0.005796142387048513
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.2774796974783913,
+            "finalAlignment": -0.41554836469223794,
+            "finalHeading": 6.063720104351093,
+            "finalX": -1.22891115444635,
+            "finalZ": 0.018516749853541476,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.005427798187867514,
+            "meanTurn": -0.0027433150353561643,
+            "sourceSignedMeanTurn": 0.0027433150353561643
+          },
+          "seed": 11
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.1622302005917129,
+            "finalAlignment": -0.60112302177841,
+            "finalHeading": 6.230642170612218,
+            "finalX": -1.2535410349789813,
+            "finalZ": -0.10917002031408797,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.013096906502105331,
+            "meanTurn": -0.0006567892070921053,
+            "sourceSignedMeanTurn": 0.0006567892070921053
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 95,
+            "distanceReduction": -0.16582646114724553,
+            "finalAlignment": -0.9860014589096077,
+            "finalHeading": 0.713610280832657,
+            "finalX": -1.25820760704619,
+            "finalZ": -0.100613885326791,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006210642949452271,
+            "meanTurn": 0.008920128510408227,
+            "sourceSignedMeanTurn": -0.008920128510408227
+          },
+          "seed": 12
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.15636744853551376,
+            "finalAlignment": 0.1265361665986715,
+            "finalHeading": 5.521699822793445,
+            "finalX": -1.314432710459998,
+            "finalZ": -0.06877329959600657,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0025773176027144165,
+            "meanTurn": -0.009518568554826743,
+            "sourceSignedMeanTurn": 0.009518568554826743
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.12370107498383476,
+            "finalAlignment": -0.03304289536014279,
+            "finalHeading": 5.643621882802841,
+            "finalX": -1.299898866245234,
+            "finalZ": -0.12104464935065282,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0024205836389969908,
+            "meanTurn": -0.007994542804709306,
+            "sourceSignedMeanTurn": 0.007994542804709306
+          },
+          "seed": 13
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.3289350804999449,
+            "finalAlignment": -0.5979434170601995,
+            "finalHeading": 0.035763863346950586,
+            "finalX": -1.243967423167107,
+            "finalZ": 0.09292414693372514,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.00865569725546298,
+            "meanTurn": 0.00044704829183687543,
+            "sourceSignedMeanTurn": -0.00044704829183687543
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.17675702791944525,
+            "finalAlignment": -0.4800979441444999,
+            "finalHeading": 6.09869324345091,
+            "finalX": -1.255262107547115,
+            "finalZ": -0.08888937318092868,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006810254451128234,
+            "meanTurn": -0.00230615079660845,
+            "sourceSignedMeanTurn": 0.00230615079660845
+          },
+          "seed": 14
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 82,
+            "distanceReduction": -0.430731406004885,
+            "finalAlignment": -0.9076526843121142,
+            "finalHeading": 0.6237419037233903,
+            "finalX": -1.2966658983528743,
+            "finalZ": 0.24591873635038752,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.010499661795983507,
+            "meanTurn": 0.0077967737965423875,
+            "sourceSignedMeanTurn": -0.0077967737965423875
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 82,
+            "distanceReduction": -0.3636499083331546,
+            "finalAlignment": -0.9176152322983866,
+            "finalHeading": 0.6089272952105426,
+            "finalX": -1.2836242201036014,
+            "finalZ": 0.1603218581388732,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.008031433770314522,
+            "meanTurn": 0.007611591190131795,
+            "sourceSignedMeanTurn": -0.007611591190131795
+          },
+          "seed": 15
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.013837747715252924,
+            "finalAlignment": -0.41796606511513046,
+            "finalHeading": 5.928029343528185,
+            "finalX": -1.2824183561308362,
+            "finalZ": -0.2837992159496294,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.006771057146919982,
+            "meanTurn": -0.004439449545642492,
+            "sourceSignedMeanTurn": 0.004439449545642492
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.07644236944163763,
+            "finalAlignment": -0.3715839156386934,
+            "finalHeading": 5.851739270852072,
+            "finalX": -1.329704797547595,
+            "finalZ": -0.36465518139213077,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.01037426582804507,
+            "meanTurn": -0.005393075454093923,
+            "sourceSignedMeanTurn": 0.005393075454093923
+          },
+          "seed": 16
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.20802218509337989,
+            "finalAlignment": -0.04139861048513906,
+            "finalHeading": 5.652959289162203,
+            "finalX": -1.2482866322125339,
+            "finalZ": -0.054354922622969606,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02479811272917507,
+            "meanTurn": -0.00787782522521732,
+            "sourceSignedMeanTurn": 0.00787782522521732
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.03066264637687688,
+            "finalAlignment": 0.4272345402278809,
+            "finalHeading": 5.116943565805528,
+            "finalX": -1.3166777786603054,
+            "finalZ": -0.22841965262198866,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02447085180930794,
+            "meanTurn": -0.014578021767175727,
+            "sourceSignedMeanTurn": 0.014578021767175727
+          },
+          "seed": 17
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.004097036408186483,
+            "finalAlignment": 0.06342899606318139,
+            "finalHeading": 5.513779795891054,
+            "finalX": -1.3485972481274813,
+            "finalZ": -0.2358761138554738,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.023731714303832745,
+            "meanTurn": -0.009617568891106659,
+            "sourceSignedMeanTurn": 0.009617568891106659
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.12729316112265188,
+            "finalAlignment": 0.6831447964335637,
+            "finalHeading": 4.804298271546074,
+            "finalX": -1.420084856216009,
+            "finalZ": -0.34783770989631213,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.035142785911674634,
+            "meanTurn": -0.01848608794541893,
+            "sourceSignedMeanTurn": 0.01848608794541893
+          },
+          "seed": 18
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 73,
+            "distanceReduction": 0.32959962819350663,
+            "finalAlignment": 0.9979689725862527,
+            "finalHeading": 4.225493686161791,
+            "finalX": -1.64922438515062,
+            "finalZ": -0.42869174122429843,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.03557466997064349,
+            "meanTurn": -0.025721145262722418,
+            "sourceSignedMeanTurn": 0.025721145262722418
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 71,
+            "distanceReduction": 0.4125934292153638,
+            "finalAlignment": 0.9693420115456989,
+            "finalHeading": 3.9558441987161266,
+            "finalX": -1.7141200170666904,
+            "finalZ": -0.4868537101770915,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02897037207784306,
+            "meanTurn": -0.02909176385579327,
+            "sourceSignedMeanTurn": 0.02909176385579327
+          },
+          "seed": 19
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 63,
+            "distanceReduction": -0.5357018052834808,
+            "finalAlignment": -0.9628170337784077,
+            "finalHeading": 0.8939659464647995,
+            "finalX": -1.397337438287901,
+            "finalZ": 0.41250765359397346,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.008530505499942189,
+            "meanTurn": 0.011174574330809994,
+            "sourceSignedMeanTurn": -0.011174574330809994
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.13816985860744646,
+            "finalAlignment": -0.6347600091336764,
+            "finalHeading": 6.273456155222191,
+            "finalX": -1.2690130769174535,
+            "finalZ": -0.1275959964988664,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0032998603311717328,
+            "meanTurn": -0.0001216143994674406,
+            "sourceSignedMeanTurn": 0.0001216143994674406
+          },
+          "seed": 20
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 79,
+            "distanceReduction": 0.3492875872675101,
+            "finalAlignment": 0.9050156418892117,
+            "finalHeading": 4.546340938475824,
+            "finalX": -1.6296704858815863,
+            "finalZ": -0.46494608210297356,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.01212035369421968,
+            "meanTurn": -0.021710554608797065,
+            "sourceSignedMeanTurn": 0.021710554608797065
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.2987276143575197,
+            "finalAlignment": 0.7297794748462296,
+            "finalHeading": 4.698962989015935,
+            "finalX": -1.5137246033738923,
+            "finalZ": -0.49470879930398837,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.013424543927546946,
+            "meanTurn": -0.01980277897704566,
+            "sourceSignedMeanTurn": 0.01980277897704566
+          },
+          "seed": 21
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.2362671070553497,
+            "finalAlignment": -0.6872081322577962,
+            "finalHeading": 0.11088187640344141,
+            "finalX": -1.2550235069017897,
+            "finalZ": -0.013406677136878388,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0011194473639622065,
+            "meanTurn": 0.0013860234550430342,
+            "sourceSignedMeanTurn": -0.0013860234550430342
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 99,
+            "distanceReduction": -0.2589207747020066,
+            "finalAlignment": -0.7881292517818127,
+            "finalHeading": 0.25258809674730276,
+            "finalX": -1.2329414580476756,
+            "finalZ": -0.0017501764616861429,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.002436625661277605,
+            "meanTurn": 0.003157351209341292,
+            "sourceSignedMeanTurn": -0.003157351209341292
+          },
+          "seed": 22
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 86,
+            "distanceReduction": -0.4801545525799069,
+            "finalAlignment": -0.7802971080405974,
+            "finalHeading": 0.39679282176685415,
+            "finalX": -1.2925230603011688,
+            "finalZ": 0.3001284087802252,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.01362868190454496,
+            "meanTurn": 0.004959910272085686,
+            "sourceSignedMeanTurn": -0.004959910272085686
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 83,
+            "distanceReduction": -0.4568437585111875,
+            "finalAlignment": -0.9519051730305552,
+            "finalHeading": 0.7536379752657725,
+            "finalX": -1.2942030478790685,
+            "finalZ": 0.2744584728777186,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.03489869899970861,
+            "meanTurn": 0.009420474690822168,
+            "sourceSignedMeanTurn": -0.009420474690822168
+          },
+          "seed": 23
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.38977495150551067,
+            "finalAlignment": -0.48941516496557264,
+            "finalHeading": 6.223772904739887,
+            "finalX": -1.2490603895326233,
+            "finalZ": 0.1694289705934468,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.00764985344111426,
+            "meanTurn": -0.0007426550304962297,
+            "sourceSignedMeanTurn": 0.0007426550304962297
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.3225301335689694,
+            "finalAlignment": -0.3539513712414481,
+            "finalHeading": 6.020993853885642,
+            "finalX": -1.2272812323822715,
+            "finalZ": 0.07330874419679213,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0057213300876373906,
+            "meanTurn": -0.0032773931661743087,
+            "sourceSignedMeanTurn": 0.0032773931661743087
+          },
+          "seed": 24
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.1855796337596789,
+            "finalAlignment": 0.6593716028305412,
+            "finalHeading": 4.9703405433927985,
+            "finalX": -1.337572773815439,
+            "finalZ": -0.016745588367302083,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.022081915023917067,
+            "meanTurn": -0.01641055954733483,
+            "sourceSignedMeanTurn": 0.01641055954733483
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.19763888676625307,
+            "finalAlignment": 0.07084417354718299,
+            "finalHeading": 5.562434139826282,
+            "finalX": -1.2753505368628408,
+            "finalZ": -0.046468637815338096,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02571678464863559,
+            "meanTurn": -0.009009389591916281,
+            "sourceSignedMeanTurn": 0.009009389591916281
+          },
+          "seed": 25
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 85,
+            "distanceReduction": -0.4040761700089559,
+            "finalAlignment": -0.613183786408891,
+            "finalHeading": 2.235239521072415,
+            "finalX": -1.6577049696249826,
+            "finalZ": 0.36171362751776276,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.02950386172610336,
+            "meanTurn": 0.02794049401340519,
+            "sourceSignedMeanTurn": -0.02794049401340519
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 62,
+            "distanceReduction": -0.4094170099392278,
+            "finalAlignment": -0.9739623277346657,
+            "finalHeading": 0.9423915017605039,
+            "finalX": -1.4515281687723214,
+            "finalZ": 0.2983200523198392,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.01529765379011019,
+            "meanTurn": 0.011779893772006327,
+            "sourceSignedMeanTurn": -0.011779893772006327
+          },
+          "seed": 26
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 94,
+            "distanceReduction": 0.26382271063397156,
+            "finalAlignment": 0.41783924661012967,
+            "finalHeading": 5.132972686138344,
+            "finalX": -1.5150483008964455,
+            "finalZ": -0.44612379459405493,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.007897037025697686,
+            "meanTurn": -0.01437765776301548,
+            "sourceSignedMeanTurn": 0.01437765776301548
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.31577785331949426,
+            "finalAlignment": 0.2288117589627375,
+            "finalHeading": 5.283558919214778,
+            "finalX": -1.5242936455502205,
+            "finalZ": -0.5082038935247858,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.012318997348388629,
+            "meanTurn": -0.012495329849560106,
+            "sourceSignedMeanTurn": 0.012495329849560106
+          },
+          "seed": 27
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 81,
+            "distanceReduction": -0.48338131145772945,
+            "finalAlignment": -0.9396289247504248,
+            "finalHeading": 0.7217142608327968,
+            "finalX": -1.289050393281823,
+            "finalZ": 0.3019104315924819,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.007496934115084195,
+            "meanTurn": 0.009021428260409964,
+            "sourceSignedMeanTurn": -0.009021428260409964
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 77,
+            "distanceReduction": -0.4648680388551749,
+            "finalAlignment": -0.987107739830758,
+            "finalHeading": 0.9152997822351668,
+            "finalX": -1.3044662584284619,
+            "finalZ": 0.2892133980047302,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0019188406733863077,
+            "meanTurn": 0.011441247277939593,
+            "sourceSignedMeanTurn": -0.011441247277939593
+          },
+          "seed": 28
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.23863136839878551,
+            "finalAlignment": 0.11724054577480475,
+            "finalHeading": 5.525405655025679,
+            "finalX": -1.2600279211924206,
+            "finalZ": -0.006697936493315494,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.029931294169427063,
+            "meanTurn": -0.009472245651923838,
+            "sourceSignedMeanTurn": 0.009472245651923838
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.18872721519511892,
+            "finalAlignment": 0.060830179267530086,
+            "finalHeading": 5.545280220449291,
+            "finalX": -1.25527835685607,
+            "finalZ": -0.07346771973203912,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.03195826361073007,
+            "meanTurn": -0.009223813584128682,
+            "sourceSignedMeanTurn": 0.009223813584128682
+          },
+          "seed": 29
+        }
+      ],
+      "scenario": "inhibitoryOdor",
+      "sourceZ": -1.0
+    },
+    {
+      "activeMinusMatchedNoCurrent": {
+        "distanceReduction": {
+          "ci95": [
+            -0.10418681309004707,
+            -0.04722029757506636
+          ],
+          "mean": -0.07570355533255671,
+          "negativeSeeds": 26,
+          "positiveSeeds": 4
+        },
+        "finalAlignment": {
+          "ci95": [
+            0.05246648903657185,
+            0.2954775727235754
+          ],
+          "mean": 0.17397203088007362,
+          "negativeSeeds": 9,
+          "positiveSeeds": 21
+        },
+        "meanFlightTurn": {
+          "ci95": [
+            -0.001031724543957873,
+            0.0048990696528587434
+          ],
+          "mean": 0.0019336725544504352,
+          "negativeSeeds": 15,
+          "positiveSeeds": 15
+        },
+        "meanTurn": {
+          "ci95": [
+            -0.0002368301027455696,
+            0.0039594758969404165
+          ],
+          "mean": 0.0018613228970974234,
+          "negativeSeeds": 13,
+          "positiveSeeds": 17
+        },
+        "sourceSignedMeanTurn": {
+          "ci95": [
+            -0.0002368301027455696,
+            0.0039594758969404165
+          ],
+          "mean": 0.0018613228970974234,
+          "negativeSeeds": 13,
+          "positiveSeeds": 17
+        }
+      },
+      "observations": [
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.2444200997026631,
+            "finalAlignment": -0.22196909054222794,
+            "finalHeading": 0.40223736489095874,
+            "finalX": -1.2708129403108273,
+            "finalZ": -0.00839854052147678,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.015342195209195568,
+            "meanTurn": 0.005027967061136999,
+            "sourceSignedMeanTurn": 0.005027967061136999
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 85,
+            "distanceReduction": -0.4178270664703998,
+            "finalAlignment": -0.987730692041394,
+            "finalHeading": 5.391622259646343,
+            "finalX": -1.2925286852771916,
+            "finalZ": -0.22870579442779562,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.006349031969079621,
+            "meanTurn": -0.011144538094165584,
+            "sourceSignedMeanTurn": -0.011144538094165584
+          },
+          "seed": 0
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 82,
+            "distanceReduction": -0.46598960790873933,
+            "finalAlignment": -0.46122545806076487,
+            "finalHeading": 0.029417092702655093,
+            "finalX": -1.285882114817405,
+            "finalZ": -0.28029730006696363,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -5.235188663803026e-05,
+            "meanTurn": 0.0003677136587831978,
+            "sourceSignedMeanTurn": 0.0003677136587831978
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 93,
+            "distanceReduction": -0.36724667793078636,
+            "finalAlignment": -0.6614898198861451,
+            "finalHeading": 6.14560667736047,
+            "finalX": -1.2447508378306913,
+            "finalZ": -0.1397202206486155,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0018045645565498362,
+            "meanTurn": -0.0017197328727389426,
+            "sourceSignedMeanTurn": -0.0017197328727389426
+          },
+          "seed": 1
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.31331773020427334,
+            "finalAlignment": -0.3401540348907481,
+            "finalHeading": 0.2767515762371536,
+            "finalX": -1.2328255931513266,
+            "finalZ": -0.06594882144748888,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.010150280754319143,
+            "meanTurn": 0.0034593947029644217,
+            "sourceSignedMeanTurn": 0.0034593947029644217
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 78,
+            "distanceReduction": -0.3340781344721546,
+            "finalAlignment": -0.8290925761997677,
+            "finalHeading": 5.872931290235946,
+            "finalX": -1.2832040234564213,
+            "finalZ": -0.1251524327341791,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.008625167833907618,
+            "meanTurn": -0.005128175211795493,
+            "sourceSignedMeanTurn": -0.005128175211795493
+          },
+          "seed": 2
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.20695213837796933,
+            "finalAlignment": 0.11458663798570967,
+            "finalHeading": 0.7446997900601373,
+            "finalX": -1.289066135726448,
+            "finalZ": 0.024650572889783635,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0014538929281715553,
+            "meanTurn": 0.009308747375751764,
+            "sourceSignedMeanTurn": 0.009308747375751764
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.029938942201567342,
+            "finalAlignment": 0.13506267069751393,
+            "finalHeading": 0.8685422087128722,
+            "finalX": -1.3508828405476514,
+            "finalZ": 0.2791218069871108,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006998016251013739,
+            "meanTurn": 0.010856777608910899,
+            "sourceSignedMeanTurn": 0.010856777608910899
+          },
+          "seed": 3
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.10007052667535832,
+            "finalAlignment": 0.4154714327674204,
+            "finalHeading": 1.0069818633824792,
+            "finalX": -1.398496754292814,
+            "finalZ": 0.07894136502417988,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.01972264667412972,
+            "meanTurn": 0.012587273292280965,
+            "sourceSignedMeanTurn": 0.012587273292280965
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.02023245513658367,
+            "finalAlignment": 0.34962717447372665,
+            "finalHeading": 1.0341160086674501,
+            "finalX": -1.3862609199410052,
+            "finalZ": 0.23627964307868207,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.021705342919575835,
+            "meanTurn": 0.012926450108343118,
+            "sourceSignedMeanTurn": 0.012926450108343118
+          },
+          "seed": 4
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 71,
+            "distanceReduction": -0.47473828817002195,
+            "finalAlignment": -0.9927963762054128,
+            "finalHeading": 5.300897775060467,
+            "finalX": -1.334207376986285,
+            "finalZ": -0.31589254946411305,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.026068398529102994,
+            "meanTurn": -0.012278594151488959,
+            "sourceSignedMeanTurn": -0.012278594151488959
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 69,
+            "distanceReduction": -0.3584733475790918,
+            "finalAlignment": -0.9976183396795235,
+            "finalHeading": 5.167720227327567,
+            "finalX": -1.3198658864100565,
+            "finalZ": -0.17595383566446401,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.020424747103612244,
+            "meanTurn": -0.013943313498150237,
+            "sourceSignedMeanTurn": -0.013943313498150237
+          },
+          "seed": 5
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": 0.030134168308565523,
+            "finalAlignment": 0.08639273577295373,
+            "finalHeading": 0.865793196607078,
+            "finalX": -1.318401216893422,
+            "finalZ": 0.3100269350545994,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.010245104230864924,
+            "meanTurn": 0.010822414957588471,
+            "sourceSignedMeanTurn": 0.010822414957588471
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.06412021133341683,
+            "finalAlignment": -0.5929728239198984,
+            "finalHeading": 0.17912592837925975,
+            "finalX": -1.3196609981992962,
+            "finalZ": 0.35734159815386357,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.011129976057915532,
+            "meanTurn": 0.0022390741047407458,
+            "sourceSignedMeanTurn": 0.0022390741047407458
+          },
+          "seed": 6
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.03241494487186514,
+            "finalAlignment": -0.23891031170777685,
+            "finalHeading": 0.437393071258981,
+            "finalX": -1.3519198092319744,
+            "finalZ": 0.19633795365909182,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.005787979573446183,
+            "meanTurn": 0.005467413390737296,
+            "sourceSignedMeanTurn": 0.005467413390737296
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.0755219546621202,
+            "finalAlignment": -0.9071032298710066,
+            "finalHeading": 5.869608774759527,
+            "finalX": -1.288577453219751,
+            "finalZ": 0.1933864401753886,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0063273186093068135,
+            "meanTurn": -0.005169706655250735,
+            "sourceSignedMeanTurn": -0.005169706655250735
+          },
+          "seed": 7
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.16964866601565043,
+            "finalAlignment": 0.5327709277681809,
+            "finalHeading": 1.1770246803885873,
+            "finalX": -1.3250149289854631,
+            "finalZ": 0.044765392262355576,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.018858789743517942,
+            "meanTurn": 0.014712808504857362,
+            "sourceSignedMeanTurn": 0.014712808504857362
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 94,
+            "distanceReduction": -0.13024562880641333,
+            "finalAlignment": -0.18525883212172284,
+            "finalHeading": 0.5130113622145653,
+            "finalX": -1.2724407600341623,
+            "finalZ": 0.13506489620530637,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.004644719046893705,
+            "meanTurn": 0.0064126420276820586,
+            "sourceSignedMeanTurn": 0.0064126420276820586
+          },
+          "seed": 8
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 82,
+            "distanceReduction": -0.40756289124073986,
+            "finalAlignment": -0.3632184028281119,
+            "finalHeading": 0.16099419963789902,
+            "finalX": -1.2851365053597619,
+            "finalZ": -0.212519474824523,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.001337912764151503,
+            "meanTurn": 0.0020124274954737426,
+            "sourceSignedMeanTurn": 0.0020124274954737426
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 87,
+            "distanceReduction": -0.2862949881826611,
+            "finalAlignment": -0.07838816162398886,
+            "finalHeading": 0.5321885911167662,
+            "finalX": -1.26243066727013,
+            "finalZ": -0.05382459453186353,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0008597183924669997,
+            "meanTurn": 0.006652357388959541,
+            "sourceSignedMeanTurn": 0.006652357388959541
+          },
+          "seed": 9
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.08715108381468184,
+            "finalAlignment": -0.04357504282876059,
+            "finalHeading": 0.6649488445964145,
+            "finalX": -1.2925645745301395,
+            "finalZ": 0.17451069187438,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.001495995399125741,
+            "meanTurn": 0.008311860557455171,
+            "sourceSignedMeanTurn": 0.008311860557455171
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.027042055841533852,
+            "finalAlignment": 0.05260953455416587,
+            "finalHeading": 0.8419360520126408,
+            "finalX": -1.3093341575750752,
+            "finalZ": 0.314706008191712,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 3.864583774676783e-05,
+            "meanTurn": 0.01052420065015801,
+            "sourceSignedMeanTurn": 0.01052420065015801
+          },
+          "seed": 10
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.4308047321671127,
+            "finalAlignment": -0.7825532830281619,
+            "finalHeading": 5.927306335701035,
+            "finalX": -1.2608435951167325,
+            "finalZ": -0.2250918295017097,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0009892820620804477,
+            "meanTurn": -0.004448487143481839,
+            "sourceSignedMeanTurn": -0.004448487143481839
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.24815358752651773,
+            "finalAlignment": -0.7741595091149484,
+            "finalHeading": 6.063720104351093,
+            "finalX": -1.22891115444635,
+            "finalZ": 0.018516749853541476,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.005427798187867514,
+            "meanTurn": -0.0027433150353561643,
+            "sourceSignedMeanTurn": -0.0027433150353561643
+          },
+          "seed": 11
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 84,
+            "distanceReduction": -0.4797489381504796,
+            "finalAlignment": -0.4322811348736217,
+            "finalHeading": 0.032147381608020886,
+            "finalX": -1.317774575480242,
+            "finalZ": -0.31309763159344234,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0006455910265902244,
+            "meanTurn": 0.0004018422701002404,
+            "sourceSignedMeanTurn": 0.0004018422701002404
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 96,
+            "distanceReduction": -0.32725539321498864,
+            "finalAlignment": 0.12026942369340618,
+            "finalHeading": 0.713610280832657,
+            "finalX": -1.25820760704619,
+            "finalZ": -0.100613885326791,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006210642949452271,
+            "meanTurn": 0.008920128510408227,
+            "sourceSignedMeanTurn": 0.008920128510408227
+          },
+          "seed": 12
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 74,
+            "distanceReduction": -0.4315455097710672,
+            "finalAlignment": -0.5573234046583541,
+            "finalHeading": 6.190146417137337,
+            "finalX": -1.3160439003314182,
+            "finalZ": -0.257587611370216,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.005589881794654563,
+            "meanTurn": -0.0011629861255281152,
+            "sourceSignedMeanTurn": -0.0011629861255281152
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 79,
+            "distanceReduction": -0.3216969029707366,
+            "finalAlignment": -0.9312428229816458,
+            "finalHeading": 5.643621882802841,
+            "finalX": -1.299898866245234,
+            "finalZ": -0.12104464935065282,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0024205836389969908,
+            "meanTurn": -0.007994542804709306,
+            "sourceSignedMeanTurn": -0.007994542804709306
+          },
+          "seed": 13
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.3413275365742654,
+            "finalAlignment": -0.40796000299285495,
+            "finalHeading": 0.18486052623926263,
+            "finalX": -1.2370165223611587,
+            "finalZ": -0.10318437861607105,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.009139149054185615,
+            "meanTurn": 0.0023107565779907635,
+            "sourceSignedMeanTurn": 0.0023107565779907635
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 87,
+            "distanceReduction": -0.31920983754727983,
+            "finalAlignment": -0.706372166907893,
+            "finalHeading": 6.09869324345091,
+            "finalX": -1.255262107547115,
+            "finalZ": -0.08888937318092868,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006810254451128234,
+            "meanTurn": -0.00230615079660845,
+            "sourceSignedMeanTurn": -0.00230615079660845
+          },
+          "seed": 14
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.12606995874201998,
+            "finalAlignment": -0.07790620089410254,
+            "finalHeading": 0.6260906941527448,
+            "finalX": -1.2710614021994344,
+            "finalZ": 0.14169814597788513,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.00791083901860857,
+            "meanTurn": 0.007826133676909309,
+            "sourceSignedMeanTurn": 0.007826133676909309
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.1037452785591102,
+            "finalAlignment": -0.09724177204682073,
+            "finalHeading": 0.6089272952105426,
+            "finalX": -1.2836242201036014,
+            "finalZ": 0.1603218581388732,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.008031433770314522,
+            "meanTurn": 0.007611591190131795,
+            "sourceSignedMeanTurn": 0.007611591190131795
+          },
+          "seed": 15
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 54,
+            "distanceReduction": -0.6311947433860146,
+            "finalAlignment": -0.8550829281620063,
+            "finalHeading": 5.5559192682900616,
+            "finalX": -1.520373227794807,
+            "finalZ": -0.5590876980574867,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.014334953929079554,
+            "meanTurn": -0.009090825486119095,
+            "sourceSignedMeanTurn": -0.009090825486119095
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 85,
+            "distanceReduction": -0.5203879184376268,
+            "finalAlignment": -0.7758208767791229,
+            "finalHeading": 5.851739270852072,
+            "finalX": -1.329704797547595,
+            "finalZ": -0.36465518139213077,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.01037426582804507,
+            "meanTurn": -0.005393075454093923,
+            "sourceSignedMeanTurn": -0.005393075454093923
+          },
+          "seed": 16
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 70,
+            "distanceReduction": -0.5169585313452858,
+            "finalAlignment": -0.9724077171245533,
+            "finalHeading": 4.910421382276184,
+            "finalX": -1.3628160617897855,
+            "finalZ": -0.37664803588577705,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.027794265495361452,
+            "meanTurn": -0.01715954906129247,
+            "sourceSignedMeanTurn": -0.01715954906129247
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 77,
+            "distanceReduction": -0.40568278822945736,
+            "finalAlignment": -0.9946916510817798,
+            "finalHeading": 5.116943565805528,
+            "finalX": -1.3166777786603054,
+            "finalZ": -0.22841965262198866,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02447085180930794,
+            "meanTurn": -0.014578021767175727,
+            "sourceSignedMeanTurn": -0.014578021767175727
+          },
+          "seed": 17
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 60,
+            "distanceReduction": -0.5582650532763731,
+            "finalAlignment": -0.9999962178119497,
+            "finalHeading": 5.062713641748352,
+            "finalX": -1.461175698841375,
+            "finalZ": -0.4621416992697175,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.026184195374064332,
+            "meanTurn": -0.015255895817890459,
+            "sourceSignedMeanTurn": -0.015255895817890459
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 55,
+            "distanceReduction": -0.4672995829783848,
+            "finalAlignment": -0.9509806363688572,
+            "finalHeading": 4.804298271546074,
+            "finalX": -1.420084856216009,
+            "finalZ": -0.34783770989631213,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.035142785911674634,
+            "meanTurn": -0.01848608794541893,
+            "sourceSignedMeanTurn": -0.01848608794541893
+          },
+          "seed": 18
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 56,
+            "distanceReduction": -0.5951395699642568,
+            "finalAlignment": -0.47367104181217945,
+            "finalHeading": 3.7694574800170737,
+            "finalX": -1.7862416681818354,
+            "finalZ": -0.5807522333509667,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.040291806664986905,
+            "meanTurn": -0.03142159783953139,
+            "sourceSignedMeanTurn": -0.03142159783953139
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 83,
+            "distanceReduction": -0.5140876196935671,
+            "finalAlignment": -0.584527756597241,
+            "finalHeading": 3.9558441987161266,
+            "finalX": -1.7141200170666904,
+            "finalZ": -0.4868537101770915,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02897037207784306,
+            "meanTurn": -0.02909176385579327,
+            "sourceSignedMeanTurn": -0.02909176385579327
+          },
+          "seed": 19
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 74,
+            "distanceReduction": -0.48441865820646757,
+            "finalAlignment": -0.5069847340256342,
+            "finalHeading": 6.2291682449933745,
+            "finalX": -1.3176014262321663,
+            "finalZ": -0.31826815912056206,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.005664247555607469,
+            "meanTurn": -0.0006752132773276461,
+            "sourceSignedMeanTurn": -0.0006752132773276461
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 80,
+            "distanceReduction": -0.34380601763720353,
+            "finalAlignment": -0.5521055100576211,
+            "finalHeading": 6.273456155222191,
+            "finalX": -1.2690130769174535,
+            "finalZ": -0.1275959964988664,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0032998603311717328,
+            "meanTurn": -0.0001216143994674406,
+            "sourceSignedMeanTurn": -0.0001216143994674406
+          },
+          "seed": 20
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 55,
+            "distanceReduction": -0.6294670259696544,
+            "finalAlignment": -0.7630057167191019,
+            "finalHeading": 4.190365269516426,
+            "finalX": -1.706959235518819,
+            "finalZ": -0.6029004644938736,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.01840304109213089,
+            "meanTurn": -0.026160250470789508,
+            "sourceSignedMeanTurn": -0.026160250470789508
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 53,
+            "distanceReduction": -0.5718200138949272,
+            "finalAlignment": -0.9467022553414399,
+            "finalHeading": 4.698962989015935,
+            "finalX": -1.5137246033738923,
+            "finalZ": -0.49470879930398837,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.013424543927546946,
+            "meanTurn": -0.01980277897704566,
+            "sourceSignedMeanTurn": -0.01980277897704566
+          },
+          "seed": 21
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 85,
+            "distanceReduction": -0.3514259711098653,
+            "finalAlignment": -0.07443913771883787,
+            "finalHeading": 0.46420632921667476,
+            "finalX": -1.3066740357375664,
+            "finalZ": -0.160022095767925,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.004239092636820576,
+            "meanTurn": 0.005802579115208423,
+            "sourceSignedMeanTurn": 0.005802579115208423
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.26169815043973377,
+            "finalAlignment": -0.3902444924199965,
+            "finalHeading": 0.25258809674730276,
+            "finalX": -1.2329414580476756,
+            "finalZ": -0.0017501764616861429,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.002436625661277605,
+            "meanTurn": 0.003157351209341292,
+            "sourceSignedMeanTurn": 0.003157351209341292
+          },
+          "seed": 22
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.0038387513860469458,
+            "finalAlignment": 0.7653195107594843,
+            "finalHeading": 1.5448756974112021,
+            "finalX": -1.374007153693781,
+            "finalZ": 0.2152546940836559,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.03775554281114879,
+            "meanTurn": 0.019310946217640006,
+            "sourceSignedMeanTurn": 0.019310946217640006
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.012205436263868608,
+            "finalAlignment": -0.017965612948710012,
+            "finalHeading": 0.7536379752657725,
+            "finalX": -1.2942030478790685,
+            "finalZ": 0.2744584728777186,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.03489869899970861,
+            "meanTurn": 0.009420474690822168,
+            "sourceSignedMeanTurn": 0.009420474690822168
+          },
+          "seed": 23
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.21997136659623773,
+            "finalAlignment": -0.3616084698981205,
+            "finalHeading": 0.2721630922115047,
+            "finalX": -1.2693310037510463,
+            "finalZ": 0.02303891928325073,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.01527678492268145,
+            "meanTurn": 0.003402038652643817,
+            "sourceSignedMeanTurn": 0.003402038652643817
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.2065864981056218,
+            "finalAlignment": -0.8176014057914076,
+            "finalHeading": 6.020993853885642,
+            "finalX": -1.2272812323822715,
+            "finalZ": 0.07330874419679213,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0057213300876373906,
+            "meanTurn": -0.0032773931661743087,
+            "sourceSignedMeanTurn": -0.0032773931661743087
+          },
+          "seed": 24
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 81,
+            "distanceReduction": -0.3631426139186813,
+            "finalAlignment": -0.9814147279952524,
+            "finalHeading": 5.467712936556202,
+            "finalX": -1.2733466928071442,
+            "finalZ": -0.15331381550154846,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.01972188390639814,
+            "meanTurn": -0.010193404632792304,
+            "sourceSignedMeanTurn": -0.010193404632792304
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 86,
+            "distanceReduction": -0.2728760561641743,
+            "finalAlignment": -0.9702851212378095,
+            "finalHeading": 5.562434139826282,
+            "finalX": -1.2753505368628408,
+            "finalZ": -0.046468637815338096,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02571678464863559,
+            "meanTurn": -0.009009389591916281,
+            "sourceSignedMeanTurn": -0.009009389591916281
+          },
+          "seed": 25
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 90,
+            "distanceReduction": 0.04355843908747048,
+            "finalAlignment": 0.4381108021755451,
+            "finalHeading": 0.9908809778435759,
+            "finalX": -1.5104058494259138,
+            "finalZ": 0.17836867929439607,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.01611717403897304,
+            "meanTurn": 0.012386012223044645,
+            "sourceSignedMeanTurn": 0.012386012223044645
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.10939565539647389,
+            "finalAlignment": 0.2753337858825666,
+            "finalHeading": 0.9423915017605039,
+            "finalX": -1.4515281687723214,
+            "finalZ": 0.2983200523198392,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.01529765379011019,
+            "meanTurn": 0.011779893772006327,
+            "sourceSignedMeanTurn": 0.011779893772006327
+          },
+          "seed": 26
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 52,
+            "distanceReduction": -0.644075679171644,
+            "finalAlignment": -0.934977903317087,
+            "finalHeading": 5.375008006412225,
+            "finalX": -1.5141118463805943,
+            "finalZ": -0.5706360307264147,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.004688081968942355,
+            "meanTurn": -0.011352216259592037,
+            "sourceSignedMeanTurn": -0.011352216259592037
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 57,
+            "distanceReduction": -0.5814472865407883,
+            "finalAlignment": -0.9649262832617624,
+            "finalHeading": 5.283558919214778,
+            "finalX": -1.5242936455502205,
+            "finalZ": -0.5082038935247858,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.012318997348388629,
+            "meanTurn": -0.012495329849560106,
+            "sourceSignedMeanTurn": -0.012495329849560106
+          },
+          "seed": 27
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.10346865319995469,
+            "finalAlignment": -0.05547924790687677,
+            "finalHeading": 0.6504055609528587,
+            "finalX": -1.284147723375867,
+            "finalZ": 0.1602389705118678,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0027549894284746653,
+            "meanTurn": 0.008130069511910741,
+            "sourceSignedMeanTurn": 0.008130069511910741
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.0055228613786613145,
+            "finalAlignment": 0.14028289528027557,
+            "finalHeading": 0.9152997822351668,
+            "finalX": -1.3044662584284619,
+            "finalZ": 0.2892133980047302,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0019188406733863077,
+            "meanTurn": 0.011441247277939593,
+            "sourceSignedMeanTurn": 0.011441247277939593
+          },
+          "seed": 28
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 84,
+            "distanceReduction": -0.42956437324148533,
+            "finalAlignment": -0.8503749153510712,
+            "finalHeading": 5.779485540473482,
+            "finalX": -1.2983823471161995,
+            "finalZ": -0.24554685435881837,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.009708916360239132,
+            "meanTurn": -0.006296247083826286,
+            "sourceSignedMeanTurn": -0.006296247083826286
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 90,
+            "distanceReduction": -0.3065003907667607,
+            "finalAlignment": -0.9744875168276335,
+            "finalHeading": 5.545280220449291,
+            "finalX": -1.25527835685607,
+            "finalZ": -0.07346771973203912,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.03195826361073007,
+            "meanTurn": -0.009223813584128682,
+            "sourceSignedMeanTurn": -0.009223813584128682
+          },
+          "seed": 29
+        }
+      ],
+      "scenario": "inhibitoryOdor",
+      "sourceZ": 1.0
+    },
+    {
+      "activeMinusMatchedNoCurrent": {
+        "distanceReduction": {
+          "ci95": [
+            -0.2188337162318144,
+            -0.07632929026283301
+          ],
+          "mean": -0.14758150324732372,
+          "negativeSeeds": 21,
+          "positiveSeeds": 9
+        },
+        "finalAlignment": {
+          "ci95": [
+            -0.7758898030483745,
+            -0.30557385235655193
+          ],
+          "mean": -0.5407318277024632,
+          "negativeSeeds": 24,
+          "positiveSeeds": 6
+        },
+        "meanFlightTurn": {
+          "ci95": [
+            0.011007792064124243,
+            0.02034352475689817
+          ],
+          "mean": 0.015675658410511207,
+          "negativeSeeds": 5,
+          "positiveSeeds": 25
+        },
+        "meanTurn": {
+          "ci95": [
+            0.012805364244398617,
+            0.020361835418496
+          ],
+          "mean": 0.016583599831447308,
+          "negativeSeeds": 2,
+          "positiveSeeds": 28
+        },
+        "sourceSignedMeanTurn": {
+          "ci95": [
+            -0.020361835418496,
+            -0.012805364244398617
+          ],
+          "mean": -0.016583599831447308,
+          "negativeSeeds": 28,
+          "positiveSeeds": 2
+        }
+      },
+      "observations": [
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 54,
+            "distanceReduction": -0.3625848378405323,
+            "finalAlignment": -0.9362385726706033,
+            "finalHeading": 0.8680349002853173,
+            "finalX": -1.540803626652414,
+            "finalZ": 0.2828780655297425,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.012159018173074514,
+            "meanTurn": 0.010850436253566468,
+            "sourceSignedMeanTurn": -0.010850436253566468
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.0466185612270007,
+            "finalAlignment": 0.14874367206322217,
+            "finalHeading": 5.391622259646343,
+            "finalX": -1.2925286852771916,
+            "finalZ": -0.22870579442779562,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.006349031969079621,
+            "meanTurn": -0.011144538094165584,
+            "sourceSignedMeanTurn": 0.011144538094165584
+          },
+          "seed": 0
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 49,
+            "distanceReduction": -0.3960178878736582,
+            "finalAlignment": -0.9172795861909314,
+            "finalHeading": 0.80166984688369,
+            "finalX": -1.5088395833143127,
+            "finalZ": 0.30676217742341005,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.007645299473783227,
+            "meanTurn": 0.010020873086046125,
+            "sourceSignedMeanTurn": -0.010020873086046125
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.14476311773148498,
+            "finalAlignment": -0.5504454957598442,
+            "finalHeading": 6.14560667736047,
+            "finalX": -1.2447508378306913,
+            "finalZ": -0.1397202206486155,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0018045645565498362,
+            "meanTurn": -0.0017197328727389426,
+            "sourceSignedMeanTurn": 0.0017197328727389426
+          },
+          "seed": 1
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 69,
+            "distanceReduction": -0.39502019628594764,
+            "finalAlignment": -0.8898225596666375,
+            "finalHeading": 1.6521696262132917,
+            "finalX": -1.466448182353447,
+            "finalZ": 0.2889545399011337,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.02624501126401798,
+            "meanTurn": 0.020652120327666133,
+            "sourceSignedMeanTurn": -0.020652120327666133
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.1309972316234853,
+            "finalAlignment": -0.27267062202988357,
+            "finalHeading": 5.872931290235946,
+            "finalX": -1.2832040234564213,
+            "finalZ": -0.1251524327341791,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.008625167833907618,
+            "meanTurn": -0.005128175211795493,
+            "sourceSignedMeanTurn": 0.005128175211795493
+          },
+          "seed": 2
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 59,
+            "distanceReduction": -0.35699623310791906,
+            "finalAlignment": -0.6857336021510925,
+            "finalHeading": 0.36176632477770637,
+            "finalX": -1.4792639823975897,
+            "finalZ": 0.2531052536162572,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.004805218142366174,
+            "meanTurn": 0.00452207905972135,
+            "sourceSignedMeanTurn": -0.00452207905972135
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 77,
+            "distanceReduction": -0.43440081002677133,
+            "finalAlignment": -0.9730593836759529,
+            "finalHeading": 0.8685422087128722,
+            "finalX": -1.3508828405476514,
+            "finalZ": 0.2791218069871108,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006998016251013739,
+            "meanTurn": 0.010856777608910899,
+            "sourceSignedMeanTurn": -0.010856777608910899
+          },
+          "seed": 3
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 64,
+            "distanceReduction": -0.32443552599244274,
+            "finalAlignment": -0.9960347338491701,
+            "finalHeading": 1.4039901590897421,
+            "finalX": -1.6647778014770171,
+            "finalZ": 0.28131008742157976,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.020772473068071853,
+            "meanTurn": 0.017549876988621795,
+            "sourceSignedMeanTurn": -0.017549876988621795
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 66,
+            "distanceReduction": -0.3802402016614408,
+            "finalAlignment": -0.9971221531765992,
+            "finalHeading": 1.0341160086674501,
+            "finalX": -1.3862609199410052,
+            "finalZ": 0.23627964307868207,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.021705342919575835,
+            "meanTurn": 0.012926450108343118,
+            "sourceSignedMeanTurn": -0.012926450108343118
+          },
+          "seed": 4
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 69,
+            "distanceReduction": -0.35124215565269234,
+            "finalAlignment": -0.9943908556730882,
+            "finalHeading": 1.0250448574464328,
+            "finalX": -1.424714916864426,
+            "finalZ": 0.22266202866312604,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.00031497019082281526,
+            "meanTurn": 0.012813060718080452,
+            "sourceSignedMeanTurn": -0.012813060718080452
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.06847297271615038,
+            "finalAlignment": 0.4127319103575233,
+            "finalHeading": 5.167720227327567,
+            "finalX": -1.3198658864100565,
+            "finalZ": -0.17595383566446401,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.020424747103612244,
+            "meanTurn": -0.013943313498150237,
+            "sourceSignedMeanTurn": 0.013943313498150237
+          },
+          "seed": 5
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 67,
+            "distanceReduction": -0.4468029961387856,
+            "finalAlignment": -0.8222004676989285,
+            "finalHeading": 1.9456464646165814,
+            "finalX": -1.669203613479088,
+            "finalZ": 0.4084788462383361,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.002492570458762143,
+            "meanTurn": 0.024320580807707267,
+            "sourceSignedMeanTurn": -0.024320580807707267
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 88,
+            "distanceReduction": -0.5183008171801999,
+            "finalAlignment": -0.6002041106829316,
+            "finalHeading": 0.17912592837925975,
+            "finalX": -1.3196609981992962,
+            "finalZ": 0.35734159815386357,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.011129976057915532,
+            "meanTurn": 0.0022390741047407458,
+            "sourceSignedMeanTurn": -0.0022390741047407458
+          },
+          "seed": 6
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 57,
+            "distanceReduction": -0.3829830887448715,
+            "finalAlignment": -0.9977235844218472,
+            "finalHeading": 1.1089673903545392,
+            "finalX": -1.4686575174399894,
+            "finalZ": 0.2768388269399041,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.014005838180358752,
+            "meanTurn": 0.013862092379431746,
+            "sourceSignedMeanTurn": -0.013862092379431746
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 84,
+            "distanceReduction": -0.3893499327605634,
+            "finalAlignment": -0.12368062715081883,
+            "finalHeading": 5.869608774759527,
+            "finalX": -1.288577453219751,
+            "finalZ": 0.1933864401753886,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0063273186093068135,
+            "meanTurn": -0.005169706655250735,
+            "sourceSignedMeanTurn": 0.005169706655250735
+          },
+          "seed": 7
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 80,
+            "distanceReduction": -0.35613380260149774,
+            "finalAlignment": -0.9305669289033738,
+            "finalHeading": 1.7568304359518059,
+            "finalX": -1.745475083185852,
+            "finalZ": 0.33203451805092105,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.024284577989357573,
+            "meanTurn": 0.021960380449397597,
+            "sourceSignedMeanTurn": -0.021960380449397597
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 88,
+            "distanceReduction": -0.34822652631419104,
+            "finalAlignment": -0.8833785128170525,
+            "finalHeading": 0.5130113622145653,
+            "finalX": -1.2724407600341623,
+            "finalZ": 0.13506489620530637,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.004644719046893705,
+            "meanTurn": 0.0064126420276820586,
+            "sourceSignedMeanTurn": -0.0064126420276820586
+          },
+          "seed": 8
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 84,
+            "distanceReduction": -0.28951847435096467,
+            "finalAlignment": -0.6754905475012507,
+            "finalHeading": 2.0179934645430415,
+            "finalX": -1.5193336892623681,
+            "finalZ": 0.19658589052951575,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.022278764867727886,
+            "meanTurn": 0.025224918306787983,
+            "sourceSignedMeanTurn": -0.025224918306787983
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 99,
+            "distanceReduction": -0.19969013436652805,
+            "finalAlignment": -0.9299661547393877,
+            "finalHeading": 0.5321885911167662,
+            "finalX": -1.26243066727013,
+            "finalZ": -0.05382459453186353,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0008597183924669997,
+            "meanTurn": 0.006652357388959541,
+            "sourceSignedMeanTurn": -0.006652357388959541
+          },
+          "seed": 9
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 59,
+            "distanceReduction": -0.44707027773612973,
+            "finalAlignment": -0.9901568121580135,
+            "finalHeading": 1.4264758559810236,
+            "finalX": -1.5935009817960764,
+            "finalZ": 0.3888019790116104,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0013207775008699924,
+            "meanTurn": 0.01783094819976284,
+            "sourceSignedMeanTurn": -0.01783094819976284
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 79,
+            "distanceReduction": -0.4850828912447671,
+            "finalAlignment": -0.9701014512990006,
+            "finalHeading": 0.8419360520126408,
+            "finalX": -1.3093341575750752,
+            "finalZ": 0.314706008191712,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 3.864583774676783e-05,
+            "meanTurn": 0.01052420065015801,
+            "sourceSignedMeanTurn": -0.01052420065015801
+          },
+          "seed": 10
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 49,
+            "distanceReduction": -0.36073747598557016,
+            "finalAlignment": -0.9980937209968516,
+            "finalHeading": 1.1908476300052386,
+            "finalX": -1.5742922599775782,
+            "finalZ": 0.292431583735318,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.024012040918193943,
+            "meanTurn": 0.014885595375065496,
+            "sourceSignedMeanTurn": -0.014885595375065496
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.2774796974783913,
+            "finalAlignment": -0.41554836469223794,
+            "finalHeading": 6.063720104351093,
+            "finalX": -1.22891115444635,
+            "finalZ": 0.018516749853541476,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.005427798187867514,
+            "meanTurn": -0.0027433150353561643,
+            "sourceSignedMeanTurn": 0.0027433150353561643
+          },
+          "seed": 11
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 88,
+            "distanceReduction": -0.22059610725495293,
+            "finalAlignment": -0.8789857782940788,
+            "finalHeading": 1.639885718954745,
+            "finalX": -1.4934159157348745,
+            "finalZ": 0.11050773190248839,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.025694412664577868,
+            "meanTurn": 0.02049857148693434,
+            "sourceSignedMeanTurn": -0.02049857148693434
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 95,
+            "distanceReduction": -0.16582646114724553,
+            "finalAlignment": -0.9860014589096077,
+            "finalHeading": 0.713610280832657,
+            "finalX": -1.25820760704619,
+            "finalZ": -0.100613885326791,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006210642949452271,
+            "meanTurn": 0.008920128510408227,
+            "sourceSignedMeanTurn": -0.008920128510408227
+          },
+          "seed": 12
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 54,
+            "distanceReduction": -0.39710108260091403,
+            "finalAlignment": -0.8110112525093035,
+            "finalHeading": 0.575718285201626,
+            "finalX": -1.4945778807091394,
+            "finalZ": 0.3024745357726505,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.020220345939190087,
+            "meanTurn": 0.007196478565020351,
+            "sourceSignedMeanTurn": -0.007196478565020351
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.12370107498383476,
+            "finalAlignment": -0.03304289536014279,
+            "finalHeading": 5.643621882802841,
+            "finalX": -1.299898866245234,
+            "finalZ": -0.12104464935065282,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0024205836389969908,
+            "meanTurn": -0.007994542804709306,
+            "sourceSignedMeanTurn": 0.007994542804709306
+          },
+          "seed": 13
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 81,
+            "distanceReduction": -0.1954525513088745,
+            "finalAlignment": -0.9997810042227017,
+            "finalHeading": 1.0191123730796015,
+            "finalX": -1.3522682536034536,
+            "finalZ": 0.004763846453970346,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.025395670294677004,
+            "meanTurn": 0.012738904663495037,
+            "sourceSignedMeanTurn": -0.012738904663495037
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.17675702791944525,
+            "finalAlignment": -0.4800979441444999,
+            "finalHeading": 6.09869324345091,
+            "finalX": -1.255262107547115,
+            "finalZ": -0.08888937318092868,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006810254451128234,
+            "meanTurn": -0.00230615079660845,
+            "sourceSignedMeanTurn": 0.00230615079660845
+          },
+          "seed": 14
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 64,
+            "distanceReduction": -0.35827543241951165,
+            "finalAlignment": -0.692517979230695,
+            "finalHeading": 2.1989360489276093,
+            "finalX": -1.7599254978154781,
+            "finalZ": 0.33689056534753997,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.02215711691795665,
+            "meanTurn": 0.027486700611595114,
+            "sourceSignedMeanTurn": -0.027486700611595114
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 82,
+            "distanceReduction": -0.3636499083331546,
+            "finalAlignment": -0.9176152322983866,
+            "finalHeading": 0.6089272952105426,
+            "finalX": -1.2836242201036014,
+            "finalZ": 0.1603218581388732,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.008031433770314522,
+            "meanTurn": 0.007611591190131795,
+            "sourceSignedMeanTurn": -0.007611591190131795
+          },
+          "seed": 15
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 70,
+            "distanceReduction": -0.26600053344075514,
+            "finalAlignment": -0.9897026886470043,
+            "finalHeading": 1.2694686209055461,
+            "finalX": -1.4550864826249919,
+            "finalZ": 0.14272770564744486,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.02214687155082945,
+            "meanTurn": 0.015868357761319313,
+            "sourceSignedMeanTurn": -0.015868357761319313
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.07644236944163763,
+            "finalAlignment": -0.3715839156386934,
+            "finalHeading": 5.851739270852072,
+            "finalX": -1.329704797547595,
+            "finalZ": -0.36465518139213077,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.01037426582804507,
+            "meanTurn": -0.005393075454093923,
+            "sourceSignedMeanTurn": 0.005393075454093923
+          },
+          "seed": 16
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 91,
+            "distanceReduction": -0.24180810520537577,
+            "finalAlignment": -0.9058668940146675,
+            "finalHeading": 0.5472266707372326,
+            "finalX": -1.3130373506372168,
+            "finalZ": 0.034490062076108594,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0127343251765134,
+            "meanTurn": 0.006840333384215436,
+            "sourceSignedMeanTurn": -0.006840333384215436
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.03066264637687688,
+            "finalAlignment": 0.4272345402278809,
+            "finalHeading": 5.116943565805528,
+            "finalX": -1.3166777786603054,
+            "finalZ": -0.22841965262198866,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02447085180930794,
+            "meanTurn": -0.014578021767175727,
+            "sourceSignedMeanTurn": 0.014578021767175727
+          },
+          "seed": 17
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 72,
+            "distanceReduction": -0.27586360835708734,
+            "finalAlignment": -0.7552675465313482,
+            "finalHeading": 0.4063174780934731,
+            "finalX": -1.4453365612149416,
+            "finalZ": 0.14898930230228907,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.00947980064374819,
+            "meanTurn": 0.005078968476168422,
+            "sourceSignedMeanTurn": -0.005078968476168422
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.12729316112265188,
+            "finalAlignment": 0.6831447964335637,
+            "finalHeading": 4.804298271546074,
+            "finalX": -1.420084856216009,
+            "finalZ": -0.34783770989631213,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.035142785911674634,
+            "meanTurn": -0.01848608794541893,
+            "sourceSignedMeanTurn": 0.01848608794541893
+          },
+          "seed": 18
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 96,
+            "distanceReduction": -0.030400251940803535,
+            "finalAlignment": -0.9895221659720698,
+            "finalHeading": 0.7374395714338899,
+            "finalX": -1.3453291052604148,
+            "finalZ": -0.20430489584229405,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.010387723864968982,
+            "meanTurn": 0.009217994642923628,
+            "sourceSignedMeanTurn": -0.009217994642923628
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 71,
+            "distanceReduction": 0.4125934292153638,
+            "finalAlignment": 0.9693420115456989,
+            "finalHeading": 3.9558441987161266,
+            "finalX": -1.7141200170666904,
+            "finalZ": -0.4868537101770915,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02897037207784306,
+            "meanTurn": -0.02909176385579327,
+            "sourceSignedMeanTurn": 0.02909176385579327
+          },
+          "seed": 19
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 64,
+            "distanceReduction": -0.350099299068094,
+            "finalAlignment": -0.6938625601411694,
+            "finalHeading": 2.032497810042129,
+            "finalX": -1.546889389448827,
+            "finalZ": 0.27179357285296174,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.024104041388663754,
+            "meanTurn": 0.025406222625526616,
+            "sourceSignedMeanTurn": -0.025406222625526616
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.13816985860744646,
+            "finalAlignment": -0.6347600091336764,
+            "finalHeading": 6.273456155222191,
+            "finalX": -1.2690130769174535,
+            "finalZ": -0.1275959964988664,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0032998603311717328,
+            "meanTurn": -0.0001216143994674406,
+            "sourceSignedMeanTurn": 0.0001216143994674406
+          },
+          "seed": 20
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 71,
+            "distanceReduction": -0.2882503644017558,
+            "finalAlignment": -0.9821196755037127,
+            "finalHeading": 0.9965716887861845,
+            "finalX": -1.5163805869569633,
+            "finalZ": 0.1940273299674365,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.018742915149244022,
+            "meanTurn": 0.012457146109827321,
+            "sourceSignedMeanTurn": -0.012457146109827321
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.2987276143575197,
+            "finalAlignment": 0.7297794748462296,
+            "finalHeading": 4.698962989015935,
+            "finalX": -1.5137246033738923,
+            "finalZ": -0.49470879930398837,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.013424543927546946,
+            "meanTurn": -0.01980277897704566,
+            "sourceSignedMeanTurn": 0.01980277897704566
+          },
+          "seed": 21
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 54,
+            "distanceReduction": -0.3383962379852117,
+            "finalAlignment": -0.8189642337764125,
+            "finalHeading": 0.5799137021867851,
+            "finalX": -1.503946737142898,
+            "finalZ": 0.24307507828843164,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.00662699714384265,
+            "meanTurn": 0.0072489212773347795,
+            "sourceSignedMeanTurn": -0.0072489212773347795
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 99,
+            "distanceReduction": -0.2589207747020066,
+            "finalAlignment": -0.7881292517818127,
+            "finalHeading": 0.25258809674730276,
+            "finalX": -1.2329414580476756,
+            "finalZ": -0.0017501764616861429,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.002436625661277605,
+            "meanTurn": 0.003157351209341292,
+            "sourceSignedMeanTurn": -0.003157351209341292
+          },
+          "seed": 22
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 59,
+            "distanceReduction": -0.33907987830207476,
+            "finalAlignment": -0.996401820792529,
+            "finalHeading": 1.3708378863069843,
+            "finalX": -1.6237451357217625,
+            "finalZ": 0.28513314391173666,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0438545374285819,
+            "meanTurn": 0.017135473578837303,
+            "sourceSignedMeanTurn": -0.017135473578837303
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 83,
+            "distanceReduction": -0.4568437585111875,
+            "finalAlignment": -0.9519051730305552,
+            "finalHeading": 0.7536379752657725,
+            "finalX": -1.2942030478790685,
+            "finalZ": 0.2744584728777186,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.03489869899970861,
+            "meanTurn": 0.009420474690822168,
+            "sourceSignedMeanTurn": -0.009420474690822168
+          },
+          "seed": 23
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 62,
+            "distanceReduction": -0.3757774855729823,
+            "finalAlignment": -0.929979199746523,
+            "finalHeading": 0.7692216736799509,
+            "finalX": -1.432569670145063,
+            "finalZ": 0.25331022120233054,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.014496077430036043,
+            "meanTurn": 0.009615270920999376,
+            "sourceSignedMeanTurn": -0.009615270920999376
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.3225301335689694,
+            "finalAlignment": -0.3539513712414481,
+            "finalHeading": 6.020993853885642,
+            "finalX": -1.2272812323822715,
+            "finalZ": 0.07330874419679213,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0057213300876373906,
+            "meanTurn": -0.0032773931661743087,
+            "sourceSignedMeanTurn": 0.0032773931661743087
+          },
+          "seed": 24
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 75,
+            "distanceReduction": -0.4176038427759847,
+            "finalAlignment": -0.7314073685400834,
+            "finalHeading": 0.3667911782758483,
+            "finalX": -1.3788097321269062,
+            "finalZ": 0.27425401947688316,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.011596702779655525,
+            "meanTurn": 0.004584889728448079,
+            "sourceSignedMeanTurn": -0.004584889728448079
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.19763888676625307,
+            "finalAlignment": 0.07084417354718299,
+            "finalHeading": 5.562434139826282,
+            "finalX": -1.2753505368628408,
+            "finalZ": -0.046468637815338096,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02571678464863559,
+            "meanTurn": -0.009009389591916281,
+            "sourceSignedMeanTurn": 0.009009389591916281
+          },
+          "seed": 25
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 63,
+            "distanceReduction": -0.3175045037565445,
+            "finalAlignment": -0.8028882290490745,
+            "finalHeading": 0.5715822984712384,
+            "finalX": -1.5352086189418166,
+            "finalZ": 0.23279645096536736,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.005627342237615094,
+            "meanTurn": 0.007144778730890458,
+            "sourceSignedMeanTurn": -0.007144778730890458
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 62,
+            "distanceReduction": -0.4094170099392278,
+            "finalAlignment": -0.9739623277346657,
+            "finalHeading": 0.9423915017605039,
+            "finalX": -1.4515281687723214,
+            "finalZ": 0.2983200523198392,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.01529765379011019,
+            "meanTurn": 0.011779893772006327,
+            "sourceSignedMeanTurn": -0.011779893772006327
+          },
+          "seed": 26
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 80,
+            "distanceReduction": -0.18958729378097527,
+            "finalAlignment": -0.9390609566831317,
+            "finalHeading": 0.6768119450990608,
+            "finalX": -1.3852544170211105,
+            "finalZ": 0.01843301092074263,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0128549606961882,
+            "meanTurn": 0.008460149313738266,
+            "sourceSignedMeanTurn": -0.008460149313738266
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.31577785331949426,
+            "finalAlignment": 0.2288117589627375,
+            "finalHeading": 5.283558919214778,
+            "finalX": -1.5242936455502205,
+            "finalZ": -0.5082038935247858,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.012318997348388629,
+            "meanTurn": -0.012495329849560106,
+            "sourceSignedMeanTurn": 0.012495329849560106
+          },
+          "seed": 27
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 52,
+            "distanceReduction": -0.4521726227179683,
+            "finalAlignment": -0.9998808882932095,
+            "finalHeading": 1.346791316466164,
+            "finalX": -1.6993110103303728,
+            "finalZ": 0.42070104443652806,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.004553872103332442,
+            "meanTurn": 0.01683489145582706,
+            "sourceSignedMeanTurn": -0.01683489145582706
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 77,
+            "distanceReduction": -0.4648680388551749,
+            "finalAlignment": -0.987107739830758,
+            "finalHeading": 0.9152997822351668,
+            "finalX": -1.3044662584284619,
+            "finalZ": 0.2892133980047302,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0019188406733863077,
+            "meanTurn": 0.011441247277939593,
+            "sourceSignedMeanTurn": -0.011441247277939593
+          },
+          "seed": 28
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 56,
+            "distanceReduction": -0.3944342059990811,
+            "finalAlignment": -0.9338742951207791,
+            "finalHeading": 1.5611539710686106,
+            "finalX": -1.4888151450822462,
+            "finalZ": 0.2973576218464218,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0064683174155594075,
+            "meanTurn": 0.019514424638357626,
+            "sourceSignedMeanTurn": -0.019514424638357626
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.18872721519511892,
+            "finalAlignment": 0.060830179267530086,
+            "finalHeading": 5.545280220449291,
+            "finalX": -1.25527835685607,
+            "finalZ": -0.07346771973203912,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.03195826361073007,
+            "meanTurn": -0.009223813584128682,
+            "sourceSignedMeanTurn": 0.009223813584128682
+          },
+          "seed": 29
+        }
+      ],
+      "scenario": "excitatoryOdor",
+      "sourceZ": -1.0
+    },
+    {
+      "activeMinusMatchedNoCurrent": {
+        "distanceReduction": {
+          "ci95": [
+            -0.1167552705725205,
+            -0.029300983649350874
+          ],
+          "mean": -0.07302812711093569,
+          "negativeSeeds": 20,
+          "positiveSeeds": 10
+        },
+        "finalAlignment": {
+          "ci95": [
+            -0.4339849821600531,
+            -0.09592379632915726
+          ],
+          "mean": -0.2649543892446052,
+          "negativeSeeds": 20,
+          "positiveSeeds": 10
+        },
+        "meanFlightTurn": {
+          "ci95": [
+            -0.012147222595293166,
+            -0.004831360703708034
+          ],
+          "mean": -0.0084892916495006,
+          "negativeSeeds": 27,
+          "positiveSeeds": 3
+        },
+        "meanTurn": {
+          "ci95": [
+            -0.011241920104103442,
+            -0.004641617205129412
+          ],
+          "mean": -0.007941768654616427,
+          "negativeSeeds": 27,
+          "positiveSeeds": 3
+        },
+        "sourceSignedMeanTurn": {
+          "ci95": [
+            -0.011241920104103442,
+            -0.004641617205129412
+          ],
+          "mean": -0.007941768654616427,
+          "negativeSeeds": 27,
+          "positiveSeeds": 3
+        }
+      },
+      "observations": [
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 63,
+            "distanceReduction": -0.43247506124422763,
+            "finalAlignment": -0.9479333015080244,
+            "finalHeading": 5.470883222848092,
+            "finalX": -1.3971451718453318,
+            "finalZ": -0.2994425178734376,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.009234938961871103,
+            "meanTurn": -0.0101537760541437,
+            "sourceSignedMeanTurn": -0.0101537760541437
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 85,
+            "distanceReduction": -0.4178270664703998,
+            "finalAlignment": -0.987730692041394,
+            "finalHeading": 5.391622259646343,
+            "finalX": -1.2925286852771916,
+            "finalZ": -0.22870579442779562,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.006349031969079621,
+            "meanTurn": -0.011144538094165584,
+            "sourceSignedMeanTurn": -0.011144538094165584
+          },
+          "seed": 0
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 74,
+            "distanceReduction": -0.371820458255433,
+            "finalAlignment": -0.6331024903184284,
+            "finalHeading": 6.064723339521217,
+            "finalX": -1.382279736231693,
+            "finalZ": -0.22487266498120503,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.00935689773400038,
+            "meanTurn": -0.002730774595729649,
+            "sourceSignedMeanTurn": -0.002730774595729649
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 93,
+            "distanceReduction": -0.36724667793078636,
+            "finalAlignment": -0.6614898198861451,
+            "finalHeading": 6.14560667736047,
+            "finalX": -1.2447508378306913,
+            "finalZ": -0.1397202206486155,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0018045645565498362,
+            "meanTurn": -0.0017197328727389426,
+            "sourceSignedMeanTurn": -0.0017197328727389426
+          },
+          "seed": 1
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 70,
+            "distanceReduction": -0.37185358038278116,
+            "finalAlignment": -0.9975542333067876,
+            "finalHeading": 5.103524776336142,
+            "finalX": -1.5669217786698324,
+            "finalZ": -0.3017010026187096,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.006937387161705347,
+            "meanTurn": -0.014745756635543061,
+            "sourceSignedMeanTurn": -0.014745756635543061
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 78,
+            "distanceReduction": -0.3340781344721546,
+            "finalAlignment": -0.8290925761997677,
+            "finalHeading": 5.872931290235946,
+            "finalX": -1.2832040234564213,
+            "finalZ": -0.1251524327341791,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.008625167833907618,
+            "meanTurn": -0.005128175211795493,
+            "sourceSignedMeanTurn": -0.005128175211795493
+          },
+          "seed": 2
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 96,
+            "distanceReduction": -0.09931540742464584,
+            "finalAlignment": -0.9286559801667446,
+            "finalHeading": 5.77637923830799,
+            "finalX": -1.3053726712600457,
+            "finalZ": 0.14795115212283114,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.010967390489541281,
+            "meanTurn": -0.006335075860894951,
+            "sourceSignedMeanTurn": -0.006335075860894951
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.029938942201567342,
+            "finalAlignment": 0.13506267069751393,
+            "finalHeading": 0.8685422087128722,
+            "finalX": -1.3508828405476514,
+            "finalZ": 0.2791218069871108,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006998016251013739,
+            "meanTurn": 0.010856777608910899,
+            "sourceSignedMeanTurn": 0.010856777608910899
+          },
+          "seed": 3
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 90,
+            "distanceReduction": -0.24314487693525666,
+            "finalAlignment": -0.9448873638456644,
+            "finalHeading": 5.690111229435755,
+            "finalX": -1.2534417384408003,
+            "finalZ": 0.005987954223853508,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.005824731147879922,
+            "meanTurn": -0.007413425971797878,
+            "sourceSignedMeanTurn": -0.007413425971797878
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.02023245513658367,
+            "finalAlignment": 0.34962717447372665,
+            "finalHeading": 1.0341160086674501,
+            "finalX": -1.3862609199410052,
+            "finalZ": 0.23627964307868207,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.021705342919575835,
+            "meanTurn": 0.012926450108343118,
+            "sourceSignedMeanTurn": 0.012926450108343118
+          },
+          "seed": 4
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 66,
+            "distanceReduction": -0.35301749724934406,
+            "finalAlignment": -0.9361127287074994,
+            "finalHeading": 4.722214107014008,
+            "finalX": -1.511722502737473,
+            "finalZ": -0.2618404944880799,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.03615120567666478,
+            "meanTurn": -0.0195121400020697,
+            "sourceSignedMeanTurn": -0.0195121400020697
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 69,
+            "distanceReduction": -0.3584733475790918,
+            "finalAlignment": -0.9976183396795235,
+            "finalHeading": 5.167720227327567,
+            "finalX": -1.3198658864100565,
+            "finalZ": -0.17595383566446401,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.020424747103612244,
+            "meanTurn": -0.013943313498150237,
+            "sourceSignedMeanTurn": -0.013943313498150237
+          },
+          "seed": 5
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.1226039724132082,
+            "finalAlignment": -0.7763734354819759,
+            "finalHeading": 6.105016723352584,
+            "finalX": -1.2676337406261935,
+            "finalZ": 0.14918900982137412,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02226325600076755,
+            "meanTurn": -0.002227107297837501,
+            "sourceSignedMeanTurn": -0.002227107297837501
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.06412021133341683,
+            "finalAlignment": -0.5929728239198984,
+            "finalHeading": 0.17912592837925975,
+            "finalX": -1.3196609981992962,
+            "finalZ": 0.35734159815386357,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.011129976057915532,
+            "meanTurn": 0.0022390741047407458,
+            "sourceSignedMeanTurn": 0.0022390741047407458
+          },
+          "seed": 6
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 85,
+            "distanceReduction": -0.25758865922850416,
+            "finalAlignment": -0.9817028465410111,
+            "finalHeading": 5.099426991808887,
+            "finalX": -1.312255955047154,
+            "finalZ": -0.05287101035789026,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.011062221969427223,
+            "meanTurn": -0.014796978942133748,
+            "sourceSignedMeanTurn": -0.014796978942133748
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.0755219546621202,
+            "finalAlignment": -0.9071032298710066,
+            "finalHeading": 5.869608774759527,
+            "finalX": -1.288577453219751,
+            "finalZ": 0.1933864401753886,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0063273186093068135,
+            "meanTurn": -0.005169706655250735,
+            "sourceSignedMeanTurn": -0.005169706655250735
+          },
+          "seed": 7
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 64,
+            "distanceReduction": -0.31408192790884293,
+            "finalAlignment": -0.9986545079839074,
+            "finalHeading": 5.104660962600139,
+            "finalX": -1.4353485101269687,
+            "finalZ": -0.1865833338795838,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.014717855722844383,
+            "meanTurn": -0.014731554307243091,
+            "sourceSignedMeanTurn": -0.014731554307243091
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 94,
+            "distanceReduction": -0.13024562880641333,
+            "finalAlignment": -0.18525883212172284,
+            "finalHeading": 0.5130113622145653,
+            "finalX": -1.2724407600341623,
+            "finalZ": 0.13506489620530637,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.004644719046893705,
+            "meanTurn": 0.0064126420276820586,
+            "sourceSignedMeanTurn": 0.0064126420276820586
+          },
+          "seed": 8
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 57,
+            "distanceReduction": -0.421196335881475,
+            "finalAlignment": -0.43322464077855616,
+            "finalHeading": 6.2000280070056295,
+            "finalX": -1.4928241420911619,
+            "finalZ": -0.32761879855527964,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0017650642800731736,
+            "meanTurn": -0.0010394662521744538,
+            "sourceSignedMeanTurn": -0.0010394662521744538
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 87,
+            "distanceReduction": -0.2862949881826611,
+            "finalAlignment": -0.07838816162398886,
+            "finalHeading": 0.5321885911167662,
+            "finalX": -1.26243066727013,
+            "finalZ": -0.05382459453186353,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0008597183924669997,
+            "meanTurn": 0.006652357388959541,
+            "sourceSignedMeanTurn": 0.006652357388959541
+          },
+          "seed": 9
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.09326502678783521,
+            "finalAlignment": -0.7685566456645864,
+            "finalHeading": 6.1172270497609285,
+            "finalX": -1.2868558732044482,
+            "finalZ": 0.17135419314738823,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.011364148617287208,
+            "meanTurn": -0.0020744782177332037,
+            "sourceSignedMeanTurn": -0.0020744782177332037
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.027042055841533852,
+            "finalAlignment": 0.05260953455416587,
+            "finalHeading": 0.8419360520126408,
+            "finalX": -1.3093341575750752,
+            "finalZ": 0.314706008191712,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 3.864583774676783e-05,
+            "meanTurn": 0.01052420065015801,
+            "sourceSignedMeanTurn": 0.01052420065015801
+          },
+          "seed": 10
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 60,
+            "distanceReduction": -0.43286598294406153,
+            "finalAlignment": -0.9707950587292545,
+            "finalHeading": 5.358792271482935,
+            "finalX": -1.4365700988137147,
+            "finalZ": -0.31744133513696304,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.006736215297232028,
+            "meanTurn": -0.011554912946208144,
+            "sourceSignedMeanTurn": -0.011554912946208144
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.24815358752651773,
+            "finalAlignment": -0.7741595091149484,
+            "finalHeading": 6.063720104351093,
+            "finalX": -1.22891115444635,
+            "finalZ": 0.018516749853541476,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.005427798187867514,
+            "meanTurn": -0.0027433150353561643,
+            "sourceSignedMeanTurn": -0.0027433150353561643
+          },
+          "seed": 11
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 85,
+            "distanceReduction": -0.38381105276939675,
+            "finalAlignment": -0.6090967328733031,
+            "finalHeading": 5.987628042545595,
+            "finalX": -1.5133429177988145,
+            "finalZ": -0.29541418631655203,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.00796011458345894,
+            "meanTurn": -0.0036944658079248807,
+            "sourceSignedMeanTurn": -0.0036944658079248807
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 96,
+            "distanceReduction": -0.32725539321498864,
+            "finalAlignment": 0.12026942369340618,
+            "finalHeading": 0.713610280832657,
+            "finalX": -1.25820760704619,
+            "finalZ": -0.100613885326791,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006210642949452271,
+            "meanTurn": 0.008920128510408227,
+            "sourceSignedMeanTurn": 0.008920128510408227
+          },
+          "seed": 12
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 70,
+            "distanceReduction": -0.23802856948060613,
+            "finalAlignment": -0.9379006791053577,
+            "finalHeading": 4.843475898240366,
+            "finalX": -1.4224320601807585,
+            "finalZ": -0.09504795043100873,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.013879101447556302,
+            "meanTurn": -0.017996367611740238,
+            "sourceSignedMeanTurn": -0.017996367611740238
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 79,
+            "distanceReduction": -0.3216969029707366,
+            "finalAlignment": -0.9312428229816458,
+            "finalHeading": 5.643621882802841,
+            "finalX": -1.299898866245234,
+            "finalZ": -0.12104464935065282,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0024205836389969908,
+            "meanTurn": -0.007994542804709306,
+            "sourceSignedMeanTurn": -0.007994542804709306
+          },
+          "seed": 13
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 74,
+            "distanceReduction": -0.35793328818728765,
+            "finalAlignment": -0.9789441393782964,
+            "finalHeading": 5.415868946606773,
+            "finalX": -1.3514680278228428,
+            "finalZ": -0.19305871449444853,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0005577255964102936,
+            "meanTurn": -0.010841454507160201,
+            "sourceSignedMeanTurn": -0.010841454507160201
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 87,
+            "distanceReduction": -0.31920983754727983,
+            "finalAlignment": -0.706372166907893,
+            "finalHeading": 6.09869324345091,
+            "finalX": -1.255262107547115,
+            "finalZ": -0.08888937318092868,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.006810254451128234,
+            "meanTurn": -0.00230615079660845,
+            "sourceSignedMeanTurn": -0.00230615079660845
+          },
+          "seed": 14
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 75,
+            "distanceReduction": -0.22373537183582703,
+            "finalAlignment": 0.05050894487248915,
+            "finalHeading": 0.6067740255331965,
+            "finalX": -1.3538679541896899,
+            "finalZ": -0.03925051823857804,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.007961645856970975,
+            "meanTurn": 0.007584675319164962,
+            "sourceSignedMeanTurn": 0.007584675319164962
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.1037452785591102,
+            "finalAlignment": -0.09724177204682073,
+            "finalHeading": 0.6089272952105426,
+            "finalX": -1.2836242201036014,
+            "finalZ": 0.1603218581388732,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.008031433770314522,
+            "meanTurn": 0.007611591190131795,
+            "sourceSignedMeanTurn": 0.007611591190131795
+          },
+          "seed": 15
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 58,
+            "distanceReduction": -0.5172739722451041,
+            "finalAlignment": -0.9474155791006648,
+            "finalHeading": 4.706529576270726,
+            "finalX": -1.5228946242789996,
+            "finalZ": -0.4403092609959016,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.017137893019635496,
+            "meanTurn": -0.019708196636360777,
+            "sourceSignedMeanTurn": -0.019708196636360777
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 85,
+            "distanceReduction": -0.5203879184376268,
+            "finalAlignment": -0.7758208767791229,
+            "finalHeading": 5.851739270852072,
+            "finalX": -1.329704797547595,
+            "finalZ": -0.36465518139213077,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.01037426582804507,
+            "meanTurn": -0.005393075454093923,
+            "sourceSignedMeanTurn": -0.005393075454093923
+          },
+          "seed": 16
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 52,
+            "distanceReduction": -0.39740528624175897,
+            "finalAlignment": -0.9872855244179874,
+            "finalHeading": 4.928095544310886,
+            "finalX": -1.487726000367668,
+            "finalZ": -0.3001218724862318,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.03059280486613657,
+            "meanTurn": -0.01693862203585878,
+            "sourceSignedMeanTurn": -0.01693862203585878
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 77,
+            "distanceReduction": -0.40568278822945736,
+            "finalAlignment": -0.9946916510817798,
+            "finalHeading": 5.116943565805528,
+            "finalX": -1.3166777786603054,
+            "finalZ": -0.22841965262198866,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02447085180930794,
+            "meanTurn": -0.014578021767175727,
+            "sourceSignedMeanTurn": -0.014578021767175727
+          },
+          "seed": 17
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 55,
+            "distanceReduction": -0.42219758187940126,
+            "finalAlignment": -0.8144893814411407,
+            "finalHeading": 4.322487794933784,
+            "finalX": -1.677091285558055,
+            "finalZ": -0.38505448414171306,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.03745027582335455,
+            "meanTurn": -0.024508718903072536,
+            "sourceSignedMeanTurn": -0.024508718903072536
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 55,
+            "distanceReduction": -0.4672995829783848,
+            "finalAlignment": -0.9509806363688572,
+            "finalHeading": 4.804298271546074,
+            "finalX": -1.420084856216009,
+            "finalZ": -0.34783770989631213,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.035142785911674634,
+            "meanTurn": -0.01848608794541893,
+            "sourceSignedMeanTurn": -0.01848608794541893
+          },
+          "seed": 18
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 58,
+            "distanceReduction": -0.5006201379609572,
+            "finalAlignment": -0.8586134102323824,
+            "finalHeading": 5.568493287343532,
+            "finalX": -1.5309950522635247,
+            "finalZ": -0.4254455996118086,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.009018308881528435,
+            "meanTurn": -0.008933650247950693,
+            "sourceSignedMeanTurn": -0.008933650247950693
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 83,
+            "distanceReduction": -0.5140876196935671,
+            "finalAlignment": -0.584527756597241,
+            "finalHeading": 3.9558441987161266,
+            "finalX": -1.7141200170666904,
+            "finalZ": -0.4868537101770915,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02897037207784306,
+            "meanTurn": -0.02909176385579327,
+            "sourceSignedMeanTurn": -0.02909176385579327
+          },
+          "seed": 19
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 69,
+            "distanceReduction": -0.3750107140611869,
+            "finalAlignment": -0.5959471634384794,
+            "finalHeading": 6.151342078337719,
+            "finalX": -1.3328333554517287,
+            "finalZ": -0.20230741999925111,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.007082782070035961,
+            "meanTurn": -0.0016480403605233476,
+            "sourceSignedMeanTurn": -0.0016480403605233476
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 80,
+            "distanceReduction": -0.34380601763720353,
+            "finalAlignment": -0.5521055100576211,
+            "finalHeading": 6.273456155222191,
+            "finalX": -1.2690130769174535,
+            "finalZ": -0.1275959964988664,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.0032998603311717328,
+            "meanTurn": -0.0001216143994674406,
+            "sourceSignedMeanTurn": -0.0001216143994674406
+          },
+          "seed": 20
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 73,
+            "distanceReduction": -0.467041882948404,
+            "finalAlignment": -0.9481248809386924,
+            "finalHeading": 4.548882316765534,
+            "finalX": -1.766266119069831,
+            "finalZ": -0.4483025786175072,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.018999691416056196,
+            "meanTurn": -0.02167878738017562,
+            "sourceSignedMeanTurn": -0.02167878738017562
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 53,
+            "distanceReduction": -0.5718200138949272,
+            "finalAlignment": -0.9467022553414399,
+            "finalHeading": 4.698962989015935,
+            "finalX": -1.5137246033738923,
+            "finalZ": -0.49470879930398837,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.013424543927546946,
+            "meanTurn": -0.01980277897704566,
+            "sourceSignedMeanTurn": -0.01980277897704566
+          },
+          "seed": 21
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 84,
+            "distanceReduction": -0.3756678813223031,
+            "finalAlignment": -0.9902559802659179,
+            "finalHeading": 5.117246324375742,
+            "finalX": -1.2873341814258654,
+            "finalZ": -0.17667733501493654,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.019093645997259687,
+            "meanTurn": -0.014574237285048043,
+            "sourceSignedMeanTurn": -0.014574237285048043
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.26169815043973377,
+            "finalAlignment": -0.3902444924199965,
+            "finalHeading": 0.25258809674730276,
+            "finalX": -1.2329414580476756,
+            "finalZ": -0.0017501764616861429,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.002436625661277605,
+            "meanTurn": 0.003157351209341292,
+            "sourceSignedMeanTurn": 0.003157351209341292
+          },
+          "seed": 22
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": 0.1028016301621012,
+            "finalAlignment": 0.22759629680081997,
+            "finalHeading": 0.9992612904819618,
+            "finalX": -1.3756522643939164,
+            "finalZ": 0.35567491133486123,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.037059781369913475,
+            "meanTurn": 0.012490766131024518,
+            "sourceSignedMeanTurn": 0.012490766131024518
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.012205436263868608,
+            "finalAlignment": -0.017965612948710012,
+            "finalHeading": 0.7536379752657725,
+            "finalX": -1.2942030478790685,
+            "finalZ": 0.2744584728777186,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.03489869899970861,
+            "meanTurn": 0.009420474690822168,
+            "sourceSignedMeanTurn": 0.009420474690822168
+          },
+          "seed": 23
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 80,
+            "distanceReduction": -0.36282374583052435,
+            "finalAlignment": -0.7864821643956426,
+            "finalHeading": 5.897202788361933,
+            "finalX": -1.323893064777094,
+            "finalZ": -0.18328693660626152,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.005061596935748012,
+            "meanTurn": -0.004824781485220644,
+            "sourceSignedMeanTurn": -0.004824781485220644
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": -0.2065864981056218,
+            "finalAlignment": -0.8176014057914076,
+            "finalHeading": 6.020993853885642,
+            "finalX": -1.2272812323822715,
+            "finalZ": 0.07330874419679213,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0057213300876373906,
+            "meanTurn": -0.0032773931661743087,
+            "sourceSignedMeanTurn": -0.0032773931661743087
+          },
+          "seed": 24
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 78,
+            "distanceReduction": -0.24879001362288755,
+            "finalAlignment": -0.8764772001377885,
+            "finalHeading": 4.671294436540231,
+            "finalX": -1.4442527148763886,
+            "finalZ": -0.11831187653623126,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.026990463596729283,
+            "meanTurn": -0.020148635882991914,
+            "sourceSignedMeanTurn": -0.020148635882991914
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 86,
+            "distanceReduction": -0.2728760561641743,
+            "finalAlignment": -0.9702851212378095,
+            "finalHeading": 5.562434139826282,
+            "finalX": -1.2753505368628408,
+            "finalZ": -0.046468637815338096,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.02571678464863559,
+            "meanTurn": -0.009009389591916281,
+            "sourceSignedMeanTurn": -0.009009389591916281
+          },
+          "seed": 25
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 100,
+            "distanceReduction": -0.1159721997805403,
+            "finalAlignment": -0.9676978802800473,
+            "finalHeading": 5.639577339892615,
+            "finalX": -1.3049646067463327,
+            "finalZ": 0.1268907555135277,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.007656799800426336,
+            "meanTurn": -0.008045099591087118,
+            "sourceSignedMeanTurn": -0.008045099591087118
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.10939565539647389,
+            "finalAlignment": 0.2753337858825666,
+            "finalHeading": 0.9423915017605039,
+            "finalX": -1.4515281687723214,
+            "finalZ": 0.2983200523198392,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.01529765379011019,
+            "meanTurn": 0.011779893772006327,
+            "sourceSignedMeanTurn": 0.011779893772006327
+          },
+          "seed": 26
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 65,
+            "distanceReduction": -0.5290552330209297,
+            "finalAlignment": -0.9909507447272435,
+            "finalHeading": 5.158403622663847,
+            "finalX": -1.5315361061608186,
+            "finalZ": -0.4555244710404983,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.004956095954104168,
+            "meanTurn": -0.01405977105644672,
+            "sourceSignedMeanTurn": -0.01405977105644672
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 57,
+            "distanceReduction": -0.5814472865407883,
+            "finalAlignment": -0.9649262832617624,
+            "finalHeading": 5.283558919214778,
+            "finalX": -1.5242936455502205,
+            "finalZ": -0.5082038935247858,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.012318997348388629,
+            "meanTurn": -0.012495329849560106,
+            "sourceSignedMeanTurn": -0.012495329849560106
+          },
+          "seed": 27
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 64,
+            "distanceReduction": -0.38281192851507173,
+            "finalAlignment": -0.7149916559278435,
+            "finalHeading": 5.934568491728241,
+            "finalX": -1.401021758137581,
+            "finalZ": -0.2463522356938174,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.025641711153274332,
+            "meanTurn": -0.004357710193141768,
+            "sourceSignedMeanTurn": -0.004357710193141768
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 100,
+            "distanceReduction": 0.0055228613786613145,
+            "finalAlignment": 0.14028289528027557,
+            "finalHeading": 0.9152997822351668,
+            "finalX": -1.3044662584284619,
+            "finalZ": 0.2892133980047302,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": 0.0019188406733863077,
+            "meanTurn": 0.011441247277939593,
+            "sourceSignedMeanTurn": 0.011441247277939593
+          },
+          "seed": 28
+        },
+        {
+          "active": {
+            "active": true,
+            "detectedTicks": 61,
+            "distanceReduction": -0.3801321729185072,
+            "finalAlignment": -0.5203349498447165,
+            "finalHeading": 3.983899703933554,
+            "finalX": -1.5986561774751593,
+            "finalZ": -0.32048777004783696,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.04190515884112769,
+            "meanTurn": -0.028741070040575394,
+            "sourceSignedMeanTurn": -0.028741070040575394
+          },
+          "control": {
+            "active": false,
+            "detectedTicks": 90,
+            "distanceReduction": -0.3065003907667607,
+            "finalAlignment": -0.9744875168276335,
+            "finalHeading": 5.545280220449291,
+            "finalX": -1.25527835685607,
+            "finalZ": -0.07346771973203912,
+            "firstDetectedTick": 0,
+            "meanFlightTurn": -0.03195826361073007,
+            "meanTurn": -0.009223813584128682,
+            "sourceSignedMeanTurn": -0.009223813584128682
+          },
+          "seed": 29
+        }
+      ],
+      "scenario": "excitatoryOdor",
+      "sourceZ": 1.0
+    }
+  ],
+  "brainWarmupTicks": 0,
+  "config": {
+    "antennaForward": 0.0014145078816978176,
+    "antennaOffset": 0.00020207253103162883,
+    "baselineBrightness": 1.0,
+    "cellSize": 0.25,
+    "decay": 0.1,
+    "diffusion": 0.2,
+    "fans": [],
+    "wind": {
+      "x": 0.0,
+      "z": 0.0
+    }
+  },
+  "elapsedSeconds": 39.48225875,
+  "fieldSettleTicks": 100,
+  "gain": 2,
+  "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+  "initialPosition": [
+    -2,
+    0
+  ],
+  "limitations": "Cold Brain initialization; existing field fixture geometry and existing Chamber/body owner. Anatomical FieldConfig default antenna span replaces historical fixture .15 offset. Each active condition paired against same-source no-current control with identical seed. Gain 2 only; settled field. Descriptive t(29) intervals, no multiple-testing adjustment; not a campaign performance or biology validation. Source-signed mean motor turn avoids erroneous heading integration in old field_probe. Endpoint heading is actual Chamber pose.",
+  "measurementTicks": 100,
+  "seeds": 30,
+  "sourceDistance": 1,
+  "sourceRadius": 0.75,
+  "sourceRate": 1,
+  "sourceHashes": {
+    "crates/sim/src/sensory.rs": "f0c599eb2ef37e7450c632ba34ba401b255c404c5ae5a2160c4d91e3df6d6334",
+    "crates/sim/src/chamber.rs": "c25d14edf1ec5263ecb2a44a0b75e11b09d47fa6f2321aa084b785b5399472ca",
+    "crates/sim/src/field_lab.rs": "0c2093ea7aa0fdf27bbb14e5c85b3b03b2cd283540b1705e29158e229315b120",
+    "crates/sim/src/lif.rs": "7394c44c26718bd00cf6c9c4ae191274b3b6bd60a12878bd752e27fdc9a258a1",
+    "crates/sim/src/body.rs": "fba6f730c49c41a7a4703a0d7215bb2977ba3420467c631b5a55174dc0b3be32",
+    "crates/sim/src/environment/fields.rs": "98a3d8314ea7d45b301ae4d3c62ddbd7e29f14643909411f0dacee3f7654f75a"
+  },
+  "probeSourceHash": "097b732867ed02ac58ca7558f3ec38f6786d22914039dc01e95f27f419819c1f"
+}

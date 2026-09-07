@@ -47,7 +47,44 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
       "antennaForward": 0.0014145078816978176
     },
     "food": [],
-    "fixedObjects": [{"id": 1, "kind": "fruit", "position": {"x": 7.4, "z": 3.2}, "heading": 0.3}, {"id": 2, "kind": "banana", "position": {"x": 2.5, "z": 8}, "heading": 0.8}],
+    "fixedObjects": [
+      {
+        "id": 1,
+        "kind": "fruit",
+        "position": {
+          "x": 7.4,
+          "z": 3.2
+        },
+        "heading": 0.3
+      },
+      {
+        "id": 2,
+        "kind": "banana",
+        "position": {
+          "x": 2.5,
+          "z": 8
+        },
+        "heading": 0.8
+      },
+      {
+        "id": 3,
+        "kind": "wornShoes",
+        "position": {
+          "x": 1.2,
+          "z": 3.4
+        },
+        "heading": 0.6
+      },
+      {
+        "id": 4,
+        "kind": "sleepingCat",
+        "position": {
+          "x": 2.2,
+          "z": 1.65
+        },
+        "heading": 0
+      }
+    ],
     "geometry": {
       "rooms": [
         {
@@ -344,15 +381,20 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
           "count": 1
         },
         {
-          "kind": "crumbs",
-          "count": 4
+          "kind": "dirtyDishes",
+          "count": 1
+        },
+        {
+          "kind": "vinegar",
+          "count": 1
         },
         {
           "kind": "fan",
           "count": 1
         }
       ],
-      "reserved": []
+      "reserved": [],
+      "fanHeading": 3.141592653589793
     },
     "sources": [],
     "starThresholds": [
@@ -376,6 +418,10 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
   },
   "tuning": {
     "cues": [
+      {
+        "gain": 2,
+        "pathway": "excitatoryOdor"
+      },
       {
         "gain": 2,
         "pathway": "inhibitoryOdor"

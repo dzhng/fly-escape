@@ -169,7 +169,9 @@ export function AttemptPlayback({
       lastState = "",
       lastSpeed = 0;
     let requestedAt = performance.now();
+    let lastDiagnosticAt = -Infinity;
     const fail = (message: string) => {
+      console.error("[Fly escape] attempt failed", { message, spec: run.current?.info.spec });
       if (run.current) {
         run.current.failed = true;
         run.current.clock.pause();
@@ -179,12 +181,14 @@ export function AttemptPlayback({
       setDisplay((previous) => ({
         ...previous,
         state: "error",
-        report: JSON.stringify({ ...JSON.parse(previous.report), error: message }, null, 2),
+        report: JSON.stringify({ ...JSON.parse(previous.report), state: "error", error: message }, null, 2),
       }));
     };
     const observer = client ?? new AttemptClient(() => {});
     observer.setReceiver((reply) => {
       if (reply.type === "ready") {
+        console.info("[Fly escape] attempt ready", reply.info.spec);
+        lastDiagnosticAt = -Infinity;
         const archive = new FrameArchive(
           reply.info.spec,
           reply.info.recordLayout,
@@ -389,6 +393,15 @@ export function AttemptPlayback({
               camera: scene.current?.cameraState,
               result: current.archive.result,
             };
+            // Keep diagnostics available without a frame-by-frame console stream.
+            const ended = current.clock.state === "ended" && lastState !== "ended";
+            if (ended || (now-lastDiagnosticAt >= 1000 && current.clock.state !== lastState)
+              || (current.clock.state === "playing" && now-lastDiagnosticAt >= 10000)) {
+              console.info("[Fly escape] playback", ended ? {
+                ...report, renderer: { ...report.renderer, gpu: scene.current?.estimateGpuMemory() },
+              } : report);
+              lastDiagnosticAt = now;
+            }
             lastPublished = now;
             setDisplay({
               cursor: current.clock.cursorTick,
@@ -465,7 +478,7 @@ export function AttemptPlayback({
           <span className="eyebrow">
             {input ? "Fly escape · attempt" : "Fly escape · playback lab"}
           </span>
-          <h1>{input ? "Watch your setup unfold." : "Twenty lives, one shared clock."}</h1>
+          <h1>{input ? "Off they go!" : "Twenty lives, one shared clock."}</h1>
         </div>
         {!input && <a href="/lab/lifecycle">Lifecycle lab</a>}
       </header>
@@ -475,7 +488,7 @@ export function AttemptPlayback({
           <div className="world-note">
             20 independent brains · shared environment
             <span>
-              Seed {input?.rootSeed ?? "42"} ·{" "}
+              {!input && <>Seed 42 · </>}
               {(input?.level.durationTicks ?? DURATION_TICKS) * TICK_SECONDS} game seconds
             </span>
           </div>
@@ -495,21 +508,21 @@ export function AttemptPlayback({
                   : !worldReady && info
                     ? "Loading world assets…"
                     : display.state === "loading"
-                      ? "Loading the connectome…"
+                      ? (input ? "Waking up twenty tiny brains…" : "Loading the connectome…")
                       : display.state === "buffering"
-                        ? "Buffering — building enough lead"
+                        ? (input ? "One moment…" : "Buffering — building enough lead")
                         : display.state === "ended"
-                          ? "Playback complete"
+                          ? (input ? "Every fly has a story." : "Playback complete")
                           : display.state === "hidden"
-                            ? "Hidden tab — playback frozen"
+                            ? "Paused while you were away"
                             : requested
                               ? `Playing at ${display.speed}×`
                               : "Paused"}
               </strong>
               <span>
                 {(display.cursor * TICK_SECONDS).toFixed(1)} /{" "}
-                {((input?.level.durationTicks ?? DURATION_TICKS) * TICK_SECONDS).toFixed(1)} s ·{" "}
-                {(display.computed * TICK_SECONDS).toFixed(1)} s computed
+                {((input?.level.durationTicks ?? DURATION_TICKS) * TICK_SECONDS).toFixed(1)} s
+                {!input && <> · {(display.computed * TICK_SECONDS).toFixed(1)} s computed</>}
               </span>
             </div>
             <input
@@ -571,14 +584,12 @@ export function AttemptPlayback({
             ) : (
               <button onClick={() => restart.current()}>New attempt</button>
             )}
-            <button disabled={!info} onClick={save}>
-              Download report
-            </button>
+            {!input && <button disabled={!info} onClick={save}>Download report</button>}
           </div>
         </div>
         <aside aria-label="All fly neural activity">
-          <span className="eyebrow">Recorded neural activity</span>
-          <h2>Read any fly’s record</h2>
+          <span className="eyebrow">Inside a tiny brain</span>
+          <h2>What are they sensing?</h2>
           <p className="intro">
             Neurons combine incoming signals and send brief electrical pulses called spikes.
             These charts show each fly’s neural activity.
@@ -612,12 +623,11 @@ export function AttemptPlayback({
           <details>
             <summary>Playback and camera controls</summary>
             <p>
-              Pause stops the shared playback cursor. Scrub within computed time or replay the
-              stored record. A speed increase may need more buffering. A hidden tab freezes playback
-              and stops new production credits.
+              Click a fly or its card to follow it. Scroll to get closer, or move to the edge
+              to explore the house. Pause and rewind to take a closer look at what its neurons did.
             </p>
           </details>
-          <details>
+          <details hidden={!!input}>
             <summary>Performance report</summary>
             <p>
               Active-work production: {display.rate.toFixed(2)} game seconds per wall second, before

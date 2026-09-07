@@ -10,12 +10,13 @@ test("edible assets preserve native metres while floor cues retain catalog scali
       {
         kind: "fruit",
         footprintRadius: 0.35,
+        contact: "apple",
+        edible: true,
         effect: {
           type: "source",
           kind: "attractiveOdor",
           radius: 0.75,
           rate: 1,
-          food: { type: "apple" },
         },
       },
     ],
@@ -46,7 +47,7 @@ for (const kind of ["fruit", "banana", "crumbs", "vinegar", "fan", "lamp", "shad
     const load = () =>
       Bun.file(
         new URL(
-          `../../../assets/${kind === "fruit" || kind === "banana" || kind === "crumbs" ? "food" : "tools"}/${kind === "fruit" ? "apple/apple" : kind === "banana" ? "banana/banana" : kind}.glb`,
+          `../../../assets/${kind === "fan" || kind === "vinegar" ? "household" : kind === "fruit" || kind === "banana" || kind === "crumbs" ? "food" : "tools"}/${kind === "fruit" ? "apple/apple" : kind === "banana" ? "banana/banana" : kind === "fan" || kind === "vinegar" ? `${kind}/${kind}` : kind}.glb`,
           import.meta.url,
         ),
       )
@@ -69,7 +70,7 @@ for (const kind of ["fruit", "banana", "crumbs", "vinegar", "fan", "lamp", "shad
     expect(released).toBe(meshes);
   });
 
-for (const kind of ["vinegar", "fan", "lamp", "shade"] as const)
+for (const kind of ["lamp", "shade"] as const)
   test(`${kind} is a finite static floor surface within its placement footprint`, async () => {
     const model = await loadPlacementModel(
       await Bun.file(new URL(`../../../assets/tools/${kind}.glb`, import.meta.url)).arrayBuffer(), kind,
@@ -80,49 +81,40 @@ for (const kind of ["vinegar", "fan", "lamp", "shade"] as const)
     model.dispose();
   });
 
-test("authored fan direction follows placement heading and restores after editing", async () => {
-  const models = new PlacementModels();
-  const model = await loadPlacementModel(
-    await Bun.file(new URL("../../../assets/tools/fan.glb", import.meta.url)).arrayBuffer(), "fan",
-  );
-  models.replace("fan", model.root);
-  const catalog = [
-    {
-      kind: "fan" as const,
-      footprintRadius: 0.25,
-      effect: { type: "fan" as const, reach: 3, halfWidth: 0.75, speed: 0.5 },
-    },
-  ];
-  const direction = (heading: number) => {
-    models.setPlacements([{ id: 1, kind: "fan", position: { x: 2, z: 3 }, heading }], catalog);
-    const arrow = models.root.getObjectByName("ForwardChevron") as THREE.Mesh;
-    arrow.geometry.computeBoundingBox();
-    models.root.updateMatrixWorld(true);
-    return arrow.geometry
-      .boundingBox!.getCenter(new THREE.Vector3())
-      .applyMatrix4(arrow.matrixWorld)
-      .sub(new THREE.Vector3(2, 0, 3));
-  };
-  const initial = direction(0);
-  expect(initial.x).toBeGreaterThan(0.1);
-  expect(Math.abs(initial.z)).toBeLessThan(1e-6);
-  const turned = direction(Math.PI / 2);
-  expect(turned.z).toBeGreaterThan(0.1);
-  expect(Math.abs(turned.x)).toBeLessThan(1e-6);
-  expect(direction(0).equals(initial)).toBe(true);
-  models.dispose();
-});
-
 test("banana stays native sized after placement and rejects mismatched apple geometry", async () => {
   const bytes = await Bun.file(new URL("../../../assets/food/banana/banana.glb", import.meta.url)).arrayBuffer();
   await expect(loadPlacementModel(bytes, "fruit")).rejects.toThrow("baked core contact surface");
   const model = await loadPlacementModel(bytes, "banana");
   const models = new PlacementModels();
   models.replace("banana", model.root);
-  models.setPlacements([{ id: 1, kind: "banana", position: { x: 2, z: 3 }, heading: Math.PI / 2 }], [{ kind: "banana", footprintRadius: 0.12, effect: { type: "source", kind: "attractiveOdor", radius: 0.75, rate: 1, food: { type: "banana" } } }]);
+  models.setPlacements([{ id: 1, kind: "banana", position: { x: 2, z: 3 }, heading: Math.PI / 2 }], [{ kind: "banana", footprintRadius: 0.12, contact: "banana", edible: true, effect: { type: "source", kind: "attractiveOdor", radius: 0.75, rate: 1 } }]);
   const bounds = new THREE.Box3().setFromObject(models.root);
   expect(bounds.max.z - bounds.min.z).toBeCloseTo(model.bounds.max.x - model.bounds.min.x, 6);
   expect(bounds.max.z - bounds.min.z).toBeGreaterThan(0.22);
   expect(bounds.max.y).toBeCloseTo(model.bounds.max.y, 6);
   models.dispose();
 });
+
+
+for (const [kind, folder] of [
+  ["fan", "fan"], ["vinegar", "vinegar"], ["wornShoes", "worn-shoes"], ["dirtyDishes", "dirty-dishes"],
+  ["laundry", "crumpled-laundry"], ["sleepingCat", "sleeping-cat"],
+] as const) {
+  test(`${kind} renders its exact native contact mesh without footprint scaling`, async () => {
+    const model = await loadPlacementModel(await Bun.file(new URL(
+      `../../../assets/household/${folder}/${folder}.glb`, import.meta.url,
+    )).arrayBuffer(), kind);
+    const nativeBounds = model.bounds.clone();
+    const models = new PlacementModels();
+    models.replace(kind, model.root);
+    models.setPlacements([{ id: 1, kind, position: { x: 2, z: 3 }, heading: Math.PI / 2 }], [{
+      kind, footprintRadius: 0.4, contact: kind,
+      edible: false, effect: { type: "none" },
+    }]);
+    const bounds = new THREE.Box3().setFromObject(models.root);
+    expect(bounds.max.z - bounds.min.z).toBeCloseTo(nativeBounds.max.x - nativeBounds.min.x, 6);
+    expect(bounds.max.x - bounds.min.x).toBeCloseTo(nativeBounds.max.z - nativeBounds.min.z, 6);
+    expect(bounds.max.y).toBeCloseTo(nativeBounds.max.y, 6);
+    models.dispose();
+  });
+}

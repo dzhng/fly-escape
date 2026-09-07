@@ -1,11 +1,12 @@
 .setup-game {
-  padding: 24px;
-  color: #e7f1f4;
+  padding: 14px 24px 20px;
+  color: #294338;
   height: 100vh;
+  background: #f4f3e9;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
 }
 .setup-game header {
   display: flex;
@@ -14,7 +15,7 @@
 }
 .setup-game h1 {
   margin: 5px 0;
-  font-size: 28px;
+  font-size: 26px;
 }
 .setup-layout {
   display: grid;
@@ -28,7 +29,7 @@
   min-height: 420px;
   overflow: hidden;
   border-radius: 18px;
-  background: #263746;
+  background: #a5c792;
 }
 .setup-canvas {
   position: absolute;
@@ -38,11 +39,11 @@
 .placement-feedback {
   position: absolute;
   left: 18px;
-  right: 18px;
+  max-width: calc(100% - 36px);
   pointer-events: none;
   padding: 12px 16px;
   border-radius: 12px;
-  background: #14212be8;
+  background: #fffbece8;
 }
 .setup-note {
   top: 18px;
@@ -53,25 +54,30 @@
   font-weight: 400;
   font-size: 12px;
   margin-top: 5px;
-  color: #adc2cc;
+  color: #63765b;
 }
 .placement-feedback {
   bottom: 18px;
-  border: 1px solid #71c4a3;
+  border: 1px solid #b9cda3;
 }
 .placement-feedback.invalid {
-  border-color: #ff8195;
-  color: #ffc6cf;
+  border-color: #bb765c;
+  color: #823e2c;
 }
 .setup-layout aside {
   overflow: auto;
   padding-right: 8px;
 }
 .setup-layout h2 {
-  margin-top: 0;
+  margin: 0 0 10px;
+  font-size: 24px;
+  font-family: Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.5px;
 }
+.setup-note small { display: block; margin-top: 8px; font-weight: 400; font-size: 11px; color: #718164; }
 .setup-layout p {
-  color: #b8cbd5;
+  color: #647457;
   line-height: 1.5;
   font-size: 13px;
 }
@@ -80,26 +86,17 @@
   grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
-.tool-palette button {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 9px;
-}
-.tool-palette span {
-  font-size: 11px;
-}
 .setup-game button {
-  color: #e7f1f4;
-  background: #273f4d;
-  border: 1px solid #567481;
+  color: #294338;
+  background: #f8f4e7;
+  border: 1px solid #ced4b8;
   border-radius: 8px;
   cursor: pointer;
   padding: 9px;
 }
 .setup-game button[aria-pressed="true"] {
-  border: 2px solid #f3d77b;
-  background: #3f5053;
+  border: 2px solid #d49c36;
+  background: #f6e5ab;
 }
 .setup-game button:disabled {
   opacity: 0.4;
@@ -125,37 +122,44 @@
 .setup-game .run-setup {
   display: block;
   width: 100%;
-  background: #c78742;
-  color: #111b21;
+  background: #e1b554;
+  color: #334227;
   font-weight: 700;
   padding: 15px;
   margin-top: 20px;
-}
-.setup-game {
-  background: #16242e;
 }
 .setup-game header {
   padding: 0 10px;
 }
 .setup-layout aside {
-  background: #1d303d;
-  border: 1px solid #3f5968;
-  border-radius: 14px;
+  background: #f9f6e9;
+  border: 1px solid #dddcc6;
+  border-radius: 22px;
   padding: 20px;
 }
 .setup-game .eyebrow {
-  color: #a9c3cb;
+  color: #70825d;
 }
 .tool-palette button {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 5px;
-  min-height: 60px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  min-height: 72px;
+  padding: 8px;
   text-align: left;
 }
-.tool-palette span {
-  white-space: nowrap;
+.tool-palette img {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 6px;
+  background: transparent;
 }
+.object-caption { display: flex; flex-direction: column; min-width: 0; gap: 5px; }
+.object-caption b { font-size: 12px; line-height: 1.25; }
+.object-caption > span { font-size: 11px; white-space: nowrap; }
 .setup-world canvas:focus { outline: none; }
 
 .campaign-levels { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 24px 0; }
@@ -163,3 +167,9 @@
 
 .campaign-shell { height: 100vh; display: flex; flex-direction: column; }
 .campaign-shell > .setup-game, .campaign-shell > .playback-lab { height: auto; flex: 1; min-height: 0; }
+
+.household-objects { margin-top: 16px; color: #647457; font-size: 13px; }
+.household-objects summary { cursor: pointer; }
+.household-objects ul { margin: 8px 0 0; padding-left: 20px; line-height: 1.7; }
+
+.setup-game .put-away { margin-top: 12px; background: transparent; border: 0; text-decoration: underline; color: #718164; }

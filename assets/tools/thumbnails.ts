@@ -1,0 +1,13 @@
+import type { ToolKind } from "../../packages/sim-client/src";
+import fruit from "./thumbnails/fruit.png?url";
+import banana from "./thumbnails/banana.png?url";
+import crumbs from "./thumbnails/crumbs.png?url";
+import vinegar from "./thumbnails/vinegar.png?url";
+import fan from "./thumbnails/fan.png?url";
+import lamp from "./thumbnails/lamp.png?url";
+import shade from "./thumbnails/shade.png?url";
+import wornShoes from "./thumbnails/wornShoes.png?url";
+import dirtyDishes from "./thumbnails/dirtyDishes.png?url";
+import laundry from "./thumbnails/laundry.png?url";
+import sleepingCat from "./thumbnails/sleepingCat.png?url";
+export const objectThumbnails = { fruit, banana, crumbs, vinegar, fan, lamp, shade, wornShoes, dirtyDishes, laundry, sleepingCat } as const satisfies Record<ToolKind, string>;

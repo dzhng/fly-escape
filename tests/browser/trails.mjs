@@ -16,7 +16,7 @@ try {
     crypto.getRandomValues=array=>array instanceof BigUint64Array && array.length===1 ? (array[0]=42n,array) : random(array);
   });
   await page.goto(`${process.env.BRAIN_URL ?? 'http://127.0.0.1:5208'}/`);
-  await page.getByRole('button',{name:'Run · release flies',exact:true}).click();
+  await page.getByRole('button',{name:'Release the flies',exact:true}).click();
   await page.waitForFunction(target=>Number(document.querySelector('[data-testid="playback-lab"]')?.dataset.computedTick)>=target,Math.ceil(Math.max(...ticks))+1,{timeout:120000});
   await page.waitForFunction(()=>JSON.parse(document.querySelector('[data-testid="playback-report"]').textContent).renderer?.modelKind==='glb');
   await page.getByRole('button',{name:'Pause',exact:true}).click();

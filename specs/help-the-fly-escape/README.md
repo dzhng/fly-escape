@@ -1,6 +1,6 @@
 # Help the Fly Escape — browser game
 
-Status: **implementation active — physical scale, furnished rooms and two levels**. Last updated: 2026-09-07.
+Status: **implementation active — physical scale, furnished rooms and two levels**. Last updated: 2026-09-08.
 
 Build a local, fully 3D browser game in which the player places environmental objects and watches a real connectome-driven swarm attempt to escape. The [game contract](GAMEPLAY.md) owns user requirements; [architecture contracts](CONTRACTS.md) own runtime/data seams. This plan replaces the previous Python tech-demo scope.
 
@@ -8,15 +8,19 @@ Build a local, fully 3D browser game in which the player places environmental ob
 
 Finish the two-level game, prioritizing reliable routes and meaningful eating. Both furnished houses, ordinary 90 cm doorways, Sims-inspired foreground cutaway, open French-window exits, mixed random starts and earned campaign progression are integrated. The user requested faster visible progress; do not return to the rejected microscopic contact-certificate program.
 
-Current gameplay pickup: redesign the two puzzles around discovering attraction and repulsion with varied objects. The user limits each level to **one fan maximum** and rejects chained-fan solutions. Previous fan-route measurements remain historical diagnostics, not campaign acceptance. Finish fixed-object composition, integrate effectful household mess and visible avoidable hazards, then calibrate object-mediated escape and meaningful eating. Household examples include worn shoes, dirty dishes, leftovers, damp laundry, pet food and a spider web. An unpleasant human smell does not by itself establish fly repulsion. Keep biological evidence and model assumptions distinct.
+Current gameplay pickup: finish [30 — Household objects and hazards](slices/30-household-objects.md). Both campaign scenes now contain native effectful household clutter and offer one fan maximum. The previously failing second-house production attempt now completes: ordinary contact with a neighboring shoe component stops motion at the last verified safe prefix, with no precision or work-budget relaxation. Its exact 20-fly seed finishes with zero replay underruns; all flies starve, so this is collision integration evidence, not a solved campaign. [Reproduction and screenshots](assets/evidence/30/household-contact/README.md) preserve both outcomes.
 
-Fixed household objects belong to the level, persist through setup/replay and do not spend the player's inventory. Their effects use the same simulation owner as placed objects. Blender household assets are being integrated; source renders alone do not establish gameplay visibility or effects. The immediate seam and gates are in [30 — Household objects and hazards](slices/30-household-objects.md). Do not make scent crumbs edible, enlarge invisible food contact or change neural outputs to obtain success.
+The user's object-discovery direction supersedes earlier chained-fan solutions. Fixed objects share source/contact resolution but never spend inventory. Native contact and food eligibility are separate; shoes, dishes and laundry emit modeled scent, while the sleeping cat is a non-edible physical surface. Zapper and spider assets exist but their actual native hazard integration remains next. Keep biological observations and modeling assumptions distinct.
+
+Cold-start odor tests support repulsion at the existing excitatory-odor gain 2. The current attraction binding is not reliably approaching: a bounded gain sweep also found no reliable candidate, so increasing gain is not the fix. Establish useful sensory-mediated attraction and food benefit before freezing campaign validation. Do not make scent crumbs edible, enlarge invisible food/hazard regions or alter motor outputs to force a win.
 
 Core motion, packed replay and timed wall sliding are integrated. Native/renderer contact gates pass; bounded distant-food culling preserves complete attempt frames and offers only a modest native CPU saving. The [isolated production fruit run](assets/evidence/17/fruit-cost/README.md) starts in 1.40 seconds, produces at 2.05× playback and has zero underruns; the earlier slower development run was confounded by concurrent work. Preserve actual native geometry, neural gains and existing work limits.
 
 [Ten full production attempts](assets/evidence/17/domestic-production/README.md) complete at 1× with zero underruns, roughly one-second initial waits and frame p95 of 17 ms. After retry, Worker/canvas/DOM/listener counts remain stable. These fan-only first-house runs are a baseline; fruit cost, combined GPU/input metrics, cancellation/hidden-tab behavior and remaining platform coverage still require final release checks.
 
 [Domestic layouts](assets/evidence/24/domestic-layouts/README.md), [furnishings](assets/evidence/22/domestic-furnishings/README.md) and [open exits](assets/evidence/24/open-exits/README.md) address the user's scale/door feedback. Final material detail, glass/daylight, close grass, interior-boundary readability and French-window identity remain visual work. Preserve wheel zoom, RTS panning, selected-fly follow, native furniture scale and zoom-readable fly models. Exactly two crafted levels and twenty real brains remain the MVP; 100 flies is future capacity work.
+
+The [latest meadow/object tray pass](assets/evidence/30/meadow-tray/README.md) integrates the native fan and bottle, actual-model pictures, fixed per-map fan directions, always-visible objects, and a warmer game interface. Item descriptions/tooltips are removed for discovery; developer diagnostics moved to the console. The first animated meadow pass is integrated, with final vegetation realism and hardware checks still open.
 
 A committed pass is a checkpoint. Continue through every open item.
 

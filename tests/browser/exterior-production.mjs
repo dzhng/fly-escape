@@ -14,7 +14,7 @@ try {
  await page.waitForFunction(()=>document.querySelector('.run-setup')?.disabled===false,{timeout:90000});
  await page.mouse.move(1400,50);await page.waitForTimeout(200);
  await page.screenshot({path:`${out}/setup.png`});await page.locator('canvas').screenshot({path:`${out}/setup-canvas.png`});
- await page.getByRole('button',{name:'Run · release flies'}).click();
+ await page.getByRole('button',{name:'Release the flies'}).click();
  const read=async()=>JSON.parse(await page.getByTestId('playback-report').textContent());
  await page.waitForFunction(()=>{try{return JSON.parse(document.querySelector('[data-testid=playback-report]')?.textContent).computedTick>=40}catch{return false}},{timeout:90000});
  await page.getByRole('button',{name:'Pause',exact:true}).click();

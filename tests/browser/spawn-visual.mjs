@@ -33,7 +33,7 @@ try {
     captures.push({ name, report: setup ? null : await report() });
   };
   await shot("area", true);
-  await page.getByRole("button", { name: "Run · release flies", exact: true }).click();
+  await page.getByRole("button", { name: "Release the flies", exact: true }).click();
   await page.waitForFunction(
     () => document.querySelector("[data-testid=playback-lab]")?.dataset.worldState === "ready",
     null,

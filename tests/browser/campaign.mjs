@@ -47,13 +47,13 @@ try {
   await page.mouse.move(680, 520);
   await page.getByTestId("placement-feedback").filter({ hasText: "Valid placement" }).waitFor();
   await page.mouse.click(680, 520);
-  await page.getByRole("button", { name: "Remove Fruit 1", exact: true }).waitFor();
+  await page.getByRole("button", { name: "Remove Apple 1", exact: true }).waitFor();
   assert.equal(await page.locator(".tool-palette button").isDisabled(), true);
   await page.screenshot({ path: out + "/first-exhausted.png" });
   await page.reload();
   await ready();
   assert.equal(await page.evaluate(() => window.liveWorkers), 1);
-  await page.getByRole("button", { name: "Remove Fruit 1", exact: true }).waitFor();
+  await page.getByRole("button", { name: "Remove Apple 1", exact: true }).waitFor();
   // Persisted completion is an explicit fixture input, not a simulated success claim.
   await page.evaluate(() => {
     const p = JSON.parse(localStorage.getItem("fly-escape-progress"));
@@ -71,7 +71,7 @@ try {
   assert.equal(await page.locator(".placed-tools button").count(), 0);
   assert.equal(await nav.getByRole("button", { name: /Third/ }).isDisabled(), true);
   await page.screenshot({ path: out + "/second-unlocked.png" });
-  await page.getByRole("button", { name: "Run · release flies", exact: true }).click();
+  await page.getByRole("button", { name: "Release the flies", exact: true }).click();
   await page.getByTestId("playback-lab").waitFor();
   assert.equal(await nav.getByRole("button", { name: /First/ }).isDisabled(), true);
   await page.getByRole("button", { name: /Retry — edit setup/ }).waitFor({ timeout: 90000 });
@@ -82,13 +82,10 @@ try {
   await nav.getByRole("button", { name: /First/ }).click();
   await ready();
   assert.equal(await page.evaluate(() => window.liveWorkers), 1);
-  await page.getByRole("button", { name: "Remove Fruit 1", exact: true }).waitFor();
-  await page.getByRole("button", { name: "Reset progress and setup", exact: true }).click();
-  await page.waitForFunction(
-    () =>
-      Object.keys(JSON.parse(localStorage.getItem("fly-escape-progress")).bestStars).length === 0,
-  );
-  assert.equal(await nav.getByRole("button", { name: /Second/ }).isDisabled(), true);
+  await page.getByRole("button", { name: "Remove Apple 1", exact: true }).waitFor();
+  await page.getByRole("button", { name: "Put objects away", exact: true }).click();
+  await page.getByRole("button", { name: "Remove Apple 1", exact: true }).waitFor({state: "detached"});
+  assert.equal(await nav.getByRole("button", { name: /Second/ }).isDisabled(), false);
   await page.addInitScript(() => {
     Storage.prototype.setItem = () => {
       throw new Error("denied");

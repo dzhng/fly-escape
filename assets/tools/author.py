@@ -1,5 +1,5 @@
 # Execute through Blender MCP with KIND set to the single contract being authored.
-import bpy, math, json
+import bpy, json
 from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 
@@ -16,33 +16,10 @@ def plate(name, outline, height, mat):
     n=len(outline); pts=[(x,y,z) for z in [0,height] for x,y in outline]
     return mesh(name,pts,[tuple(range(n,2*n)),tuple(reversed(range(n)))]+[(i,(i+1)%n,(i+1)%n+n,i+n) for i in range(n)],mat)
 
-def disk(name,r,h,mat,n=64):
-    return plate(name,[(r*math.cos(i*2*math.pi/n),r*math.sin(i*2*math.pi/n)) for i in range(n)],h,mat)
-
-def arc(name,r,width,start,end,h,mat,n=32):
-    pts=[((r+width/2)*math.cos(start+(end-start)*i/n),(r+width/2)*math.sin(start+(end-start)*i/n)) for i in range(n+1)]
-    pts += [((r-width/2)*math.cos(start+(end-start)*i/n),(r-width/2)*math.sin(start+(end-start)*i/n)) for i in range(n,-1,-1)]
-    return plate(name,pts,h,mat)
-
 def rect(name,x1,y1,x2,y2,h,mat): return plate(name,[(x1,y1),(x2,y1),(x2,y2),(x1,y2)],h,mat)
 
 s=bpy.data.scenes.new('Tool-'+KIND.title()); bpy.context.window.scene=s
-if KIND=='vinegar':
-    rim=material('vinegar.ceramic',(.30,.17,.30)); edge=material('vinegar.edge',(.70,.56,.63)); liquid=material('vinegar.liquid',(.22,.065,.02)); ripple=material('vinegar.ripple',(.74,.41,.16))
-    disk('Saucer',.96,.002,rim); disk('Lip',.87,.003,edge); disk('AmberLiquid',.77,.004,liquid)
-    for i in range(3): arc('SourRipple%d'%i,.22+i*.18,.045,.3,2.6,.005,ripple)
-elif KIND=='fan':
-    rim=material('fan.housing',(.09,.17,.18)); inset=material('fan.inset',(.025,.04,.045)); blade=material('fan.rotor',(.38,.52,.48)); grate=material('fan.grille',(.55,.64,.55)); arrow=material('fan.direction',(.84,.65,.23))
-    disk('VentHousing',.97,.002,rim); disk('RotorWell',.83,.003,inset)
-    for i in range(3):
-        a=i*math.tau/3; outline=[(.14,0),(.33,-.16),(.69,-.12),(.7,.13),(.38,.26)]
-        plate('RotorBlade%d'%i,[(x*math.cos(a)-y*math.sin(a),x*math.sin(a)+y*math.cos(a)) for x,y in outline],.004,blade)
-    disk('RotorHub',.15,.005,grate,24)
-    for y in [-.52,-.26,.26,.52]:
-        x=math.sqrt(.78**2-y*y); rect('Grille',-x,y-.018,x,y+.018,.005,grate)
-    # Blender +X stays glTF +X, the core heading-zero wind direction.
-    plate('ForwardChevron',[(.70,-.18),(.92,0),(.70,.18),(.70,.075),(.55,.075),(.55,-.075),(.70,-.075)],.005,arrow)
-elif KIND=='lamp':
+if KIND=='lamp':
     housing=material('lamp.housing',(.14,.19,.21)); trim=material('lamp.trim',(.45,.51,.50)); lens=material('lamp.lens',(.85,.89,.82)); screw=material('lamp.fastener',(.065,.09,.10))
     rect('SquareHousing',-.67,-.67,.67,.67,.002,housing)
     rect('MetalBezel',-.59,-.59,.59,.59,.003,trim)

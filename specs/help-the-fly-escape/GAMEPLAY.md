@@ -12,9 +12,9 @@ Every fly has a card in the scrollable right panel, containing both a grouped ne
 
 ## Defaults selected by the planner
 
-These fill ordinary implementation gaps; they are not quoted user answers. Pre-run placement allows choosing, moving, rotating directional objects, and removing items with immediate inventory refunds. Freeze placements during simulation/playback. Retry preserves the setup as editable defaults but creates a fresh seed on the next Run. Start, buffering, playing, paused, complete and error are explicit states. Cancelling returns to editable placement. Replay and seeking never award progress twice.
+These fill ordinary implementation gaps; they are not quoted user answers. Pre-run placement allows choosing, moving and removing objects with immediate inventory refunds. Freeze placements during simulation/playback. Retry preserves the setup as editable defaults but creates a fresh seed on the next Run. Start, buffering, playing, paused, complete and error are explicit states. Cancelling returns to editable placement. Replay and seeking never award progress twice.
 
-Place objects on open floor, outside solid props/walls, the spawn footprint and the exit opening; keep placement centres separate while allowing sensory fields to overlap. Invalid placement gives a specific visible reason and does not consume inventory. A fan's arrow shows its direction. The placement preview and simulation share field and geometry owners. No mandatory introductory modal or tutorial checklist.
+Place objects on open floor, outside solid props/walls, the spawn footprint and the exit opening; keep placement centres separate while allowing sensory fields to overlap. Invalid placement gives a specific visible reason and does not consume inventory. Each map fixes the fan's blowing direction; there are no rotation controls. The core enforces that direction for both new and saved placements. The palette shows a thumbnail of the actual in-game object beside its name. Scent crumbs are a discarded prototype lure and do not belong in the campaign inventory. The placement preview and simulation share field and geometry owners. No mandatory introductory modal or tutorial checklist.
 
 Call the inventory **objects**, never tools. Each level permits at most one fan. Winning should require experimenting with objects that attract or repel the flies; a chain of fans must not be a solution. Offer meaningful sensory variation, not only different-looking copies of the same effect.
 
@@ -24,7 +24,7 @@ Food fruit combines odor and an edible landing surface; scent-only objects do no
 
 All placement tuning, exact layouts, object counts, time budgets and star numbers are delegated to the implementing agent **within the campaign acceptance criteria below**. Do not quietly substitute a weaker simulation if a puzzle is unwinnable; first adjust geometry, inventory and sensory tuning within documented interfaces.
 
-Progress uses localStorage: best stars per level, preferences and last editable placements. Unlocks derive from best stars. Store completed results once per attempt; failures to persist do not destroy the current playable session. No accounts, migration, cross-device saves or persistent replay library. Reset progress is an explicit player action. Reloading ends an unfinished attempt.
+Progress uses localStorage: best stars per level and last editable placements. Unlocks derive from best stars. Store completed results once per attempt; failures to persist do not destroy the current playable session. No accounts, migration, cross-device saves or persistent replay library. Putting objects away clears only the current arrangement and preserves earned stars. Reloading ends an unfinished attempt.
 
 ## A natural starting swarm
 
@@ -38,7 +38,7 @@ The user explicitly requests photorealistic rooms and selected a warm, lived-in 
 
 Rooms must have believable domestic proportions and circulation space around native-sized furniture. A sofa must not fill an entire room. Use distinct living, kitchen, hallway and side-room spaces; small domestic doorways with frames and wall above them connect rooms, rather than wide missing wall sections. Sims-inspired cutaway visibility does not change the physical room or doorway dimensions.
 
-The house sits within a finite circular area of attractive, natural grass. Grass may end at the circle's edge; an infinite ground surface is unnecessary. At the fixed angled camera, choose the circle size and zoom/pan limits together so the entire house can be viewed while the outer edge stays offscreen, including maximum zoom-out. All visible exterior ground should look grassy, with no blank floor. Start with uniform grass detail; distance-based detail is not required for this small map and should only be considered if measured performance warrants it. Keep grass outside the house footprint. The circle is a presentation boundary, not a change to room topology, escape, collision or sensory rules. Slice22 owns grass rendering/appearance; slice24 verifies composed camera coverage and performance.
+The house sits within a bounded, sun-drenched meadow inspired by the user's Windborne reference: tall grass swaying in coherent wind, drifting leaves, scattered rocks and wildflowers, gentle hills and terrain variation, warm daylight and blue sky. Keep foundation and doorway approaches level, and keep grass outside the actual house footprint. Preserve the fixed angled RTS camera; sky is the environment backdrop rather than a reason to introduce a low free camera. Size the exterior and camera limits together so its edge remains offscreen even at maximum zoom-out. Terrain and vegetation share one height function, with bounded instanced scenery and no per-frame field regeneration. The outdoor presentation does not change escape, collision or sensory rules. Slice22 owns meadow appearance; slice24 verifies composed camera coverage and performance.
 
 Establish the look in one furnished room using Blender-authored assets and the actual browser renderer before expanding it through the campaign. Judge realism at the default close/follow camera and further zoom, as well as room readability at maximum zoom-out. Keep the selected fly, its yellow ring and white trail readable; do not regain contrast by stripping rooms of their real colors and furnishings.
 
@@ -75,3 +75,9 @@ At wide zoom, enlarge the 3D fly models dynamically so players can still see and
 Camera navigation uses scroll-wheel zoom and RTS edge panning over the 3D viewport. There is no Overview button. Selecting a fly enters close follow; wheel zoom preserves follow, while panning releases it without clearing selection.
 
 Use The Sims as inspiration for room visibility: full-height domestic walls, foreground upper walls nearly transparent, and a short opaque bottom strip to preserve room boundaries. Cutaway works in setup and while panning without requiring a selected fly.
+
+The interface is a whimsical educational game, not a settings dashboard. Keep the house visually dominant, use a warm object tray with actual model pictures, and use direct game actions such as “Release the flies.” Placed objects always remain visible; there is no visibility checkbox or stored hiding preference. Detailed education belongs in fly/neuron explanations, not configuration jargon.
+
+Object effects are discovered through play. The object tray and fixed-household list show pictures, names and counts without item descriptions or explanatory hover tooltips. Preserve neuron education, which explains the biology rather than revealing object strategies.
+
+Developer diagnostics remain in the console: attempt identity, bounded playback/performance summaries and failures. Emit state changes at a bounded cadence and periodic progress, never every rendered frame; completion includes the detailed final report.

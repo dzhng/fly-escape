@@ -23,7 +23,7 @@ try {
   });
   await page.goto(base + "/lab/setup");
   await page
-    .getByRole("button", { name: "Run · release flies", exact: true })
+    .getByRole("button", { name: "Release the flies", exact: true })
     .waitFor();
   await page.waitForFunction(
     () => !document.querySelector(".run-setup").disabled,
@@ -48,7 +48,7 @@ try {
   await page.mouse.move(1430, 20);
   await page.screenshot({ path: output + "/setup-placed.png" });
   await page
-    .getByRole("button", { name: "Run · release flies", exact: true })
+    .getByRole("button", { name: "Release the flies", exact: true })
     .click();
   await page.waitForFunction(
     () =>

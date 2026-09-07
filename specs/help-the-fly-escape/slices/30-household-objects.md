@@ -11,4 +11,12 @@ Status: active. The user's object-discovery direction supersedes fan-route accep
 
 Fixed objects are authored level conditions, not a second editable inventory. Rendering consumes the same definitions that generate effects. Do not introduce a parallel steering controller or invisible oversized food/hazard regions.
 
-Fixed-object ownership is integrated with [native and production-browser evidence](../assets/evidence/30/fixed-objects/README.md). Both authored houses contain fixed fruit, with one editable fan each. Other household objects and hazards still require runtime integration.
+Fixed-object ownership is integrated with [native and production-browser evidence](../assets/evidence/30/fixed-objects/README.md). Both authored houses contain fixed fruit, with one editable fan each. Native shoes, dishes, laundry and the sleeping cat now share physical contact; zapper and spider hazards remain open.
+
+[Cold-start odor evidence](../assets/evidence/30/cold-odor/README.md) supports enabling the existing excitatory-odor repellent pathway at gain two. It does **not** establish reliable attraction through the current inhibitory-odor binding. Both campaign tunings enable the measured repellent pathway; strong vinegar is a modeled acidic source. Final cue combinations and useful attraction remain open gates.
+
+The contact pass separates native mesh shape, sensory effect and edibility. Shoes, dishes and laundry have explicitly modeled scent strengths; the sleeping cat is a physical household surface without an odor assignment. These are authored game assumptions, not empirical claims about the response to each household material. Native disconnected parts remain exact edge-connected surfaces under the existing contact validator. Object descriptions and effect tooltips are removed, so object responses are discovered through play. Neuron education remains.
+
+The old prepared-corner acceptance test is removed: it asserted a historical spike map's exact fan route and translated its obsolete schema at test time. The user rejected that puzzle direction; the historical evidence is preserved unchanged. Current native house geometry, object placement and body wind/collision tests retain the corresponding runtime coverage. Current campaign acceptance belongs to the redesigned authored houses.
+
+[Meadow and object tray evidence](../assets/evidence/30/meadow-tray/README.md) records the native fan/bottle, static pictures, fixed fan headings, always-visible placements, and the first animated meadow pass. Developer diagnostics are console output, not normal game controls.

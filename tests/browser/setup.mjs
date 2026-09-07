@@ -13,11 +13,14 @@ try {
     viewport: { width: 1440, height: 900 },
   });
   const errors = [];
+  const diagnostics = [];
+  page.on("console", message => { if (message.text().startsWith("[Fly escape]")) diagnostics.push(message.text()); });
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto(base + "/lab/setup");
-  const run = page.getByRole("button", { name: "Run · release flies" });
+  const run = page.getByRole("button", { name: "Release the flies" });
   await run.waitFor();
   await page.waitForFunction(() => !document.querySelector(".run-setup").disabled);
+  assert.equal(await page.locator(".tool-palette [title]").count(), 0);
   await page.screenshot({ path: output + "/setup.png" });
   await page.mouse.move(80, 300);
   await page.getByTestId("placement-feedback").filter({ hasText: "open floor" }).waitFor();
@@ -33,13 +36,11 @@ try {
   await page.getByRole("button", { name: "Fan 2 left", exact: true }).click();
   await page.mouse.click(560, 440);
   await page.getByRole("button", { name: "Remove Fan 2", exact: true }).waitFor();
-  await page.getByRole("button", { name: "Fan #2", exact: true }).click();
-  await page.getByRole("button", { name: "Rotate fan 90°", exact: true }).click();
-  await page.waitForFunction(
-    () =>
-      JSON.parse(localStorage.getItem("fly-escape-progress")).setups["five-room-setup"][1].heading >
-      1,
-  );
+  assert.equal(await page.getByRole("button", { name: /Rotate/i }).count(), 0);
+  await page.waitForFunction(() => {
+    const images = [...document.querySelectorAll(".tool-palette img")];
+    return images.length > 0 && images.every(image => image.complete && image.naturalWidth > 0);
+  });
   const stored = await page.evaluate(() => JSON.parse(localStorage.getItem("fly-escape-progress")));
   await page.getByRole("button", { name: "Apple #1", exact: true }).click();
   await page.mouse.click(760, 600);
@@ -56,6 +57,9 @@ try {
     () => !!document.querySelector("[data-attempt-id]")?.dataset.attemptId,
     { timeout: 90000 },
   );
+  assert.equal(await page.getByRole("button", { name: "Download report", exact: true }).count(), 0);
+  assert.ok(diagnostics.some(line => line.startsWith("[Fly escape] attempt ready")));
+  assert.ok(diagnostics.some(line => line.startsWith("[Fly escape] playback")));
   const first = JSON.parse(await page.getByTestId("playback-report").textContent());
   assert.equal(first.spec.flyCount, 20);
   assert.equal(first.spec.placements.length, 2);
@@ -97,11 +101,10 @@ try {
   await page.screenshot({ path: output + "/result.png" });
   await page.getByRole("button", { name: "Retry — edit setup", exact: true }).click();
   await page.getByRole("button", { name: "Remove Apple 1", exact: true }).waitFor();
-  await page.getByLabel("Show placed objects").uncheck();
   await page.reload();
   await page.getByRole("button", { name: "Remove Apple 1", exact: true }).waitFor();
-  assert.equal(await page.getByLabel("Show placed objects").isChecked(), false);
-  await page.getByRole("button", { name: "Reset progress and setup", exact: true }).click();
+  assert.equal(await page.getByLabel("Show placed objects").count(), 0);
+  await page.getByRole("button", { name: "Put objects away", exact: true }).click();
   await page.getByRole("button", { name: "Apple 2 left", exact: true }).waitFor();
   assert.equal(await page.getByRole("button", { name: "Remove Apple 1", exact: true }).count(), 0);
   const broken = await browser.newPage();
@@ -114,9 +117,9 @@ try {
     };
   });
   await broken.goto(base + "/lab/setup");
-  await broken.getByRole("button", { name: "Run · release flies" }).waitFor();
+  await broken.getByRole("button", { name: "Release the flies" }).waitFor();
   await broken.getByText("Storage is unavailable.", { exact: false }).waitFor();
-  await broken.getByRole("button", { name: "Run · release flies" }).click();
+  await broken.getByRole("button", { name: "Release the flies" }).click();
   await broken.getByTestId("playback-lab").waitFor();
   await broken.close();
   assert.deepEqual(errors, []);

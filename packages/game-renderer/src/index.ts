@@ -707,7 +707,7 @@ export class WorldView {
     this.trailSample = { paths, cursorTick };
   }
 
-  render(): void {
+  render(timeSeconds = performance.now() / 1000): void {
     this.controls?.update(performance.now());
     this.displayScale = this.navigation.displayScale(this.nativeSpan);
     for (const fly of this.flies) fly.scale.copy(this.nativeScale).multiplyScalar(this.displayScale);
@@ -736,7 +736,7 @@ export class WorldView {
     }
     if (this.trailSample) this.trails.sample(this.trailSample.paths, this.trailSample.cursorTick,
       this.selectionRing.geometry.parameters.outerRadius * this.displayScale);
-    this.exterior.update(this.navigation.exteriorGroundCircle());
+    this.exterior.update(this.navigation.exteriorGroundCircle(), timeSeconds);
     this.roomDetails?.update(this.navigation.camera);
     this.renderer.render(this.scene, this.navigation.camera);
   }

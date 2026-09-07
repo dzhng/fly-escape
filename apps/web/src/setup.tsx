@@ -1,3 +1,4 @@
+import { objectThumbnails } from "../../../assets/tools/thumbnails";
 import type { RoomDetail } from "@fly-escape/game-renderer";
 import { loadWorldAssets } from "./world-assets";
 import React, { useEffect, useRef, useState } from "react";
@@ -15,7 +16,7 @@ import {
 } from "@fly-escape/sim-client";
 import { WorldView } from "@fly-escape/game-renderer";
 import { AttemptPlayback } from "./playback";
-import { type Progress, awardResult, emptyProgress } from "./progress";
+import { type Progress, awardResult } from "./progress";
 import "./setup.css";
 
 type Intent = { edit: PlacementEdit; placement?: Placement; commit: boolean };
@@ -23,19 +24,14 @@ const names: Record<ToolKind, string> = {
   fruit: "Apple",
   banana: "Banana",
   crumbs: "Scent crumbs",
-  vinegar: "Vinegar",
+  vinegar: "Strong vinegar",
   lamp: "Lamp",
   shade: "Shade",
   fan: "Fan",
-};
-const descriptions: Record<ToolKind, string> = {
-  fruit: "Attractive odor and an edible landing surface",
-  banana: "Attractive odor and an edible landing surface",
-  crumbs: "Attractive odor, without food",
-  vinegar: "Repellent odor",
-  lamp: "A local bright cue",
-  shade: "A local shaded cue",
-  fan: "A directional local wind",
+  wornShoes: "Worn shoes",
+  dirtyDishes: "Dirty dishes",
+  laundry: "Damp laundry",
+  sleepingCat: "Sleeping cat",
 };
 export function SetupGame({
   content,
@@ -64,7 +60,6 @@ export function SetupGame({
     content.level.placementRules.inventory.find((stock) => stock.count > 0)?.kind,
   );
   const [selected, setSelected] = useState<number>();
-  const [heading, setHeading] = useState(0);
   const [intent, setIntent] = useState<Intent>();
   const intentRef = useRef<Intent | undefined>(undefined);
   intentRef.current = intent;
@@ -146,12 +141,12 @@ export function SetupGame({
     if (!setup) return;
     world.current?.setContactGeometry(setup.food.slice(0, content.level.food.length), content.level.zappers, content.level.exit, false);
     world.current?.setPlacements(
-      progress.preferences.showTools ? setup.placements : [],
+      setup.placements,
       content.catalog,
       intent?.placement ? { placement: intent.placement, valid } : undefined,
       content.level.fixedObjects,
     );
-  }, [content, setup, intent, valid, input, progress.preferences.showTools]);
+  }, [content, setup, intent, valid, input]);
   useEffect(() => {
     if (!intent || checked.current === intent || busy || !setup || input) return;
     checked.current = intent;
@@ -194,6 +189,7 @@ export function SetupGame({
     const existing = setup.placements.find((p) => p.id === selected);
     const kind = existing?.kind ?? tool;
     if (!kind) return;
+    const heading = kind === "fan" ? content.level.placementRules.fanHeading : (existing?.heading ?? 0);
     const placement: Placement = {
       id: existing?.id ?? Math.max(0, ...setup.placements.map((p) => p.id)) + 1,
       kind,
@@ -209,30 +205,6 @@ export function SetupGame({
         : { type: "place", placement },
     });
   };
-  const rotate = () => {
-    const next = (heading + Math.PI / 2) % (2 * Math.PI);
-    setHeading(next);
-    const placement = setup?.placements.find((p) => p.id === selected);
-    if (placement)
-      setIntent({
-        commit: true,
-        edit: {
-          type: "move",
-          id: placement.id,
-          position: placement.position,
-          heading: next,
-        },
-      });
-    else if (intent?.placement) {
-      const p = { ...intent.placement, heading: next };
-      setIntent({
-        placement: p,
-        commit: false,
-        edit: { type: "place", placement: p },
-      });
-      setValid(null);
-    }
-  };
   if (input)
     return (
       <AttemptPlayback
@@ -244,7 +216,7 @@ export function SetupGame({
           client.cancel();
           setInput(undefined);
           setIntent(undefined);
-          setMessage("Your setup is ready to edit. The next Run uses a fresh seed.");
+          setMessage("Try a new arrangement. Every swarm explores a little differently.");
         }}
         onResult={(result) => {
           if (awarded.current === input.attemptId) return;
@@ -290,6 +262,7 @@ export function SetupGame({
             {content.level.geometry.rooms.length} rooms · 20 flies ·{" "}
             {content.level.durationTicks / 10} game seconds
             <span>{content.description}</span>
+            <small>Scroll to zoom · move to the edge or drag to explore</small>
           </div>
           <div
             className={`placement-feedback ${valid === false ? "invalid" : ""}`}
@@ -300,10 +273,9 @@ export function SetupGame({
           </div>
         </div>
         <aside>
-          <h2>Shape the environment</h2>
+          <h2>What will they follow?</h2>
           <p>
-            Choose an object and click open floor. Select a placed object below to move it. Drag the view
-            to pan; scroll to zoom.
+            Pick an object, find it a spot, then let the flies explore.
           </p>
           <div className="tool-palette">
             {setup?.remaining
@@ -317,30 +289,18 @@ export function SetupGame({
                   key={stock.kind}
                   aria-pressed={tool === stock.kind && selected === undefined}
                   disabled={stock.count === 0 || !!intent?.commit}
-                  title={descriptions[stock.kind]}
                   onClick={() => {
                     setTool(stock.kind);
                     setSelected(undefined);
                     setIntent(undefined);
                   }}
                 >
-                  <b>{names[stock.kind]}</b>
-                  <span>{stock.count} left</span>
+                  <img src={objectThumbnails[stock.kind]} alt="" width={48} height={48} />
+                  <span className="object-caption"><b>{names[stock.kind]}</b><span>{stock.count} left</span></span>
                 </button>
               ))}
           </div>
-          <p>{tool ? descriptions[tool] : "This level has no placement objects."}</p>
-          <button
-            onClick={rotate}
-            disabled={
-              busy ||
-              !!intent?.commit ||
-              (setup?.placements.find((p) => p.id === selected)?.kind ?? tool) !== "fan"
-            }
-          >
-            Rotate fan 90°
-          </button>
-          <h3>Placed objects</h3>
+          {!!setup?.placements.length && <h3>In your house</h3>}
           <div className="placed-tools">
             {setup?.placements.map((p) => (
               <div key={p.id}>
@@ -350,7 +310,6 @@ export function SetupGame({
                   onClick={() => {
                     setSelected(p.id);
                     setTool(p.kind);
-                    setHeading(p.heading);
                     setIntent(undefined);
                     setMessage("Click open floor to move this object.");
                   }}
@@ -372,19 +331,6 @@ export function SetupGame({
               </div>
             ))}
           </div>
-          <label>
-            <input
-              type="checkbox"
-              checked={progress.preferences.showTools}
-              onChange={(e) =>
-                setProgress((p) => ({
-                  ...p,
-                  preferences: { showTools: e.target.checked },
-                }))
-              }
-            />{" "}
-            Show placed objects
-          </label>
           <button
             className="run-setup"
             disabled={!setup || worldState !== "ready" || busy || !!intent?.commit}
@@ -401,10 +347,21 @@ export function SetupGame({
               });
             }}
           >
-            Run · release flies
+            Release the flies
           </button>
+          {content.level.fixedObjects.length > 0 && (
+            <details className="household-objects">
+              <summary>Already in this house</summary>
+              <ul>
+                {content.level.fixedObjects.map((object) => (
+                  <li key={object.id}>{names[object.kind]}</li>
+                ))}
+              </ul>
+            </details>
+          )}
           <button
-            disabled={busy || !!intent?.commit}
+            className="put-away"
+            disabled={busy || !!intent?.commit || !setup?.placements.length}
             onClick={() => {
               setBusy(true);
               setIntent(undefined);
@@ -416,15 +373,15 @@ export function SetupGame({
                 })
                 .then((resolved) => {
                   setSetup(resolved.state);
-                  setProgress(emptyProgress());
+                  setProgress((p) => ({ ...p, setups: { ...p.setups, [content.level.id]: [] } }));
                   setSelected(undefined);
-                  setMessage("Saved progress and setup reset.");
+                  setMessage("Objects put away. Try a different arrangement.");
                 })
                 .catch((error) => setMessage(String(error)))
                 .finally(() => setBusy(false));
             }}
           >
-            Reset progress and setup
+            Put objects away
           </button>
           {storageFailed && (
             <p role="status">

@@ -38,7 +38,7 @@ try {
   );
   await page.waitForTimeout(300);
   await shot("production-setup-overview");
-  await page.getByRole("button", { name: "Run · release flies" }).click();
+  await page.getByRole("button", { name: "Release the flies" }).click();
   await page.getByRole("button", { name: "Pause", exact: true }).click();
   await page.waitForFunction(
     () => {

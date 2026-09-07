@@ -13,7 +13,7 @@ try {
    await page.reload();await ready();await page.getByRole('button',{name:/2. Turn the Corner/}).click();await ready();
   }
   console.log('SETUP',i,await page.getByRole('heading',{level:1}).innerText());
-  await page.getByRole('button',{name:'Run · release flies'}).click();
+  await page.getByRole('button',{name:'Release the flies'}).click();
   await page.waitForFunction(()=>{const e=document.querySelector('[data-testid="playback-lab"]');return e?.dataset.playbackState==='error'||Number(e?.dataset.computedTick)>=10},null,{timeout:90000});
   await page.waitForFunction(()=>Number(document.querySelector('[data-testid="playback-lab"]')?.dataset.cursorTick)>1,null,{timeout:60000});
   const state=await page.getByTestId('playback-lab').evaluate(e=>({...e.dataset}));console.log('ATTEMPT',i,state);

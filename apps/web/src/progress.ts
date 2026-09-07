@@ -3,12 +3,10 @@ const KEY = "fly-escape-progress";
 export type Progress = {
   bestStars: Record<string, number>;
   setups: Record<string, Placement[]>;
-  preferences: { showTools: boolean };
 };
 export const emptyProgress = (): Progress => ({
   bestStars: {},
   setups: {},
-  preferences: { showTools: true },
 });
 export function loadProgress(): Progress {
   try {
@@ -27,7 +25,6 @@ export function loadProgress(): Progress {
     return {
       bestStars,
       setups,
-      preferences: { showTools: stored.preferences?.showTools !== false },
     } as Progress;
   } catch {
     return emptyProgress();

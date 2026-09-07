@@ -20,7 +20,7 @@ try {
       a instanceof BigUint64Array && a.length === 1 ? ((a[0] = 42n), a) : random(a);
   });
   await page.goto(base + "/lab/setup");
-  await page.getByRole("button", { name: "Run · release flies", exact: true }).waitFor();
+  await page.getByRole("button", { name: "Release the flies", exact: true }).waitFor();
   await page.waitForFunction(() => !document.querySelector(".run-setup").disabled);
   let id = 0;
   const positions = [];
@@ -57,7 +57,7 @@ try {
   await page.mouse.move(1430, 20);
   await page.screenshot({ path: output + "/setup-placed.png" });
   await page.screenshot({path:output+"/setup-placed-crop.png",clip:{x:300,y:340,width:650,height:390}});
-  await page.getByRole("button", { name: "Run · release flies", exact: true }).click();
+  await page.getByRole("button", { name: "Release the flies", exact: true }).click();
   await page.waitForFunction(
     () =>
       Number(document.querySelector('[data-testid="playback-lab"]')?.dataset.computedTick) >= 55,

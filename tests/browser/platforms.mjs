@@ -18,7 +18,7 @@ for (const name of (process.env.SMOKE_ENGINES ?? "chromium,firefox,webkit").spli
     const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
     page.on("pageerror", error => result.errors.push(error.message));
     await page.goto(base);
-    await page.getByRole("button", { name: "Run · release flies", exact: true }).click();
+    await page.getByRole("button", { name: "Release the flies", exact: true }).click();
     await page.waitForFunction(() => document.querySelector('[data-testid="playback-lab"]')?.dataset.playbackState === "playing", null, { timeout: 120000 });
     await page.getByRole("button", { name: "Pause", exact: true }).click();
     await page.waitForFunction(() => document.querySelector('[data-testid="playback-lab"]')?.dataset.playbackState === "paused");

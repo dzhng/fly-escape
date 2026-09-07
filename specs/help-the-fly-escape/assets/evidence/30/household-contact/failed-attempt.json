@@ -1,0 +1,1218 @@
+{
+  "records": [
+    {
+      "food": 2,
+      "objects": 51,
+      "placements": [],
+      "sources": [
+        {
+          "position": {
+            "x": 7.4,
+            "z": 3.2
+          },
+          "radius": 0.75,
+          "rate": 1,
+          "kind": "attractiveOdor"
+        },
+        {
+          "position": {
+            "x": 2.5,
+            "z": 8
+          },
+          "radius": 0.75,
+          "rate": 1,
+          "kind": "attractiveOdor"
+        },
+        {
+          "position": {
+            "x": 1.2,
+            "z": 3.4
+          },
+          "radius": 0.75,
+          "rate": 0.35,
+          "kind": "attractiveOdor"
+        }
+      ]
+    },
+    {
+      "food": 2,
+      "objects": 75,
+      "placements": [],
+      "sources": [
+        {
+          "position": {
+            "x": 3.4,
+            "z": 3.3
+          },
+          "radius": 0.75,
+          "rate": 1,
+          "kind": "attractiveOdor"
+        },
+        {
+          "position": {
+            "x": 8.7,
+            "z": 8.2
+          },
+          "radius": 0.75,
+          "rate": 1,
+          "kind": "attractiveOdor"
+        },
+        {
+          "position": {
+            "x": 2.6,
+            "z": 6.7
+          },
+          "radius": 0.75,
+          "rate": 0.35,
+          "kind": "attractiveOdor"
+        },
+        {
+          "position": {
+            "x": 5.6,
+            "z": 6.7
+          },
+          "radius": 0.75,
+          "rate": 0.2,
+          "kind": "attractiveOdor"
+        },
+        {
+          "position": {
+            "x": 7.3,
+            "z": 8.6
+          },
+          "radius": 0.75,
+          "rate": 1.5,
+          "kind": "attractiveOdor"
+        }
+      ]
+    }
+  ],
+  "report": {
+    "spec": {
+      "schemaVersion": 1,
+      "attemptId": "a3c2114b-a29a-4076-a4ce-9c40cd96038f",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+      "simulationBuildId": "2372125af279202bf3879229bcbe9f70b32a1a5d2ce0ba3433070a1c43710684",
+      "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb",
+      "placements": [],
+      "levelHash": "e55890c0ca4a321f82f58f1286374f02881f7bafb5fc6a225b6799009d98b496",
+      "levelId": "turn-the-corner",
+      "rootSeed": "18065457143613761157",
+      "flyCount": 20,
+      "durationTicks": 800
+    },
+    "initialBodies": [
+      {
+        "pose": {
+          "position": {
+            "x": 1.8235666496530283,
+            "z": 7.713435625419283
+          },
+          "heading": 6.227042186009639
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.7266751789818539,
+          0,
+          0.6869812109888384
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 1.5720559755973162,
+            "z": 7.662425739117615
+          },
+          "heading": 5.229554768689195
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9667533180193161,
+          0,
+          0.2557108173281747
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 1.6532336075764218,
+            "z": 7.237083240991322
+          },
+          "heading": 0.2819099852115771
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.6007533832430025,
+          0,
+          0.7994344078922838
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 1.4154574446975474,
+            "z": 7.487386408055169
+          },
+          "heading": 0.9698490187717417
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.2959726724551995,
+          0,
+          0.9551964076354805
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 1.3528279517506836,
+            "z": 7.674549502081208
+          },
+          "heading": 1.3842204409784054
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.09315269320468475,
+          0,
+          0.9956518346031978
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 1.832370924372019,
+            "z": 7.7512929669263
+          },
+          "heading": 3.3909597593004768
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.7895538900567349,
+          0,
+          -0.6136812321525544
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 1.8674575879565625,
+            "z": 7.734635763091652
+          },
+          "heading": 3.7384263532935087
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.8837495083343239,
+          0,
+          -0.4679602616877215
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 1.4489603610093107,
+            "z": 7.219782713786767
+          },
+          "heading": 4.591613603602284
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9981772175706725,
+          0,
+          -0.0603509927248119
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 1.5925554763551877,
+            "z": 7.2671219989106515
+          },
+          "heading": 1.897677864212692
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          -0.162714077582652,
+          0,
+          0.9866732635256854
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 1.7115698694287937,
+            "z": 7.540444708460624
+          },
+          "heading": 0.20271891390044922
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.631928275272034,
+          0,
+          0.7750268736706568
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 1.50232396213661,
+            "z": 7.334171681239036
+          },
+          "heading": 0.39465570861079186
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.554756529372019,
+          0,
+          0.832012736151985
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 1.8983227237023588,
+            "z": 7.498495833884306
+          },
+          "heading": 3.247812986837543
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.7436466576360445,
+          0,
+          -0.6685728446375453
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 1.5987141093185444,
+            "z": 7.554744196559798
+          },
+          "heading": 4.315903090188663
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9804141377322506,
+          0,
+          -0.19694699422618098
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 1.5597121481171068,
+            "z": 7.687517125782073
+          },
+          "heading": 2.1310244047963995
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          -0.27646524456874,
+          0,
+          0.9610239167396131
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 1.3105099440184698,
+            "z": 7.520229243743859
+          },
+          "heading": 4.370011374951097
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9853829460810393,
+          0,
+          -0.17035389509093093
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 1.311742701560992,
+            "z": 7.464377883756169
+          },
+          "heading": 4.113224584339657
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9554598746676961,
+          0,
+          -0.2951210394058523
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 1.8678183018809373,
+            "z": 7.723074643227324
+          },
+          "heading": 5.924160446203847
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.8219980037737894,
+          0,
+          0.5694903702363241
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 1.566452165893851,
+            "z": 7.322069010399123
+          },
+          "heading": 3.9899140859033473
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9354601864533335,
+          0,
+          -0.3534320862070882
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 1.3132321621964553,
+            "z": 7.443894602919878
+          },
+          "heading": 0.6554910916176737
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.44184350790302374,
+          0,
+          0.8970921438313628
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 1.3695371746139808,
+            "z": 7.793805367592519
+          },
+          "heading": 5.50408597326146
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9226697237707129,
+          0,
+          0.38559120949118714
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 20,
+        "outcome": null
+      }
+    ],
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+    "viewport": [
+      1440,
+      1000
+    ],
+    "devicePixelRatio": 1,
+    "cursorTick": 48.16500000000019,
+    "sampleTick": 48,
+    "computedTick": 140,
+    "state": "playing",
+    "speed": 1,
+    "complete": false,
+    "initialWaitMs": 1323.5999999523165,
+    "warmWaitMs": 1095.6999999761583,
+    "productionMs": 5878.300000190735,
+    "activeNeuralSteps": 2800,
+    "activeEquivalentProductionRate": 2.381640950537696,
+    "underruns": 0,
+    "frameIntervals": {
+      "count": 331,
+      "p95Ms": 17,
+      "p95Capped": false,
+      "maxMs": 183.20000000000027,
+      "histogramResolutionMs": 1
+    },
+    "interactions": {
+      "count": 1,
+      "p95Ms": 15,
+      "p95Capped": false,
+      "maxMs": 14.600000023841858,
+      "histogramResolutionMs": 1,
+      "measurement": "control callback to synchronous scene render completion; excludes browser paint"
+    },
+    "memory": {
+      "wasmBytes": 104988672,
+      "archiveOwnedChunkBytes": 2809252,
+      "archiveBoundBytes": 134217728,
+      "graphBytes": 9864584,
+      "brainStateBytes": 64400000,
+      "observedJSHeapBytes": 96588235,
+      "note": "WASM includes graph and brain state; do not add those again. Download report includes an on-demand GPU memory estimate."
+    },
+    "renderer": {
+      "flyCount": 20,
+      "modelKind": "glb",
+      "drawCalls": 1278,
+      "triangles": 375452,
+      "geometries": 324,
+      "textures": 26
+    },
+    "camera": {
+      "near": 0.0015020476902875874,
+      "far": 66.49326736200834,
+      "fov": 38,
+      "following": true,
+      "distance": 0.03004095380575175,
+      "minDistance": 0.015020476902875874,
+      "maxDistance": 23.375637557020216,
+      "closeDistance": 0.03004095380575175,
+      "target": [
+        3.0211287404695986,
+        0.6009010391100541,
+        6.984858832442653
+      ],
+      "width": 1075,
+      "height": 574,
+      "selectedFlyId": 0,
+      "displayScale": 1,
+      "flies": [
+        {
+          "id": 0,
+          "x": 537.4999999999753,
+          "y": 286.9999999999754,
+          "visible": true
+        },
+        {
+          "id": 1,
+          "x": 369.3805389218664,
+          "y": -729.2354253541098,
+          "visible": false
+        },
+        {
+          "id": 2,
+          "x": -34179.26652626937,
+          "y": 36702.07753497031,
+          "visible": false
+        },
+        {
+          "id": 3,
+          "x": 213925.28618284705,
+          "y": -16331.239149876857,
+          "visible": false
+        },
+        {
+          "id": 4,
+          "x": -2991.7023741264043,
+          "y": 424.40320790543126,
+          "visible": false
+        },
+        {
+          "id": 5,
+          "x": -1594.784032536818,
+          "y": -738.5992792420319,
+          "visible": false
+        },
+        {
+          "id": 6,
+          "x": -622.3506511885585,
+          "y": -729.8070788945732,
+          "visible": false
+        },
+        {
+          "id": 7,
+          "x": 70.28550344546905,
+          "y": -738.5277714050347,
+          "visible": false
+        },
+        {
+          "id": 8,
+          "x": -3465.750904273615,
+          "y": -499.85995659592305,
+          "visible": false
+        },
+        {
+          "id": 9,
+          "x": 2005.0609818650296,
+          "y": -842.4486380293924,
+          "visible": false
+        },
+        {
+          "id": 10,
+          "x": 3594.7690840500195,
+          "y": -880.6293812326953,
+          "visible": false
+        },
+        {
+          "id": 11,
+          "x": -1579.6491642883916,
+          "y": -718.4300105955624,
+          "visible": false
+        },
+        {
+          "id": 12,
+          "x": 34.542310113506204,
+          "y": -747.3732604265558,
+          "visible": false
+        },
+        {
+          "id": 13,
+          "x": -4338.132850481842,
+          "y": -710.5965506014555,
+          "visible": false
+        },
+        {
+          "id": 14,
+          "x": -9.722691749253858,
+          "y": -548.3405113603969,
+          "visible": false
+        },
+        {
+          "id": 15,
+          "x": -39.29685451832329,
+          "y": -672.5835998573262,
+          "visible": false
+        },
+        {
+          "id": 16,
+          "x": 691.9586148580978,
+          "y": 492.626852699175,
+          "visible": true
+        },
+        {
+          "id": 17,
+          "x": -91.51794511380358,
+          "y": -751.2882210260476,
+          "visible": false
+        },
+        {
+          "id": 18,
+          "x": 4049.8506283754755,
+          "y": -939.1800570848137,
+          "visible": false
+        },
+        {
+          "id": 19,
+          "x": 11.896886020525345,
+          "y": -587.775596682826,
+          "visible": false
+        }
+      ]
+    },
+    "result": null,
+    "error": "numerical support unresolved: endpoint blocked by neighboring surface"
+  },
+  "errors": [],
+  "attempt": {
+    "type": "start",
+    "input": {
+      "level": {
+        "bodyConfig": {
+          "reserveCapacity": 30,
+          "idleCost": 0.2,
+          "walkingCost": 0.4,
+          "flyingCost": 0.8,
+          "feedingRate": 3,
+          "maxBoutSeconds": 3,
+          "bodyRadius": 0.002632,
+          "walkSpeed": 0.12,
+          "flightSpeed": 0.24,
+          "turnGain": 8,
+          "takeoffThreshold": 0.2,
+          "landingThreshold": 0.2,
+          "landingDwellSeconds": 1,
+          "proboscisThreshold": 0.2
+        },
+        "durationTicks": 800,
+        "exit": {
+          "a": {
+            "x": 9.6,
+            "z": 1.8
+          },
+          "b": {
+            "x": 9.6,
+            "z": 2.7
+          },
+          "outward": {
+            "x": 1,
+            "z": 0
+          }
+        },
+        "exitCue": null,
+        "fieldConfig": {
+          "antennaOffset": 0.00020207253103162883,
+          "baselineBrightness": 1,
+          "cellSize": 0.2,
+          "decay": 0.1,
+          "diffusion": 0.5,
+          "fans": [],
+          "wind": {
+            "x": 0,
+            "z": 0
+          },
+          "antennaForward": 0.0014145078816978176
+        },
+        "food": [],
+        "fixedObjects": [
+          {
+            "id": 1,
+            "kind": "banana",
+            "position": {
+              "x": 3.4,
+              "z": 3.3
+            },
+            "heading": 0.5
+          },
+          {
+            "id": 2,
+            "kind": "fruit",
+            "position": {
+              "x": 8.7,
+              "z": 8.2
+            },
+            "heading": 0.2
+          },
+          {
+            "id": 3,
+            "kind": "wornShoes",
+            "position": {
+              "x": 2.6,
+              "z": 6.7
+            },
+            "heading": 0.8
+          },
+          {
+            "id": 4,
+            "kind": "laundry",
+            "position": {
+              "x": 5.6,
+              "z": 6.7
+            },
+            "heading": 0.3
+          },
+          {
+            "id": 5,
+            "kind": "dirtyDishes",
+            "position": {
+              "x": 7.3,
+              "z": 8.6
+            },
+            "heading": 0
+          },
+          {
+            "id": 6,
+            "kind": "sleepingCat",
+            "position": {
+              "x": 2,
+              "z": 1.6
+            },
+            "heading": 0
+          }
+        ],
+        "geometry": {
+          "rooms": [
+            {
+              "id": 1,
+              "min": {
+                "x": 0,
+                "z": 0
+              },
+              "max": {
+                "x": 4.8,
+                "z": 4.5
+              }
+            },
+            {
+              "id": 2,
+              "min": {
+                "x": 4.8,
+                "z": 0
+              },
+              "max": {
+                "x": 9.6,
+                "z": 4.5
+              }
+            },
+            {
+              "id": 3,
+              "min": {
+                "x": 0,
+                "z": 4.5
+              },
+              "max": {
+                "x": 9.6,
+                "z": 6
+              }
+            },
+            {
+              "id": 4,
+              "min": {
+                "x": 0,
+                "z": 6
+              },
+              "max": {
+                "x": 3.3,
+                "z": 10.4
+              }
+            },
+            {
+              "id": 5,
+              "min": {
+                "x": 3.3,
+                "z": 6
+              },
+              "max": {
+                "x": 6.3,
+                "z": 10.4
+              }
+            },
+            {
+              "id": 6,
+              "min": {
+                "x": 6.3,
+                "z": 6
+              },
+              "max": {
+                "x": 9.6,
+                "z": 10.4
+              }
+            }
+          ],
+          "walls": [
+            {
+              "a": {
+                "x": 0,
+                "z": 0
+              },
+              "b": {
+                "x": 0,
+                "z": 10.4
+              }
+            },
+            {
+              "a": {
+                "x": 4.8,
+                "z": 0
+              },
+              "b": {
+                "x": 4.8,
+                "z": 2.1
+              }
+            },
+            {
+              "a": {
+                "x": 4.8,
+                "z": 3
+              },
+              "b": {
+                "x": 4.8,
+                "z": 4.5
+              }
+            },
+            {
+              "a": {
+                "x": 0,
+                "z": 0
+              },
+              "b": {
+                "x": 9.6,
+                "z": 0
+              }
+            },
+            {
+              "a": {
+                "x": 0,
+                "z": 4.5
+              },
+              "b": {
+                "x": 1.8,
+                "z": 4.5
+              }
+            },
+            {
+              "a": {
+                "x": 2.7,
+                "z": 4.5
+              },
+              "b": {
+                "x": 6,
+                "z": 4.5
+              }
+            },
+            {
+              "a": {
+                "x": 6.9,
+                "z": 4.5
+              },
+              "b": {
+                "x": 9.6,
+                "z": 4.5
+              }
+            },
+            {
+              "a": {
+                "x": 9.6,
+                "z": 0
+              },
+              "b": {
+                "x": 9.6,
+                "z": 1.8
+              }
+            },
+            {
+              "a": {
+                "x": 9.6,
+                "z": 2.7
+              },
+              "b": {
+                "x": 9.6,
+                "z": 10.4
+              }
+            },
+            {
+              "a": {
+                "x": 0,
+                "z": 6
+              },
+              "b": {
+                "x": 1.2,
+                "z": 6
+              }
+            },
+            {
+              "a": {
+                "x": 2.1,
+                "z": 6
+              },
+              "b": {
+                "x": 4.35,
+                "z": 6
+              }
+            },
+            {
+              "a": {
+                "x": 5.25,
+                "z": 6
+              },
+              "b": {
+                "x": 6.9,
+                "z": 6
+              }
+            },
+            {
+              "a": {
+                "x": 7.8,
+                "z": 6
+              },
+              "b": {
+                "x": 9.6,
+                "z": 6
+              }
+            },
+            {
+              "a": {
+                "x": 3.3,
+                "z": 6
+              },
+              "b": {
+                "x": 3.3,
+                "z": 10.4
+              }
+            },
+            {
+              "a": {
+                "x": 0,
+                "z": 10.4
+              },
+              "b": {
+                "x": 9.6,
+                "z": 10.4
+              }
+            },
+            {
+              "a": {
+                "x": 6.3,
+                "z": 6
+              },
+              "b": {
+                "x": 6.3,
+                "z": 10.4
+              }
+            }
+          ],
+          "solids": [
+            {
+              "id": 1,
+              "furnishing": {
+                "model": "sofa",
+                "quarterTurns": 0
+              },
+              "min": {
+                "x": 0.3,
+                "z": 0.25
+              },
+              "max": {
+                "x": 2.2,
+                "z": 1.1
+              },
+              "height": 0.85
+            },
+            {
+              "id": 2,
+              "furnishing": {
+                "model": "kitchen",
+                "quarterTurns": 0
+              },
+              "min": {
+                "x": 5.3,
+                "z": 0.2
+              },
+              "max": {
+                "x": 7.7,
+                "z": 0.85
+              },
+              "height": 2.1
+            },
+            {
+              "id": 4,
+              "furnishing": {
+                "model": "cabinet",
+                "quarterTurns": 0
+              },
+              "min": {
+                "x": 6.8,
+                "z": 9.75
+              },
+              "max": {
+                "x": 8,
+                "z": 10.2
+              },
+              "height": 0.85
+            },
+            {
+              "id": 5,
+              "furnishing": {
+                "model": "desk",
+                "quarterTurns": 2
+              },
+              "min": {
+                "x": 0.4,
+                "z": 9.55
+              },
+              "max": {
+                "x": 1.8,
+                "z": 10.25
+              },
+              "height": 1.05
+            },
+            {
+              "id": 6,
+              "furnishing": {
+                "model": "chair",
+                "quarterTurns": 0
+              },
+              "min": {
+                "x": 0.8,
+                "z": 8.45
+              },
+              "max": {
+                "x": 1.4,
+                "z": 9.1
+              },
+              "height": 0.95
+            },
+            {
+              "id": 7,
+              "furnishing": {
+                "model": "bed",
+                "quarterTurns": 2
+              },
+              "min": {
+                "x": 4,
+                "z": 8.15
+              },
+              "max": {
+                "x": 5.6,
+                "z": 10.25
+              },
+              "height": 1.05
+            }
+          ]
+        },
+        "id": "turn-the-corner",
+        "initialReserve": 20,
+        "placementRules": {
+          "inventory": [
+            {
+              "kind": "fruit",
+              "count": 1
+            },
+            {
+              "kind": "banana",
+              "count": 1
+            },
+            {
+              "kind": "crumbs",
+              "count": 4
+            },
+            {
+              "kind": "dirtyDishes",
+              "count": 1
+            },
+            {
+              "kind": "wornShoes",
+              "count": 1
+            },
+            {
+              "kind": "laundry",
+              "count": 1
+            },
+            {
+              "kind": "vinegar",
+              "count": 2
+            },
+            {
+              "kind": "fan",
+              "count": 1
+            }
+          ],
+          "reserved": []
+        },
+        "sources": [],
+        "starThresholds": [
+          1,
+          8,
+          15
+        ],
+        "zappers": [],
+        "spawn": {
+          "kind": "cluster",
+          "min": {
+            "x": 1.3,
+            "z": 7.2
+          },
+          "max": {
+            "x": 1.95,
+            "z": 7.85
+          },
+          "flyingCount": 10
+        }
+      },
+      "tuning": {
+        "cues": [
+          {
+            "gain": 2,
+            "pathway": "excitatoryOdor"
+          },
+          {
+            "gain": 2,
+            "pathway": "inhibitoryOdor"
+          }
+        ],
+        "silencedNeurons": [],
+        "tasteGain": 1
+      },
+      "placements": [],
+      "flyCount": 20,
+      "attemptId": "a3c2114b-a29a-4076-a4ce-9c40cd96038f",
+      "rootSeed": "18065457143613761157"
+    },
+    "generation": 1
+  }
+}

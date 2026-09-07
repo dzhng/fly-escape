@@ -15,7 +15,7 @@ try {
   const samples = [];
   for (let run = 0; run < runs; run++) {
     await page.waitForFunction(() => document.querySelector(".run-setup")?.disabled === false);
-    await page.getByRole("button", { name: "Run · release flies", exact: true }).click();
+    await page.getByRole("button", { name: "Release the flies", exact: true }).click();
     await page.waitForFunction(() => {
       const text = document.querySelector('[data-testid="playback-report"]')?.textContent;
       if (!text) return false;
