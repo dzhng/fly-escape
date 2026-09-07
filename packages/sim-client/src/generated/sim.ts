@@ -90,7 +90,7 @@ export type RectRoom = { id: number, min: Point, max: Point, };
 export type Wall = { a: Point, b: Point, };
 export type Geometry = { rooms: Array<RectRoom>, walls: Array<Wall>, solids: Array<SolidProp>, };
 export type SolidProp = { id: number, furnishing: Furnishing | null, min: Point, max: Point, height: number, };
-export type FurnitureModel = "cabinet" | "sofa" | "desk" | "chair" | "bed";
+export type FurnitureModel = "cabinet" | "sofa" | "desk" | "chair" | "bed" | "kitchen";
 export type Furnishing = { model: FurnitureModel,
 /**
  * Quarter turns around +Y; native front is +Z.

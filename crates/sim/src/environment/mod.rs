@@ -37,6 +37,7 @@ pub enum FurnitureModel {
     Desk,
     Chair,
     Bed,
+    Kitchen,
 }
 impl FurnitureModel {
     pub fn dimensions(self) -> [f64; 3] {
@@ -47,6 +48,7 @@ impl FurnitureModel {
             desk: [f64; 3],
             chair: [f64; 3],
             bed: [f64; 3],
+            kitchen: [f64; 3],
         }
         static CATALOG: std::sync::OnceLock<Catalog> = std::sync::OnceLock::new();
         let catalog = CATALOG.get_or_init(|| {
@@ -59,6 +61,7 @@ impl FurnitureModel {
             Self::Desk => catalog.desk,
             Self::Chair => catalog.chair,
             Self::Bed => catalog.bed,
+            Self::Kitchen => catalog.kitchen,
         }
     }
 }
