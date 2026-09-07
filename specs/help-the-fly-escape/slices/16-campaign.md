@@ -1,6 +1,6 @@
 # 16 — A carefully designed second level
 
-Status: implementation pending Level 1 acceptance; additional content and campaign progression are not implemented. Dependencies: 15.
+Status: final content and integration pending Level 1 acceptance. A six-room topology candidate and an isolated campaign progression implementation are prepared; neither is accepted campaign content. Dependencies: 15.
 
 ## Contract and seam
 
@@ -10,7 +10,7 @@ One additional LevelDef using the shared tool/geometry schema → two-level camp
 
 ## Implementation pickup
 
-After 15 passes, author one level at a time in the same authoritative content seam. Add a campaign selector and derive one-star unlocks from persisted best stars; the existing progress store already holds per-level stars and editable setups, so it remains the persistence owner. The current browser still starts the integration fixture and has no campaign navigation or unlock consumer. Do not create a second progress store or duplicate level geometry in TypeScript.
+After 15 passes, finalize the second level in the same authoritative content seam. Integrate the prepared selector and one-star unlock consumer from `codex/campaign-seam` (`/tmp/fly-campaign-ui`), whose frozen workflow and single-Worker evidence are banked at commit `1b073bc`. The existing progress store remains the owner of per-level stars and editable setups. Root still opens the integration fixture; rebase and verify the prepared implementation against accepted furnished content instead of rebuilding it. Do not create a second progress store or duplicate level geometry in TypeScript.
 
 The [game contract](../GAMEPLAY.md) owns increasing room counts, tool eligibility, topology and food-dependence requirements.
 
