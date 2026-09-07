@@ -155,6 +155,8 @@ pub fn sample_motion(
             &states[a * STATE_FIELDS.len()..b * STATE_FIELDS.len()],
         )?;
         let p = MotionTrace {
+            rotation_blocked: false,
+            rotation_unresolved: false,
             contact_hazard: None,
             points,
             queries: 0,

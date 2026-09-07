@@ -117,6 +117,13 @@ impl ContactHull {
     }
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum RotationClearance {
+    Clear,
+    Blocked,
+    Unresolved,
+}
+
 struct ContactMesh {
     id: u32,
     mesh: TriMesh,
@@ -349,6 +356,108 @@ impl ContactScene {
         };
         let velocity = Vector::from_array(displacement) * QUERY_UNITS;
         cast_on(hull, pose, velocity, self.meshes.iter())
+    }
+
+    /// Uses the retained quaternion exactly, including supported-pose roll.
+    pub fn cast_at_rotation(
+        &self,
+        hull: &ContactHull,
+        position: [f64; 3],
+        rotation: [f64; 4],
+        displacement: [f64; 3],
+    ) -> Result<Option<SurfaceHit>, String> {
+        if !bounded(position) || !bounded(displacement) || !rotation.iter().all(|x| x.is_finite()) {
+            return Err("contact cast requires bounded finite pose".into());
+        }
+        if (Rotation::from_array(rotation).length_squared() - 1.).abs() > 1e-6 {
+            return Err("contact cast requires a unit quaternion".into());
+        }
+        cast_on(
+            hull,
+            Pose {
+                translation: Vector::from_array(position) * QUERY_UNITS,
+                rotation: Rotation::from_array(rotation),
+            },
+            Vector::from_array(displacement) * QUERY_UNITS,
+            self.meshes.iter(),
+        )
+    }
+    /// A Failed nonlinear solve declines the angular request; other failures stay errors.
+    pub fn rotation_clearance(
+        &self,
+        hull: &ContactHull,
+        position: [f64; 3],
+        from: [f64; 4],
+        to: [f64; 4],
+        displacement: [f64; 3],
+    ) -> Result<RotationClearance, String> {
+        use parry3d_f64::query::{cast_shapes_nonlinear, NonlinearRigidMotion};
+        if !bounded(position)
+            || !bounded(displacement)
+            || !from.iter().chain(&to).all(|x| x.is_finite())
+        {
+            return Err("rotation clearance requires bounded finite poses".into());
+        }
+        let start = Rotation::from_array(from);
+        let end = Rotation::from_array(to);
+        if (start.length_squared() - 1.).abs() > 1e-6 || (end.length_squared() - 1.).abs() > 1e-6 {
+            return Err("rotation clearance requires unit quaternions".into());
+        }
+        if (start - end)
+            .length_squared()
+            .min((start + end).length_squared())
+            < 1e-24
+        {
+            return Ok(RotationClearance::Clear);
+        }
+        let pose = Pose {
+            translation: Vector::from_array(position) * QUERY_UNITS,
+            rotation: start,
+        };
+        let velocity = Vector::from_array(displacement) * QUERY_UNITS;
+        let mut angular = end * start.inverse();
+        if angular.w < 0. {
+            angular = -angular;
+        }
+        let moving =
+            NonlinearRigidMotion::new(pose, Vector::ZERO, velocity, angular.to_scaled_axis());
+        let fixed = NonlinearRigidMotion::identity();
+        let radius = hull.bounds.mins.abs().max(hull.bounds.maxs.abs()).length() + PLANE_TOLERANCE;
+        let bounds = Aabb::new(
+            pose.translation.min(pose.translation + velocity) - Vector::splat(radius),
+            pose.translation.max(pose.translation + velocity) + Vector::splat(radius),
+        );
+        for entry in self
+            .meshes
+            .iter()
+            .filter(|m| m.mesh.local_aabb().intersects(&bounds))
+        {
+            for id in entry.mesh.bvh().intersect_aabb(&bounds) {
+                if let Some(hit) = cast_shapes_nonlinear(
+                    &moving,
+                    &hull.shape,
+                    &fixed,
+                    &entry.mesh.triangle(id),
+                    0.,
+                    1.,
+                    false,
+                )
+                .map_err(|_| "unsupported rotating contact shape pair")?
+                {
+                    return match hit.status {
+                        ShapeCastStatus::Converged
+                        | ShapeCastStatus::PenetratingOrWithinTargetDist => {
+                            Ok(RotationClearance::Blocked)
+                        }
+                        ShapeCastStatus::Failed => Ok(RotationClearance::Unresolved),
+                        status => Err(format!(
+                            "rotating contact query did not converge: {status:?}"
+                        )),
+                    };
+                }
+            }
+        }
+        Ok(RotationClearance::Clear)
     }
 
     /// Find the upper supporting root at a requested planar position/orientation.

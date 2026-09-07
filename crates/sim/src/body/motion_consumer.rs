@@ -361,3 +361,153 @@ fn native_shoe_rim_blocks_supported_motion_without_aborting_the_tick() {
         "an invalid initial penetration remains an error"
     );
 }
+
+#[test]
+fn free_rotation_cannot_push_a_blocked_fly_into_neighboring_shoe_mesh() {
+    let state: BodyState = serde_json::from_str(r#"{"height":0.08816780470482011,"mode":"flying","outcome":null,"pose":{"heading":4.591304066780186,"position":{"x":1.2578663807494694,"z":3.456808803950721}},"reserve":5.800000000000106,"rotation":[0.025199154720995532,0.9975620655081161,-0.022595059457293367,-0.0610277916088221],"support":null}"#).unwrap();
+    let desired: BodyPose = serde_json::from_str(
+        r#"{"heading":4.564267411386064,"position":{"x":1.253090143632047,"z":3.424799585182792}}"#,
+    )
+    .unwrap();
+    let objects = crate::native_object::NativeObjectShape::WornShoes
+        .placed_surfaces(Point { x: 1.2, z: 3.4 }, 0.6, 2)
+        .unwrap();
+    let geometry = Geometry {
+        rooms: vec![crate::environment::RectRoom {
+            id: 1,
+            min: Point { x: 0., z: 0. },
+            max: Point { x: 10., z: 10. },
+        }],
+        walls: vec![],
+        solids: vec![],
+    };
+    let world = BodyWorld::new(
+        &geometry,
+        &[],
+        &objects,
+        &[],
+        ExitOpening {
+            a: Point { x: 10., z: 1. },
+            b: Point { x: 10., z: 2. },
+            outward: Point { x: 1., z: 0. },
+        },
+        1000,
+    )
+    .unwrap();
+    let depth = |p: &MotionPoint| {
+        world
+            .surfaces
+            .penetration(
+                world.hull,
+                [p.pose.position.x, p.height, p.pose.position.z],
+                p.rotation,
+            )
+            .unwrap()
+    };
+    let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
+    assert!(depth(&trace.points[0]) <= 3e-6);
+    assert!(trace.rotation_blocked);
+    assert_eq!(trace.end().rotation, state.rotation);
+    assert_eq!(trace.end().pose.heading, state.pose.heading);
+    assert_eq!(trace.end().fraction, 1.);
+    for i in 0..=100 {
+        let p = trace.at(i as f64 / 100.).unwrap();
+        assert!(
+            depth(&p) <= 3e-6,
+            "free rotation produced penetration {}",
+            depth(&p)
+        );
+    }
+    assert!(
+        trace.end().pose.position.distance(desired.position) > 0.01,
+        "the shoe blocks the requested movement"
+    );
+    // The next captured failure had a blocked turn but a penetrative translation hit.
+    let state: BodyState=serde_json::from_str(r#"{"height":0.08816214699472592,"mode":"flying","outcome":null,"pose":{"heading":4.588282400211157,"position":{"x":1.2578666725763556,"z":3.4568113204200213}},"reserve":5.8800000000001065,"rotation":[0.02523324670468137,0.997468774177808,-0.022556982145555512,-0.06253407357150904],"support":null}"#).unwrap();
+    let desired: BodyPose=serde_json::from_str(r#"{"heading":4.594124730896361,"position":{"x":1.2538818289756446,"z":3.423274149579663}}"#).unwrap();
+    let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
+    assert_eq!(
+        trace.end().pose,
+        state.pose,
+        "blocked candidate retains the verified pose"
+    );
+    assert_eq!(trace.end().rotation, state.rotation);
+    for i in 0..=100 {
+        assert!(depth(&trace.at(i as f64 / 100.).unwrap()) <= 3e-6);
+    }
+}
+
+#[test]
+fn free_space_turns_remain_available_and_zero_time_landing_records_support() {
+    let geometry = Geometry {
+        rooms: vec![crate::environment::RectRoom {
+            id: 1,
+            min: Point { x: 0., z: 0. },
+            max: Point { x: 4., z: 4. },
+        }],
+        walls: vec![],
+        solids: vec![],
+    };
+    let objects = crate::native_object::NativeObjectShape::Apple
+        .placed_surfaces(Point { x: 2., z: 2. }, 0., 5)
+        .unwrap();
+    let world = BodyWorld::new(
+        &geometry,
+        &objects,
+        &[],
+        &[],
+        ExitOpening {
+            a: Point { x: 4., z: 1. },
+            b: Point { x: 4., z: 3. },
+            outward: Point { x: 1., z: 0. },
+        },
+        100,
+    )
+    .unwrap();
+    let mut state = Body::new_in_mode(
+        BodyPose {
+            position: Point { x: 1., z: 1. },
+            heading: 0.,
+        },
+        10.,
+        BodyConfig::default(),
+        BodyMode::Flying,
+    )
+    .unwrap()
+    .state;
+    let trace = motion::advance(
+        &world,
+        &state,
+        BodyPose {
+            position: Point { x: 1.1, z: 1. },
+            heading: 0.2,
+        },
+        0.1,
+        0.002632,
+    )
+    .unwrap();
+    assert!(!trace.rotation_blocked);
+    assert!((trace.end().pose.heading - 0.2).abs() < 1e-12);
+    assert!((trace.end().pose.position.x - 1.1).abs() < 1e-12);
+    let support = world
+        .surfaces
+        .support_at(world.hull, 5, [2., 2.], 0., [0., 1., 0.])
+        .unwrap()
+        .unwrap();
+    state.pose = BodyPose {
+        position: Point { x: 2., z: 2. },
+        heading: 0.,
+    };
+    // One nanometre inside the contact precision makes acquisition exactly zero-time.
+    state.height = support.root[1] - 1e-9;
+    state.rotation = support.rotation;
+    state.mode = BodyMode::Landing;
+    state.support = None;
+    let trace = motion::advance(&world, &state, state.pose, 0.1, 0.002632).unwrap();
+    assert_eq!(trace.points[0].support, Some(5));
+    assert_eq!(trace.end().support, Some(5));
+    assert!(trace
+        .points
+        .windows(2)
+        .all(|p| p[0].fraction < p[1].fraction));
+}

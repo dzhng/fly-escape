@@ -33,6 +33,10 @@ impl MotionPoint {
 }
 #[derive(Debug)]
 pub struct MotionTrace {
+    /// At least one angular request was declined; translation was still tested.
+    pub rotation_blocked: bool,
+    /// A declined request included a typed Failed nonlinear solve.
+    pub rotation_unresolved: bool,
     pub contact_hazard: Option<(f64, ContactHazardKind)>,
     pub queries: usize,
     pub points: Vec<MotionPoint>,
@@ -51,6 +55,8 @@ impl MotionTrace {
         end.fraction = 1.;
         Self {
             points: vec![point, end],
+            rotation_blocked: false,
+            rotation_unresolved: false,
             contact_hazard: None,
             queries: 0,
         }
@@ -182,6 +188,8 @@ pub(super) fn advance(
     };
     let mut trace = MotionTrace {
         points: vec![point.clone()],
+        rotation_blocked: false,
+        rotation_unresolved: false,
         contact_hazard: None,
         queries: 0,
     };
@@ -226,7 +234,7 @@ pub(super) fn advance(
             continue;
         }
         let fraction = ((elapsed + step) / dt).min(1.);
-        let heading = angle(state.pose.heading, desired.heading, fraction);
+        let mut heading = angle(state.pose.heading, desired.heading, fraction);
         let target = Point {
             x: origin.x + velocity.x * (elapsed + step - origin_time),
             z: origin.z + velocity.z * (elapsed + step - origin_time),
@@ -347,29 +355,72 @@ pub(super) fn advance(
             descending = true;
             continue;
         }
-        let next_up = if point.grounded {
+        let mut next_up = if point.grounded {
             toward(current_up, [0., 1., 0.], step)
         } else {
             current_up
         };
-        let rotation = support_rotation(heading, next_up)?;
-        let floor = world.hull.floor_height(heading, next_up)?;
-        let height = if point.grounded {
+        let mut rotation = support_rotation(heading, next_up)?;
+        let mut floor = world.hull.floor_height(heading, next_up)?;
+        let mut height = if point.grounded {
             floor
         } else if descending {
             point.height - VERTICAL_SPEED * step
         } else {
             (point.height + VERTICAL_SPEED * step).min(CRUISE_HEIGHT)
         };
-        let delta = [
+        let mut delta = [
             target.x - point.pose.position.x,
             height - point.height,
             target.z - point.pose.position.z,
         ];
         work.query()?;
-        let surface_hit = world
-            .surfaces
-            .cast(world.hull, point.root(), heading, next_up, delta)?;
+        let mut clearance = world.surfaces.rotation_clearance(
+            world.hull,
+            point.root(),
+            point.rotation,
+            rotation,
+            delta,
+        )?;
+        if clearance == crate::surface::RotationClearance::Clear {
+            // Translation uses the requested orientation from its start, so that
+            // turn at the retained root must also have a swept-clearance proof.
+            work.query()?;
+            clearance = world.surfaces.rotation_clearance(
+                world.hull,
+                point.root(),
+                point.rotation,
+                rotation,
+                [0., 0., 0.],
+            )?;
+        }
+        if clearance != crate::surface::RotationClearance::Clear {
+            // No swept-clearance proof: reject angular motion, then still test
+            // the requested translation using the last verified orientation.
+            work.query()?;
+            if world
+                .surfaces
+                .penetration(world.hull, point.root(), point.rotation)?
+                > MOTION_ERROR
+            {
+                return Err("blocked angular motion has no verified nonpenetrating start".into());
+            }
+            trace.rotation_blocked = true;
+            trace.rotation_unresolved |= clearance == crate::surface::RotationClearance::Unresolved;
+            heading = point.pose.heading;
+            next_up = current_up;
+            rotation = point.rotation;
+            floor = world.hull.floor_height(heading, next_up)?;
+            if point.grounded {
+                height = floor;
+                delta[1] = floor - point.height;
+            }
+        }
+        work.query()?;
+        let surface_hit =
+            world
+                .surfaces
+                .cast_at_rotation(world.hull, point.root(), rotation, delta)?;
         let floor_fraction = if !point.grounded && height <= floor + 1e-12 && height < point.height
         {
             Some(((point.height - floor) / (point.height - height)).clamp(0., 1.))
@@ -383,6 +434,28 @@ pub(super) fn advance(
             })
         });
         if let Some(hit) = surface_first {
+            let impact = [
+                point.pose.position.x + delta[0] * hit.fraction,
+                point.height + delta[1] * hit.fraction,
+                point.pose.position.z + delta[2] * hit.fraction,
+            ];
+            work.query()?;
+            if world.surfaces.penetration(world.hull, impact, rotation)? > MOTION_ERROR {
+                // A candidate impact is not permission to enter a neighboring
+                // component. Retain the verified prefix when this root is blocked.
+                work.query()?;
+                if world
+                    .surfaces
+                    .penetration(world.hull, point.root(), point.rotation)?
+                    > MOTION_ERROR
+                {
+                    return Err("blocked free motion has no verified nonpenetrating start".into());
+                }
+                point.fraction = 1.;
+                append_point(&mut trace.points, point)?;
+                trace.queries = work.queries;
+                return Ok(trace);
+            }
             let used = step * hit.fraction;
             point.pose.position = Point {
                 x: point.pose.position.x + delta[0] * hit.fraction,
@@ -425,6 +498,9 @@ pub(super) fn advance(
                 }
                 point.support = Some(hit.surface_id);
                 point.grounded = true;
+                if point.fraction == trace.end().fraction {
+                    *trace.points.last_mut().unwrap() = point.clone();
+                }
                 if point.fraction > trace.end().fraction {
                     append_point(&mut trace.points, point.clone())?;
                 }
@@ -559,7 +635,8 @@ fn stop_supported(
         world.hull,
         last.root(),
         last.rotation,
-        last.support.unwrap(),
+        last.support
+            .ok_or("blocked support trace lost its surface identity")?,
     )? > MOTION_ERROR
     {
         return Err(
@@ -696,11 +773,15 @@ mod coalescing_tests {
             })
             .collect();
         let original = MotionTrace {
+            rotation_blocked: false,
+            rotation_unresolved: false,
             contact_hazard: None,
             queries: 5,
             points: points.clone(),
         };
         let mut retained = MotionTrace {
+            rotation_blocked: false,
+            rotation_unresolved: false,
             contact_hazard: None,
             queries: 5,
             points,
@@ -719,6 +800,8 @@ mod coalescing_tests {
     #[test]
     fn collision_hold_and_support_boundaries_survive_coalescing() {
         let mut trace = MotionTrace {
+            rotation_blocked: false,
+            rotation_unresolved: false,
             contact_hazard: None,
             queries: 0,
             points: vec![point(0., 0.), point(0.4, 0.4), point(1., 0.4)],
@@ -729,6 +812,8 @@ mod coalescing_tests {
         let mut middle = point(0.5, 0.5);
         middle.support = Some(7);
         let mut trace = MotionTrace {
+            rotation_blocked: false,
+            rotation_unresolved: false,
             contact_hazard: None,
             queries: 0,
             points: vec![point(0., 0.), middle, point(1., 1.)],
