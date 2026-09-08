@@ -1213,6 +1213,7 @@ fn doorway_suction() -> ExitSuction {
     ExitSuction {
         reach: 0.9,
         speed: 0.5,
+        room_speed: 0.,
     }
 }
 #[test]
@@ -1263,14 +1264,7 @@ fn exit_suction_stops_at_its_reach_and_never_pulls_through_a_wall() {
             .with_exit_suction(Some(doorway_suction()))
             .unwrap()
     };
-    let drift = |world: &BodyWorld, from: Point| {
-        let mut b = drifting_body(from.x, from.z);
-        for tick in 1..=10 {
-            b.step(&neural(0., 0.), world, Point::default(), 0.1, tick)
-                .unwrap();
-        }
-        b.state().pose.position
-    };
+    let drift = |world: &BodyWorld, from: Point| drifted(world, from, 10).state().pose.position;
     // A metre from the opening is outside the reach, where the air is still.
     let beyond = Point { x: 3., z: 2. };
     assert_eq!(drift(&world(&g), beyond), beyond);
@@ -1292,18 +1286,22 @@ fn exit_suction_is_rejected_outside_its_authored_bounds() {
         ExitSuction {
             reach: 0.,
             speed: 0.5,
+            room_speed: 0.,
         },
         ExitSuction {
             reach: 2.5,
             speed: 0.5,
+            room_speed: 0.,
         },
         ExitSuction {
             reach: 0.9,
             speed: 1.5,
+            room_speed: 0.,
         },
         ExitSuction {
             reach: f64::NAN,
             speed: 0.5,
+            room_speed: 0.,
         },
     ] {
         assert!(world().with_exit_suction(Some(rejected)).is_err());
@@ -1331,17 +1329,151 @@ fn exit_suction_does_not_reach_into_an_adjacent_open_room() {
         .unwrap()
         .with_exit_suction(Some(doorway_suction()))
         .unwrap();
-    let mut outside_room = drifting_body(3.5, 2.);
-    let mut inside_room = drifting_body(3.8, 2.);
-    for tick in 1..=20 {
-        outside_room
-            .step(&neural(0., 0.), &world, Point::default(), 0.1, tick)
-            .unwrap();
-        inside_room
-            .step(&neural(0., 0.), &world, Point::default(), 0.1, tick)
-            .unwrap();
-    }
+    let outside_room = drifted(&world, Point { x: 3.5, z: 2. }, 20);
+    let inside_room = drifted(&world, Point { x: 3.8, z: 2. }, 20);
     assert_eq!(outside_room.state().pose.position, Point { x: 3.5, z: 2. });
     assert_eq!(outside_room.state().outcome, None);
     assert_eq!(inside_room.state().outcome, Some(TerminalOutcome::Escaped));
+}
+
+/// The authored room pull: the same doorway air, held at a gentle speed
+/// everywhere in the exit room so objects only have to lead a body into it.
+fn room_pull(room_speed: f64) -> ExitSuction {
+    ExitSuction {
+        room_speed,
+        ..doorway_suction()
+    }
+}
+/// Where a drifting body ends up after `ticks` of tenth-second steps.
+fn drifted(world: &BodyWorld, from: Point, ticks: u32) -> Body {
+    let mut b = drifting_body(from.x, from.z);
+    for tick in 1..=ticks {
+        b.step(&neural(0., 0.), world, Point::default(), 0.1, tick)
+            .unwrap();
+    }
+    b
+}
+#[test]
+fn room_pull_carries_a_body_the_near_door_falloff_cannot_reach() {
+    let g = geometry();
+    let world = |suction| {
+        BodyWorld::new(&g, &[], &[], &[], exit(), 400)
+            .unwrap()
+            .with_exit_suction(Some(suction))
+            .unwrap()
+    };
+    // A metre and a half from the opening: well outside the 0.9 near-door reach.
+    let start = Point { x: 2.5, z: 2. };
+    // Without a room speed the far air is still, exactly as it was before.
+    assert_eq!(
+        drifted(&world(room_pull(0.)), start, 10)
+            .state()
+            .pose
+            .position,
+        start
+    );
+    let pulled = drifted(&world(room_pull(0.06)), start, 10);
+    // Gentle and flat: a second of drift covers the authored room speed, not the
+    // much stronger doorway pull.
+    assert!(
+        (pulled.state().pose.position.x - start.x - 0.06).abs() < 1e-4,
+        "moved {} in a second",
+        pulled.state().pose.position.x - start.x
+    );
+    assert_eq!(pulled.state().pose.position.z, start.z);
+    // And it is a lead all the way out, not a nudge that stalls.
+    assert_eq!(
+        drifted(&world(room_pull(0.06)), start, 400).state().outcome,
+        Some(TerminalOutcome::Escaped)
+    );
+    assert_eq!(
+        drifted(&world(room_pull(0.)), start, 400).state().outcome,
+        Some(TerminalOutcome::TimedOut)
+    );
+}
+#[test]
+fn room_pull_stops_at_the_exit_room_even_through_an_open_doorway() {
+    let mut g = geometry();
+    // The exit room is the thin strip by the opening; its neighbour opens onto it
+    // with no wall between them, so only the room gate can hold the pull back.
+    g.rooms = vec![
+        RectRoom {
+            id: 1,
+            min: Point { x: 0., z: 0. },
+            max: Point { x: 3.6, z: 4. },
+        },
+        RectRoom {
+            id: 2,
+            min: Point { x: 3.6, z: 0. },
+            max: Point { x: 4., z: 4. },
+        },
+    ];
+    let world = BodyWorld::new(&g, &[], &[], &[], exit(), 200)
+        .unwrap()
+        .with_exit_suction(Some(room_pull(0.06)))
+        .unwrap();
+    let neighbour = Point { x: 3.5, z: 2. };
+    let outside_room = drifted(&world, neighbour, 20);
+    assert_eq!(outside_room.state().pose.position, neighbour);
+    assert_eq!(outside_room.state().outcome, None);
+    // Half a step away, inside the exit room, the same air moves the same body.
+    assert!(
+        drifted(&world, Point { x: 3.7, z: 2. }, 20)
+            .state()
+            .pose
+            .position
+            .x
+            > 3.7
+    );
+}
+#[test]
+fn room_pull_never_crosses_a_wall_or_an_obstacle() {
+    let g = geometry();
+    let start = Point { x: 2.5, z: 2. };
+    let world = |g: &Geometry| {
+        BodyWorld::new(g, &[], &[], &[], exit(), 200)
+            .unwrap()
+            .with_exit_suction(Some(room_pull(0.06)))
+            .unwrap()
+    };
+    let mut partitioned = g.clone();
+    partitioned.walls.push(Wall {
+        a: Point { x: 3., z: 1.5 },
+        b: Point { x: 3., z: 2.5 },
+    });
+    assert_eq!(
+        drifted(&world(&partitioned), start, 20)
+            .state()
+            .pose
+            .position,
+        start
+    );
+    let mut furnished = g.clone();
+    furnished.solids.push(SolidProp {
+        id: 1,
+        furnishing: None,
+        min: Point { x: 3., z: 1.5 },
+        max: Point { x: 3.2, z: 2.5 },
+        height: 1.,
+    });
+    assert_eq!(
+        drifted(&world(&furnished), start, 20).state().pose.position,
+        start
+    );
+    // The obstacle is the reason: the same body in the open room does move.
+    assert!(drifted(&world(&g), start, 20).state().pose.position.x > start.x);
+}
+#[test]
+fn room_pull_is_rejected_outside_its_authored_bounds() {
+    let g = geometry();
+    let world = || BodyWorld::new(&g, &[], &[], &[], exit(), 200).unwrap();
+    for rejected in [-0.1, 1.5, f64::NAN] {
+        assert!(
+            world()
+                .with_exit_suction(Some(room_pull(rejected)))
+                .is_err(),
+            "room speed {rejected}"
+        );
+    }
+    assert!(world().with_exit_suction(Some(room_pull(0.06))).is_ok());
 }

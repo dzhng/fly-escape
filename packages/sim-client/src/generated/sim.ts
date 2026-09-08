@@ -61,7 +61,13 @@ reach: number,
 /**
  * World units per second at the midpoint, falling linearly to zero at reach.
  */
-speed: number, };
+speed: number,
+/**
+ * World units per second held everywhere else in the exit room, so authored
+ * objects only have to lead a body into that room. Zero, the default, is the
+ * doorway-only pull levels had before the setting existed.
+ */
+roomSpeed?: number, };
 export type BodyContacts = { food: boolean, contactHazard: ContactHazardKind | null, };
 export type FeedingEnd = "contactLost" | "satiated" | "boutLimit" | "terminal";
 export type BodyEventKind = { "type": "modeChanged", from: BodyMode, to: BodyMode, } | { "type": "feedingStarted" } | { "type": "feedingEnded", reason: FeedingEnd, } | { "type": "terminal", outcome: TerminalOutcome, };

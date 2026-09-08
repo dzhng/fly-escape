@@ -174,10 +174,10 @@ impl ExitOpening {
         }
     }
 }
-/// Authored short-range physical help through the doorway: a reverse fan whose
-/// pull converges on a point just outside the exit. It is ordinary wind on the
-/// swept body, so contact and escape adjudication are unchanged, and it is
-/// absent unless a level authors it.
+/// Authored physical help toward the doorway: a reverse fan whose pull
+/// converges on a point just outside the exit. It is ordinary wind on the swept
+/// body, so contact and escape adjudication are unchanged, and it is absent
+/// unless a level authors it.
 #[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 pub struct ExitSuction {
@@ -185,6 +185,11 @@ pub struct ExitSuction {
     pub reach: f64,
     /// World units per second at the midpoint, falling linearly to zero at reach.
     pub speed: f64,
+    /// World units per second held everywhere else in the exit room, so authored
+    /// objects only have to lead a body into that room. Zero, the default, is the
+    /// doorway-only pull levels had before the setting existed.
+    #[serde(default, skip_serializing_if = "is_zero")]
+    pub room_speed: f64,
 }
 impl ExitSuction {
     pub(crate) fn validate(self) -> Result<(), String> {
@@ -194,14 +199,21 @@ impl ExitSuction {
             || !self.speed.is_finite()
             || self.speed < 0.
             || self.speed > 1.
+            || !self.room_speed.is_finite()
+            || self.room_speed < 0.
+            || self.room_speed > 1.
         {
             return Err(
-                "exit suction requires reach in (0,2] world units and speed in [0,1] per second"
+                "exit suction requires reach in (0,2] world units and speeds in [0,1] per second"
                     .into(),
             );
         }
         Ok(())
     }
+}
+/// Serde omits an unset room pull, so a doorway-only level keeps its prior JSON.
+fn is_zero(value: &f64) -> bool {
+    *value == 0.
 }
 /// How far outside the wall plane the pull converges. Small enough to stay a
 /// doorway step, large enough that a body at the plane is carried through it
@@ -321,32 +333,38 @@ impl BodyWorld {
         self.exit_suction = suction;
         Ok(self)
     }
-    /// Convergent pull toward a point just outside the exit, for a body already
-    /// within reach of the opening and able to see it. Zero everywhere else, so
-    /// nothing steers a body across the house and nothing pulls through a wall.
+    /// Convergent pull toward a point just outside the exit, for a body in the
+    /// exit room that can see the opening: the authored room speed everywhere in
+    /// that room, rising to the near-door falloff within reach. Zero outside the
+    /// room, so nothing steers a body across the house, and zero without sight of
+    /// the opening, so nothing pulls through a wall or an obstacle.
     fn exit_suction_velocity(&self, position: Point) -> Point {
         let Some(suction) = self.exit_suction else {
             return Point::default();
         };
         let mid = self.exit.midpoint();
-        let distance = position.distance(mid);
         let inside = Point {
             x: mid.x - self.exit.outward.x * 1e-5,
             z: mid.z - self.exit.outward.z * 1e-5,
         };
-        if distance >= suction.reach
-            || self.geometry.room_at(position) != self.geometry.room_at(inside)
+        if self.geometry.room_at(position) != self.geometry.room_at(inside)
             || !self.geometry.line_of_sight(position, mid)
         {
             return Point::default();
         }
+        let distance = position.distance(mid);
+        let near_door = if distance < suction.reach {
+            suction.speed * (1. - distance / suction.reach)
+        } else {
+            0.
+        };
+        let speed = near_door.max(suction.room_speed);
         let dx = mid.x + self.exit.outward.x * EXIT_SUCTION_TARGET_OFFSET - position.x;
         let dz = mid.z + self.exit.outward.z * EXIT_SUCTION_TARGET_OFFSET - position.z;
         let length = dx.hypot(dz);
-        if length == 0. {
+        if speed == 0. || length == 0. {
             return Point::default();
         }
-        let speed = suction.speed * (1. - distance / suction.reach);
         Point {
             x: speed * dx / length,
             z: speed * dz / length,

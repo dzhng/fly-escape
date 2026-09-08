@@ -787,8 +787,29 @@ fn exit_suction_is_absent_unless_a_level_authors_it() {
         helped.exit_suction,
         Some(ExitSuction {
             reach: 0.9,
-            speed: 0.5
+            speed: 0.5,
+            room_speed: 0.,
         })
+    );
+}
+#[test]
+fn an_authored_suction_without_a_room_pull_keeps_its_prior_json() {
+    let mut authored = serde_json::to_value(level(1)).unwrap();
+    authored["exitSuction"] = json!({"reach": 0.9, "speed": 0.5});
+    let doorway_only: LevelDef = serde_json::from_value(authored.clone()).unwrap();
+    assert_eq!(doorway_only.exit_suction.unwrap().room_speed, 0.);
+    // A level that authors no room pull serializes back to exactly the JSON it
+    // had before the setting existed, so identities and recordings still line up.
+    assert_eq!(
+        serde_json::to_value(&doorway_only).unwrap()["exitSuction"],
+        json!({"reach": 0.9, "speed": 0.5})
+    );
+    authored["exitSuction"]["roomSpeed"] = json!(0.06);
+    let with_room: LevelDef = serde_json::from_value(authored.clone()).unwrap();
+    assert_eq!(with_room.exit_suction.unwrap().room_speed, 0.06);
+    assert_eq!(
+        serde_json::to_value(&with_room).unwrap()["exitSuction"],
+        authored["exitSuction"]
     );
 }
 #[test]
@@ -812,6 +833,7 @@ fn authored_exit_suction_only_reaches_the_body_at_the_doorway() {
     definition.exit_suction = Some(ExitSuction {
         reach: 0.9,
         speed: 0.5,
+        room_speed: 0.,
     });
     let helped = run(definition);
     assert_eq!(
