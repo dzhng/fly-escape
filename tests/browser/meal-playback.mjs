@@ -38,10 +38,10 @@ try {
     frames.push({ tick, report: JSON.parse(await page.getByTestId('playback-report').textContent()) });
   }
   await seek(53);
-  const feeding = await page.locator('canvas').screenshot();
+  const feeding = await page.locator('.playback-world canvas').screenshot();
   await seek(65);
   await seek(53);
-  assert.ok((await page.locator('canvas').screenshot()).equals(feeding), 'reverse seek restores the same curved feeding pose');
+  assert.ok((await page.locator('.playback-world canvas').screenshot()).equals(feeding), 'reverse seek restores the same curved feeding pose');
   await page.mouse.move(550, 500);
   await page.mouse.wheel(0, -1600);
   await page.mouse.move(1400, 50);

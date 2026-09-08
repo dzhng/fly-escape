@@ -32,7 +32,7 @@ try {
   await page.getByRole('button', { name: 'Pause', exact: true }).click();
   await page.mouse.move(1400, 50);
   await page.waitForTimeout(200);
-  const before = await page.locator('canvas').screenshot();
+  const before = await page.locator('.playback-world canvas').screenshot();
   await page.evaluate(() => window.breakProducer());
   await page.waitForFunction(() => document.querySelector('[data-testid="playback-lab"]')?.dataset.playbackState === 'error');
   assert.equal(await page.getByRole('alert').innerText(), 'This flight was interrupted. You can try again from setup.');
@@ -46,7 +46,7 @@ try {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.waitForTimeout(200);
   await page.screenshot({ path: `${out}/restored.png` });
-  const after = await page.locator('canvas').screenshot();
+  const after = await page.locator('.playback-world canvas').screenshot();
   const restored = before.equals(after);
   await writeFile(`${out}/report.json`, JSON.stringify({ restored, errors, diagnostics, cursor }, null, 2));
   assert.equal(await page.getByTestId('playback-lab').getAttribute('data-cursor-tick'), cursor);

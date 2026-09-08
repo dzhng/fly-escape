@@ -29,19 +29,19 @@ try {
     );
   };
   await seek(10.3);
-  const a = await page.locator("canvas").screenshot();
+  const a = await page.locator(".playback-world canvas").screenshot();
   await page.waitForTimeout(200);
   assert.deepEqual(
-    await page.locator("canvas").screenshot(),
+    await page.locator(".playback-world canvas").screenshot(),
     a,
     "pause freezes recorded pose and clip phase",
   );
   await seek(12.8);
-  const b = await page.locator("canvas").screenshot();
+  const b = await page.locator(".playback-world canvas").screenshot();
   assert.notDeepEqual(a, b, "recorded cursor changes the rendered scene");
   await seek(10.3);
   assert.deepEqual(
-    await page.locator("canvas").screenshot(),
+    await page.locator(".playback-world canvas").screenshot(),
     a,
     "reverse seek reproduces recorded pose and phase",
   );

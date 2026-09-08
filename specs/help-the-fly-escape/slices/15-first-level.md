@@ -1,6 +1,6 @@
 # 15 — Level 1 is the tutorial
 
-Status: the furnished first house completes in the production browser with earned stars, replay, retry and actual second-level unlock. Final art/contact acceptance and fresh tuning/held-out validation remain open. Dependencies: 03,04,09,12,14,18 and the revised realism passes.
+Status: the furnished first house completes in the production browser with earned stars, replay, retry and actual second-level unlock. Final contact acceptance and fresh tuning/held-out validation remain open; appearance is accepted for MVP. Dependencies: 03,04,09,12,14,18 and the revised realism passes.
 
 ## Contract and seam
 

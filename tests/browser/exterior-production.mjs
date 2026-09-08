@@ -26,7 +26,7 @@ try {
  for(const state of ['follow','overview']){
   if(state==='overview')await zoomOut(page);
   await page.mouse.move(1400,50);await page.waitForTimeout(300);
-  const canvas=page.locator('canvas'); await page.screenshot({path:`${out}/${state}.png`});await canvas.screenshot({path:`${out}/${state}-canvas.png`});
+  const canvas=page.locator('.playback-world canvas'); await page.screenshot({path:`${out}/${state}.png`});await canvas.screenshot({path:`${out}/${state}-canvas.png`});
   const pixels=await canvas.screenshot();await page.waitForTimeout(150);samePixels(await canvas.screenshot(),pixels,'paused world pixel identity');
   await page.getByTestId('playback-seek').fill('10');await page.getByTestId('playback-seek').dispatchEvent('input');await page.waitForTimeout(100);
   await page.getByTestId('playback-seek').fill('20');await page.getByTestId('playback-seek').dispatchEvent('input');await page.waitForTimeout(200);
@@ -34,14 +34,14 @@ try {
   const raf=await page.evaluate(async()=>{const values=[];let last=performance.now();for(let i=0;i<90;i++){await new Promise(requestAnimationFrame);let t=performance.now();if(i>10)values.push(t-last);last=t;}values.sort((a,b)=>a-b);return{median:values[Math.floor(values.length*.5)],p95:values[Math.floor(values.length*.95)]}});
   frames.push({state,report:await read(),raf});
  }
- const restoredPixels=await page.locator('canvas').screenshot();
+ const restoredPixels=await page.locator('.playback-world canvas').screenshot();
  const resizeResources=[];
  for(const [name,width,height] of [['wide',2560,900],['portrait',900,1000],['restored',1440,1000]]) {
   await page.setViewportSize({width,height});await zoomOut(page);await page.mouse.move(width-30,30);await page.waitForTimeout(300);
-  await page.screenshot({path:`${out}/${name}.png`});await page.locator('canvas').screenshot({path:`${out}/${name}-canvas.png`});
+  await page.screenshot({path:`${out}/${name}.png`});await page.locator('.playback-world canvas').screenshot({path:`${out}/${name}-canvas.png`});
   resizeResources.push({name,report:await read()});
  }
- samePixels(await page.locator('canvas').screenshot(),restoredPixels,'resize restores exact world pixels');
+ samePixels(await page.locator('.playback-world canvas').screenshot(),restoredPixels,'resize restores exact world pixels');
  await page.getByRole('button',{name:'Play',exact:true}).click();
  await page.waitForFunction(()=>{try{return JSON.parse(document.querySelector('[data-testid=playback-report]')?.textContent).state==='ended'}catch{return false}},{timeout:90000});
  const final=await read();
