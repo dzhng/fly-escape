@@ -467,9 +467,9 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
     },
     "sources": [],
     "starThresholds": [
-      4,
-      9,
-      15
+      2,
+      5,
+      10
     ],
     "zappers": [],
     "spawn": {
