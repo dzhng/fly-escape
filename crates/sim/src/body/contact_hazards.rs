@@ -289,3 +289,20 @@ fn native_web_initial_contact_catches_without_feeding() {
     assert_eq!(body.state.outcome, Some(TerminalOutcome::Caught));
     assert_eq!(body.state.pose, pose);
 }
+
+#[test]
+fn turning_toward_a_zapper_preserves_the_reachable_contact() {
+    let world = world(true);
+    for mode in [BodyMode::Walking, BodyMode::Flying] {
+        let mut body = fly(mode, 2.);
+        let mut input = neural();
+        input.motor.turn = 0.01;
+        input.motor.flight_turn = 0.01;
+        if mode == BodyMode::Walking {
+            input.motor.flight_thrust = 0.;
+        }
+        let step = body.step(&input, &world, Point::default(), 0.5, 1).unwrap();
+        assert_eq!(body.state.outcome, Some(TerminalOutcome::Zapped));
+        assert!(step.motion.contact_hazard.is_some());
+    }
+}

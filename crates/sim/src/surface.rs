@@ -72,6 +72,43 @@ impl ContactHull {
         })
     }
 
+    /// Highest floor requirement along the same shortest quaternion arc replay uses.
+    pub(crate) fn floor_height_during_turn(
+        &self,
+        from: [f64; 4],
+        to: [f64; 4],
+    ) -> Result<f64, String> {
+        let start = checked_pose([0.; 3], from)?.rotation;
+        let end = checked_pose([0.; 3], to)?.rotation;
+        let mut relative = end * start.inverse();
+        if relative.w < 0. {
+            relative = -relative;
+        }
+        let angular = relative.to_scaled_axis();
+        let angle = angular.length();
+        if angle < 1e-12 {
+            return self.floor_height_at(from);
+        }
+        let axis = angular / angle;
+        let mut lowest = f64::INFINITY;
+        for vertex in self.shape.points() {
+            let v = start * *vertex;
+            // Rodrigues' formula: vertical position is c + a*cos(t) + b*sin(t).
+            let c = axis.y * axis.dot(v);
+            let a = v.y - c;
+            let b = axis.cross(v).y;
+            let end_y = c + a * angle.cos() + b * angle.sin();
+            let minimum_at = (b.atan2(a) + std::f64::consts::PI).rem_euclid(std::f64::consts::TAU);
+            let minimum = if minimum_at <= angle {
+                (c - a.hypot(b)).min(v.y).min(end_y)
+            } else {
+                v.y.min(end_y)
+            };
+            lowest = lowest.min(minimum);
+        }
+        Ok(-lowest / QUERY_UNITS)
+    }
+
     /// Prepared plane incidence, in metres; point-only hulls cannot construct paths.
     pub fn from_boundary(mut boundary: ContactBoundary) -> Result<Self, String> {
         if !(4..=4096).contains(&boundary.vertices.len())

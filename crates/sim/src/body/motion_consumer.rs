@@ -422,12 +422,15 @@ fn free_rotation_cannot_push_a_blocked_fly_into_neighboring_shoe_mesh() {
     let state: BodyState=serde_json::from_str(r#"{"height":0.08816214699472592,"mode":"flying","outcome":null,"pose":{"heading":4.588282400211157,"position":{"x":1.2578666725763556,"z":3.4568113204200213}},"reserve":5.8800000000001065,"rotation":[0.02523324670468137,0.997468774177808,-0.022556982145555512,-0.06253407357150904],"support":null}"#).unwrap();
     let desired: BodyPose=serde_json::from_str(r#"{"heading":4.594124730896361,"position":{"x":1.2538818289756446,"z":3.423274149579663}}"#).unwrap();
     let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
+    // Here the turn has its own swept proof at the retained root, so it is the
+    // whole substep: the blocked translation holds, the heading still arrives.
     assert_eq!(
-        trace.end().pose,
-        state.pose,
-        "blocked candidate retains the verified pose"
+        trace.end().pose.position,
+        state.pose.position,
+        "blocked candidate retains the verified position"
     );
-    assert_eq!(trace.end().rotation, state.rotation);
+    assert_eq!(trace.end().height, state.height);
+    assert!((trace.end().pose.heading - desired.heading).abs() < 1e-12);
     for i in 0..=100 {
         assert!(!depth(&trace.at(i as f64 / 100.).unwrap()).exceeds(3e-6));
     }
@@ -539,11 +542,17 @@ fn descending_shoe_rim_contact_keeps_a_verified_prefix() {
     let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
     assert_eq!(trace.end().fraction, 1.);
     assert!(trace.end().pose.position.distance(desired.position) > 0.01);
-    let held = &trace.points[trace.points.len() - 2];
-    assert!(held.fraction > 0.27 && held.fraction < 0.28);
-    assert_eq!(held.pose, trace.end().pose);
-    assert_eq!(held.height, trace.end().height);
-    assert_eq!(held.rotation, trace.end().rotation);
+    // The descent advances to the rim it verified and holds that root for the
+    // rest of the tick; only the separately proven turn keeps going.
+    let held = &trace.points[1];
+    assert!(held.fraction > 0. && held.fraction < 1.);
+    assert!(held.height < state.height);
+    assert!(held.pose.position.distance(state.pose.position) > 0.);
+    for point in &trace.points[1..] {
+        assert_eq!(point.pose.position, held.pose.position);
+        assert_eq!(point.height, held.height);
+    }
+    assert!((trace.end().pose.heading - desired.heading).abs() < 1e-12);
     for pair in trace.points.windows(2) {
         for i in 0..=100 {
             let t = pair[0].fraction + (pair[1].fraction - pair[0].fraction) * i as f64 / 100.;
@@ -565,50 +574,24 @@ fn descending_shoe_rim_contact_keeps_a_verified_prefix() {
 }
 
 #[test]
-fn query_exhaustion_after_partial_shoe_motion_restores_verified_start() {
-    let state: BodyState = serde_json::from_str(r#"{"height":0.11255713501421462,"mode":"landing","outcome":null,"pose":{"heading":0.2176269264573418,"position":{"x":2.609781851680292,"z":6.617292034591574}},"reserve":15.800000000000088,"rotation":[0.05143462464804994,0.6216922215351854,-0.07547638774578283,0.7779181036348288],"support":null}"#).unwrap();
-    let desired: BodyPose = serde_json::from_str(
-        r#"{"heading":0.0258326279435859,"position":{"x":2.637053725814715,"z":6.61799669552226}}"#,
-    )
-    .unwrap();
-    let objects = crate::native_object::NativeObjectShape::WornShoes
-        .placed_surfaces(Point { x: 2.6, z: 6.7 }, 0.8, 2)
-        .unwrap();
-    let geometry = Geometry {
-        rooms: vec![crate::environment::RectRoom {
-            id: 1,
-            min: Point { x: 0., z: 0. },
-            max: Point { x: 10., z: 10. },
-        }],
-        walls: vec![],
-        solids: vec![],
-    };
-    let world = BodyWorld::new(
-        &geometry,
-        &[],
-        &objects,
-        &[],
-        ExitOpening {
-            a: Point { x: 10., z: 1. },
-            b: Point { x: 10., z: 2. },
-            outward: Point { x: 1., z: 0. },
-        },
-        1000,
-    )
-    .unwrap();
+fn a_blocked_shoe_landing_turns_at_the_retained_root_instead_of_freezing() {
+    let (state, desired, world) = blocked_shoe_landing();
     let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
     assert_eq!(trace.end().fraction, 1.);
-    assert_eq!(trace.queries, 512);
-    assert_eq!(trace.points.len(), 2);
+    assert!(trace.queries < 512);
     assert!(trace.end().pose.position.distance(desired.position) > 0.01);
-    let held = &trace.points[trace.points.len() - 2];
-    assert_eq!(held.fraction, 0.);
-    assert_eq!(held.pose, state.pose);
-    assert_eq!(held.height, state.height);
-    assert_eq!(held.rotation, state.rotation);
-    assert_eq!(held.pose, trace.end().pose);
-    assert_eq!(held.height, trace.end().height);
-    assert_eq!(held.rotation, trace.end().rotation);
+    // Nothing translates, so the shoe never admits the request; the turn it
+    // leaves clear resolves the tick instead of searching until the budget ends.
+    for point in &trace.points {
+        assert_eq!(point.pose.position, state.pose.position);
+        assert_eq!(point.height, state.height);
+    }
+    assert_eq!(trace.points[0].rotation, state.rotation);
+    assert!((trace.end().pose.heading - desired.heading).abs() < 1e-12);
+    assert!(trace
+        .points
+        .windows(2)
+        .all(|p| p[0].fraction < p[1].fraction));
     for pair in trace.points.windows(2) {
         for i in 0..=100 {
             let t = pair[0].fraction + (pair[1].fraction - pair[0].fraction) * i as f64 / 100.;
@@ -663,16 +646,16 @@ fn unresolved_shoe_rim_landing_declines_support_at_the_verified_pose() {
     .unwrap();
     let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
     assert_eq!(trace.end().fraction, 1.);
-    assert_eq!(trace.points.len(), 2);
     assert!(trace.end().pose.position.distance(desired.position) > 0.01);
-    // The landing is declined, not snapped onto the rim it grazed.
+    // The landing is declined, not snapped onto the rim it grazed, and the turn
+    // the unresolved sweep never proved translating is taken on its own proof.
     for point in &trace.points {
         assert_eq!(point.support, None);
         assert!(!point.grounded);
-        assert_eq!(point.pose, state.pose);
+        assert_eq!(point.pose.position, state.pose.position);
         assert_eq!(point.height, state.height);
-        assert_eq!(point.rotation, state.rotation);
     }
+    assert!((trace.end().pose.heading - desired.heading).abs() < 1e-12);
     for pair in trace.points.windows(2) {
         for i in 0..=100 {
             let t = pair[0].fraction + (pair[1].fraction - pair[0].fraction) * i as f64 / 100.;
@@ -691,6 +674,45 @@ fn unresolved_shoe_rim_landing_declines_support_at_the_verified_pose() {
             );
         }
     }
+}
+
+#[test]
+fn a_blocked_body_keeps_turning_instead_of_repeating_one_frozen_request() {
+    // The stall this pins: a body the cat blocks used to decline the turn along
+    // with the translation, so every later tick posed the identical query and
+    // the state was an exact fixed point for the rest of the attempt.
+    let start: BodyState = serde_json::from_str(r#"{"height":0.23414186509649976,"mode":"flying","outcome":null,"pose":{"heading":3.327521341194789,"position":{"x":1.989364406830438,"z":1.7249449795611456}},"reserve":15.320000000000093,"rotation":[-0.05489973288487602,0.7523768295447301,-0.1602347215681242,-0.636584605294045],"support":null}"#).unwrap();
+    let world = first_house_room(
+        crate::native_object::NativeObjectShape::SleepingCat
+            .placed_surfaces(Point { x: 2.2, z: 1.65 }, 0., 34)
+            .unwrap(),
+    );
+    // Thrust holds against the cat throughout; only the turn request changes.
+    let request = |state: &BodyState, turn: f64| BodyPose {
+        position: Point {
+            x: state.pose.position.x + 0.03 * state.pose.heading.cos(),
+            z: state.pose.position.z + 0.03 * state.pose.heading.sin(),
+        },
+        heading: state.pose.heading + turn,
+    };
+    let mut state = start.clone();
+    let mut turned = 0.;
+    for _ in 0..15 {
+        let before = state.pose.heading;
+        let trace = motion::advance(&world, &state, request(&state, -0.05), 0.1, 0.002632).unwrap();
+        assert_traversal_clears_contact(&world, &trace);
+        trace.end().apply(&mut state);
+        assert_ne!(
+            state.pose.heading, before,
+            "a blocked body still turns every tick"
+        );
+        turned += (state.pose.heading - before).abs();
+    }
+    assert!(turned > 0.7, "the blocked body swept {turned} rad");
+    assert!(
+        state.pose.position.distance(start.pose.position) < 0.01,
+        "the cat still blocks the translation the turn was taken without"
+    );
 }
 
 #[test]
@@ -721,9 +743,10 @@ fn free_flight_into_a_closed_cat_part_holds_the_verified_pose() {
         .exceeds(3e-6));
     let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
     assert_eq!(trace.end().fraction, 1.);
-    assert_eq!(trace.end().pose, state.pose);
+    assert_eq!(trace.end().pose.position, state.pose.position);
     assert_eq!(trace.end().height, state.height);
-    assert_eq!(trace.end().rotation, state.rotation);
+    // Entering the component stays refused; the turn away from it does not.
+    assert!((trace.end().pose.heading - desired.heading).abs() < 1e-12);
     assert_traversal_clears_contact(&world, &trace);
 }
 
@@ -854,6 +877,7 @@ fn assert_traversal_clears_contact(world: &BodyWorld, trace: &MotionTrace) {
         for i in 0..=100 {
             let t = pair[0].fraction + (pair[1].fraction - pair[0].fraction) * i as f64 / 100.;
             let p = trace.at(t).unwrap();
+            assert!(p.height + 3e-6 >= world.hull.floor_height_at(p.rotation).unwrap());
             let depth = world
                 .surfaces
                 .penetration(
@@ -868,4 +892,75 @@ fn assert_traversal_clears_contact(world: &BodyWorld, trace: &MotionTrace) {
             );
         }
     }
+}
+
+#[test]
+fn query_exhaustion_after_partial_contact_restores_the_start() {
+    let (state, mut desired, world) = blocked_shoe_landing();
+    desired.heading = state.pose.heading;
+    let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
+    assert_eq!(trace.queries, 512);
+    assert_eq!(trace.points.len(), 2);
+    assert_eq!(trace.end().pose, state.pose);
+    assert_eq!(trace.end().rotation, state.rotation);
+    assert_eq!(trace.end().height, state.height);
+    assert_eq!(trace.end().fraction, 1.);
+    assert_traversal_clears_contact(&world, &trace);
+}
+
+fn blocked_shoe_landing() -> (BodyState, BodyPose, BodyWorld) {
+    let state: BodyState = serde_json::from_str(r#"{"height":0.11255713501421462,"mode":"landing","outcome":null,"pose":{"heading":0.2176269264573418,"position":{"x":2.609781851680292,"z":6.617292034591574}},"reserve":15.800000000000088,"rotation":[0.05143462464804994,0.6216922215351854,-0.07547638774578283,0.7779181036348288],"support":null}"#).unwrap();
+    let desired: BodyPose = serde_json::from_str(
+        r#"{"heading":0.0258326279435859,"position":{"x":2.637053725814715,"z":6.61799669552226}}"#,
+    )
+    .unwrap();
+    let objects = crate::native_object::NativeObjectShape::WornShoes
+        .placed_surfaces(Point { x: 2.6, z: 6.7 }, 0.8, 2)
+        .unwrap();
+    let geometry = Geometry {
+        rooms: vec![crate::environment::RectRoom {
+            id: 1,
+            min: Point { x: 0., z: 0. },
+            max: Point { x: 10., z: 10. },
+        }],
+        walls: vec![],
+        solids: vec![],
+    };
+    let world = BodyWorld::new(
+        &geometry,
+        &[],
+        &objects,
+        &[],
+        ExitOpening {
+            a: Point { x: 10., z: 1. },
+            b: Point { x: 10., z: 2. },
+            outward: Point { x: 1., z: 0. },
+        },
+        1000,
+    )
+    .unwrap();
+    (state, desired, world)
+}
+
+#[test]
+fn retained_root_turn_accounts_for_floor_between_clear_endpoints() {
+    use parry3d_f64::math::Rotation;
+    let hull = native_hull().unwrap();
+    let from = support_rotation(0.14, [0.8, 0.6, 0.]).unwrap();
+    let to = support_rotation(0.74, [0.8, 0.6, 0.]).unwrap();
+    let endpoints = hull
+        .floor_height_at(from)
+        .unwrap()
+        .max(hull.floor_height_at(to).unwrap());
+    let swept = hull.floor_height_during_turn(from, to).unwrap();
+    assert!(
+        swept > endpoints + 3e-6,
+        "endpoints miss the intervening floor collision"
+    );
+    for i in 0..=1000 {
+        let q = Rotation::from_array(from).slerp(Rotation::from_array(to), i as f64 / 1000.);
+        assert!(hull.floor_height_at(q.to_array()).unwrap() <= swept + 1e-15);
+    }
+    let equivalent = hull.floor_height_during_turn(from, to.map(|v| -v)).unwrap();
+    assert!((swept - equivalent).abs() < 1e-15);
 }

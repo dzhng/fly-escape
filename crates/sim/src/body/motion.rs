@@ -491,23 +491,66 @@ fn advance_bounded(
             rotation,
             delta,
         )?;
+        // Translation uses the requested orientation from its start, so that turn
+        // at the retained root needs a swept-clearance proof of its own either
+        // way: it is what admits the combined request, and it is the whole
+        // substep when the combined request is blocked.
+        work.query()?;
+        let turn = world.surfaces.rotation_clearance(
+            world.hull,
+            point.root(),
+            point.rotation,
+            rotation,
+            [0., 0., 0.],
+        )?;
         if clearance == crate::surface::RotationClearance::Clear {
-            // Translation uses the requested orientation from its start, so that
-            // turn at the retained root must also have a swept-clearance proof.
-            work.query()?;
-            clearance = world.surfaces.rotation_clearance(
-                world.hull,
-                point.root(),
-                point.rotation,
-                rotation,
-                [0., 0., 0.],
-            )?;
+            clearance = turn;
         }
         if clearance != crate::surface::RotationClearance::Clear {
             // No swept-clearance proof: reject angular motion, then still test
             // the requested translation using the last verified orientation.
             if !verified(world, point.root(), point.rotation, work)? {
                 return Err(MotionFailure::Blocked);
+            }
+            // Blocked translation must not freeze heading: a proven turn at the
+            // retained root is this substep on its own, holding translation and
+            // the height that already rests on or above the rotated floor. Time
+            // still advances, so the request keeps arriving at a new pose.
+            let rests_on_floor = if point.grounded {
+                (point.height - floor).abs() <= MOTION_ERROR
+            } else {
+                point.height >= floor - MOTION_ERROR
+            };
+            // A turn-only fallback may defer ordinary contact, but must not
+            // suppress an otherwise reachable terminal hazard.
+            work.query()?;
+            let reachable_hazard = world
+                .surfaces
+                .cast_at_rotation(world.hull, point.root(), point.rotation, delta)?
+                .is_some_and(|hit| world.contact_hazards.contains_key(&hit.surface_id));
+            if !reachable_hazard
+                && turn == crate::surface::RotationClearance::Clear
+                && rests_on_floor
+                && point.height + MOTION_ERROR
+                    >= world
+                        .hull
+                        .floor_height_during_turn(point.rotation, rotation)?
+                && verified(world, point.root(), rotation, work)?
+            {
+                point.pose.heading = heading;
+                point.rotation = rotation;
+                point.fraction = fraction;
+                elapsed += step;
+                origin = point.pose.position;
+                origin_time = elapsed;
+                if blocked[0] {
+                    velocity.x = 0.;
+                }
+                if blocked[1] {
+                    velocity.z = 0.;
+                }
+                append_point(&mut trace.points, point.clone())?;
+                continue;
             }
             trace.rotation_blocked = true;
             trace.rotation_unresolved |= clearance == crate::surface::RotationClearance::Unresolved;
