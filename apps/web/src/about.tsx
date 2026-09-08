@@ -48,8 +48,9 @@ export function About() {
         <p>
           Odor, light and contact are modeled signals mapped to selected neural groups. Neural
           readouts drive movement and behavioral transitions. Sensory gains, movement decoding,
-          collisions, feeding and energy reserves are simplified game models. Their behavior is not
-          a validated prediction of an animal’s behavior.
+          and collisions are simplified game models. Their behavior is not
+          a validated prediction of an animal’s behavior. The separate lifecycle laboratory also
+          uses a simplified feeding and energy model; campaign rounds use a timer.
         </p>
         <p>
           The activity panels show simulated state and connectivity summaries. They do not measure a

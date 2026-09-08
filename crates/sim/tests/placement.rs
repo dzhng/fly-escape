@@ -1,4 +1,9 @@
-use sim::{attempt::LevelDef, body::ContactRegion, environment::*, placement::*};
+use sim::{
+    attempt::LevelDef,
+    body::{ContactRegion, LifeModel},
+    environment::*,
+    placement::*,
+};
 fn level() -> LevelDef {
     let mut level = sim::swarm_lab::level(1).unwrap();
     level.sources.clear();
@@ -198,11 +203,11 @@ fn canonical_resolution_binds_each_tool_without_mixing_food_and_odor() {
         .remaining
         .iter()
         .all(|s| s.count == u32::from(!placements.iter().any(|p| p.kind == s.kind))));
-    let mut no_replenishment = level;
-    no_replenishment.body_config.feeding_rate = 0.;
-    let ablated = resolve_placements(&no_replenishment, &placements).unwrap();
-    assert_eq!(ablated.sources, resolved.sources);
-    assert_eq!(ablated.state.food, resolved.state.food);
+    let mut timed = level;
+    timed.body_config.life = LifeModel::Timed;
+    let without_energy = resolve_placements(&timed, &placements).unwrap();
+    assert_eq!(without_energy.sources, resolved.sources);
+    assert_eq!(without_energy.state.food, resolved.state.food);
 }
 
 #[test]

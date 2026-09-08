@@ -60,7 +60,7 @@ fn actual_graph_lifecycle_probe() {
                     serde_json::to_string(&lab.info().spec).unwrap()
                 );
             }
-            let mut prior = lab.info().level.initial_reserve;
+            let mut prior = lab.info().level.body_config.life.reserve().unwrap().initial;
             let mut gained = 0.;
             while let Some(frame) = lab.step().unwrap() {
                 let fly = &frame.flies[0];

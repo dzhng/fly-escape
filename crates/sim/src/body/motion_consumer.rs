@@ -57,7 +57,7 @@ fn numerical_producer_handles_actual_requests() {
             position: Point { x: 0.02, z: -0.003 },
             heading,
         };
-        let mut body = Body::new(pose, 10., BodyConfig::default()).unwrap();
+        let mut body = Body::new(pose, BodyConfig::default()).unwrap();
         body.state.height = sample.root[1];
         body.state.rotation = sample.rotation;
         body.state.support = Some(apple.id);
@@ -175,7 +175,7 @@ fn motion_requests_advance_within_budget() {
                 position: Point { x, z },
                 heading,
             };
-            let mut body = Body::new(pose, 10., BodyConfig::default()).unwrap();
+            let mut body = Body::new(pose, BodyConfig::default()).unwrap();
             body.state.height = sample.root[1];
             body.state.rotation = sample.rotation;
             body.state.support = Some(apple.id);
@@ -465,7 +465,6 @@ fn free_space_turns_remain_available_and_zero_time_landing_records_support() {
             position: Point { x: 1., z: 1. },
             heading: 0.,
         },
-        10.,
         BodyConfig::default(),
         BodyMode::Flying,
     )

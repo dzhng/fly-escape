@@ -23,8 +23,14 @@ rotation: [number, number, number, number],
 /**
  * Food support identity; None is floor for grounded modes, air otherwise.
  */
-support: number | null, mode: BodyMode, reserve: number, outcome: TerminalOutcome | null, };
-export type BodyConfig = { reserveCapacity: number, idleCost: number, walkingCost: number, flyingCost: number, feedingRate: number, maxBoutSeconds: number, bodyRadius: number, walkSpeed: number, flightSpeed: number, turnGain: number, takeoffThreshold: number,
+support: number | null, mode: BodyMode,
+/**
+ * Remaining energy under the reserve model; timed rounds model none and hold zero.
+ */
+reserve: number, outcome: TerminalOutcome | null, };
+export type ReserveModel = { initial: number, capacity: number, idleCost: number, walkingCost: number, flyingCost: number, feedingRate: number, maxBoutSeconds: number, };
+export type LifeModel = { "kind": "timed" } | { "kind": "reserve" } & ReserveModel;
+export type BodyConfig = { life: LifeModel, bodyRadius: number, walkSpeed: number, flightSpeed: number, turnGain: number, takeoffThreshold: number,
 /**
  * Emitted spike fraction, averaged across the two landing groups.
  */
@@ -52,7 +58,7 @@ export type FeedingEnd = "contactLost" | "satiated" | "boutLimit" | "terminal";
 export type BodyEventKind = { "type": "modeChanged", from: BodyMode, to: BodyMode, } | { "type": "feedingStarted" } | { "type": "feedingEnded", reason: FeedingEnd, } | { "type": "terminal", outcome: TerminalOutcome, };
 export type BodyEvent = { tick: number, kind: BodyEventKind, };
 export type OutcomeSummary = { escaped: number, starved: number, zapped: number, caught: number, timedOut: number, score: number, };
-export type LevelDef = { id: string, geometry: Geometry, spawn: SpawnDef, exit: ExitOpening, exitCue: ExitCue | null, food: Array<FoodDef>, fixedObjects: Array<Placement>, zappers: Array<ContactRegion>, sources: Array<Source>, fieldConfig: FieldConfig, bodyConfig: BodyConfig, initialReserve: number, durationTicks: number, starThresholds: [number, number, number], placementRules: PlacementRules, };
+export type LevelDef = { id: string, geometry: Geometry, spawn: SpawnDef, exit: ExitOpening, exitCue: ExitCue | null, food: Array<FoodDef>, fixedObjects: Array<Placement>, zappers: Array<ContactRegion>, sources: Array<Source>, fieldConfig: FieldConfig, bodyConfig: BodyConfig, durationTicks: number, starThresholds: [number, number, number], placementRules: PlacementRules, };
 export type ToolKind = "fruit" | "banana" | "crumbs" | "vinegar" | "lamp" | "shade" | "fan" | "bugZapper" | "spiderWeb" | "wornShoes" | "dirtyDishes" | "laundry" | "sleepingCat";
 export type ToolEffect = { "type": "none" } | { "type": "source", kind: SourceKind, radius: number, rate: number, } | { "type": "fan", reach: number, halfWidth: number, speed: number, };
 export type ToolDef = { kind: ToolKind, footprintRadius: number, effect: ToolEffect, contact: NativeObjectShape | null, edible: boolean, contactHazard: ContactHazardKind | null, };

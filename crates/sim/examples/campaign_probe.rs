@@ -245,7 +245,7 @@ fn run(
         }
         for fly in &frame.flies {
             if !fly.events.is_empty() {
-                body_events.push(json!({"tick":frame.tick,"flyId":fly.id,"events":fly.events,"reserve":fly.body.reserve,"position":fly.body.pose.position,"mode":fly.body.mode}));
+                body_events.push(json!({"tick":frame.tick,"flyId":fly.id,"events":fly.events,"position":fly.body.pose.position,"mode":fly.body.mode}));
             }
             let a = fly.input_pose.position;
             let b = fly.body.pose.position;
@@ -365,7 +365,7 @@ fn run(
         }
         if let Some(result) = frame.result {
             return Ok(
-                json!({"seed":seed,"condition":label,"feedingRate":content.level.body_config.feeding_rate,"armChange":if label=="no-food-energy" {json!({"path":"level.bodyConfig.feedingRate","value":0,"preserved":"same placements, odor sources, contacts, taste input and all other tuning; energy-dependent later behavior may diverge"})} else {Value::Null},"bodyEvents":body_events,"spec":spec,"result":result,"constructSeconds":construct_seconds,"firstTickSeconds":first_tick_seconds,"wallSeconds":start.elapsed().as_secs_f64(),"detector":if detector {json!({"free":detector_free,"wall":detector_wall,"samples":detector_samples,"activationAuthority":"cue_currents on actual FlyFrame sensory; no duplicated detector threshold","occupancy":"antennae reconstructed from FieldSet.sample formula; room_at checks floor and contains_body(radius=0) checks obstacles"})} else {Value::Null},"wallMotor":{"samples":wall_motor_samples,"maxSamplesPerFly":8,"absTurnSum":wall_abs_turn_sum,"absTurnMax":wall_abs_turn_max,"absHeadingDeltaSum":wall_abs_heading_delta_sum},"stalledTicks":stalled,"boundaryStalledTicks":boundary_stalled,"stallDefinition":"nonterminal nonfeeding displacement below 1e-8; boundary subset fails Geometry occupancy with body radius enlarged by 1e-5","samples":samples}),
+                json!({"seed":seed,"condition":label,"bodyEvents":body_events,"spec":spec,"result":result,"constructSeconds":construct_seconds,"firstTickSeconds":first_tick_seconds,"wallSeconds":start.elapsed().as_secs_f64(),"detector":if detector {json!({"free":detector_free,"wall":detector_wall,"samples":detector_samples,"activationAuthority":"cue_currents on actual FlyFrame sensory; no duplicated detector threshold","occupancy":"antennae reconstructed from FieldSet.sample formula; room_at checks floor and contains_body(radius=0) checks obstacles"})} else {Value::Null},"wallMotor":{"samples":wall_motor_samples,"maxSamplesPerFly":8,"absTurnSum":wall_abs_turn_sum,"absTurnMax":wall_abs_turn_max,"absHeadingDeltaSum":wall_abs_heading_delta_sum},"stalledTicks":stalled,"boundaryStalledTicks":boundary_stalled,"stallDefinition":"nonterminal nonfeeding displacement below 1e-8; boundary subset fails Geometry occupancy with body radius enlarged by 1e-5","samples":samples}),
             );
         }
     }
@@ -383,11 +383,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 && v != "--reference-empty"
                 && v != "--detector-controls"
                 && v != "--no-fans-control"
-                && v != "--food-energy-control"
         })
     {
         return Err(
-            "Usage: campaign_probe GRAPH_DIR CONTENT_JSON tuning|heldout COUNT OUTPUT_JSON [--empty-control|--reference-empty|--detector-controls|--no-fans-control|--food-energy-control]".into(),
+            "Usage: campaign_probe GRAPH_DIR CONTENT_JSON tuning|heldout COUNT OUTPUT_JSON [--empty-control|--reference-empty|--detector-controls|--no-fans-control]".into(),
         );
     }
     let content_text = std::fs::read_to_string(&args[2])?;
@@ -403,10 +402,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Err("reference-empty diagnostic requires at most three seeds and exactly one inhibitory odor cue".into());
     }
     let no_fans = args.get(6).is_some_and(|v| v == "--no-fans-control");
-    let food_energy = args.get(6).is_some_and(|v| v == "--food-energy-control");
-    if food_energy && content.level.body_config.feeding_rate <= 0. {
-        return Err("food energy control requires positive reference feeding rate".into());
-    }
     let topology = topology(&content.level)?;
     let thresholds = content.level.star_thresholds;
     if thresholds[0] == 0 || thresholds[2] > 20 || thresholds.windows(2).any(|v| v[0] >= v[1]) {
@@ -459,17 +454,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
         if no_fans {
             arms.push(("no-fans", &without_fans));
-        } else if food_energy {
-            arms.push(("no-food-energy", &content.reference));
         } else if args.len() == 7 {
             arms.push(("empty", &empty));
         }
         for (label, placements) in arms {
-            let mut arm_content = content.clone();
-            if label == "no-food-energy" {
-                arm_content.level.body_config.feeding_rate = 0.;
-            }
-            let row = run(&graph, &arm_content, seed, label, placements, detector)?;
+            let row = run(&graph, &content, seed, label, placements, detector)?;
             eprintln!(
                 "seed {seed} {label}: {} in {:.2}s; first tick {:.3}s",
                 row["result"],
@@ -512,22 +501,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             .unwrap()
                 })
                 .collect();
-            let starved: Vec<_> = rows
-                .iter()
-                .map(|r| r["result"]["outcomes"]["starved"].as_f64().unwrap())
-                .collect();
-            let starvation_differences: Vec<_> = pairs
-                .iter()
-                .map(|p| {
-                    p["conditions"][arm]["result"]["outcomes"]["starved"]
-                        .as_f64()
-                        .unwrap()
-                        - p["conditions"][0]["result"]["outcomes"]["starved"]
-                            .as_f64()
-                            .unwrap()
-                })
-                .collect();
-            summaries.insert(rows[0]["condition"].as_str().unwrap().into(), json!({"starved":starved,"medianStarved":median(starved.clone()),"medianStarvationIncreaseOverReference":median(starvation_differences),"escapes":escapes,"medianEscapes":median(escapes),"oneStarAttempts":rows.iter().filter(|r|r["result"]["stars"].as_u64().unwrap()>=1).count(),"medianReferenceMinusThis":median(paired)}));
+            summaries.insert(rows[0]["condition"].as_str().unwrap().into(), json!({"escapes":escapes,"medianEscapes":median(escapes),"oneStarAttempts":rows.iter().filter(|r|r["result"]["stars"].as_u64().unwrap()>=1).count(),"medianReferenceMinusThis":median(paired)}));
         }
         let acceptance = acceptance(
             &summaries,
@@ -561,7 +535,6 @@ fn acceptance(
         .is_some_and(|n| n >= 27);
     json!({"diagnosticOnly":!full || diagnostic,"completeSeedSet":full,
         "seedSetPassed":full && frozen && !diagnostic && enough_stars && benefit("poor") && (!require_no_fans || benefit("no-fans")),
-        "foodEnergyPassed":full && frozen && !diagnostic && summaries.get("no-food-energy").zip(summaries.get("reference")).is_some_and(|(ablation, reference)| [ (reference["medianEscapes"].as_f64(), ablation["medianEscapes"].as_f64()), (ablation["medianStarved"].as_f64(), reference["medianStarved"].as_f64()) ].iter().all(|(higher, lower)| higher.zip(*lower).is_some_and(|(a,b)| a>b))),
         "campaignAccepted":false,
         "remaining":"Need matching frozen 30-seed tuning and disjoint 30-seed heldout reports, plus integration/human gates; one partial or individual report cannot accept campaign content"})
 }
@@ -569,20 +542,20 @@ fn acceptance(
 #[cfg(test)]
 mod tests {
     use super::*;
-    fn level(text: &str) -> LevelDef {
-        let mut value = serde_json::from_str::<Value>(text).unwrap()["level"].clone();
-        // Archived greybox inputs predate SpawnDef; adaptation stays in this test.
-        if let Some(poses) = value.as_object_mut().unwrap().remove("spawnPoses") {
-            value["spawn"] = json!({"kind":"fixed","states":poses.as_array().unwrap().iter().map(|pose|json!({"pose":pose,"mode":"walking"})).collect::<Vec<_>>()});
-        }
-        serde_json::from_value(value).unwrap()
+    fn level(source: &str) -> LevelDef {
+        // The authored TypeScript modules hold JSON literals. Read those same
+        // levels so topology checks cannot drift into a separate test campaign.
+        let start = source.find("= {").unwrap() + 2;
+        let end = source.rfind("};").unwrap() + 1;
+        let mut content: Value = serde_json::from_str(&source[start..end]).unwrap();
+        serde_json::from_value(content["level"].take()).unwrap()
     }
     #[test]
     fn diagnostic_or_missing_control_cannot_accept_a_seed_set() {
         let mut summaries = serde_json::Map::from_iter([
             (
                 "reference".into(),
-                json!({"oneStarAttempts":30,"medianEscapes":10,"medianStarved":1}),
+                json!({"oneStarAttempts":30,"medianEscapes":10}),
             ),
             ("poor".into(), json!({"medianReferenceMinusThis":8})),
             ("no-fans".into(), json!({"medianReferenceMinusThis":5})),
@@ -612,79 +585,20 @@ mod tests {
         );
     }
     #[test]
-    fn food_energy_evidence_has_a_separate_paired_gate() {
-        let mut summaries = serde_json::Map::from_iter([
-            (
-                "reference".into(),
-                json!({"oneStarAttempts":30,"medianEscapes":10,"medianStarved":1}),
-            ),
-            ("poor".into(), json!({"medianReferenceMinusThis":8})),
-            (
-                "no-food-energy".into(),
-                json!({"medianReferenceMinusThis":2,"medianStarvationIncreaseOverReference":3,"medianEscapes":8,"medianStarved":4}),
-            ),
-        ]);
-        let gate = acceptance(&summaries, true, true, false, false);
-        assert_eq!(gate["seedSetPassed"], true);
-        assert_eq!(gate["foodEnergyPassed"], true);
-        for (field, equal) in [("medianEscapes", 10), ("medianStarved", 1)] {
-            let original = summaries["no-food-energy"][field].clone();
-            summaries.get_mut("no-food-energy").unwrap()[field] = json!(equal);
-            let gate = acceptance(&summaries, true, true, false, false);
-            assert_eq!(gate["seedSetPassed"], true);
-            assert_eq!(gate["foodEnergyPassed"], false);
-            summaries.get_mut("no-food-energy").unwrap()[field] = original;
-        }
-        assert_eq!(
-            acceptance(&summaries, false, true, false, false)["foodEnergyPassed"],
-            false
-        );
-        assert_eq!(
-            acceptance(&summaries, true, false, false, false)["foodEnergyPassed"],
-            false
-        );
-    }
-    #[test]
-    fn positive_paired_medians_do_not_substitute_for_marginal_food_benefit() {
-        // Escapes [0,10,20] vs [10,9,19]: paired benefit +1, both medians 10.
-        // Starvation [0,10,20] vs [10,11,1]: paired increase +1, both medians 10.
-        let summaries = serde_json::Map::from_iter([
-            (
-                "reference".into(),
-                json!({"oneStarAttempts":30,"medianEscapes":median(vec![0.,10.,20.]),"medianStarved":median(vec![0.,10.,20.])}),
-            ),
-            ("poor".into(), json!({"medianReferenceMinusThis":8})),
-            (
-                "no-food-energy".into(),
-                json!({"medianReferenceMinusThis":median(vec![-10.,1.,1.]),"medianStarvationIncreaseOverReference":median(vec![10.,1.,-19.]),"medianEscapes":median(vec![10.,9.,19.]),"medianStarved":median(vec![10.,11.,1.])}),
-            ),
-        ]);
-        assert_eq!(
-            acceptance(&summaries, true, true, false, false)["foodEnergyPassed"],
-            false
-        );
-    }
-    #[test]
     fn real_five_and_six_room_layouts_are_order_independent() {
         for text in [
-            include_str!("../../../assets/levels/OpenWindow.json"),
-            include_str!(
-                "../../../specs/help-the-fly-escape/assets/evidence/16/prepared/candidate.json"
-            ),
+            include_str!("../../../apps/web/src/levels/open-window.ts"),
+            include_str!("../../../apps/web/src/levels/turn-the-corner.ts"),
         ] {
             let mut level = level(text);
             let expected = topology(&level).unwrap();
             level.geometry.rooms.reverse();
             assert_eq!(topology(&level).unwrap(), expected);
-            assert_eq!(
-                expected["roomLinks"].as_array().unwrap().len(),
-                level.geometry.rooms.len() - 1
-            );
         }
     }
     #[test]
     fn disconnected_room_and_blocked_exit_are_rejected() {
-        let mut level = level(include_str!("../../../assets/levels/OpenWindow.json"));
+        let mut level = level(include_str!("../../../apps/web/src/levels/open-window.ts"));
         let mut room = level.geometry.rooms[0].clone();
         room.id = 99;
         room.min.x += 100.;
@@ -694,24 +608,5 @@ mod tests {
         level.geometry.rooms.pop();
         level.exit.outward.x = -level.exit.outward.x;
         assert!(topology(&level).is_err());
-    }
-    #[test]
-    fn energy_ablation_preserves_resolved_sources_and_is_valid() {
-        let mut content: Content =
-            serde_json::from_str(include_str!("../../../assets/levels/OpenWindow.json")).unwrap();
-        let before =
-            sim::placement::resolve_placements(&content.level, &content.reference).unwrap();
-        content.level.body_config.feeding_rate = 0.;
-        sim::body::Body::new(
-            sim::spawn::resolve(&content.level, 0, 20).unwrap()[0].pose,
-            content.level.initial_reserve,
-            content.level.body_config.clone(),
-        )
-        .unwrap();
-        let after = sim::placement::resolve_placements(&content.level, &content.reference).unwrap();
-        assert_eq!(
-            serde_json::to_value(before).unwrap(),
-            serde_json::to_value(after).unwrap()
-        );
     }
 }

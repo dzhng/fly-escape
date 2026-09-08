@@ -89,11 +89,12 @@ pub fn level(count: u32) -> Result<LevelDef, String> {
             wind: point(0., 0.),
             ..FieldConfig::default()
         },
+        // A timed round keeps every fly active for the whole benchmark without an
+        // energy model; the closed room is what prevents an early escape.
         body_config: BodyConfig {
-            reserve_capacity: 1000.,
+            life: LifeModel::Timed,
             ..BodyConfig::default()
         },
-        initial_reserve: 1000.,
         duration_ticks: 6000,
         star_thresholds: [1, 10, 20],
         placement_rules: Default::default(),

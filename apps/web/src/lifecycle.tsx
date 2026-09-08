@@ -101,6 +101,8 @@ export function LifecycleLab() {
     client.current?.startLifecycle(6, next);
   };
   const body = frame?.flies[0].body;
+  const life = info?.level.bodyConfig.life;
+  const reserve = life?.kind === "reserve" ? life : undefined;
   const exitProbe = scenario === "openExit" || scenario === "blockedExit";
   const save = () => {
     const url = URL.createObjectURL(
@@ -176,13 +178,13 @@ export function LifecycleLab() {
             <label>
               Remaining reserve{" "}
               <output data-testid="reserve">
-                {(body?.reserve ?? info?.level.initialReserve ?? 0).toFixed(2)}
+                {(body?.reserve ?? reserve?.initial ?? 0).toFixed(2)}
               </output>
             </label>
             <progress
               aria-label="Remaining reserve"
-              value={body?.reserve ?? info?.level.initialReserve ?? 0}
-              max={info?.level.bodyConfig.reserveCapacity ?? 1}
+              value={body?.reserve ?? reserve?.initial ?? 0}
+              max={reserve?.capacity ?? 1}
             />
             <p>{((frame?.tick ?? 0) / 10).toFixed(1)} game seconds</p>
             {frame?.result && (

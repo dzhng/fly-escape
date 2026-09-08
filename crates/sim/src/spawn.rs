@@ -94,7 +94,6 @@ pub fn validate(level: &LevelDef, count: u32) -> Result<(), String> {
             position: Point { x: 0., z: 0. },
             heading: 0.,
         },
-        level.initial_reserve,
         level.body_config.clone(),
     )?;
     match &level.spawn {
@@ -175,14 +174,11 @@ pub fn resolve(level: &LevelDef, seed: u64, count: u32) -> Result<Vec<BodyState>
             if !level.geometry.contains_body(s.pose.position, radius) {
                 return Err("spawn body must clear room floor, walls and solid props".into());
             }
-            Ok(Body::new_in_mode(
-                s.pose,
-                level.initial_reserve,
-                level.body_config.clone(),
-                s.mode.body_mode(),
-            )?
-            .state()
-            .clone())
+            Ok(
+                Body::new_in_mode(s.pose, level.body_config.clone(), s.mode.body_mode())?
+                    .state()
+                    .clone(),
+            )
         })
         .collect()
 }

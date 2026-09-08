@@ -178,17 +178,20 @@ fn fixture(scenario: LifecycleScenario) -> LevelDef {
         },
         // Costs compress finite life into a short review; locomotion stays neural.
         body_config: BodyConfig {
-            reserve_capacity: 10.,
-            idle_cost: 0.5,
-            walking_cost: 0.6,
-            flying_cost: 0.8,
-            feeding_rate: 3.,
+            life: LifeModel::Reserve(ReserveModel {
+                initial: 8.,
+                capacity: 10.,
+                idle_cost: 0.5,
+                walking_cost: 0.6,
+                flying_cost: 0.8,
+                feeding_rate: 3.,
+                max_bout_seconds: 3.,
+            }),
             walk_speed: 0.12,
             flight_speed: 0.12,
             turn_gain: 8.,
             ..Default::default()
         },
-        initial_reserve: 8.,
         duration_ticks: 300,
         star_thresholds: [1, 2, 3],
         placement_rules: Default::default(),

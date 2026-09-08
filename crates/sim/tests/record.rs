@@ -223,8 +223,13 @@ fn dense_real_body_transitions_fit_and_replay_in_order() {
             position: Point { x: 2., z: 2. },
             heading: 0.,
         },
-        19.9,
-        BodyConfig::default(),
+        BodyConfig {
+            life: LifeModel::Reserve(ReserveModel {
+                initial: 19.9,
+                ..ReserveModel::default()
+            }),
+            ..BodyConfig::default()
+        },
     )
     .unwrap();
     let mut neural = StepOutput {

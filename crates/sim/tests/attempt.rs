@@ -75,7 +75,6 @@ fn level(count: usize) -> LevelDef {
         }],
         field_config: FieldConfig::default(),
         body_config: BodyConfig::default(),
-        initial_reserve: 10.,
         duration_ticks: 3,
         star_thresholds: [1, 2, 3],
         placement_rules: Default::default(),
@@ -687,4 +686,86 @@ fn placement_reserves_the_whole_cluster_before_seed_resolution() {
             .unwrap_err()
             .contains("spawn footprint")
     );
+}
+
+#[test]
+fn a_timed_level_reaches_its_horizon_where_a_finite_life_level_starves() {
+    let graph = graph();
+    let horizon = 10;
+    let mut timed = level(2);
+    timed.body_config.life = LifeModel::Timed;
+    timed.duration_ticks = horizon;
+    let mut finite = timed.clone();
+    // Half a game second of idling: this level dies long before its horizon.
+    finite.body_config.life = LifeModel::Reserve(ReserveModel {
+        initial: 0.1,
+        capacity: 20.,
+        idle_cost: 0.2,
+        walking_cost: 0.4,
+        flying_cost: 0.8,
+        feeding_rate: 3.,
+        max_bout_seconds: 3.,
+    });
+    let mut timed = attempt(graph.clone(), timed, 7, 2);
+    let mut finite = attempt(graph, finite, 7, 2);
+    assert!(timed.initial_bodies().iter().all(|b| b.reserve == 0.));
+    assert!(finite.initial_bodies().iter().all(|b| b.reserve == 0.1));
+    let mut last = None;
+    for tick in 1..=horizon {
+        let frame = timed.step().unwrap().unwrap();
+        assert_eq!(frame.tick, tick);
+        assert!(
+            frame.flies.iter().all(|f| f.body.outcome.is_none()) || tick == horizon,
+            "only the horizon ends a timed round here"
+        );
+        last = Some(frame);
+    }
+    let result = last.unwrap().result.unwrap();
+    assert_eq!(result.outcomes.timed_out, 2);
+    assert_eq!(result.outcomes.starved, 0);
+    assert_eq!(result.completed_tick, horizon);
+    while finite.step().unwrap().is_some() {}
+    let starved = finite.result().unwrap();
+    assert_eq!(starved.outcomes.starved, 2);
+    assert!(starved.completed_tick < horizon);
+}
+
+#[test]
+fn timed_round_with_only_hazard_victims_keeps_the_authored_timer() {
+    let mut definition = level(2);
+    definition.body_config.life = LifeModel::Timed;
+    definition.zappers.push(ContactRegion {
+        center: Point { x: 2., z: 2. },
+        radius: 0.2,
+    });
+    let mut run = attempt(graph(), definition, 9, 2);
+    let first = run.step().unwrap().unwrap();
+    assert!(first
+        .flies
+        .iter()
+        .all(|f| f.body.outcome == Some(TerminalOutcome::Zapped)));
+    assert!(first.result.is_none());
+    let second = run.step().unwrap().unwrap();
+    assert_eq!(second.neural_steps, first.neural_steps);
+    assert!(second.result.is_none());
+    let final_frame = run.step().unwrap().unwrap();
+    let result = final_frame.result.unwrap();
+    assert_eq!(result.completed_tick, 3);
+    assert_eq!(result.outcomes.zapped, 2);
+    assert_eq!(result.outcomes.score, 0);
+    assert!(run.step().unwrap().is_none());
+}
+
+#[test]
+fn all_escaped_ends_a_timed_round_before_its_horizon() {
+    let mut definition = level(2);
+    definition.body_config.life = LifeModel::Timed;
+    definition.duration_ticks = 100;
+    definition.field_config.wind = Point { x: 5., z: 0. };
+    let mut run = attempt(graph(), definition, 9, 2);
+    while run.step().unwrap().is_some() {}
+    let result = run.result().unwrap();
+    assert_eq!(result.outcomes.escaped, 2);
+    assert_eq!(result.outcomes.score, 2);
+    assert!(result.completed_tick < 100);
 }

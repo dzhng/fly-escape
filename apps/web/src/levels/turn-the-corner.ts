@@ -2,12 +2,9 @@ import type { CampaignLevel } from "../campaign";
 const content: Pick<CampaignLevel, "level" | "tuning"> = {
   "level": {
     "bodyConfig": {
-      "reserveCapacity": 30,
-      "idleCost": 0.2,
-      "walkingCost": 0.4,
-      "flyingCost": 0.8,
-      "feedingRate": 3,
-      "maxBoutSeconds": 3,
+      "life": {
+        "kind": "timed"
+      },
       "bodyRadius": 0.002632,
       "walkSpeed": 0.12,
       "flightSpeed": 0.24,
@@ -17,7 +14,7 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
       "landingDwellSeconds": 1,
       "proboscisThreshold": 0.2
     },
-    "durationTicks": 800,
+    "durationTicks": 3000,
     "exit": {
       "a": {
         "x": 9.6,
@@ -440,7 +437,6 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
       ]
     },
     "id": "turn-the-corner",
-    "initialReserve": 20,
     "placementRules": {
       "inventory": [
         {

@@ -65,7 +65,6 @@ pub struct LevelDef {
     pub sources: Vec<Source>,
     pub field_config: FieldConfig,
     pub body_config: BodyConfig,
-    pub initial_reserve: f64,
     pub duration_ticks: u32,
     pub star_thresholds: [u32; 3],
     pub placement_rules: PlacementRules,
@@ -268,12 +267,7 @@ impl Attempt {
                 brain.set_silenced_neurons(&tuning.silenced_neurons)?;
                 Ok(Fly {
                     brain,
-                    body: Body::new_in_mode(
-                        initial.pose,
-                        initial.reserve,
-                        level.body_config.clone(),
-                        initial.mode,
-                    )?,
+                    body: Body::new_in_mode(initial.pose, level.body_config.clone(), initial.mode)?,
                 })
             })
             .collect::<Result<_, String>>()?;
@@ -398,6 +392,12 @@ impl Attempt {
             .flies
             .iter()
             .all(|fly| fly.body.state().outcome.is_some())
+            && (self.level.body_config.life != LifeModel::Timed
+                || self.tick >= self.level.duration_ticks
+                || self
+                    .flies
+                    .iter()
+                    .all(|fly| fly.body.state().outcome == Some(TerminalOutcome::Escaped)))
         {
             let states: Vec<_> = self.flies.iter().map(|f| f.body.state().clone()).collect();
             let outcomes = summarize_outcomes(&states);

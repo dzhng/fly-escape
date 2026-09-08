@@ -489,6 +489,9 @@ export function AttemptPlayback({
   for (const frameFly of display.frame?.flies ?? [])
     if (frameFly.body.outcome) counts[frameFly.body.outcome]++;
   const terminalCount = Object.values(counts).reduce((a, b) => a + b, 0);
+  const timedRound = input?.level.bodyConfig.life.kind === "timed";
+  const secondsLeft = Math.ceil(Math.max(0,
+    ((input?.level.durationTicks ?? DURATION_TICKS) - display.cursor) * TICK_SECONDS));
   return (
     <main
       className="playback-lab"
@@ -520,7 +523,7 @@ export function AttemptPlayback({
           )}
           <div className="playback-counters" aria-label="Outcomes at playback time">
             <b data-testid="active-count">{FLY_COUNT - terminalCount} {error ? "paused" : "active"}</b>
-            {Object.entries(counts).map(([name, count]) => (
+            {Object.entries(counts).filter(([name]) => !timedRound || name !== "starved").map(([name, count]) => (
               <span key={name} data-testid={`outcome-${name}`}>
                 {count} {name === "timedOut" ? "timed out" : name}
               </span>
@@ -547,10 +550,14 @@ export function AttemptPlayback({
                                 : "Playing in real time"
                               : "Paused"}
               </strong>
-              <span>
-                {(display.cursor * TICK_SECONDS).toFixed(1)} /{" "}
-                {((input?.level.durationTicks ?? DURATION_TICKS) * TICK_SECONDS).toFixed(1)} s
-                {!input && <> · {(display.computed * TICK_SECONDS).toFixed(1)} s computed</>}
+              <span data-testid="round-time">
+                {timedRound
+                  ? `${Math.floor(secondsLeft / 60)}:${String(secondsLeft % 60).padStart(2, "0")} left`
+                  : <>
+                      {(display.cursor * TICK_SECONDS).toFixed(1)} /{" "}
+                      {((input?.level.durationTicks ?? DURATION_TICKS) * TICK_SECONDS).toFixed(1)} s
+                      {!input && <> · {(display.computed * TICK_SECONDS).toFixed(1)} s computed</>}
+                    </>}
               </span>
             </div>
             <input

@@ -24,6 +24,8 @@ fn main() {
         BodyMode::decl(),
         TerminalOutcome::decl(),
         BodyState::decl(),
+        ReserveModel::decl(),
+        LifeModel::decl(),
         BodyConfig::decl(),
         ContactRegion::decl(),
         ContactHazardKind::decl(),

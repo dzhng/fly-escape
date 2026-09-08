@@ -40,13 +40,12 @@ pub fn fixture() -> Result<SetupFixture, String> {
             sources: vec![],
             field_config: FieldConfig::default(),
             body_config: BodyConfig {
+                life: LifeModel::Timed,
                 walk_speed: 0.12,
                 flight_speed: 0.24,
                 turn_gain: 8.,
-                reserve_capacity: 30.,
                 ..Default::default()
             },
-            initial_reserve: 20.,
             duration_ticks: 600,
             star_thresholds: [1, 10, 18],
             placement_rules: PlacementRules {

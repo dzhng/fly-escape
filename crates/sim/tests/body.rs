@@ -61,10 +61,26 @@ fn body(x: f64, z: f64, reserve: f64) -> Body {
             position: Point { x, z },
             heading: 0.,
         },
-        reserve,
-        BodyConfig::default(),
+        reserve_config(reserve),
     )
     .unwrap()
+}
+/// A timed round: the horizon is the only clock, so no energy is spent or gained.
+fn timed_config() -> BodyConfig {
+    BodyConfig {
+        life: LifeModel::Timed,
+        ..BodyConfig::default()
+    }
+}
+/// The shared finite-life model, started at a chosen reserve.
+fn reserve_config(initial: f64) -> BodyConfig {
+    BodyConfig {
+        life: LifeModel::Reserve(ReserveModel {
+            initial,
+            ..ReserveModel::default()
+        }),
+        ..BodyConfig::default()
+    }
 }
 fn food_patch(x: f64, z: f64, radius: f64) -> sim::surface::ContactSurface {
     FoodDef {
@@ -330,9 +346,12 @@ fn feeding_does_not_exempt_a_body_from_net_energy_loss() {
             position: Point { x: 2., z: 2. },
             heading: 0.,
         },
-        0.01,
         BodyConfig {
-            feeding_rate: 0.05,
+            life: LifeModel::Reserve(ReserveModel {
+                initial: 0.01,
+                feeding_rate: 0.05,
+                ..ReserveModel::default()
+            }),
             ..BodyConfig::default()
         },
     )
@@ -460,7 +479,7 @@ fn airborne_landing_is_latched_and_terminal_height_freezes_at_the_actual_time() 
         mean_voltage: 0.,
         spike_fraction: 1.,
     });
-    let mut b = Body::new_in_mode(start, 10., BodyConfig::default(), BodyMode::Flying).unwrap();
+    let mut b = Body::new_in_mode(start, reserve_config(10.), BodyMode::Flying).unwrap();
     let initial_height = b.state().height;
     b.step(&pulse, &world, Point::default(), 0.1, 1).unwrap();
     assert_eq!(b.state().mode, BodyMode::Landing);
@@ -479,8 +498,7 @@ fn airborne_landing_is_latched_and_terminal_height_freezes_at_the_actual_time() 
     assert_eq!(b.state().mode, BodyMode::Walking);
     assert!(b.contacts(&world).unwrap().food);
 
-    let mut dying =
-        Body::new_in_mode(start, 0.04, BodyConfig::default(), BodyMode::Flying).unwrap();
+    let mut dying = Body::new_in_mode(start, reserve_config(0.04), BodyMode::Flying).unwrap();
     dying.step(&pulse, &world, Point::default(), 1., 1).unwrap();
     // Reserve lasts0.05s, so descent stops after0.0375m even though dt spans touchdown.
     assert_eq!(dying.state().outcome, Some(TerminalOutcome::Starved));
@@ -506,8 +524,7 @@ fn native_fly_lands_on_authored_apple_before_it_can_feed() {
             position: Point { x: 2., z: 2. },
             heading: 0.,
         },
-        3.,
-        BodyConfig::default(),
+        reserve_config(3.),
         BodyMode::Flying,
     )
     .unwrap();
@@ -555,8 +572,7 @@ fn apple_support_follows_walking_and_is_lost_at_the_edge() {
             position: Point { x: 2., z: 2. },
             heading: 0.,
         },
-        20.,
-        BodyConfig::default(),
+        reserve_config(20.),
         BodyMode::Flying,
     )
     .unwrap();
@@ -652,8 +668,7 @@ fn neighboring_apple_blocks_while_time_advances() {
             position: Point { x: 2., z: 2. },
             heading: 0.,
         },
-        20.,
-        BodyConfig::default(),
+        reserve_config(20.),
         BodyMode::Flying,
     )
     .unwrap();
@@ -721,9 +736,13 @@ fn feeding_prefix_energy_and_terminal_hold_share_the_motion_clock() {
     let g = geometry();
     let world = BodyWorld::new(&g, &[food_patch(2., 2., 1.)], &[], &[], exit(), 100).unwrap();
     let config = BodyConfig {
-        idle_cost: 1.,
-        feeding_rate: 0.1,
-        max_bout_seconds: 0.2,
+        life: LifeModel::Reserve(ReserveModel {
+            initial: 0.5,
+            idle_cost: 1.,
+            feeding_rate: 0.1,
+            max_bout_seconds: 0.2,
+            ..ReserveModel::default()
+        }),
         ..BodyConfig::default()
     };
     let mut b = Body::new(
@@ -731,7 +750,6 @@ fn feeding_prefix_energy_and_terminal_hold_share_the_motion_clock() {
             position: Point { x: 2., z: 2. },
             heading: 0.,
         },
-        0.5,
         config,
     )
     .unwrap();
@@ -774,8 +792,7 @@ fn takeoff_from_tilted_apple_makes_progress() {
             position: Point { x: 2., z: 2. },
             heading: 0.,
         },
-        20.,
-        BodyConfig::default(),
+        reserve_config(20.),
         BodyMode::Flying,
     )
     .unwrap();
@@ -884,8 +901,7 @@ fn native_fly_can_land_and_feed_on_the_authored_banana() {
             position: Point { x: 2., z: 2. },
             heading: 0.,
         },
-        3.,
-        BodyConfig::default(),
+        reserve_config(3.),
         BodyMode::Flying,
     )
     .unwrap();
@@ -935,8 +951,7 @@ fn household_surfaces_support_walking_but_never_feed_even_with_proboscis_spikes(
                 },
                 heading: 0.,
             },
-            10.,
-            BodyConfig::default(),
+            reserve_config(10.),
             BodyMode::Flying,
         )
         .unwrap();
@@ -1011,8 +1026,7 @@ fn household_meshes_do_not_block_the_air_above_their_native_height() {
                 position: Point { x: 1.5, z: 2. },
                 heading: 0.,
             },
-            10.,
-            BodyConfig::default(),
+            reserve_config(10.),
             BodyMode::Flying,
         )
         .unwrap();
@@ -1027,4 +1041,158 @@ fn household_meshes_do_not_block_the_air_above_their_native_height() {
         assert!(b.state().support.is_none());
         assert!(!b.contacts(&world).unwrap().food);
     }
+}
+
+#[test]
+fn a_timed_round_outlives_starvation_and_ends_at_its_horizon() {
+    let g = geometry();
+    let horizon = 30;
+    let world = BodyWorld::new(&g, &[], &[], &[], exit(), horizon).unwrap();
+    let mut timed = Body::new(
+        BodyPose {
+            position: Point { x: 2., z: 2. },
+            heading: 0.,
+        },
+        timed_config(),
+    )
+    .unwrap();
+    let mut finite = body(2., 2., 1.);
+    let mut starved_at = None;
+    for tick in 1..horizon {
+        timed
+            .step(&neural(0., 0.), &world, Point::default(), 1., tick)
+            .unwrap();
+        finite
+            .step(&neural(0., 0.), &world, Point::default(), 1., tick)
+            .unwrap();
+        assert_eq!(timed.state().outcome, None, "no clock but the horizon");
+        starved_at = starved_at.or(finite.state().outcome.map(|_| tick));
+    }
+    assert_eq!(finite.state().outcome, Some(TerminalOutcome::Starved));
+    assert!(
+        starved_at.is_some_and(|tick| tick < horizon / 2),
+        "the finite-life body dies long before the horizon"
+    );
+    let last = timed
+        .step(&neural(0., 0.), &world, Point::default(), 1., horizon)
+        .unwrap();
+    assert_eq!(timed.state().outcome, Some(TerminalOutcome::TimedOut));
+    assert!(last.events.iter().any(|e| e.kind
+        == BodyEventKind::Terminal {
+            outcome: TerminalOutcome::TimedOut
+        }));
+    assert_eq!(timed.state().reserve, 0., "a timed round models no energy");
+}
+#[test]
+fn a_timed_fly_walks_on_food_without_feeding_or_moving_its_horizon() {
+    let g = geometry();
+    let apple = FoodDef {
+        position: Point { x: 2., z: 2. },
+        heading: 0.,
+        shape: FoodShape::Apple,
+    }
+    .surface(7)
+    .unwrap();
+    let horizon = 20;
+    let world = BodyWorld::new(&g, &[apple], &[], &[], exit(), horizon).unwrap();
+    let mut b = Body::new_in_mode(
+        BodyPose {
+            position: Point { x: 2., z: 2. },
+            heading: 0.,
+        },
+        timed_config(),
+        BodyMode::Flying,
+    )
+    .unwrap();
+    let mut landing = neural(0., 1.);
+    landing.groups.push(GroupActivity {
+        id: "landingL".into(),
+        mean_voltage: 0.,
+        spike_fraction: 1.,
+    });
+    let mut events = vec![];
+    for tick in 1..=horizon {
+        events.extend(
+            b.step(&landing, &world, Point::default(), 0.1, tick)
+                .unwrap()
+                .events,
+        );
+    }
+    assert_eq!(b.state().support, Some(7), "food still carries the body");
+    assert!(
+        (0.07..0.09).contains(&b.state().height),
+        "land on fruit, not the floor"
+    );
+    assert!(
+        b.contacts(&world).unwrap().food,
+        "walking contact still reaches the taste pathway"
+    );
+    assert_eq!(b.state().mode, BodyMode::Walking);
+    assert!(
+        !events.iter().any(|e| matches!(
+            e.kind,
+            BodyEventKind::FeedingStarted | BodyEventKind::FeedingEnded { .. }
+        )),
+        "a timed round never starts a bout, however hard the proboscis fires"
+    );
+    assert_eq!(b.state().reserve, 0., "food cannot extend a timed round");
+    assert_eq!(b.state().outcome, Some(TerminalOutcome::TimedOut));
+}
+#[test]
+fn the_life_model_owns_energy_validation_without_an_immortality_loophole() {
+    let pose = BodyPose {
+        position: Point { x: 2., z: 2. },
+        heading: 0.,
+    };
+    assert!(Body::new(pose, timed_config()).is_ok());
+    let model = reserve_config(1.).life.reserve().unwrap();
+    for broken in [
+        ReserveModel {
+            idle_cost: 0.,
+            ..model
+        },
+        ReserveModel {
+            walking_cost: 0.,
+            ..model
+        },
+        ReserveModel {
+            flying_cost: 0.,
+            ..model
+        },
+        ReserveModel {
+            capacity: 0.,
+            ..model
+        },
+        ReserveModel {
+            max_bout_seconds: 0.,
+            ..model
+        },
+        ReserveModel {
+            initial: model.capacity + 1.,
+            ..model
+        },
+    ] {
+        assert!(
+            Body::new(
+                pose,
+                BodyConfig {
+                    life: LifeModel::Reserve(broken),
+                    ..BodyConfig::default()
+                }
+            )
+            .is_err(),
+            "a finite life cannot be made endless from inside its own model"
+        );
+    }
+    assert!(
+        Body::new(
+            pose,
+            BodyConfig {
+                takeoff_threshold: 0.,
+                ..timed_config()
+            }
+        )
+        .is_err(),
+        "a timed round still decodes motor thresholds"
+    );
 }

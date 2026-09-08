@@ -1,4 +1,5 @@
-//! Neural body decoding, bounded vertical movement and finite-life outcomes. Gains/thresholds are modeled
+//! Neural body decoding, bounded vertical movement and terminal outcomes. The life
+//! model chooses between a timed round and a finite energy reserve. Gains/thresholds are modeled
 //! approximations pending actual-graph feasibility probes, not biological units.
 use crate::{
     environment::{Geometry, Point},
@@ -70,18 +71,60 @@ pub struct BodyState {
     /// Food support identity; None is floor for grounded modes, air otherwise.
     pub support: Option<u32>,
     pub mode: BodyMode,
+    /// Remaining energy under the reserve model; timed rounds model none and hold zero.
     pub reserve: f64,
     pub outcome: Option<TerminalOutcome>,
 }
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
+/// Finite-life energy: what each mode spends per game second, what feeding returns
+/// and how much a body starts and can hold.
+#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
-pub struct BodyConfig {
-    pub reserve_capacity: f64,
+pub struct ReserveModel {
+    pub initial: f64,
+    pub capacity: f64,
     pub idle_cost: f64,
     pub walking_cost: f64,
     pub flying_cost: f64,
     pub feeding_rate: f64,
     pub max_bout_seconds: f64,
+}
+impl Default for ReserveModel {
+    fn default() -> Self {
+        Self {
+            initial: 20.,
+            capacity: 20.,
+            idle_cost: 0.2,
+            walking_cost: 0.4,
+            flying_cost: 0.8,
+            feeding_rate: 3.,
+            max_bout_seconds: 3.,
+        }
+    }
+}
+/// The single owner of what limits a life, besides hazards and the exit. Campaign
+/// rounds are timed: nothing is spent or gained, no feeding bout ever starts, and
+/// food acts only through the support it offers, its taste and the walking it imposes.
+/// The reserve model is the finite-life diagnostic, where modes drain a reserve that
+/// feeding replenishes.
+#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize, TS)]
+#[serde(tag = "kind", rename_all = "camelCase")]
+pub enum LifeModel {
+    Timed,
+    Reserve(ReserveModel),
+}
+impl LifeModel {
+    /// The energy model, present only when a life is limited by one.
+    pub fn reserve(self) -> Option<ReserveModel> {
+        match self {
+            Self::Timed => None,
+            Self::Reserve(model) => Some(model),
+        }
+    }
+}
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+pub struct BodyConfig {
+    pub life: LifeModel,
     pub body_radius: f64,
     pub walk_speed: f64,
     pub flight_speed: f64,
@@ -97,12 +140,7 @@ pub struct BodyConfig {
 impl Default for BodyConfig {
     fn default() -> Self {
         Self {
-            reserve_capacity: 20.,
-            idle_cost: 0.2,
-            walking_cost: 0.4,
-            flying_cost: 0.8,
-            feeding_rate: 3.,
-            max_bout_seconds: 3.,
+            life: LifeModel::Reserve(ReserveModel::default()),
             body_radius: 0.002632,
             walk_speed: 1.,
             flight_speed: 2.,
@@ -351,14 +389,9 @@ pub struct Body {
     ground_dwell_remaining: f64,
 }
 impl Body {
-    pub fn new(pose: BodyPose, reserve: f64, config: BodyConfig) -> Result<Self, String> {
-        let values = [
-            config.reserve_capacity,
-            config.idle_cost,
-            config.walking_cost,
-            config.flying_cost,
-            config.feeding_rate,
-            config.max_bout_seconds,
+    pub fn new(pose: BodyPose, config: BodyConfig) -> Result<Self, String> {
+        let reserve = config.life.reserve();
+        let mut values = vec![
             config.body_radius,
             config.walk_speed,
             config.flight_speed,
@@ -368,18 +401,29 @@ impl Body {
             config.proboscis_threshold,
             config.landing_dwell_seconds,
         ];
+        if let Some(model) = reserve {
+            values.extend([
+                model.initial,
+                model.capacity,
+                model.idle_cost,
+                model.walking_cost,
+                model.flying_cost,
+                model.feeding_rate,
+                model.max_bout_seconds,
+            ]);
+        }
         if values.iter().any(|v| !v.is_finite() || *v < 0.)
-            || config.reserve_capacity == 0.
-            || config.max_bout_seconds == 0.
-            || config.idle_cost == 0.
-            || config.walking_cost == 0.
-            || config.flying_cost == 0.
             || config.proboscis_threshold == 0.
             || config.takeoff_threshold == 0.
             || config.landing_threshold == 0.
-            || !reserve.is_finite()
-            || reserve < 0.
-            || reserve > config.reserve_capacity
+            || reserve.is_some_and(|model| {
+                model.capacity == 0.
+                    || model.max_bout_seconds == 0.
+                    || model.idle_cost == 0.
+                    || model.walking_cost == 0.
+                    || model.flying_cost == 0.
+                    || model.initial > model.capacity
+            })
             || !pose.position.x.is_finite()
             || !pose.position.z.is_finite()
             || !pose.heading.is_finite()
@@ -393,7 +437,7 @@ impl Body {
                 rotation: support_rotation(pose.heading, [0., 1., 0.])?,
                 support: None,
                 mode: BodyMode::Walking,
-                reserve,
+                reserve: reserve.map_or(0., |model| model.initial),
                 outcome: None,
             },
             config,
@@ -403,16 +447,11 @@ impl Body {
             ground_dwell_remaining: 0.,
         })
     }
-    pub fn new_in_mode(
-        pose: BodyPose,
-        reserve: f64,
-        config: BodyConfig,
-        mode: BodyMode,
-    ) -> Result<Self, String> {
+    pub fn new_in_mode(pose: BodyPose, config: BodyConfig, mode: BodyMode) -> Result<Self, String> {
         if !matches!(mode, BodyMode::Walking | BodyMode::Flying) {
             return Err("initial body mode must be walking or flying".into());
         }
-        let mut body = Self::new(pose, reserve, config)?;
+        let mut body = Self::new(pose, config)?;
         body.state.mode = mode;
         if mode == BodyMode::Flying {
             body.state.height = CRUISE_HEIGHT;
@@ -513,7 +552,10 @@ impl Body {
         }
         self.last_tick = Some(tick);
         let mut events = vec![];
-        if self.state.reserve <= 0. {
+        // The reserve model is the only source of energy transitions; a timed round
+        // neither spends nor gains, so no bout starts and nothing starves.
+        let reserve = self.config.life.reserve();
+        if reserve.is_some() && self.state.reserve <= 0. {
             self.terminal(TerminalOutcome::Starved, tick, &mut events);
             return Ok(BodyStep {
                 events,
@@ -534,14 +576,16 @@ impl Body {
         } else {
             self.ground_dwell_remaining - dt
         };
-        let proboscis = spike_fraction(neural, "proboscis");
-        let wants_food = proboscis > self.config.proboscis_threshold;
-        let on_food = contacts.food;
-        if self.state.mode != BodyMode::Feeding && !wants_food {
-            self.feeding_ready = true;
-        }
-        if self.state.mode == BodyMode::Feeding && !on_food {
-            self.end_feeding(FeedingEnd::ContactLost, tick, &mut events);
+        // Only a body that can feed decodes the proboscis readout.
+        let wants_food = reserve.is_some()
+            && spike_fraction(neural, "proboscis") > self.config.proboscis_threshold;
+        if reserve.is_some() {
+            if self.state.mode != BodyMode::Feeding && !wants_food {
+                self.feeding_ready = true;
+            }
+            if self.state.mode == BodyMode::Feeding && !contacts.food {
+                self.end_feeding(FeedingEnd::ContactLost, tick, &mut events);
+            }
         }
         let landing =
             (spike_fraction(neural, "landingL") + spike_fraction(neural, "landingR")) / 2.;
@@ -554,38 +598,39 @@ impl Body {
         {
             self.mode(BodyMode::Flying, tick, &mut events);
         }
-        if self.state.mode == BodyMode::Walking
-            && on_food
-            && wants_food
-            && self.feeding_ready
-            && self.state.reserve < self.config.reserve_capacity
-        {
-            self.bout_seconds = 0.;
-            self.mode(BodyMode::Feeding, tick, &mut events);
-            events.push(BodyEvent {
-                tick,
-                kind: BodyEventKind::FeedingStarted,
-            });
+        if let Some(model) = reserve {
+            if self.state.mode == BodyMode::Walking
+                && contacts.food
+                && wants_food
+                && self.feeding_ready
+                && self.state.reserve < model.capacity
+            {
+                self.bout_seconds = 0.;
+                self.mode(BodyMode::Feeding, tick, &mut events);
+                events.push(BodyEvent {
+                    tick,
+                    kind: BodyEventKind::FeedingStarted,
+                });
+            }
         }
-        let (thrust, turn, speed, cost) = match self.state.mode {
+        let (thrust, turn, speed) = match self.state.mode {
             BodyMode::Flying | BodyMode::Landing => (
                 neural.motor.flight_thrust,
                 neural.motor.flight_turn,
                 self.config.flight_speed,
-                self.config.flying_cost,
             ),
             BodyMode::Walking => (
                 neural.motor.thrust,
                 neural.motor.turn,
                 self.config.walk_speed,
-                if neural.motor.thrust > 0. {
-                    self.config.walking_cost
-                } else {
-                    self.config.idle_cost
-                },
             ),
-            BodyMode::Feeding => (0., 0., 0., self.config.idle_cost),
+            BodyMode::Feeding => (0., 0., 0.),
         };
+        let cost = reserve.map_or(0., |model| match self.state.mode {
+            BodyMode::Flying | BodyMode::Landing => model.flying_cost,
+            BodyMode::Walking if neural.motor.thrust > 0. => model.walking_cost,
+            BodyMode::Walking | BodyMode::Feeding => model.idle_cost,
+        });
         let desired = desired_pose(
             self.state.pose,
             Locomotion {
@@ -602,7 +647,7 @@ impl Body {
         let mut feed_fraction = 0.;
         let mut feed_stops = false;
         let mut feed_end = FeedingEnd::ContactLost;
-        if self.state.mode == BodyMode::Feeding {
+        if let (Some(model), BodyMode::Feeding) = (reserve, self.state.mode) {
             feed_fraction = 1.;
             let contact_at = |fraction: f64, trace: &mut MotionTrace| -> Result<bool, String> {
                 trace.queries += 1;
@@ -634,16 +679,15 @@ impl Body {
                     break;
                 }
             }
-            let bout = (self.config.max_bout_seconds - self.bout_seconds).max(0.) / dt;
+            let bout = (model.max_bout_seconds - self.bout_seconds).max(0.) / dt;
             if bout <= feed_fraction {
                 feed_fraction = bout;
                 feed_stops = true;
                 feed_end = FeedingEnd::BoutLimit;
             }
-            let net = self.config.feeding_rate - cost;
+            let net = model.feeding_rate - cost;
             if net > 0. {
-                let full =
-                    ((self.config.reserve_capacity - self.state.reserve) / (net * dt)).max(0.);
+                let full = ((model.capacity - self.state.reserve) / (net * dt)).max(0.);
                 if full <= feed_fraction {
                     feed_fraction = full;
                     feed_stops = true;
@@ -674,15 +718,17 @@ impl Body {
             }
         }
         // Integrate the feeding prefix and subsequent loss separately.
-        let feeding_loss = (cost - self.config.feeding_rate) * feed_seconds;
-        let after_feed = self.state.reserve - feeding_loss;
-        let starved = if feeding_loss > 0. && self.state.reserve <= feeding_loss {
-            Some(self.state.reserve / ((cost - self.config.feeding_rate) * dt))
-        } else if cost > 0. && after_feed <= cost * (dt - feed_seconds) {
-            Some(feed_fraction + after_feed / (cost * dt))
-        } else {
-            None
-        };
+        let starved = reserve.and_then(|model| {
+            let feeding_loss = (cost - model.feeding_rate) * feed_seconds;
+            let after_feed = self.state.reserve - feeding_loss;
+            if feeding_loss > 0. && self.state.reserve <= feeding_loss {
+                Some(self.state.reserve / ((cost - model.feeding_rate) * dt))
+            } else if cost > 0. && after_feed <= cost * (dt - feed_seconds) {
+                Some(feed_fraction + after_feed / (cost * dt))
+            } else {
+                None
+            }
+        });
         if let Some(t) = starved {
             if terminal.is_none_or(|(prior, _)| t <= prior) {
                 terminal = Some((t, TerminalOutcome::Starved));
@@ -692,9 +738,11 @@ impl Body {
         let reached = trace.at(fraction)?;
         reached.apply(&mut self.state);
         let actual_feed = dt * fraction.min(feed_fraction);
-        self.state.reserve = (self.state.reserve + self.config.feeding_rate * actual_feed
-            - cost * dt * fraction)
-            .clamp(0., self.config.reserve_capacity);
+        if let Some(model) = reserve {
+            self.state.reserve = (self.state.reserve + model.feeding_rate * actual_feed
+                - cost * dt * fraction)
+                .clamp(0., model.capacity);
+        }
         if self.state.mode == BodyMode::Feeding {
             self.bout_seconds += actual_feed;
             if fraction >= feed_fraction && feed_stops {
@@ -713,7 +761,7 @@ impl Body {
         }
         if let Some((_, outcome)) = terminal {
             self.terminal(outcome, tick, &mut events);
-        } else if self.state.reserve <= 0. {
+        } else if reserve.is_some() && self.state.reserve <= 0. {
             self.terminal(TerminalOutcome::Starved, tick, &mut events);
         } else if tick >= world.duration_ticks {
             self.terminal(TerminalOutcome::TimedOut, tick, &mut events);

@@ -25,7 +25,7 @@ try {
     const arms=[];
     for(const feedingRate of [3,0]) {
       const level=structuredClone(info.level);
-      level.bodyConfig.feedingRate=feedingRate;
+      level.bodyConfig.life={...level.bodyConfig.life,feedingRate};
       if(surface==='banana') {
         level.food=[];
         level.fixedObjects=[{id:1,kind:'banana',position:{x:0.33,z:0.18},heading:0}];
@@ -57,14 +57,14 @@ try {
   await writeFile(output+'/browser.json',JSON.stringify({browser:browser.version(),...report}));
   const [enabled,disabled]=report.arms;
   assert.equal(enabled.error,null); assert.equal(disabled.error,null);
-  const normalized=arm=>{const input=structuredClone(arm.input);delete input.attemptId;input.level.bodyConfig.feedingRate=0;return input;};
+  const normalized=arm=>{const input=structuredClone(arm.input);delete input.attemptId;input.level.bodyConfig.life={...input.level.bodyConfig.life,feedingRate:0};return input;};
   assert.deepEqual(normalized(enabled),normalized(disabled));
   assert.deepEqual(enabled.ready.resolvedSetup,disabled.ready.resolvedSetup);
   assert.deepEqual(enabled.ready.initialBodies,disabled.ready.initialBodies);
   const rows=[];
   for(let id=0;id<enabled.input.flyCount;id++) {
     const metrics=arm=> {
-      let previous=arm.input.level.initialReserve,gain=0;const starts=[];let terminal;
+      let previous=arm.input.level.bodyConfig.life.initial,gain=0;const starts=[];let terminal;
       for(const frame of arm.frames) {
         const fly=frame.flies[id]; gain+=Math.max(0,fly.body.reserve-previous);previous=fly.body.reserve;
         for(const event of fly.events) {

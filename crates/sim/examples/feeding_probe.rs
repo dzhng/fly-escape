@@ -5,8 +5,8 @@ use sha2::{Digest, Sha256};
 use sim::food::{FoodDef, FoodShape};
 use sim::{
     body::{
-        Body, BodyConfig, BodyEventKind, BodyMode, BodyPose, BodyWorld, ExitOpening,
-        TerminalOutcome,
+        Body, BodyConfig, BodyEventKind, BodyMode, BodyPose, BodyWorld, ExitOpening, LifeModel,
+        ReserveModel, TerminalOutcome,
     },
     environment::{Geometry, Point, RectRoom, Wall},
     Brain, Graph, PRNG_ID,
@@ -118,13 +118,18 @@ fn run(
         },
         1000,
     )?;
-    let config = BodyConfig::default();
+    let config = BodyConfig {
+        life: LifeModel::Reserve(ReserveModel {
+            initial: 5.,
+            ..ReserveModel::default()
+        }),
+        ..BodyConfig::default()
+    };
     let mut body = Body::new(
         BodyPose {
             position: Point { x: 50., z: 50. },
             heading: 0.,
         },
-        5.,
         config.clone(),
     )?;
     let mut result = SeedResult {

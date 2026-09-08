@@ -6,6 +6,9 @@ const seeds = process.env.RETRY_SEEDS?.split(",");
 const runs = Number(process.env.RETRY_RUNS ?? seeds?.length ?? 20);
 const campaign = process.env.RETRY_CAMPAIGN;
 const fullAttempts = process.env.RETRY_FULL === "1";
+// An explicit diagnostic override measures slow startup; the default gate stays unchanged.
+const startTimeoutMs = Number(process.env.RETRY_START_TIMEOUT_MS ?? 90000);
+assert.ok(Number.isFinite(startTimeoutMs) && startTimeoutMs > 0);
 const mode = process.env.RETRY_MODE ?? "realTime";
 assert.ok(mode === "realTime" || mode === "fast", "RETRY_MODE must be realTime or fast");
 assert.ok(!campaign || campaign === "1" || campaign === "2", "RETRY_CAMPAIGN must be 1 or 2");
@@ -54,7 +57,7 @@ try {
       if (!text) return false;
       const report = JSON.parse(text);
       return report.state === "error" || (report.state === "playing" && report.cursorTick >= 10);
-    }, undefined, { timeout: 90000 });
+    }, undefined, { timeout: startTimeoutMs });
     const startedAt = performance.now();
     const started = JSON.parse(await page.getByTestId("playback-report").textContent());
     assert.equal(started.state, "playing", started.error ?? "attempt must enter playback");
@@ -64,6 +67,12 @@ try {
       return extension ? gl.getParameter(extension.UNMASKED_RENDERER_WEBGL) : null;
     });
     if (seeds) assert.equal(BigInt(started.spec.rootSeed), BigInt(seeds[run]), "attempt must use its recorded seed");
+    if (campaign) {
+      assert.equal(await page.getByRole("button", { name: "Real time", exact: true }).count(), 1);
+      assert.equal(await page.getByRole("button", { name: "Fast", exact: true }).count(), 1);
+      assert.equal(await page.getByTestId("outcome-starved").count(), 0);
+      assert.match(await page.getByTestId("round-time").textContent(), /^\d+:\d{2} left$/);
+    }
     const startedTick = started.cursorTick;
     if (fullAttempts) {
       await page.waitForFunction(() => {
@@ -86,6 +95,12 @@ try {
       assert.equal(report.cursorTick, report.result.completedTick);
       assert.equal(report.computedTick, report.result.completedTick);
       assert.ok(report.result.completedTick > 0 && report.result.completedTick <= report.spec.durationTicks);
+      if (campaign) {
+        assert.equal(report.result.outcomes.starved, 0, "timed campaign flies cannot starve");
+        if (report.result.completedTick === report.spec.durationTicks)
+          assert.equal(await page.getByTestId("round-time").textContent(), "0:00 left");
+        await page.screenshot({ path: `${output}/attempt-${run + 1}.png` });
+      }
       const outcomes = report.result.outcomes;
       assert.equal(outcomes.escaped + outcomes.starved + outcomes.zapped + outcomes.caught + outcomes.timedOut,
         report.spec.flyCount, "every fly must have a terminal outcome before an attempt is complete");

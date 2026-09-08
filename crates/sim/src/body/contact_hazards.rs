@@ -69,7 +69,6 @@ fn fly(mode: BodyMode, z: f64) -> Body {
             position: Point { x: 1.5, z },
             heading: 0.,
         },
-        10.,
         BodyConfig::default(),
         mode,
     )
