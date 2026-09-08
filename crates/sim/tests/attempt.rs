@@ -399,7 +399,6 @@ fn simultaneous_senses_sum_and_each_channel_can_be_ablated() {
                     .filter(|(_, on)| *on)
                     .map(|(pathway, _)| CueInput { pathway, gain: 0.1 })
                     .collect();
-                let expected_current = cues.len() as f64 * 0.1;
                 let tuning = AttemptTuning {
                     cues,
                     ..Default::default()
@@ -426,6 +425,21 @@ fn simultaneous_senses_sum_and_each_channel_can_be_ablated() {
                     senses.left.brightness > senses.right.brightness,
                     !remove_disabled_sources || enabled[2]
                 );
+                // Compose the independently tested sensory adapter outputs. This
+                // pins Attempt's channel summation without assuming fixed amplitudes.
+                let expected_current: f64 = tuning
+                    .cues
+                    .iter()
+                    .map(|cue| {
+                        sim::sensory::cue_currents(&graph, &senses, cue.pathway, cue.gain)
+                            .unwrap()
+                            .into_iter()
+                            .find(|(index, _)| *index == 2)
+                            .unwrap()
+                            .1
+                    })
+                    .sum();
+                assert!(expected_current > 0.);
                 let mut reference =
                     sim::Brain::new(graph.clone(), sim::Brain::seed_for_fly(seed, 0));
                 reference

@@ -13,12 +13,20 @@ pub enum CuePathway {
     None,
 }
 
+/// Modeled half-gain scale chosen from uniform settled-field samples, not receptor
+/// measurements or the concentrations experienced by moving flies. See the
+/// scent-strength evidence under specs/help-the-fly-escape/assets/evidence/33/.
+const ODOR_HALF_CONCENTRATION: f64 = 0.55;
+
 /// The measured chamber maps attractive odor and the room-local exit cue to
 /// excitatory-labeled inputs and repellent odor to inhibitory-labeled inputs.
 /// These source bindings are modeling assumptions, not universal biological
 /// functions of excitation or inhibition.
 /// Local contrast selects sensory input. Side identity is retained;
 /// whether a pathway attracts or repels is an empirical result, not a sign flip.
+/// Odor is delivered graded: the detected side carries its own concentration, so a
+/// stronger smell drives a stronger current. Vision stays binary; brightness only
+/// picks a side.
 pub fn cue_currents(
     graph: &Graph,
     sample: &SensorySample,
@@ -28,21 +36,24 @@ pub fn cue_currents(
     if !gain.is_finite() || !(0.0..=3.0).contains(&gain) {
         return Err("cue gain must be between zero and three".into());
     }
-    let (ids, mut values) = match pathway {
+    let (ids, mut values, graded) = match pathway {
         CuePathway::ExcitatoryOdor => (
             ["odorExcL", "odorExcR"],
             [
                 sample.left.attractive_odor + sample.left.exit_cue,
                 sample.right.attractive_odor + sample.right.exit_cue,
             ],
+            true,
         ),
         CuePathway::InhibitoryOdor => (
             ["odorInhL", "odorInhR"],
             [sample.left.repellent_odor, sample.right.repellent_odor],
+            true,
         ),
         CuePathway::Vision => (
             ["visionL", "visionR"],
             [sample.left.brightness, sample.right.brightness],
+            false,
         ),
         CuePathway::None => return Ok(vec![]),
     };
@@ -51,12 +62,20 @@ pub fn cue_currents(
     // The 0.01% contrast floor is calibrated at anatomical spacing, not a biological threshold.
     let detected = values[0].max(values[1]) >= 0.05
         && (values[0] - values[1]).abs() > 0.0001 * (values[0] + values[1]);
+    // Compress large odor concentrations while retaining dose sensitivity.
+    let amplitude = |concentration: f64| {
+        if graded {
+            concentration / (concentration + ODOR_HALF_CONCENTRATION)
+        } else {
+            1.0
+        }
+    };
     values = if !detected {
         [0.0, 0.0]
     } else if values[0] > values[1] {
-        [1.0, 0.0]
+        [amplitude(values[0]), 0.0]
     } else {
-        [0.0, 1.0]
+        [0.0, amplitude(values[1])]
     };
     group_currents(graph, ids, values.map(|value| gain * value.clamp(0.0, 1.0)))
 }
@@ -145,6 +164,28 @@ mod tests {
             body_lookup: Default::default(),
         }
     }
+    /// Which populations a pathway drives at all, ignoring how strongly.
+    fn driven(currents: &[(u32, f64)]) -> Vec<(u32, bool)> {
+        currents.iter().map(|(i, c)| (*i, *c > 0.)).collect()
+    }
+    /// The strongest current the pathway delivers anywhere.
+    fn peak(currents: &[(u32, f64)]) -> f64 {
+        currents.iter().map(|(_, c)| *c).fold(0., f64::max)
+    }
+    /// A one-sided attractive-odor sample; the left antenna smells `left`.
+    fn attractive(left: f64, right: f64) -> SensorySample {
+        SensorySample {
+            left: FieldSample {
+                attractive_odor: left,
+                ..Default::default()
+            },
+            right: FieldSample {
+                attractive_odor: right,
+                ..Default::default()
+            },
+            wind: Point::default(),
+        }
+    }
     /// Each odor channel reaches its own labelled population, so a pathway ablation
     /// removes one smell rather than silently re-routing the other.
     #[test]
@@ -163,14 +204,15 @@ mod tests {
             },
             wind: Point::default(),
         };
+        let excitatory = cue_currents(&graph, &opposed, CuePathway::ExcitatoryOdor, 1.).unwrap();
         assert_eq!(
-            cue_currents(&graph, &opposed, CuePathway::ExcitatoryOdor, 1.).unwrap(),
-            vec![(0, 1.0), (1, 0.0), (2, 1.0)],
+            driven(&excitatory),
+            vec![(0, true), (1, false), (2, true)],
             "attractive odor drives the excitatory-labelled side that smells it more"
         );
         assert_eq!(
-            cue_currents(&graph, &opposed, CuePathway::InhibitoryOdor, 1.).unwrap(),
-            vec![(0, 0.0), (1, 1.0)],
+            driven(&cue_currents(&graph, &opposed, CuePathway::InhibitoryOdor, 1.).unwrap()),
+            vec![(0, false), (1, true)],
             "repellent odor drives the inhibitory-labelled side independently"
         );
         let exit_only = SensorySample {
@@ -185,9 +227,21 @@ mod tests {
             wind: Point::default(),
         };
         assert_eq!(
-            cue_currents(&graph, &exit_only, CuePathway::ExcitatoryOdor, 1.).unwrap(),
-            vec![(0, 1.0), (1, 0.0), (2, 1.0)],
-            "the room-local exit cue adds into the same excitatory channel"
+            driven(&cue_currents(&graph, &exit_only, CuePathway::ExcitatoryOdor, 1.).unwrap()),
+            vec![(0, true), (1, false), (2, true)],
+            "the room-local exit cue drives the same excitatory channel on its own"
+        );
+        let odor_and_exit = SensorySample {
+            left: FieldSample {
+                exit_cue: 0.8,
+                ..opposed.left
+            },
+            ..opposed
+        };
+        assert!(
+            peak(&cue_currents(&graph, &odor_and_exit, CuePathway::ExcitatoryOdor, 1.).unwrap())
+                > peak(&excitatory),
+            "the exit cue adds into the attractive channel rather than replacing it"
         );
         assert!(
             cue_currents(&graph, &exit_only, CuePathway::InhibitoryOdor, 1.)
@@ -205,67 +259,135 @@ mod tests {
             vec![(0, 0.25), (1, 0.75), (2, 1.0)],
             "manual sensory input sums overlapping groups and excludes motor neuron 3"
         );
-        let strong = FieldSample {
-            attractive_odor: 0.8,
-            ..Default::default()
-        };
-        let weak = FieldSample {
-            attractive_odor: 0.2,
-            ..Default::default()
-        };
-        let mut sample = SensorySample {
-            left: strong,
-            right: weak,
-            wind: Point::default(),
-        };
+        let mut sample = attractive(0.8, 0.2);
         let left = cue_currents(&graph, &sample, CuePathway::ExcitatoryOdor, 1.).unwrap();
         std::mem::swap(&mut sample.left, &mut sample.right);
         let right = cue_currents(&graph, &sample, CuePathway::ExcitatoryOdor, 1.).unwrap();
-        assert_eq!(left, vec![(0, 1.0), (1, 0.0), (2, 1.0)]);
-        assert_eq!(right, vec![(0, 0.0), (1, 1.0), (2, 1.0)]);
+        assert_eq!(driven(&left), vec![(0, true), (1, false), (2, true)]);
+        assert_eq!(driven(&right), vec![(0, false), (1, true), (2, true)]);
+        assert_eq!(
+            peak(&left),
+            peak(&right),
+            "mirroring a sample mirrors which side is driven, not how strongly"
+        );
+        assert_eq!(
+            (left[1].1, left[2].1),
+            (0., left[0].1),
+            "the population shared by both sides carries the driven side's current alone"
+        );
         assert!(
             !left.iter().any(|(i, _)| *i == 3),
             "a sensory/motor overlap must not directly drive a readout"
         );
-        let anatomical = SensorySample {
-            left: FieldSample {
-                attractive_odor: 0.5002,
-                ..Default::default()
-            },
-            right: FieldSample {
-                attractive_odor: 0.5,
-                ..Default::default()
-            },
-            wind: Point::default(),
-        };
         assert_eq!(
-            cue_currents(&graph, &anatomical, CuePathway::ExcitatoryOdor, 1.).unwrap(),
-            vec![(0, 1.), (1, 0.), (2, 1.)],
+            driven(
+                &cue_currents(
+                    &graph,
+                    &attractive(0.5002, 0.5),
+                    CuePathway::ExcitatoryOdor,
+                    1.
+                )
+                .unwrap()
+            ),
+            vec![(0, true), (1, false), (2, true)],
             "resolved anatomical-scale gradient remains detectable"
         );
         for [left, right] in [[0., 0.], [0.8, 0.8], [0.049, 0.], [0., 0.049]] {
-            let neutral = SensorySample {
-                left: FieldSample {
-                    attractive_odor: left,
-                    ..Default::default()
-                },
-                right: FieldSample {
-                    attractive_odor: right,
-                    ..Default::default()
-                },
-                wind: Point::default(),
-            };
             assert!(
-                cue_currents(&graph, &neutral, CuePathway::ExcitatoryOdor, 1.)
-                    .unwrap()
-                    .iter()
-                    .all(|(_, current)| *current == 0.),
+                cue_currents(
+                    &graph,
+                    &attractive(left, right),
+                    CuePathway::ExcitatoryOdor,
+                    1.
+                )
+                .unwrap()
+                .iter()
+                .all(|(_, current)| *current == 0.),
                 "uniform or sub-floor odor must not drive a lateral input"
             );
         }
         assert!(
             cue_currents(&graph, &sample, CuePathway::Vision, 1.).is_err(),
             "missing required pathways cannot silently become zero input"
+        );
+    }
+    /// The point of grading: how hard a smell drives the fly now depends on how
+    /// strong the smell is, and a stronger source keeps buying less than the last.
+    #[test]
+    fn stronger_odor_delivers_more_current_with_bounded_diminishing_returns() {
+        let graph = fixture_graph();
+        for pathway in [CuePathway::ExcitatoryOdor, CuePathway::InhibitoryOdor] {
+            let gain = 2.;
+            let delivered = |concentration: f64| {
+                let mut sample = attractive(concentration, 0.);
+                sample.left.repellent_odor = concentration;
+                peak(&cue_currents(&graph, &sample, pathway, gain).unwrap())
+            };
+            // The concentrations this house actually produces: the minimum above the
+            // detection floor, the quartiles and median the half-concentration was drawn
+            // from, and the strongest cell of the settled field.
+            let surveyed = [0.051, 0.251, 0.548, 0.666, 0.840, 1.180];
+            let currents: Vec<f64> = surveyed.iter().map(|&c| delivered(c)).collect();
+            for pair in currents.windows(2) {
+                assert!(
+                    pair[1] > pair[0],
+                    "delivered current must rise with concentration: {currents:?}"
+                );
+            }
+            assert!(
+            4. * currents[0] < *currents.last().unwrap(),
+            "a barely detected plume must drive far less than the strongest one this house produces: {currents:?}"
+        );
+            assert!(
+                delivered(1e6) < gain && delivered(1e6) > 0.999 * gain,
+                "an overwhelming plume approaches the gain without ever exceeding it"
+            );
+            let doublings: Vec<f64> = (0..5)
+                .map(|i| delivered(ODOR_HALF_CONCENTRATION * 2f64.powi(i)))
+                .collect();
+            assert_eq!(
+            doublings[0],
+            gain / 2.,
+            "the half-concentration delivers half the gain, so subsequent doublings test diminishing returns"
+        );
+            let gained: Vec<f64> = doublings.windows(2).map(|p| p[1] - p[0]).collect();
+            for pair in gained.windows(2) {
+                assert!(
+                pair[1] < pair[0],
+                "each doubling above the half-gain concentration must buy less current than the last: {gained:?}"
+            );
+            }
+        }
+    }
+    /// Grading is an odor property. Vision still only reports which eye is brighter.
+    #[test]
+    fn vision_reports_a_side_without_reporting_how_bright_it_is() {
+        let mut graph = fixture_graph();
+        for (id, index) in [("visionL", 0), ("visionR", 1)] {
+            graph.manifest.groups.push(
+                serde_json::from_value(
+                    serde_json::json!({"id": id, "label": id, "indices": [index]}),
+                )
+                .unwrap(),
+            );
+        }
+        let lit = |brightness: f64| SensorySample {
+            left: FieldSample {
+                brightness,
+                ..Default::default()
+            },
+            right: FieldSample::default(),
+            wind: Point::default(),
+        };
+        assert_eq!(
+            cue_currents(&graph, &lit(0.2), CuePathway::Vision, 1.).unwrap(),
+            cue_currents(&graph, &lit(0.9), CuePathway::Vision, 1.).unwrap(),
+            "a dim and a bright lamp drive the same eye equally hard"
+        );
+        assert_eq!(
+            cue_currents(&graph, &lit(0.2), CuePathway::Vision, 1.).unwrap(),
+            vec![(0, 1.0), (1, 0.0)],
+            "the brighter eye receives the whole gain"
         );
     }
 }
