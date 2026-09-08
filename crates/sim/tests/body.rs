@@ -1295,7 +1295,7 @@ fn exit_suction_is_rejected_outside_its_authored_bounds() {
         },
         ExitSuction {
             reach: 0.9,
-            speed: 1.5,
+            speed: 2.5,
             room_speed: 0.,
         },
         ExitSuction {
@@ -1467,7 +1467,7 @@ fn room_pull_never_crosses_a_wall_or_an_obstacle() {
 fn room_pull_is_rejected_outside_its_authored_bounds() {
     let g = geometry();
     let world = || BodyWorld::new(&g, &[], &[], &[], exit(), 200).unwrap();
-    for rejected in [-0.1, 1.5, f64::NAN] {
+    for rejected in [-0.1, 2.5, f64::NAN] {
         assert!(
             world()
                 .with_exit_suction(Some(room_pull(rejected)))
@@ -1476,4 +1476,29 @@ fn room_pull_is_rejected_outside_its_authored_bounds() {
         );
     }
     assert!(world().with_exit_suction(Some(room_pull(0.06))).is_ok());
+}
+
+#[test]
+fn finish_pull_overcomes_maximum_away_motion_from_two_metres_in_seconds() {
+    for outward in [-1., 1.] {
+        let (geometry, exit) = room_with_opening(outward);
+        let world = BodyWorld::new(&geometry, &[], &[], &[], exit, 100)
+            .unwrap()
+            .with_exit_suction(Some(ExitSuction { reach: 2., speed: 2., room_speed: 1.5 }))
+            .unwrap();
+        for mode in [BodyMode::Walking, BodyMode::Flying] {
+            let mut body = Body::new_in_mode(
+                BodyPose { position: Point { x: 2., z: 2. }, heading: if outward < 0. { 0. } else { std::f64::consts::PI } },
+                BodyConfig { walk_speed: 0.24, flight_speed: 0.48, ..timed_config() },
+                mode,
+            ).unwrap();
+            let mut away = neural(2., 0.);
+            away.motor.flight_thrust = if mode == BodyMode::Flying { 2. } else { 0. };
+            for tick in 1..=50 {
+                if body.state().outcome.is_some() { break; }
+                body.step(&away, &world, Point::default(), 0.1, tick).unwrap();
+            }
+            assert_eq!(body.state().outcome, Some(TerminalOutcome::Escaped), "{mode:?}, outward {outward}");
+        }
+    }
 }

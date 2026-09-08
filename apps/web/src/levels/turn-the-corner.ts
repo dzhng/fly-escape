@@ -30,7 +30,7 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
       }
     },
     "exitCue": null,
-    "exitSuction": { "reach": 0.9, "speed": 0.5, "roomSpeed": 0.06 },
+    "exitSuction": { "reach": 2, "speed": 2, "roomSpeed": 1.5 },
     "fieldConfig": {
       "antennaOffset": 0.00020207253103162883,
       "baselineBrightness": 1,

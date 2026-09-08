@@ -1,5 +1,4 @@
-import type { CampaignLevel } from "../campaign";
-const content: Pick<CampaignLevel, "level" | "tuning"> = {
+{
   "level": {
     "bodyConfig": {
       "life": {
@@ -31,9 +30,9 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
     },
     "exitCue": null,
     "exitSuction": {
-      "reach": 2,
-      "speed": 2,
-      "roomSpeed": 1.5
+      "reach": 0.9,
+      "speed": 0.5,
+      "roomSpeed": 0.06
     },
     "fieldConfig": {
       "antennaOffset": 0.00020207253103162883,
@@ -241,13 +240,13 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
             "z": 6
           },
           "b": {
-            "x": 0.9,
+            "x": 1.2,
             "z": 6
           }
         },
         {
           "a": {
-            "x": 3.6,
+            "x": 2.1,
             "z": 6
           },
           "b": {
@@ -278,16 +277,6 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
         {
           "a": {
             "x": 0,
-            "z": 4.5
-          },
-          "b": {
-            "x": 0.9,
-            "z": 4.5
-          }
-        },
-        {
-          "a": {
-            "x": 2.4,
             "z": 4.5
           },
           "b": {
@@ -416,12 +405,12 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
     "spawn": {
       "kind": "cluster",
       "min": {
-        "x": 2.2,
-        "z": 6.55
+        "x": 7.55,
+        "z": 8.15
       },
       "max": {
-        "x": 3.1,
-        "z": 7.15
+        "x": 8.05,
+        "z": 8.8
       },
       "flyingCount": 8
     }
@@ -439,6 +428,103 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
     ],
     "silencedNeurons": [],
     "tasteGain": 1
-  }
-};
-export default content;
+  },
+  "placements": [
+    {
+      "heading": 0,
+      "id": 1,
+      "kind": "dirtyDishes",
+      "position": {
+        "x": 7.848384949638851,
+        "z": 7.276832254024385
+      }
+    },
+    {
+      "heading": 0,
+      "id": 2,
+      "kind": "dirtyDishes",
+      "position": {
+        "x": 7.663431310451095,
+        "z": 6.772238045778395
+      }
+    },
+    {
+      "heading": 0,
+      "id": 3,
+      "kind": "dirtyDishes",
+      "position": {
+        "x": 6.476559080194122,
+        "z": 5.752832130118614
+      }
+    },
+    {
+      "heading": 0,
+      "id": 4,
+      "kind": "fruit",
+      "position": {
+        "x": 6.66427583626712,
+        "z": 5.001953138354838
+      }
+    },
+    {
+      "heading": 0,
+      "id": 5,
+      "kind": "fruit",
+      "position": {
+        "x": 6.220395589335293,
+        "z": 5.3223058519012
+      }
+    },
+    {
+      "heading": 0,
+      "id": 6,
+      "kind": "banana",
+      "position": {
+        "x": 5.2727006509668755,
+        "z": 2.2849103146482364
+      }
+    },
+    {
+      "heading": 0,
+      "id": 7,
+      "kind": "banana",
+      "position": {
+        "x": 5.298506031977284,
+        "z": 2.6790972388739043
+      }
+    },
+    {
+      "heading": 0,
+      "id": 8,
+      "kind": "banana",
+      "position": {
+        "x": 5.103334312533992,
+        "z": 2.8223424699709945
+      }
+    },
+    {
+      "heading": 3.141592653589793,
+      "id": 9,
+      "kind": "fan",
+      "position": {
+        "x": 6.996028251843338,
+        "z": 2.098072936103865
+      }
+    },
+    {
+      "heading": 0,
+      "id": 10,
+      "kind": "fruit",
+      "position": {
+        "x": 2.682590629016662,
+        "z": 2.3938095617046855
+      }
+    }
+  ],
+  "seeds": [
+    "20260908",
+    "20260909"
+  ],
+  "label": "baseline-fresh",
+  "stop_at": 1200
+}

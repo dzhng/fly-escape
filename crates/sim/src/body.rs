@@ -198,13 +198,13 @@ impl ExitSuction {
             || self.reach > 2.
             || !self.speed.is_finite()
             || self.speed < 0.
-            || self.speed > 1.
+            || self.speed > 2.
             || !self.room_speed.is_finite()
             || self.room_speed < 0.
-            || self.room_speed > 1.
+            || self.room_speed > 2.
         {
             return Err(
-                "exit suction requires reach in (0,2] world units and speeds in [0,1] per second"
+                "exit suction requires reach in (0,2] world units and speeds in [0,2] per second"
                     .into(),
             );
         }

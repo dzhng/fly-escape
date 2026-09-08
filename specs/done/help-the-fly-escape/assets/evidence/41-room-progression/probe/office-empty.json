@@ -1,5 +1,4 @@
-import type { CampaignLevel } from "../campaign";
-const content: Pick<CampaignLevel, "level" | "tuning"> = {
+{
   "level": {
     "bodyConfig": {
       "life": {
@@ -63,8 +62,8 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
         "id": 2,
         "kind": "banana",
         "position": {
-          "x": 2.5,
-          "z": 8
+          "x": 1.65,
+          "z": 5.25
         },
         "heading": 0.8
       },
@@ -439,6 +438,11 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
     ],
     "silencedNeurons": [],
     "tasteGain": 1
-  }
-};
-export default content;
+  },
+  "placements": [],
+  "seeds": [
+    "17884844139807819042"
+  ],
+  "label": "office-open-route-lure-empty",
+  "stop_at": 2400
+}

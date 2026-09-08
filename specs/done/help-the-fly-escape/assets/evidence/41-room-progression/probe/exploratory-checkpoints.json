@@ -1,0 +1,37 @@
+{
+  "note": "Exploratory full-horizon runs stopped after late contact work became expensive; only printed checkpoints are retained. No complete-attempt result is claimed.",
+  "baseline": {
+    "600": {
+      "leftSpawn": 2,
+      "arrivedExitRoom": 0,
+      "escaped": 0
+    },
+    "1200": {
+      "leftSpawn": 3,
+      "arrivedExitRoom": 1,
+      "escaped": 0
+    },
+    "2400": {
+      "leftSpawn": 11,
+      "arrivedExitRoom": 4,
+      "escaped": 1
+    }
+  },
+  "foot-of-bed": {
+    "600": {
+      "leftSpawn": 9,
+      "arrivedExitRoom": 1,
+      "escaped": 0
+    },
+    "1200": {
+      "leftSpawn": 10,
+      "arrivedExitRoom": 3,
+      "escaped": 0
+    },
+    "2400": {
+      "leftSpawn": 12,
+      "arrivedExitRoom": 3,
+      "escaped": 2
+    }
+  }
+}
