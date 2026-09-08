@@ -1,0 +1,17 @@
+[
+  { "label": "h1-backpush-exitfan", "speedScale": 2.0, "placements": [
+    { "id": 11, "kind": "vinegar", "position": { "x": 1.90, "z": 8.90 }, "heading": 0 },
+    { "id": 12, "kind": "vinegar", "position": { "x": 2.90, "z": 8.90 }, "heading": 0 },
+    { "id": 13, "kind": "fan",     "position": { "x": 6.60, "z": 2.25 }, "heading": 0 }
+  ] },
+  { "label": "h2-threshold-relay", "speedScale": 2.0, "placements": [
+    { "id": 11, "kind": "laundry",   "position": { "x": 2.10, "z": 5.25 }, "heading": 0 },
+    { "id": 12, "kind": "wornShoes", "position": { "x": 5.35, "z": 2.55 }, "heading": 0 },
+    { "id": 13, "kind": "fan",       "position": { "x": 6.60, "z": 2.25 }, "heading": 0 }
+  ] },
+  { "label": "h3-backpush-cornerfan", "speedScale": 2.0, "placements": [
+    { "id": 11, "kind": "vinegar", "position": { "x": 1.90, "z": 8.90 }, "heading": 0 },
+    { "id": 12, "kind": "vinegar", "position": { "x": 2.90, "z": 8.90 }, "heading": 0 },
+    { "id": 13, "kind": "fan",     "position": { "x": 2.60, "z": 2.55 }, "heading": 0 }
+  ] }
+]

@@ -1,0 +1,41 @@
+[
+  {
+    "label": "cornerfan-only",
+    "speedScale": 2.0,
+    "placements": [
+      {
+        "id": 13,
+        "kind": "fan",
+        "position": {
+          "x": 2.6,
+          "z": 2.55
+        },
+        "heading": 0
+      }
+    ]
+  },
+  {
+    "label": "back-vinegar-only",
+    "speedScale": 2.0,
+    "placements": [
+      {
+        "id": 11,
+        "kind": "vinegar",
+        "position": {
+          "x": 1.9,
+          "z": 8.9
+        },
+        "heading": 0
+      },
+      {
+        "id": 12,
+        "kind": "vinegar",
+        "position": {
+          "x": 2.9,
+          "z": 8.9
+        },
+        "heading": 0
+      }
+    ]
+  }
+]

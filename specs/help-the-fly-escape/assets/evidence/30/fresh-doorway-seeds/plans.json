@@ -1,0 +1,11 @@
+[
+  { "label": "empty", "speedScale": 1.0, "placements": [] },
+  { "label": "fan", "speedScale": 1.0, "placements": [
+    { "id": 13, "kind": "fan", "position": { "x": 2.60, "z": 2.55 }, "heading": 0 }
+  ] },
+  { "label": "combined", "speedScale": 1.0, "placements": [
+    { "id": 11, "kind": "vinegar", "position": { "x": 1.90, "z": 8.90 }, "heading": 0 },
+    { "id": 12, "kind": "vinegar", "position": { "x": 2.90, "z": 8.90 }, "heading": 0 },
+    { "id": 13, "kind": "fan",     "position": { "x": 2.60, "z": 2.55 }, "heading": 0 }
+  ] }
+]
