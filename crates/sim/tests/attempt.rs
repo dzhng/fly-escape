@@ -65,6 +65,7 @@ fn level(count: usize) -> LevelDef {
             outward: Point { x: 1., z: 0. },
         },
         exit_cue: None,
+        exit_suction: None,
         food: vec![],
         zappers: vec![],
         sources: vec![Source {
@@ -771,4 +772,55 @@ fn all_escaped_ends_a_timed_round_before_its_horizon() {
     assert_eq!(result.outcomes.escaped, 2);
     assert_eq!(result.outcomes.score, 2);
     assert!(result.completed_tick < 100);
+}
+#[test]
+fn exit_suction_is_absent_unless_a_level_authors_it() {
+    let mut authored = serde_json::to_value(level(1)).unwrap();
+    // An unauthored level is exactly the level it was before the setting existed,
+    // so its identity and any prior recording still line up.
+    assert!(!authored.as_object().unwrap().contains_key("exitSuction"));
+    let unhelped: LevelDef = serde_json::from_value(authored.clone()).unwrap();
+    assert!(unhelped.exit_suction.is_none());
+    authored["exitSuction"] = json!({"reach": 0.9, "speed": 0.5});
+    let helped: LevelDef = serde_json::from_value(authored).unwrap();
+    assert_eq!(
+        helped.exit_suction,
+        Some(ExitSuction {
+            reach: 0.9,
+            speed: 0.5
+        })
+    );
+}
+#[test]
+fn authored_exit_suction_only_reaches_the_body_at_the_doorway() {
+    let mut definition = level(2);
+    fixed(&mut definition)[0].pose.position = Point { x: 3.5, z: 2. };
+    fixed(&mut definition)[1].pose.position = Point { x: 0.5, z: 2. };
+    // Flightless bodies: whatever moves them came from the authored air.
+    definition.body_config.walk_speed = 0.;
+    definition.body_config.flight_speed = 0.;
+    definition.duration_ticks = 20;
+    let run = |definition: LevelDef| {
+        let mut attempt = attempt(graph(), definition, 11, 2);
+        let mut last = attempt.step().unwrap().unwrap();
+        while let Some(frame) = attempt.step().unwrap() {
+            last = frame;
+        }
+        last
+    };
+    let unhelped = run(definition.clone());
+    definition.exit_suction = Some(ExitSuction {
+        reach: 0.9,
+        speed: 0.5,
+    });
+    let helped = run(definition);
+    assert_eq!(
+        unhelped.flies[0].body.outcome,
+        Some(TerminalOutcome::TimedOut)
+    );
+    assert_eq!(helped.flies[0].body.outcome, Some(TerminalOutcome::Escaped));
+    assert_eq!(
+        helped.flies[1].body, unhelped.flies[1].body,
+        "a fly away from the doorway must be untouched"
+    );
 }

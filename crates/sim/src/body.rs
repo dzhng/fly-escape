@@ -165,6 +165,48 @@ pub struct ExitOpening {
     pub b: Point,
     pub outward: Point,
 }
+impl ExitOpening {
+    /// Centre of the opening: the doorway an escaping body has to cross.
+    fn midpoint(self) -> Point {
+        Point {
+            x: (self.a.x + self.b.x) / 2.,
+            z: (self.a.z + self.b.z) / 2.,
+        }
+    }
+}
+/// Authored short-range physical help through the doorway: a reverse fan whose
+/// pull converges on a point just outside the exit. It is ordinary wind on the
+/// swept body, so contact and escape adjudication are unchanged, and it is
+/// absent unless a level authors it.
+#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+pub struct ExitSuction {
+    /// World units from the exit midpoint at which the pull reaches zero.
+    pub reach: f64,
+    /// World units per second at the midpoint, falling linearly to zero at reach.
+    pub speed: f64,
+}
+impl ExitSuction {
+    pub(crate) fn validate(self) -> Result<(), String> {
+        if !self.reach.is_finite()
+            || self.reach <= 0.
+            || self.reach > 2.
+            || !self.speed.is_finite()
+            || self.speed < 0.
+            || self.speed > 1.
+        {
+            return Err(
+                "exit suction requires reach in (0,2] world units and speed in [0,1] per second"
+                    .into(),
+            );
+        }
+        Ok(())
+    }
+}
+/// How far outside the wall plane the pull converges. Small enough to stay a
+/// doorway step, large enough that a body at the plane is carried through it
+/// rather than along it.
+const EXIT_SUCTION_TARGET_OFFSET: f64 = 0.25;
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 pub struct BodyContacts {
@@ -226,6 +268,7 @@ pub struct BodyWorld {
     hull: &'static ContactHull,
     zappers: Vec<ContactRegion>,
     exit: ExitOpening,
+    exit_suction: Option<ExitSuction>,
     duration_ticks: u32,
 }
 impl BodyWorld {
@@ -247,6 +290,7 @@ impl BodyWorld {
             hull: native_hull()?,
             zappers: zappers.to_vec(),
             exit,
+            exit_suction: None,
             duration_ticks,
         })
     }
@@ -269,6 +313,44 @@ impl BodyWorld {
         }
         self.contact_hazards = roles;
         Ok(self)
+    }
+    pub fn with_exit_suction(mut self, suction: Option<ExitSuction>) -> Result<Self, String> {
+        if let Some(suction) = suction {
+            suction.validate()?;
+        }
+        self.exit_suction = suction;
+        Ok(self)
+    }
+    /// Convergent pull toward a point just outside the exit, for a body already
+    /// within reach of the opening and able to see it. Zero everywhere else, so
+    /// nothing steers a body across the house and nothing pulls through a wall.
+    fn exit_suction_velocity(&self, position: Point) -> Point {
+        let Some(suction) = self.exit_suction else {
+            return Point::default();
+        };
+        let mid = self.exit.midpoint();
+        let distance = position.distance(mid);
+        let inside = Point {
+            x: mid.x - self.exit.outward.x * 1e-5,
+            z: mid.z - self.exit.outward.z * 1e-5,
+        };
+        if distance >= suction.reach
+            || self.geometry.room_at(position) != self.geometry.room_at(inside)
+            || !self.geometry.line_of_sight(position, mid)
+        {
+            return Point::default();
+        }
+        let dx = mid.x + self.exit.outward.x * EXIT_SUCTION_TARGET_OFFSET - position.x;
+        let dz = mid.z + self.exit.outward.z * EXIT_SUCTION_TARGET_OFFSET - position.z;
+        let length = dx.hypot(dz);
+        if length == 0. {
+            return Point::default();
+        }
+        let speed = suction.speed * (1. - distance / suction.reach);
+        Point {
+            x: speed * dx / length,
+            z: speed * dz / length,
+        }
     }
     fn contact_hazard_at(&self, state: &BodyState) -> Result<Option<ContactHazardKind>, String> {
         if let Some(kind) = state.support.and_then(|id| self.contact_hazards.get(&id)) {
@@ -330,10 +412,7 @@ impl BodyWorld {
                     .into(),
             );
         }
-        let mid = Point {
-            x: (exit.a.x + exit.b.x) / 2.,
-            z: (exit.a.z + exit.b.z) / 2.,
-        };
+        let mid = exit.midpoint();
         let probe = (length * 1e-6).min(1e-5);
         let inside = Point {
             x: mid.x - exit.outward.x * probe,
@@ -631,6 +710,9 @@ impl Body {
             BodyMode::Walking if neural.motor.thrust > 0. => model.walking_cost,
             BodyMode::Walking | BodyMode::Feeding => model.idle_cost,
         });
+        // Authored doorway help joins the air the body already moves through, so
+        // the swept step, contact and escape adjudication stay the same.
+        let suction = world.exit_suction_velocity(self.state.pose.position);
         let desired = desired_pose(
             self.state.pose,
             Locomotion {
@@ -639,7 +721,10 @@ impl Body {
                 speed,
                 turn_gain: self.config.turn_gain,
             },
-            wind,
+            Point {
+                x: wind.x + suction.x,
+                z: wind.z + suction.z,
+            },
             dt,
         );
         let mut trace = motion::advance(world, &self.state, desired, dt, self.config.body_radius)?;

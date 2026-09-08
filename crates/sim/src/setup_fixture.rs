@@ -35,6 +35,7 @@ pub fn fixture() -> Result<SetupFixture, String> {
                 radius: 2.,
                 strength: 1.,
             }),
+            exit_suction: None,
             food: vec![],
             zappers: vec![],
             sources: vec![],

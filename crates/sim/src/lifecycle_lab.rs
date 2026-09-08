@@ -160,6 +160,7 @@ fn fixture(scenario: LifecycleScenario) -> LevelDef {
             outward: p(1., 0.),
         },
         exit_cue: None,
+        exit_suction: None,
         food: if exit_case {
             vec![]
         } else {

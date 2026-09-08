@@ -59,6 +59,11 @@ pub struct LevelDef {
     pub spawn: crate::spawn::SpawnDef,
     pub exit: ExitOpening,
     pub exit_cue: Option<ExitCue>,
+    /// Optional physical help through the doorway; absent levels get none and
+    /// keep the identity they had before the setting existed.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional = nullable)]
+    pub exit_suction: Option<ExitSuction>,
     pub food: Vec<FoodDef>,
     pub fixed_objects: Vec<Placement>,
     pub zappers: Vec<ContactRegion>,
@@ -219,7 +224,8 @@ impl Attempt {
             level.exit,
             level.duration_ticks,
         )?
-        .with_contact_hazards(&resolved.state.contact_hazards)?;
+        .with_contact_hazards(&resolved.state.contact_hazards)?
+        .with_exit_suction(level.exit_suction)?;
         let fields = FieldSet::new(
             level.geometry.clone(),
             resolved.field_config.clone(),
@@ -469,6 +475,9 @@ fn validate_description(
         level.exit,
         level.duration_ticks,
     )?;
+    if let Some(suction) = level.exit_suction {
+        suction.validate()?;
+    }
     Ok(())
 }
 fn canonical_hash(value: &impl Serialize) -> Result<String, String> {

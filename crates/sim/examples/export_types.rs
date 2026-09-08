@@ -37,6 +37,7 @@ fn main() {
         sim::surface::SurfaceHit::decl(),
         sim::surface::SupportSample::decl(),
         ExitOpening::decl(),
+        ExitSuction::decl(),
         BodyContacts::decl(),
         FeedingEnd::decl(),
         BodyEventKind::decl(),

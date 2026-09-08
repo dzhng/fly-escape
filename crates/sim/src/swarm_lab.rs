@@ -77,6 +77,7 @@ pub fn level(count: u32) -> Result<LevelDef, String> {
             outward: point(1., 0.),
         },
         exit_cue: None,
+        exit_suction: None,
         food: vec![],
         zappers: vec![],
         sources: vec![Source {

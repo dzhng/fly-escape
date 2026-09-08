@@ -1,43 +1,45 @@
 use sim::food::{FoodDef, FoodShape};
 use sim::{body::*, environment::*, GroupActivity, MotorOutput, StepOutput};
+/// One walled room whose only opening faces the given outward normal, so a test
+/// can pin behaviour that must follow the authored facing rather than an axis.
+fn room_with_opening(outward_x: f64) -> (Geometry, ExitOpening) {
+    let wall = |ax, az, bx, bz| Wall {
+        a: Point { x: ax, z: az },
+        b: Point { x: bx, z: bz },
+    };
+    let open_x = if outward_x > 0. { 4. } else { 0. };
+    let closed_x = 4. - open_x;
+    (
+        Geometry {
+            solids: vec![],
+            rooms: vec![RectRoom {
+                id: 1,
+                min: Point { x: 0., z: 0. },
+                max: Point { x: 4., z: 4. },
+            }],
+            walls: vec![
+                wall(0., 0., 4., 0.),
+                wall(0., 4., 4., 4.),
+                wall(closed_x, 0., closed_x, 4.),
+                wall(open_x, 0., open_x, 1.),
+                wall(open_x, 3., open_x, 4.),
+            ],
+        },
+        ExitOpening {
+            a: Point { x: open_x, z: 1. },
+            b: Point { x: open_x, z: 3. },
+            outward: Point {
+                x: outward_x,
+                z: 0.,
+            },
+        },
+    )
+}
 fn geometry() -> Geometry {
-    Geometry {
-        solids: vec![],
-        rooms: vec![RectRoom {
-            id: 1,
-            min: Point { x: 0., z: 0. },
-            max: Point { x: 4., z: 4. },
-        }],
-        walls: vec![
-            Wall {
-                a: Point { x: 0., z: 0. },
-                b: Point { x: 4., z: 0. },
-            },
-            Wall {
-                a: Point { x: 0., z: 4. },
-                b: Point { x: 4., z: 4. },
-            },
-            Wall {
-                a: Point { x: 0., z: 0. },
-                b: Point { x: 0., z: 4. },
-            },
-            Wall {
-                a: Point { x: 4., z: 0. },
-                b: Point { x: 4., z: 1. },
-            },
-            Wall {
-                a: Point { x: 4., z: 3. },
-                b: Point { x: 4., z: 4. },
-            },
-        ],
-    }
+    room_with_opening(1.).0
 }
 fn exit() -> ExitOpening {
-    ExitOpening {
-        a: Point { x: 4., z: 1. },
-        b: Point { x: 4., z: 3. },
-        outward: Point { x: 1., z: 0. },
-    }
+    room_with_opening(1.).1
 }
 fn neural(thrust: f64, proboscis: f64) -> StepOutput {
     StepOutput {
@@ -1195,4 +1197,151 @@ fn the_life_model_owns_energy_validation_without_an_immortality_loophole() {
         .is_err(),
         "a timed round still decodes motor thresholds"
     );
+}
+/// A timed body that never flaps: whatever it covers came from the air.
+fn drifting_body(x: f64, z: f64) -> Body {
+    Body::new(
+        BodyPose {
+            position: Point { x, z },
+            heading: 0.,
+        },
+        timed_config(),
+    )
+    .unwrap()
+}
+fn doorway_suction() -> ExitSuction {
+    ExitSuction {
+        reach: 0.9,
+        speed: 0.5,
+    }
+}
+#[test]
+fn authored_exit_suction_carries_a_drifting_body_through_either_facing_doorway() {
+    for outward_x in [1., -1.] {
+        let (g, exit) = room_with_opening(outward_x);
+        let helped = BodyWorld::new(&g, &[], &[], &[], exit, 200)
+            .unwrap()
+            .with_exit_suction(Some(doorway_suction()))
+            .unwrap();
+        let unhelped = BodyWorld::new(&g, &[], &[], &[], exit, 200).unwrap();
+        // Half a metre inside the opening, on the wrong side of it to walk out.
+        let start = Point {
+            x: 2. + outward_x * 1.5,
+            z: 2.,
+        };
+        let mut pulled = drifting_body(start.x, start.z);
+        let mut ticks = 0;
+        while pulled.state().outcome.is_none() && ticks < 200 {
+            ticks += 1;
+            pulled
+                .step(&neural(0., 0.), &helped, Point::default(), 0.1, ticks)
+                .unwrap();
+        }
+        assert_eq!(
+            pulled.state().outcome,
+            Some(TerminalOutcome::Escaped),
+            "outward {outward_x}"
+        );
+        // Help across the last half metre, not a slow drift: about 1.5 seconds.
+        assert!(ticks <= 20, "escape took {ticks} ticks outward {outward_x}");
+        let mut untouched = drifting_body(start.x, start.z);
+        for tick in 1..=ticks {
+            untouched
+                .step(&neural(0., 0.), &unhelped, Point::default(), 0.1, tick)
+                .unwrap();
+        }
+        assert_eq!(untouched.state().outcome, None);
+        assert_eq!(untouched.state().pose.position, start);
+    }
+}
+#[test]
+fn exit_suction_stops_at_its_reach_and_never_pulls_through_a_wall() {
+    let g = geometry();
+    let world = |g: &Geometry| {
+        BodyWorld::new(g, &[], &[], &[], exit(), 200)
+            .unwrap()
+            .with_exit_suction(Some(doorway_suction()))
+            .unwrap()
+    };
+    let drift = |world: &BodyWorld, from: Point| {
+        let mut b = drifting_body(from.x, from.z);
+        for tick in 1..=10 {
+            b.step(&neural(0., 0.), world, Point::default(), 0.1, tick)
+                .unwrap();
+        }
+        b.state().pose.position
+    };
+    // A metre from the opening is outside the reach, where the air is still.
+    let beyond = Point { x: 3., z: 2. };
+    assert_eq!(drift(&world(&g), beyond), beyond);
+    // Well within the reach, but behind a partition: still nothing.
+    let near = Point { x: 3.5, z: 2. };
+    let mut partitioned = g.clone();
+    partitioned.walls.push(Wall {
+        a: Point { x: 3.6, z: 0.5 },
+        b: Point { x: 3.6, z: 2.5 },
+    });
+    assert_eq!(drift(&world(&partitioned), near), near);
+    assert!(drift(&world(&g), near).x > near.x);
+}
+#[test]
+fn exit_suction_is_rejected_outside_its_authored_bounds() {
+    let g = geometry();
+    let world = || BodyWorld::new(&g, &[], &[], &[], exit(), 200).unwrap();
+    for rejected in [
+        ExitSuction {
+            reach: 0.,
+            speed: 0.5,
+        },
+        ExitSuction {
+            reach: 2.5,
+            speed: 0.5,
+        },
+        ExitSuction {
+            reach: 0.9,
+            speed: 1.5,
+        },
+        ExitSuction {
+            reach: f64::NAN,
+            speed: 0.5,
+        },
+    ] {
+        assert!(world().with_exit_suction(Some(rejected)).is_err());
+    }
+    assert!(world().with_exit_suction(Some(doorway_suction())).is_ok());
+    assert!(world().with_exit_suction(None).is_ok());
+}
+
+#[test]
+fn exit_suction_does_not_reach_into_an_adjacent_open_room() {
+    let mut g = geometry();
+    g.rooms = vec![
+        RectRoom {
+            id: 1,
+            min: Point { x: 0., z: 0. },
+            max: Point { x: 3.6, z: 4. },
+        },
+        RectRoom {
+            id: 2,
+            min: Point { x: 3.6, z: 0. },
+            max: Point { x: 4., z: 4. },
+        },
+    ];
+    let world = BodyWorld::new(&g, &[], &[], &[], exit(), 200)
+        .unwrap()
+        .with_exit_suction(Some(doorway_suction()))
+        .unwrap();
+    let mut outside_room = drifting_body(3.5, 2.);
+    let mut inside_room = drifting_body(3.8, 2.);
+    for tick in 1..=20 {
+        outside_room
+            .step(&neural(0., 0.), &world, Point::default(), 0.1, tick)
+            .unwrap();
+        inside_room
+            .step(&neural(0., 0.), &world, Point::default(), 0.1, tick)
+            .unwrap();
+    }
+    assert_eq!(outside_room.state().pose.position, Point { x: 3.5, z: 2. });
+    assert_eq!(outside_room.state().outcome, None);
+    assert_eq!(inside_room.state().outcome, Some(TerminalOutcome::Escaped));
 }

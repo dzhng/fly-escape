@@ -53,12 +53,26 @@ export type ContactSurface = { id: number, vertices: Array<[number, number, numb
 export type SurfaceHit = { surfaceId: number, fraction: number, point: [number, number, number], normal: [number, number, number], };
 export type SupportSample = { surfaceId: number, root: [number, number, number], rotation: [number, number, number, number], point: [number, number, number], normal: [number, number, number], };
 export type ExitOpening = { a: Point, b: Point, outward: Point, };
+export type ExitSuction = {
+/**
+ * World units from the exit midpoint at which the pull reaches zero.
+ */
+reach: number,
+/**
+ * World units per second at the midpoint, falling linearly to zero at reach.
+ */
+speed: number, };
 export type BodyContacts = { food: boolean, contactHazard: ContactHazardKind | null, };
 export type FeedingEnd = "contactLost" | "satiated" | "boutLimit" | "terminal";
 export type BodyEventKind = { "type": "modeChanged", from: BodyMode, to: BodyMode, } | { "type": "feedingStarted" } | { "type": "feedingEnded", reason: FeedingEnd, } | { "type": "terminal", outcome: TerminalOutcome, };
 export type BodyEvent = { tick: number, kind: BodyEventKind, };
 export type OutcomeSummary = { escaped: number, starved: number, zapped: number, caught: number, timedOut: number, score: number, };
-export type LevelDef = { id: string, geometry: Geometry, spawn: SpawnDef, exit: ExitOpening, exitCue: ExitCue | null, food: Array<FoodDef>, fixedObjects: Array<Placement>, zappers: Array<ContactRegion>, sources: Array<Source>, fieldConfig: FieldConfig, bodyConfig: BodyConfig, durationTicks: number, starThresholds: [number, number, number], placementRules: PlacementRules, };
+export type LevelDef = { id: string, geometry: Geometry, spawn: SpawnDef, exit: ExitOpening, exitCue: ExitCue | null,
+/**
+ * Optional physical help through the doorway; absent levels get none and
+ * keep the identity they had before the setting existed.
+ */
+exitSuction?: ExitSuction | null, food: Array<FoodDef>, fixedObjects: Array<Placement>, zappers: Array<ContactRegion>, sources: Array<Source>, fieldConfig: FieldConfig, bodyConfig: BodyConfig, durationTicks: number, starThresholds: [number, number, number], placementRules: PlacementRules, };
 export type ToolKind = "fruit" | "banana" | "crumbs" | "vinegar" | "lamp" | "shade" | "fan" | "bugZapper" | "spiderWeb" | "wornShoes" | "dirtyDishes" | "laundry" | "sleepingCat";
 export type ToolEffect = { "type": "none" } | { "type": "source", kind: SourceKind, radius: number, rate: number, } | { "type": "fan", reach: number, halfWidth: number, speed: number, };
 export type ToolDef = { kind: ToolKind, footprintRadius: number, effect: ToolEffect, contact: NativeObjectShape | null, edible: boolean, contactHazard: ContactHazardKind | null, };

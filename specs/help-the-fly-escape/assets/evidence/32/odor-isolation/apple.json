@@ -1,13 +1,12 @@
-import type { CampaignLevel } from "../campaign";
-const content: Pick<CampaignLevel, "level" | "tuning"> = {
+{
   "level": {
     "bodyConfig": {
       "life": {
         "kind": "timed"
       },
       "bodyRadius": 0.002632,
-      "walkSpeed": 0.24,
-      "flightSpeed": 0.48,
+      "walkSpeed": 0.12,
+      "flightSpeed": 0.24,
       "turnGain": 8,
       "takeoffThreshold": 0.2,
       "landingThreshold": 0.2,
@@ -17,20 +16,19 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
     "durationTicks": 3000,
     "exit": {
       "a": {
-        "x": 9.6,
+        "x": 0,
         "z": 1.8
       },
       "b": {
-        "x": 9.6,
+        "x": 0,
         "z": 2.7
       },
       "outward": {
-        "x": 1,
+        "x": -1,
         "z": 0
       }
     },
     "exitCue": null,
-    "exitSuction": { "reach": 0.9, "speed": 0.5 },
     "fieldConfig": {
       "antennaOffset": 0.00020207253103162883,
       "baselineBrightness": 1,
@@ -48,64 +46,46 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
     "fixedObjects": [
       {
         "id": 1,
-        "kind": "banana",
+        "kind": "fruit",
         "position": {
-          "x": 3.4,
-          "z": 3.3
+          "x": 7.4,
+          "z": 3.2
         },
-        "heading": 0.5
+        "heading": 0.3
       },
       {
         "id": 2,
-        "kind": "fruit",
+        "kind": "banana",
         "position": {
-          "x": 8.7,
-          "z": 8.2
+          "x": 2.5,
+          "z": 8
         },
-        "heading": 0.2
+        "heading": 0.8
       },
       {
         "id": 3,
         "kind": "wornShoes",
         "position": {
-          "x": 2.6,
-          "z": 6.7
+          "x": 1.2,
+          "z": 3.4
         },
-        "heading": 0.8
+        "heading": 0.6
       },
       {
         "id": 4,
-        "kind": "laundry",
+        "kind": "sleepingCat",
         "position": {
-          "x": 5.6,
-          "z": 6.7
+          "x": 2.2,
+          "z": 1.65
         },
-        "heading": 0.3
+        "heading": 0
       },
       {
         "id": 5,
-        "kind": "dirtyDishes",
+        "kind": "spiderWeb",
         "position": {
-          "x": 7.3,
-          "z": 8.6
-        },
-        "heading": 0
-      },
-      {
-        "id": 6,
-        "kind": "sleepingCat",
-        "position": {
-          "x": 2,
-          "z": 1.6
-        },
-        "heading": 0
-      },
-      {
-        "id": 7,
-        "kind": "bugZapper",
-        "position": {
-          "x": 6.8,
-          "z": 5.2
+          "x": 4.4923,
+          "z": 8.9
         },
         "heading": 0
       }
@@ -130,7 +110,7 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
             "z": 0
           },
           "max": {
-            "x": 9.6,
+            "x": 8.4,
             "z": 4.5
           }
         },
@@ -141,7 +121,7 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
             "z": 4.5
           },
           "max": {
-            "x": 9.6,
+            "x": 8.4,
             "z": 6
           }
         },
@@ -152,30 +132,19 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
             "z": 6
           },
           "max": {
-            "x": 3.3,
-            "z": 10.4
+            "x": 4.8,
+            "z": 9.2
           }
         },
         {
           "id": 5,
           "min": {
-            "x": 3.3,
+            "x": 4.8,
             "z": 6
           },
           "max": {
-            "x": 6.3,
-            "z": 10.4
-          }
-        },
-        {
-          "id": 6,
-          "min": {
-            "x": 6.3,
-            "z": 6
-          },
-          "max": {
-            "x": 9.6,
-            "z": 10.4
+            "x": 8.4,
+            "z": 9.2
           }
         }
       ],
@@ -187,7 +156,17 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
           },
           "b": {
             "x": 0,
-            "z": 10.4
+            "z": 1.8
+          }
+        },
+        {
+          "a": {
+            "x": 0,
+            "z": 2.7
+          },
+          "b": {
+            "x": 0,
+            "z": 9.2
           }
         },
         {
@@ -203,7 +182,7 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
         {
           "a": {
             "x": 4.8,
-            "z": 3.0
+            "z": 3
           },
           "b": {
             "x": 4.8,
@@ -212,42 +191,42 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
         },
         {
           "a": {
-            "x": 0,
-            "z": 0
+            "x": 4.8,
+            "z": 6
           },
           "b": {
-            "x": 9.6,
-            "z": 0
+            "x": 4.8,
+            "z": 9.2
           }
         },
         {
           "a": {
             "x": 0,
-            "z": 4.5
-          },
-          "b": {
-            "x": 1.8,
-            "z": 4.5
-          }
-        },
-        {
-          "a": {
-            "x": 9.6,
             "z": 0
           },
           "b": {
-            "x": 9.6,
-            "z": 1.8
+            "x": 8.4,
+            "z": 0
           }
         },
         {
           "a": {
-            "x": 9.6,
-            "z": 2.7
+            "x": 6.9,
+            "z": 4.5
           },
           "b": {
-            "x": 9.6,
-            "z": 10.4
+            "x": 8.4,
+            "z": 4.5
+          }
+        },
+        {
+          "a": {
+            "x": 8.4,
+            "z": 0
+          },
+          "b": {
+            "x": 8.4,
+            "z": 9.2
           }
         },
         {
@@ -266,67 +245,37 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
             "z": 6
           },
           "b": {
-            "x": 4.35,
+            "x": 6,
             "z": 6
           }
         },
         {
           "a": {
-            "x": 5.25,
-            "z": 6
-          },
-          "b": {
             "x": 6.9,
             "z": 6
-          }
-        },
-        {
-          "a": {
-            "x": 7.8,
-            "z": 6
           },
           "b": {
-            "x": 9.6,
+            "x": 8.4,
             "z": 6
-          }
-        },
-        {
-          "a": {
-            "x": 3.3,
-            "z": 6
-          },
-          "b": {
-            "x": 3.3,
-            "z": 10.4
           }
         },
         {
           "a": {
             "x": 0,
-            "z": 10.4
+            "z": 9.2
           },
           "b": {
-            "x": 9.6,
-            "z": 10.4
+            "x": 8.4,
+            "z": 9.2
           }
         },
         {
           "a": {
-            "x": 6.3,
-            "z": 6
-          },
-          "b": {
-            "x": 6.3,
-            "z": 10.4
-          }
-        },
-        {
-          "a": {
-            "x": 2.7,
+            "x": 0,
             "z": 4.5
           },
           "b": {
-            "x": 9.6,
+            "x": 6,
             "z": 4.5
           }
         }
@@ -365,22 +314,6 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
           "height": 2.1
         },
         {
-          "id": 4,
-          "furnishing": {
-            "model": "cabinet",
-            "quarterTurns": 0
-          },
-          "min": {
-            "x": 6.8,
-            "z": 9.75
-          },
-          "max": {
-            "x": 8.0,
-            "z": 10.2
-          },
-          "height": 0.85
-        },
-        {
           "id": 5,
           "furnishing": {
             "model": "desk",
@@ -388,11 +321,11 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
           },
           "min": {
             "x": 0.4,
-            "z": 9.55
+            "z": 8.35
           },
           "max": {
             "x": 1.8,
-            "z": 10.25
+            "z": 9.05
           },
           "height": 1.05
         },
@@ -404,11 +337,11 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
           },
           "min": {
             "x": 0.8,
-            "z": 8.45
+            "z": 7.25
           },
           "max": {
             "x": 1.4,
-            "z": 9.1
+            "z": 7.9
           },
           "height": 0.95
         },
@@ -419,18 +352,18 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
             "quarterTurns": 2
           },
           "min": {
-            "x": 4,
-            "z": 8.15
+            "x": 5.65,
+            "z": 6.95
           },
           "max": {
-            "x": 5.6,
-            "z": 10.25
+            "x": 7.25,
+            "z": 9.05
           },
           "height": 1.05
         }
       ]
     },
-    "id": "turn-the-corner",
+    "id": "open-window",
     "placementRules": {
       "inventory": [
         {
@@ -446,16 +379,8 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
           "count": 1
         },
         {
-          "kind": "wornShoes",
-          "count": 1
-        },
-        {
-          "kind": "laundry",
-          "count": 1
-        },
-        {
           "kind": "vinegar",
-          "count": 2
+          "count": 1
         },
         {
           "kind": "fan",
@@ -463,7 +388,7 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
         }
       ],
       "reserved": [],
-      "fanHeading": 0
+      "fanHeading": 3.141592653589793
     },
     "sources": [],
     "starThresholds": [
@@ -475,14 +400,18 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
     "spawn": {
       "kind": "cluster",
       "min": {
-        "x": 2.05,
-        "z": 9.15
+        "x": 7.55,
+        "z": 8.15
       },
       "max": {
-        "x": 2.7,
-        "z": 9.7
+        "x": 8.05,
+        "z": 8.8
       },
       "flyingCount": 10
+    },
+    "exitSuction": {
+      "reach": 0.9,
+      "speed": 0.5
     }
   },
   "tuning": {
@@ -498,6 +427,28 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
     ],
     "silencedNeurons": [],
     "tasteGain": 1
+  },
+  "reference": [
+    {
+      "id": 1,
+      "kind": "fruit",
+      "position": {
+        "x": 6.45,
+        "z": 6.35
+      },
+      "heading": 0
+    }
+  ],
+  "poor": [],
+  "tuningSeeds": [
+    "15789670027162723101",
+    "104",
+    "106"
+  ],
+  "heldoutSeeds": [],
+  "frozen": false,
+  "probeTarget": {
+    "x": 6.45,
+    "z": 6.35
   }
-};
-export default content;
+}
