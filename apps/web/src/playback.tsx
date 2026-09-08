@@ -57,6 +57,7 @@ type Run = {
   info: AttemptInfo;
   failed: boolean;
   assetsReady: boolean;
+  resultPublished: boolean;
   motionSampler?: MotionSampler;
   archive: FrameArchive;
   clock: PlaybackClock;
@@ -218,6 +219,7 @@ export function AttemptPlayback({
           info: reply.info,
           failed: false,
           assetsReady: false,
+          resultPublished: false,
           archive,
           clock,
           requestedAt,
@@ -282,8 +284,6 @@ export function AttemptPlayback({
           });
           if (current.rateWindow.length > 20) current.rateWindow.shift();
         }
-      } else if (reply.type === "complete") {
-        onResult?.(reply.result);
       } else if (reply.type === "error") {
         fail(reply.message);
       }
@@ -424,6 +424,10 @@ export function AttemptPlayback({
               };
               // Keep diagnostics available without a frame-by-frame console stream.
               const ended = current.clock.state === "ended" && lastState !== "ended";
+              if (current.clock.state === "ended" && current.archive.result && !current.resultPublished) {
+                current.resultPublished = true;
+                onResult?.(current.archive.result);
+              }
               if (ended || (now-lastDiagnosticAt >= 1000 && current.clock.state !== lastState)
                 || (current.clock.state === "playing" && now-lastDiagnosticAt >= 10000)) {
                 console.info("[Fly escape] playback", ended ? {
