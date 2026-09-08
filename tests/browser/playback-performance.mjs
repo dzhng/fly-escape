@@ -21,7 +21,10 @@ assert.ok(Number.isInteger(runs) && runs > 0 && runs <= 10);
 try {
   await page.goto(`${base}/lab/playback`);
   for (let run = 1; run <= runs; run++) {
-    if (run > 1) await page.getByRole("button", { name: "New attempt", exact: true }).click();
+    if (run > 1) {
+      await page.getByRole("button", { name: "New attempt", exact: true }).click();
+      await page.getByRole("button", { name: "Leave attempt", exact: true }).click();
+    }
     await page.waitForFunction(
       () =>
         document.querySelector('[data-testid="playback-lab"]')?.dataset.playbackState === "playing",

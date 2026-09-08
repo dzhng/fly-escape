@@ -21,7 +21,8 @@ try {
   await page.waitForFunction(()=>document.querySelector('[data-testid="playback-report"]')?.textContent.length>10);
   const report=JSON.parse(await page.getByTestId('playback-report').textContent());assert.equal(report.initialBodies.filter(b=>b.mode==='flying').length,10);assert.equal(report.initialBodies.filter(b=>b.mode==='walking').length,10);
   assert.equal(await page.getByRole('button',{name:'Overview',exact:true}).count(),0);
-  await page.getByRole('button',{name:/Cancel attempt|Retry — edit setup/}).click();await ready();
+  await page.getByRole('button',{name:/Cancel attempt|Retry — edit setup/}).click();
+  await page.getByRole("button", {name: "Leave attempt", exact: true}).click();await ready();
  }
  assert.deepEqual(errors,[]);console.log('PASS: both actual levels resolve, release mixed20-fly swarm,produce replay,and return to setup; stored one-star fixture unlocks second.');
 } finally {await browser.close();}

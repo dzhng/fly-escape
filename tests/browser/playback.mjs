@@ -63,8 +63,7 @@ try {
   await seekOne();
   assert.equal(await readout(), first, "seeking back must restore the same recorded neuron values");
   await page.screenshot({ path: new URL("paused-seek.png", output).pathname });
-  await page.getByRole("button", { name: "Fast", exact: true }).click();
-  await page.getByRole("button", { name: "Play", exact: true }).click();
+  await page.getByRole("button", { name: "Fast", exact: true }).click({timeout: 120000});
   await page.waitForFunction(() => {
     const current = JSON.parse(
       document.querySelector('[data-testid="playback-report"]').textContent,
@@ -80,17 +79,19 @@ try {
   );
   // Only real time and fast exist; there is no third speed to select.
   assert.equal(
-    await page.getByRole("button", { name: /^(Real time|Fast|[0-9.]+×)$/ }).count(),
+    await page.getByRole("button", { name: /^(Play|Fast|[0-9.]+×)$/ }).count(),
     2,
   );
   await page.getByRole("button", { name: "Pause", exact: true }).click();
   await state("paused");
   await page.getByRole("button", { name: "Replay", exact: true }).click();
+  await page.getByRole("button", {name: "Replay from start", exact: true}).click();
   await page.waitForFunction(
     () => Number(document.querySelector('[data-testid="playback-lab"]').dataset.cursorTick) < 1,
   );
   const oldId = (await report()).spec.attemptId;
   await page.getByRole("button", { name: "New attempt", exact: true }).click();
+  await page.getByRole("button", {name: "Leave attempt", exact: true}).click();
   await state("playing");
   const restarted = await report();
   assert.notEqual(restarted.spec.attemptId, oldId);

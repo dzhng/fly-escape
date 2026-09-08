@@ -64,6 +64,7 @@ try {
   assert.equal(first.spec.flyCount, 16);
   assert.equal(first.spec.placements.length, 2);
   await page.getByRole("button", { name: "Cancel attempt", exact: true }).click();
+  await page.getByRole("button", {name: "Leave attempt", exact: true}).click();
   await page.getByTestId("setup-game").waitFor();
   assert.equal(await page.getByRole("button", { name: "Remove Fan 2", exact: true }).count(), 1);
   await page.getByRole("button", { name: "Remove Fan 2", exact: true }).click();
@@ -91,6 +92,7 @@ try {
   assert.notEqual(second.spec.rootSeed, first.spec.rootSeed);
   const progress = await page.evaluate(() => localStorage.getItem("fly-escape-progress"));
   await page.getByRole("button", { name: "Replay", exact: true }).click();
+  await page.getByRole("button", {name: "Replay from start", exact: true}).click();
   await page.waitForTimeout(150);
   assert.equal(await page.evaluate(() => localStorage.getItem("fly-escape-progress")), progress);
   await page.getByTestId("playback-seek").focus();
@@ -100,6 +102,7 @@ try {
   );
   await page.screenshot({ path: output + "/result.png" });
   await page.getByRole("button", { name: "Retry — edit setup", exact: true }).click();
+  await page.getByRole("button", {name: "Leave attempt", exact: true}).click();
   await page.getByRole("button", { name: "Remove Apple 1", exact: true }).waitFor();
   await page.reload();
   await page.getByRole("button", { name: "Remove Apple 1", exact: true }).waitFor();

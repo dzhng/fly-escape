@@ -51,6 +51,7 @@ try {
       () => document.querySelector('[data-testid="playback-lab"]')?.dataset.worldState === "ready",
     );
     await page.getByRole("button", { name: /Cancel attempt|Retry — edit setup/ }).click();
+    await page.getByRole("button", {name: "Leave attempt", exact: true}).click();
     await page.waitForFunction(
       () => document.querySelector('[data-testid="setup-game"]')?.dataset.worldState === "ready",
     );

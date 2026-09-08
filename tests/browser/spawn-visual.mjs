@@ -80,6 +80,7 @@ try {
     ) + "\n",
   );
   await page.getByRole("button", { name: "Cancel attempt", exact: true }).click();
+  await page.getByRole("button", {name: "Leave attempt", exact: true}).click();
 } finally {
   await browser.close();
 }

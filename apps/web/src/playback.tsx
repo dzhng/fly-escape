@@ -1,3 +1,4 @@
+import { PlaybackControls } from "./playback-controls";
 import { frameBesidePanel } from "./world-framing";
 import { StarCelebration, WatchedStars } from "./star-celebration";
 import { Stars } from "./stars";
@@ -184,6 +185,8 @@ export function AttemptPlayback({
   };
   const previewUpdate = useRef<PreviewUpdate | null>(null);
   const [requested, setRequested] = useState(true);
+  const requestedRef = useRef(requested);
+  requestedRef.current = requested;
   const [error, setError] = useState("");
   const [worldReady, setWorldReady] = useState(false);
 
@@ -223,13 +226,12 @@ export function AttemptPlayback({
           reply.info.archiveBytes,
           reply.info.initialBodies,
         );
-        // Campaign attempts default to fast so a whole attempt plays within a minute.
         const clock = new PlaybackClock(
           reply.info.spec.durationTicks,
           TICK_SECONDS,
-          input ? "fast" : "realTime",
+          "realTime",
         );
-        clock.play();
+        if (requestedRef.current) clock.play();
         clock.setHidden(document.hidden);
         run.current = {
           info: reply.info,
@@ -620,51 +622,28 @@ export function AttemptPlayback({
                 )
               }
             />
-            <button
-              disabled={!info || !!error}
-              onClick={() => {
-                setRequested(!requested);
-                control((current) => (requested ? current.clock.pause() : current.clock.play()));
-              }}
-            >
-              {requested ? "Pause" : "Play"}
-            </button>
-            {(["realTime", "fast"] as const).map((mode) => (
-              <button
-                key={mode}
-                aria-pressed={display.mode === mode}
-                disabled={!info || !!error}
-                title={
-                  mode === "fast" && display.fastMultiplier > 1
-                    ? "Fits a whole attempt into about a minute"
-                    : undefined
-                }
-                onClick={() => control((current) => current.clock.setMode(mode))}
-              >
-                {mode === "fast" ? "Fast" : "Real time"}
-              </button>
-            ))}
-            <button
-              disabled={
-                display.computed === 0 || !!error || (!!input && !run.current?.archive.complete)
-              }
-              onClick={() => {
+            <PlaybackControls
+              ready={worldReady && !!info && !error}
+              fastReady={worldReady && !!run.current?.archive.complete && !error}
+              replayReady={worldReady && display.computed > 0 && !error && (!input || !!run.current?.archive.complete)}
+              requested={requested}
+              mode={display.mode}
+              returnToSetup={!!onReturn}
+              returnLabel={onReturn ? (error ? "Back to setup" : run.current?.archive.complete ? "Retry — edit setup" : "Cancel attempt") : "New attempt"}
+              onPause={() => { setRequested(false); control(current => current.clock.pause()); }}
+              onResume={() => { setRequested(true); control(current => current.clock.play()); }}
+              onPlay={() => { setRequested(true); control(current => { current.clock.setMode("realTime"); current.clock.play(); }); }}
+              onFast={() => { setRequested(true); control(current => { current.clock.setMode("fast"); current.clock.play(); }); }}
+              onReplay={() => {
                 setRequested(true);
-                control((current) => {
+                control(current => {
                   current.clock.seek(0, current.archive.computedTick);
+                  current.clock.setMode("realTime");
                   current.clock.play();
                 });
               }}
-            >
-              Replay
-            </button>
-            {onReturn ? (
-              <button onClick={onReturn}>
-                {error ? "Back to setup" : run.current?.archive.complete ? "Retry — edit setup" : "Cancel attempt"}
-              </button>
-            ) : (
-              <button onClick={() => restart.current()}>New attempt</button>
-            )}
+              onReturn={onReturn ?? (() => restart.current())}
+            />
             {!input && <button disabled={!info} onClick={save}>Download report</button>}
           </div>
         </div>

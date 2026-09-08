@@ -46,6 +46,7 @@ try {
   assert.ok(report.console.some(entry => entry.message.includes('failed attempt cleanup')), 'the actual borrowed Rust value cannot be freed after this panic');
   assert.equal(report.failed.terminated, 1, 'the trapped WASM instance is retired');
   await page.getByRole('button', { name: 'New attempt', exact: true }).click();
+  await page.getByRole("button", {name: "Leave attempt", exact: true}).click();
   await page.waitForFunction(() => {
     const player = document.querySelector('[data-testid="playback-lab"]');
     return player?.dataset.playbackState === 'playing' && Number(player.dataset.cursorTick) >= 10;

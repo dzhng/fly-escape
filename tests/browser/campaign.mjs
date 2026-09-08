@@ -76,6 +76,7 @@ try {
   assert.equal(await nav.getByRole("button", { name: /First/ }).isDisabled(), true);
   await page.getByRole("button", { name: /Retry — edit setup/ }).waitFor({ timeout: 90000 });
   await page.getByRole("button", { name: /Retry — edit setup/ }).click();
+  await page.getByRole("button", {name: "Leave attempt", exact: true}).click();
   await ready();
   assert.equal(await page.evaluate(() => window.liveWorkers), 1);
   assert.equal(await nav.getByRole("button", { name: /Third/ }).isDisabled(), true);

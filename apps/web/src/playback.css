@@ -85,3 +85,27 @@
 .playback-world canvas:focus {
   outline: none;
 }
+
+.playback-icon-tooltip { display: inline-flex; }
+.playback-controls button.playback-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 38px;
+  padding: 7px;
+}
+.playback-icon:focus-visible { outline: 2px solid #c5922c; outline-offset: 3px; }
+.playback-confirmation {
+  width: min(420px, calc(100vw - 40px));
+  box-sizing: border-box;
+  padding: 26px;
+  border: 1px solid #c6c9a5;
+  border-radius: 20px;
+  background: #fffced;
+  color: #29473b;
+  box-shadow: 0 18px 70px #152d3540;
+}
+.playback-confirmation::backdrop { background: #1b2c2670; }
+.playback-confirmation h2 { margin: 0 0 14px; font-size: 24px; }
+.playback-confirmation p { line-height: 1.6; font-size: 14px; }
+.playback-confirmation > div { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }

@@ -50,8 +50,8 @@ try {
     activeRun = run + 1;
     await page.waitForFunction(() => document.querySelector(".run-setup")?.disabled === false);
     await page.getByRole("button", { name: "Release the flies", exact: true }).click();
-    if (fullAttempts && mode === "realTime")
-      await page.getByRole("button", { name: "Real time", exact: true }).click();
+    if (fullAttempts)
+      await page.getByRole("button", { name: mode === "fast" ? "Fast" : "Play", exact: true }).click({timeout: startTimeoutMs});
     await page.waitForFunction(() => {
       const text = document.querySelector('[data-testid="playback-report"]')?.textContent;
       if (!text) return false;
@@ -68,7 +68,7 @@ try {
     });
     if (seeds) assert.equal(BigInt(started.spec.rootSeed), BigInt(seeds[run]), "attempt must use its recorded seed");
     if (campaign) {
-      assert.equal(await page.getByRole("button", { name: "Real time", exact: true }).count(), 1);
+      assert.equal(await page.getByRole("button", { name: "Play", exact: true }).count(), 1);
       assert.equal(await page.getByRole("button", { name: "Fast", exact: true }).count(), 1);
       assert.equal(await page.getByTestId("outcome-starved").count(), 0);
       assert.match(await page.getByTestId("round-time").textContent(), /^\d+:\d{2} left$/);
@@ -118,6 +118,7 @@ try {
     }
     assert.equal(page.workers().length, 1, "retry must not accumulate live simulation Workers");
     await page.getByRole("button", { name: /Cancel attempt|Retry — edit setup/ }).click();
+    await page.getByRole("button", {name: "Leave attempt", exact: true}).click();
     await page.waitForFunction(() => document.querySelector(".run-setup")?.disabled === false);
     await cdp.send("HeapProfiler.collectGarbage");
     const heap = await cdp.send("Runtime.getHeapUsage");

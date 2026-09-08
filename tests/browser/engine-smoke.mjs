@@ -64,6 +64,7 @@ try {
   report.checks.push('pause and reverse/forward seek');
   await page.screenshot({path:output+'/paused.png'});
   await page.getByRole('button',{name:/Cancel attempt|Retry — edit setup/}).click();
+  await page.getByRole("button", {name: "Leave attempt", exact: true}).click();
   await page.waitForFunction(()=>document.querySelector('[data-testid="setup-game"]')?.dataset.worldState==='ready');
   report.checks.push('cancel returns to ready setup');
   await page.locator('.run-setup').click();

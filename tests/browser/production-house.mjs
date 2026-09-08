@@ -44,6 +44,7 @@ try {
   );
   assert.equal(loaded.length, 9);
   await page.getByRole("button", { name: /Cancel attempt|Retry — edit setup/ }).click();
+  await page.getByRole("button", {name: "Leave attempt", exact: true}).click();
   await page.waitForFunction(
     () => document.querySelector('[data-testid="setup-game"]')?.dataset.worldState === "ready",
   );
@@ -54,6 +55,7 @@ try {
   await page.locator(".run-setup").click();
   await page.getByText("Loading world assets…", { exact: true }).waitFor();
   await page.getByRole("button", { name: /Cancel attempt|Retry — edit setup/ }).click();
+  await page.getByRole("button", {name: "Leave attempt", exact: true}).click();
   release();
   await page.waitForFunction(
     () => document.querySelector('[data-testid="setup-game"]')?.dataset.worldState === "ready",

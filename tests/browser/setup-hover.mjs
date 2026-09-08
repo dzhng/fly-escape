@@ -82,6 +82,7 @@ try {
   const playbackBox=await page.locator('.playback-world .canvas > canvas').boundingBox();
   assert.deepEqual(playbackBox,{x:0,y:0,width:1440,height:900});
   await page.getByRole('button',{name:'Cancel attempt',exact:true}).click();
+  await page.getByRole("button", {name: "Leave attempt", exact: true}).click();
   await page.waitForFunction(()=>document.querySelector('.setup-game')?.dataset.worldState==='ready',null,{timeout:90000});
   await page.setViewportSize({width:900,height:700});
   await page.screenshot({path:output+'/compact.png'});
