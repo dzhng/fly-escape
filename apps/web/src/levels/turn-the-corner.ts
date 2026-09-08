@@ -6,8 +6,8 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
         "kind": "timed"
       },
       "bodyRadius": 0.002632,
-      "walkSpeed": 0.12,
-      "flightSpeed": 0.24,
+      "walkSpeed": 0.24,
+      "flightSpeed": 0.48,
       "turnGain": 8,
       "takeoffThreshold": 0.2,
       "landingThreshold": 0.2,
