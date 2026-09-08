@@ -1,0 +1,1887 @@
+{
+  "complete": true,
+  "identity": {
+    "armFilter": "reference",
+    "authoredDurationTicks": 3000,
+    "checkpoints": [
+      3000
+    ],
+    "contentHash": "42b298aef8cf099f5acaa21f87cb0b2740c99b3d3f917e9c51ec3857472dadae",
+    "contentPath": "/tmp/fly-food-strategy/clustered-food.json",
+    "continuity": "one Attempt per (arm, seed), constructed once and stepped to its own terminal frame; no respawn, no neural reset, no reseeding, no field or body reset",
+    "diagnosticDurationTicks": 3000,
+    "edges": 798715,
+    "flyCount": 20,
+    "graphDir": "/Users/david/dev/fly-escape/data/processed/brain",
+    "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+    "graphLoadSeconds": 0.034272416,
+    "manifestHash": "ead5f7d258f83ee3909080797752c2f4bb749be939a2ff983f411095722efbf1",
+    "neurons": 70000,
+    "probeSourceHash": "2b925d367e4a35b1c701fed8b56ac77e339e3fc7ef4a80bbd0c9a4b3f4834729",
+    "seedFilter": "all",
+    "simulationBuildId": "a51b27b5b52546010e4e05b3119f39eec66b80883d37f24e3ee965b2ed2b26e4",
+    "tuningSeeds": [
+      "15789670027162723101",
+      "104",
+      "106"
+    ]
+  },
+  "pairs": [
+    {
+      "conditions": [
+        {
+          "checkpoints": [
+            {
+              "outcomes": {
+                "caught": 0,
+                "escaped": 0,
+                "score": 0,
+                "starved": 0,
+                "timedOut": 20,
+                "zapped": 0
+              },
+              "positions": [
+                {
+                  "id": 0,
+                  "mode": "walking",
+                  "outcome": "timedOut",
+                  "x": 8.296587720943185,
+                  "z": 0.0026320007517855555
+                },
+                {
+                  "id": 1,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 5.661196052604179,
+                  "z": 4.502632000419168
+                },
+                {
+                  "id": 2,
+                  "mode": "landing",
+                  "outcome": "timedOut",
+                  "x": 7.623281034322108,
+                  "z": 9.194394518851125
+                },
+                {
+                  "id": 3,
+                  "mode": "walking",
+                  "outcome": "timedOut",
+                  "x": 8.397367999448022,
+                  "z": 6.00263200083857
+                },
+                {
+                  "id": 4,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 8.39736799903874,
+                  "z": 6.0026320002972176
+                },
+                {
+                  "id": 5,
+                  "mode": "walking",
+                  "outcome": "timedOut",
+                  "x": 7.739066198966215,
+                  "z": 6.445194827740449
+                },
+                {
+                  "id": 6,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 0.002632000651620207,
+                  "z": 5.057368141270942
+                },
+                {
+                  "id": 7,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 0.0708409964607686,
+                  "z": 4.502632000769984
+                },
+                {
+                  "id": 8,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 4.802632000465509,
+                  "z": 9.197367999110213
+                },
+                {
+                  "id": 9,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 4.802632001,
+                  "z": 4.497367999515529
+                },
+                {
+                  "id": 10,
+                  "mode": "landing",
+                  "outcome": "timedOut",
+                  "x": 5.1049285887208615,
+                  "z": 6.0026320006049865
+                },
+                {
+                  "id": 11,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 4.802632001,
+                  "z": 9.197367999953308
+                },
+                {
+                  "id": 12,
+                  "mode": "landing",
+                  "outcome": "timedOut",
+                  "x": 8.397367999783738,
+                  "z": 8.779506851938386
+                },
+                {
+                  "id": 13,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 8.39736799965872,
+                  "z": 7.754070493880621
+                },
+                {
+                  "id": 14,
+                  "mode": "walking",
+                  "outcome": "timedOut",
+                  "x": 7.033030940464194,
+                  "z": 9.197367999558491
+                },
+                {
+                  "id": 15,
+                  "mode": "landing",
+                  "outcome": "timedOut",
+                  "x": 4.802632000463856,
+                  "z": 9.197367999077565
+                },
+                {
+                  "id": 16,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 4.9404285692995416,
+                  "z": 4.506839295040283
+                },
+                {
+                  "id": 17,
+                  "mode": "landing",
+                  "outcome": "timedOut",
+                  "x": 7.230984907045438,
+                  "z": 9.052632000025072
+                },
+                {
+                  "id": 18,
+                  "mode": "walking",
+                  "outcome": "timedOut",
+                  "x": 8.397367999359318,
+                  "z": 4.497367999197499
+                },
+                {
+                  "id": 19,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 8.397367999726221,
+                  "z": 0.7458614577109266
+                }
+              ],
+              "simulatedSeconds": 300.0,
+              "stations": {
+                "timedOut": 20
+              },
+              "tick": 3000,
+              "wallSeconds": 63.190033042
+            }
+          ],
+          "condition": "reference",
+          "constructSeconds": 0.068397583,
+          "perFly": {
+            "boundaryStalledTicks": [
+              785,
+              513,
+              886,
+              449,
+              656,
+              47,
+              462,
+              266,
+              794,
+              885,
+              650,
+              1055,
+              524,
+              987,
+              362,
+              988,
+              449,
+              1447,
+              247,
+              586
+            ],
+            "distanceSum": [
+              21048.879471588756,
+              14831.958097287848,
+              24321.011180742604,
+              23594.619079549244,
+              26329.426141555716,
+              25861.466922513584,
+              16735.48587857801,
+              10227.244982395983,
+              27073.958593958123,
+              20827.66867523519,
+              26562.994518544507,
+              25763.245646630094,
+              27562.371056160075,
+              28824.80508504249,
+              27945.165576035102,
+              22502.478819426775,
+              20764.778919719905,
+              27107.42317514356,
+              20918.25681923857,
+              25851.08158889011
+            ],
+            "escapeTick": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "firstNearTick": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "foodSupportTicks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "leftAdded": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "nearAddedTicks": [
+              1208,
+              251,
+              1721,
+              981,
+              743,
+              2479,
+              306,
+              98,
+              1143,
+              700,
+              1025,
+              692,
+              100,
+              343,
+              0,
+              1145,
+              1592,
+              1989,
+              200,
+              875
+            ],
+            "nearTicks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observedTicks": [
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999
+            ],
+            "stalledTicks": [
+              785,
+              513,
+              886,
+              449,
+              656,
+              2239,
+              462,
+              266,
+              794,
+              885,
+              650,
+              1055,
+              524,
+              987,
+              362,
+              988,
+              449,
+              1447,
+              247,
+              586
+            ],
+            "terminalTick": [
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000
+            ],
+            "tickOccupancy": [
+              {
+                "room1": 36,
+                "room2": 937,
+                "room3": 978,
+                "room5": 1048,
+                "timedOut": 1
+              },
+              {
+                "room3": 477,
+                "room4": 2115,
+                "room5": 407,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              },
+              {
+                "room3": 39,
+                "room5": 2960,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              },
+              {
+                "room2": 1632,
+                "room3": 1037,
+                "room5": 330,
+                "timedOut": 1
+              },
+              {
+                "room3": 2893,
+                "room4": 6,
+                "room5": 100,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              },
+              {
+                "room2": 708,
+                "room3": 1141,
+                "room5": 1150,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              },
+              {
+                "room3": 32,
+                "room5": 2967,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              },
+              {
+                "room3": 715,
+                "room5": 2284,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              },
+              {
+                "room1": 104,
+                "room2": 1408,
+                "room3": 363,
+                "room5": 1124,
+                "timedOut": 1
+              },
+              {
+                "room2": 1096,
+                "room3": 58,
+                "room5": 1845,
+                "timedOut": 1
+              }
+            ],
+            "visitedAdded": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "walkingNearAddedTicks": [
+              476,
+              91,
+              683,
+              353,
+              297,
+              1200,
+              121,
+              40,
+              463,
+              301,
+              425,
+              304,
+              40,
+              127,
+              0,
+              425,
+              627,
+              773,
+              60,
+              331
+            ]
+          },
+          "result": {
+            "attemptId": "duration-reference-15789670027162723101",
+            "completedTick": 3000,
+            "outcomes": {
+              "caught": 0,
+              "escaped": 0,
+              "score": 0,
+              "starved": 0,
+              "timedOut": 20,
+              "zapped": 0
+            },
+            "stars": 0
+          },
+          "seed": "15789670027162723101",
+          "spec": {
+            "attemptId": "duration-reference-15789670027162723101",
+            "durationTicks": 3000,
+            "flyCount": 20,
+            "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+            "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+            "levelHash": "66f251662390a6475ba21e00e0224a9847c5adfe545ad15c3a99538b7736335c",
+            "levelId": "open-window",
+            "placements": [
+              {
+                "heading": 0.0,
+                "id": 1,
+                "kind": "fruit",
+                "position": {
+                  "x": 5.15,
+                  "z": 6.7
+                }
+              },
+              {
+                "heading": 0.0,
+                "id": 2,
+                "kind": "banana",
+                "position": {
+                  "x": 6.45,
+                  "z": 6.35
+                }
+              },
+              {
+                "heading": 0.0,
+                "id": 3,
+                "kind": "dirtyDishes",
+                "position": {
+                  "x": 7.75,
+                  "z": 6.35
+                }
+              }
+            ],
+            "rootSeed": "15789670027162723101",
+            "schemaVersion": 1,
+            "simulationBuildId": "a51b27b5b52546010e4e05b3119f39eec66b80883d37f24e3ee965b2ed2b26e4",
+            "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb"
+          },
+          "stallDefinition": "nonterminal nonfeeding displacement below 1e-8; boundary subset fails Geometry occupancy with body radius enlarged by 1e-5",
+          "wallSeconds": 63.190165833
+        }
+      ],
+      "seed": "15789670027162723101"
+    },
+    {
+      "conditions": [
+        {
+          "checkpoints": [
+            {
+              "outcomes": {
+                "caught": 0,
+                "escaped": 0,
+                "score": 0,
+                "starved": 0,
+                "timedOut": 20,
+                "zapped": 0
+              },
+              "positions": [
+                {
+                  "id": 0,
+                  "mode": "walking",
+                  "outcome": "timedOut",
+                  "x": 4.797367999530699,
+                  "z": 7.151928472228677
+                },
+                {
+                  "id": 1,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 8.39736799990835,
+                  "z": 8.889673555287139
+                },
+                {
+                  "id": 2,
+                  "mode": "walking",
+                  "outcome": "timedOut",
+                  "x": 0.11502136195195127,
+                  "z": 6.00263200061353
+                },
+                {
+                  "id": 3,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 3.679588670227174,
+                  "z": 4.502632000783294
+                },
+                {
+                  "id": 4,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 8.397367999568857,
+                  "z": 2.6044024392782386
+                },
+                {
+                  "id": 5,
+                  "mode": "landing",
+                  "outcome": "timedOut",
+                  "x": 8.39736799974624,
+                  "z": 9.197367998999999
+                },
+                {
+                  "id": 6,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 4.802632000873949,
+                  "z": 9.197367999414416
+                },
+                {
+                  "id": 7,
+                  "mode": "walking",
+                  "outcome": "timedOut",
+                  "x": 8.176162739998448,
+                  "z": 6.360608120110535
+                },
+                {
+                  "id": 8,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 8.140432068855368,
+                  "z": 9.197367999904625
+                },
+                {
+                  "id": 9,
+                  "mode": "walking",
+                  "outcome": "timedOut",
+                  "x": 8.397367999435113,
+                  "z": 5.997367999172306
+                },
+                {
+                  "id": 10,
+                  "mode": "walking",
+                  "outcome": "timedOut",
+                  "x": 8.397367999685484,
+                  "z": 4.225149263316932
+                },
+                {
+                  "id": 11,
+                  "mode": "walking",
+                  "outcome": "timedOut",
+                  "x": 3.8589366856124108,
+                  "z": 9.197367999588737
+                },
+                {
+                  "id": 12,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 4.113669853094261,
+                  "z": 9.169125373911617
+                },
+                {
+                  "id": 13,
+                  "mode": "walking",
+                  "outcome": "timedOut",
+                  "x": 6.4900819623102075,
+                  "z": 6.327507645444615
+                },
+                {
+                  "id": 14,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 0.0026320000874321798,
+                  "z": 5.377809691160972
+                },
+                {
+                  "id": 15,
+                  "mode": "landing",
+                  "outcome": "timedOut",
+                  "x": 7.5802895925180795,
+                  "z": 9.197367999437619
+                },
+                {
+                  "id": 16,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 0.0026320007635638595,
+                  "z": 9.197367999353276
+                },
+                {
+                  "id": 17,
+                  "mode": "landing",
+                  "outcome": "timedOut",
+                  "x": 5.647367999563902,
+                  "z": 7.987572112144938
+                },
+                {
+                  "id": 18,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 4.802632000503219,
+                  "z": 7.914742368016268
+                },
+                {
+                  "id": 19,
+                  "mode": "walking",
+                  "outcome": "timedOut",
+                  "x": 5.86852881252133,
+                  "z": 1.2055589764904953
+                }
+              ],
+              "simulatedSeconds": 300.0,
+              "stations": {
+                "timedOut": 20
+              },
+              "tick": 3000,
+              "wallSeconds": 78.071980958
+            }
+          ],
+          "condition": "reference",
+          "constructSeconds": 0.031982916,
+          "perFly": {
+            "boundaryStalledTicks": [
+              568,
+              690,
+              591,
+              797,
+              823,
+              559,
+              607,
+              382,
+              740,
+              864,
+              720,
+              385,
+              248,
+              0,
+              896,
+              820,
+              306,
+              525,
+              668,
+              899
+            ],
+            "distanceSum": [
+              14046.638023866975,
+              28157.4597289649,
+              21939.418230653893,
+              25734.46642695234,
+              21325.68943158563,
+              22200.14828569999,
+              23048.523962625557,
+              23903.162208802667,
+              26880.754040922533,
+              24861.23492503044,
+              23368.59810206147,
+              25304.022988015477,
+              23161.558337376642,
+              21930.709433395816,
+              14453.001465884223,
+              15084.111478608545,
+              22705.824319864943,
+              24627.637890603062,
+              26706.191587494217,
+              23575.56592499042
+            ],
+            "escapeTick": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "firstNearTick": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "foodSupportTicks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "leftAdded": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "nearAddedTicks": [
+              449,
+              1571,
+              1018,
+              1096,
+              1235,
+              736,
+              1114,
+              1142,
+              1391,
+              1435,
+              264,
+              237,
+              1378,
+              2926,
+              772,
+              497,
+              810,
+              2042,
+              256,
+              1140
+            ],
+            "nearTicks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observedTicks": [
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999
+            ],
+            "stalledTicks": [
+              568,
+              949,
+              591,
+              797,
+              823,
+              559,
+              607,
+              382,
+              740,
+              864,
+              720,
+              385,
+              248,
+              2757,
+              896,
+              820,
+              306,
+              525,
+              668,
+              899
+            ],
+            "terminalTick": [
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000
+            ],
+            "tickOccupancy": [
+              {
+                "room3": 2038,
+                "room4": 698,
+                "room5": 263,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              },
+              {
+                "room3": 246,
+                "room4": 935,
+                "room5": 1818,
+                "timedOut": 1
+              },
+              {
+                "room3": 272,
+                "room5": 2727,
+                "timedOut": 1
+              },
+              {
+                "room2": 634,
+                "room3": 406,
+                "room5": 1959,
+                "timedOut": 1
+              },
+              {
+                "room2": 1736,
+                "room3": 158,
+                "room5": 1105,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              },
+              {
+                "room3": 50,
+                "room5": 2949,
+                "timedOut": 1
+              },
+              {
+                "room3": 18,
+                "room5": 2981,
+                "timedOut": 1
+              },
+              {
+                "room3": 1810,
+                "room5": 1189,
+                "timedOut": 1
+              },
+              {
+                "room2": 2355,
+                "room3": 315,
+                "room5": 329,
+                "timedOut": 1
+              },
+              {
+                "room3": 265,
+                "room4": 819,
+                "room5": 1915,
+                "timedOut": 1
+              },
+              {
+                "room3": 869,
+                "room4": 210,
+                "room5": 1920,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              },
+              {
+                "room3": 2233,
+                "room5": 766,
+                "timedOut": 1
+              },
+              {
+                "room3": 2052,
+                "room5": 947,
+                "timedOut": 1
+              },
+              {
+                "room3": 286,
+                "room4": 1210,
+                "room5": 1503,
+                "timedOut": 1
+              },
+              {
+                "room3": 1014,
+                "room5": 1985,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              },
+              {
+                "room2": 182,
+                "room3": 68,
+                "room5": 2749,
+                "timedOut": 1
+              }
+            ],
+            "visitedAdded": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "walkingNearAddedTicks": [
+              178,
+              601,
+              376,
+              382,
+              445,
+              291,
+              402,
+              430,
+              510,
+              553,
+              110,
+              103,
+              552,
+              1267,
+              320,
+              183,
+              303,
+              769,
+              81,
+              412
+            ]
+          },
+          "result": {
+            "attemptId": "duration-reference-104",
+            "completedTick": 3000,
+            "outcomes": {
+              "caught": 0,
+              "escaped": 0,
+              "score": 0,
+              "starved": 0,
+              "timedOut": 20,
+              "zapped": 0
+            },
+            "stars": 0
+          },
+          "seed": "104",
+          "spec": {
+            "attemptId": "duration-reference-104",
+            "durationTicks": 3000,
+            "flyCount": 20,
+            "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+            "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+            "levelHash": "66f251662390a6475ba21e00e0224a9847c5adfe545ad15c3a99538b7736335c",
+            "levelId": "open-window",
+            "placements": [
+              {
+                "heading": 0.0,
+                "id": 1,
+                "kind": "fruit",
+                "position": {
+                  "x": 5.15,
+                  "z": 6.7
+                }
+              },
+              {
+                "heading": 0.0,
+                "id": 2,
+                "kind": "banana",
+                "position": {
+                  "x": 6.45,
+                  "z": 6.35
+                }
+              },
+              {
+                "heading": 0.0,
+                "id": 3,
+                "kind": "dirtyDishes",
+                "position": {
+                  "x": 7.75,
+                  "z": 6.35
+                }
+              }
+            ],
+            "rootSeed": "104",
+            "schemaVersion": 1,
+            "simulationBuildId": "a51b27b5b52546010e4e05b3119f39eec66b80883d37f24e3ee965b2ed2b26e4",
+            "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb"
+          },
+          "stallDefinition": "nonterminal nonfeeding displacement below 1e-8; boundary subset fails Geometry occupancy with body radius enlarged by 1e-5",
+          "wallSeconds": 78.072204
+        }
+      ],
+      "seed": "104"
+    },
+    {
+      "conditions": [
+        {
+          "checkpoints": [
+            {
+              "outcomes": {
+                "caught": 0,
+                "escaped": 0,
+                "score": 0,
+                "starved": 0,
+                "timedOut": 20,
+                "zapped": 0
+              },
+              "positions": [
+                {
+                  "id": 0,
+                  "mode": "walking",
+                  "outcome": "timedOut",
+                  "x": 5.118027584246583,
+                  "z": 6.002632000622015
+                },
+                {
+                  "id": 1,
+                  "mode": "walking",
+                  "outcome": "timedOut",
+                  "x": 6.42964129476792,
+                  "z": 6.420058237197512
+                },
+                {
+                  "id": 2,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 8.392450565090986,
+                  "z": 4.497367999292437
+                },
+                {
+                  "id": 3,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 8.054041539161554,
+                  "z": 9.197367999322806
+                },
+                {
+                  "id": 4,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 8.39736799917617,
+                  "z": 6.073818924027034
+                },
+                {
+                  "id": 5,
+                  "mode": "walking",
+                  "outcome": "timedOut",
+                  "x": 8.132415624700009,
+                  "z": 5.997367999291106
+                },
+                {
+                  "id": 6,
+                  "mode": "landing",
+                  "outcome": "timedOut",
+                  "x": 7.076160310637293,
+                  "z": 5.024544236969554
+                },
+                {
+                  "id": 7,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 5.516181027128567,
+                  "z": 5.997367999127573
+                },
+                {
+                  "id": 8,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 8.371626348818308,
+                  "z": 4.5026320003501805
+                },
+                {
+                  "id": 9,
+                  "mode": "walking",
+                  "outcome": "timedOut",
+                  "x": 6.72780926342294,
+                  "z": 9.197367999969165
+                },
+                {
+                  "id": 10,
+                  "mode": "walking",
+                  "outcome": "timedOut",
+                  "x": 0.002632000140716318,
+                  "z": 8.495534745974947
+                },
+                {
+                  "id": 11,
+                  "mode": "landing",
+                  "outcome": "timedOut",
+                  "x": 4.802632000252763,
+                  "z": 8.396292997130427
+                },
+                {
+                  "id": 12,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 4.967022929860991,
+                  "z": 9.197367999912876
+                },
+                {
+                  "id": 13,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 4.802632000615254,
+                  "z": 6.002632000813097
+                },
+                {
+                  "id": 14,
+                  "mode": "walking",
+                  "outcome": "timedOut",
+                  "x": 6.246332619853884,
+                  "z": 9.19736799997671
+                },
+                {
+                  "id": 15,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 8.371819154268403,
+                  "z": 4.5026320009817535
+                },
+                {
+                  "id": 16,
+                  "mode": "landing",
+                  "outcome": "timedOut",
+                  "x": 7.6247633871319005,
+                  "z": 6.41379237041723
+                },
+                {
+                  "id": 17,
+                  "mode": "landing",
+                  "outcome": "timedOut",
+                  "x": 8.37583603969427,
+                  "z": 6.0026320006756535
+                },
+                {
+                  "id": 18,
+                  "mode": "flying",
+                  "outcome": "timedOut",
+                  "x": 8.298982633605291,
+                  "z": 9.197367999861997
+                },
+                {
+                  "id": 19,
+                  "mode": "landing",
+                  "outcome": "timedOut",
+                  "x": 4.802632000656433,
+                  "z": 8.305962276832856
+                }
+              ],
+              "simulatedSeconds": 300.0,
+              "stations": {
+                "timedOut": 20
+              },
+              "tick": 3000,
+              "wallSeconds": 74.269401875
+            }
+          ],
+          "condition": "reference",
+          "constructSeconds": 0.051474667,
+          "perFly": {
+            "boundaryStalledTicks": [
+              622,
+              611,
+              466,
+              1026,
+              1002,
+              1041,
+              546,
+              832,
+              619,
+              918,
+              888,
+              1115,
+              317,
+              759,
+              970,
+              1103,
+              12,
+              1051,
+              533,
+              681
+            ],
+            "distanceSum": [
+              22287.84666847393,
+              25507.046406110312,
+              23949.168700910464,
+              27757.210257717772,
+              26599.628783247477,
+              23062.075400125257,
+              23432.708046506134,
+              24944.68319868996,
+              25805.903295698467,
+              26740.214194883323,
+              25481.71089558547,
+              24958.496523425656,
+              19322.884484185422,
+              27216.36655496765,
+              26501.20840035584,
+              24139.285433094657,
+              23766.387268091763,
+              27733.147909864816,
+              26489.71029244934,
+              26096.559734750088
+            ],
+            "escapeTick": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "firstNearTick": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "foodSupportTicks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "leftAdded": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "nearAddedTicks": [
+              1796,
+              1173,
+              1332,
+              361,
+              2349,
+              1368,
+              1828,
+              549,
+              1224,
+              662,
+              1407,
+              0,
+              487,
+              1280,
+              2214,
+              1157,
+              1898,
+              634,
+              586,
+              309
+            ],
+            "nearTicks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observedTicks": [
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999,
+              2999
+            ],
+            "stalledTicks": [
+              622,
+              611,
+              466,
+              1026,
+              1002,
+              1041,
+              546,
+              832,
+              619,
+              918,
+              888,
+              1115,
+              317,
+              759,
+              970,
+              1103,
+              1631,
+              1051,
+              533,
+              681
+            ],
+            "terminalTick": [
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000,
+              3000
+            ],
+            "tickOccupancy": [
+              {
+                "room3": 85,
+                "room5": 2914,
+                "timedOut": 1
+              },
+              {
+                "room2": 5,
+                "room3": 527,
+                "room5": 2467,
+                "timedOut": 1
+              },
+              {
+                "room2": 733,
+                "room3": 83,
+                "room5": 2183,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              },
+              {
+                "room3": 381,
+                "room5": 2618,
+                "timedOut": 1
+              },
+              {
+                "room3": 1171,
+                "room5": 1828,
+                "timedOut": 1
+              },
+              {
+                "room3": 383,
+                "room5": 2616,
+                "timedOut": 1
+              },
+              {
+                "room3": 462,
+                "room5": 2537,
+                "timedOut": 1
+              },
+              {
+                "room3": 14,
+                "room5": 2985,
+                "timedOut": 1
+              },
+              {
+                "room3": 234,
+                "room4": 222,
+                "room5": 2543,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              },
+              {
+                "room1": 933,
+                "room2": 224,
+                "room3": 174,
+                "room5": 1668,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              },
+              {
+                "room3": 69,
+                "room5": 2930,
+                "timedOut": 1
+              },
+              {
+                "room3": 1866,
+                "room5": 1133,
+                "timedOut": 1
+              },
+              {
+                "room2": 879,
+                "room3": 245,
+                "room5": 1875,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              },
+              {
+                "room3": 6,
+                "room5": 2993,
+                "timedOut": 1
+              },
+              {
+                "room5": 2999,
+                "timedOut": 1
+              }
+            ],
+            "visitedAdded": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "walkingNearAddedTicks": [
+              648,
+              513,
+              525,
+              112,
+              896,
+              559,
+              717,
+              232,
+              437,
+              262,
+              471,
+              0,
+              202,
+              456,
+              854,
+              472,
+              109,
+              250,
+              202,
+              127
+            ]
+          },
+          "result": {
+            "attemptId": "duration-reference-106",
+            "completedTick": 3000,
+            "outcomes": {
+              "caught": 0,
+              "escaped": 0,
+              "score": 0,
+              "starved": 0,
+              "timedOut": 20,
+              "zapped": 0
+            },
+            "stars": 0
+          },
+          "seed": "106",
+          "spec": {
+            "attemptId": "duration-reference-106",
+            "durationTicks": 3000,
+            "flyCount": 20,
+            "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+            "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+            "levelHash": "66f251662390a6475ba21e00e0224a9847c5adfe545ad15c3a99538b7736335c",
+            "levelId": "open-window",
+            "placements": [
+              {
+                "heading": 0.0,
+                "id": 1,
+                "kind": "fruit",
+                "position": {
+                  "x": 5.15,
+                  "z": 6.7
+                }
+              },
+              {
+                "heading": 0.0,
+                "id": 2,
+                "kind": "banana",
+                "position": {
+                  "x": 6.45,
+                  "z": 6.35
+                }
+              },
+              {
+                "heading": 0.0,
+                "id": 3,
+                "kind": "dirtyDishes",
+                "position": {
+                  "x": 7.75,
+                  "z": 6.35
+                }
+              }
+            ],
+            "rootSeed": "106",
+            "schemaVersion": 1,
+            "simulationBuildId": "a51b27b5b52546010e4e05b3119f39eec66b80883d37f24e3ee965b2ed2b26e4",
+            "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb"
+          },
+          "stallDefinition": "nonterminal nonfeeding displacement below 1e-8; boundary subset fails Geometry occupancy with body radius enlarged by 1e-5",
+          "wallSeconds": 74.269532
+        }
+      ],
+      "seed": "106"
+    }
+  ],
+  "wallSeconds": 215.57123575
+}
