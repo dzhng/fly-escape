@@ -1,0 +1,142 @@
+{
+ "pkgDir": "/tmp/timed-performance/wasm-opt-named",
+ "ticks": 500,
+ "buildMs": 247.5,
+ "wallMs": 22432.6,
+ "msPerTick": 44.87,
+ "chunkMs": 4.7,
+ "lastTick": {
+  "tick": 500,
+  "neuralSteps": 10000,
+  "bufferedTicks": 10,
+  "complete": false
+ },
+ "totalSamples": 72877
+}
+[
+ {
+  "name": "sim::lif::Brain::step::hb9120bb8c12730cf",
+  "hits": 46585,
+  "pct": 63.92
+ },
+ {
+  "name": "compiler_builtins::math::libm_math::rem_pio2::rem_pio2::h862e37c70249efba",
+  "hits": 12107,
+  "pct": 16.61
+ },
+ {
+  "name": "compiler_builtins::math::libm_math::cos::cos::h024d23a0ddb53d69",
+  "hits": 4830,
+  "pct": 6.63
+ },
+ {
+  "name": "compiler_builtins::math::libm_math::sin::sin::hdc42fbba77a57070",
+  "hits": 3130,
+  "pct": 4.29
+ },
+ {
+  "name": "parry3d_f64::shape::support_map::SupportMap::local_support_point_toward::hd48cc7ce2d378465",
+  "hits": 1644,
+  "pct": 2.26
+ },
+ {
+  "name": "hashbrown::map::HashMap<K,V,S,A>::insert::hbfcb3bf0f212ea6d",
+  "hits": 860,
+  "pct": 1.18
+ },
+ {
+  "name": "parry3d_f64::shape::support_map::SupportMap::support_point::h3da9944ede45ca44",
+  "hits": 728,
+  "pct": 1
+ },
+ {
+  "name": "core::hash::BuildHasher::hash_one::h45cdb95d46052e56",
+  "hits": 632,
+  "pct": 0.87
+ },
+ {
+  "name": "sim::surface::ContactScene::penetration_on::h1787ad0581cd6c92",
+  "hits": 245,
+  "pct": 0.34
+ },
+ {
+  "name": "<parry3d_f64::shape::convex_polyhedron::ConvexPolyhedron as parry3d_f64::shape::support_map::SupportMap>::local_support_point::h55a0e4b31ddd4b19",
+  "hits": 217,
+  "pct": 0.3
+ },
+ {
+  "name": "sim::environment::fields::FieldSet::advance::he5f73f95475a3b47",
+  "hits": 212,
+  "pct": 0.29
+ },
+ {
+  "name": "<core::hash::sip::Hasher<S> as core::hash::Hasher>::write::h63f8e20fc8c0f1c9",
+  "hits": 174,
+  "pct": 0.24
+ },
+ {
+  "name": "parry3d_f64::shape::trimesh::TriMesh::local_aabb::h80ee45cabba4bf9d",
+  "hits": 171,
+  "pct": 0.23
+ },
+ {
+  "name": "sim::attempt::Attempt::step::he4dcd7f2fa27aad5",
+  "hits": 154,
+  "pct": 0.21
+ },
+ {
+  "name": "sim::lif::Brain::set_external_current::hf5a8f46004cbd322",
+  "hits": 89,
+  "pct": 0.12
+ },
+ {
+  "name": "<parry3d_f64::shape::convex_polyhedron::ConvexPolyhedron as parry3d_f64::shape::shape::Shape>::compute_local_bounding_sphere::h2f2f594f2387d847",
+  "hits": 68,
+  "pct": 0.09
+ },
+ {
+  "name": "sim::surface::ContactScene::rotation_clearance::h8318600d1e0a84d8",
+  "hits": 67,
+  "pct": 0.09
+ },
+ {
+  "name": "sim::body::Body::contacts::hfbbe194ed76d1aee",
+  "hits": 63,
+  "pct": 0.09
+ },
+ {
+  "name": "fmax",
+  "hits": 61,
+  "pct": 0.08
+ },
+ {
+  "name": "parry3d_f64::query::nonlinear_shape_cast::nonlinear_rigid_motion::NonlinearRigidMotion::position_at_time::h384adc70e9efe025",
+  "hits": 60,
+  "pct": 0.08
+ },
+ {
+  "name": "sim::sensory::group_currents::h65c6f9c598ef0206",
+  "hits": 59,
+  "pct": 0.08
+ },
+ {
+  "name": "<core::iter::adapters::chain::Chain<A,B> as core::iter::traits::iterator::Iterator>::fold::h6c39baac8f4abef1",
+  "hits": 50,
+  "pct": 0.07
+ },
+ {
+  "name": "parry3d_f64::bounding_volume::aabb_utils::point_cloud_aabb_ref::he300647c0e7fdee0",
+  "hits": 49,
+  "pct": 0.07
+ },
+ {
+  "name": "<parry3d_f64::shape::convex_polyhedron::ConvexPolyhedron as parry3d_f64::shape::shape::Shape>::ccd_thickness::h5273b8060a0384d7",
+  "hits": 46,
+  "pct": 0.06
+ },
+ {
+  "name": "parry3d_f64::query::nonlinear_shape_cast::nonlinear_shape_cast_support_map_support_map::bisect::hb6e046089763f3a7",
+  "hits": 40,
+  "pct": 0.05
+ }
+]

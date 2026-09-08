@@ -1,0 +1,427 @@
+Analysis of sampling placement_pilot (pid 93808) every 1 millisecond
+Process:         placement_pilot [93808]
+Path:            /private/tmp/*/placement_pilot
+Load Address:    0x102d7c000
+Identifier:      placement_pilot
+Version:         0
+Code Type:       ARM64
+Platform:        macOS
+Parent Process:  launchd [1]
+Target Type:     live task
+
+Date/Time:       2026-09-08 07:49:53.267 +0700
+Launch Time:     2026-09-08 07:42:27.164 +0700
+OS Version:      macOS 26.4.1 (25E253)
+Report Version:  7
+Analysis Tool:   /usr/bin/sample
+
+Physical footprint:         109.0M
+Physical footprint (peak):  200.6M
+Idle exit:                  untracked
+----
+
+Call graph:
+    2187 Thread_33235846   DispatchQueue_1: com.apple.main-thread  (serial)
+      2186 start  (in dyld) + 6992  [0x189bcfda4]
+      + 2186 main  (in placement_pilot) + 52  [0x102de5ae4]
+      +   2186 std::rt::lang_start_internal::h11fc0900699d88c7  (in placement_pilot) + 932  [0x102e77200]
+      +     2186 std::rt::lang_start::_$u7b$$u7b$closure$u7d$$u7d$::h8e2a4912fb069efc  (in placement_pilot) + 16  [0x102e02718]
+      +       2186 std::sys::backtrace::__rust_begin_short_backtrace::h6602ca5bec50b5a0  (in placement_pilot) + 12  [0x102e02734]
+      +         2185 placement_pilot::main::he395f9516c04b34b  (in placement_pilot) + 4660  [0x102de0e9c]
+      +         ! 1867 sim::attempt::Attempt::step::h8225bb230ab7d6a9  (in placement_pilot) + 1720  [0x102e2baf0]
+      +         ! : 1248 sim::lif::Brain::advance::hb69e0714ced47719  (in placement_pilot) + 708,632,...  [0x102e4cd28,0x102e4ccdc,...]
+      +         ! : 350 sim::lif::Brain::step::hb53578f9011c352f  (in placement_pilot) + 324  [0x102e4ca08]
+      +         ! : | 178 sim::lif::Brain::step::hb53578f9011c352f  (in placement_pilot) + 324  [0x102e4ca08]
+      +         ! : | + 110 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1170  [0x199d08170]
+      +         ! : | + 44 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1168  [0x199d08168]
+      +         ! : | + 8 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1138  [0x199d08138]
+      +         ! : | + 5 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1150  [0x199d08150]
+      +         ! : | + 3 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1098  [0x199d08098]
+      +         ! : | + 3 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1114  [0x199d08114]
+      +         ! : | + 2 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1130  [0x199d08130]
+      +         ! : | + 1 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x107c  [0x199d0807c]
+      +         ! : | + 1 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x10a8  [0x199d080a8]
+      +         ! : | + 1 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1124  [0x199d08124]
+      +         ! : | 129 cos  (in libsystem_m.dylib) + 28,320,...  [0x199d07af0,0x199d07c14,...]
+      +         ! : | 16 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x10ac  [0x199d080ac]
+      +         ! : | 15 DYLD-STUB$$cos  (in placement_pilot) + 4,0,...  [0x102ea11f0,0x102ea11ec,...]
+      +         ! : | 8 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1154  [0x199d08154]
+      +         ! : | 4 sim::lif::Brain::step::hb53578f9011c352f  (in placement_pilot) + 328,324  [0x102e4ca0c,0x102e4ca08]
+      +         ! : 134 sim::lif::Brain::step::hb53578f9011c352f  (in placement_pilot) + 260  [0x102e4c9c8]
+      +         ! : | 100 log  (in libsystem_m.dylib) + 188,128,...  [0x199d0823c,0x199d08200,...]
+      +         ! : | 31 DYLD-STUB$$log  (in placement_pilot) + 4  [0x102ea1298]
+      +         ! : | 3 sim::lif::Brain::step::hb53578f9011c352f  (in placement_pilot) + 300  [0x102e4c9f0]
+      +         ! : 123 sim::lif::Brain::step::hb53578f9011c352f  (in placement_pilot) + 348  [0x102e4ca20]
+      +         ! : | 47 sin  (in libsystem_m.dylib) + 324,4,...  [0x199d07aac,0x199d0796c,...]
+      +         ! : | 31 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x10ac  [0x199d080ac]
+      +         ! : | 16 sim::lif::Brain::step::hb53578f9011c352f  (in placement_pilot) + 348  [0x102e4ca20]
+      +         ! : | + 6 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1098  [0x199d08098]
+      +         ! : | + 4 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1138  [0x199d08138]
+      +         ! : | + 3 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1150  [0x199d08150]
+      +         ! : | + 1 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1094  [0x199d08094]
+      +         ! : | + 1 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1124  [0x199d08124]
+      +         ! : | + 1 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1130  [0x199d08130]
+      +         ! : | 11 ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1154  [0x199d08154]
+      +         ! : | 11 sim::lif::Brain::step::hb53578f9011c352f  (in placement_pilot) + 192,216  [0x102e4c984,0x102e4c99c]
+      +         ! : | 7 DYLD-STUB$$sin  (in placement_pilot) + 4  [0x102ea1418]
+      +         ! : 10 log  (in libsystem_m.dylib) + 184,244  [0x199d08238,0x199d08274]
+      +         ! : 1 sim::lif::Brain::advance::hb69e0714ced47719  (in placement_pilot) + 444  [0x102e4cc20]
+      +         ! : | 1 sim::lif::Brain::motor_output::h4e148aa8de972b8a  (in placement_pilot) + 504  [0x102e4c14c]
+      +         ! : 1 sim::lif::Brain::advance::hb69e0714ced47719  (in placement_pilot) + 476  [0x102e4cc40]
+      +         ! :   1 _$LT$alloc..vec..Vec$LT$T$GT$$u20$as$u20$alloc..vec..spec_from_iter_nested..SpecFromIterNested$LT$T$C$I$GT$$GT$::from_iter::h66cccd18d8e281a5  (in placement_pilot) + 180  [0x102e3f8a4]
+      +         ! :     1 _$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$::fold::h12a66771aa12c145  (in placement_pilot) + 244  [0x102e56c70]
+      +         ! 265 sim::attempt::Attempt::step::h8225bb230ab7d6a9  (in placement_pilot) + 1776  [0x102e2bb28]
+      +         ! : 263 sim::body::Body::step::he5c95c8d029836d3  (in placement_pilot) + 1648  [0x102e19c1c]
+      +         ! : | 103 sim::body::motion::advance::ha31dd8889f5ebc6a  (in placement_pilot) + 2960  [0x102e22dd8]
+      +         ! : | + 102 sim::surface::ContactScene::rotation_clearance::hb01c2f3e1a838b6c  (in placement_pilot) + 1676  [0x102e38324]
+      +         ! : | + ! 100 _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::cast_shapes_nonlinear::hd94e9334a58d9cb6  (in placement_pilot) + 544  [0x102dbc6f0]
+      +         ! : | + ! : 100 parry3d_f64::query::nonlinear_shape_cast::nonlinear_shape_cast_support_map_support_map::cast_shapes_nonlinear_support_map_support_map::hd5b76168c9bde027  (in placement_pilot) + 188  [0x102dab614]
+      +         ! : | + ! :   81 parry3d_f64::query::nonlinear_shape_cast::nonlinear_shape_cast_support_map_support_map::compute_toi::h35a19250a31b7a86  (in placement_pilot) + 1156  [0x102daab0c]
+      +         ! : | + ! :   | 78 parry3d_f64::query::nonlinear_shape_cast::nonlinear_shape_cast_support_map_support_map::bisect::h54b6f5402a8bbdf9  (in placement_pilot) + 888  [0x102daba48]
+      +         ! : | + ! :   | + 78 parry3d_f64::shape::support_map::SupportMap::support_point_toward::hbeb0f91d7f63d054  (in placement_pilot) + 224  [0x102e5ce48]
+      +         ! : | + ! :   | +   78 parry3d_f64::shape::support_map::SupportMap::local_support_point_toward::h35e06f2c92976f99  (in placement_pilot) + 172,184,...  [0x102e5cf98,0x102e5cfa4,...]
+      +         ! : | + ! :   | 2 parry3d_f64::query::nonlinear_shape_cast::nonlinear_shape_cast_support_map_support_map::bisect::h54b6f5402a8bbdf9  (in placement_pilot) + 384  [0x102dab850]
+      +         ! : | + ! :   | + 2 parry3d_f64::query::nonlinear_shape_cast::nonlinear_rigid_motion::NonlinearRigidMotion::position_at_time::h200e7988abda6573  (in placement_pilot) + 52,432  [0x102d97afc,0x102d97c78]
+      +         ! : | + ! :   | 1 parry3d_f64::query::nonlinear_shape_cast::nonlinear_shape_cast_support_map_support_map::bisect::h54b6f5402a8bbdf9  (in placement_pilot) + 400  [0x102dab860]
+      +         ! : | + ! :   |   1 parry3d_f64::query::nonlinear_shape_cast::nonlinear_rigid_motion::NonlinearRigidMotion::position_at_time::h200e7988abda6573  (in placement_pilot) + 184  [0x102d97b80]
+      +         ! : | + ! :   |     1 libm::math::sincos::sincos::h9f073fc8be0e02db  (in placement_pilot) + 0  [0x102d88d94]
+      +         ! : | + ! :   15 parry3d_f64::query::nonlinear_shape_cast::nonlinear_shape_cast_support_map_support_map::compute_toi::h35a19250a31b7a86  (in placement_pilot) + 600  [0x102daa8e0]
+      +         ! : | + ! :   | 15 _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::closest_points::h90fb6e3b36436145  (in placement_pilot) + 2048  [0x102dbbd04]
+      +         ! : | + ! :   |   13 parry3d_f64::query::closest_points::closest_points_support_map_support_map::closest_points_support_map_support_map::h08b86e69b9a147b7  (in placement_pilot) + 504  [0x102dc7104]
+      +         ! : | + ! :   |   + 13 parry3d_f64::query::gjk::gjk::closest_points::h122004fc7d1f0691  (in placement_pilot) + 812  [0x102da51fc]
+      +         ! : | + ! :   |   +   13 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320,292,...  [0x102e5cc9c,0x102e5cc80,...]
+      +         ! : | + ! :   |   2 parry3d_f64::query::closest_points::closest_points_support_map_support_map::closest_points_support_map_support_map::h08b86e69b9a147b7  (in placement_pilot) + 392  [0x102dc7094]
+      +         ! : | + ! :   |     2 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320  [0x102e5cc9c]
+      +         ! : | + ! :   3 parry3d_f64::query::nonlinear_shape_cast::nonlinear_shape_cast_support_map_support_map::compute_toi::h35a19250a31b7a86  (in placement_pilot) + 2720  [0x102dab128]
+      +         ! : | + ! :   | 3 _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::contact::h7b10394e79b654e5  (in placement_pilot) + 1144  [0x102dbcd40]
+      +         ! : | + ! :   |   3 parry3d_f64::query::contact::contact_support_map_support_map::contact_support_map_support_map::h02b773d579b736c7  (in placement_pilot) + 464  [0x102d9bc94]
+      +         ! : | + ! :   |     2 parry3d_f64::query::gjk::gjk::closest_points::h122004fc7d1f0691  (in placement_pilot) + 812  [0x102da51fc]
+      +         ! : | + ! :   |     + 2 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 292,320  [0x102e5cc80,0x102e5cc9c]
+      +         ! : | + ! :   |     1 parry3d_f64::query::gjk::gjk::closest_points::h122004fc7d1f0691  (in placement_pilot) + 1028  [0x102da52d4]
+      +         ! : | + ! :   |       1 parry3d_f64::query::gjk::voronoi_simplex3::VoronoiSimplex::project_origin_and_reduce::hda10589600ddef82  (in placement_pilot) + 1364  [0x102d98788]
+      +         ! : | + ! :   1 parry3d_f64::query::nonlinear_shape_cast::nonlinear_shape_cast_support_map_support_map::compute_toi::h35a19250a31b7a86  (in placement_pilot) + 3668  [0x102dab4dc]
+      +         ! : | + ! :     1 parry3d_f64::query::nonlinear_shape_cast::nonlinear_shape_cast_support_map_support_map::bisect::h54b6f5402a8bbdf9  (in placement_pilot) + 888  [0x102daba48]
+      +         ! : | + ! :       1 parry3d_f64::shape::support_map::SupportMap::support_point_toward::hbeb0f91d7f63d054  (in placement_pilot) + 224  [0x102e5ce48]
+      +         ! : | + ! :         1 parry3d_f64::shape::support_map::SupportMap::local_support_point_toward::h35e06f2c92976f99  (in placement_pilot) + 144  [0x102e5cf7c]
+      +         ! : | + ! 2 _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::cast_shapes_nonlinear::hd94e9334a58d9cb6  (in placement_pilot) + 424  [0x102dbc678]
+      +         ! : | + !   2 _$LT$parry3d_f64..shape..convex_polyhedron..ConvexPolyhedron$u20$as$u20$parry3d_f64..shape..shape..Shape$GT$::ccd_thickness::h1441d363c2b85d81  (in placement_pilot) + 88,112  [0x102d9d560,0x102d9d578]
+      +         ! : | + 1 sim::surface::ContactScene::rotation_clearance::hb01c2f3e1a838b6c  (in placement_pilot) + 1396  [0x102e3820c]
+      +         ! : | +   1 _$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$::find::h21f5d9a5d6487230  (in placement_pilot) + 64  [0x102e3acec]
+      +         ! : | +     1 parry3d_f64::partitioning::bvh::bvh_tree::Bvh::root_aabb::h085207f235402b6a  (in placement_pilot) + 192  [0x102d8f1a0]
+      +         ! : | 32 sim::body::motion::advance::ha31dd8889f5ebc6a  (in placement_pilot) + 1132  [0x102e226b4]
+      +         ! : | + 28 sim::surface::ContactScene::penetration_on::hf1b68a229192b3bd  (in placement_pilot) + 1064  [0x102e37a20]
+      +         ! : | + ! 28 parry3d_f64::query::contact::contact_shape_shape::contact::ha81b1fa13d2473d4  (in placement_pilot) + 432  [0x102d9b39c]
+      +         ! : | + !   28 _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::contact::h7b10394e79b654e5  (in placement_pilot) + 1472  [0x102dbce88]
+      +         ! : | + !     28 parry3d_f64::query::contact::contact_composite_shape_shape::contact_shape_composite_shape::h34c73db9f986bc9f  (in placement_pilot) + 216  [0x102dba388]
+      +         ! : | + !       24 parry3d_f64::query::contact::contact_composite_shape_shape::_$LT$impl$u20$parry3d_f64..shape..composite_shape..CompositeShapeRef$LT$S$GT$$GT$::contact_with_shape::h19a549104e9736ca  (in placement_pilot) + 260  [0x102d9b6ec]
+      +         ! : | + !       : 24 _$LT$parry3d_f64..shape..trimesh..TriMesh$u20$as$u20$parry3d_f64..shape..composite_shape..CompositeShape$GT$::map_part_at::hfa70f605b0f333b3  (in placement_pilot) + 228  [0x102daea4c]
+      +         ! : | + !       :   24 parry3d_f64::query::contact::contact_composite_shape_shape::_$LT$impl$u20$parry3d_f64..shape..composite_shape..CompositeShapeRef$LT$S$GT$$GT$::contact_with_shape::_$u7b$$u7b$closure$u7d$$u7d$::h83432fc9289f19d3  (in placement_pilot) + 392  [0x102d9b91c]
+      +         ! : | + !       :     24 _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::contact::h7b10394e79b654e5  (in placement_pilot) + 1144  [0x102dbcd40]
+      +         ! : | + !       :       15 parry3d_f64::query::contact::contact_support_map_support_map::contact_support_map_support_map::h02b773d579b736c7  (in placement_pilot) + 464  [0x102d9bc94]
+      +         ! : | + !       :       | 15 parry3d_f64::query::gjk::gjk::closest_points::h122004fc7d1f0691  (in placement_pilot) + 812  [0x102da51fc]
+      +         ! : | + !       :       |   15 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320,316,...  [0x102e5cc9c,0x102e5cc98,...]
+      +         ! : | + !       :       7 parry3d_f64::query::contact::contact_support_map_support_map::contact_support_map_support_map::h02b773d579b736c7  (in placement_pilot) + 352  [0x102d9bc24]
+      +         ! : | + !       :       | 7 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320,292,...  [0x102e5cc9c,0x102e5cc80,...]
+      +         ! : | + !       :       1 parry3d_f64::query::contact::contact_support_map_support_map::contact_support_map_support_map::h02b773d579b736c7  (in placement_pilot) + 600  [0x102d9bd1c]
+      +         ! : | + !       :       | 1 parry3d_f64::query::epa::epa3::EPA::closest_points::hb071005d1c67fb72  (in placement_pilot) + 5916  [0x102dbe918]
+      +         ! : | + !       :       |   1 alloc::raw_vec::RawVec$LT$T$C$A$GT$::grow_one::hc0f7970ba0e81f62  (in placement_pilot) + 60  [0x102e97508]
+      +         ! : | + !       :       |     1 alloc::raw_vec::RawVecInner$LT$A$GT$::finish_grow::h61fb7825160bbd98  (in placement_pilot) + 128  [0x102e976ec]
+      +         ! : | + !       :       |       1 _realloc  (in libsystem_malloc.dylib) + 252  [0x189db8dc8]
+      +         ! : | + !       :       |         1 xzm_malloc_zone_size  (in libsystem_malloc.dylib) + 96  [0x189db3504]
+      +         ! : | + !       :       1 parry3d_f64::query::contact::contact_support_map_support_map::contact_support_map_support_map::h02b773d579b736c7  (in placement_pilot) + 1208  [0x102d9bf7c]
+      +         ! : | + !       3 parry3d_f64::query::contact::contact_composite_shape_shape::_$LT$impl$u20$parry3d_f64..shape..composite_shape..CompositeShapeRef$LT$S$GT$$GT$::contact_with_shape::h19a549104e9736ca  (in placement_pilot) + 84  [0x102d9b63c]
+      +         ! : | + !       : 3 parry3d_f64::bounding_volume::aabb_utils::point_cloud_aabb_ref::h75fda12f4c0cce63  (in placement_pilot) + 284,304,...  [0x102dc6ddc,0x102dc6df0,...]
+      +         ! : | + !       1 parry3d_f64::query::contact::contact_composite_shape_shape::_$LT$impl$u20$parry3d_f64..shape..composite_shape..CompositeShapeRef$LT$S$GT$$GT$::contact_with_shape::h19a549104e9736ca  (in placement_pilot) + 188  [0x102d9b6a4]
+      +         ! : | + !         1 parry3d_f64::partitioning::bvh::bvh_traverse::Leaves$LT$Check$GT$::new::hc00c6495f16ea57b  (in placement_pilot) + 0  [0x102dadb18]
+      +         ! : | + 3 sim::surface::ContactScene::penetration_on::hf1b68a229192b3bd  (in placement_pilot) + 848  [0x102e37948]
+      +         ! : | + ! 3 parry3d_f64::partitioning::bvh::bvh_tree::Bvh::root_aabb::h085207f235402b6a  (in placement_pilot) + 0,80,...  [0x102d8f0e0,0x102d8f130,...]
+      +         ! : | + 1 sim::surface::ContactScene::penetration_on::hf1b68a229192b3bd  (in placement_pilot) + 160  [0x102e37698]
+      +         ! : | +   1 sim::surface::ContactScene::penetration_on::hf1b68a229192b3bd  (in placement_pilot) + 288  [0x102e37718]
+      +         ! : | 24 sim::body::motion::advance::ha31dd8889f5ebc6a  (in placement_pilot) + 3180  [0x102e22eb4]
+      +         ! : | + 24 sim::surface::ContactScene::penetration_on::hf1b68a229192b3bd  (in placement_pilot) + 1064  [0x102e37a20]
+      +         ! : | +   24 parry3d_f64::query::contact::contact_shape_shape::contact::ha81b1fa13d2473d4  (in placement_pilot) + 432  [0x102d9b39c]
+      +         ! : | +     24 _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::contact::h7b10394e79b654e5  (in placement_pilot) + 1472  [0x102dbce88]
+      +         ! : | +       24 parry3d_f64::query::contact::contact_composite_shape_shape::contact_shape_composite_shape::h34c73db9f986bc9f  (in placement_pilot) + 216  [0x102dba388]
+      +         ! : | +         23 parry3d_f64::query::contact::contact_composite_shape_shape::_$LT$impl$u20$parry3d_f64..shape..composite_shape..CompositeShapeRef$LT$S$GT$$GT$::contact_with_shape::h19a549104e9736ca  (in placement_pilot) + 260  [0x102d9b6ec]
+      +         ! : | +         ! 23 _$LT$parry3d_f64..shape..trimesh..TriMesh$u20$as$u20$parry3d_f64..shape..composite_shape..CompositeShape$GT$::map_part_at::hfa70f605b0f333b3  (in placement_pilot) + 228  [0x102daea4c]
+      +         ! : | +         !   23 parry3d_f64::query::contact::contact_composite_shape_shape::_$LT$impl$u20$parry3d_f64..shape..composite_shape..CompositeShapeRef$LT$S$GT$$GT$::contact_with_shape::_$u7b$$u7b$closure$u7d$$u7d$::h83432fc9289f19d3  (in placement_pilot) + 392  [0x102d9b91c]
+      +         ! : | +         !     23 _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::contact::h7b10394e79b654e5  (in placement_pilot) + 1144  [0x102dbcd40]
+      +         ! : | +         !       20 parry3d_f64::query::contact::contact_support_map_support_map::contact_support_map_support_map::h02b773d579b736c7  (in placement_pilot) + 464  [0x102d9bc94]
+      +         ! : | +         !       : 19 parry3d_f64::query::gjk::gjk::closest_points::h122004fc7d1f0691  (in placement_pilot) + 812  [0x102da51fc]
+      +         ! : | +         !       : | 19 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320  [0x102e5cc9c]
+      +         ! : | +         !       : 1 parry3d_f64::query::gjk::gjk::closest_points::h122004fc7d1f0691  (in placement_pilot) + 1012  [0x102da52c4]
+      +         ! : | +         !       :   1 parry3d_f64::query::gjk::voronoi_simplex3::VoronoiSimplex::add_point::ha7ee21a1ef3ee897  (in placement_pilot) + 188  [0x102d998f0]
+      +         ! : | +         !       3 parry3d_f64::query::contact::contact_support_map_support_map::contact_support_map_support_map::h02b773d579b736c7  (in placement_pilot) + 352  [0x102d9bc24]
+      +         ! : | +         !         3 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320,328  [0x102e5cc9c,0x102e5cca4]
+      +         ! : | +         1 parry3d_f64::query::contact::contact_composite_shape_shape::_$LT$impl$u20$parry3d_f64..shape..composite_shape..CompositeShapeRef$LT$S$GT$$GT$::contact_with_shape::h19a549104e9736ca  (in placement_pilot) + 84  [0x102d9b63c]
+      +         ! : | +           1 parry3d_f64::bounding_volume::aabb_utils::point_cloud_aabb_ref::h75fda12f4c0cce63  (in placement_pilot) + 312  [0x102dc6df8]
+      +         ! : | 20 sim::body::motion::advance::ha31dd8889f5ebc6a  (in placement_pilot) + 3432  [0x102e22fb0]
+      +         ! : | + 20 sim::surface::ContactScene::cast_at_rotation::h286bc341a5cb348f  (in placement_pilot) + 416  [0x102e37c88]
+      +         ! : | +   14 sim::surface::cast_on::h3e256d2db8f050b5  (in placement_pilot) + 1472  [0x102e3a5b4]
+      +         ! : | +   ! 14 parry3d_f64::query::shape_cast::shape_cast::cast_shapes::h6e5f235925b9bba2  (in placement_pilot) + 496  [0x102d97570]
+      +         ! : | +   !   14 _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::cast_shapes::hd27da22bd09bb2f9  (in placement_pilot) + 1348  [0x102dbb0c0]
+      +         ! : | +   !     13 parry3d_f64::query::shape_cast::shape_cast_support_map_support_map::cast_shapes_support_map_support_map::hac12a7f9d658d5d2  (in placement_pilot) + 336  [0x102da9080]
+      +         ! : | +   !     : 12 parry3d_f64::query::gjk::gjk::directional_distance::h7ce30dbd262133c4  (in placement_pilot) + 640  [0x102da7178]
+      +         ! : | +   !     : | 12 _$LT$parry3d_f64..shape..convex_polyhedron..ConvexPolyhedron$u20$as$u20$parry3d_f64..shape..support_map..SupportMap$GT$::local_support_point::hf882b462fd2a20ec  (in placement_pilot) + 172,180,...  [0x102e33120,0x102e33128,...]
+      +         ! : | +   !     : 1 parry3d_f64::query::gjk::gjk::directional_distance::h7ce30dbd262133c4  (in placement_pilot) + 240  [0x102da6fe8]
+      +         ! : | +   !     :   1 _$LT$parry3d_f64..shape..convex_polyhedron..ConvexPolyhedron$u20$as$u20$parry3d_f64..shape..support_map..SupportMap$GT$::local_support_point::hf882b462fd2a20ec  (in placement_pilot) + 184  [0x102e3312c]
+      +         ! : | +   !     1 parry3d_f64::query::shape_cast::shape_cast_support_map_support_map::cast_shapes_support_map_support_map::hac12a7f9d658d5d2  (in placement_pilot) + 552  [0x102da9158]
+      +         ! : | +   !       1 parry3d_f64::query::contact::contact_support_map_support_map::contact_support_map_support_map::h02b773d579b736c7  (in placement_pilot) + 464  [0x102d9bc94]
+      +         ! : | +   !         1 parry3d_f64::query::gjk::gjk::closest_points::h122004fc7d1f0691  (in placement_pilot) + 768  [0x102da51d0]
+      +         ! : | +   !           1 _$LT$parry3d_f64..shape..convex_polyhedron..ConvexPolyhedron$u20$as$u20$parry3d_f64..shape..support_map..SupportMap$GT$::local_support_point::hf882b462fd2a20ec  (in placement_pilot) + 172  [0x102e33120]
+      +         ! : | +   3 sim::surface::cast_on::h3e256d2db8f050b5  (in placement_pilot) + 356  [0x102e3a158]
+      +         ! : | +   ! 3 sim::surface::cast_on::h3e256d2db8f050b5  (in placement_pilot) + 412  [0x102e3a190]
+      +         ! : | +   3 sim::surface::cast_on::h3e256d2db8f050b5  (in placement_pilot) + 1328  [0x102e3a524]
+      +         ! : | +     3 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320,324  [0x102e5cc9c,0x102e5cca0]
+      +         ! : | 18 sim::body::motion::advance::ha31dd8889f5ebc6a  (in placement_pilot) + 4316  [0x102e23324]
+      +         ! : | + 18 sim::surface::ContactScene::penetration_on::hf1b68a229192b3bd  (in placement_pilot) + 1064  [0x102e37a20]
+      +         ! : | +   18 parry3d_f64::query::contact::contact_shape_shape::contact::ha81b1fa13d2473d4  (in placement_pilot) + 432  [0x102d9b39c]
+      +         ! : | +     18 _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::contact::h7b10394e79b654e5  (in placement_pilot) + 1472  [0x102dbce88]
+      +         ! : | +       18 parry3d_f64::query::contact::contact_composite_shape_shape::contact_shape_composite_shape::h34c73db9f986bc9f  (in placement_pilot) + 216  [0x102dba388]
+      +         ! : | +         18 parry3d_f64::query::contact::contact_composite_shape_shape::_$LT$impl$u20$parry3d_f64..shape..composite_shape..CompositeShapeRef$LT$S$GT$$GT$::contact_with_shape::h19a549104e9736ca  (in placement_pilot) + 260  [0x102d9b6ec]
+      +         ! : | +           18 _$LT$parry3d_f64..shape..trimesh..TriMesh$u20$as$u20$parry3d_f64..shape..composite_shape..CompositeShape$GT$::map_part_at::hfa70f605b0f333b3  (in placement_pilot) + 228  [0x102daea4c]
+      +         ! : | +             18 parry3d_f64::query::contact::contact_composite_shape_shape::_$LT$impl$u20$parry3d_f64..shape..composite_shape..CompositeShapeRef$LT$S$GT$$GT$::contact_with_shape::_$u7b$$u7b$closure$u7d$$u7d$::h83432fc9289f19d3  (in placement_pilot) + 392  [0x102d9b91c]
+      +         ! : | +               18 _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::contact::h7b10394e79b654e5  (in placement_pilot) + 1144  [0x102dbcd40]
+      +         ! : | +                 10 parry3d_f64::query::contact::contact_support_map_support_map::contact_support_map_support_map::h02b773d579b736c7  (in placement_pilot) + 464  [0x102d9bc94]
+      +         ! : | +                 ! 10 parry3d_f64::query::gjk::gjk::closest_points::h122004fc7d1f0691  (in placement_pilot) + 812  [0x102da51fc]
+      +         ! : | +                 !   9 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320,332,...  [0x102e5cc9c,0x102e5cca8,...]
+      +         ! : | +                 !   1 parry3d_f64::query::gjk::gjk::closest_points::h122004fc7d1f0691  (in placement_pilot) + 960  [0x102da5290]
+      +         ! : | +                 4 parry3d_f64::query::contact::contact_support_map_support_map::contact_support_map_support_map::h02b773d579b736c7  (in placement_pilot) + 352  [0x102d9bc24]
+      +         ! : | +                 ! 4 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320,324,...  [0x102e5cc9c,0x102e5cca0,...]
+      +         ! : | +                 4 parry3d_f64::query::contact::contact_support_map_support_map::contact_support_map_support_map::h02b773d579b736c7  (in placement_pilot) + 600  [0x102d9bd1c]
+      +         ! : | +                   4 parry3d_f64::query::epa::epa3::EPA::closest_points::hb071005d1c67fb72  (in placement_pilot) + 4740  [0x102dbe480]
+      +         ! : | +                     4 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320  [0x102e5cc9c]
+      +         ! : | 10 sim::body::motion::advance::ha31dd8889f5ebc6a  (in placement_pilot) + 4392  [0x102e23370]
+      +         ! : | + 10 sim::body::motion::stop_supported::hd3b3eb140bcbb32b  (in placement_pilot) + 120  [0x102e21984]
+      +         ! : | +   10 sim::surface::ContactScene::penetration_on::hf1b68a229192b3bd  (in placement_pilot) + 1064  [0x102e37a20]
+      +         ! : | +     10 parry3d_f64::query::contact::contact_shape_shape::contact::ha81b1fa13d2473d4  (in placement_pilot) + 432  [0x102d9b39c]
+      +         ! : | +       10 _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::contact::h7b10394e79b654e5  (in placement_pilot) + 1472  [0x102dbce88]
+      +         ! : | +         10 parry3d_f64::query::contact::contact_composite_shape_shape::contact_shape_composite_shape::h34c73db9f986bc9f  (in placement_pilot) + 216  [0x102dba388]
+      +         ! : | +           10 parry3d_f64::query::contact::contact_composite_shape_shape::_$LT$impl$u20$parry3d_f64..shape..composite_shape..CompositeShapeRef$LT$S$GT$$GT$::contact_with_shape::h19a549104e9736ca  (in placement_pilot) + 260  [0x102d9b6ec]
+      +         ! : | +             10 _$LT$parry3d_f64..shape..trimesh..TriMesh$u20$as$u20$parry3d_f64..shape..composite_shape..CompositeShape$GT$::map_part_at::hfa70f605b0f333b3  (in placement_pilot) + 228  [0x102daea4c]
+      +         ! : | +               10 parry3d_f64::query::contact::contact_composite_shape_shape::_$LT$impl$u20$parry3d_f64..shape..composite_shape..CompositeShapeRef$LT$S$GT$$GT$::contact_with_shape::_$u7b$$u7b$closure$u7d$$u7d$::h83432fc9289f19d3  (in placement_pilot) + 392  [0x102d9b91c]
+      +         ! : | +                 10 _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::contact::h7b10394e79b654e5  (in placement_pilot) + 1144  [0x102dbcd40]
+      +         ! : | +                   8 parry3d_f64::query::contact::contact_support_map_support_map::contact_support_map_support_map::h02b773d579b736c7  (in placement_pilot) + 464  [0x102d9bc94]
+      +         ! : | +                   ! 7 parry3d_f64::query::gjk::gjk::closest_points::h122004fc7d1f0691  (in placement_pilot) + 812  [0x102da51fc]
+      +         ! : | +                   ! : 7 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320,332  [0x102e5cc9c,0x102e5cca8]
+      +         ! : | +                   ! 1 parry3d_f64::query::gjk::gjk::closest_points::h122004fc7d1f0691  (in placement_pilot) + 1460  [0x102da5484]
+      +         ! : | +                   !   1 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320  [0x102e5cc9c]
+      +         ! : | +                   1 parry3d_f64::query::contact::contact_support_map_support_map::contact_support_map_support_map::h02b773d579b736c7  (in placement_pilot) + 352  [0x102d9bc24]
+      +         ! : | +                   ! 1 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320  [0x102e5cc9c]
+      +         ! : | +                   1 parry3d_f64::query::contact::contact_support_map_support_map::contact_support_map_support_map::h02b773d579b736c7  (in placement_pilot) + 600  [0x102d9bd1c]
+      +         ! : | +                     1 parry3d_f64::query::epa::epa3::EPA::closest_points::hb071005d1c67fb72  (in placement_pilot) + 4740  [0x102dbe480]
+      +         ! : | +                       1 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320  [0x102e5cc9c]
+      +         ! : | 10 sim::body::motion::advance::ha31dd8889f5ebc6a  (in placement_pilot) + 4980  [0x102e235bc]
+      +         ! : | + 10 sim::surface::ContactScene::penetration_on::hf1b68a229192b3bd  (in placement_pilot) + 1064  [0x102e37a20]
+      +         ! : | +   10 parry3d_f64::query::contact::contact_shape_shape::contact::ha81b1fa13d2473d4  (in placement_pilot) + 432  [0x102d9b39c]
+      +         ! : | +     10 _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::contact::h7b10394e79b654e5  (in placement_pilot) + 1472  [0x102dbce88]
+      +         ! : | +       10 parry3d_f64::query::contact::contact_composite_shape_shape::contact_shape_composite_shape::h34c73db9f986bc9f  (in placement_pilot) + 216  [0x102dba388]
+      +         ! : | +         10 parry3d_f64::query::contact::contact_composite_shape_shape::_$LT$impl$u20$parry3d_f64..shape..composite_shape..CompositeShapeRef$LT$S$GT$$GT$::contact_with_shape::h19a549104e9736ca  (in placement_pilot) + 260  [0x102d9b6ec]
+      +         ! : | +           10 _$LT$parry3d_f64..shape..trimesh..TriMesh$u20$as$u20$parry3d_f64..shape..composite_shape..CompositeShape$GT$::map_part_at::hfa70f605b0f333b3  (in placement_pilot) + 228  [0x102daea4c]
+      +         ! : | +             10 parry3d_f64::query::contact::contact_composite_shape_shape::_$LT$impl$u20$parry3d_f64..shape..composite_shape..CompositeShapeRef$LT$S$GT$$GT$::contact_with_shape::_$u7b$$u7b$closure$u7d$$u7d$::h83432fc9289f19d3  (in placement_pilot) + 392  [0x102d9b91c]
+      +         ! : | +               10 _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::contact::h7b10394e79b654e5  (in placement_pilot) + 1144  [0x102dbcd40]
+      +         ! : | +                 9 parry3d_f64::query::contact::contact_support_map_support_map::contact_support_map_support_map::h02b773d579b736c7  (in placement_pilot) + 464  [0x102d9bc94]
+      +         ! : | +                 ! 9 parry3d_f64::query::gjk::gjk::closest_points::h122004fc7d1f0691  (in placement_pilot) + 812  [0x102da51fc]
+      +         ! : | +                 !   9 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320,332  [0x102e5cc9c,0x102e5cca8]
+      +         ! : | +                 1 parry3d_f64::query::contact::contact_support_map_support_map::contact_support_map_support_map::h02b773d579b736c7  (in placement_pilot) + 352  [0x102d9bc24]
+      +         ! : | +                   1 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320  [0x102e5cc9c]
+      +         ! : | 9 sim::body::motion::advance::ha31dd8889f5ebc6a  (in placement_pilot) + 2712  [0x102e22ce0]
+      +         ! : | + 9 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320,316,...  [0x102e5cc9c,0x102e5cc98,...]
+      +         ! : | 9 sim::body::motion::advance::ha31dd8889f5ebc6a  (in placement_pilot) + 4096  [0x102e23248]
+      +         ! : | + 7 sim::surface::ContactScene::support_at::ha83c541bf98e9077  (in placement_pilot) + 1816  [0x102e36854]
+      +         ! : | + ! 7 parry3d_f64::query::shape_cast::shape_cast::cast_shapes::h6e5f235925b9bba2  (in placement_pilot) + 496  [0x102d97570]
+      +         ! : | + !   7 _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::cast_shapes::hd27da22bd09bb2f9  (in placement_pilot) + 1348  [0x102dbb0c0]
+      +         ! : | + !     7 parry3d_f64::query::shape_cast::shape_cast_support_map_support_map::cast_shapes_support_map_support_map::hac12a7f9d658d5d2  (in placement_pilot) + 336  [0x102da9080]
+      +         ! : | + !       6 parry3d_f64::query::gjk::gjk::directional_distance::h7ce30dbd262133c4  (in placement_pilot) + 640  [0x102da7178]
+      +         ! : | + !       : 6 _$LT$parry3d_f64..shape..convex_polyhedron..ConvexPolyhedron$u20$as$u20$parry3d_f64..shape..support_map..SupportMap$GT$::local_support_point::hf882b462fd2a20ec  (in placement_pilot) + 172,184,...  [0x102e33120,0x102e3312c,...]
+      +         ! : | + !       1 parry3d_f64::query::gjk::gjk::directional_distance::h7ce30dbd262133c4  (in placement_pilot) + 240  [0x102da6fe8]
+      +         ! : | + !         1 _$LT$parry3d_f64..shape..convex_polyhedron..ConvexPolyhedron$u20$as$u20$parry3d_f64..shape..support_map..SupportMap$GT$::local_support_point::hf882b462fd2a20ec  (in placement_pilot) + 172  [0x102e33120]
+      +         ! : | + 2 sim::surface::ContactScene::support_at::ha83c541bf98e9077  (in placement_pilot) + 1524  [0x102e36730]
+      +         ! : | +   2 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320  [0x102e5cc9c]
+      +         ! : | 8 sim::body::motion::advance::ha31dd8889f5ebc6a  (in placement_pilot) + 1260  [0x102e22734]
+      +         ! : | + 7 sim::surface::ContactScene::support_at::ha83c541bf98e9077  (in placement_pilot) + 1816  [0x102e36854]
+      +         ! : | + ! 7 parry3d_f64::query::shape_cast::shape_cast::cast_shapes::h6e5f235925b9bba2  (in placement_pilot) + 496  [0x102d97570]
+      +         ! : | + !   7 _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::cast_shapes::hd27da22bd09bb2f9  (in placement_pilot) + 1348  [0x102dbb0c0]
+      +         ! : | + !     7 parry3d_f64::query::shape_cast::shape_cast_support_map_support_map::cast_shapes_support_map_support_map::hac12a7f9d658d5d2  (in placement_pilot) + 336  [0x102da9080]
+      +         ! : | + !       4 parry3d_f64::query::gjk::gjk::directional_distance::h7ce30dbd262133c4  (in placement_pilot) + 640  [0x102da7178]
+      +         ! : | + !       : 4 _$LT$parry3d_f64..shape..convex_polyhedron..ConvexPolyhedron$u20$as$u20$parry3d_f64..shape..support_map..SupportMap$GT$::local_support_point::hf882b462fd2a20ec  (in placement_pilot) + 172,184,...  [0x102e33120,0x102e3312c,...]
+      +         ! : | + !       2 parry3d_f64::query::gjk::gjk::directional_distance::h7ce30dbd262133c4  (in placement_pilot) + 240  [0x102da6fe8]
+      +         ! : | + !       : 2 _$LT$parry3d_f64..shape..convex_polyhedron..ConvexPolyhedron$u20$as$u20$parry3d_f64..shape..support_map..SupportMap$GT$::local_support_point::hf882b462fd2a20ec  (in placement_pilot) + 172,176  [0x102e33120,0x102e33124]
+      +         ! : | + !       1 parry3d_f64::query::gjk::gjk::directional_distance::h7ce30dbd262133c4  (in placement_pilot) + 680  [0x102da71a0]
+      +         ! : | + !         1 parry3d_f64::shape::support_map::SupportMap::support_point::h902a6a9cedfceac3  (in placement_pilot) + 280  [0x102e203b8]
+      +         ! : | + 1 sim::surface::ContactScene::support_at::ha83c541bf98e9077  (in placement_pilot) + 1652  [0x102e367b0]
+      +         ! : | +   1 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320  [0x102e5cc9c]
+      +         ! : | 7 sim::body::motion::advance::ha31dd8889f5ebc6a  (in placement_pilot) + 3604  [0x102e2305c]
+      +         ! : | + 7 sim::surface::ContactScene::penetration_on::hf1b68a229192b3bd  (in placement_pilot) + 160  [0x102e37698]
+      +         ! : | +   7 sim::surface::ContactScene::penetration_on::hf1b68a229192b3bd  (in placement_pilot) + 288,252,...  [0x102e37718,0x102e376f4,...]
+      +         ! : | 7 sim::body::motion::advance::ha31dd8889f5ebc6a  (in placement_pilot) + 3976  [0x102e231d0]
+      +         ! : | + 6 sim::surface::ContactScene::support_at::ha83c541bf98e9077  (in placement_pilot) + 1816  [0x102e36854]
+      +         ! : | + ! 6 parry3d_f64::query::shape_cast::shape_cast::cast_shapes::h6e5f235925b9bba2  (in placement_pilot) + 496  [0x102d97570]
+      +         ! : | + !   6 _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::cast_shapes::hd27da22bd09bb2f9  (in placement_pilot) + 1348  [0x102dbb0c0]
+      +         ! : | + !     6 parry3d_f64::query::shape_cast::shape_cast_support_map_support_map::cast_shapes_support_map_support_map::hac12a7f9d658d5d2  (in placement_pilot) + 336  [0x102da9080]
+      +         ! : | + !       6 parry3d_f64::query::gjk::gjk::directional_distance::h7ce30dbd262133c4  (in placement_pilot) + 640  [0x102da7178]
+      +         ! : | + !         6 _$LT$parry3d_f64..shape..convex_polyhedron..ConvexPolyhedron$u20$as$u20$parry3d_f64..shape..support_map..SupportMap$GT$::local_support_point::hf882b462fd2a20ec  (in placement_pilot) + 172,180,...  [0x102e33120,0x102e33128,...]
+      +         ! : | + 1 sim::surface::ContactScene::support_at::ha83c541bf98e9077  (in placement_pilot) + 952  [0x102e364f4]
+      +         ! : | +   1 parry3d_f64::bounding_volume::aabb_utils::point_cloud_aabb_ref::h75fda12f4c0cce63  (in placement_pilot) + 316  [0x102dc6dfc]
+      +         ! : | 2 sim::body::motion::advance::ha31dd8889f5ebc6a  (in placement_pilot) + 3084  [0x102e22e54]
+      +         ! : | + 1 sim::body::motion::advance::ha31dd8889f5ebc6a  (in placement_pilot) + 3360  [0x102e22f68]
+      +         ! : | + 1 sim::surface::ContactScene::rotation_clearance::hb01c2f3e1a838b6c  (in placement_pilot) + 1012  [0x102e3808c]
+      +         ! : | +   1 sim::surface::ContactScene::rotation_clearance::hb01c2f3e1a838b6c  (in placement_pilot) + 1132  [0x102e38104]
+      +         ! : | 1 sim::body::motion::advance::ha31dd8889f5ebc6a  (in placement_pilot) + 784  [0x102e22558]
+      +         ! : | + 1 _$LT$core..iter..adapters..chain..Chain$LT$A$C$B$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$::try_fold::h3a1a89124350f28d  (in placement_pilot) + 28  [0x102e610f8]
+      +         ! : | 1 sim::body::motion::advance::ha31dd8889f5ebc6a  (in placement_pilot) + 936  [0x102e225f0]
+      +         ! : | + 1 parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 320  [0x102e5cc9c]
+      +         ! : | 1 sim::body::motion::advance::ha31dd8889f5ebc6a  (in placement_pilot) + 3828  [0x102e2313c]
+      +         ! : | + 1 alloc::raw_vec::RawVec$LT$T$C$A$GT$::grow_one::hf2633b1f2d9fedbe  (in placement_pilot) + 60  [0x102e9d108]
+      +         ! : | +   1 alloc::raw_vec::RawVecInner$LT$A$GT$::finish_grow::h2174f54cd819db14  (in placement_pilot) + 128  [0x102e9d1b4]
+      +         ! : | +     1 _realloc  (in libsystem_malloc.dylib) + 452  [0x189db8e90]
+      +         ! : | +       1 _malloc_zone_realloc  (in libsystem_malloc.dylib) + 148  [0x189db8674]
+      +         ! : | +         1 xzm_realloc  (in libsystem_malloc.dylib) + 852  [0x189da8e48]
+      +         ! : | +           1 _platform_memmove  (in libsystem_platform.dylib) + 0  [0x189f953c0]
+      +         ! : | 1 sim::body::motion::advance::ha31dd8889f5ebc6a  (in placement_pilot) + 5212  [0x102e236a4]
+      +         ! : |   1 sim::surface::ContactScene::support_at::ha83c541bf98e9077  (in placement_pilot) + 460  [0x102e36308]
+      +         ! : |     1 parry3d_f64::bounding_volume::aabb_utils::point_cloud_aabb_ref::h75fda12f4c0cce63  (in placement_pilot) + 284  [0x102dc6ddc]
+      +         ! : 2 sim::body::Body::step::he5c95c8d029836d3  (in placement_pilot) + 832  [0x102e198ec]
+      +         ! :   2 sim::body::Body::contacts::ha1bf17c5f67991c5  (in placement_pilot) + 208  [0x102e1ab10]
+      +         ! :     2 sim::surface::ContactScene::touching_hull::h3e24bc7b39ec745f  (in placement_pilot) + 536,540  [0x102e3722c,0x102e37230]
+      +         ! 40 sim::attempt::Attempt::step::h8225bb230ab7d6a9  (in placement_pilot) + 476  [0x102e2b614]
+      +         ! : 40 sim::sensory::cue_currents::h4bdc4ac27fa1b81f  (in placement_pilot) + 408  [0x102e25464]
+      +         ! :   37 sim::sensory::group_currents::h3d1297f7cd5e2921  (in placement_pilot) + 220  [0x102e2555c]
+      +         ! :   | 36 sim::sensory::motor_readout_indices::h7270be8dcdd53cc1  (in placement_pilot) + 484  [0x102e25cf8]
+      +         ! :   | + 36 _$LT$core..iter..adapters..chain..Chain$LT$A$C$B$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$::fold::h561d4ed7c25838a3  (in placement_pilot) + 148  [0x102e60f54]
+      +         ! :   | +   11 _$LT$core..iter..adapters..chain..Chain$LT$A$C$B$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$::fold::h17c9ce058f538c78  (in placement_pilot) + 100  [0x102e60e10]
+      +         ! :   | +   ! 8 hashbrown::map::HashMap$LT$K$C$V$C$S$C$A$GT$::insert::ha41d69bd196780c7  (in placement_pilot) + 44  [0x102e4effc]
+      +         ! :   | +   ! : 4 core::hash::BuildHasher::hash_one::h40aa823efeb5e821  (in placement_pilot) + 88  [0x102e4e1b4]
+      +         ! :   | +   ! : | 4 _$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$::write::h833b8aac80b4f8cf  (in placement_pilot) + 12,100,...  [0x102e4e3b0,0x102e4e408,...]
+      +         ! :   | +   ! : 4 core::hash::BuildHasher::hash_one::h40aa823efeb5e821  (in placement_pilot) + 176,204,...  [0x102e4e20c,0x102e4e228,...]
+      +         ! :   | +   ! 3 hashbrown::map::HashMap$LT$K$C$V$C$S$C$A$GT$::insert::ha41d69bd196780c7  (in placement_pilot) + 104,148,...  [0x102e4f038,0x102e4f064,...]
+      +         ! :   | +   11 _$LT$core..iter..adapters..chain..Chain$LT$A$C$B$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$::fold::h17c9ce058f538c78  (in placement_pilot) + 144  [0x102e60e3c]
+      +         ! :   | +   ! 10 hashbrown::map::HashMap$LT$K$C$V$C$S$C$A$GT$::insert::ha41d69bd196780c7  (in placement_pilot) + 44  [0x102e4effc]
+      +         ! :   | +   ! : 7 core::hash::BuildHasher::hash_one::h40aa823efeb5e821  (in placement_pilot) + 256,272,...  [0x102e4e25c,0x102e4e26c,...]
+      +         ! :   | +   ! : 3 core::hash::BuildHasher::hash_one::h40aa823efeb5e821  (in placement_pilot) + 88  [0x102e4e1b4]
+      +         ! :   | +   ! :   3 _$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$::write::h833b8aac80b4f8cf  (in placement_pilot) + 12,92,...  [0x102e4e3b0,0x102e4e400,...]
+      +         ! :   | +   ! 1 hashbrown::map::HashMap$LT$K$C$V$C$S$C$A$GT$::insert::ha41d69bd196780c7  (in placement_pilot) + 28  [0x102e4efec]
+      +         ! :   | +   8 _$LT$core..iter..adapters..chain..Chain$LT$A$C$B$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$::fold::h17c9ce058f538c78  (in placement_pilot) + 188  [0x102e60e68]
+      +         ! :   | +   ! 7 hashbrown::map::HashMap$LT$K$C$V$C$S$C$A$GT$::insert::ha41d69bd196780c7  (in placement_pilot) + 44  [0x102e4effc]
+      +         ! :   | +   ! : 7 core::hash::BuildHasher::hash_one::h40aa823efeb5e821  (in placement_pilot) + 272  [0x102e4e26c]
+      +         ! :   | +   ! 1 hashbrown::map::HashMap$LT$K$C$V$C$S$C$A$GT$::insert::ha41d69bd196780c7  (in placement_pilot) + 168  [0x102e4f078]
+      +         ! :   | +   4 _$LT$core..iter..adapters..chain..Chain$LT$A$C$B$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$::fold::h17c9ce058f538c78  (in placement_pilot) + 240  [0x102e60e9c]
+      +         ! :   | +   ! 2 hashbrown::map::HashMap$LT$K$C$V$C$S$C$A$GT$::insert::ha41d69bd196780c7  (in placement_pilot) + 44  [0x102e4effc]
+      +         ! :   | +   ! : 2 core::hash::BuildHasher::hash_one::h40aa823efeb5e821  (in placement_pilot) + 120,272  [0x102e4e1d4,0x102e4e26c]
+      +         ! :   | +   ! 2 hashbrown::map::HashMap$LT$K$C$V$C$S$C$A$GT$::insert::ha41d69bd196780c7  (in placement_pilot) + 160,168  [0x102e4f070,0x102e4f078]
+      +         ! :   | +   1 _$LT$core..iter..adapters..chain..Chain$LT$A$C$B$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$::fold::h17c9ce058f538c78  (in placement_pilot) + 188  [0x102e60e68]
+      +         ! :   | +   1 hashbrown::map::HashMap$LT$K$C$V$C$S$C$A$GT$::insert::ha41d69bd196780c7  (in placement_pilot) + 328  [0x102e4f118]
+      +         ! :   | 1 sim::sensory::motor_readout_indices::h7270be8dcdd53cc1  (in placement_pilot) + 100  [0x102e25b78]
+      +         ! :   |   1 _tlv_get_addr  (in libdyld.dylib) + 0  [0x189b98388]
+      +         ! :   3 sim::sensory::group_currents::h3d1297f7cd5e2921  (in placement_pilot) + 572  [0x102e256bc]
+      +         ! :     3 core::hash::BuildHasher::hash_one::h40aa823efeb5e821  (in placement_pilot) + 88  [0x102e4e1b4]
+      +         ! :       3 _$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$::write::h833b8aac80b4f8cf  (in placement_pilot) + 100  [0x102e4e408]
+      +         ! 6 sim::attempt::Attempt::step::h8225bb230ab7d6a9  (in placement_pilot) + 104  [0x102e2b4a0]
+      +         ! : 6 sim::environment::fields::FieldSet::advance::hc17d8dc10c466f13  (in placement_pilot) + 1332,1628,...  [0x102e49244,0x102e4936c,...]
+      +         ! 3 sim::attempt::Attempt::step::h8225bb230ab7d6a9  (in placement_pilot) + 540,628,...  [0x102e2b654,0x102e2b6ac,...]
+      +         ! 2 sim::attempt::Attempt::step::h8225bb230ab7d6a9  (in placement_pilot) + 400  [0x102e2b5c8]
+      +         ! : 2 sim::environment::fields::FieldSet::sample::h376271c1e037db8c  (in placement_pilot) + 116  [0x102e48b20]
+      +         ! :   2 sim::environment::fields::FieldSet::sample_point::ha1eb9f10d73e3a38  (in placement_pilot) + 240  [0x102e4638c]
+      +         ! :     1 _$LT$core..iter..adapters..chain..Chain$LT$A$C$B$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$::try_fold::h3a1a89124350f28d  (in placement_pilot) + 76  [0x102e61128]
+      +         ! :     | 1 _$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$::try_fold::h750d4ca97ce4fdd0  (in placement_pilot) + 128  [0x102e57adc]
+      +         ! :     1 sim::environment::fields::FieldSet::sample_point::ha1eb9f10d73e3a38  (in placement_pilot) + 512  [0x102e4649c]
+      +         ! 1 sim::attempt::Attempt::step::h8225bb230ab7d6a9  (in placement_pilot) + 1068  [0x102e2b864]
+      +         ! : 1 sim::body::Body::contacts::ha1bf17c5f67991c5  (in placement_pilot) + 164  [0x102e1aae4]
+      +         ! 1 sim::attempt::Attempt::step::h8225bb230ab7d6a9  (in placement_pilot) + 1636  [0x102e2ba9c]
+      +         !   1 __bzero  (in libsystem_platform.dylib) + 68  [0x189f950d4]
+      +         1 placement_pilot::main::he395f9516c04b34b  (in placement_pilot) + 5424  [0x102de1198]
+      +           1 alloc::collections::btree::map::BTreeMap$LT$K$C$V$C$A$GT$::insert::h4b50acd39eabd753  (in placement_pilot) + 380  [0x102e00028]
+      1 ???  (in <unknown binary>)  [0x2a00000018]
+        1 ???  (in <unknown binary>)  [0x75b095000]
+          1 hashbrown::raw::RawTableInner::fallible_with_capacity::h8d282108f6dde3c5  (in placement_pilot) + 228  [0x102e3f0f0]
+            1 _xzm_xzone_malloc_small_freelist  (in libsystem_malloc.dylib) + 104  [0x189dae338]
+
+Total number in stack (recursive counted multiple, when >=5):
+        21       parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot) + 0  [0x102e5cb5c]
+        8       _$LT$parry3d_f64..shape..convex_polyhedron..ConvexPolyhedron$u20$as$u20$parry3d_f64..shape..support_map..SupportMap$GT$::local_support_point::hf882b462fd2a20ec  (in placement_pilot) + 0  [0x102e33074]
+        7       parry3d_f64::query::contact::contact_support_map_support_map::contact_support_map_support_map::h02b773d579b736c7  (in placement_pilot) + 464  [0x102d9bc94]
+        7       parry3d_f64::query::gjk::gjk::closest_points::h122004fc7d1f0691  (in placement_pilot) + 812  [0x102da51fc]
+        6       _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::contact::h7b10394e79b654e5  (in placement_pilot) + 1144  [0x102dbcd40]
+        5       _$LT$parry3d_f64..query..default_query_dispatcher..DefaultQueryDispatcher$u20$as$u20$parry3d_f64..query..query_dispatcher..QueryDispatcher$GT$::contact::h7b10394e79b654e5  (in placement_pilot) + 1472  [0x102dbce88]
+        5       _$LT$parry3d_f64..shape..trimesh..TriMesh$u20$as$u20$parry3d_f64..shape..composite_shape..CompositeShape$GT$::map_part_at::hfa70f605b0f333b3  (in placement_pilot) + 228  [0x102daea4c]
+        5       hashbrown::map::HashMap$LT$K$C$V$C$S$C$A$GT$::insert::ha41d69bd196780c7  (in placement_pilot) + 0  [0x102e4efd0]
+        5       parry3d_f64::query::contact::contact_composite_shape_shape::_$LT$impl$u20$parry3d_f64..shape..composite_shape..CompositeShapeRef$LT$S$GT$$GT$::contact_with_shape::_$u7b$$u7b$closure$u7d$$u7d$::h83432fc9289f19d3  (in placement_pilot) + 392  [0x102d9b91c]
+        5       parry3d_f64::query::contact::contact_composite_shape_shape::_$LT$impl$u20$parry3d_f64..shape..composite_shape..CompositeShapeRef$LT$S$GT$$GT$::contact_with_shape::h19a549104e9736ca  (in placement_pilot) + 260  [0x102d9b6ec]
+        5       parry3d_f64::query::contact::contact_composite_shape_shape::contact_shape_composite_shape::h34c73db9f986bc9f  (in placement_pilot) + 216  [0x102dba388]
+        5       parry3d_f64::query::contact::contact_shape_shape::contact::ha81b1fa13d2473d4  (in placement_pilot) + 432  [0x102d9b39c]
+        5       parry3d_f64::query::contact::contact_support_map_support_map::contact_support_map_support_map::h02b773d579b736c7  (in placement_pilot) + 352  [0x102d9bc24]
+        5       sim::surface::ContactScene::penetration_on::hf1b68a229192b3bd  (in placement_pilot) + 1064  [0x102e37a20]
+
+Sort by top of stack, same collapsed (when >= 5):
+        sim::lif::Brain::advance::hb69e0714ced47719  (in placement_pilot)        1248
+        cos  (in libsystem_m.dylib)        129
+        parry3d_f64::shape::support_map::SupportMap::support_point::haa7d0d85360ff2cc  (in placement_pilot)        114
+        ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1170  [0x199d08170]        110
+        log  (in libsystem_m.dylib)        110
+        parry3d_f64::shape::support_map::SupportMap::local_support_point_toward::h35e06f2c92976f99  (in placement_pilot)        79
+        ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x10ac  [0x199d080ac]        47
+        sin  (in libsystem_m.dylib)        47
+        ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1168  [0x199d08168]        44
+        _$LT$parry3d_f64..shape..convex_polyhedron..ConvexPolyhedron$u20$as$u20$parry3d_f64..shape..support_map..SupportMap$GT$::local_support_point::hf882b462fd2a20ec  (in placement_pilot)        33
+        DYLD-STUB$$log  (in placement_pilot)        31
+        core::hash::BuildHasher::hash_one::h40aa823efeb5e821  (in placement_pilot)        20
+        ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1154  [0x199d08154]        19
+        sim::lif::Brain::step::hb53578f9011c352f  (in placement_pilot)        18
+        DYLD-STUB$$cos  (in placement_pilot)        15
+        ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1138  [0x199d08138]        12
+        _$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$::write::h833b8aac80b4f8cf  (in placement_pilot)        10
+        ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1098  [0x199d08098]        9
+        ???  (in libsystem_m.dylib)  load address 0x199d07000 + 0x1150  [0x199d08150]        8
+        hashbrown::map::HashMap$LT$K$C$V$C$S$C$A$GT$::insert::ha41d69bd196780c7  (in placement_pilot)        8
+        sim::surface::ContactScene::penetration_on::hf1b68a229192b3bd  (in placement_pilot)        8
+        DYLD-STUB$$sin  (in placement_pilot)        7
+        parry3d_f64::bounding_volume::aabb_utils::point_cloud_aabb_ref::h75fda12f4c0cce63  (in placement_pilot)        6
+        sim::environment::fields::FieldSet::advance::hc17d8dc10c466f13  (in placement_pilot)        6
+
+Binary Images:
+       0x102d7c000 -        0x1030ef887 +placement_pilot (0) <AB082120-46E1-38C2-BAF4-5F8A5EBF2F35> /tmp/*/placement_pilot
+       0x189b28000 -        0x189b7ab4b  libobjc.A.dylib (951.7) <2E858E25-1FF6-3DA6-84F6-911630620512> /usr/lib/libobjc.A.dylib
+       0x189b7b000 -        0x189bafb34  libdyld.dylib (1376.6) <2C3C5F75-3686-39A1-9202-BD4D2133379D> /usr/lib/system/libdyld.dylib
+       0x189bb0000 -        0x189c55ec7  dyld (1.0.0 - 1376.6) <9F682DCF-340C-3BFA-BCDD-DD702F30313E> /usr/lib/dyld
+       0x189c56000 -        0x189c59228  libsystem_blocks.dylib (96) <2EA73169-CF76-3DD1-9869-F23C8B338022> /usr/lib/system/libsystem_blocks.dylib
+       0x189c5a000 -        0x189cae51f  libxpc.dylib (3102.100.102) <618039C8-9965-3782-A7D2-90FD4C3DD66F> /usr/lib/system/libxpc.dylib
+       0x189caf000 -        0x189ccf9bf  libsystem_trace.dylib (1861.100.19) <08629650-54FC-3AA6-910E-EACA563804D0> /usr/lib/system/libsystem_trace.dylib
+       0x189cd0000 -        0x189d7ddaf  libcorecrypto.dylib (1922.101.2) <D1EC203E-9B2E-391B-8DE3-7C58F0589437> /usr/lib/system/libcorecrypto.dylib
+       0x189d7e000 -        0x189dce1d7  libsystem_malloc.dylib (812.100.31) <2AD21BE3-FFDB-31D5-A3D7-2F7F672D6E92> /usr/lib/system/libsystem_malloc.dylib
+       0x189dcf000 -        0x189e1623f  libdispatch.dylib (1542.100.32) <E17AA23F-DB2A-3302-B14C-F6B08C540FCF> /usr/lib/system/libdispatch.dylib
+       0x189e17000 -        0x189e19ffb  libsystem_featureflags.dylib (103) <0DE01F76-4B36-35A2-98F9-43DD147EDD95> /usr/lib/system/libsystem_featureflags.dylib
+       0x189e1a000 -        0x189e9aef7  libsystem_c.dylib (1752.100.10) <66EBD321-6899-3863-BA24-5CFC3076A0CB> /usr/lib/system/libsystem_c.dylib
+       0x189e9b000 -        0x189f2bae7  libc++.1.dylib (2100.43) <1E9541EC-C564-38CB-BED6-46F708E8D863> /usr/lib/libc++.1.dylib
+       0x189f2c000 -        0x189f4675f  libc++abi.dylib (2100.43) <E8D325ED-3B97-325E-B494-B1B0FF93D133> /usr/lib/libc++abi.dylib
+       0x189f47000 -        0x189f8428f  libsystem_kernel.dylib (12377.101.15) <51565B39-F595-3E96-A217-FEF29815057A> /usr/lib/system/libsystem_kernel.dylib
+       0x189f85000 -        0x189f91b3b  libsystem_pthread.dylib (539.100.4) <E7A73008-0C09-31E3-9DD9-0C61652F0E85> /usr/lib/system/libsystem_pthread.dylib
+       0x189f92000 -        0x189f9a8f3  libsystem_platform.dylib (375.100.10) <D93EC420-F465-3A3A-916D-A04AF9B023EB> /usr/lib/system/libsystem_platform.dylib
+       0x189f9b000 -        0x189fca6eb  libsystem_info.dylib (600) <201FD67C-3DF6-3788-B132-A69CAA2AA3D7> /usr/lib/system/libsystem_info.dylib
+       0x18df60000 -        0x18df69e5f  libsystem_darwin.dylib (1752.100.10) <D5BA0CAB-F283-3620-AAA9-1EEB718E1BA8> /usr/lib/system/libsystem_darwin.dylib
+       0x18e3cb000 -        0x18e3dcf5b  libsystem_notify.dylib (348.100.7) <9F46F30B-B7C0-3DD7-AC38-57B78C7971FF> /usr/lib/system/libsystem_notify.dylib
+       0x190695000 -        0x1906aff5b  libsystem_networkextension.dylib (2226.101.1) <85169C7B-48DD-3542-AD38-F1B88EA2A95A> /usr/lib/system/libsystem_networkextension.dylib
+       0x190732000 -        0x190749fdf  libsystem_asl.dylib (406) <6427D987-7938-3278-8C14-10FB9C06BBD5> /usr/lib/system/libsystem_asl.dylib
+       0x1922ed000 -        0x1922f5387  libsystem_symptoms.dylib (2169.100.30) <28B6E34E-9C7D-3437-A3F1-A3C979DE579A> /usr/lib/system/libsystem_symptoms.dylib
+       0x196588000 -        0x1965c025f  libsystem_containermanager.dylib (725.100.37) <14750F95-BB3A-3654-8610-A05A454643A8> /usr/lib/system/libsystem_containermanager.dylib
+       0x197998000 -        0x19799c5d7  libsystem_configuration.dylib (1405.100.8) <634F597D-F8BD-3C00-B967-86047FC15D14> /usr/lib/system/libsystem_configuration.dylib
+       0x19799d000 -        0x1979a38cf  libsystem_sandbox.dylib (2680.100.174) <AF76231D-EADC-3399-9414-6AD90FB4EA89> /usr/lib/system/libsystem_sandbox.dylib
+       0x198fe3000 -        0x198fe61fb  libquarantine.dylib (196.100.8) <268FEB6E-A237-3050-BFFF-AE3A66B7EAD4> /usr/lib/system/libquarantine.dylib
+       0x199782000 -        0x199788d03  libsystem_coreservices.dylib (191.4.5) <7129349D-04F9-3C3C-BF37-3082C1468654> /usr/lib/system/libsystem_coreservices.dylib
+       0x199d07000 -        0x199d44a77  libsystem_m.dylib (3312.100.1) <83B173CD-7F32-3901-8E67-C0B2676BE015> /usr/lib/system/libsystem_m.dylib
+       0x199d46000 -        0x199d49527  libmacho.dylib (1376.6) <9729ECEA-0A08-32E3-8BDB-B42FC15FF258> /usr/lib/system/libmacho.dylib
+       0x199d63000 -        0x199d703a7  libcommonCrypto.dylib (600035) <710EC5FA-F77C-3646-A9E3-C037C42E1539> /usr/lib/system/libcommonCrypto.dylib
+       0x199d71000 -        0x199d7aca3  libunwind.dylib (2100.2) <FB0518B9-DF0F-3A03-A74B-AF1B21C26F8B> /usr/lib/system/libunwind.dylib
+       0x199d83000 -        0x199d8d7ff  libcopyfile.dylib (240) <0B7FF027-5579-3CBF-A12B-68A4FD36641C> /usr/lib/system/libcopyfile.dylib
+       0x199d8e000 -        0x199d91987  libcompiler_rt.dylib (103.3) <65E29E6E-7042-3F73-A1D2-F2C4EBCD7524> /usr/lib/system/libcompiler_rt.dylib
+       0x199d92000 -        0x199d9678b  libsystem_collections.dylib (1752.100.10) <B81193DE-3BEC-3340-86D0-DB7F3683D135> /usr/lib/system/libsystem_collections.dylib
+       0x199d97000 -        0x199d9a4cf  libsystem_secinit.dylib (168.100.7) <A6B77B36-195D-33F8-8058-FE0B5BFA9D37> /usr/lib/system/libsystem_secinit.dylib
+       0x199d9b000 -        0x199d9dbf7  libremovefile.dylib (85.100.6) <BD89B1A3-0D06-3881-B5E1-EFC6CFBDFCC1> /usr/lib/system/libremovefile.dylib
+       0x199d9e000 -        0x199d9ef27  libkeymgr.dylib (31) <DE8F8219-0072-35C2-8932-C065491ED15D> /usr/lib/system/libkeymgr.dylib
+       0x199d9f000 -        0x199da7e3f  libsystem_dnssd.dylib (2881.100.56.0.1) <DEC8BDD2-366C-3BF9-A123-35744DB06354> /usr/lib/system/libsystem_dnssd.dylib
+       0x199da8000 -        0x199dad09b  libcache.dylib (95) <4D6833A3-C910-3A76-AA8A-303F698B36BF> /usr/lib/system/libcache.dylib
+       0x199dae000 -        0x199dafce3  libSystem.B.dylib (1356) <E05F5341-06B7-365E-8014-E9CD64C352FE> /usr/lib/libSystem.B.dylib
+       0x28c691000 -        0x28c698349  libRosetta.dylib (367.5) <2FC1EF06-04C4-35FC-8DC3-BEA1E9FBD63F> /usr/lib/libRosetta.dylib
+       0x28e36e000 -        0x28e371a4b  libsystem_darwindirectory.dylib (122) <CCAA2170-32DD-34BD-A927-32DF30893969> /usr/lib/system/libsystem_darwindirectory.dylib
+       0x28e372000 -        0x28e37b5a7  libsystem_eligibility.dylib (319.101.1) <2D19994A-87BB-34B8-A343-CB8DD47FF110> /usr/lib/system/libsystem_eligibility.dylib
+       0x28e37c000 -        0x28e3838db  libsystem_sanitizers.dylib (26) <FCB93D2F-4437-3089-A43F-A19BC23DD65B> /usr/lib/system/libsystem_sanitizers.dylib
+       0x28e384000 -        0x28e384bb7  libsystem_trial.dylib (474.2.18) <5BB81430-4E33-3160-94D2-1FFB2B614DB2> /usr/lib/system/libsystem_trial.dylib

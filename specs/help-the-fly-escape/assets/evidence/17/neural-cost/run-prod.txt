@@ -1,0 +1,142 @@
+{
+ "pkgDir": "/Users/david/dev/fly-escape/packages/sim-client/src/wasm",
+ "ticks": 500,
+ "buildMs": 246.7,
+ "wallMs": 22661.4,
+ "msPerTick": 45.32,
+ "chunkMs": 4.7,
+ "lastTick": {
+  "tick": 500,
+  "neuralSteps": 10000,
+  "bufferedTicks": 10,
+  "complete": false
+ },
+ "totalSamples": 73867
+}
+[
+ {
+  "name": "wasm-function[576]",
+  "hits": 47528,
+  "pct": 64.34
+ },
+ {
+  "name": "wasm-function[95]",
+  "hits": 12166,
+  "pct": 16.47
+ },
+ {
+  "name": "wasm-function[249]",
+  "hits": 4997,
+  "pct": 6.76
+ },
+ {
+  "name": "wasm-function[263]",
+  "hits": 2926,
+  "pct": 3.96
+ },
+ {
+  "name": "wasm-function[365]",
+  "hits": 1633,
+  "pct": 2.21
+ },
+ {
+  "name": "wasm-function[385]",
+  "hits": 874,
+  "pct": 1.18
+ },
+ {
+  "name": "wasm-function[185]",
+  "hits": 730,
+  "pct": 0.99
+ },
+ {
+  "name": "wasm-function[377]",
+  "hits": 631,
+  "pct": 0.85
+ },
+ {
+  "name": "wasm-function[36]",
+  "hits": 250,
+  "pct": 0.34
+ },
+ {
+  "name": "wasm-function[110]",
+  "hits": 246,
+  "pct": 0.33
+ },
+ {
+  "name": "wasm-function[367]",
+  "hits": 182,
+  "pct": 0.25
+ },
+ {
+  "name": "wasm-function[530]",
+  "hits": 175,
+  "pct": 0.24
+ },
+ {
+  "name": "wasm-function[20]",
+  "hits": 167,
+  "pct": 0.23
+ },
+ {
+  "name": "wasm-function[231]",
+  "hits": 155,
+  "pct": 0.21
+ },
+ {
+  "name": "wasm-function[162]",
+  "hits": 80,
+  "pct": 0.11
+ },
+ {
+  "name": "wasm-function[564]",
+  "hits": 74,
+  "pct": 0.1
+ },
+ {
+  "name": "wasm-function[982]",
+  "hits": 70,
+  "pct": 0.09
+ },
+ {
+  "name": "wasm-function[260]",
+  "hits": 68,
+  "pct": 0.09
+ },
+ {
+  "name": "wasm-function[183]",
+  "hits": 66,
+  "pct": 0.09
+ },
+ {
+  "name": "wasm-function[47]",
+  "hits": 61,
+  "pct": 0.08
+ },
+ {
+  "name": "wasm-function[116]",
+  "hits": 58,
+  "pct": 0.08
+ },
+ {
+  "name": "wasm-function[270]",
+  "hits": 55,
+  "pct": 0.07
+ },
+ {
+  "name": "wasm-function[48]",
+  "hits": 53,
+  "pct": 0.07
+ },
+ {
+  "name": "wasm-function[554]",
+  "hits": 53,
+  "pct": 0.07
+ },
+ {
+  "name": "wasm-function[138]",
+  "hits": 42,
+  "pct": 0.06
+ }
+]
