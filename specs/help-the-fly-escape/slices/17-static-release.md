@@ -48,4 +48,11 @@ A [paused-frame CPU audit](../assets/evidence/17/paused-cpu/README.md) measures 
 
 The [sustained retry harness](../assets/evidence/17/full-retry-harness/README.md) now runs complete actual campaign attempts at 1× and can replay captured seeds through the normal setup UI. It preserves cancellation as the default, saves failure evidence, and rejects vacuous post-warm-up comparisons. Its random second-house run exposed a supported-motion refinement failure. The [native and rebuilt-browser repair](../assets/evidence/30/refinement-contact/README.md) closes that captured case; repeated-attempt and final release gates remain open.
 
-A subsequent ten-attempt batch failed on attempt four with a distinct [query-budget error](../assets/evidence/30/query-budget-contact/README.md). Repair bounded-motion recovery before repeating sustained acceptance; three completed attempts do not close this gate.
+A subsequent ten-attempt batch failed on attempt four with a distinct [query-budget error](../assets/evidence/30/query-budget-contact/README.md). The later [contact-acceptance repair](../assets/evidence/30/contact-acceptance/README.md) closes the captured query failures; final repeated-attempt acceptance remains open.
+
+
+## Timed-round production cost
+
+The [timed integration](../assets/evidence/17/timed-rounds/README.md) completed five-minute attempts in both houses without starvation or replay underruns. Startup took84–98seconds. This is the current performance failure; raising the harness observation timeout only measured it and did not accept it. The production work is bounded by20flies and3000ticks and advances normally, so retry/backoff changes do not address the cause.
+
+The next performance pass targets neural computation while preserving exact arithmetic order, stochastic streams and actual-graph behavior. Verify an optimization against baseline neural values and seeded attempt outcomes before measuring rebuilt browser startup. Avoid conflating fewer active flies, easier geometry or altered neural rules with faster computation. Full campaign balance and final resource/platform gates still follow.
