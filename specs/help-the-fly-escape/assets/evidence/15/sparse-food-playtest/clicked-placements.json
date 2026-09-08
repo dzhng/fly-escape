@@ -1,0 +1,45 @@
+{
+ "A-nearExit": [
+  {
+   "id": 10,
+   "kind": "banana",
+   "position": {
+    "x": 4.3,
+    "z": 2.55
+   },
+   "heading": 0.0
+  }
+ ],
+ "C-pastBedroom": [
+  {
+   "id": 11,
+   "kind": "banana",
+   "position": {
+    "x": 6.45,
+    "z": 5.7
+   },
+   "heading": 0.0
+  }
+ ],
+ "D-twoFood": [
+  {
+   "id": 10,
+   "kind": "banana",
+   "position": {
+    "x": 4.3,
+    "z": 2.55
+   },
+   "heading": 0.0
+  },
+  {
+   "id": 11,
+   "kind": "fruit",
+   "position": {
+    "x": 6.45,
+    "z": 5.7
+   },
+   "heading": 0.0
+  }
+ ],
+ "B-empty": []
+}

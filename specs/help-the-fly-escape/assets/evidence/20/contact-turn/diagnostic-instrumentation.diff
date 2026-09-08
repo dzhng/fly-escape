@@ -1,0 +1,144 @@
+diff --git a/crates/sim/src/body.rs b/crates/sim/src/body.rs
+index 63bd397..63a3371 100644
+--- a/crates/sim/src/body.rs
++++ b/crates/sim/src/body.rs
+@@ -9,7 +9,7 @@ use crate::{
+ use serde::{Deserialize, Serialize};
+ use std::sync::OnceLock;
+ use ts_rs::TS;
+-mod motion;
++pub mod motion;
+ pub use motion::{MotionPoint, MotionTrace, MAX_MOTION_POINTS};
+ #[derive(Debug)]
+ pub struct BodyStep {
+diff --git a/crates/sim/src/body/motion.rs b/crates/sim/src/body/motion.rs
+index d5dd664..b20aa80 100644
+--- a/crates/sim/src/body/motion.rs
++++ b/crates/sim/src/body/motion.rs
+@@ -166,6 +166,30 @@ fn toward(from: [f64; 3], to: [f64; 3], seconds: f64) -> [f64; 3] {
+ 
+ /// A work-limited request consumes its tick at an independently verified start.
+ /// Validation shares the same query budget as the attempted movement.
++// SCRATCH DIAGNOSTIC INSTRUMENTATION (not for production): records why the last
++// advance() call ended, so a probe can tell a held contact from a rollback.
++thread_local! {
++    pub static ADVANCE_LOG: std::cell::RefCell<Vec<(u8, bool, bool, usize, u32)>> =
++        const { std::cell::RefCell::new(Vec::new()) };
++}
++thread_local! {
++    pub static EXIT_SITE: std::cell::Cell<u32> = const { std::cell::Cell::new(0) };
++}
++pub(super) fn site(code: u8) {
++    EXIT_SITE.with(|c| c.set(c.get() * 100 + code as u32));
++}
++fn note(kind: u8, trace: &MotionTrace) {
++    ADVANCE_LOG.with(|c| {
++        c.borrow_mut().push((
++            kind,
++            trace.rotation_blocked,
++            trace.rotation_unresolved,
++            trace.queries,
++            EXIT_SITE.with(|c| c.get()),
++        ))
++    });
++}
++
+ pub(super) fn advance(
+     world: &BodyWorld,
+     state: &BodyState,
+@@ -173,17 +197,21 @@ pub(super) fn advance(
+     dt: f64,
+     radius: f64,
+ ) -> Result<MotionTrace, String> {
++    EXIT_SITE.with(|c| c.set(0));
+     let mut work = Work::default();
+     validate_start(world, state, desired, dt, radius, &mut work)
+         .map_err(|error| error.to_string())?;
+     match advance_bounded(world, state, desired, dt, radius, &mut work) {
+-        Ok(trace) => Ok(trace),
++        Ok(trace) => {
++            note(1, &trace);
++            Ok(trace)
++        }
+         Err(
+-            MotionFailure::QueryLimit
++            failure @ (MotionFailure::QueryLimit
+             | MotionFailure::SegmentLimit
+             | MotionFailure::KnotLimit
+             | MotionFailure::SubstepLimit
+-            | MotionFailure::Blocked,
++            | MotionFailure::Blocked),
+         ) => {
+             let mut trace = MotionTrace::stationary(state);
+             // Mode changes can initiate takeoff while retaining the old support
+@@ -194,6 +222,16 @@ pub(super) fn advance(
+                 }
+             }
+             trace.queries = work.queries;
++            note(
++                match failure {
++                    MotionFailure::QueryLimit => 2,
++                    MotionFailure::SegmentLimit => 3,
++                    MotionFailure::KnotLimit => 4,
++                    MotionFailure::SubstepLimit => 5,
++                    _ => 6,
++                },
++                &trace,
++            );
+             Ok(trace)
+         }
+         Err(MotionFailure::Invalid(message)) => Err(message),
+@@ -319,6 +357,7 @@ fn advance_bounded(
+                 .motion_contact(point.pose.position, requested, radius);
+         let step = step * contact_fraction;
+         if step == 0. {
++            site(14);
+             origin = point.pose.position;
+             origin_time = elapsed;
+             if blocked[0] {
+@@ -509,6 +548,21 @@ fn advance_bounded(
+             if !verified(world, point.root(), point.rotation, work)? {
+                 return Err(MotionFailure::Blocked);
+             }
++            site(13);
++            // SCRATCH: would a pure in-place turn (no translation) have a proof?
++            {
++                let inplace = world.surfaces.rotation_clearance(
++                    world.hull,
++                    point.root(),
++                    point.rotation,
++                    rotation,
++                    [0., 0., 0.],
++                )?;
++                eprintln!(
++                    "site13 swept={clearance:?} inplace={inplace:?} height={:.9} heading={:.6}->{:.6}",
++                    point.height, point.pose.heading, heading
++                );
++            }
+             trace.rotation_blocked = true;
+             trace.rotation_unresolved |= clearance == crate::surface::RotationClearance::Unresolved;
+             heading = point.pose.heading;
+@@ -546,6 +600,7 @@ fn advance_bounded(
+             if !verified(world, impact, rotation, work)? {
+                 // A candidate impact is not permission to enter a neighboring
+                 // component. Retain the verified prefix when this root is blocked.
++                site(12);
+                 return hold(world, trace, point, work);
+             }
+             let used = step * hit.fraction;
+@@ -614,6 +669,7 @@ fn advance_bounded(
+                 append_point(&mut trace.points, point)?;
+             }
+             trace.queries = work.queries;
++            site(11);
+             return Ok(trace);
+         }
+         if let Some(f) = floor_fraction {
+@@ -710,6 +766,7 @@ fn hold(
+     point.fraction = 1.;
+     append_point(&mut trace.points, point)?;
+     trace.queries = work.queries;
++    site(10);
+     Ok(trace)
+ }
+ 
