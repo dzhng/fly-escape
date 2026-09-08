@@ -1,10 +1,10 @@
 # 16 — A carefully designed second level
 
-Status: both furnished houses and campaign progression are integrated. Second-level route tuning and meaningful food replenishment remain open; final acceptance depends on 15.
+Status: both furnished houses and campaign progression are integrated. Second-level route tuning and timed-round calibration remain open; final acceptance depends on 15.
 
 ## Contract and seam
 
-Two authored levels grow in rooms and decisions; the second makes food important for completing its larger route.
+Two authored levels grow in rooms and decisions; the second adds meaningful object-placement decisions on its larger route.
 
 One additional LevelDef using the shared tool/geometry schema → two-level campaign progression.
 
@@ -12,7 +12,7 @@ One additional LevelDef using the shared tool/geometry schema → two-level camp
 
 The production registry and level files in `apps/web/src/` are authoritative. Earned first-level stars unlock the second level through the existing progress store; actual browser completion verifies that transition. Do not reintegrate the obsolete isolated campaign worktree.
 
-The current second house starts in the study and traverses the hall and kitchen. Ordinary door openings and native furnishings are settled enough for bounded route/food diagnostics. Timed wall sliding fixes the measured doorway stall; tune placements on current geometry, then freeze and run the campaign criteria. Food must be reachable and actually replenish life before a full food-energy comparison is useful.
+The current second house starts in the study and traverses the hall and kitchen. Ordinary door openings and native furnishings are settled enough for bounded route/food diagnostics. Timed wall sliding fixes the measured doorway stall; tune placements on current geometry, then freeze and run the campaign criteria. Food remains a physical landing/walking distraction; feeding and starvation are deferred.
 
 The [game contract](../GAMEPLAY.md) owns increasing room counts, tool eligibility, topology and food-dependence requirements.
 
@@ -22,7 +22,7 @@ Each level individually playable with topology and reference solution; campaign 
 
 ## Verification
 
-Accept level 2 using GAMEPLAY.md paired/holdout criteria after the furnished geometry and randomized spawn contract are settled. Verify increasing room counts and one-star unlocks. For level 2 perform food-replenishment ablation holding odor constant. Check no required route is sealed and zapper cannot cover spawn/only exit. Run a fresh-progress complete campaign.
+Accept level 2 using GAMEPLAY.md paired/holdout criteria after the furnished geometry and randomized spawn contract are settled. Verify increasing room counts and one-star unlocks. Use the timed-round acceptance contract; food-replenishment ablation is deferred. Check no required route is sealed and zapper cannot cover spawn/only exit. Run a fresh-progress complete campaign.
 
 Visual variable and crop: Topology readability per level; overview and critical junction crops, with accepted house materials frozen. New visual effects and tool types are out of scope.
 
@@ -38,7 +38,9 @@ Human feedback that changes this slice: Human difficulty feedback may reshape a 
 
 Must stay green: all accepted dependency contracts and their focused fixtures; neural motor ownership, real-data provenance, bounded work and the [global invariants](../README.md#standing-gates-and-ownership). Do not broaden testing without a new failure or changed consumer. Record evidence under `assets/evidence/16/` and update the README handoff before ending the pass. Unlisted material decisions require a spec update.
 
-## Generic native validation preparation
+## Historical finite-energy validation preparation
+
+The food-energy requirements below are historical preparation, superseded for MVP by the user’s timed-round decision. They are not active acceptance gates.
 
 The existing campaign probe now prepares to validate 5–9-room authored Geometry rather than a hardcoded first-level adjacency list. Shared openings are tested through body occupancy and sweep, independent of room array order; all rooms and spawns must connect to an exit with a clear outward body sweep. This is offline topology validation, never runtime steering. Explicit no-fans controls preserve reference scents. A separate diagnostic food-energy arm sets only the existing feedingRate to zero, preserving source/food placement, contact and taste configuration; later energy-dependent behavior may diverge. Per-fly body events/reserves and paired starvation medians distinguish missing replenishment from navigation. Detector-only modes cannot report seed-set acceptance. A full frozen food-energy run retains its reference/poor placement gate and reports a separate food-energy gate requiring higher median escapes and lower median starvation than the no-replenishment arm, with paired medians retained as diagnostics. Full acceptance batches follow settled first-level contracts; bounded second-level diagnostics may proceed independently.
 
