@@ -301,3 +301,79 @@ fn spiking_sources_deliver_exactly_what_an_incoming_scan_accumulates() {
         "no tick delivered the full cancelling triple, so ordering went untested"
     );
 }
+
+/// Reference Box-Muller stream: splitmix64 uniforms, one pair per angle, the odd
+/// tail taking the cosine only. Defines the numbers `Brain::step` must draw
+/// independently of how a platform computes the two trig values of that angle.
+struct ReferenceNoise(u64);
+impl ReferenceNoise {
+    fn uniform(&mut self) -> f64 {
+        self.0 = self.0.wrapping_add(0x9e3779b97f4a7c15);
+        let mut z = self.0;
+        z = (z ^ (z >> 30)).wrapping_mul(0xbf58476d1ce4e5b9);
+        z = (z ^ (z >> 27)).wrapping_mul(0x94d049bb133111eb);
+        z ^= z >> 31;
+        ((z >> 11) as f64 + 0.5) / 9007199254740992.0
+    }
+    fn tick(&mut self, n: usize, noise_std: f64) -> Vec<f64> {
+        let mut out = vec![0.0; n];
+        for pair in out.chunks_mut(2) {
+            let r = (-2.0 * self.uniform().ln()).sqrt() * noise_std;
+            let theta = std::f64::consts::TAU * self.uniform();
+            pair[0] = r * theta.cos();
+            if pair.len() == 2 {
+                pair[1] = r * theta.sin();
+            }
+        }
+        out
+    }
+}
+
+#[test]
+fn drawn_noise_is_the_box_muller_stream_bit_for_bit() {
+    // Nine neurons, so the trailing unpaired sample — cosine only — is covered too.
+    let n = 9usize;
+    let seed = 0xfeed_1234_5678_9abc;
+    let noise_std = 0.015;
+    let case = json!({
+        "body_ids": (1..=n).map(|i| i.to_string()).collect::<Vec<_>>(),
+        "edges": [[0, 1, 1.0]],
+        "motor_groups": {"dn_left":[1],"dn_right":[2],"mn_left":[],"mn_right":[],
+            "olf_dn_left":[],"olf_dn_right":[],"flight_dn_left":[],"flight_dn_right":[]},
+    });
+    let (bytes, manifest) = artifact(&case);
+    let graph = Arc::new(Graph::from_bytes(&bytes, &manifest.to_string()).unwrap());
+    let mut brain = Brain::new(graph, seed);
+    // Zero drive, dt 1 and an unreachable threshold leave each membrane holding
+    // exactly the sample it was given, so voltage reads back the drawn noise.
+    brain
+        .set_params(sim::LifParams {
+            threshold: 100.0,
+            dt: 1.0,
+            noise_std,
+            input_scale: 0.0,
+            baseline_drive: 0.0,
+            ..Default::default()
+        })
+        .unwrap();
+    let mut reference = ReferenceNoise(seed);
+    for tick in 0..4 {
+        brain
+            .set_state(sim::NeuralState {
+                voltage: vec![0.0; n],
+                spikes: vec![false; n],
+                refractory: vec![0; n],
+            })
+            .unwrap();
+        let expected = reference.tick(n, noise_std);
+        brain.step();
+        for (i, (&actual, &want)) in brain.voltage().iter().zip(expected.iter()).enumerate() {
+            assert_eq!(
+                actual.to_bits(),
+                want.to_bits(),
+                "tick {tick} neuron {i}: drew {actual}, the stream is {want}"
+            );
+        }
+        assert!(expected.iter().all(|v| *v != 0.0));
+    }
+}

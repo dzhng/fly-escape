@@ -11,5 +11,9 @@ ts-rs = { version = "11", features = ["serde-compat"] }
 
 parry3d-f64 = { version = "=0.30.2", default-features = false, features = ["required-features", "std", "alloc", "enhanced-determinism"] }
 
+# wasm32 only: one shared argument reduction for the Box-Muller angle (see lif::sin_cos).
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+libm = "0.2"
+
 [build-dependencies]
 sha2 = "0.10"

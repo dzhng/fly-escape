@@ -433,6 +433,7 @@ dependencies = [
 name = "sim"
 version = "0.1.0"
 dependencies = [
+ "libm",
  "parry3d-f64",
  "serde",
  "serde_json",

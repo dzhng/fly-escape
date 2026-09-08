@@ -1,0 +1,19 @@
+[workspace]
+
+[package]
+name = "noise-sincos-probe"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+wasm-bindgen = "=0.2.123"
+libm = "0.2"
+sim = { path = "/private/tmp/fly-timed-rounds/crates/sim" }
+
+[profile.release]
+opt-level = 3
+lto = "thin"

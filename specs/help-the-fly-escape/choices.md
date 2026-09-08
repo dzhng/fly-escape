@@ -752,3 +752,7 @@ The user's one-fan maximum and rejection of chained-fan solutions supersede earl
 ## Object contribution control — 2026-09-08
 
 - **Compare the full arrangement against its fan alone — sound, medium confidence.** If the fan already earns most escapes, removing it measures the fan's strength but says little about the value of the apple or vinegar. The optional calibration control now keeps the exact fan and removes other editable objects, while retaining the same fixed environment. Its paired difference measures what those other placements add. The user asked for object discovery but left the numerical test open; this reuses the existing four-escape planner bar provisionally, subject to evidence-led balance review.
+
+## Shared WASM angle calculation — 2026-09-08
+
+- **Use the existing math library directly for paired sine/cosine on WASM — sound, high confidence.** Each random noise pair needs two trigonometric values of one angle. A shared calculation avoids repeating the expensive first part. The plan left this internal optimization unspecified; the default standard-library helper did not share that work in the measured WASM build. This adds a WASM-only direct dependency on already-locked libm and preserves native platform math. Exact output comparisons cover bounded samples and recorded attempts; future compiler/library changes still need numerical verification. No random-stream change or new game setting is introduced.

@@ -63,6 +63,22 @@ pub struct Diagnostics {
     pub dv: Vec<f64>,
     pub can_spike: Vec<bool>,
 }
+/// Both trig values of one Box-Muller angle. wasm32 has no hardware trig, so
+/// `cos()` and `sin()` there each run the full software argument reduction, the
+/// largest single cost in the noise draw. `libm::sincos` reduces once and returns
+/// the same bits; std's `f64::sin_cos` shares nothing and is not a substitute.
+/// Native keeps the platform trig it already used.
+#[inline]
+fn sin_cos(theta: f64) -> (f64, f64) {
+    #[cfg(target_arch = "wasm32")]
+    {
+        libm::sincos(theta)
+    }
+    #[cfg(not(target_arch = "wasm32"))]
+    {
+        (theta.sin(), theta.cos())
+    }
+}
 struct Rng(u64);
 impl Rng {
     fn next(&mut self) -> u64 {
@@ -226,9 +242,10 @@ impl Brain {
         for pair in self.noise.chunks_mut(2) {
             let r = (-2.0 * self.rng.uniform().ln()).sqrt() * self.params.noise_std;
             let theta = std::f64::consts::TAU * self.rng.uniform();
-            pair[0] = r * theta.cos();
+            let (sin, cos) = sin_cos(theta);
+            pair[0] = r * cos;
             if pair.len() == 2 {
-                pair[1] = r * theta.sin();
+                pair[1] = r * sin;
             }
         }
         self.advance()
