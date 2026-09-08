@@ -1,12 +1,19 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "installCommand": "bun install --frozen-lockfile",
-  "buildCommand": "bun run build",
+  "installCommand": "bash scripts/vercel-install.sh",
+  "buildCommand": "bash scripts/vercel-build.sh",
   "outputDirectory": "apps/web/dist",
-  "git": { "deploymentEnabled": true },
+  "git": {
+    "deploymentEnabled": true
+  },
   "routes": [
-    { "handle": "filesystem" },
-    { "src": "/lab(?:/.*)?", "dest": "/index.html" }
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/lab(?:/.*)?",
+      "dest": "/index.html"
+    }
   ]
 }
