@@ -67,7 +67,7 @@ function harness() {
   camera.resize(800, 600);
   camera.follow(new THREE.Vector3(2, 0.5, 2));
   const picks: number[][] = [];
-  const controls = cameraInput(canvas as unknown as HTMLCanvasElement, camera, (x, y) => picks.push([x, y]));
+  const controls = cameraInput(canvas as unknown as HTMLCanvasElement, camera, (x, y, button) => picks.push([x, y, button]));
   const button = () => parent.children[1];
   const drag = (button: number, from: [number, number], to: [number, number]) => {
     canvas.emit("pointerdown", { button, pointerId: 1, clientX: from[0], clientY: from[1] });
@@ -95,16 +95,16 @@ test("the right button orbits while the left button still pans and picks", () =>
   expect(camera.state.yaw).toBe(turned.yaw);
   canvas.emit("pointerdown", { button: 0, pointerId: 2, clientX: 210, clientY: 120 });
   canvas.emit("pointerup", { pointerId: 2, clientX: 210, clientY: 120 });
-  expect(picks).toEqual([[210, 120]]);
+  expect(picks).toEqual([[210, 120, 0]]);
 });
 
-test("a right click neither selects a fly nor opens the browser menu", () => {
+test("a right click reports its button without moving the camera or opening a menu", () => {
   const { camera, picks, canvas } = harness();
   const before = camera.state;
   let defaulted = true;
   canvas.emit("pointerdown", { button: 2, pointerId: 3, clientX: 300, clientY: 300 });
   canvas.emit("pointerup", { pointerId: 3, clientX: 300, clientY: 300 });
-  expect(picks).toEqual([]);
+  expect(picks).toEqual([[300, 300, 2]]);
   expect(camera.state).toEqual(before);
   canvas.emit("contextmenu", { preventDefault: () => (defaulted = false) });
   expect(defaulted).toBe(false);

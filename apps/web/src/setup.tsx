@@ -179,6 +179,7 @@ export function SetupGame({
           setSetup(state);
           setIntent(undefined);
           setSelected(undefined);
+          setTool(undefined);
           setProgress((p) => ({
             ...p,
             setups: { ...p.setups, [content.level.id]: state.placements },
@@ -296,7 +297,7 @@ export function SetupGame({
                   aria-pressed={tool === stock.kind && selected === undefined}
                   disabled={stock.count === 0 || clearing || !!intent?.commit}
                   onClick={() => {
-                    setTool(stock.kind);
+                    setTool(tool === stock.kind && selected === undefined ? undefined : stock.kind);
                     setValid(null);
                     setSelected(undefined);
                     setIntent(undefined);

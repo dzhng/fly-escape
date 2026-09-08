@@ -20,7 +20,7 @@ export async function proportionsWorkbench() {
   await loadHouseAssets(view, () => alive, ["cabinet", "sofa"]);
   if (!alive) return;
   let selected = 5;
-  view.enableSelection(id => { selected = id; app.querySelector<HTMLSelectElement>("#subject")!.value = String(id); view.selectFly(id); });
+  view.enableSelection(id => { if (id === null) { view.selectFly(null); return; } selected = id; app.querySelector<HTMLSelectElement>("#subject")!.value = String(id); view.selectFly(id); });
   // This one-room composition uses the existing scene owner, without relaxing any GLB kit bounds.
   const { scene: floor } = await new GLTFLoader().parseAsync(await (await fetch(floorUrl)).arrayBuffer(), "");
   if (!alive) { disposeObjectResources(floor); return; }

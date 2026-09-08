@@ -34,6 +34,7 @@ const seekOne = async () => {
 try {
   await page.goto(`${base}/lab/playback`);
   await state("playing");
+  await page.getByTestId("fly-card-0").click();
   await page.waitForFunction(
     () => Number(document.querySelector('[data-testid="playback-lab"]').dataset.cursorTick) >= 10,
   );

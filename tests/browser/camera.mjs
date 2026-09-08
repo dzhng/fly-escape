@@ -46,6 +46,7 @@ try {
   await page.getByRole("button", { name: "Pause", exact: true }).click();
   await page.getByRole("slider", {name:"Playback time"}).press("Home");
   await page.waitForFunction(() => JSON.parse(document.querySelector('[data-testid="playback-report"]').textContent).cursorTick === 0);
+  await page.getByTestId("fly-card-0").click();
   await follow(0);
   assert.equal(await page.getByRole("button", {name:"Overview", exact:true}).count(), 0);
   const initial = await report();
@@ -90,7 +91,9 @@ try {
   assert.equal(overview.camera.distance, overview.camera.maxDistance);
   assert.ok(overview.camera.displayScale > 1, "Overview compensates fly size");
   await page.screenshot({ path: `${output}/overview.png` });
-  const target = overview.camera.flies[19];
+  await page.mouse.click(box.x + 100, box.y + 200, {button: "right"});
+  await page.waitForFunction(() => JSON.parse(document.querySelector('[data-testid="playback-report"]').textContent).camera.selectedFlyId === null);
+  const target = (await report()).camera.flies[19];
   await page.mouse.click(box.x + target.x, box.y + target.y);
   await page.waitForFunction(
     () =>
@@ -106,6 +109,8 @@ try {
     "true",
   );
   await zoomOut(page);
+  await page.mouse.click(box.x + 100, box.y + 200, {button: "right"});
+  await page.waitForFunction(() => JSON.parse(document.querySelector('[data-testid="playback-report"]').textContent).camera.selectedFlyId === null);
   const firstTarget = (await report()).camera.flies[0];
   await page.mouse.click(box.x + firstTarget.x, box.y + firstTarget.y);
   await page.waitForFunction((prior) => {

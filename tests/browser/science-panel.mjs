@@ -36,6 +36,8 @@ try {
     Array.from({ length: 20 }, (_, id) => id),
   );
   assert.equal(await page.locator(".fly-roster canvas.fly-preview").count(), 20);
+  assert.equal(await page.locator(".science-details").count(), 0);
+  await page.getByTestId("fly-card-0").click();
   assert.equal(await page.locator(".science-details").count(), 1);
   assert.equal(await page.locator(".group-network").count(), 1);
   assert.equal(await page.locator(".science-trace").count(), 2);

@@ -26,7 +26,7 @@ function resetRotationButton(canvas: HTMLCanvasElement, camera: WorldCamera) {
 
 /** Inputs are scoped to the drawable canvas. Panel fields/cards never become
  * movement controls, and a drag cannot also select a fly on pointer release. */
-export function cameraInput(canvas: HTMLCanvasElement, camera: WorldCamera, pick: (x: number, y: number) => void) {
+export function cameraInput(canvas: HTMLCanvasElement, camera: WorldCamera, pick: (x: number, y: number, button: number) => void) {
   const events = new AbortController();
   const signal = events.signal;
   const keys = new Set<string>();
@@ -59,9 +59,9 @@ export function cameraInput(canvas: HTMLCanvasElement, camera: WorldCamera, pick
     const { dragged, button } = down;
     down = null;
     if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
-    if (!dragged && button === 0) {
+    if (!dragged) {
       const box = canvas.getBoundingClientRect();
-      pick(event.clientX - box.left, event.clientY - box.top);
+      pick(event.clientX - box.left, event.clientY - box.top, button);
     }
   }, { signal });
   // The right button is the orbit control here, so it never opens a menu instead.

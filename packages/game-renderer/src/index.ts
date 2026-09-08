@@ -574,15 +574,20 @@ export class WorldView {
     };
   }
 
-  enableCamera(onPick: (x: number, y: number) => void = () => {}): void {
+  enableCamera(onPick: (x: number, y: number, button: number) => void = () => {}): void {
     this.controls?.dispose();
     this.controls = cameraInput(this.renderer.domElement, this.navigation, onPick);
   }
 
   /** Web owns selected ID. Model picks return through its same card action. */
-  enableSelection(onSelect: (id: number) => void): void {
+  enableSelection(onSelect: (id: number | null) => void): void {
     const canvas = this.renderer.domElement;
-    this.enableCamera((x, y) => {
+    this.enableCamera((x, y, button) => {
+      if (this.selectedFly !== null) {
+        onSelect(null);
+        return;
+      }
+      if (button !== 0) return;
       this.scene.updateMatrixWorld(true);
       this.raycaster.setFromCamera(
         new THREE.Vector2((x / canvas.clientWidth) * 2 - 1, 1 - (y / canvas.clientHeight) * 2),
@@ -599,7 +604,13 @@ export class WorldView {
     });
   }
 
-  selectFly(id: number): void {
+  selectFly(id: number | null): void {
+    if (id === null) {
+      this.selectedFly = null;
+      this.selectionRing.visible = false;
+      this.navigation.overview();
+      return;
+    }
     const fly = this.flies[id];
     if (!fly) throw new Error("Selected fly does not exist");
     this.selectedFly = id;

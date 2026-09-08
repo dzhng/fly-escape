@@ -29,7 +29,9 @@ try {
  await page.locator('[data-view="context"]').click(); await page.waitForTimeout(100);
  const contextBefore = await read();
  const canvas = await page.locator('canvas').boundingBox();
- const target = contextBefore.camera.flies[5];
+ await page.mouse.click(canvas.x + 100, canvas.y + 200, {button: "right"});
+ await page.waitForFunction(() => JSON.parse(document.querySelector('#app').dataset.measurements).camera.selectedFlyId === null);
+ const target = (await read()).camera.flies[5];
  await page.mouse.click(canvas.x + target.x, canvas.y + target.y);
  await page.waitForTimeout(100);
  const picked = await read();

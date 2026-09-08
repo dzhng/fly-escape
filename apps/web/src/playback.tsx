@@ -174,13 +174,13 @@ export function AttemptPlayback({
     return frameBesidePanel(scene.current, container.current, container.current.closest(".playback-lab")!.querySelector("aside")!);
   }, [input, info]);
   const [display, setDisplay] = useState(initialDisplay);
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState<number | null>(null);
   const cards = useRef(new Map<number, HTMLButtonElement>());
-  const selectFly = (id: number) => {
+  const selectFly = (id: number | null) => {
     interactionAt.current = performance.now();
     setSelected(id);
     scene.current?.selectFly(id);
-    cards.current.get(id)?.scrollIntoView({ block: "nearest", inline: "nearest" });
+    if (id !== null) cards.current.get(id)?.scrollIntoView({ block: "nearest", inline: "nearest" });
   };
   const previewUpdate = useRef<PreviewUpdate | null>(null);
   const [requested, setRequested] = useState(true);
@@ -269,7 +269,7 @@ export function AttemptPlayback({
         scene.current.setPlacements(reply.info.spec.placements, catalog, undefined, reply.info.level.fixedObjects);
         scene.current.setPoses(sample(run.current));
         scene.current.enableSelection(selectFly);
-        scene.current.selectFly(0);
+        scene.current.selectFly(null);
         const target = scene.current;
         setWorldReady(false);
         void Promise.all([
@@ -322,7 +322,7 @@ export function AttemptPlayback({
       setError("");
       renderFailed = false;
       setRequested(true);
-      setSelected(0);
+      setSelected(null);
       lastFrameAt = null;
       requestedAt = performance.now();
       if (input) observer.start(input);
@@ -706,7 +706,7 @@ export function AttemptPlayback({
           <details>
             <summary>Playback and camera controls</summary>
             <p>
-              Click a fly or its card to follow it. Scroll to get closer, or move to the edge
+              Click a fly or its card to follow it. Left- or right-click the scene to clear the selection. Drag to move the camera. Scroll to get closer, or move to the edge
               to explore the house. Pause and rewind to take a closer look at what its neurons did.
             </p>
           </details>

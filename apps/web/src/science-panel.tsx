@@ -403,7 +403,7 @@ export function SciencePanel({
   info: AttemptInfo;
   frame?: AttemptFrame;
   archive?: FrameArchive;
-  selected: number;
+  selected: number | null;
   selectFly: (id: number) => void;
   register: (id: number, button: HTMLButtonElement | null) => void;
   previews: React.RefObject<PreviewUpdate | null>;
@@ -424,7 +424,7 @@ export function SciencePanel({
           />
         ))}
       </div>
-      <FlyDetails id={selected} info={info} frame={frame} archive={archive} />
+      {selected !== null && <FlyDetails id={selected} info={info} frame={frame} archive={archive} />}
     </div>
   );
 }
