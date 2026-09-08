@@ -7,6 +7,7 @@ import numpy as np
 from scipy import sparse
 
 MAGIC = b'FLYGRAPH'
+OLFACTORY_READOUT_SIDES = {'OLFACTORY_DN_LEFT': 'L', 'OLFACTORY_DN_RIGHT': 'R'}
 
 
 def write_binary(path, matrix):
@@ -42,9 +43,27 @@ def group_links(matrix, groups):
     return links
 
 
-def metadata(graph, annotations):
+def check_olfactory_readouts(candidates, annotations):
+    """The turning readouts must be source-annotated descending neurons on their named side."""
+    absent = [column for column in ('bodyId', 'superclass', 'somaSide') if column not in annotations]
+    if absent:
+        raise ValueError(f'Olfactory readout anatomy is unverifiable without annotation columns {absent}')
+    facts = annotations.drop_duplicates('bodyId', keep='last')
+    classes = dict(zip(map(int, facts['bodyId']), facts['superclass'].fillna('').astype(str)))
+    somas = dict(zip(map(int, facts['bodyId']), facts['somaSide'].fillna('').astype(str)))
+    contradicted = [f"{name}/{body} is {classes.get(body) or 'unannotated'}"
+                    f" with soma side {somas.get(body) or 'unannotated'}"
+                    for name, side in OLFACTORY_READOUT_SIDES.items() for body in candidates[name]
+                    if classes.get(body) != 'descending_neuron' or somas.get(body) != side]
+    if contradicted:
+        raise ValueError('Olfactory descending readout candidates contradict their source annotations; '
+                         f'each must be descending_neuron on its named side: {"; ".join(contradicted)}')
+
+
+def metadata(graph, annotations, source=None):
     lookup = {body: i for i, body in enumerate(graph['bodies'])}
-    source = json.loads(Path(__file__).with_name('pathways.json').read_text())
+    source = source or json.loads(Path(__file__).with_name('pathways.json').read_text())
+    check_olfactory_readouts(source['bodies'], annotations)
     pathways = {name: ({side: [lookup[b] for b in ids if b in lookup] for side, ids in bodies.items()}
                       if isinstance(bodies, dict) else [lookup[b] for b in bodies if b in lookup])
                 for name, bodies in source['bodies'].items()}

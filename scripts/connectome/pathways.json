@@ -1,5 +1,5 @@
 {
-  "provenance": "Candidate injection/readout body IDs extracted from spike revision ae754b0; anatomical claims and effectiveness require slice-03 probes.",
+  "provenance": "Candidate injection/readout body IDs extracted from spike revision ae754b0; anatomical claims and effectiveness require slice-03 probes. OLFACTORY_DN_* hold only source-annotated descending neurons on the named soma side; intrinsic cells such as 13500 (LHAV2p1) are lateral-horn candidates only.",
   "bodies": {
     "OLFACTORY_DN_LEFT": [
       10118,
@@ -41,8 +41,6 @@
       11513,
       11765,
       10464,
-      12212,
-      13500,
       11103,
       10924,
       10822,
