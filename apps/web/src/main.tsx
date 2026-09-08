@@ -5,12 +5,15 @@ import { PlaybackLab } from "./playback";
 import { LifecycleLab } from "./lifecycle";
 import React, { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
+import { inject } from "@vercel/analytics";
 import { WorldView } from "@fly-escape/game-renderer";
 import { BrainClient, type BrainFrame, type BrainInfo } from "@fly-escape/sim-client";
 import "./style.css";
 import { FieldsLab } from "./fields";
 import { NeuralExplanations } from "./neural-explanations";
 import "./game-hud.css";
+
+inject();
 
 function BrainLab() {
   const container = useRef<HTMLDivElement>(null);
