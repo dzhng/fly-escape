@@ -187,3 +187,117 @@ fn silenced_neuron_rejects_external_noise_and_network_drive() {
     brain.step_with_noise(&[0.0; 3]).unwrap();
     assert!(brain.spikes()[1]);
 }
+
+/// Reference incoming current: sum active-source weights in ascending source order,
+/// then scale and zero silenced targets. This defines the result independently of
+/// the runtime adjacency layout.
+fn incoming_accumulation(
+    edges: &[(u32, u32, f64)],
+    n: usize,
+    spikes: &[bool],
+    silenced: &[u32],
+    input_scale: f64,
+) -> Vec<f64> {
+    (0..n as u32)
+        .map(|target| {
+            if silenced.contains(&target) {
+                return 0.0;
+            }
+            let mut sources: Vec<_> = edges.iter().filter(|e| e.1 == target).collect();
+            sources.sort_by_key(|e| e.0);
+            let mut input = 0.0;
+            for e in sources {
+                if spikes[e.0 as usize] {
+                    input += e.2;
+                }
+            }
+            input * input_scale
+        })
+        .collect()
+}
+
+#[test]
+fn spiking_sources_deliver_exactly_what_an_incoming_scan_accumulates() {
+    // Fan-in and fan-out disagree everywhere, no edge is reciprocated, and neurons 6 and 8
+    // are pure targets while 3, 4 and 7 are pure sources. Targets 5 and 6 each take a
+    // cancelling pair astride a small weight, so a delivery order other than ascending
+    // source would leave 1.0 where exact ascending accumulation leaves 0.0. Neuron 7 is a
+    // silenced source whose enormous weights must never arrive; 8 is a silenced target.
+    let edges: Vec<(u32, u32, f64)> = vec![
+        (0, 1, 3.0),
+        (0, 2, -2.5),
+        (0, 5, 1.0),
+        (0, 6, 1e16),
+        (0, 8, 7.0),
+        (1, 6, 1.0),
+        (2, 6, -1e16),
+        (3, 5, 1e16),
+        (4, 5, -1e16),
+        (5, 1, 0.75),
+        (7, 5, 1e300),
+        (7, 8, 1e300),
+    ];
+    let n = 9;
+    let silenced = [7u32, 8];
+    let case = json!({
+        "body_ids": (1..=n).map(|i| i.to_string()).collect::<Vec<_>>(),
+        "edges": edges.iter().map(|e| json!([e.0, e.1, e.2])).collect::<Vec<_>>(),
+        "motor_groups": {"dn_left":[1],"dn_right":[5],"mn_left":[6],"mn_right":[2],
+            "olf_dn_left":[],"olf_dn_right":[],"flight_dn_left":[],"flight_dn_right":[]},
+    });
+    let (bytes, manifest) = artifact(&case);
+    let graph = Arc::new(Graph::from_bytes(&bytes, &manifest.to_string()).unwrap());
+    let input_scale = 0.5;
+    let mut brain = Brain::new(graph, 11);
+    brain
+        .set_params(sim::LifParams {
+            input_scale,
+            noise_std: 0.0,
+            baseline_drive: 0.0,
+            ..Default::default()
+        })
+        .unwrap();
+    brain.set_silenced_neurons(&silenced).unwrap();
+
+    let mut previous_spikes = brain.spikes().to_vec();
+    let mut patterns = std::collections::HashSet::new();
+    let mut cancelled_ticks = 0;
+    for tick in 0..24u32 {
+        // Rotating drive keeps the spiking set changing, so the delivery set changes too.
+        let currents: Vec<(u32, f64)> = (0..n as u32)
+            .map(|i| (i, if (tick / (i + 1)) % 2 == 0 { 1.4 } else { -0.3 }))
+            .collect();
+        brain.set_external_current(&currents).unwrap();
+        let noise: Vec<f64> = (0..n).map(|i| 0.01 * (i as f64 - 4.0)).collect();
+        brain.step_with_noise(&noise).unwrap();
+
+        let expected = incoming_accumulation(&edges, n, &previous_spikes, &silenced, input_scale);
+        for (i, (&actual, &want)) in brain
+            .diagnostics()
+            .synaptic_input
+            .iter()
+            .zip(expected.iter())
+            .enumerate()
+        {
+            assert_eq!(
+                actual.to_bits(),
+                want.to_bits(),
+                "tick {tick} neuron {i}: {actual} is not the bit-exact incoming sum {want}"
+            );
+        }
+        if previous_spikes[0] && previous_spikes[3] && previous_spikes[4] {
+            cancelled_ticks += 1;
+        }
+        previous_spikes = brain.spikes().to_vec();
+        patterns.insert(previous_spikes.clone());
+    }
+    assert!(
+        patterns.len() > 3,
+        "drive must exercise several delivery sets, saw {}",
+        patterns.len()
+    );
+    assert!(
+        cancelled_ticks > 0,
+        "no tick delivered the full cancelling triple, so ordering went untested"
+    );
+}

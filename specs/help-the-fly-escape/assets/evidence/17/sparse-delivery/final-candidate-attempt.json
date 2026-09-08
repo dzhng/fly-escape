@@ -1,0 +1,571 @@
+{
+  "activeNeuralSteps": 50020,
+  "activeNeuralStepsPerSecond": 1150.59909678776,
+  "blocks": [
+    {
+      "activeNeuralSteps": 4000,
+      "firstTick": 1,
+      "lastTick": 200,
+      "neuralStepsPerSecond": 1199.1222275404125,
+      "wallSeconds": 3.335773375
+    },
+    {
+      "activeNeuralSteps": 4000,
+      "firstTick": 201,
+      "lastTick": 400,
+      "neuralStepsPerSecond": 1181.2195832505938,
+      "wallSeconds": 3.386330583
+    },
+    {
+      "activeNeuralSteps": 4000,
+      "firstTick": 401,
+      "lastTick": 600,
+      "neuralStepsPerSecond": 1176.2198198994267,
+      "wallSeconds": 3.400724875
+    },
+    {
+      "activeNeuralSteps": 4000,
+      "firstTick": 601,
+      "lastTick": 800,
+      "neuralStepsPerSecond": 1173.3937228078948,
+      "wallSeconds": 3.408915458
+    },
+    {
+      "activeNeuralSteps": 4000,
+      "firstTick": 801,
+      "lastTick": 1000,
+      "neuralStepsPerSecond": 1187.1118237079586,
+      "wallSeconds": 3.3695225
+    },
+    {
+      "activeNeuralSteps": 4000,
+      "firstTick": 1001,
+      "lastTick": 1200,
+      "neuralStepsPerSecond": 1171.3456066926003,
+      "wallSeconds": 3.414876
+    },
+    {
+      "activeNeuralSteps": 4000,
+      "firstTick": 1201,
+      "lastTick": 1400,
+      "neuralStepsPerSecond": 1169.0144251265622,
+      "wallSeconds": 3.42168575
+    },
+    {
+      "activeNeuralSteps": 4000,
+      "firstTick": 1401,
+      "lastTick": 1600,
+      "neuralStepsPerSecond": 1127.9972429987706,
+      "wallSeconds": 3.546107958
+    },
+    {
+      "activeNeuralSteps": 4000,
+      "firstTick": 1601,
+      "lastTick": 1800,
+      "neuralStepsPerSecond": 1157.3373901696907,
+      "wallSeconds": 3.456209083
+    },
+    {
+      "activeNeuralSteps": 4000,
+      "firstTick": 1801,
+      "lastTick": 2000,
+      "neuralStepsPerSecond": 1048.2513822038316,
+      "wallSeconds": 3.815878584
+    },
+    {
+      "activeNeuralSteps": 4000,
+      "firstTick": 2001,
+      "lastTick": 2200,
+      "neuralStepsPerSecond": 1111.575734329509,
+      "wallSeconds": 3.59849525
+    },
+    {
+      "activeNeuralSteps": 4000,
+      "firstTick": 2201,
+      "lastTick": 2400,
+      "neuralStepsPerSecond": 1151.2352435270882,
+      "wallSeconds": 3.474528792
+    },
+    {
+      "activeNeuralSteps": 2020,
+      "firstTick": 2401,
+      "lastTick": 2501,
+      "neuralStepsPerSecond": 1095.6184259507925,
+      "wallSeconds": 1.843707583
+    }
+  ],
+  "constructSeconds": 0.005624917,
+  "graphEdges": 798715,
+  "graphNeurons": 70000,
+  "level": {
+    "bodyConfig": {
+      "bodyRadius": 0.002632,
+      "flightSpeed": 2.0,
+      "landingDwellSeconds": 1.0,
+      "landingThreshold": 0.2,
+      "life": {
+        "kind": "timed"
+      },
+      "proboscisThreshold": 0.2,
+      "takeoffThreshold": 0.2,
+      "turnGain": 1.0,
+      "walkSpeed": 1.0
+    },
+    "durationTicks": 6000,
+    "exit": {
+      "a": {
+        "x": 8.0,
+        "z": -0.5
+      },
+      "b": {
+        "x": 8.0,
+        "z": 0.5
+      },
+      "outward": {
+        "x": 1.0,
+        "z": 0.0
+      }
+    },
+    "exitCue": null,
+    "fieldConfig": {
+      "antennaForward": 0.0014145078816978176,
+      "antennaOffset": 0.00020207253103162883,
+      "baselineBrightness": 1.0,
+      "cellSize": 0.25,
+      "decay": 0.1,
+      "diffusion": 0.2,
+      "fans": [],
+      "wind": {
+        "x": 0.0,
+        "z": 0.0
+      }
+    },
+    "fixedObjects": [],
+    "food": [],
+    "geometry": {
+      "rooms": [
+        {
+          "id": 0,
+          "max": {
+            "x": 6.0,
+            "z": 6.0
+          },
+          "min": {
+            "x": -6.0,
+            "z": -6.0
+          }
+        },
+        {
+          "id": 1,
+          "max": {
+            "x": 8.0,
+            "z": 1.0
+          },
+          "min": {
+            "x": 7.0,
+            "z": -1.0
+          }
+        }
+      ],
+      "solids": [],
+      "walls": [
+        {
+          "a": {
+            "x": -6.0,
+            "z": -6.0
+          },
+          "b": {
+            "x": 6.0,
+            "z": -6.0
+          }
+        },
+        {
+          "a": {
+            "x": -6.0,
+            "z": -6.0
+          },
+          "b": {
+            "x": -6.0,
+            "z": 6.0
+          }
+        },
+        {
+          "a": {
+            "x": -6.0,
+            "z": 6.0
+          },
+          "b": {
+            "x": 6.0,
+            "z": 6.0
+          }
+        },
+        {
+          "a": {
+            "x": 7.0,
+            "z": -1.0
+          },
+          "b": {
+            "x": 8.0,
+            "z": -1.0
+          }
+        },
+        {
+          "a": {
+            "x": 7.0,
+            "z": -1.0
+          },
+          "b": {
+            "x": 7.0,
+            "z": 1.0
+          }
+        },
+        {
+          "a": {
+            "x": 7.0,
+            "z": 1.0
+          },
+          "b": {
+            "x": 8.0,
+            "z": 1.0
+          }
+        },
+        {
+          "a": {
+            "x": 6.0,
+            "z": -6.0
+          },
+          "b": {
+            "x": 6.0,
+            "z": 6.0
+          }
+        },
+        {
+          "a": {
+            "x": 8.0,
+            "z": -1.0
+          },
+          "b": {
+            "x": 8.0,
+            "z": -0.5
+          }
+        },
+        {
+          "a": {
+            "x": 8.0,
+            "z": 0.5
+          },
+          "b": {
+            "x": 8.0,
+            "z": 1.0
+          }
+        }
+      ]
+    },
+    "id": "active-native-benchmark",
+    "placementRules": {
+      "fanHeading": 0.0,
+      "inventory": [],
+      "reserved": []
+    },
+    "sources": [
+      {
+        "kind": "repellentOdor",
+        "position": {
+          "x": 0.0,
+          "z": 0.0
+        },
+        "radius": 1.0,
+        "rate": 1.0
+      }
+    ],
+    "spawn": {
+      "kind": "fixed",
+      "states": [
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": -2.0
+            }
+          }
+        },
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": -2.0
+            }
+          }
+        },
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": -2.0
+            }
+          }
+        },
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": -2.0
+            }
+          }
+        },
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": -2.0
+            }
+          }
+        },
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": -2.0
+            }
+          }
+        },
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": -2.0
+            }
+          }
+        },
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": -2.0
+            }
+          }
+        },
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": -2.0
+            }
+          }
+        },
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": -2.0
+            }
+          }
+        },
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": -2.0,
+              "z": -1.6
+            }
+          }
+        },
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": -1.6,
+              "z": -1.6
+            }
+          }
+        },
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": -1.2,
+              "z": -1.6
+            }
+          }
+        },
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": -0.7999999999999998,
+              "z": -1.6
+            }
+          }
+        },
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": -0.3999999999999999,
+              "z": -1.6
+            }
+          }
+        },
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.0,
+              "z": -1.6
+            }
+          }
+        },
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.40000000000000036,
+              "z": -1.6
+            }
+          }
+        },
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 0.8000000000000003,
+              "z": -1.6
+            }
+          }
+        },
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 1.2000000000000002,
+              "z": -1.6
+            }
+          }
+        },
+        {
+          "mode": "walking",
+          "pose": {
+            "heading": 0.0,
+            "position": {
+              "x": 1.6,
+              "z": -1.6
+            }
+          }
+        }
+      ]
+    },
+    "starThresholds": [
+      1,
+      10,
+      20
+    ],
+    "zappers": []
+  },
+  "loadSeconds": 0.028717208,
+  "machine": {
+    "architecture": "arm64",
+    "compiler": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: aarch64-apple-darwin\nrelease: 1.94.1\nLLVM version: 21.1.8",
+    "cpu": "Apple M5 Pro",
+    "logicalCores": "18",
+    "memoryBytes": "51539607552",
+    "model": "Mac17,9",
+    "os": "Darwin 25.4.0 Darwin Kernel Version 25.4.0: Thu Mar 19 19:33:50 PDT 2026; root:xnu-12377.101.15~1/RELEASE_ARM64_T6050",
+    "physicalCores": "18"
+  },
+  "manifestFileHash": "ead5f7d258f83ee3909080797752c2f4bb749be939a2ff983f411095722efbf1",
+  "measuredTicks": 2501,
+  "measurementScope": "Every counted neural step is confirmed by AttemptFrame.neural_steps delta and present neural output; no terminal no-op contributes. Wall time includes step calls, frame destruction and light telemetry; excludes graph loading, construction, RSS commands, serialization and I/O. Frames are dropped each tick, so this does not measure replay archive/Worker transfer/rendering. RSS includes allocator/runtime/manifest overhead; graph+brain byte counts are exact owner-reported array payload only, excluding field arrays and allocation headers. A disconnected exit annex and timed life policy keep the neural workload active; benchmark content is not campaign tuning. Native feasibility is not browser acceptance.",
+  "modeObservations": {
+    "feeding": 0,
+    "flying": 21914,
+    "landing": 9488,
+    "walking": 18618
+  },
+  "payloadBytes": {
+    "allBrainArrays": 64400000,
+    "graphAndBrainArrays": 74264584,
+    "graphArrays": 9864584,
+    "perBrainArrays": 3220000
+  },
+  "probeSourceHash": "bcbf4cba06d7725c15a1774b211240819964f31a3c7a74c3f2468884c5838e5a",
+  "productionGameSecondsPerWallSecond": 5.7529954839388004,
+  "profile": "cargo release; workspace opt-level3, thin LTO; single-threaded Attempt, graph shared by Arc",
+  "projection6000TicksWallSeconds": 104.29349400239904,
+  "projectionIsNotMeasurement": true,
+  "result": null,
+  "rssKiB": {
+    "afterStepping": 109984,
+    "attemptInitialized": 47712,
+    "graphLoadedAfterTemporaryBrainCalibration": 38064
+  },
+  "sharedField": {
+    "activeCells": 2336,
+    "dimensions": [
+      56,
+      48
+    ],
+    "evolutions": 2501
+  },
+  "simulatedSeconds": 250.10000000000002,
+  "spec": {
+    "attemptId": "native-throughput",
+    "durationTicks": 6000,
+    "flyCount": 20,
+    "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+    "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+    "levelHash": "a531f1179afc8c4cd634bd1d6202242d2fed935d0fbc94786aeabbde7fa15dd0",
+    "levelId": "active-native-benchmark",
+    "placements": [],
+    "rootSeed": "42",
+    "schemaVersion": 1,
+    "simulationBuildId": "92296b6b2e6b1780fe9d33c3e77166f4c3dc133f24e520d2c5f840871064c0ba",
+    "tuningHash": "63d512072f819b59e5ecb03ed80c0200f5c390c317ffb16a3c1bb40b90266d8e"
+  },
+  "stepCallLatencyMs": {
+    "max": 53.932291,
+    "p50": 16.954041,
+    "p95": 19.639457999999998,
+    "p99": 22.984458
+  },
+  "terminalFliesAtLastTick": 0,
+  "tuning": {
+    "cues": [
+      {
+        "gain": 1.0,
+        "pathway": "excitatoryOdor"
+      }
+    ],
+    "silencedNeurons": [],
+    "tasteGain": 0.0
+  },
+  "wallSeconds": 43.47300475
+}

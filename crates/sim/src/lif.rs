@@ -243,18 +243,27 @@ impl Brain {
     }
     fn advance(&mut self) -> StepOutput {
         let p = &self.params;
-        // Complete incoming currents before changing any previous-tick spikes.
-        for (i, rows) in self.graph.rows.windows(2).enumerate() {
-            let mut input = 0.0;
-            for j in rows[0] as usize..rows[1] as usize {
-                if self.state.spikes[self.graph.columns[j] as usize] {
-                    input += self.graph.weights[j];
-                }
+        // Complete incoming currents before changing any previous-tick spikes. Only sources
+        // that spiked deliver, and visiting them ascending reaches each target in the same
+        // ascending-source order its incoming row held, so every sum is the one a full
+        // incoming scan would have accumulated, bit for bit.
+        self.diagnostics.synaptic_input.fill(0.0);
+        for (source, &spiked) in self.state.spikes.iter().enumerate() {
+            if !spiked {
+                continue;
             }
-            self.diagnostics.synaptic_input[i] = if self.silenced.get(i) == Some(&true) {
+            for j in self.graph.source_offsets[source] as usize
+                ..self.graph.source_offsets[source + 1] as usize
+            {
+                self.diagnostics.synaptic_input[self.graph.targets[j] as usize] +=
+                    self.graph.weights[j];
+            }
+        }
+        for (i, input) in self.diagnostics.synaptic_input.iter_mut().enumerate() {
+            *input = if self.silenced.get(i) == Some(&true) {
                 0.0
             } else {
-                input * p.input_scale
+                *input * p.input_scale
             };
         }
         for i in 0..self.state.voltage.len() {

@@ -137,8 +137,8 @@ mod tests {
                 "groupLinks":[],"pathwayProvenance":"synthetic adapter fixture"
             }))
             .unwrap(),
-            rows: vec![0; 5],
-            columns: vec![],
+            source_offsets: vec![0; 5],
+            targets: vec![],
             weights: vec![],
             body_lookup: Default::default(),
         };

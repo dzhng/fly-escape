@@ -54,8 +54,13 @@ pub struct Manifest {
 }
 pub struct Graph {
     pub manifest: Manifest,
-    pub(crate) rows: Vec<u32>,
-    pub(crate) columns: Vec<u32>,
+    /// Outgoing adjacency in CSR by presynaptic source: `source_offsets[s]..source_offsets[s + 1]`
+    /// indexes `targets` and `weights` for the edges neuron `s` drives. The file stores incoming
+    /// rows; loading validates those and then transposes once, so a tick can skip whole sources
+    /// that did not spike. Targets stay ascending inside a source, so visiting sources ascending
+    /// reaches each target in the same ascending-source order its incoming row had.
+    pub(crate) source_offsets: Vec<u32>,
+    pub(crate) targets: Vec<u32>,
     pub(crate) weights: Vec<f64>,
     pub(crate) body_lookup: HashMap<String, u32>,
 }
@@ -93,12 +98,16 @@ impl Graph {
             return Err("Presynaptic index out of bounds".into());
         }
         let start = 20 + (n + 1 + e) * 4;
-        let weights: Vec<_> = (0..e)
-            .map(|i| {
-                f64::from_le_bytes(bytes[start + i * 8..start + i * 8 + 8].try_into().unwrap())
-            })
-            .collect();
-        if weights.iter().any(|w| !w.is_finite()) {
+        // Weights are read straight from the file into their transposed slot below, so the
+        // incoming order never occupies a second array of its own.
+        let weight = |at: usize| {
+            f64::from_le_bytes(
+                bytes[start + at * 8..start + at * 8 + 8]
+                    .try_into()
+                    .unwrap(),
+            )
+        };
+        if (0..e).any(|i| !weight(i).is_finite()) {
             return Err("Nonfinite graph weight".into());
         }
         for row in rows.windows(2) {
@@ -162,10 +171,28 @@ impl Graph {
                 return Err("Invalid group connectivity".into());
             }
         }
+        // Transpose the validated incoming rows once, so a tick can skip non-spiking sources.
+        let mut source_offsets = vec![0u32; n + 1];
+        for &source in &columns {
+            source_offsets[source as usize + 1] += 1;
+        }
+        for i in 0..n {
+            source_offsets[i + 1] += source_offsets[i];
+        }
+        let mut cursor = source_offsets[..n].to_vec();
+        let (mut targets, mut weights) = (vec![0u32; e], vec![0.0; e]);
+        for (target, row) in rows.windows(2).enumerate() {
+            for j in row[0] as usize..row[1] as usize {
+                let slot = &mut cursor[columns[j] as usize];
+                targets[*slot as usize] = target as u32;
+                weights[*slot as usize] = weight(j);
+                *slot += 1;
+            }
+        }
         Ok(Self {
             manifest,
-            rows,
-            columns,
+            source_offsets,
+            targets,
             weights,
             body_lookup,
         })
@@ -183,6 +210,6 @@ impl Graph {
         }
     }
     pub fn storage_bytes(&self) -> usize {
-        self.rows.len() * 4 + self.columns.len() * 4 + self.weights.len() * 8
+        self.source_offsets.len() * 4 + self.targets.len() * 4 + self.weights.len() * 8
     }
 }
