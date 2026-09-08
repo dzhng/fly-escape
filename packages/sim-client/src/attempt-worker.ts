@@ -55,7 +55,19 @@ const loadAssets = () =>
     assets = undefined;
     throw error;
   }));
-const yieldToMessages = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
+// Yield a task after each tick so cancellation can run without nested timers'
+// minimum delay. The single pump awaits each yield: only one resolver is pending.
+const tickChannel = new MessageChannel();
+let resumeTick: (() => void) | undefined;
+tickChannel.port1.onmessage = () => {
+  const resume = resumeTick;
+  resumeTick = undefined;
+  resume?.();
+};
+const yieldToMessages = () => new Promise<void>((resolve) => {
+  resumeTick = resolve;
+  tickChannel.port2.postMessage(null);
+});
 function retire(error: unknown) {
   generation++;
   active = undefined;
