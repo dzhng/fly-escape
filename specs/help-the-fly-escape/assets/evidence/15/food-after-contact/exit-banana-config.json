@@ -1,5 +1,4 @@
-import type { CampaignLevel } from "../campaign";
-const content: Pick<CampaignLevel, "level" | "tuning"> = {
+{
   "level": {
     "bodyConfig": {
       "life": {
@@ -14,7 +13,7 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
       "landingDwellSeconds": 1,
       "proboscisThreshold": 0.2
     },
-    "durationTicks": 6000,
+    "durationTicks": 3000,
     "exit": {
       "a": {
         "x": 0,
@@ -30,7 +29,10 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
       }
     },
     "exitCue": null,
-    "exitSuction": { "reach": 0.9, "speed": 0.5 },
+    "exitSuction": {
+      "reach": 0.9,
+      "speed": 0.5
+    },
     "fieldConfig": {
       "antennaOffset": 0.00020207253103162883,
       "baselineBrightness": 1,
@@ -425,6 +427,25 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
     ],
     "silencedNeurons": [],
     "tasteGain": 1
-  }
-};
-export default content;
+  },
+  "tuningSeeds": [
+    "15789670027162723101",
+    "104",
+    "106"
+  ],
+  "probeTarget": {
+    "x": 0.55,
+    "z": 2.25
+  },
+  "reference": [
+    {
+      "id": 1,
+      "kind": "banana",
+      "position": {
+        "x": 0.5361244305665984,
+        "z": 2.255441845509319
+      },
+      "heading": 0
+    }
+  ]
+}
