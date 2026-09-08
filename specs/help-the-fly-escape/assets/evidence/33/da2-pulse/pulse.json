@@ -1,0 +1,797 @@
+{
+  "activeMinusControl": {
+    "after.motorFlightTurn": {
+      "max": -0.0024805012997509692,
+      "mean": -0.004472384520451927,
+      "min": -0.007834423381284926,
+      "perSeed": [
+        -0.007834423381284926,
+        -0.003102228880319883,
+        -0.0024805012997509692
+      ]
+    },
+    "after.motorThrust": {
+      "max": 0.00018893618913484733,
+      "mean": -0.00019848706054933127,
+      "min": -0.0009179142105635307,
+      "perSeed": [
+        0.00013351683978068962,
+        -0.0009179142105635307,
+        0.00018893618913484733
+      ]
+    },
+    "after.motorTurn": {
+      "max": -3.0357660829594124e-18,
+      "mean": -0.0004115942028985514,
+      "min": -0.0007652173913043443,
+      "perSeed": [
+        -0.0007652173913043443,
+        -3.0357660829594124e-18,
+        -0.0004695652173913069
+      ]
+    },
+    "after.ornLSpikeFraction": {
+      "max": -0.0007142857142857124,
+      "mean": -0.000952380952380954,
+      "min": -0.001190476190476195,
+      "perSeed": [
+        -0.0009523809523809545,
+        -0.001190476190476195,
+        -0.0007142857142857124
+      ]
+    },
+    "after.ornRSpikeFraction": {
+      "max": -0.0007500000000000007,
+      "mean": -0.000833333333333334,
+      "min": -0.0010000000000000009,
+      "perSeed": [
+        -0.0007500000000000007,
+        -0.0007500000000000007,
+        -0.0010000000000000009
+      ]
+    },
+    "after.ornunknownSpikeFraction": {
+      "max": -0.0007142857142857159,
+      "mean": -0.0010714285714285732,
+      "min": -0.0014285714285714318,
+      "perSeed": [
+        -0.0014285714285714318,
+        -0.0010714285714285721,
+        -0.0007142857142857159
+      ]
+    },
+    "after.pnLSpikeFraction": {
+      "max": 0.0010000000000000009,
+      "mean": 0.0003333333333333348,
+      "min": 0.0,
+      "perSeed": [
+        3.469446951953614e-18,
+        0.0010000000000000009,
+        0.0
+      ]
+    },
+    "after.pnRSpikeFraction": {
+      "max": 0.0,
+      "mean": -0.000500000000000001,
+      "min": -0.0010000000000000026,
+      "perSeed": [
+        0.0,
+        -0.0005000000000000004,
+        -0.0010000000000000026
+      ]
+    },
+    "after.spikeCount": {
+      "max": -0.0625000000009095,
+      "mean": -0.16500000000041837,
+      "min": -0.35000000000059117,
+      "perSeed": [
+        -0.08249999999975444,
+        -0.35000000000059117,
+        -0.0625000000009095
+      ]
+    },
+    "after.turnLMeanVoltage": {
+      "max": 0.00502155982010255,
+      "mean": -0.00017011723775051113,
+      "min": -0.005309444391046192,
+      "perSeed": [
+        -0.005309444391046192,
+        0.00502155982010255,
+        -0.00022246714230789166
+      ]
+    },
+    "after.turnLSpikeFraction": {
+      "max": 0.00030000000000001206,
+      "mean": 0.00006666666666667205,
+      "min": -0.00010000000000000286,
+      "perSeed": [
+        0.00030000000000001206,
+        6.938893903907228e-18,
+        -0.00010000000000000286
+      ]
+    },
+    "after.turnRMeanVoltage": {
+      "max": 0.0030201248136055847,
+      "mean": -0.0004344237733202583,
+      "min": -0.005250697032350371,
+      "perSeed": [
+        -0.005250697032350371,
+        0.0009273008987840115,
+        0.0030201248136055847
+      ]
+    },
+    "after.turnRSpikeFraction": {
+      "max": 0.00010869565217392838,
+      "mean": -0.00003623188405796803,
+      "min": -0.00021739130434782553,
+      "perSeed": [
+        0.00010869565217392838,
+        -6.938893903907228e-18,
+        -0.00021739130434782553
+      ]
+    },
+    "before.motorFlightTurn": {
+      "max": 0.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "perSeed": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "before.motorThrust": {
+      "max": 0.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "perSeed": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "before.motorTurn": {
+      "max": 0.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "perSeed": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "before.ornLSpikeFraction": {
+      "max": 0.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "perSeed": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "before.ornRSpikeFraction": {
+      "max": 0.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "perSeed": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "before.ornunknownSpikeFraction": {
+      "max": 0.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "perSeed": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "before.pnLSpikeFraction": {
+      "max": 0.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "perSeed": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "before.pnRSpikeFraction": {
+      "max": 0.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "perSeed": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "before.spikeCount": {
+      "max": 0.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "perSeed": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "before.turnLMeanVoltage": {
+      "max": 0.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "perSeed": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "before.turnLSpikeFraction": {
+      "max": 0.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "perSeed": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "before.turnRMeanVoltage": {
+      "max": 0.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "perSeed": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "before.turnRSpikeFraction": {
+      "max": 0.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "perSeed": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "during.motorFlightTurn": {
+      "max": 0.0061174940004009165,
+      "mean": -5.2270795236718e-6,
+      "min": -0.007635478109585939,
+      "perSeed": [
+        0.0061174940004009165,
+        -0.007635478109585939,
+        0.0015023028706140067
+      ]
+    },
+    "during.motorThrust": {
+      "max": 0.00029033992737648173,
+      "mean": -0.00009476271840421398,
+      "min": -0.00047618154020867554,
+      "perSeed": [
+        -0.00047618154020867554,
+        -0.00009844654238044814,
+        0.00029033992737648173
+      ]
+    },
+    "during.motorTurn": {
+      "max": 0.00006956521739130347,
+      "mean": -0.00028985507246377055,
+      "min": -0.0008695652173913056,
+      "perSeed": [
+        0.00006956521739130347,
+        -0.00006956521739130955,
+        -0.0008695652173913056
+      ]
+    },
+    "during.ornLSpikeFraction": {
+      "max": 0.48761904761904795,
+      "mean": 0.4873809523809527,
+      "min": 0.4871428571428574,
+      "perSeed": [
+        0.4873809523809527,
+        0.4871428571428574,
+        0.48761904761904795
+      ]
+    },
+    "during.ornRSpikeFraction": {
+      "max": 0.4872499999999976,
+      "mean": 0.48674999999999846,
+      "min": 0.48649999999999755,
+      "perSeed": [
+        0.48649999999999755,
+        0.4865000000000003,
+        0.4872499999999976
+      ]
+    },
+    "during.ornunknownSpikeFraction": {
+      "max": 0.4885714285714289,
+      "mean": 0.4871428571428575,
+      "min": 0.48642857142857177,
+      "perSeed": [
+        0.48642857142857177,
+        0.4885714285714289,
+        0.48642857142857177
+      ]
+    },
+    "during.pnLSpikeFraction": {
+      "max": 0.04400000000000003,
+      "mean": 0.04266666666666669,
+      "min": 0.04100000000000003,
+      "perSeed": [
+        0.04400000000000003,
+        0.04100000000000003,
+        0.04300000000000003
+      ]
+    },
+    "during.pnRSpikeFraction": {
+      "max": 0.05700000000000005,
+      "mean": 0.05633333333333338,
+      "min": 0.05600000000000004,
+      "perSeed": [
+        0.05600000000000004,
+        0.05600000000000004,
+        0.05700000000000005
+      ]
+    },
+    "during.spikeCount": {
+      "max": 25.150000000000205,
+      "mean": 24.96333333333382,
+      "min": 24.74500000000114,
+      "perSeed": [
+        24.99500000000012,
+        25.150000000000205,
+        24.74500000000114
+      ]
+    },
+    "during.turnLMeanVoltage": {
+      "max": 0.0013783844818101576,
+      "mean": -0.000020161787054366147,
+      "min": -0.0017409455120257489,
+      "perSeed": [
+        -0.0017409455120257489,
+        0.0013783844818101576,
+        0.00030207566905249283
+      ]
+    },
+    "during.turnLSpikeFraction": {
+      "max": 0.00019999999999998838,
+      "mean": -5.782411586589357e-18,
+      "min": -0.0002000000000000092,
+      "perSeed": [
+        0.00019999999999998838,
+        -0.0002000000000000092,
+        3.469446951953614e-18
+      ]
+    },
+    "during.turnRMeanVoltage": {
+      "max": 0.0015999689434450515,
+      "mean": 0.0005152896961400458,
+      "min": -0.0007283150479419076,
+      "perSeed": [
+        0.0006742151929169937,
+        -0.0007283150479419076,
+        0.0015999689434450515
+      ]
+    },
+    "during.turnRSpikeFraction": {
+      "max": 0.00021739130434782553,
+      "mean": -0.000072463768115943,
+      "min": -0.000217391304347829,
+      "perSeed": [
+        0.00021739130434782553,
+        -0.000217391304347829,
+        -0.00021739130434782553
+      ]
+    }
+  },
+  "brainWarmupSteps": 0,
+  "elapsedSeconds": 4.742597625,
+  "externalCurrentPerNeuron": 2.0,
+  "graphHash": "26e9e3ce55b3bc8d2351f205b453c05afb53e29524c9c06eba70eb96633872ef",
+  "limits": "Uncalibrated external neural current injected into retained ORN_DA2 bodies; NOT a geosmin dose and not a receptor model. Cold Brain initialization, no odor field, no body, no movement, no gain sweep. Paired against the same-seed no-current run; identical noise stream. Three seeds are descriptive only.",
+  "observations": [
+    {
+      "active": {
+        "after.motorFlightTurn": 0.002695809082138085,
+        "after.motorThrust": 0.6964774512461576,
+        "after.motorTurn": 0.0031999999999999884,
+        "after.ornLSpikeFraction": 0.011547619047619062,
+        "after.ornRSpikeFraction": 0.01237500000000001,
+        "after.ornunknownSpikeFraction": 0.011785714285714293,
+        "after.pnLSpikeFraction": 0.01600000000000001,
+        "after.pnRSpikeFraction": 0.01450000000000001,
+        "after.spikeCount": 920.815,
+        "after.turnLMeanVoltage": 0.6494137123225494,
+        "after.turnLSpikeFraction": 0.021699999999999955,
+        "after.turnRMeanVoltage": 0.6453675018899504,
+        "after.turnRSpikeFraction": 0.022500000000000037,
+        "before.motorFlightTurn": 0.009188147592266112,
+        "before.motorThrust": 0.6859807193119593,
+        "before.motorTurn": 0.0026086956521739033,
+        "before.ornLSpikeFraction": 0.012023809523809537,
+        "before.ornRSpikeFraction": 0.011875000000000009,
+        "before.ornunknownSpikeFraction": 0.010714285714285721,
+        "before.pnLSpikeFraction": 0.014000000000000009,
+        "before.pnRSpikeFraction": 0.01500000000000001,
+        "before.spikeCount": 845.2500000000002,
+        "before.turnLMeanVoltage": 0.648798867709533,
+        "before.turnLSpikeFraction": 0.019999999999999973,
+        "before.turnRMeanVoltage": 0.6388350112188385,
+        "before.turnRSpikeFraction": 0.020652173913043498,
+        "during.motorFlightTurn": 0.022066952662779582,
+        "during.motorThrust": 0.6968109478071463,
+        "during.motorTurn": 0.0022956521739130368,
+        "during.ornLSpikeFraction": 0.5000000000000003,
+        "during.ornRSpikeFraction": 0.49999999999999756,
+        "during.ornunknownSpikeFraction": 0.5000000000000003,
+        "during.pnLSpikeFraction": 0.05700000000000004,
+        "during.pnRSpikeFraction": 0.07300000000000005,
+        "during.spikeCount": 944.9400000000005,
+        "during.turnLMeanVoltage": 0.663537029312643,
+        "during.turnLSpikeFraction": 0.021599999999999977,
+        "during.turnRMeanVoltage": 0.6455107978059481,
+        "during.turnRSpikeFraction": 0.02217391304347823
+      },
+      "activeMinusControl": {
+        "after.motorFlightTurn": -0.007834423381284926,
+        "after.motorThrust": 0.00013351683978068962,
+        "after.motorTurn": -0.0007652173913043443,
+        "after.ornLSpikeFraction": -0.0009523809523809545,
+        "after.ornRSpikeFraction": -0.0007500000000000007,
+        "after.ornunknownSpikeFraction": -0.0014285714285714318,
+        "after.pnLSpikeFraction": 3.469446951953614e-18,
+        "after.pnRSpikeFraction": 0.0,
+        "after.spikeCount": -0.08249999999975444,
+        "after.turnLMeanVoltage": -0.005309444391046192,
+        "after.turnLSpikeFraction": 0.00030000000000001206,
+        "after.turnRMeanVoltage": -0.005250697032350371,
+        "after.turnRSpikeFraction": 0.00010869565217392838,
+        "before.motorFlightTurn": 0.0,
+        "before.motorThrust": 0.0,
+        "before.motorTurn": 0.0,
+        "before.ornLSpikeFraction": 0.0,
+        "before.ornRSpikeFraction": 0.0,
+        "before.ornunknownSpikeFraction": 0.0,
+        "before.pnLSpikeFraction": 0.0,
+        "before.pnRSpikeFraction": 0.0,
+        "before.spikeCount": 0.0,
+        "before.turnLMeanVoltage": 0.0,
+        "before.turnLSpikeFraction": 0.0,
+        "before.turnRMeanVoltage": 0.0,
+        "before.turnRSpikeFraction": 0.0,
+        "during.motorFlightTurn": 0.0061174940004009165,
+        "during.motorThrust": -0.00047618154020867554,
+        "during.motorTurn": 0.00006956521739130347,
+        "during.ornLSpikeFraction": 0.4873809523809527,
+        "during.ornRSpikeFraction": 0.48649999999999755,
+        "during.ornunknownSpikeFraction": 0.48642857142857177,
+        "during.pnLSpikeFraction": 0.04400000000000003,
+        "during.pnRSpikeFraction": 0.05600000000000004,
+        "during.spikeCount": 24.99500000000012,
+        "during.turnLMeanVoltage": -0.0017409455120257489,
+        "during.turnLSpikeFraction": 0.00019999999999998838,
+        "during.turnRMeanVoltage": 0.0006742151929169937,
+        "during.turnRSpikeFraction": 0.00021739130434782553
+      },
+      "control": {
+        "after.motorFlightTurn": 0.01053023246342301,
+        "after.motorThrust": 0.6963439344063769,
+        "after.motorTurn": 0.003965217391304333,
+        "after.ornLSpikeFraction": 0.012500000000000016,
+        "after.ornRSpikeFraction": 0.01312500000000001,
+        "after.ornunknownSpikeFraction": 0.013214285714285725,
+        "after.pnLSpikeFraction": 0.016000000000000007,
+        "after.pnRSpikeFraction": 0.01450000000000001,
+        "after.spikeCount": 920.8974999999998,
+        "after.turnLMeanVoltage": 0.6547231567135956,
+        "after.turnLSpikeFraction": 0.021399999999999943,
+        "after.turnRMeanVoltage": 0.6506181989223008,
+        "after.turnRSpikeFraction": 0.02239130434782611,
+        "before.motorFlightTurn": 0.009188147592266112,
+        "before.motorThrust": 0.6859807193119593,
+        "before.motorTurn": 0.0026086956521739033,
+        "before.ornLSpikeFraction": 0.012023809523809537,
+        "before.ornRSpikeFraction": 0.011875000000000009,
+        "before.ornunknownSpikeFraction": 0.010714285714285721,
+        "before.pnLSpikeFraction": 0.014000000000000009,
+        "before.pnRSpikeFraction": 0.01500000000000001,
+        "before.spikeCount": 845.2500000000002,
+        "before.turnLMeanVoltage": 0.648798867709533,
+        "before.turnLSpikeFraction": 0.019999999999999973,
+        "before.turnRMeanVoltage": 0.6388350112188385,
+        "before.turnRSpikeFraction": 0.020652173913043498,
+        "during.motorFlightTurn": 0.015949458662378665,
+        "during.motorThrust": 0.6972871293473549,
+        "during.motorTurn": 0.0022260869565217333,
+        "during.ornLSpikeFraction": 0.01261904761904762,
+        "during.ornRSpikeFraction": 0.01350000000000001,
+        "during.ornunknownSpikeFraction": 0.013571428571428571,
+        "during.pnLSpikeFraction": 0.013000000000000005,
+        "during.pnRSpikeFraction": 0.017000000000000008,
+        "during.spikeCount": 919.9450000000004,
+        "during.turnLMeanVoltage": 0.6652779748246688,
+        "during.turnLSpikeFraction": 0.02139999999999999,
+        "during.turnRMeanVoltage": 0.6448365826130311,
+        "during.turnRSpikeFraction": 0.021956521739130406
+      },
+      "seed": 0
+    },
+    {
+      "active": {
+        "after.motorFlightTurn": -0.006195508543641107,
+        "after.motorThrust": 0.6954778222181003,
+        "after.motorTurn": 0.0029913043478260763,
+        "after.ornLSpikeFraction": 0.011904761904761918,
+        "after.ornRSpikeFraction": 0.011875000000000009,
+        "after.ornunknownSpikeFraction": 0.011785714285714295,
+        "after.pnLSpikeFraction": 0.01600000000000001,
+        "after.pnRSpikeFraction": 0.01450000000000001,
+        "after.spikeCount": 920.4774999999994,
+        "after.turnLMeanVoltage": 0.6632218683274962,
+        "after.turnLSpikeFraction": 0.02109999999999996,
+        "after.turnRMeanVoltage": 0.6485232137663396,
+        "after.turnRSpikeFraction": 0.02184782608695655,
+        "before.motorFlightTurn": -0.0009507099866669634,
+        "before.motorThrust": 0.6875194236641039,
+        "before.motorTurn": -0.0012347826086956568,
+        "before.ornLSpikeFraction": 0.011785714285714299,
+        "before.ornRSpikeFraction": 0.011500000000000008,
+        "before.ornunknownSpikeFraction": 0.012500000000000011,
+        "before.pnLSpikeFraction": 0.014000000000000009,
+        "before.pnRSpikeFraction": 0.01550000000000001,
+        "before.spikeCount": 844.1174999999995,
+        "before.turnLMeanVoltage": 0.6489864704890445,
+        "before.turnLSpikeFraction": 0.02019999999999995,
+        "before.turnRMeanVoltage": 0.650264665680096,
+        "before.turnRSpikeFraction": 0.019891304347826103,
+        "during.motorFlightTurn": -0.003642545944488914,
+        "during.motorThrust": 0.692026431449083,
+        "during.motorTurn": 0.003965217391304329,
+        "during.ornLSpikeFraction": 0.5000000000000002,
+        "during.ornRSpikeFraction": 0.5000000000000003,
+        "during.ornunknownSpikeFraction": 0.5000000000000003,
+        "during.pnLSpikeFraction": 0.056000000000000036,
+        "during.pnRSpikeFraction": 0.07300000000000005,
+        "during.spikeCount": 946.155,
+        "during.turnLMeanVoltage": 0.6526285826603355,
+        "during.turnLSpikeFraction": 0.021399999999999985,
+        "during.turnRMeanVoltage": 0.6516161003384563,
+        "during.turnRSpikeFraction": 0.022391304347826064
+      },
+      "activeMinusControl": {
+        "after.motorFlightTurn": -0.003102228880319883,
+        "after.motorThrust": -0.0009179142105635307,
+        "after.motorTurn": -3.0357660829594124e-18,
+        "after.ornLSpikeFraction": -0.001190476190476195,
+        "after.ornRSpikeFraction": -0.0007500000000000007,
+        "after.ornunknownSpikeFraction": -0.0010714285714285721,
+        "after.pnLSpikeFraction": 0.0010000000000000009,
+        "after.pnRSpikeFraction": -0.0005000000000000004,
+        "after.spikeCount": -0.35000000000059117,
+        "after.turnLMeanVoltage": 0.00502155982010255,
+        "after.turnLSpikeFraction": 6.938893903907228e-18,
+        "after.turnRMeanVoltage": 0.0009273008987840115,
+        "after.turnRSpikeFraction": -6.938893903907228e-18,
+        "before.motorFlightTurn": 0.0,
+        "before.motorThrust": 0.0,
+        "before.motorTurn": 0.0,
+        "before.ornLSpikeFraction": 0.0,
+        "before.ornRSpikeFraction": 0.0,
+        "before.ornunknownSpikeFraction": 0.0,
+        "before.pnLSpikeFraction": 0.0,
+        "before.pnRSpikeFraction": 0.0,
+        "before.spikeCount": 0.0,
+        "before.turnLMeanVoltage": 0.0,
+        "before.turnLSpikeFraction": 0.0,
+        "before.turnRMeanVoltage": 0.0,
+        "before.turnRSpikeFraction": 0.0,
+        "during.motorFlightTurn": -0.007635478109585939,
+        "during.motorThrust": -0.00009844654238044814,
+        "during.motorTurn": -0.00006956521739130955,
+        "during.ornLSpikeFraction": 0.4871428571428574,
+        "during.ornRSpikeFraction": 0.4865000000000003,
+        "during.ornunknownSpikeFraction": 0.4885714285714289,
+        "during.pnLSpikeFraction": 0.04100000000000003,
+        "during.pnRSpikeFraction": 0.05600000000000004,
+        "during.spikeCount": 25.150000000000205,
+        "during.turnLMeanVoltage": 0.0013783844818101576,
+        "during.turnLSpikeFraction": -0.0002000000000000092,
+        "during.turnRMeanVoltage": -0.0007283150479419076,
+        "during.turnRSpikeFraction": -0.000217391304347829
+      },
+      "control": {
+        "after.motorFlightTurn": -0.003093279663321224,
+        "after.motorThrust": 0.6963957364286638,
+        "after.motorTurn": 0.0029913043478260793,
+        "after.ornLSpikeFraction": 0.013095238095238113,
+        "after.ornRSpikeFraction": 0.01262500000000001,
+        "after.ornunknownSpikeFraction": 0.012857142857142867,
+        "after.pnLSpikeFraction": 0.01500000000000001,
+        "after.pnRSpikeFraction": 0.01500000000000001,
+        "after.spikeCount": 920.8275,
+        "after.turnLMeanVoltage": 0.6582003085073936,
+        "after.turnLSpikeFraction": 0.021099999999999952,
+        "after.turnRMeanVoltage": 0.6475959128675556,
+        "after.turnRSpikeFraction": 0.021847826086956557,
+        "before.motorFlightTurn": -0.0009507099866669634,
+        "before.motorThrust": 0.6875194236641039,
+        "before.motorTurn": -0.0012347826086956568,
+        "before.ornLSpikeFraction": 0.011785714285714299,
+        "before.ornRSpikeFraction": 0.011500000000000008,
+        "before.ornunknownSpikeFraction": 0.012500000000000011,
+        "before.pnLSpikeFraction": 0.014000000000000009,
+        "before.pnRSpikeFraction": 0.01550000000000001,
+        "before.spikeCount": 844.1174999999995,
+        "before.turnLMeanVoltage": 0.6489864704890445,
+        "before.turnLSpikeFraction": 0.02019999999999995,
+        "before.turnRMeanVoltage": 0.650264665680096,
+        "before.turnRSpikeFraction": 0.019891304347826103,
+        "during.motorFlightTurn": 0.003992932165097025,
+        "during.motorThrust": 0.6921248779914635,
+        "during.motorTurn": 0.004034782608695639,
+        "during.ornLSpikeFraction": 0.012857142857142862,
+        "during.ornRSpikeFraction": 0.01350000000000001,
+        "during.ornunknownSpikeFraction": 0.011428571428571429,
+        "during.pnLSpikeFraction": 0.015000000000000006,
+        "during.pnRSpikeFraction": 0.017000000000000008,
+        "during.spikeCount": 921.0049999999998,
+        "during.turnLMeanVoltage": 0.6512501981785254,
+        "during.turnLSpikeFraction": 0.021599999999999994,
+        "during.turnRMeanVoltage": 0.6523444153863982,
+        "during.turnRSpikeFraction": 0.022608695652173893
+      },
+      "seed": 1
+    },
+    {
+      "active": {
+        "after.motorFlightTurn": 0.0016538082705235908,
+        "after.motorThrust": 0.6958440641647219,
+        "after.motorTurn": 0.000799999999999985,
+        "after.ornLSpikeFraction": 0.011547619047619062,
+        "after.ornRSpikeFraction": 0.01250000000000001,
+        "after.ornunknownSpikeFraction": 0.011785714285714295,
+        "after.pnLSpikeFraction": 0.01550000000000001,
+        "after.pnRSpikeFraction": 0.015500000000000009,
+        "after.spikeCount": 920.5474999999993,
+        "after.turnLMeanVoltage": 0.6471967179377313,
+        "after.turnLSpikeFraction": 0.022299999999999952,
+        "after.turnRMeanVoltage": 0.6452921650859929,
+        "after.turnRSpikeFraction": 0.022500000000000027,
+        "before.motorFlightTurn": 0.00967588890995996,
+        "before.motorThrust": 0.686532944395276,
+        "before.motorTurn": 0.0018086956521739075,
+        "before.ornLSpikeFraction": 0.011309523809523821,
+        "before.ornRSpikeFraction": 0.011750000000000009,
+        "before.ornunknownSpikeFraction": 0.011071428571428578,
+        "before.pnLSpikeFraction": 0.01450000000000001,
+        "before.pnRSpikeFraction": 0.01450000000000001,
+        "before.spikeCount": 844.7274999999994,
+        "before.turnLMeanVoltage": 0.6442979038543618,
+        "before.turnLSpikeFraction": 0.02019999999999995,
+        "before.turnRMeanVoltage": 0.6416972601861206,
+        "before.turnRSpikeFraction": 0.020652173913043505,
+        "during.motorFlightTurn": -0.011877497052403,
+        "during.motorThrust": 0.6941134677980747,
+        "during.motorTurn": -0.001843478260869572,
+        "during.ornLSpikeFraction": 0.5000000000000003,
+        "during.ornRSpikeFraction": 0.49999999999999756,
+        "during.ornunknownSpikeFraction": 0.5000000000000003,
+        "during.pnLSpikeFraction": 0.056000000000000036,
+        "during.pnRSpikeFraction": 0.07400000000000005,
+        "during.spikeCount": 947.4300000000005,
+        "during.turnLMeanVoltage": 0.6552300819183111,
+        "during.turnLSpikeFraction": 0.022199999999999987,
+        "during.turnRMeanVoltage": 0.6513556446911225,
+        "during.turnRSpikeFraction": 0.021739130434782584
+      },
+      "activeMinusControl": {
+        "after.motorFlightTurn": -0.0024805012997509692,
+        "after.motorThrust": 0.00018893618913484733,
+        "after.motorTurn": -0.0004695652173913069,
+        "after.ornLSpikeFraction": -0.0007142857142857124,
+        "after.ornRSpikeFraction": -0.0010000000000000009,
+        "after.ornunknownSpikeFraction": -0.0007142857142857159,
+        "after.pnLSpikeFraction": 0.0,
+        "after.pnRSpikeFraction": -0.0010000000000000026,
+        "after.spikeCount": -0.0625000000009095,
+        "after.turnLMeanVoltage": -0.00022246714230789166,
+        "after.turnLSpikeFraction": -0.00010000000000000286,
+        "after.turnRMeanVoltage": 0.0030201248136055847,
+        "after.turnRSpikeFraction": -0.00021739130434782553,
+        "before.motorFlightTurn": 0.0,
+        "before.motorThrust": 0.0,
+        "before.motorTurn": 0.0,
+        "before.ornLSpikeFraction": 0.0,
+        "before.ornRSpikeFraction": 0.0,
+        "before.ornunknownSpikeFraction": 0.0,
+        "before.pnLSpikeFraction": 0.0,
+        "before.pnRSpikeFraction": 0.0,
+        "before.spikeCount": 0.0,
+        "before.turnLMeanVoltage": 0.0,
+        "before.turnLSpikeFraction": 0.0,
+        "before.turnRMeanVoltage": 0.0,
+        "before.turnRSpikeFraction": 0.0,
+        "during.motorFlightTurn": 0.0015023028706140067,
+        "during.motorThrust": 0.00029033992737648173,
+        "during.motorTurn": -0.0008695652173913056,
+        "during.ornLSpikeFraction": 0.48761904761904795,
+        "during.ornRSpikeFraction": 0.4872499999999976,
+        "during.ornunknownSpikeFraction": 0.48642857142857177,
+        "during.pnLSpikeFraction": 0.04300000000000003,
+        "during.pnRSpikeFraction": 0.05700000000000005,
+        "during.spikeCount": 24.74500000000114,
+        "during.turnLMeanVoltage": 0.00030207566905249283,
+        "during.turnLSpikeFraction": 3.469446951953614e-18,
+        "during.turnRMeanVoltage": 0.0015999689434450515,
+        "during.turnRSpikeFraction": -0.00021739130434782553
+      },
+      "control": {
+        "after.motorFlightTurn": 0.00413430957027456,
+        "after.motorThrust": 0.695655127975587,
+        "after.motorTurn": 0.0012695652173912919,
+        "after.ornLSpikeFraction": 0.012261904761904774,
+        "after.ornRSpikeFraction": 0.01350000000000001,
+        "after.ornunknownSpikeFraction": 0.012500000000000011,
+        "after.pnLSpikeFraction": 0.01550000000000001,
+        "after.pnRSpikeFraction": 0.01650000000000001,
+        "after.spikeCount": 920.6100000000002,
+        "after.turnLMeanVoltage": 0.6474191850800392,
+        "after.turnLSpikeFraction": 0.022399999999999955,
+        "after.turnRMeanVoltage": 0.6422720402723873,
+        "after.turnRSpikeFraction": 0.022717391304347852,
+        "before.motorFlightTurn": 0.00967588890995996,
+        "before.motorThrust": 0.686532944395276,
+        "before.motorTurn": 0.0018086956521739075,
+        "before.ornLSpikeFraction": 0.011309523809523821,
+        "before.ornRSpikeFraction": 0.011750000000000009,
+        "before.ornunknownSpikeFraction": 0.011071428571428578,
+        "before.pnLSpikeFraction": 0.01450000000000001,
+        "before.pnRSpikeFraction": 0.01450000000000001,
+        "before.spikeCount": 844.7274999999994,
+        "before.turnLMeanVoltage": 0.6442979038543618,
+        "before.turnLSpikeFraction": 0.02019999999999995,
+        "before.turnRMeanVoltage": 0.6416972601861206,
+        "before.turnRSpikeFraction": 0.020652173913043505,
+        "during.motorFlightTurn": -0.013379799923017006,
+        "during.motorThrust": 0.6938231278706982,
+        "during.motorTurn": -0.0009739130434782664,
+        "during.ornLSpikeFraction": 0.012380952380952387,
+        "during.ornRSpikeFraction": 0.01275000000000001,
+        "during.ornunknownSpikeFraction": 0.013571428571428571,
+        "during.pnLSpikeFraction": 0.013000000000000003,
+        "during.pnRSpikeFraction": 0.017000000000000005,
+        "during.spikeCount": 922.6849999999994,
+        "during.turnLMeanVoltage": 0.6549280062492586,
+        "during.turnLSpikeFraction": 0.022199999999999984,
+        "during.turnRMeanVoltage": 0.6497556757476775,
+        "during.turnRSpikeFraction": 0.02195652173913041
+      },
+      "seed": 2
+    }
+  ],
+  "pulseSteps": [
+    400,
+    600
+  ],
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "steps": 1000,
+  "stimulatedGroups": {
+    "ornL": 21,
+    "ornR": 20,
+    "ornunknown": 7,
+    "pnL": 5,
+    "pnR": 5
+  },
+  "stimulatedNeurons": 48
+}
