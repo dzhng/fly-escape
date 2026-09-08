@@ -61,6 +61,7 @@ export { AttemptClient } from "./attempt-client";
 export type { AttemptReply } from "./attempt-protocol";
 export { FrameArchive } from "./record";
 export { PlaybackClock } from "./playback";
+export type { PlaybackMode } from "./playback";
 
 export type { RecordedMotion, RecordedPose } from "./record";
 export { HouseProbeClient } from "./house-probe";

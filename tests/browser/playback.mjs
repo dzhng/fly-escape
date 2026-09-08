@@ -62,16 +62,26 @@ try {
   await seekOne();
   assert.equal(await readout(), first, "seeking back must restore the same recorded neuron values");
   await page.screenshot({ path: new URL("paused-seek.png", output).pathname });
-  await page.getByRole("button", { name: "2×", exact: true }).click();
+  await page.getByRole("button", { name: "Fast", exact: true }).click();
   await page.getByRole("button", { name: "Play", exact: true }).click();
   await page.waitForFunction(() => {
     const current = JSON.parse(
       document.querySelector('[data-testid="playback-report"]').textContent,
     );
-    return current.speed === 2 && ["playing", "buffering"].includes(current.state);
+    return current.mode === "fast" && ["playing", "buffering"].includes(current.state);
   });
-  const speed = await report();
-  assert.ok(["playing", "buffering"].includes(speed.state));
+  const fast = await report();
+  assert.ok(["playing", "buffering"].includes(fast.state));
+  assert.equal(fast.speed, fast.fastMultiplier, "fast mode must consume at the derived multiplier");
+  assert.ok(
+    fast.spec.durationTicks * 0.1 <= fast.speed * 60 + 0.001,
+    "fast mode must fit the authored horizon into a wall minute",
+  );
+  // Only real time and fast exist; there is no third speed to select.
+  assert.equal(
+    await page.getByRole("button", { name: /^(Real time|Fast|[0-9.]+×)$/ }).count(),
+    2,
+  );
   await page.getByRole("button", { name: "Pause", exact: true }).click();
   await state("paused");
   await page.getByRole("button", { name: "Replay", exact: true }).click();
@@ -83,6 +93,7 @@ try {
   await state("playing");
   const restarted = await report();
   assert.notEqual(restarted.spec.attemptId, oldId);
+  assert.equal(restarted.mode, "realTime", "the lab starts a new attempt in real time");
   assert.equal(restarted.speed, 1);
   assert.equal(restarted.spec.flyCount, 20);
   assert.ok(restarted.cursorTick < 30);
@@ -103,7 +114,7 @@ try {
       {
         browser: browser.version(),
         paused,
-        speed,
+        fast,
         restarted,
         repeatedNeuralReadout: true,
         pauseResponseMs,
@@ -113,7 +124,7 @@ try {
       2,
     ) + "\n",
   );
-  console.log("Playback pause/seek/2×/replay/restart and shared sample time passed.");
+  console.log("Playback pause/seek/fast/replay/restart and shared sample time passed.");
 } finally {
   await browser.close();
 }

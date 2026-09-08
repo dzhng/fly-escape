@@ -270,10 +270,7 @@ function FlyScienceCard({
       >
         <strong>Fly {String(id + 1).padStart(2, "0")}</strong>
         <span>{fly?.body.outcome ?? fly?.body.mode ?? "Initial state"}</span>
-        <small>
-          Reserve {(fly?.body.reserve ?? info.level.initialReserve).toFixed(2)} ·{" "}
-          {(tick * 0.1).toFixed(1)} s
-        </small>
+        <small>{(tick * 0.1).toFixed(1)} s</small>
       </button>
       <svg
         className="group-network"

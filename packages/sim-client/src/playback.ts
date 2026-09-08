@@ -1,5 +1,7 @@
 export type PlaybackState =
   "paused" | "buffering" | "playing" | "hidden" | "ended";
+/** Real time, or fast enough to fit one authored attempt into a wall minute. */
+export type PlaybackMode = "realTime" | "fast";
 export type ProductionProgress = {
   computedTick: number;
   complete: boolean;
@@ -8,11 +10,17 @@ export type ProductionProgress = {
   productionRate: number;
 };
 
+/** Wall seconds a fast replay of the whole authored horizon should occupy. */
+const FAST_ATTEMPT_SECONDS = 60;
+
 /** One fractional tick cursor for every visible consumer. Wall timestamps are
  * milliseconds; graph cadence remains a separate, fixed simulation concern. */
 export class PlaybackClock {
+  /** Game seconds per wall second in fast mode, from the authored horizon.
+   * Attempts that end early simply finish sooner; they are never stretched. */
+  readonly fastMultiplier: number;
   private cursor = 0;
-  private playbackSpeed: 1 | 2 = 1;
+  private currentMode: PlaybackMode;
   private requested = false;
   private hidden = false;
   private lastNow: number | null = null;
@@ -20,6 +28,7 @@ export class PlaybackClock {
   constructor(
     readonly durationTicks: number,
     readonly tickSeconds = 0.1,
+    mode: PlaybackMode = "realTime",
   ) {
     if (
       !Number.isInteger(durationTicks) ||
@@ -29,6 +38,11 @@ export class PlaybackClock {
       tickSeconds <= 0
     )
       throw new Error("Invalid playback horizon");
+    this.currentMode = validMode(mode);
+    this.fastMultiplier = Math.max(
+      1,
+      (durationTicks * tickSeconds) / FAST_ATTEMPT_SECONDS,
+    );
   }
   get cursorTick() {
     return this.cursor;
@@ -36,8 +50,12 @@ export class PlaybackClock {
   get state() {
     return this.currentState;
   }
+  get mode() {
+    return this.currentMode;
+  }
+  /** Game seconds consumed per wall second at the current mode. */
   get speed() {
-    return this.playbackSpeed;
+    return this.currentMode === "fast" ? this.fastMultiplier : 1;
   }
 
   play() {
@@ -50,11 +68,10 @@ export class PlaybackClock {
     this.currentState = "paused";
     this.lastNow = null;
   }
-  setSpeed(speed: 1 | 2) {
-    if (speed !== 1 && speed !== 2)
-      throw new Error("Playback supports 1× and 2×");
-    if (speed !== this.playbackSpeed) {
-      this.playbackSpeed = speed;
+  /** The cursor is kept; a faster mode may rebuild its lead instead of stuttering. */
+  setMode(mode: PlaybackMode) {
+    if (validMode(mode) !== this.currentMode) {
+      this.currentMode = mode;
       this.restartLeadCheck();
     }
   }
@@ -98,13 +115,14 @@ export class PlaybackClock {
       this.currentState = "ended";
       return this.cursor;
     }
+    const speed = this.speed;
     const buffered = (progress.computedTick - this.cursor) * this.tickSeconds;
     const remaining =
       (this.durationTicks - progress.computedTick) * this.tickSeconds;
     const rate = progress.productionRate * 0.8;
     const deficit =
-      rate === 0 ? Infinity : remaining * Math.max(0, this.speed / rate - 1);
-    const lead = Math.max(3 * this.speed, deficit + 2 * this.speed);
+      rate === 0 ? Infinity : remaining * Math.max(0, speed / rate - 1);
+    const lead = Math.max(3 * speed, deficit + 2 * speed);
     if (this.currentState !== "playing") {
       if (!progress.complete && (rate === 0 || buffered < lead)) {
         this.currentState = "buffering";
@@ -116,11 +134,11 @@ export class PlaybackClock {
     }
     // A lower running threshold retains one wall second of reserve, avoiding
     // threshold flicker as individual production ticks arrive.
-    if (!progress.complete && buffered < deficit + this.speed) {
+    if (!progress.complete && buffered < deficit + speed) {
       this.currentState = "buffering";
       return this.cursor;
     }
-    const next = this.cursor + (elapsed * this.speed) / this.tickSeconds;
+    const next = this.cursor + (elapsed * speed) / this.tickSeconds;
     this.cursor = Math.min(progress.computedTick, next);
     if (next >= progress.computedTick)
       this.currentState = progress.complete ? "ended" : "buffering";
@@ -134,4 +152,10 @@ export class PlaybackClock {
         : "buffering"
       : "paused";
   }
+}
+
+function validMode(mode: PlaybackMode): PlaybackMode {
+  if (mode !== "realTime" && mode !== "fast")
+    throw new Error("Playback offers real time and fast only");
+  return mode;
 }

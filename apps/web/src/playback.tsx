@@ -18,6 +18,7 @@ import {
   type RecordedPose,
   type StartAttempt,
   type AttemptResult,
+  type PlaybackMode,
   type ToolDef,
 } from "@fly-escape/sim-client";
 import { SciencePanel } from "./science-panel";
@@ -78,7 +79,9 @@ type Display = {
   cursor: number;
   computed: number;
   state: string;
-  speed: 1 | 2;
+  mode: PlaybackMode;
+  /** Game seconds per wall second fast mode uses for this horizon. */
+  fastMultiplier: number;
   frame?: AttemptFrame;
   rate: number;
   report: string;
@@ -87,7 +90,8 @@ const initialDisplay: Display = {
   cursor: 0,
   computed: 0,
   state: "loading",
-  speed: 1,
+  mode: "realTime",
+  fastMultiplier: 1,
   rate: 0,
   report: "{}",
 };
@@ -169,7 +173,7 @@ export function AttemptPlayback({
       lastPublished = -Infinity,
       lastSampleTick = -1,
       lastState = "",
-      lastSpeed = 0;
+      lastMode = "";
     let requestedAt = performance.now();
     let lastDiagnosticAt = -Infinity;
     let renderFailed = false;
@@ -198,7 +202,12 @@ export function AttemptPlayback({
           reply.info.archiveBytes,
           reply.info.initialBodies,
         );
-        const clock = new PlaybackClock(reply.info.spec.durationTicks);
+        // Campaign attempts default to fast so a whole attempt plays within a minute.
+        const clock = new PlaybackClock(
+          reply.info.spec.durationTicks,
+          TICK_SECONDS,
+          input ? "fast" : "realTime",
+        );
         clock.play();
         clock.setHidden(document.hidden);
         run.current = {
@@ -287,7 +296,7 @@ export function AttemptPlayback({
       lastPublished = -Infinity;
       lastSampleTick = -1;
       lastState = "";
-      lastSpeed = 0;
+      lastMode = "";
       setError("");
       renderFailed = false;
       setRequested(true);
@@ -360,7 +369,7 @@ export function AttemptPlayback({
               progressDue ||
               sampleTick !== lastSampleTick ||
               current.clock.state !== lastState ||
-              current.clock.speed !== lastSpeed
+              current.clock.mode !== lastMode
             ) {
               const heap =
                 (
@@ -378,7 +387,9 @@ export function AttemptPlayback({
                 sampleTick: current.lower?.tick ?? 0,
                 computedTick: current.archive.computedTick,
                 state: current.clock.state,
+                mode: current.clock.mode,
                 speed: current.clock.speed,
+                fastMultiplier: current.clock.fastMultiplier,
                 complete: current.archive.complete,
                 initialWaitMs:
                   current.firstPlayAt === null ? null : current.firstPlayAt - current.requestedAt,
@@ -421,14 +432,15 @@ export function AttemptPlayback({
                 cursor: current.clock.cursorTick,
                 computed: current.archive.computedTick,
                 state: current.clock.state,
-                speed: current.clock.speed,
+                mode: current.clock.mode,
+                fastMultiplier: current.clock.fastMultiplier,
                 frame: current.lower,
                 rate,
                 report: JSON.stringify(report, null, 2),
               });
               lastSampleTick = sampleTick;
               lastState = current.clock.state;
-              lastSpeed = current.clock.speed;
+              lastMode = current.clock.mode;
             }
           }
         } catch (cause) {
@@ -530,7 +542,9 @@ export function AttemptPlayback({
                           : display.state === "hidden"
                             ? "Paused while you were away"
                             : requested
-                              ? `Playing at ${display.speed}×`
+                              ? display.mode === "fast"
+                                ? "Playing fast"
+                                : "Playing in real time"
                               : "Paused"}
               </strong>
               <span>
@@ -567,14 +581,19 @@ export function AttemptPlayback({
             >
               {requested ? "Pause" : "Play"}
             </button>
-            {([1, 2] as const).map((speed) => (
+            {(["realTime", "fast"] as const).map((mode) => (
               <button
-                key={speed}
-                aria-pressed={display.speed === speed}
+                key={mode}
+                aria-pressed={display.mode === mode}
                 disabled={!info || !!error}
-                onClick={() => control((current) => current.clock.setSpeed(speed))}
+                title={
+                  mode === "fast" && display.fastMultiplier > 1
+                    ? "Fits a whole attempt into about a minute"
+                    : undefined
+                }
+                onClick={() => control((current) => current.clock.setMode(mode))}
               >
-                {speed}×
+                {mode === "fast" ? "Fast" : "Real time"}
               </button>
             ))}
             <button

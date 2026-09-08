@@ -66,6 +66,8 @@ try {
       120000,
       "all20 brains must remain active through the complete horizon",
     );
+    assert.equal(result.mode, "realTime", "the lab measures production against real time");
+    assert.equal(result.speed, 1);
     assert.equal(result.underruns, 0, "a sustained1× run must not need repeated buffer rebuilding");
     assert.ok(result.frameIntervals.p95Ms <= 25, "frame intervalp95 exceeds the desktop target");
     assert.ok(

@@ -10,7 +10,7 @@ AttemptSpec/FrameChunk/Worker credits → archive and one playback cursor; /lab/
 
 ## Runnable review surface
 
-20 placeholders, aggregate counters, per-fly sample readout, pause/1×/2×/seek/replay and visible buffering; downloadable performance report.
+20 placeholders, aggregate counters, per-fly sample readout, pause/Real time/Fast/seek/replay and visible buffering; downloadable performance report.
 
 ## Verification
 

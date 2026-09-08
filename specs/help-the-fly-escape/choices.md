@@ -732,3 +732,8 @@ The user's one-fan maximum and rejection of chained-fan solutions supersede earl
 
 - **Keep physical overlap distinct from a broken query — sound, high confidence.** A proposed move into a closed prop is a blocked move; an already-invalid starting pose still fails. The motion owner checks candidate endpoints and uses its existing safe stopping behavior. This adds an internal typed overlap result, without changing browser schemas, geometry or neural rules.
 - **Commit departure only after checking it — sound, high confidence.** A walking fly keeps its current support while a proposed departure is tested. If the departure is blocked, it stays supported instead of entering an inconsistent state that aborts the swarm. This can conservatively delay movement; time and reserve still advance.
+
+## Timed-round replay — 2026-09-08
+
+- **Start campaign playback in Fast — sound, medium confidence.** The user wants either real-time observation or the full attempt within a minute. Fast is the initial choice so an ordinary run fits that viewing budget. Real time remains one click away; switching keeps the same recording and cursor, with additional buffering if necessary.
+- **Derive Fast from the authored horizon — sound, high confidence.** A five-minute attempt uses5× and a ten-minute attempt uses10×. An early finish ends sooner instead of stretching the recording, and short diagnostic attempts never slow below1×. The clock owns that arithmetic so UI, buffer planning and cursor progression cannot disagree.

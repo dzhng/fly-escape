@@ -6,6 +6,8 @@ const seeds = process.env.RETRY_SEEDS?.split(",");
 const runs = Number(process.env.RETRY_RUNS ?? seeds?.length ?? 20);
 const campaign = process.env.RETRY_CAMPAIGN;
 const fullAttempts = process.env.RETRY_FULL === "1";
+const mode = process.env.RETRY_MODE ?? "realTime";
+assert.ok(mode === "realTime" || mode === "fast", "RETRY_MODE must be realTime or fast");
 assert.ok(!campaign || campaign === "1" || campaign === "2", "RETRY_CAMPAIGN must be 1 or 2");
 assert.ok(!fullAttempts || campaign, "Full-attempt verification requires an actual campaign level");
 assert.ok(process.env.RETRY_ASSERT_STABLE !== "1" || runs >= 3, "Post-warm-up stability comparison requires at least three retries");
@@ -45,6 +47,8 @@ try {
     activeRun = run + 1;
     await page.waitForFunction(() => document.querySelector(".run-setup")?.disabled === false);
     await page.getByRole("button", { name: "Release the flies", exact: true }).click();
+    if (fullAttempts && mode === "realTime")
+      await page.getByRole("button", { name: "Real time", exact: true }).click();
     await page.waitForFunction(() => {
       const text = document.querySelector('[data-testid="playback-report"]')?.textContent;
       if (!text) return false;
@@ -65,7 +69,7 @@ try {
       await page.waitForFunction(() => {
         const report = JSON.parse(document.querySelector('[data-testid="playback-report"]').textContent);
         return report.state === "ended" || report.state === "error";
-      }, undefined, { timeout: 180000 });
+      }, undefined, { timeout: started.spec.durationTicks * 100 / started.speed + 90000 });
     } else {
       await page.getByRole("button", { name: "Pause", exact: true }).click();
       await page.waitForFunction(() => JSON.parse(document.querySelector('[data-testid="playback-report"]').textContent).state === "paused");
@@ -85,9 +89,13 @@ try {
       const outcomes = report.result.outcomes;
       assert.equal(outcomes.escaped + outcomes.starved + outcomes.zapped + outcomes.caught + outcomes.timedOut,
         report.spec.flyCount, "every fly must have a terminal outcome before an attempt is complete");
-      assert.equal(report.speed, 1, "full attempts must play at normal speed without seeking");
-      assert.ok(performance.now() - startedAt >= (report.cursorTick - startedTick) * 100 - 100,
-        "playback must traverse the recorded interval at 1× without skipping ahead");
+      assert.equal(report.mode, mode, "attempt must retain the selected playback mode");
+      assert.equal(report.speed, mode === "fast" ? report.fastMultiplier : 1,
+        "playback must consume at the selected mode's multiplier");
+      assert.ok(report.spec.durationTicks * 0.1 <= report.fastMultiplier * 60 + 0.001,
+        "fast mode must fit the authored horizon into a wall minute");
+      assert.ok(performance.now() - startedAt >= (report.cursorTick - startedTick) * 100 / report.speed - 100,
+        "playback must traverse the recorded interval at the chosen rate without skipping ahead");
       assert.equal(report.underruns, 0);
       assert.ok(report.frameIntervals.count > 0 && Number.isFinite(report.frameIntervals.p95Ms),
         "full attempts require measured frame intervals");
@@ -119,7 +127,7 @@ try {
   const heaps = samples.map((s) => s.mainHeapAfterReturn.usedSize);
   await writeFile(`${output}/report.json`, JSON.stringify({ browser: browser.version(), samples,
     retainedMainHeapChangeBytes: heaps.at(-1) - heaps[0], errors,
-    scope: `${runs} real 20-fly ${fullAttempts ? "complete 1× attempts and retries" : "Run/cancel/edit cycles"} on ${campaign ? `campaign level ${campaign}` : "diagnostic setup"}. Collected main heaps are observations, not process RSS or a proof that Worker/GPU memory cannot leak. Final combined memory, input latency, hidden-tab and platform gates remain separate.` }, null, 2) + "\n");
+    scope: `${runs} real 20-fly ${fullAttempts ? `complete ${mode} attempts and retries` : "Run/cancel/edit cycles"} on ${campaign ? `campaign level ${campaign}` : "diagnostic setup"}. Collected main heaps are observations, not process RSS or a proof that Worker/GPU memory cannot leak. Final combined memory, input latency, hidden-tab and platform gates remain separate.` }, null, 2) + "\n");
   if (process.env.RETRY_ASSERT_STABLE === "1") {
     assert.ok(samples.at(-1).dom.nodes <= samples[1].dom.nodes + 2, "detached DOM must not grow per retry after warm-up");
   }
