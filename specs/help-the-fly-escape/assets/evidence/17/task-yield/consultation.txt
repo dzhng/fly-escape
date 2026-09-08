@@ -1,0 +1,104 @@
+I couldn't write the file: this session has no Write/Edit tool, and the sandbox denied the `cat > /tmp/fly-performance-consult.md` heredoc (it also denied `node`/`python3`, so the manifest was read via the pipeline's own `report.json` instead). **Nothing in the repo was modified, no build or benchmark was run.** If you re-run with write permission for `/tmp`, I'll drop this verbatim into `/tmp/fly-performance-consult.md`; the full report follows.
+
+---
+
+# Fly-escape performance consultation — read-only, HEAD `1884feb`
+
+Scope: `crates/sim` neural hot path, `crates/game-wasm` attempt stepping, Worker production scheduling. Constraints honoured: bit-identical outputs, unchanged random stream and draw ordering, full 798,715-edge graph, 20 flies, unchanged buffering safety and gameplay.
+
+## 1. Where the round now stands
+
+Both optimizations the earlier diagnosis proposed are integrated:
+
+| Commit | Change | Browser production, seed 11716541513791412824 |
+|---|---|---|
+| (before) | full incoming CSR scan + separate `sin`/`cos` | 145.12 s |
+| `518b184` | sparse source delivery | 94.99 s (`evidence/17/sparse-delivery/README.md:15`) |
+| `761a36a` | shared WASM `sincos` | 90.28 s isolated (`evidence/17/shared-trig/README.md:17`) |
+| `1884feb` (HEAD) | + gameplay/readout changes, under load | 98.30 s, frame p95 34 ms (**gate fail**) (`startup-delivery/README.md:9-11`) |
+
+Per-tick: **48.4 → 30.1 ms** at 20 flies. Everything untouched by those two commits costs the same wall time it always did but is now a **1.61× larger share**. That amplification is why the candidates below are worth their size. Baseline shares from `evidence/17/neural-cost/diagnosis.md` (Node/V8, named `-O -g` build verified within ~1% of production release, `diagnosis.md:74-88`), converted to absolute ms/tick and re-divided by 30.1:
+
+| Bucket | then (44.87 ms/tick) | absolute | now (30.1 ms/tick) |
+|---|---|---|---|
+| noise draw (`ln`/`sqrt`/`sincos`) | 52% | 23.3 ms | ~45% |
+| `advance()` CSR scan + readout | 30% | 13.5 ms | small — see below |
+| membrane/spike loop | 9% | 4.0 ms | ~13% |
+| contact/geometry | 4.85% | 2.18 ms | **~7.2%** |
+| sensory cue-current hashing | ~2.5% | 1.12 ms | **~3.7%** |
+
+**The CSR scan is no longer a lever.** `candidate-trace-final.json` reports `meanSpikeFraction: 0.0123` on the real graph; recorded gameplay `spikeCount` spans 105–976 of 70,000 (`evidence/19/proportions/final/report.json:1685+`, `evidence/30/seed42-contact/resolved/original-entry.json:138`). At 1.23% spiking and mean out-degree 798,715/70,000 = 11.41, `Brain::advance` delivers ~9.8k edges per fly-tick — **1.2% of the pre-`518b184` work**. What remains in `advance()` is four *full-length* 70,000-element sweeps, not edge work. That drives candidate B.
+
+## 2. The three candidates
+
+None changes an arithmetic operation, operand, addition order, PRNG draw, draw count, or branch outcome.
+
+### A. Memoize `motor_readout_indices` out of the per-fly-tick cue path — best evidence, lowest risk
+
+`sensory.rs:79` rebuilds a `HashSet<u32>` from scratch inside `group_currents`, called from `cue_currents` (`sensory.rs:61`), which `Attempt::advance_tick` calls **once per cue per fly per tick** (`attempt.rs:360-366`). Each build chains four motor index vectors, four `graph.pathway(...)` `HashMap<String,_>` lookups (`graph.rs:206-211`) and three `groups.iter()` string-compare scans (`sensory.rs:96-123`); then `sensory.rs:88` does a `contains` per group index (122/128 for vision).
+
+Volume: 2 cues × 20 flies × 3000 ticks = **120,000 rebuilds of a constant of the graph**. The profile attributes it directly: 84% of all `hashbrown`/`sip` samples sit under `group_currents ← cue_currents ← Attempt::step`, ~2.5% of the round (`diagnosis.md:99, 114-117`).
+
+Change: compute once (`OnceLock<HashSet<u32>>` on `Graph`, or eagerly in `Graph::from_bytes`), return `&HashSet<u32>`. Only two call sites: `sensory.rs:79`, `attempt.rs:229`.
+
+**Expected: 0.8–1.1 ms/tick ≈ 2.7–3.7% (≈ 2.4–3.3 s per attempt).** Bit-exact: the set is only read via `contains`, so the filtered index sequence, summed values and `BTreeMap` output ordering are unchanged; `Graph` is shared as `Arc` with no interior mutability, so the cache cannot diverge.
+
+### B. Fuse the synaptic scale sweep into the membrane sweep, hoist the `silenced` test
+
+`lif.rs:284-290` is a standalone pass over all 70,000 neurons that reads `synaptic_input[i]`, tests `self.silenced.get(i) == Some(&true)`, and writes back `0.0` or `*input * p.input_scale`. The next loop (`lif.rs:291-313`) reads the same element and repeats the same test. LLVM does not fuse these (loop fusion is off in the default Rust pipeline), so per fly-tick this is an extra 560 KB read + 560 KB write and 140,000 `Option` compares — on state that is 3.29 MB per fly (`brainArrayBytes`) × 20 flies = 65.8 MB, always out of cache.
+
+Change: compute the scaled value in a register inside the membrane loop, store it once to `synaptic_input[i]`, use the register for `dv`; hoist `let ablated = !self.silenced.is_empty()`.
+
+**Expected: 0.8–1.6 ms/tick ≈ 2.7–5.3%.** Lower end is the pure-bandwidth floor (1.12 MB at ~28 GB/s ≈ 40 µs/fly-tick); upper end includes the removed per-neuron branch.
+
+Bit-exact: each element's expression and operand order are unchanged and no element reads another's value, so fusion cannot reorder an addition. Two invariants must survive: (i) a silenced neuron's `synaptic_input` is zeroed *after* delivery has scattered into it (`lif.rs:272-283` can write into a silenced target); (ii) a silenced neuron's `dv`/`can_spike`/`voltage`/`spikes`/`refractory` stay untouched by the membrane loop, retaining what `enforce_silencing` wrote (`lif.rs:191-203`). This is the only candidate that edits the numerically sensitive loop — the trace harness in §5 is non-optional for it.
+
+### C. Stop computing `Body::contacts` twice per fly-tick
+
+`Attempt::advance_tick` calls `fly.body.contacts(world)?` for the taste current (`attempt.rs:367`); `Body::step` calls `self.contacts(world)?` again (`body.rs:565`). Nothing between them mutates the body — `attempt.rs:368-378` touches only the brain. `contacts` is a pure function of `(&self.state, world)` (`body.rs:464-479`) running one or two parry3d `touching_hull` convex-hull queries (`body.rs:273-286`, `body.rs:351-361`) — exactly the bucket measured at 4.85% (`diagnosis.md:98`), now ~7.2%.
+
+Change: pass the computed `BodyContacts` in; keep `Body::step`'s signature and add a delegating `Body::step_with_contacts` so lab/test callers are untouched.
+
+**Expected: 0.5–0.75 ms/tick ≈ 1.8–2.5% (≈ 1.6–2.3 s)** — half of whatever share `Body::contacts`, as opposed to `Body::step`'s own surface/motion queries, holds in that bucket. Widest error bar of the three; §4 collapses it from your profile.
+
+Bit-exact: a pure result is reused, no float op differs. The only surface is error ordering — `Body::step` returns early on a terminal body (`body.rs:523`) and on starvation (`body.rs:558`) before calling `contacts`, but from `Attempt`'s side that is already unobservable (`attempt.rs:349` skips terminal flies, and `attempt.rs:367` has already called `contacts`). The delegating wrapper keeps all other callers identical.
+
+**Combined: ~4–8% of production, ≈ 4–7 s off a 90 s round.**
+
+## 3. Existing bounds — what these cannot fix
+
+- **Noise floor.** `lif.rs:246-255` draws 700k pairs/tick: 700k `ln`, `sqrt`, `sincos`, 1.4M PRNG draws. Isolation measured 0.77–0.85 ms/fly-tick shipped vs 0.04–0.13 for "PRNG draw + store only" (`diagnosis.md:126, 166-172`) → **~14 ms/tick ≈ ~42 s of the 90 s round is software transcendental math no bit-exact change can touch.** `761a36a` took the one free win there. Marsaglia polar (−28%) needs a different stream — your open decision, out of scope.
+- **Unavoidable state traffic.** 3.29 MB per fly-tick × 60,000 fly-ticks ≈ 197 GB per attempt before B's sweeps. `dv`/`can_spike` are 630 KB per fly-tick of pure diagnostics but are public (`lif.rs:213`) and hashed by the equivalence harness, so they stay.
+- **Edge work is already gone.** The 47,922,900,000-inspection upper bound (`neural-cost/README.md:9`) is now ~5.9×10⁸ actual deliveries. Don't spend effort here.
+- **Worker scheduling is not the production bottleneck.** At most 2 chunks in flight (`attempt-worker.ts:274`) of `MAX_CHUNK_TICKS = 10` (`record.rs:22`), credits returned on chunk receipt independently of the playback cursor (`attempt-client.ts:17, 86-89`) — the producer never idles, so production time maps ~1:1 into startup wait. The per-tick `await yieldToMessages()` (`attempt-worker.ts:115`) is ~3000 task turns ≈ <0.1 s of 90 s, and it is what bounds cancellation to one tick. **Leave it, the per-tick `JSON.parse(core.step())`, and the 10-tick cadence alone.**
+- **The failing gate at HEAD is frame time, not production** — 34 ms p95 vs the 25 ms gate (`startup-delivery/README.md:10-11`), main-thread/renderer, in a run with other work active. A/B/C do not address it.
+- **Startup has a non-compute component** — that run waited 11.183 s beyond the hindsight-earliest safe launch (`startup-delivery/README.md:16-21`). Policy, not CPU.
+
+**Bottom line: A+B+C are a single-digit-percent win, comparable to `761a36a`. They do not close the startup target. The only large remaining lever is still the noise-stream decision.**
+
+## 4. Falsification checks (run against the profile you're capturing, before writing code)
+
+**A** — sum worker self-time under `hashbrown`/`SipHash`/`group_currents`/`cue_currents`; below ~1% of worker CPU kills it. *Safety:* assert the memoized set equals a freshly built one on the production graph; `sensory.rs:150-270` already pins the exact returned vectors.
+
+**B** — check `Brain::step` self-time composition; if libm `log`/`sincos`/`rem_pio2` are >80% of it, the scale sweep is thin and B drops under ~1%. Cross-check: at 30.1 ms/tick the four 70k sweeps should total ~2–4 ms/tick. *Safety:* the §5 trace hash with the scattered `i % 997 == 3` silenced set (the exact case fusion can break), plus an assertion that after a tick, silenced `i` still has `dv == 0.0`, `can_spike == false`, `synaptic_input == 0.0` even when a spiking source targets `i`.
+
+**C** — look at the caller split of parry3d `touching_hull`/support-map samples between `Attempt::step` (direct) and `Body::step`. A small direct share means the broad phase rejects cheaply and C is under ~1%. *Safety:* debug-assert `body.contacts(world)?` immediately before `body.step(...)` equals what `step` computes internally, over a full campaign attempt.
+
+**Cross-cutting:** any `crates/sim/src/**` edit changes `SIM_BUILD_ID`, which `Attempt::new` compares against the supplied spec (`attempt.rs:181, 210-212`) — records tagged with the old id carry a different id even though re-simulation is bit-identical (`sparse-delivery/README.md:11`). Land all three in one commit so the id changes once.
+
+## 5. Smallest verification experiment
+
+**Re-baseline first.** Both published digests are stale at HEAD: `3f3af05` changed the olfactory readout (`lif.rs:351-399`) and odor→pathway bindings, and `0d74899` changed movement pace, both *after* `761a36a`. So neither `60536ed1628ca354c1df273251489438f8c6ec30c9090a7bac15241a586e178e` nor `251308f828034385c41b1e567320723738f3ee714d4b49f08a3394566be6a837` is a valid comparator. Capture both from an unmodified HEAD build.
+
+**The one experiment (no browser, ~1 min per side):** restore `crates/sim/examples/neural_trace.rs` from `evidence/17/sparse-delivery/neural_trace.rs`, run 500 ticks against `data/processed/brain` on HEAD and on the candidate. It hashes `synaptic_input`, `dv`, `can_spike`, `voltage`, `spikes`, `refractory`, all four motor outputs, every group mean/spike-fraction and `spike_count` per tick by raw f64 bits, with silencing and time-varying currents already wired. **Equal `traceHash` is the pass condition for B**, and `stepSeconds`/`ticksPerSecond` size it without a browser.
+
+That harness drives `Brain` directly, so add a second run over `AttemptSession`: `turn-the-corner`, `rootSeed 11716541513791412824`, `flyCount 20`, 500 ticks, `take_chunk()` drained at 10 buffered ticks (the worker's cadence, `attempt-worker.ts:110-118`), hashing each `step()` JSON plus every `take_*` array. Equal digest is the pass condition for A and C, and its wall time is directly comparable to the 44.87 → 30.1 ms/tick line above.
+
+Then `cargo test -p sim` and `cargo test -p game-wasm` — the Python reference fixture, the silencing test and `spiking_sources_deliver_exactly_what_an_incoming_scan_accumulates` are the mutation-checked guards already in place. The browser acceptance run (zero underruns, frame p95, final frame vs `4f91a98469f7d4fd7f80b5a051bd7af629e9236e283e42e302558f5d77906f81`) stays the release gate, not part of this experiment.
+
+## 6. Considered and not proposed
+
+- **Sparse `external` clear + spiking-source list.** `set_external_current` memsets 70,000 entries per fly-tick (`lif.rs:226, 237`) for ~270 non-zeros, and the delivery loop scans 70,000 `spikes` (`lif.rs:273`) to find ~861. Worth ~1–2.5%, but both need cached state invalidated across `set_state`, `set_silenced_neurons` and `enforce_silencing` — more moving parts for less win. Revisit after B.
+- **`GroupActivity.id: String` cloned 16× per fly-tick** (`lif.rs:322`, ~1M allocations/round) — removing it changes a public `ts-rs` type.
+- **Dropping `dv`/`can_spike`** — public diagnostics, hashed by the equivalence harness.
+- **Noise stream / Worker scheduling** — excluded by your constraints.
