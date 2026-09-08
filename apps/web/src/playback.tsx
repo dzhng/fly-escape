@@ -1,10 +1,11 @@
 import { frameBesidePanel } from "./world-framing";
+import { StarCelebration, WatchedStars } from "./star-celebration";
 import { Stars } from "./stars";
 import { DepartureTail } from "./departure-tail";
 import type { PreviewUpdate } from "./fly-preview";
 import type { RoomDetail, RoomFloor } from "@fly-escape/game-renderer";
 import { loadWorldAssets } from "./world-assets";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   WorldView,
   flyAnimation,
@@ -63,6 +64,7 @@ type Run = {
   failed: boolean;
   assetsReady: boolean;
   resultPublished: boolean;
+  watchedStars: WatchedStars;
   motionSampler?: MotionSampler;
   archive: FrameArchive;
   clock: PlaybackClock;
@@ -164,6 +166,8 @@ export function AttemptPlayback({
   const run = useRef<Run | undefined>(undefined);
   const restart = useRef<() => void>(() => {});
   const interactionAt = useRef<number | null>(null);
+  const [celebration, setCelebration] = useState<number>();
+  const finishCelebration = useCallback(() => setCelebration(undefined), []);
   const [info, setInfo] = useState<AttemptInfo>();
   useEffect(() => {
     if (!input || !info || !scene.current || !container.current) return;
@@ -212,6 +216,7 @@ export function AttemptPlayback({
       if (reply.type === "ready") {
         console.info("[Fly escape] attempt ready", reply.info.spec);
         lastDiagnosticAt = -Infinity;
+        setCelebration(undefined);
         const archive = new FrameArchive(
           reply.info.spec,
           reply.info.recordLayout,
@@ -231,6 +236,7 @@ export function AttemptPlayback({
           failed: false,
           assetsReady: false,
           resultPublished: false,
+          watchedStars: new WatchedStars(),
           archive,
           clock,
           requestedAt,
@@ -373,6 +379,15 @@ export function AttemptPlayback({
             lastFrameAt = now;
             try {
               scene.current?.render(current.clock.cursorTick * TICK_SECONDS);
+              if (input && current.lower) {
+                const earned = current.watchedStars.observe(
+                  current.lower.flies.filter(fly => fly.body.outcome === "escaped").length,
+                  current.info.level.starThresholds,
+                  current.assetsReady && !current.failed &&
+                    (current.clock.state === "playing" || current.clock.state === "ended"),
+                );
+                if (earned !== undefined) setCelebration(earned);
+              }
               if (scene.current) previewUpdate.current?.(sampledPoses, scene.current.cameraRotation);
             } catch (cause) {
               renderFailed = true;
@@ -540,6 +555,7 @@ export function AttemptPlayback({
       <section className="workspace">
         <div className={`world playback-world${input ? " game-world" : ""}`}>
           <div className="canvas" ref={container} />
+          {celebration !== undefined && <StarCelebration key={celebration} stars={celebration} onFinish={finishCelebration} />}
           {!input && (
             <div className="world-note">
               20 independent brains · shared environment
