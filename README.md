@@ -30,7 +30,7 @@ That uncertainty is part of the game. An object need not affect every fly in the
 
 ## Run locally
 
-Install Bun, Rust, and wasm-pack. From a checkout of this repository:
+Install Bun and Rust. Bun installs the pinned wasm-pack build tool with the project dependencies. From a checkout of this repository:
 
 ```sh
 rustup target add wasm32-unknown-unknown

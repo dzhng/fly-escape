@@ -36,11 +36,15 @@ Historical experiments are retained in the [research archive](../specs/done/help
 
 ## Deploy to Vercel
 
-Vercel hosts the static game; the Rust and asset build runs locally. Link the checkout once with `vercel link`, selecting the intended organization and project. Then run:
+Vercel’s Git integration builds and deploys pushes to `main` as production. Other branches receive preview deployments. The project stays rooted at the repository root so Bun can resolve workspace packages and Rust can see the shared assets. [vercel.json](../vercel.json) owns the install command, build command, output directory and routing rules.
+
+The cloud build uses the committed graph and manifest, compiles Rust to WebAssembly, and publishes only the game distribution. `wasm-pack` is a pinned build dependency installed with Bun; its trusted install script downloads the native executable. Python and raw connectome downloads are unnecessary for deployment. A failed build leaves the previous production deployment serving.
+
+For an explicit local prebuilt deployment, link the checkout with `vercel link`, then run:
 
 ```sh
 bun run build:vercel
 vercel deploy --prebuilt --prod
 ```
 
-The packaging step copies only the game distribution into Vercel's Build Output format. Existing files resolve directly; diagnostic `/lab/*` routes fall back to the game document. Missing asset URLs remain errors rather than returning HTML. Local project metadata and deployment credentials stay ignored. This workflow does not enable automatic Git-based builds.
+The packaging step reuses the checked-in route configuration. Existing files resolve directly; diagnostic `/lab/*` routes fall back to the game document. Missing asset URLs remain errors rather than returning HTML. Local project metadata and deployment credentials stay ignored.
