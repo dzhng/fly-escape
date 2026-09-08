@@ -73,7 +73,7 @@ try {
   await page.screenshot({ path: out + "/second-unlocked.png" });
   await page.getByRole("button", { name: "Release the flies", exact: true }).click();
   await page.getByTestId("playback-lab").waitFor();
-  assert.equal(await nav.getByRole("button", { name: /First/ }).isDisabled(), true);
+  assert.equal(await nav.getByRole("button", { name: /First/ }).isDisabled(), false);
   await page.getByRole("button", { name: /Retry — edit setup/ }).waitFor({ timeout: 90000 });
   await page.getByRole("button", { name: /Retry — edit setup/ }).click();
   await page.getByRole("button", {name: "Leave attempt", exact: true}).click();

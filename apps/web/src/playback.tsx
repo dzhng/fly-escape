@@ -24,7 +24,6 @@ import {
   type AttemptFrame,
   type RecordedPose,
   type StartAttempt,
-  type AttemptResult,
   type PlaybackMode,
   type ToolDef,
 } from "@fly-escape/sim-client";
@@ -64,7 +63,6 @@ type Run = {
   info: AttemptInfo;
   failed: boolean;
   assetsReady: boolean;
-  resultPublished: boolean;
   watchedStars: WatchedStars;
   motionSampler?: MotionSampler;
   archive: FrameArchive;
@@ -151,7 +149,7 @@ export function AttemptPlayback({
   roomDetails,
   roomFloors,
   onReturn,
-  onResult,
+  onStars,
 }: {
   input?: StartAttempt;
   client?: AttemptClient;
@@ -159,7 +157,7 @@ export function AttemptPlayback({
   roomDetails?: readonly RoomDetail[];
   roomFloors?: readonly RoomFloor[];
   onReturn?: () => void;
-  onResult?: (result: AttemptResult) => void;
+  onStars?: (stars: number) => void;
 }) {
   const container = useRef<HTMLDivElement>(null);
   const seekInput = useRef<HTMLInputElement>(null);
@@ -237,7 +235,6 @@ export function AttemptPlayback({
           info: reply.info,
           failed: false,
           assetsReady: false,
-          resultPublished: false,
           watchedStars: new WatchedStars(),
           archive,
           clock,
@@ -388,7 +385,10 @@ export function AttemptPlayback({
                   current.assetsReady && !current.failed &&
                     (current.clock.state === "playing" || current.clock.state === "ended"),
                 );
-                if (earned !== undefined) setCelebration(earned);
+                if (earned !== undefined) {
+                  setCelebration(earned);
+                  onStars?.(earned);
+                }
               }
               if (scene.current) previewUpdate.current?.(sampledPoses, scene.current.cameraRotation);
             } catch (cause) {
@@ -458,10 +458,6 @@ export function AttemptPlayback({
               };
               // Keep diagnostics available without a frame-by-frame console stream.
               const ended = current.clock.state === "ended" && lastState !== "ended";
-              if (current.clock.state === "ended" && current.archive.result && !current.resultPublished) {
-                current.resultPublished = true;
-                onResult?.(current.archive.result);
-              }
               if (ended || (now-lastDiagnosticAt >= 1000 && current.clock.state !== lastState)
                 || (current.clock.state === "playing" && now-lastDiagnosticAt >= 10000)) {
                 console.info("[Fly escape] playback", ended ? {

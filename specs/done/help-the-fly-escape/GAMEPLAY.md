@@ -28,7 +28,7 @@ Fruit combines odor and a physical landing surface. Timed campaign attempts do n
 
 All placement tuning, exact layouts, object counts, time budgets and star numbers are delegated to the implementing agent **within the campaign acceptance criteria below**. Do not quietly substitute a weaker simulation if a puzzle is unwinnable; first adjust geometry, inventory and sensory tuning within documented interfaces.
 
-Progress uses localStorage: best stars per level and last editable placements. Unlocks derive from best stars. Store completed results once per attempt; failures to persist do not destroy the current playable session. No accounts, migration, cross-device saves or persistent replay library. Putting objects away clears only the current arrangement and preserves earned stars. Reloading ends an unfinished attempt.
+Progress uses localStorage: best stars per level and last editable placements. Unlocks derive from best stars. Save each star milestone when its escape count is first watched, and make the next unlocked level selectable immediately—even while a replay is open. Computed-ahead results alone never award stars; failures to persist do not destroy the current playable session. No accounts, migration, cross-device saves or persistent replay library. Putting objects away clears only the current arrangement and preserves earned stars. Reloading ends an unfinished attempt.
 
 ## Timed attempts and replay
 

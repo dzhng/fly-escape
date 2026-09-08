@@ -1,4 +1,4 @@
-import type { Placement, AttemptResult } from "@fly-escape/sim-client";
+import type { Placement } from "@fly-escape/sim-client";
 const KEY = "fly-escape-progress";
 export type Progress = {
   bestStars: Record<string, number>;
@@ -38,12 +38,13 @@ export function saveProgress(progress: Progress): boolean {
     return false;
   }
 }
-export function awardResult(progress: Progress, levelId: string, result: AttemptResult): Progress {
+export function awardStars(progress: Progress, levelId: string, stars: number): Progress {
+  if (stars <= (progress.bestStars[levelId] ?? 0)) return progress;
   return {
     ...progress,
     bestStars: {
       ...progress.bestStars,
-      [levelId]: Math.max(progress.bestStars[levelId] ?? 0, result.stars),
+      [levelId]: stars,
     },
   };
 }

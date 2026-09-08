@@ -55,7 +55,7 @@ try {
  await page.waitForFunction(()=>Number(document.querySelector('[data-cursor-tick]').dataset.cursorTick)<2);
  await page.getByRole('button',{name:'Pause',exact:true}).click();
  await page.getByRole('button',{name:'Retry — edit setup',exact:true}).click();
- await dialog.waitFor();assert.match(await dialog.innerText(),/unfinished results are not awarded/);
+ await dialog.waitFor();assert.match(await dialog.innerText(),/Unseen results are not awarded/);
  await page.screenshot({path:output+'/leave-dialog.png'});
  await page.keyboard.press('Escape');
  await dialog.waitFor({state:'detached'});

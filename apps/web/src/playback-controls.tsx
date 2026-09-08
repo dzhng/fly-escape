@@ -49,7 +49,7 @@ export function PlaybackControls({ ready, fastReady, replayReady, requested, mod
       <p>{replay
         ? "Watch the same flies and events again from the beginning. Your setup and earned stars stay saved; celebrations you have already seen will not repeat."
         : !returnToSetup ? "Close this recording and start a new attempt with a fresh random seed. The current recording will no longer be available."
-        : "Return to setup to edit your objects. This replay will be closed, and releasing the flies again starts a new attempt. Your object placements and previously earned stars stay saved; unfinished results are not awarded."}</p>
+        : "Return to setup to edit your objects. This replay will be closed, and releasing the flies again starts a new attempt. Your object placements and stars you have already watched stay saved. Unseen results are not awarded."}</p>
       <div>
         <button autoFocus onClick={dismiss}>Keep watching</button>
         <button onClick={() => { setConfirmation(undefined); if (replay) onReplay(); else onReturn(); }}>{replay ? "Replay from start" : "Leave attempt"}</button>

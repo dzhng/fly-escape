@@ -29,7 +29,6 @@ export function Campaign({ levels }: { levels: readonly CampaignLevel[] }) {
   const [progress, setProgress] = useState(loadProgress);
   const [storageFailed, setStorageFailed] = useState(false);
   const [selected, setSelected] = useState(0);
-  const [active, setActive] = useState(false);
   const [catalog, setCatalog] = useState<ToolDef[]>();
   const [error, setError] = useState("");
   useEffect(() => {
@@ -77,7 +76,7 @@ export function Campaign({ levels }: { levels: readonly CampaignLevel[] }) {
         {levels.map((entry, i) => (
           <button
             key={entry.level.id}
-            disabled={active || i >= count}
+            disabled={i >= count}
             aria-current={i === index ? "step" : undefined}
             onClick={() => setSelected(i)}
           >
@@ -98,7 +97,6 @@ export function Campaign({ levels }: { levels: readonly CampaignLevel[] }) {
           progress={progress}
           setProgress={setProgress}
           storageFailed={storageFailed}
-          onAttemptChange={setActive}
         />
       )}
     </div>

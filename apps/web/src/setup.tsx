@@ -16,7 +16,7 @@ import {
 } from "@fly-escape/sim-client";
 import { WorldView } from "@fly-escape/game-renderer";
 import { AttemptPlayback } from "./playback";
-import { type Progress, awardResult } from "./progress";
+import { type Progress, awardStars } from "./progress";
 import "./setup.css";
 import { frameBesidePanel } from "./world-framing";
 
@@ -43,7 +43,6 @@ export function SetupGame({
   progress,
   setProgress,
   storageFailed,
-  onAttemptChange,
 }: {
   content: {
     roomDetails?: readonly RoomDetail[];
@@ -57,7 +56,6 @@ export function SetupGame({
   progress: Progress;
   setProgress: React.Dispatch<React.SetStateAction<Progress>>;
   storageFailed: boolean;
-  onAttemptChange?: (active: boolean) => void;
 }) {
   const [client] = useState(() => new AttemptClient(() => {}));
   const [setup, setSetup] = useState<PlacementState>();
@@ -77,7 +75,6 @@ export function SetupGame({
   const [worldState, setWorldState] = useState("loading");
   const world = useRef<WorldView | undefined>(undefined);
   const container = useRef<HTMLDivElement>(null);
-  const awarded = useRef<string | undefined>(undefined);
   useEffect(() => {
     let live = true;
     void (async () => {
@@ -110,10 +107,6 @@ export function SetupGame({
       client.dispose();
     };
   }, []);
-  useEffect(() => {
-    onAttemptChange?.(!!input);
-    return () => onAttemptChange?.(false);
-  }, [input, onAttemptChange]);
   useEffect(() => {
     if (input || !container.current) return;
     const view = new WorldView(container.current, content.level.geometry, FLY_COUNT, content.roomFloors);
@@ -246,11 +239,7 @@ export function SetupGame({
           setIntent(undefined);
           setError("");
         }}
-        onResult={(result) => {
-          if (awarded.current === input.attemptId) return;
-          awarded.current = input.attemptId;
-          setProgress((p) => awardResult(p, content.level.id, result));
-        }}
+        onStars={(stars) => setProgress(p => awardStars(p, content.level.id, stars))}
       />
     );
   return (
