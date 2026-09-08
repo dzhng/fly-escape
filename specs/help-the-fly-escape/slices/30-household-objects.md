@@ -23,3 +23,5 @@ The old prepared-corner acceptance test is removed: it asserted a historical spi
 
 
 The current calibration evidence is linked from the spec handoff. Placement sweeps alone have not established useful attraction. The [readout experiment](../assets/evidence/30/odor-readouts/README.md) motivates a bounded firing-based steering comparison before further campaign tuning; the [odor-presence candidate](../assets/evidence/30/odor-presence/README.md) remains an alternative with only preliminary campaign evidence. Neither is integrated or accepted. Once spatial effects are supported, return to the reference/poor campaign gates.
+
+The user accepts weaker inhibitory response and explicitly rejects overengineering equal-strength effects. Accept a useful asymmetric mechanic; do not add smoothing or gain sweeps merely to make the pathways alike. Validate complete timed play and use object placement/level design for balance. The [firing-based steering comparison](../assets/evidence/30/spike-steering/README.md) supports the next integration candidate, subject to full-body and house verification.

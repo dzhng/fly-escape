@@ -1,0 +1,10 @@
+rustc: rustc 1.94.1 (e408947bf 2026-03-25)
+cargo: cargo 1.94.1 (29ea6fb6a 2026-03-24)
+git: b77198bf7ce7b7b3c35ad6a00c748ec0ff2ce969 (worktree /private/tmp/fly-sparse-neural-delivery, branch codex/sparse-neural-delivery)
+tracked-dirty-at-run: crates/sim/src/lif.rs (patch below), crates/sim/examples/spike_readout_probe.rs (untracked)
+harness-sha256: 5d706b1bfeb044c32688611704bfe257b5cfa6bbedd496d6ae10d0a95d405bfe
+patched-lif-sha256: 552d1eb5357cccbf17dcc2983392797a7956957a83550bd0d2dfb24c5c0f186d
+graph.bin-sha256: 6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454
+manifest.json-sha256: ead5f7d258f83ee3909080797752c2f4bb749be939a2ff983f411095722efbf1
+cmd: cargo build --release --example spike_readout_probe && ./target/release/examples/spike_readout_probe
+elapsed: 41.0 s (480 chamber runs = 2 decodes x 2 pathways x 2 sides x 30 seeds x {control,active} x 100 ticks, zero warmup)

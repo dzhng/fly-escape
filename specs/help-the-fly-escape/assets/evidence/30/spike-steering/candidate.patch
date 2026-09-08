@@ -1,0 +1,51 @@
+diff --git a/crates/sim/src/lif.rs b/crates/sim/src/lif.rs
+index 4c40517..26af446 100644
+--- a/crates/sim/src/lif.rs
++++ b/crates/sim/src/lif.rs
+@@ -29,6 +29,13 @@ impl Default for LifParams {
+         }
+     }
+ }
++/// SCRATCH EXPERIMENT ONLY (not production): when true, `motor_output` decodes the
++/// olfactory steering term from OLFACTORY_DN spike fractions instead of mean voltage.
++pub static SPIKE_OLF: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
++/// SCRATCH: fixed before any trial from the 0-30 fixed-input evidence
++/// (excitatory spike-fraction difference .007 vs voltage difference .026).
++pub const SPIKE_OLF_SCALE: f64 = 4.0;
++
+ #[derive(Clone, Debug, Serialize, Deserialize, TS, PartialEq)]
+ #[serde(rename_all = "camelCase")]
+ pub struct MotorOutput {
+@@ -330,6 +337,18 @@ impl Brain {
+             spike_count: self.state.spikes.iter().filter(|&&v| v).count() as u32,
+         }
+     }
++    /// SCRATCH EXPERIMENT ONLY (not production): switches the olfactory steering term
++    /// from mean voltage difference to spike-fraction difference. Set by the harness.
++    fn spike_fraction(&self, ids: &[u32]) -> f64 {
++        if ids.is_empty() {
++            0.0
++        } else {
++            ids.iter()
++                .filter(|&&i| self.state.spikes[i as usize])
++                .count() as f64
++                / ids.len() as f64
++        }
++    }
+     fn mean(&self, ids: &[u32]) -> f64 {
+         if ids.is_empty() {
+             0.0
+@@ -352,7 +371,12 @@ impl Brain {
+         let or = self.graph.pathway("OLFACTORY_DN_RIGHT");
+         let has_olf = !ol.is_empty() && !or.is_empty();
+         let olf = if has_olf {
+-            self.mean(or) - self.mean(ol)
++            if SPIKE_OLF.load(std::sync::atomic::Ordering::Relaxed) {
++                // SCRATCH: right-minus-left spike fraction, scaled by 4.
++                SPIKE_OLF_SCALE * (self.spike_fraction(or) - self.spike_fraction(ol))
++            } else {
++                self.mean(or) - self.mean(ol)
++            }
+         } else {
+             0.0
+         };
