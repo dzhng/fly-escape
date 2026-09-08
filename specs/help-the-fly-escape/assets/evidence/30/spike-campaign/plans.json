@@ -1,0 +1,16 @@
+[
+  { "label": "op-empty", "speedScale": 1.0, "placements": [] },
+  { "label": "op-cornerfan-only", "speedScale": 1.0, "placements": [
+    { "id": 13, "kind": "fan", "position": { "x": 2.60, "z": 2.55 }, "heading": 0 }
+  ] },
+  { "label": "op-backpush-cornerfan", "speedScale": 1.0, "placements": [
+    { "id": 11, "kind": "vinegar", "position": { "x": 1.90, "z": 8.90 }, "heading": 0 },
+    { "id": 12, "kind": "vinegar", "position": { "x": 2.90, "z": 8.90 }, "heading": 0 },
+    { "id": 13, "kind": "fan",     "position": { "x": 2.60, "z": 2.55 }, "heading": 0 }
+  ] },
+  { "label": "op-study-food-only", "speedScale": 1.0, "placements": [
+    { "id": 11, "kind": "fruit",   "position": { "x": 2.60, "z": 7.60 }, "heading": 0 },
+    { "id": 12, "kind": "banana",  "position": { "x": 2.70, "z": 8.50 }, "heading": 0 },
+    { "id": 13, "kind": "laundry", "position": { "x": 2.25, "z": 9.20 }, "heading": 0 }
+  ] }
+]

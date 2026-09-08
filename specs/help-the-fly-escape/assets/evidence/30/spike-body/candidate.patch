@@ -1,0 +1,68 @@
+diff --git a/crates/sim/src/lif.rs b/crates/sim/src/lif.rs
+index 4c40517..9610c01 100644
+--- a/crates/sim/src/lif.rs
++++ b/crates/sim/src/lif.rs
+@@ -29,6 +29,10 @@ impl Default for LifParams {
+         }
+     }
+ }
++/// Scale on the olfactory spike-fraction steering term, fixed from the 0-30 fixed-input
++/// readout evidence (excitatory spike-fraction difference .007 vs voltage difference .026).
++pub const OLFACTORY_SPIKE_SCALE: f64 = 4.0;
++
+ #[derive(Clone, Debug, Serialize, Deserialize, TS, PartialEq)]
+ #[serde(rename_all = "camelCase")]
+ pub struct MotorOutput {
+@@ -330,6 +334,17 @@ impl Brain {
+             spike_count: self.state.spikes.iter().filter(|&&v| v).count() as u32,
+         }
+     }
++    /// Fraction of `ids` that spiked on the current tick.
++    fn spike_fraction(&self, ids: &[u32]) -> f64 {
++        if ids.is_empty() {
++            0.0
++        } else {
++            ids.iter()
++                .filter(|&&i| self.state.spikes[i as usize])
++                .count() as f64
++                / ids.len() as f64
++        }
++    }
+     fn mean(&self, ids: &[u32]) -> f64 {
+         if ids.is_empty() {
+             0.0
+@@ -352,7 +367,9 @@ impl Brain {
+         let or = self.graph.pathway("OLFACTORY_DN_RIGHT");
+         let has_olf = !ol.is_empty() && !or.is_empty();
+         let olf = if has_olf {
+-            self.mean(or) - self.mean(ol)
++            // Firing-rate readout: right-minus-left OLFACTORY_DN spike fraction, scaled
++            // by 4 to match the voltage term's range on the same populations.
++            OLFACTORY_SPIKE_SCALE * (self.spike_fraction(or) - self.spike_fraction(ol))
+         } else {
+             0.0
+         };
+diff --git a/crates/sim/src/sensory.rs b/crates/sim/src/sensory.rs
+index ea046d6..455b7d3 100644
+--- a/crates/sim/src/sensory.rs
++++ b/crates/sim/src/sensory.rs
+@@ -30,15 +30,15 @@ pub fn cue_currents(
+     let (ids, mut values) = match pathway {
+         CuePathway::ExcitatoryOdor => (
+             ["odorExcL", "odorExcR"],
+-            [sample.left.repellent_odor, sample.right.repellent_odor],
+-        ),
+-        CuePathway::InhibitoryOdor => (
+-            ["odorInhL", "odorInhR"],
+             [
+                 sample.left.attractive_odor + sample.left.exit_cue,
+                 sample.right.attractive_odor + sample.right.exit_cue,
+             ],
+         ),
++        CuePathway::InhibitoryOdor => (
++            ["odorInhL", "odorInhR"],
++            [sample.left.repellent_odor, sample.right.repellent_odor],
++        ),
+         CuePathway::Vision => (
+             ["visionL", "visionR"],
+             [sample.left.brightness, sample.right.brightness],

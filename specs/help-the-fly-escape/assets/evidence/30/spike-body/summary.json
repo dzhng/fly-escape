@@ -1,0 +1,90 @@
+[
+  {
+    "mode": "Walking",
+    "side": "left",
+    "kind": "AttractiveOdor",
+    "pairedDistanceImprovement": 2.2287375641838723,
+    "t29ci95": [
+      1.9788276757219658,
+      2.4786474526457787
+    ],
+    "closerSeeds": 30
+  },
+  {
+    "mode": "Walking",
+    "side": "left",
+    "kind": "RepellentOdor",
+    "pairedDistanceImprovement": -0.032463436017165066,
+    "t29ci95": [
+      -0.10537938951274445,
+      0.04045251747841432
+    ],
+    "closerSeeds": 9
+  },
+  {
+    "mode": "Walking",
+    "side": "right",
+    "kind": "AttractiveOdor",
+    "pairedDistanceImprovement": 0.9346671256326013,
+    "t29ci95": [
+      0.7127988815871433,
+      1.1565353696780594
+    ],
+    "closerSeeds": 29
+  },
+  {
+    "mode": "Walking",
+    "side": "right",
+    "kind": "RepellentOdor",
+    "pairedDistanceImprovement": -0.23114269346848057,
+    "t29ci95": [
+      -0.36995681396969154,
+      -0.0923285729672696
+    ],
+    "closerSeeds": 5
+  },
+  {
+    "mode": "Flying",
+    "side": "left",
+    "kind": "AttractiveOdor",
+    "pairedDistanceImprovement": 2.225873907309639,
+    "t29ci95": [
+      1.9744182092808114,
+      2.4773296053384666
+    ],
+    "closerSeeds": 30
+  },
+  {
+    "mode": "Flying",
+    "side": "left",
+    "kind": "RepellentOdor",
+    "pairedDistanceImprovement": -0.029177364291538218,
+    "t29ci95": [
+      -0.10335417436827919,
+      0.04499944578520275
+    ],
+    "closerSeeds": 9
+  },
+  {
+    "mode": "Flying",
+    "side": "right",
+    "kind": "AttractiveOdor",
+    "pairedDistanceImprovement": 0.9373159153925678,
+    "t29ci95": [
+      0.721497400011509,
+      1.1531344307736267
+    ],
+    "closerSeeds": 29
+  },
+  {
+    "mode": "Flying",
+    "side": "right",
+    "kind": "RepellentOdor",
+    "pairedDistanceImprovement": -0.22819090355446617,
+    "t29ci95": [
+      -0.367069780088881,
+      -0.08931202702005128
+    ],
+    "closerSeeds": 5
+  }
+]
