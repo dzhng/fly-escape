@@ -83,10 +83,10 @@ fn closed_food_containment_is_not_mistaken_for_surface_separation() {
     let scene = crate::surface::ContactScene::new(&[apple]).unwrap();
     let hull = native_hull().unwrap();
     let q = support_rotation(0., [0., 1., 0.]).unwrap();
-    assert!(scene
-        .penetration(hull, [0., 0.04, 0.], q)
-        .unwrap_err()
-        .contains("inside closed food"));
+    assert_eq!(
+        scene.penetration(hull, [0., 0.04, 0.], q).unwrap(),
+        crate::surface::Penetration::Contained
+    );
     let open = ContactSurface {
         id: 0,
         vertices: vec![[-1., 0.08, -1.], [1., 0.08, -1.], [0., 0.08, 1.]],
@@ -97,7 +97,7 @@ fn closed_food_containment_is_not_mistaken_for_surface_separation() {
             .unwrap()
             .penetration(hull, [0., 0.04, 0.], q)
             .unwrap(),
-        0.
+        crate::surface::Penetration::Depth(0.)
     );
 }
 
@@ -221,17 +221,15 @@ fn motion_requests_advance_within_budget() {
                     pair[1].fraction,
                 ] {
                     let p = result.motion.at(t).unwrap();
-                    assert!(
-                        world
-                            .surfaces
-                            .penetration(
-                                world.hull,
-                                [p.pose.position.x, p.height, p.pose.position.z],
-                                p.rotation
-                            )
-                            .unwrap()
-                            <= 3e-6
-                    );
+                    assert!(!world
+                        .surfaces
+                        .penetration(
+                            world.hull,
+                            [p.pose.position.x, p.height, p.pose.position.z],
+                            p.rotation
+                        )
+                        .unwrap()
+                        .exceeds(3e-6));
                 }
             }
         }
@@ -319,18 +317,16 @@ fn native_shoe_rim_blocks_supported_motion_without_aborting_the_tick() {
     );
     for i in 0..=100 {
         let p = trace.at(i as f64 / 100.).unwrap();
-        assert!(
-            world
-                .surfaces
-                .neighbor_penetration(
-                    world.hull,
-                    [p.pose.position.x, p.height, p.pose.position.z],
-                    p.rotation,
-                    state.support.unwrap()
-                )
-                .unwrap()
-                <= 3e-6
-        );
+        assert!(!world
+            .surfaces
+            .neighbor_penetration(
+                world.hull,
+                [p.pose.position.x, p.height, p.pose.position.z],
+                p.rotation,
+                state.support.unwrap()
+            )
+            .unwrap()
+            .exceeds(3e-6));
     }
     // The collision result is local to this request, not a permanently stuck body.
     let mut airborne = state.clone();
@@ -405,7 +401,7 @@ fn free_rotation_cannot_push_a_blocked_fly_into_neighboring_shoe_mesh() {
             .unwrap()
     };
     let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
-    assert!(depth(&trace.points[0]) <= 3e-6);
+    assert!(!depth(&trace.points[0]).exceeds(3e-6));
     assert!(trace.rotation_blocked);
     assert_eq!(trace.end().rotation, state.rotation);
     assert_eq!(trace.end().pose.heading, state.pose.heading);
@@ -413,8 +409,8 @@ fn free_rotation_cannot_push_a_blocked_fly_into_neighboring_shoe_mesh() {
     for i in 0..=100 {
         let p = trace.at(i as f64 / 100.).unwrap();
         assert!(
-            depth(&p) <= 3e-6,
-            "free rotation produced penetration {}",
+            !depth(&p).exceeds(3e-6),
+            "free rotation produced penetration {:?}",
             depth(&p)
         );
     }
@@ -433,7 +429,7 @@ fn free_rotation_cannot_push_a_blocked_fly_into_neighboring_shoe_mesh() {
     );
     assert_eq!(trace.end().rotation, state.rotation);
     for i in 0..=100 {
-        assert!(depth(&trace.at(i as f64 / 100.).unwrap()) <= 3e-6);
+        assert!(!depth(&trace.at(i as f64 / 100.).unwrap()).exceeds(3e-6));
     }
 }
 
@@ -561,7 +557,10 @@ fn descending_shoe_rim_contact_keeps_a_verified_prefix() {
                     p.rotation,
                 )
                 .unwrap();
-            assert!(depth <= 3e-6, "rim motion penetrates by {depth} at {t}");
+            assert!(
+                !depth.exceeds(3e-6),
+                "rim motion penetrates by {depth:?} at {t}"
+            );
         }
     }
 }
@@ -623,7 +622,10 @@ fn query_exhaustion_after_partial_shoe_motion_restores_verified_start() {
                     p.rotation,
                 )
                 .unwrap();
-            assert!(depth <= 3e-6, "rim motion penetrates by {depth} at {t}");
+            assert!(
+                !depth.exceeds(3e-6),
+                "rim motion penetrates by {depth:?} at {t}"
+            );
         }
     }
 }
@@ -685,8 +687,185 @@ fn unresolved_shoe_rim_landing_declines_support_at_the_verified_pose() {
                 )
                 .unwrap();
             assert!(
-                depth <= 3e-6,
-                "declined landing penetrates by {depth} at {t}"
+                !depth.exceeds(3e-6),
+                "declined landing penetrates by {depth:?} at {t}"
+            );
+        }
+    }
+}
+
+#[test]
+fn free_flight_into_a_closed_cat_part_holds_the_verified_pose() {
+    // Campaign first house, cold seed 102 vinegar plan, fly 6, tick 64. The fly
+    // starts touching the sleeping cat; the request leads its hull interior
+    // inside one closed cat component, which the swept cast does not report.
+    let state: BodyState = serde_json::from_str(r#"{"height":0.23414186509649976,"mode":"flying","outcome":null,"pose":{"heading":3.327521341194789,"position":{"x":1.989364406830438,"z":1.7249449795611456}},"reserve":15.320000000000093,"rotation":[-0.05489973288487602,0.7523768295447301,-0.1602347215681242,-0.636584605294045],"support":null}"#).unwrap();
+    let desired: BodyPose = serde_json::from_str(
+        r#"{"heading":3.0698210248916333,"position":{"x":1.9614511716976932,"z":1.726951804923425}}"#,
+    )
+    .unwrap();
+    let world = first_house_room(
+        crate::native_object::NativeObjectShape::SleepingCat
+            .placed_surfaces(Point { x: 2.2, z: 1.65 }, 0., 34)
+            .unwrap(),
+    );
+    // The request start is a physically valid pose, so the failure was never a
+    // malformed query about it.
+    assert!(!world
+        .surfaces
+        .penetration(
+            world.hull,
+            [state.pose.position.x, state.height, state.pose.position.z],
+            state.rotation
+        )
+        .unwrap()
+        .exceeds(3e-6));
+    let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
+    assert_eq!(trace.end().fraction, 1.);
+    assert_eq!(trace.end().pose, state.pose);
+    assert_eq!(trace.end().height, state.height);
+    assert_eq!(trace.end().rotation, state.rotation);
+    assert_traversal_clears_contact(&world, &trace);
+}
+
+#[test]
+fn landing_tilt_that_overlaps_a_shoe_holds_the_verified_pose() {
+    // Campaign first house, cold seed 105 empty plan, fly 14, tick 123. The
+    // upright tilt of a grounded landing clears the nonlinear sweep but leaves
+    // the hull 5.9 um inside the worn shoes.
+    let state: BodyState = serde_json::from_str(r#"{"height":0.0,"mode":"landing","outcome":null,"pose":{"heading":3.460587965107426,"position":{"x":1.3137040611390862,"z":3.424126647542054}},"reserve":11.360000000000104,"rotation":[0.0,0.8104359062021477,0.0,-0.5858273140937557],"support":null}"#).unwrap();
+    let desired: BodyPose = serde_json::from_str(
+        r#"{"heading":3.32200042232266,"position":{"x":1.2809258651707927,"z":3.4181482051254144}}"#,
+    )
+    .unwrap();
+    let world = first_house_room(
+        crate::native_object::NativeObjectShape::WornShoes
+            .placed_surfaces(Point { x: 1.2, z: 3.4 }, 0.6, 2)
+            .unwrap(),
+    );
+    let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
+    assert_eq!(trace.end().fraction, 1.);
+    assert_eq!(trace.end().pose, state.pose);
+    assert_eq!(trace.end().height, state.height);
+    assert_eq!(trace.end().rotation, state.rotation);
+    assert_traversal_clears_contact(&world, &trace);
+}
+
+#[test]
+fn an_initial_pose_inside_a_closed_surface_stays_an_error() {
+    // Containment only stops being an error for a candidate the owner proposes;
+    // the request start still has to be a pose the body could legally occupy.
+    let world = first_house_room(
+        crate::native_object::NativeObjectShape::SleepingCat
+            .placed_surfaces(Point { x: 2.2, z: 1.65 }, 0., 34)
+            .unwrap(),
+    );
+    let state: BodyState = serde_json::from_str(r#"{"height":0.24914186509649977,"mode":"flying","outcome":null,"pose":{"heading":3.327521341194789,"position":{"x":1.983781759803889,"z":1.7253463446336015}},"reserve":15.320000000000093,"rotation":[-0.05489973288487602,0.7523768295447301,-0.1602347215681242,-0.636584605294045],"support":null}"#).unwrap();
+    assert_eq!(
+        world
+            .surfaces
+            .penetration(
+                world.hull,
+                [state.pose.position.x, state.height, state.pose.position.z],
+                state.rotation
+            )
+            .unwrap(),
+        crate::surface::Penetration::Contained
+    );
+    assert!(motion::advance(&world, &state, state.pose, 0.1, 0.002632)
+        .unwrap_err()
+        .contains("initial body penetrates native contact"));
+}
+
+#[test]
+fn a_blocked_departure_keeps_the_walking_fly_on_its_support() {
+    // Campaign first house, cold seed 103 vinegar plan, fly 5, tick 147. The walk
+    // target has no support root on the shoe, and the planar departure that would
+    // replace it immediately enters contact.
+    let state: BodyState = serde_json::from_str(r#"{"height":0.15002094274263175,"mode":"walking","outcome":null,"pose":{"heading":1.766214338589159,"position":{"x":1.1603924979639133,"z":3.2857453925929896}},"reserve":9.840000000000103,"rotation":[-0.00719136019307749,-0.09754800447367712,-0.0011243779958433396,0.9952042036365698],"support":26}"#).unwrap();
+    let desired: BodyPose = serde_json::from_str(
+        r#"{"heading":1.8618788094966923,"position":{"x":1.157975176288005,"z":3.293814103723813}}"#,
+    )
+    .unwrap();
+    let world = first_house_room(
+        crate::native_object::NativeObjectShape::WornShoes
+            .placed_surfaces(Point { x: 1.2, z: 3.4 }, 0.6, 2)
+            .unwrap(),
+    );
+    let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
+    assert_eq!(trace.end().fraction, 1.);
+    assert_eq!(trace.end().pose, state.pose);
+    assert_eq!(trace.end().height, state.height);
+    // A departure that never happened cannot cost the body its support.
+    assert_eq!(trace.end().support, state.support);
+    assert!(trace.end().grounded);
+    assert_traversal_clears_contact(&world, &trace);
+}
+
+#[test]
+fn an_absent_tilted_support_root_departs_instead_of_aborting() {
+    // A walk target can have a support root upright, but not under the proposed
+    // tilt toward that root's normal.
+    let state: BodyState = serde_json::from_str(r#"{"height":0.15002094274263175,"mode":"walking","outcome":null,"pose":{"heading":1.766214338589159,"position":{"x":1.1603924979639133,"z":3.2857453925929896}},"reserve":9.560000000000109,"rotation":[-0.00719136019307749,-0.09754800447367712,-0.0011243779958433396,0.9952042036365698],"support":26}"#).unwrap();
+    let desired: BodyPose = serde_json::from_str(
+        r#"{"heading":1.7748608875491652,"position":{"x":1.1587038271244583,"z":3.293905385830609}}"#,
+    )
+    .unwrap();
+    let world = first_house_room(
+        crate::native_object::NativeObjectShape::WornShoes
+            .placed_surfaces(Point { x: 1.2, z: 3.4 }, 0.6, 2)
+            .unwrap(),
+    );
+    let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
+    assert_eq!(trace.end().fraction, 1.);
+    // The tilt is refused, the body leaves that root, and the tick still moves.
+    assert_ne!(trace.end().support, state.support);
+    assert!(trace.end().pose.position.distance(state.pose.position) > 1e-6);
+    assert_traversal_clears_contact(&world, &trace);
+}
+
+/// One authored first-house room holding a single native prop at its map pose.
+fn first_house_room(objects: Vec<ContactSurface>) -> BodyWorld {
+    BodyWorld::new(
+        &Geometry {
+            rooms: vec![crate::environment::RectRoom {
+                id: 1,
+                min: Point { x: 0., z: 0. },
+                max: Point { x: 4.8, z: 4.5 },
+            }],
+            walls: vec![],
+            solids: vec![],
+        },
+        &[],
+        &objects,
+        &[],
+        ExitOpening {
+            a: Point { x: 0., z: 1.8 },
+            b: Point { x: 0., z: 2.7 },
+            outward: Point { x: -1., z: 0. },
+        },
+        1000,
+    )
+    .unwrap()
+}
+
+/// No pose the body passes through may overlap contact, not just the knots.
+fn assert_traversal_clears_contact(world: &BodyWorld, trace: &MotionTrace) {
+    for pair in trace.points.windows(2) {
+        for i in 0..=100 {
+            let t = pair[0].fraction + (pair[1].fraction - pair[0].fraction) * i as f64 / 100.;
+            let p = trace.at(t).unwrap();
+            let depth = world
+                .surfaces
+                .penetration(
+                    world.hull,
+                    [p.pose.position.x, p.height, p.pose.position.z],
+                    p.rotation,
+                )
+                .unwrap();
+            assert!(
+                !depth.exceeds(3e-6),
+                "held motion penetrates {depth:?} at {t}"
             );
         }
     }

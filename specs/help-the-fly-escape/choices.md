@@ -727,3 +727,8 @@ The user's one-fan maximum and rejection of chained-fan solutions supersede earl
 ## Unusable landing candidates — 2026-09-08
 
 - **Treat a noncoincident landing projection as blocking contact — sound, high confidence.** A fly grazing a nearly vertical shoe can contact it without having a consistent pose for standing on it. The body now declines standing and keeps the already verified impact for the rest of the tick, using the existing collision response. Previously this valid request aborted the whole swarm. The choice preserves geometry and precision rather than snapping to an unchecked position; it can leave a fly blocked until a later request moves clear. Invalid input and failed native queries remain errors.
+
+## Candidate contact acceptance — 2026-09-08
+
+- **Keep physical overlap distinct from a broken query — sound, high confidence.** A proposed move into a closed prop is a blocked move; an already-invalid starting pose still fails. The motion owner checks candidate endpoints and uses its existing safe stopping behavior. This adds an internal typed overlap result, without changing browser schemas, geometry or neural rules.
+- **Commit departure only after checking it — sound, high confidence.** A walking fly keeps its current support while a proposed departure is tested. If the departure is blocked, it stays supported instead of entering an inconsistent state that aborts the swarm. This can conservatively delay movement; time and reserve still advance.

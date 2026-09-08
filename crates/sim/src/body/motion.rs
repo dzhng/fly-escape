@@ -182,7 +182,8 @@ pub(super) fn advance(
             MotionFailure::QueryLimit
             | MotionFailure::SegmentLimit
             | MotionFailure::KnotLimit
-            | MotionFailure::SubstepLimit,
+            | MotionFailure::SubstepLimit
+            | MotionFailure::Blocked,
         ) => {
             let mut trace = MotionTrace::stationary(state);
             // Mode changes can initiate takeoff while retaining the old support
@@ -225,11 +226,14 @@ fn validate_start(
         return Err("initial body penetrates the floor".into());
     }
     work.query()?;
-    if world.surfaces.penetration(
-        world.hull,
-        [state.pose.position.x, state.height, state.pose.position.z],
-        state.rotation,
-    )? > MOTION_ERROR
+    if world
+        .surfaces
+        .penetration(
+            world.hull,
+            [state.pose.position.x, state.height, state.pose.position.z],
+            state.rotation,
+        )?
+        .exceeds(MOTION_ERROR)
     {
         return Err("initial body penetrates native contact".into());
     }
@@ -342,13 +346,24 @@ fn advance_bounded(
                 heading,
                 current_up,
             )?;
-            if let Some(candidate) = candidate.filter(|s| s.normal[1] > 0.) {
-                let next_up = toward(current_up, candidate.normal, step);
-                work.query()?;
-                let sample = world
-                    .surfaces
-                    .support_at(world.hull, id, [target.x, target.z], heading, next_up)?
-                    .ok_or("support disappeared while changing orientation")?;
+            // The tilt toward the candidate normal is part of the proposal, so a
+            // root that disappears under it leaves no supported endpoint to walk
+            // to; the departure below owns that outcome either way.
+            let endpoint = match candidate.filter(|s| s.normal[1] > 0.) {
+                Some(candidate) => {
+                    let next_up = toward(current_up, candidate.normal, step);
+                    work.query()?;
+                    world.surfaces.support_at(
+                        world.hull,
+                        id,
+                        [target.x, target.z],
+                        heading,
+                        next_up,
+                    )?
+                }
+                None => None,
+            };
+            if let Some(sample) = endpoint {
                 let endpoint = MotionPoint {
                     fraction,
                     pose: BodyPose {
@@ -380,20 +395,15 @@ fn advance_bounded(
                 continue;
             }
             // Test a constrained horizontal departure before beginning descent.
-            // The supported endpoint is absent, but the old pose still touches its surface.
-            point.support = None;
-            point.grounded = false;
-            if let Some(last) = trace.points.last_mut() {
-                last.support = None;
-                last.grounded = false;
-            }
-            let from = point.clone();
+            // The supported endpoint is absent, but the old pose still touches
+            // its surface, so nothing is committed until the whole departure is
+            // proven: a blocked one leaves the body supported where it was.
             let mut departure = point.clone();
             departure.pose.position = target;
             departure.pose.heading = heading;
             departure.rotation = support_rotation(heading, current_up)?;
             departure.fraction = fraction;
-            let rotation_angle = Rotation::from_array(from.rotation)
+            let rotation_angle = Rotation::from_array(point.rotation)
                 .angle_between(Rotation::from_array(departure.rotation));
             let count = (((target.x - point.pose.position.x)
                 .hypot(target.z - point.pose.position.z)
@@ -401,19 +411,17 @@ fn advance_bounded(
                 .max(rotation_angle / 0.01))
             .ceil()
             .max(1.) as usize;
+            let mut leaving = vec![];
             for i in 1..=count {
                 let t = i as f64 / count as f64;
-                let mut next = mix(&from, &departure, t);
+                let mut next = mix(&point, &departure, t);
                 work.query()?;
                 if world
                     .surfaces
                     .penetration(world.hull, next.root(), next.rotation)?
-                    > CONTACT_PRECISION
+                    .exceeds(CONTACT_PRECISION)
                 {
-                    return Err(
-                        "numerical departure unresolved: planar request enters blocking contact"
-                            .into(),
-                    );
+                    return hold(world, trace, point, work);
                 }
                 work.segments += 1;
                 if work.segments > 128 {
@@ -421,16 +429,26 @@ fn advance_bounded(
                 }
                 next.support = None;
                 next.grounded = false;
-                append_point(&mut trace.points, next.clone())?;
-                point = next;
+                leaving.push(next);
             }
             work.query()?;
+            let arrival = leaving.last().unwrap_or(&point);
             if world
                 .surfaces
-                .touching_hull(world.hull, point.root(), point.rotation, |_| true)?
+                .touching_hull(world.hull, arrival.root(), arrival.rotation, |_| true)?
                 .is_some()
             {
-                return Err("numerical departure unresolved: unilateral contact remains".into());
+                return hold(world, trace, point, work);
+            }
+            point.support = None;
+            point.grounded = false;
+            if let Some(last) = trace.points.last_mut() {
+                last.support = None;
+                last.grounded = false;
+            }
+            for next in leaving {
+                append_point(&mut trace.points, next.clone())?;
+                point = next;
             }
             elapsed += step;
             if blocked.iter().any(|v| *v) {
@@ -488,13 +506,8 @@ fn advance_bounded(
         if clearance != crate::surface::RotationClearance::Clear {
             // No swept-clearance proof: reject angular motion, then still test
             // the requested translation using the last verified orientation.
-            work.query()?;
-            if world
-                .surfaces
-                .penetration(world.hull, point.root(), point.rotation)?
-                > MOTION_ERROR
-            {
-                return Err("blocked angular motion has no verified nonpenetrating start".into());
+            if !verified(world, point.root(), point.rotation, work)? {
+                return Err(MotionFailure::Blocked);
             }
             trace.rotation_blocked = true;
             trace.rotation_unresolved |= clearance == crate::surface::RotationClearance::Unresolved;
@@ -530,22 +543,10 @@ fn advance_bounded(
                 point.height + delta[1] * hit.fraction,
                 point.pose.position.z + delta[2] * hit.fraction,
             ];
-            work.query()?;
-            if world.surfaces.penetration(world.hull, impact, rotation)? > MOTION_ERROR {
+            if !verified(world, impact, rotation, work)? {
                 // A candidate impact is not permission to enter a neighboring
                 // component. Retain the verified prefix when this root is blocked.
-                work.query()?;
-                if world
-                    .surfaces
-                    .penetration(world.hull, point.root(), point.rotation)?
-                    > MOTION_ERROR
-                {
-                    return Err("blocked free motion has no verified nonpenetrating start".into());
-                }
-                point.fraction = 1.;
-                append_point(&mut trace.points, point)?;
-                trace.queries = work.queries;
-                return Ok(trace);
+                return hold(world, trace, point, work);
             }
             let used = step * hit.fraction;
             point.pose.position = Point {
@@ -616,23 +617,31 @@ fn advance_bounded(
             return Ok(trace);
         }
         if let Some(f) = floor_fraction {
-            point.pose.position = Point {
-                x: point.pose.position.x + delta[0] * f,
-                z: point.pose.position.z + delta[2] * f,
+            let landed = MotionPoint {
+                fraction: (elapsed + step * f) / dt,
+                pose: BodyPose {
+                    position: Point {
+                        x: point.pose.position.x + delta[0] * f,
+                        z: point.pose.position.z + delta[2] * f,
+                    },
+                    heading,
+                },
+                height: floor,
+                rotation,
+                support: None,
+                grounded: true,
             };
-            point.pose.heading = heading;
-            point.height = floor;
-            point.rotation = rotation;
-            point.support = None;
-            point.grounded = true;
+            if !verified(world, landed.root(), landed.rotation, work)? {
+                return hold(world, trace, point, work);
+            }
             elapsed += step * f;
-            point.fraction = elapsed / dt;
+            point = landed;
             if point.fraction > trace.end().fraction {
                 append_point(&mut trace.points, point.clone())?;
             }
             continue;
         }
-        point = MotionPoint {
+        let next = MotionPoint {
             fraction,
             pose: BodyPose {
                 position: target,
@@ -643,6 +652,10 @@ fn advance_bounded(
             support: None,
             grounded: point.grounded,
         };
+        if !verified(world, next.root(), next.rotation, work)? {
+            return hold(world, trace, point, work);
+        }
+        point = next;
         elapsed += step;
         if blocked.iter().any(|v| *v) {
             origin = point.pose.position;
@@ -664,6 +677,42 @@ fn advance_bounded(
     Ok(trace)
 }
 
+/// A scene cast is a search, not a proof: it filters triangles by separating
+/// planes and does not stop at an already-touching start, so it can answer a
+/// request with a destination that overlaps. This owner therefore proves every
+/// pose it is about to move a body onto, using the same allowance that admitted
+/// the request start.
+fn verified(
+    world: &BodyWorld,
+    root: [f64; 3],
+    rotation: [f64; 4],
+    work: &mut Work,
+) -> Result<bool, MotionFailure> {
+    work.query()?;
+    Ok(!world
+        .surfaces
+        .penetration(world.hull, root, rotation)?
+        .exceeds(MOTION_ERROR))
+}
+
+/// Contact declined a candidate. Time still advances: the verified prefix holds
+/// its last pose for the rest of the tick. A prefix that cannot be reverified is
+/// no prefix at all, so the tick reverts to the already validated request start.
+fn hold(
+    world: &BodyWorld,
+    mut trace: MotionTrace,
+    mut point: MotionPoint,
+    work: &mut Work,
+) -> Result<MotionTrace, MotionFailure> {
+    if !verified(world, point.root(), point.rotation, work)? {
+        return Err(MotionFailure::Blocked);
+    }
+    point.fraction = 1.;
+    append_point(&mut trace.points, point)?;
+    trace.queries = work.queries;
+    Ok(trace)
+}
+
 fn append_point(points: &mut Vec<MotionPoint>, point: MotionPoint) -> Result<(), MotionFailure> {
     // Reserve space for an event split and a stationary terminal tail.
     if points.len() >= MAX_MOTION_POINTS - 2 {
@@ -679,6 +728,9 @@ enum MotionFailure {
     SegmentLimit,
     KnotLimit,
     SubstepLimit,
+    /// Contact blocked the request before any part of it was verified. The
+    /// request start is already proven, so the tick holds there.
+    Blocked,
     Invalid(String),
 }
 impl From<String> for MotionFailure {
@@ -760,7 +812,7 @@ fn stop_supported(
     if world
         .surfaces
         .penetration(world.hull, last.root(), last.rotation)?
-        > MOTION_ERROR
+        .exceeds(MOTION_ERROR)
     {
         return Err(
             "numerical support unresolved: retained pose penetrates contact surface".into(),
@@ -783,7 +835,7 @@ fn supported_knots(
         if world
             .surfaces
             .neighbor_penetration(world.hull, end.root(), end.rotation, selected)?
-            > MOTION_ERROR
+            .exceeds(MOTION_ERROR)
         {
             return stop_supported(world, out, work);
         }
@@ -810,15 +862,14 @@ fn supported_knots(
                 )?
                 .ok_or("numerical motion unresolved: interior support gap")?;
             let error = (sample.root[1] - p.height).abs();
-            let penetration = if neighbors {
+            let overlapping = neighbors && {
                 work.query()?;
                 world
                     .surfaces
                     .neighbor_penetration(world.hull, p.root(), p.rotation, selected)?
-            } else {
-                0.
+                    .exceeds(MOTION_ERROR * 0.5)
             };
-            if error > MOTION_ERROR * 0.5 || penetration > MOTION_ERROR * 0.5 {
+            if error > MOTION_ERROR * 0.5 || overlapping {
                 let mut middle = mix(&a, &b, 0.5);
                 let center = if i * 2 == count {
                     sample
@@ -839,12 +890,10 @@ fn supported_knots(
                 middle.rotation = center.rotation;
                 if neighbors {
                     work.query()?;
-                    if world.surfaces.neighbor_penetration(
-                        world.hull,
-                        middle.root(),
-                        middle.rotation,
-                        selected,
-                    )? > MOTION_ERROR
+                    if world
+                        .surfaces
+                        .neighbor_penetration(world.hull, middle.root(), middle.rotation, selected)?
+                        .exceeds(MOTION_ERROR)
                     {
                         return stop_supported(world, out, work);
                     }
@@ -919,13 +968,15 @@ mod coalescing_tests {
         let mut retained = point(0.5, 0.);
         retained.height = 0.04;
         retained.support = Some(apple.id);
-        assert!(world
-            .surfaces
-            .penetration(world.hull, retained.root(), retained.rotation)
-            .unwrap_err()
-            .contains("inside closed food"));
+        assert_eq!(
+            world
+                .surfaces
+                .penetration(world.hull, retained.root(), retained.rotation)
+                .unwrap(),
+            crate::surface::Penetration::Contained
+        );
         assert!(
-            matches!(stop_supported(&world, &[retained.clone()], &mut Work::default()), Err(MotionFailure::Invalid(message)) if message.contains("inside closed food"))
+            matches!(stop_supported(&world, &[retained.clone()], &mut Work::default()), Err(MotionFailure::Invalid(message)) if message.contains("retained pose penetrates"))
         );
         let mut work = Work {
             queries: MAX_QUERIES,
@@ -1013,7 +1064,7 @@ mod coalescing_tests {
         invalid.mode = BodyMode::Landing;
         assert!(advance(&world, &invalid, invalid.pose, 0.1, 0.002632)
             .unwrap_err()
-            .contains("inside closed food"));
+            .contains("initial body penetrates native contact"));
     }
     #[test]
     fn straight_knots_coalesce_without_moving_any_intermediate_pose() {

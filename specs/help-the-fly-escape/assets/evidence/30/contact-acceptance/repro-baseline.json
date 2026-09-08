@@ -1,0 +1,395 @@
+{
+  "attemptSourceSha256": "44232ff3f39830e0c805d7fb4281965580e9e5d375d3029d66e022cd12c94d22",
+  "complete": true,
+  "durationTicks": 800,
+  "elapsedSeconds": 5.663682209,
+  "errors": [
+    {
+      "error": "blocked free motion has no verified nonpenetrating start | failedAtTick 123 | lastVerified [{\"heading\":3.227775034134795,\"height\":0.30000000000000016,\"id\":0,\"mode\":\"Flying\",\"outcome\":\"running\",\"position\":{\"x\":1.3046897512594775,\"z\":4.4822944431782465},\"reserve\":11.400000000000105,\"support\":null},{\"heading\":5.2052508365062105,\"height\":0.0,\"id\":1,\"mode\":\"Walking\",\"outcome\":\"running\",\"position\":{\"x\":2.2602221938305385,\"z\":0.5855791516841892},\"reserve\":11.440000000000108,\"support\":null},{\"heading\":5.565625927227508,\"height\":0.6,\"id\":2,\"mode\":\"Flying\",\"outcome\":\"running\",\"position\":{\"x\":6.1141753405818156,\"z\":1.451088211792898},\"reserve\":10.960000000000097,\"support\":null},{\"heading\":1.1395571479858706,\"height\":0.15000000000000002,\"id\":3,\"mode\":\"Landing\",\"outcome\":\"running\",\"position\":{\"x\":3.437142903227514,\"z\":4.497367999439455},\"reserve\":11.320000000000105,\"support\":null},{\"heading\":6.1148114077680145,\"height\":0.0,\"id\":4,\"mode\":\"Walking\",\"outcome\":\"running\",\"position\":{\"x\":4.797367999450299,\"z\":0.13812068632436458},\"reserve\":11.280000000000104,\"support\":null},{\"heading\":1.4428883852871603,\"height\":0.0,\"id\":5,\"mode\":\"Walking\",\"outcome\":\"running\",\"position\":{\"x\":2.564733576596846,\"z\":4.772155682962496},\"reserve\":11.640000000000112,\"support\":null},{\"heading\":3.2132084306365414,\"height\":0.075,\"id\":6,\"mode\":\"Flying\",\"outcome\":\"running\",\"position\":{\"x\":0.7451111315383445,\"z\":2.506900420236532},\"reserve\":11.360000000000104,\"support\":null},{\"heading\":3.0223792198315342,\"height\":0.0,\"id\":7,\"mode\":\"Walking\",\"outcome\":\"running\",\"position\":{\"x\":0.5706739683985528,\"z\":3.550229660203799},\"reserve\":11.160000000000101,\"support\":null},{\"heading\":0.5551841545960352,\"height\":0.2250000000000001,\"id\":8,\"mode\":\"Flying\",\"outcome\":\"running\",\"position\":{\"x\":4.797367999150196,\"z\":1.3973841180352387},\"reserve\":11.400000000000105,\"support\":null},{\"heading\":5.82159768218074,\"height\":0.44999999999999984,\"id\":9,\"mode\":\"Landing\",\"outcome\":\"running\",\"position\":{\"x\":4.797367999264986,\"z\":3.28882690366463},\"reserve\":11.040000000000097,\"support\":null},{\"heading\":6.2014378322282155,\"height\":0.07499999999999957,\"id\":10,\"mode\":\"Landing\",\"outcome\":\"running\",\"position\":{\"x\":2.3631094032604696,\"z\":2.854361581412548},\"reserve\":11.000000000000098,\"support\":null},{\"heading\":0.5445828802784197,\"height\":0.6,\"id\":11,\"mode\":\"Flying\",\"outcome\":\"running\",\"position\":{\"x\":4.79736799944124,\"z\":1.0215560420443588},\"reserve\":11.400000000000105,\"support\":null},{\"heading\":1.074971649858479,\"height\":0.5249999999999999,\"id\":12,\"mode\":\"Landing\",\"outcome\":\"running\",\"position\":{\"x\":1.0897360424494056,\"z\":3.798689559812504},\"reserve\":11.040000000000095,\"support\":null},{\"heading\":4.366298908655855,\"height\":0.0,\"id\":13,\"mode\":\"Walking\",\"outcome\":\"running\",\"position\":{\"x\":1.419846405814971,\"z\":1.2292340200423229},\"reserve\":11.56000000000011,\"support\":null},{\"heading\":3.460587965107426,\"height\":0.0,\"id\":14,\"mode\":\"Flying\",\"outcome\":\"running\",\"position\":{\"x\":1.3137040611390862,\"z\":3.424126647542054},\"reserve\":11.360000000000104,\"support\":null},{\"heading\":1.4456392993845932,\"height\":0.6,\"id\":15,\"mode\":\"Flying\",\"outcome\":\"running\",\"position\":{\"x\":1.9519082764620714,\"z\":5.164252058176577},\"reserve\":11.040000000000097,\"support\":null},{\"heading\":2.361664013974384,\"height\":0.2250000000000001,\"id\":16,\"mode\":\"Flying\",\"outcome\":\"running\",\"position\":{\"x\":0.869715055778032,\"z\":2.180396155749206},\"reserve\":10.960000000000097,\"support\":null},{\"heading\":4.293960297584612,\"height\":0.0,\"id\":17,\"mode\":\"Walking\",\"outcome\":\"running\",\"position\":{\"x\":2.3978130879212407,\"z\":0.0026320007946949373},\"reserve\":11.440000000000106,\"support\":null},{\"heading\":4.695810819918597,\"height\":0.0,\"id\":18,\"mode\":\"Walking\",\"outcome\":\"running\",\"position\":{\"x\":4.797049911831314,\"z\":0.4015178910541954},\"reserve\":11.760000000000113,\"support\":null},{\"heading\":2.6168122414641517,\"height\":0.5250000000000004,\"id\":19,\"mode\":\"Flying\",\"outcome\":\"running\",\"position\":{\"x\":0.4977200728150739,\"z\":3.2434494005714165},\"reserve\":11.320000000000105,\"support\":null}]",
+      "plan": "empty",
+      "seed": 105
+    },
+    {
+      "error": "numerical contact unresolved: hull interior is inside closed food | failedAtTick 64 | lastVerified [{\"heading\":1.9372112484456,\"height\":0.6,\"id\":0,\"mode\":\"Flying\",\"outcome\":\"running\",\"position\":{\"x\":3.4156403098105783,\"z\":3.726272546166276},\"reserve\":15.320000000000086,\"support\":null},{\"heading\":3.164240427556433,\"height\":0.0,\"id\":1,\"mode\":\"Walking\",\"outcome\":\"running\",\"position\":{\"x\":2.6732579969934283,\"z\":0.6486355398482296},\"reserve\":15.28000000000009,\"support\":null},{\"heading\":5.204937673774916,\"height\":0.6,\"id\":2,\"mode\":\"Flying\",\"outcome\":\"running\",\"position\":{\"x\":4.699954259964471,\"z\":1.4181149963104254},\"reserve\":15.440000000000085,\"support\":null},{\"heading\":5.5284606145879005,\"height\":0.2250000000000001,\"id\":3,\"mode\":\"Flying\",\"outcome\":\"running\",\"position\":{\"x\":4.411721879902459,\"z\":1.1371637388303986},\"reserve\":15.400000000000093,\"support\":null},{\"heading\":2.660037159836321,\"height\":0.0,\"id\":4,\"mode\":\"Walking\",\"outcome\":\"running\",\"position\":{\"x\":1.7497048480777087,\"z\":1.3693233738700004},\"reserve\":15.160000000000087,\"support\":null},{\"heading\":3.1597081137401206,\"height\":0.0,\"id\":5,\"mode\":\"Walking\",\"outcome\":\"running\",\"position\":{\"x\":1.3705536082196934,\"z\":2.0897906315764634},\"reserve\":15.24000000000009,\"support\":null},{\"heading\":3.327521341194789,\"height\":0.23414186509649976,\"id\":6,\"mode\":\"Flying\",\"outcome\":\"running\",\"position\":{\"x\":1.989364406830438,\"z\":1.7249449795611456},\"reserve\":15.320000000000093,\"support\":null},{\"heading\":6.18193750658053,\"height\":0.0,\"id\":7,\"mode\":\"Walking\",\"outcome\":\"running\",\"position\":{\"x\":5.021211852261553,\"z\":2.093279190189407},\"reserve\":15.160000000000087,\"support\":null},{\"heading\":5.483740277398134,\"height\":0.0,\"id\":8,\"mode\":\"Walking\",\"outcome\":\"running\",\"position\":{\"x\":4.797367999302895,\"z\":1.372242211889838},\"reserve\":15.240000000000089,\"support\":null},{\"heading\":4.709466219461725,\"height\":0.2250000000000001,\"id\":9,\"mode\":\"Flying\",\"outcome\":\"running\",\"position\":{\"x\":3.6713838679854987,\"z\":1.2383334492098923},\"reserve\":15.320000000000093,\"support\":null},{\"heading\":2.099511477478101,\"height\":0.0,\"id\":10,\"mode\":\"Walking\",\"outcome\":\"running\",\"position\":{\"x\":1.6652246952343752,\"z\":1.5909465403772556},\"reserve\":15.280000000000092,\"support\":null},{\"heading\":2.5660246819619346,\"height\":0.0,\"id\":11,\"mode\":\"Walking\",\"outcome\":\"running\",\"position\":{\"x\":1.7594461577800788,\"z\":3.0783750507907186},\"reserve\":15.040000000000086,\"support\":null},{\"heading\":1.54275250045966,\"height\":0.0,\"id\":12,\"mode\":\"Walking\",\"outcome\":\"running\",\"position\":{\"x\":4.786816315024268,\"z\":2.584386105225711},\"reserve\":15.120000000000088,\"support\":null},{\"heading\":3.1711016093271525,\"height\":0.07500000000000001,\"id\":13,\"mode\":\"Landing\",\"outcome\":\"running\",\"position\":{\"x\":1.5078695540443634,\"z\":2.674155422178005},\"reserve\":15.360000000000092,\"support\":null},{\"heading\":4.486461820795728,\"height\":0.07500000000000001,\"id\":14,\"mode\":\"Landing\",\"outcome\":\"running\",\"position\":{\"x\":2.8936313774422553,\"z\":0.9696724455416629},\"reserve\":15.400000000000084,\"support\":null},{\"heading\":2.047852968843063,\"height\":0.30000000000000016,\"id\":15,\"mode\":\"Flying\",\"outcome\":\"running\",\"position\":{\"x\":3.998993098020093,\"z\":3.4144026554610973},\"reserve\":15.320000000000093,\"support\":null},{\"heading\":2.396446285853817,\"height\":0.0,\"id\":16,\"mode\":\"Walking\",\"outcome\":\"running\",\"position\":{\"x\":1.477102302866411,\"z\":1.663343699217029},\"reserve\":15.200000000000088,\"support\":null},{\"heading\":5.534501558974034,\"height\":0.5249999999999999,\"id\":17,\"mode\":\"Landing\",\"outcome\":\"running\",\"position\":{\"x\":4.487071606253339,\"z\":1.3503326038211332},\"reserve\":15.360000000000085,\"support\":null},{\"heading\":3.3013108990005575,\"height\":0.2250000000000001,\"id\":18,\"mode\":\"Landing\",\"outcome\":\"running\",\"position\":{\"x\":1.9786444806631107,\"z\":2.77118225714417},\"reserve\":15.320000000000087,\"support\":null},{\"heading\":5.1785878502563465,\"height\":0.0,\"id\":19,\"mode\":\"Walking\",\"outcome\":\"running\",\"position\":{\"x\":2.8835513144482663,\"z\":0.37228191349708695},\"reserve\":15.040000000000086,\"support\":null}]",
+      "plan": "vinegar",
+      "seed": 102
+    }
+  ],
+  "flyCount": 20,
+  "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+  "levelContentSha256": "a4d15b39bb4e7fd0c3bd41ecde22f456a4303dcb55c69635e43affd45c1dc488",
+  "plans": [
+    {
+      "foodSurfaces": 2,
+      "objectSurfaces": 78,
+      "placements": [],
+      "plan": "empty",
+      "remainingInventory": [
+        {
+          "count": 1,
+          "kind": "fruit"
+        },
+        {
+          "count": 1,
+          "kind": "banana"
+        },
+        {
+          "count": 1,
+          "kind": "vinegar"
+        },
+        {
+          "count": 1,
+          "kind": "fan"
+        },
+        {
+          "count": 1,
+          "kind": "dirtyDishes"
+        }
+      ],
+      "resolvedPlacements": [],
+      "sources": [
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 7.4,
+            "z": 3.2
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 2.5,
+            "z": 8.0
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 1.2,
+            "z": 3.4
+          },
+          "radius": 0.75,
+          "rate": 0.35
+        }
+      ]
+    },
+    {
+      "foodSurfaces": 3,
+      "objectSurfaces": 78,
+      "placements": [
+        {
+          "heading": 0.0,
+          "id": 10,
+          "kind": "fruit",
+          "position": {
+            "x": 1.6,
+            "z": 2.3
+          }
+        }
+      ],
+      "plan": "apple",
+      "remainingInventory": [
+        {
+          "count": 0,
+          "kind": "fruit"
+        },
+        {
+          "count": 1,
+          "kind": "banana"
+        },
+        {
+          "count": 1,
+          "kind": "vinegar"
+        },
+        {
+          "count": 1,
+          "kind": "fan"
+        },
+        {
+          "count": 1,
+          "kind": "dirtyDishes"
+        }
+      ],
+      "resolvedPlacements": [
+        {
+          "heading": 0.0,
+          "id": 10,
+          "kind": "fruit",
+          "position": {
+            "x": 1.6,
+            "z": 2.3
+          }
+        }
+      ],
+      "sources": [
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 7.4,
+            "z": 3.2
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 2.5,
+            "z": 8.0
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 1.2,
+            "z": 3.4
+          },
+          "radius": 0.75,
+          "rate": 0.35
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 1.6,
+            "z": 2.3
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        }
+      ]
+    },
+    {
+      "foodSurfaces": 2,
+      "objectSurfaces": 99,
+      "placements": [
+        {
+          "heading": 0.0,
+          "id": 11,
+          "kind": "vinegar",
+          "position": {
+            "x": 4.2,
+            "z": 2.35
+          }
+        }
+      ],
+      "plan": "vinegar",
+      "remainingInventory": [
+        {
+          "count": 1,
+          "kind": "fruit"
+        },
+        {
+          "count": 1,
+          "kind": "banana"
+        },
+        {
+          "count": 0,
+          "kind": "vinegar"
+        },
+        {
+          "count": 1,
+          "kind": "fan"
+        },
+        {
+          "count": 1,
+          "kind": "dirtyDishes"
+        }
+      ],
+      "resolvedPlacements": [
+        {
+          "heading": 0.0,
+          "id": 11,
+          "kind": "vinegar",
+          "position": {
+            "x": 4.2,
+            "z": 2.35
+          }
+        }
+      ],
+      "sources": [
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 7.4,
+            "z": 3.2
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 2.5,
+            "z": 8.0
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 1.2,
+            "z": 3.4
+          },
+          "radius": 0.75,
+          "rate": 0.35
+        },
+        {
+          "kind": "repellentOdor",
+          "position": {
+            "x": 4.2,
+            "z": 2.35
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        }
+      ]
+    },
+    {
+      "foodSurfaces": 3,
+      "objectSurfaces": 99,
+      "placements": [
+        {
+          "heading": 0.0,
+          "id": 10,
+          "kind": "fruit",
+          "position": {
+            "x": 1.6,
+            "z": 2.3
+          }
+        },
+        {
+          "heading": 0.0,
+          "id": 11,
+          "kind": "vinegar",
+          "position": {
+            "x": 4.2,
+            "z": 2.35
+          }
+        }
+      ],
+      "plan": "apple-vinegar",
+      "remainingInventory": [
+        {
+          "count": 0,
+          "kind": "fruit"
+        },
+        {
+          "count": 1,
+          "kind": "banana"
+        },
+        {
+          "count": 0,
+          "kind": "vinegar"
+        },
+        {
+          "count": 1,
+          "kind": "fan"
+        },
+        {
+          "count": 1,
+          "kind": "dirtyDishes"
+        }
+      ],
+      "resolvedPlacements": [
+        {
+          "heading": 0.0,
+          "id": 10,
+          "kind": "fruit",
+          "position": {
+            "x": 1.6,
+            "z": 2.3
+          }
+        },
+        {
+          "heading": 0.0,
+          "id": 11,
+          "kind": "vinegar",
+          "position": {
+            "x": 4.2,
+            "z": 2.35
+          }
+        }
+      ],
+      "sources": [
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 7.4,
+            "z": 3.2
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 2.5,
+            "z": 8.0
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 1.2,
+            "z": 3.4
+          },
+          "radius": 0.75,
+          "rate": 0.35
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 1.6,
+            "z": 2.3
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        },
+        {
+          "kind": "repellentOdor",
+          "position": {
+            "x": 4.2,
+            "z": 2.35
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        }
+      ]
+    }
+  ],
+  "probeSourceSha256": "71489dbc695c9e22d8442f4125b7eb324571fee3406f764ecd48132bd3cfba92",
+  "runs": [],
+  "seeds": [
+    100,
+    101,
+    102,
+    103,
+    104,
+    105
+  ],
+  "simulationBuildId": "1dbcdfdcfd55e7b40275f22fa6988cf3f4a6e3a31e06a14431b7918648f4636e",
+  "tuning": {
+    "cues": [
+      {
+        "gain": 2.0,
+        "pathway": "excitatoryOdor"
+      },
+      {
+        "gain": 2.0,
+        "pathway": "inhibitoryOdor"
+      }
+    ],
+    "silencedNeurons": [],
+    "tasteGain": 1.0
+  },
+  "warmupTicks": 0
+}

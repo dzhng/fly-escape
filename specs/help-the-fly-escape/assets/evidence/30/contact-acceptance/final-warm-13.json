@@ -1,0 +1,2344 @@
+{
+  "attemptSourceSha256": "6f042626341a743fe1522bdbce392d6e89f76009cfefad77001992f2b2efeb84",
+  "complete": true,
+  "durationTicks": 800,
+  "elapsedSeconds": 91.086531292,
+  "errors": [],
+  "flyCount": 20,
+  "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+  "levelContentSha256": "a4d15b39bb4e7fd0c3bd41ecde22f456a4303dcb55c69635e43affd45c1dc488",
+  "plans": [
+    {
+      "foodSurfaces": 2,
+      "objectSurfaces": 78,
+      "placements": [],
+      "plan": "empty",
+      "remainingInventory": [
+        {
+          "count": 1,
+          "kind": "fruit"
+        },
+        {
+          "count": 1,
+          "kind": "banana"
+        },
+        {
+          "count": 1,
+          "kind": "vinegar"
+        },
+        {
+          "count": 1,
+          "kind": "fan"
+        },
+        {
+          "count": 1,
+          "kind": "dirtyDishes"
+        }
+      ],
+      "resolvedPlacements": [],
+      "sources": [
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 7.4,
+            "z": 3.2
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 2.5,
+            "z": 8.0
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 1.2,
+            "z": 3.4
+          },
+          "radius": 0.75,
+          "rate": 0.35
+        }
+      ]
+    },
+    {
+      "foodSurfaces": 3,
+      "objectSurfaces": 78,
+      "placements": [
+        {
+          "heading": 0.0,
+          "id": 10,
+          "kind": "fruit",
+          "position": {
+            "x": 1.6,
+            "z": 2.3
+          }
+        }
+      ],
+      "plan": "apple",
+      "remainingInventory": [
+        {
+          "count": 0,
+          "kind": "fruit"
+        },
+        {
+          "count": 1,
+          "kind": "banana"
+        },
+        {
+          "count": 1,
+          "kind": "vinegar"
+        },
+        {
+          "count": 1,
+          "kind": "fan"
+        },
+        {
+          "count": 1,
+          "kind": "dirtyDishes"
+        }
+      ],
+      "resolvedPlacements": [
+        {
+          "heading": 0.0,
+          "id": 10,
+          "kind": "fruit",
+          "position": {
+            "x": 1.6,
+            "z": 2.3
+          }
+        }
+      ],
+      "sources": [
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 7.4,
+            "z": 3.2
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 2.5,
+            "z": 8.0
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 1.2,
+            "z": 3.4
+          },
+          "radius": 0.75,
+          "rate": 0.35
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 1.6,
+            "z": 2.3
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        }
+      ]
+    },
+    {
+      "foodSurfaces": 2,
+      "objectSurfaces": 99,
+      "placements": [
+        {
+          "heading": 0.0,
+          "id": 11,
+          "kind": "vinegar",
+          "position": {
+            "x": 4.2,
+            "z": 2.35
+          }
+        }
+      ],
+      "plan": "vinegar",
+      "remainingInventory": [
+        {
+          "count": 1,
+          "kind": "fruit"
+        },
+        {
+          "count": 1,
+          "kind": "banana"
+        },
+        {
+          "count": 0,
+          "kind": "vinegar"
+        },
+        {
+          "count": 1,
+          "kind": "fan"
+        },
+        {
+          "count": 1,
+          "kind": "dirtyDishes"
+        }
+      ],
+      "resolvedPlacements": [
+        {
+          "heading": 0.0,
+          "id": 11,
+          "kind": "vinegar",
+          "position": {
+            "x": 4.2,
+            "z": 2.35
+          }
+        }
+      ],
+      "sources": [
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 7.4,
+            "z": 3.2
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 2.5,
+            "z": 8.0
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 1.2,
+            "z": 3.4
+          },
+          "radius": 0.75,
+          "rate": 0.35
+        },
+        {
+          "kind": "repellentOdor",
+          "position": {
+            "x": 4.2,
+            "z": 2.35
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        }
+      ]
+    },
+    {
+      "foodSurfaces": 3,
+      "objectSurfaces": 99,
+      "placements": [
+        {
+          "heading": 0.0,
+          "id": 10,
+          "kind": "fruit",
+          "position": {
+            "x": 1.6,
+            "z": 2.3
+          }
+        },
+        {
+          "heading": 0.0,
+          "id": 11,
+          "kind": "vinegar",
+          "position": {
+            "x": 4.2,
+            "z": 2.35
+          }
+        }
+      ],
+      "plan": "apple-vinegar",
+      "remainingInventory": [
+        {
+          "count": 0,
+          "kind": "fruit"
+        },
+        {
+          "count": 1,
+          "kind": "banana"
+        },
+        {
+          "count": 0,
+          "kind": "vinegar"
+        },
+        {
+          "count": 1,
+          "kind": "fan"
+        },
+        {
+          "count": 1,
+          "kind": "dirtyDishes"
+        }
+      ],
+      "resolvedPlacements": [
+        {
+          "heading": 0.0,
+          "id": 10,
+          "kind": "fruit",
+          "position": {
+            "x": 1.6,
+            "z": 2.3
+          }
+        },
+        {
+          "heading": 0.0,
+          "id": 11,
+          "kind": "vinegar",
+          "position": {
+            "x": 4.2,
+            "z": 2.35
+          }
+        }
+      ],
+      "sources": [
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 7.4,
+            "z": 3.2
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 2.5,
+            "z": 8.0
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 1.2,
+            "z": 3.4
+          },
+          "radius": 0.75,
+          "rate": 0.35
+        },
+        {
+          "kind": "attractiveOdor",
+          "position": {
+            "x": 1.6,
+            "z": 2.3
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        },
+        {
+          "kind": "repellentOdor",
+          "position": {
+            "x": 4.2,
+            "z": 2.35
+          },
+          "radius": 0.75,
+          "rate": 1.0
+        }
+      ]
+    }
+  ],
+  "probeSourceSha256": "71489dbc695c9e22d8442f4125b7eb324571fee3406f764ecd48132bd3cfba92",
+  "runs": [
+    {
+      "completedTick": 315,
+      "constructSeconds": 1.587780792,
+      "feedingTicks": 0,
+      "flies": [
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 0,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 305
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 1,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 314
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 2,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 283
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 3,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 314
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 4,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 289
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 5,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 310
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 5.383717708149813,
+          "id": 6,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 216
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 7,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 306
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 8,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 315
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 9,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 305
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 10,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 291
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 11,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 296
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 12,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 296
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 13,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 311
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 14,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 299
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 15,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 291
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 16,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 297
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 17,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 302
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 18,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 290
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 19,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 297
+        }
+      ],
+      "meals": 0,
+      "outcomes": {
+        "caught": 0,
+        "escaped": 1,
+        "score": 1,
+        "starved": 19,
+        "timedOut": 0,
+        "zapped": 0
+      },
+      "peakReserveSum": 400.0,
+      "plan": "empty",
+      "seed": 105,
+      "spec": {
+        "attemptId": "warmup-empty-105",
+        "durationTicks": 800,
+        "flyCount": 20,
+        "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+        "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+        "levelHash": "508640524b55f20c70b1bc708582b69450152af79d89e5f2b4a25d7338542751",
+        "levelId": "open-window",
+        "placements": [],
+        "rootSeed": "105",
+        "schemaVersion": 1,
+        "simulationBuildId": "554d79807721b0f00c1b919fd045f524236a1887fe8f4c4c08e7388be760efa8",
+        "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb"
+      },
+      "stars": 1,
+      "wallSeconds": 10.273229
+    },
+    {
+      "completedTick": 800,
+      "constructSeconds": 1.5842655410000002,
+      "feedingTicks": 170,
+      "flies": [
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 0,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 311
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 1,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 296
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 6.2702078267887,
+          "id": 2,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 213
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 3,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 301
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 4,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 305
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 5,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 304
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 6,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 297
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 7,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 301
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 6.3111584398162845,
+          "id": 8,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 204
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 9,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 305
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 10,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 297
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 11,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 300
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 12,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 296
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 1.8075717754778267,
+          "id": 13,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 268
+        },
+        {
+          "feedingTicks": 170,
+          "finalReserve": 29.149493588981002,
+          "id": 14,
+          "initialMode": "Flying",
+          "meals": 9,
+          "outcome": "timedOut",
+          "peakReserve": 29.98959183673476,
+          "terminalTick": 800
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 15,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 302
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 16,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 296
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 17,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 287
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 18,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 314
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 19,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 292
+        }
+      ],
+      "meals": 9,
+      "outcomes": {
+        "caught": 0,
+        "escaped": 3,
+        "score": 3,
+        "starved": 16,
+        "timedOut": 1,
+        "zapped": 0
+      },
+      "peakReserveSum": 409.98959183673475,
+      "plan": "apple",
+      "seed": 100,
+      "spec": {
+        "attemptId": "warmup-apple-100",
+        "durationTicks": 800,
+        "flyCount": 20,
+        "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+        "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+        "levelHash": "508640524b55f20c70b1bc708582b69450152af79d89e5f2b4a25d7338542751",
+        "levelId": "open-window",
+        "placements": [
+          {
+            "heading": 0.0,
+            "id": 10,
+            "kind": "fruit",
+            "position": {
+              "x": 1.6,
+              "z": 2.3
+            }
+          }
+        ],
+        "rootSeed": "100",
+        "schemaVersion": 1,
+        "simulationBuildId": "554d79807721b0f00c1b919fd045f524236a1887fe8f4c4c08e7388be760efa8",
+        "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb"
+      },
+      "stars": 1,
+      "wallSeconds": 14.47251525
+    },
+    {
+      "completedTick": 318,
+      "constructSeconds": 1.555432916,
+      "feedingTicks": 0,
+      "flies": [
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 0,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 314
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 1,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 298
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 2,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 310
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 3,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 296
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 4,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 292
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 5,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 318
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 6,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 269
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 7,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 291
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 8,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 301
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 9,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 306
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 10,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 297
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 11,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 301
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 12,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 301
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 13,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 296
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 14,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 292
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 15,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 301
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 16,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 306
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 17,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 316
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 18,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 292
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 19,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 290
+        }
+      ],
+      "meals": 0,
+      "outcomes": {
+        "caught": 0,
+        "escaped": 0,
+        "score": 0,
+        "starved": 20,
+        "timedOut": 0,
+        "zapped": 0
+      },
+      "peakReserveSum": 400.0,
+      "plan": "apple",
+      "seed": 101,
+      "spec": {
+        "attemptId": "warmup-apple-101",
+        "durationTicks": 800,
+        "flyCount": 20,
+        "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+        "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+        "levelHash": "508640524b55f20c70b1bc708582b69450152af79d89e5f2b4a25d7338542751",
+        "levelId": "open-window",
+        "placements": [
+          {
+            "heading": 0.0,
+            "id": 10,
+            "kind": "fruit",
+            "position": {
+              "x": 1.6,
+              "z": 2.3
+            }
+          }
+        ],
+        "rootSeed": "101",
+        "schemaVersion": 1,
+        "simulationBuildId": "554d79807721b0f00c1b919fd045f524236a1887fe8f4c4c08e7388be760efa8",
+        "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb"
+      },
+      "stars": 0,
+      "wallSeconds": 11.196501875
+    },
+    {
+      "completedTick": 318,
+      "constructSeconds": 1.628366208,
+      "feedingTicks": 0,
+      "flies": [
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 0,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 314
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 1,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 301
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 2,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 260
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 3,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 301
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 4,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 310
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 5,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 298
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 6,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 289
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 7,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 301
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 8,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 314
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 9,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 296
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 10,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 306
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 11,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 283
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 9.457824084001572,
+          "id": 12,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 160
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 13,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 305
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 14,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 305
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 15,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 310
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 16,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 305
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 5.745467659215808,
+          "id": 17,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 211
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 18,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 310
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 19,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 318
+        }
+      ],
+      "meals": 0,
+      "outcomes": {
+        "caught": 0,
+        "escaped": 2,
+        "score": 2,
+        "starved": 18,
+        "timedOut": 0,
+        "zapped": 0
+      },
+      "peakReserveSum": 400.0,
+      "plan": "apple",
+      "seed": 104,
+      "spec": {
+        "attemptId": "warmup-apple-104",
+        "durationTicks": 800,
+        "flyCount": 20,
+        "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+        "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+        "levelHash": "508640524b55f20c70b1bc708582b69450152af79d89e5f2b4a25d7338542751",
+        "levelId": "open-window",
+        "placements": [
+          {
+            "heading": 0.0,
+            "id": 10,
+            "kind": "fruit",
+            "position": {
+              "x": 1.6,
+              "z": 2.3
+            }
+          }
+        ],
+        "rootSeed": "104",
+        "schemaVersion": 1,
+        "simulationBuildId": "554d79807721b0f00c1b919fd045f524236a1887fe8f4c4c08e7388be760efa8",
+        "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb"
+      },
+      "stars": 1,
+      "wallSeconds": 10.909169833
+    },
+    {
+      "completedTick": 318,
+      "constructSeconds": 1.573232875,
+      "feedingTicks": 0,
+      "flies": [
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 0,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 296
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 1,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 296
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 2,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 297
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 3,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 301
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 4,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 314
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 5,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 318
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 6,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 305
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 7,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 296
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 8,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 297
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 9,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 292
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 8.140357501828555,
+          "id": 10,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 185
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 11,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 264
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 12,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 305
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 13,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 296
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 14,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 305
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 15,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 287
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 1.2597885617614784,
+          "id": 16,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 279
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 17,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 296
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 18,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 297
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 19,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 287
+        }
+      ],
+      "meals": 0,
+      "outcomes": {
+        "caught": 0,
+        "escaped": 2,
+        "score": 2,
+        "starved": 18,
+        "timedOut": 0,
+        "zapped": 0
+      },
+      "peakReserveSum": 400.0,
+      "plan": "vinegar",
+      "seed": 102,
+      "spec": {
+        "attemptId": "warmup-vinegar-102",
+        "durationTicks": 800,
+        "flyCount": 20,
+        "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+        "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+        "levelHash": "508640524b55f20c70b1bc708582b69450152af79d89e5f2b4a25d7338542751",
+        "levelId": "open-window",
+        "placements": [
+          {
+            "heading": 0.0,
+            "id": 11,
+            "kind": "vinegar",
+            "position": {
+              "x": 4.2,
+              "z": 2.35
+            }
+          }
+        ],
+        "rootSeed": "102",
+        "schemaVersion": 1,
+        "simulationBuildId": "554d79807721b0f00c1b919fd045f524236a1887fe8f4c4c08e7388be760efa8",
+        "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb"
+      },
+      "stars": 1,
+      "wallSeconds": 12.374146
+    },
+    {
+      "completedTick": 315,
+      "constructSeconds": 1.561861708,
+      "feedingTicks": 0,
+      "flies": [
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 0,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 315
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 1,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 282
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 2,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 287
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 1.9536292074098809,
+          "id": 3,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 264
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 4,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 307
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 4.58917868868936,
+          "id": 5,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 222
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 6,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 296
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 7,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 313
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 4.425952068906451,
+          "id": 8,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 241
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 9,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 292
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 10,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 301
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 11,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 283
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 12,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 309
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 4.41576372289321,
+          "id": 13,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 240
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 14,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 306
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 15,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 307
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 16,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 314
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 17,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 296
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 18,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 301
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 19,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 297
+        }
+      ],
+      "meals": 0,
+      "outcomes": {
+        "caught": 0,
+        "escaped": 4,
+        "score": 4,
+        "starved": 16,
+        "timedOut": 0,
+        "zapped": 0
+      },
+      "peakReserveSum": 400.0,
+      "plan": "vinegar",
+      "seed": 104,
+      "spec": {
+        "attemptId": "warmup-vinegar-104",
+        "durationTicks": 800,
+        "flyCount": 20,
+        "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+        "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+        "levelHash": "508640524b55f20c70b1bc708582b69450152af79d89e5f2b4a25d7338542751",
+        "levelId": "open-window",
+        "placements": [
+          {
+            "heading": 0.0,
+            "id": 11,
+            "kind": "vinegar",
+            "position": {
+              "x": 4.2,
+              "z": 2.35
+            }
+          }
+        ],
+        "rootSeed": "104",
+        "schemaVersion": 1,
+        "simulationBuildId": "554d79807721b0f00c1b919fd045f524236a1887fe8f4c4c08e7388be760efa8",
+        "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb"
+      },
+      "stars": 1,
+      "wallSeconds": 10.681303291
+    },
+    {
+      "completedTick": 315,
+      "constructSeconds": 1.6103695,
+      "feedingTicks": 0,
+      "flies": [
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 0,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 293
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 1,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 296
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 6.991529922260604,
+          "id": 2,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 190
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 3,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 313
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 4,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 287
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 5,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 311
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 9.320460817600924,
+          "id": 6,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 153
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 8.615131878592969,
+          "id": 7,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 179
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 8,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 315
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 9,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 315
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 9.115628330188112,
+          "id": 10,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 155
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 11,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 305
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 12,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 292
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 13,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 297
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 14,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 301
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 15,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 296
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 16,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 305
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 17,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 297
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 18,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 310
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 19,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 291
+        }
+      ],
+      "meals": 0,
+      "outcomes": {
+        "caught": 0,
+        "escaped": 4,
+        "score": 4,
+        "starved": 16,
+        "timedOut": 0,
+        "zapped": 0
+      },
+      "peakReserveSum": 400.0,
+      "plan": "vinegar",
+      "seed": 105,
+      "spec": {
+        "attemptId": "warmup-vinegar-105",
+        "durationTicks": 800,
+        "flyCount": 20,
+        "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+        "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+        "levelHash": "508640524b55f20c70b1bc708582b69450152af79d89e5f2b4a25d7338542751",
+        "levelId": "open-window",
+        "placements": [
+          {
+            "heading": 0.0,
+            "id": 11,
+            "kind": "vinegar",
+            "position": {
+              "x": 4.2,
+              "z": 2.35
+            }
+          }
+        ],
+        "rootSeed": "105",
+        "schemaVersion": 1,
+        "simulationBuildId": "554d79807721b0f00c1b919fd045f524236a1887fe8f4c4c08e7388be760efa8",
+        "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb"
+      },
+      "stars": 1,
+      "wallSeconds": 10.608535042
+    },
+    {
+      "completedTick": 314,
+      "constructSeconds": 1.679746542,
+      "feedingTicks": 0,
+      "flies": [
+        {
+          "feedingTicks": 0,
+          "finalReserve": 9.693467680935305,
+          "id": 0,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 143
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 1,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 301
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 2,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 303
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 3,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 301
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 4,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 314
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 10.734221607494568,
+          "id": 5,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 139
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 3.0248689736390793,
+          "id": 6,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 263
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 7,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 301
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 8,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 305
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 9,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 290
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 7.1240756204342075,
+          "id": 10,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 197
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 11,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 287
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 2.255115595797906,
+          "id": 12,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 263
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 13,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 296
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.2731432978833364,
+          "id": 14,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 302
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 15,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 296
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 2.7066896043630693,
+          "id": 16,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 253
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 17,
+          "initialMode": "Walking",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 305
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 0.0,
+          "id": 18,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "starved",
+          "peakReserve": 20.0,
+          "terminalTick": 305
+        },
+        {
+          "feedingTicks": 0,
+          "finalReserve": 10.39460325401191,
+          "id": 19,
+          "initialMode": "Flying",
+          "meals": 0,
+          "outcome": "escaped",
+          "peakReserve": 20.0,
+          "terminalTick": 134
+        }
+      ],
+      "meals": 0,
+      "outcomes": {
+        "caught": 0,
+        "escaped": 8,
+        "score": 8,
+        "starved": 12,
+        "timedOut": 0,
+        "zapped": 0
+      },
+      "peakReserveSum": 400.0,
+      "plan": "apple-vinegar",
+      "seed": 102,
+      "spec": {
+        "attemptId": "warmup-apple-vinegar-102",
+        "durationTicks": 800,
+        "flyCount": 20,
+        "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+        "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+        "levelHash": "508640524b55f20c70b1bc708582b69450152af79d89e5f2b4a25d7338542751",
+        "levelId": "open-window",
+        "placements": [
+          {
+            "heading": 0.0,
+            "id": 10,
+            "kind": "fruit",
+            "position": {
+              "x": 1.6,
+              "z": 2.3
+            }
+          },
+          {
+            "heading": 0.0,
+            "id": 11,
+            "kind": "vinegar",
+            "position": {
+              "x": 4.2,
+              "z": 2.35
+            }
+          }
+        ],
+        "rootSeed": "102",
+        "schemaVersion": 1,
+        "simulationBuildId": "554d79807721b0f00c1b919fd045f524236a1887fe8f4c4c08e7388be760efa8",
+        "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb"
+      },
+      "stars": 2,
+      "wallSeconds": 10.564294375
+    }
+  ],
+  "seeds": [
+    100,
+    101,
+    102,
+    103,
+    104,
+    105
+  ],
+  "simulationBuildId": "554d79807721b0f00c1b919fd045f524236a1887fe8f4c4c08e7388be760efa8",
+  "tuning": {
+    "cues": [
+      {
+        "gain": 2.0,
+        "pathway": "excitatoryOdor"
+      },
+      {
+        "gain": 2.0,
+        "pathway": "inhibitoryOdor"
+      }
+    ],
+    "silencedNeurons": [],
+    "tasteGain": 1.0
+  },
+  "warmupTicks": 60
+}

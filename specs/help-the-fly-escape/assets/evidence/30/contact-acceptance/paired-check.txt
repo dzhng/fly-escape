@@ -1,0 +1,12 @@
+cold: 24 complete attempts, all20 terminal outcomes
+empty: escapes=[0, 1, 0, 1, 0, 1], mean=0.500, paired mean vs empty=0.000, paired SD=0.000
+apple: escapes=[1, 0, 1, 0, 2, 2], mean=1.000, paired mean vs empty=0.500, paired SD=1.225
+vinegar: escapes=[2, 2, 4, 2, 3, 1], mean=2.333, paired mean vs empty=1.833, paired SD=1.472
+apple-vinegar: escapes=[2, 1, 5, 1, 2, 3], mean=2.333, paired mean vs empty=1.833, paired SD=1.835
+Feeding fly-lives=1
+warm: 24 complete attempts, all20 terminal outcomes
+empty: escapes=[2, 0, 1, 2, 2, 1], mean=1.333, paired mean vs empty=0.000, paired SD=0.000
+apple: escapes=[3, 0, 2, 5, 2, 0], mean=2.000, paired mean vs empty=0.667, paired SD=1.366
+vinegar: escapes=[3, 3, 2, 4, 4, 4], mean=3.333, paired mean vs empty=2.000, paired SD=0.894
+apple-vinegar: escapes=[2, 2, 8, 7, 3, 2], mean=4.000, paired mean vs empty=2.667, paired SD=2.733
+Feeding fly-lives=1

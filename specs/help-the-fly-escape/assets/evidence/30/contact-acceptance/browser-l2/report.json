@@ -1,0 +1,92 @@
+{
+  "browser": "152.0.7977.77",
+  "samples": [
+    {
+      "run": 0,
+      "attemptId": "fcc922ce-e7d5-4348-8989-cf4e91ef217a",
+      "rootSeed": "11716541513791412824",
+      "simulationBuildId": "18a5a27c1a9162c067c3008cad26fd84b1a19d1774003da15648177274109962",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1247,
+        "triangles": 344506,
+        "geometries": 367,
+        "textures": 27
+      },
+      "wasmBytes": 106102784,
+      "mainHeapAfterReturn": {
+        "usedSize": 33098724,
+        "totalSize": 39337984,
+        "embedderHeapUsedSize": 2148024,
+        "backingStorageSize": 132624678
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 160,
+        "jsEventListeners": 208
+      }
+    },
+    {
+      "run": 1,
+      "attemptId": "bb518bff-00c7-42ae-9aa7-0fd3b61e185f",
+      "rootSeed": "10488929867879453175",
+      "simulationBuildId": "18a5a27c1a9162c067c3008cad26fd84b1a19d1774003da15648177274109962",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1246,
+        "triangles": 434498,
+        "geometries": 369,
+        "textures": 27
+      },
+      "wasmBytes": 106102784,
+      "mainHeapAfterReturn": {
+        "usedSize": 33900808,
+        "totalSize": 40648704,
+        "embedderHeapUsedSize": 2222328,
+        "backingStorageSize": 132624982
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 160,
+        "jsEventListeners": 208
+      }
+    },
+    {
+      "run": 2,
+      "attemptId": "a72fab36-7406-4abb-8bc0-8850e09f8cbe",
+      "rootSeed": "1744322718178062846",
+      "simulationBuildId": "18a5a27c1a9162c067c3008cad26fd84b1a19d1774003da15648177274109962",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "renderer": {
+        "flyCount": 20,
+        "modelKind": "glb",
+        "drawCalls": 1247,
+        "triangles": 522974,
+        "geometries": 366,
+        "textures": 27
+      },
+      "wasmBytes": 106102784,
+      "mainHeapAfterReturn": {
+        "usedSize": 28093036,
+        "totalSize": 29753344,
+        "embedderHeapUsedSize": 2258392,
+        "backingStorageSize": 34832509
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 160,
+        "jsEventListeners": 208
+      }
+    }
+  ],
+  "retainedMainHeapChangeBytes": -5005688,
+  "errors": [],
+  "scope": "3 real 20-fly complete 1× attempts and retries on campaign level 2. Collected main heaps are observations, not process RSS or a proof that Worker/GPU memory cannot leak. Final combined memory, input latency, hidden-tab and platform gates remain separate."
+}

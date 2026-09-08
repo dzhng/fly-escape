@@ -681,14 +681,14 @@ fn neighboring_apple_blocks_while_time_advances() {
                     ] {
                         let p = step.motion.at(t).unwrap();
                         assert!(
-                            contact_scene
+                            !contact_scene
                                 .penetration(
                                     &hull,
                                     [p.pose.position.x, p.height, p.pose.position.z],
                                     p.rotation
                                 )
                                 .unwrap()
-                                <= 3e-6,
+                                .exceeds(3e-6),
                             "native hull trajectory exceeds the numerical food-contact budget"
                         );
                     }

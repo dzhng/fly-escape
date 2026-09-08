@@ -124,6 +124,24 @@ pub enum RotationClearance {
     Unresolved,
 }
 
+/// How a hull overlaps the scene at one pose. Containment is physical overlap,
+/// not a query failure; a boundary-distance result alone cannot clear that pose.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum Penetration {
+    /// Deepest surface overlap in metres; zero when nothing overlaps.
+    Depth(f64),
+    Contained,
+}
+impl Penetration {
+    /// Whether this pose overlaps by more than the caller's numerical allowance.
+    pub fn exceeds(self, allowance: f64) -> bool {
+        match self {
+            Self::Depth(depth) => depth > allowance,
+            Self::Contained => true,
+        }
+    }
+}
+
 struct ContactMesh {
     id: u32,
     mesh: TriMesh,
@@ -138,7 +156,7 @@ impl ContactScene {
         hull: &ContactHull,
         root: [f64; 3],
         rotation: [f64; 4],
-    ) -> Result<f64, String> {
+    ) -> Result<Penetration, String> {
         self.penetration_on(hull, root, rotation, None)
     }
     pub(crate) fn has_other_surface(&self, id: u32) -> bool {
@@ -151,7 +169,7 @@ impl ContactScene {
         root: [f64; 3],
         rotation: [f64; 4],
         selected: u32,
-    ) -> Result<f64, String> {
+    ) -> Result<Penetration, String> {
         self.penetration_on(hull, root, rotation, Some(selected))
     }
     fn penetration_on(
@@ -160,7 +178,7 @@ impl ContactScene {
         root: [f64; 3],
         rotation: [f64; 4],
         selected: Option<u32>,
-    ) -> Result<f64, String> {
+    ) -> Result<Penetration, String> {
         let pose = checked_pose(root, rotation)?;
         let bounds = hull.bounds.transform_by(&pose).loosened(PLANE_TOLERANCE);
         let mut deepest = 0f64;
@@ -171,9 +189,7 @@ impl ContactScene {
             Some(entry.id) != selected && entry.mesh.local_aabb().intersects(&bounds)
         }) {
             if entry.closed && entry.mesh.contains_local_point(interior) {
-                return Err(
-                    "numerical contact unresolved: hull interior is inside closed food".into(),
-                );
+                return Ok(Penetration::Contained);
             }
             if let Some(c) = contact(&pose, &hull.shape, &Pose::IDENTITY, &entry.mesh, 0.)
                 .map_err(|_| "unsupported contact pair")?
@@ -181,7 +197,7 @@ impl ContactScene {
                 deepest = deepest.max(-c.dist / QUERY_UNITS);
             }
         }
-        Ok(deepest)
+        Ok(Penetration::Depth(deepest))
     }
     pub fn touching_hull(
         &self,
