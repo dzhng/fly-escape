@@ -17,7 +17,7 @@ test('recorded airborne landing plays Land, touchdown immediately plays Walk', (
     ),
   ).toEqual({ clip: 'Walk', seconds: 0 });
   expect(flyAnimation({ ...descending, mode: 'feeding' }, 0.1).clip).toBe('Feed');
-  expect(flyAnimation({ ...descending, mode: 'flying' }, 0.1).clip).toBe('Fly');
+  expect(flyAnimation({ ...descending, mode: 'flying' }, 0.1)).toEqual({ clip: 'Fly', seconds: (23 - 20) * 0.1 * 5 });
 });
 
 test('recorded orientation sampling is absolute, normalized and takes the short arc', async () => {

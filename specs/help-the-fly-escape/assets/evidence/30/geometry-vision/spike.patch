@@ -1,0 +1,176 @@
+diff --git a/crates/sim/src/attempt.rs b/crates/sim/src/attempt.rs
+index 8ce930d..4ad8c63 100644
+--- a/crates/sim/src/attempt.rs
++++ b/crates/sim/src/attempt.rs
+@@ -7,7 +7,7 @@ use crate::{
+     food::FoodDef,
+     placement::{resolve_placements, Placement, PlacementRules, ResolvedSetup},
+     record::RecordLayout,
+-    sensory::{cue_currents, motor_readout_indices, CuePathway},
++    sensory::{cue_currents, motor_readout_indices, proximity_currents, CuePathway},
+     Brain, Graph, Group, GroupLink, LifParams, StepOutput,
+ };
+ use serde::{Deserialize, Serialize};
+@@ -83,6 +83,12 @@ pub struct AttemptTuning {
+     /// Experimental ablation, fixed for the complete attempt and included in its identity.
+     #[serde(default)]
+     pub silenced_neurons: Vec<u32>,
++    /// SCRATCH (geometry-vision spike): zero disables the modeled proximity rays.
++    #[serde(default)]
++    pub proximity_gain: f64,
++    /// SCRATCH (geometry-vision spike): ray length in metres; zero uses 0.25 m.
++    #[serde(default)]
++    pub proximity_reach: f64,
+ }
+ #[derive(Clone, Debug, PartialEq, Serialize, Deserialize, TS)]
+ #[serde(rename_all = "camelCase")]
+@@ -364,6 +370,19 @@ impl Attempt {
+                         *currents.entry(index).or_default() += value;
+                     }
+                 }
++                if self.tuning.proximity_gain > 0. {
++                    let reach = if self.tuning.proximity_reach > 0. {
++                        self.tuning.proximity_reach
++                    } else {
++                        0.25
++                    };
++                    let proximity = world.proximity(input_pose, reach, 0.6);
++                    for (index, value) in
++                        proximity_currents(&self.graph, proximity, self.tuning.proximity_gain)?
++                    {
++                        *currents.entry(index).or_default() += value;
++                    }
++                }
+                 if fly.body.contacts(world)?.food {
+                     for &index in &self.taste_indices {
+                         *currents.entry(index).or_default() += self.tuning.taste_gain;
+diff --git a/crates/sim/src/body.rs b/crates/sim/src/body.rs
+index 93ecc48..8333c52 100644
+--- a/crates/sim/src/body.rs
++++ b/crates/sim/src/body.rs
+@@ -250,6 +250,35 @@ impl BodyWorld {
+             duration_ticks,
+         })
+     }
++    /// SCRATCH (geometry-vision spike): three short body-frame rays (forward,
++    /// left, right) against this world's own room/solid geometry and native
++    /// object surfaces. Returns normalized proximity in 0..1 per ray (1 = touching).
++    /// Modeled proximity only: this is not rendered fly vision and carries no
++    /// steering, motor or avoidance authority.
++    pub fn proximity(&self, pose: BodyPose, reach: f64, spread: f64) -> [f64; 3] {
++        if !reach.is_finite() || reach <= 0. || !pose.position.finite() || !pose.heading.is_finite()
++        {
++            return [0.; 3];
++        }
++        [0., spread, -spread].map(|offset| {
++            let a = pose.heading + offset;
++            let (dx, dz) = (a.cos(), a.sin());
++            let to = Point {
++                x: pose.position.x + dx * reach,
++                z: pose.position.z + dz * reach,
++            };
++            let stop = self.geometry.sweep(pose.position, to, 0.);
++            let mut travel = pose.position.distance(stop).min(reach);
++            if let Ok(Some(hit)) = self.surfaces.along(
++                [pose.position.x, 0.01, pose.position.z],
++                [dx, 0., dz],
++                reach,
++            ) {
++                travel = travel.min(hit.fraction * reach);
++            }
++            (1. - travel / reach).clamp(0., 1.)
++        })
++    }
+     pub fn with_contact_hazards(mut self, hazards: &[ContactHazard]) -> Result<Self, String> {
+         if hazards.len() > 256 {
+             return Err("at most 256 contact hazards are supported".into());
+diff --git a/crates/sim/src/sensory.rs b/crates/sim/src/sensory.rs
+index ea046d6..3e179c1 100644
+--- a/crates/sim/src/sensory.rs
++++ b/crates/sim/src/sensory.rs
+@@ -60,6 +60,33 @@ pub fn cue_currents(
+     group_currents(graph, ids, values.map(|value| gain * value.clamp(0.0, 1.0)))
+ }
+ 
++/// SCRATCH (geometry-vision spike): encode three modeled proximity rays
++/// (forward, left, right) into the existing lateral `visionL`/`visionR` sensory
++/// groups. Ipsilateral encoding only, with the forward ray shared equally by both
++/// sides; there is no contralateral turn rule, no motor injection and no
++/// avoidance fallback. Downstream steering, if any, is the graph's own result.
++pub fn proximity_currents(
++    graph: &Graph,
++    proximity: [f64; 3],
++    gain: f64,
++) -> Result<Vec<(u32, f64)>, String> {
++    if !gain.is_finite() || !(0.0..=3.0).contains(&gain) {
++        return Err("proximity gain must be between zero and three".into());
++    }
++    if proximity.iter().any(|v| !v.is_finite() || !(0.0..=1.0).contains(v)) {
++        return Err("proximity must be normalized to zero..one".into());
++    }
++    let [forward, left, right] = proximity;
++    group_currents(
++        graph,
++        ["visionL", "visionR"],
++        [
++            (gain * (left + 0.5 * forward)).clamp(0.0, 3.0),
++            (gain * (right + 0.5 * forward)).clamp(0.0, 3.0),
++        ],
++    )
++}
++
+ /// Sensory-labelled inputs must propagate through the graph before reaching a
+ /// motor readout, including manual inputs in the observation lab.
+ pub fn group_currents(
+diff --git a/crates/sim/src/surface.rs b/crates/sim/src/surface.rs
+index 47b0ab3..8108bb6 100644
+--- a/crates/sim/src/surface.rs
++++ b/crates/sim/src/surface.rs
+@@ -516,6 +516,47 @@ impl ContactScene {
+         }))
+     }
+ 
++    /// SCRATCH (geometry-vision spike): first surface hit along an arbitrary short
++    /// direction. Same normalized-unit contract as `below`; returns metres.
++    pub fn along(
++        &self,
++        position: [f64; 3],
++        direction: [f64; 3],
++        distance: f64,
++    ) -> Result<Option<SurfaceHit>, String> {
++        if !bounded(position)
++            || !direction.iter().all(|c| c.is_finite())
++            || !distance.is_finite()
++            || distance <= 0.
++            || distance > MAX_COORDINATE
++        {
++            return Err("surface ray requires a bounded pose and positive distance".into());
++        }
++        let dir = Vector::from_array(direction);
++        if dir.length_squared() <= 0. {
++            return Err("surface ray requires a nonzero direction".into());
++        }
++        let ray = Ray::new(
++            Vector::from_array(position) * QUERY_UNITS,
++            dir.normalize() * distance * QUERY_UNITS,
++        );
++        let mut first = None;
++        for entry in &self.meshes {
++            if let Some(hit) = entry.mesh.cast_local_ray_and_get_normal(&ray, 1., false) {
++                select(
++                    &mut first,
++                    checked_hit(
++                        entry.id,
++                        hit.time_of_impact,
++                        ray.point_at(hit.time_of_impact) / QUERY_UNITS,
++                        hit.normal,
++                    )?,
++                );
++            }
++        }
++        Ok(first)
++    }
++
+     /// Locate a support point below a root; the body owner decides whether to land on it.
+     pub fn below(&self, position: [f64; 3], distance: f64) -> Result<Option<SurfaceHit>, String> {
+         if !bounded(position)

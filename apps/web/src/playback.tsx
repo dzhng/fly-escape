@@ -117,11 +117,15 @@ function sample(run: Run): FlyPose[] {
         x: body.pose.position.x, z: body.pose.position.z, heading: body.pose.heading,
         height: body.height, rotation: body.rotation,
       }));
-  return poses.map((pose, id) => ({
-    x: pose.x, z: pose.z, heading: pose.heading, y: pose.height,
-    rotation: pose.rotation,
-    animation: flyAnimation(motions[id], TICK_SECONDS),
-  }));
+  return poses.map((pose, id) => {
+    const outcome = run.lower?.flies[id].body.outcome;
+    return {
+      x: pose.x, z: pose.z, heading: pose.heading, y: pose.height,
+      rotation: pose.rotation,
+      animation: flyAnimation(motions[id], TICK_SECONDS),
+      outcome: outcome === "zapped" || outcome === "escaped" ? outcome : undefined,
+    };
+  });
 }
 
 export function PlaybackLab() {

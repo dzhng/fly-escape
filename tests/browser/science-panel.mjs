@@ -28,6 +28,8 @@ try {
   );
   assert.equal(await page.locator(".group-network").count(), 20);
   assert.equal(await page.locator(".science-trace").count(), 40);
+  assert.equal(await page.locator(".science-card select").count(), 0);
+  assert.equal(await page.locator(".brain-view canvas").count(), 1);
   const tick = await page.locator(".science-card").first().getAttribute("data-sample-tick");
   assert.ok(
     (
@@ -48,7 +50,7 @@ try {
   await page.waitForFunction(
     () => document.querySelector('[data-testid="selected-fly"]').dataset.flyId === "19",
   );
-  await page.getByLabel("Neural group for fly 20", { exact: true }).selectOption("visionL");
+  await page.locator('.science-card[data-fly-id="19"] .science-legend').getByRole("button", { name: "Vision L", exact: true }).click();
   await page.screenshot({ path: new URL("last-card.png", output).pathname });
   const explain = page.getByRole("button", { name: "Explain Vision · left", exact: true });
   await explain.focus();

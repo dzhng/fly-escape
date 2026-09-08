@@ -170,3 +170,11 @@
     right: 377px;
   }
 }
+
+.brain-view { padding: 10px; border-radius: 12px; background: #e7eddb; }
+.brain-view canvas { display: block; border-radius: 10px; touch-action: none; cursor: grab; }
+.brain-view small { display: block; font-size: 10px; margin-top: 5px; color: #52654f; }
+.science-legend { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+.science-legend button { display: flex; align-items: center; gap: 5px; padding: 3px; font-size: 10px; text-align: left; background: transparent; border: 1px solid transparent; }
+.science-legend button[aria-pressed="true"] { border-color: #acb797; }
+.science-legend button span { width: 10px; height: 3px; flex-shrink: 0; }

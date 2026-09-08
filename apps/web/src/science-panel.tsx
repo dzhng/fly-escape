@@ -1,3 +1,5 @@
+import { BrainView } from "./brain-view";
+import { groupColor } from "@fly-escape/game-renderer";
 import React, { useEffect, useId, useMemo, useRef, useState } from "react";
 import type { AttemptFrame, AttemptInfo, FrameArchive, Group } from "@fly-escape/sim-client";
 import "./science-panel.css";
@@ -137,20 +139,20 @@ function Explanation({ group }: { group: Group }) {
   );
 }
 function Trace({
-  points,
+  series,
   field,
   endTick,
 }: {
-  points: Point[];
+  series: { group: Group; points: Point[] }[];
   field: "meanVoltage" | "spikeFraction";
   endTick: number;
 }) {
-  const values = points.flatMap((point) => (point[field] === null ? [] : [point[field]!]));
+  const values = series.flatMap(({ points }) => points.flatMap(point => point[field] === null ? [] : [point[field]!]));
   const lower = field === "spikeFraction" ? 0 : Math.min(0, ...values);
   const upper = field === "spikeFraction" ? 1 : Math.max(1, ...values);
   const startTick = Math.max(1, endTick - 99);
-  let path = "",
-    connected = false;
+  const paths = series.map(({ points }) => {
+  let path = "", connected = false;
   for (const point of points) {
     const value = point[field];
     if (value === null) {
@@ -162,6 +164,8 @@ function Trace({
     path += `${connected ? "L" : "M"}${x.toFixed(2)},${y.toFixed(2)} `;
     connected = true;
   }
+  return path;
+  });
   return (
     <div className={`science-trace ${field}`}>
       <div>
@@ -191,7 +195,7 @@ function Trace({
             </text>
           </g>
         ))}
-        <path d={path} className="trace-line" />
+        {paths.map((path, index) => <path key={series[index].group.id} d={path} fill="none" stroke={groupColor(index)} strokeWidth="1.1"><title>{series[index].group.label}</title></path>)}
         {[0, 0.5, 1].map((fraction) => (
           <text
             key={`time-${fraction}`}
@@ -236,9 +240,9 @@ function FlyScienceCard({
   const tick = frame?.tick ?? 0;
   const group = info.groups.find((group) => group.id === groupId)!;
   const fly = frame?.flies[id];
-  const points = useMemo(
-    () => (visible && archive ? archive.neuralTrace(id, groupId, tick) : []),
-    [visible, archive, id, groupId, tick],
+  const series = useMemo(
+    () => info.groups.map(group => ({ group, points: visible && archive ? archive.neuralTrace(id, group.id, tick) : [] })),
+    [visible, archive, id, info.groups, tick],
   );
   const activity = fly?.neural?.groups.find((group) => group.id === groupId);
   const positions = useMemo(
@@ -355,30 +359,19 @@ function FlyScienceCard({
         })}
       </svg>
       <div className="network-key">Nodes: fraction firing · arrows: selected group’s links</div>
-      <div className="science-group-picker">
-        <label>
-          Trace{" "}
-          <select
-            aria-label={`Neural group for fly ${id + 1}`}
-            value={groupId}
-            onChange={(event) => setGroupId(event.target.value)}
-          >
-            {info.groups.map((group) => (
-              <option key={group.id} value={group.id}>
-                {group.label}
-              </option>
-            ))}
-          </select>
-        </label>
-        <Explanation group={group} />
+      <div className="science-legend" aria-label="All recorded neuron groups">
+        {info.groups.map((item, index) => <button key={item.id} onClick={() => setGroupId(item.id)} aria-pressed={groupId === item.id}>
+          <span style={{ background: groupColor(index) }} />{shortNames[item.id] ?? item.label}
+        </button>)}
       </div>
+      <div className="science-group-picker"><span>{group.label}</span><Explanation group={group} /></div>
       <div className="science-current">
         <output>{activity ? activity.meanVoltage.toFixed(3) : "—"} voltage</output>
         <output>{activity ? (activity.spikeFraction * 100).toFixed(1) + "%" : "—"} firing</output>
       </div>
-      <Trace points={points} field="meanVoltage" endTick={tick} />
-      <Trace points={points} field="spikeFraction" endTick={tick} />
-      <div className="science-time">Last 10 simulated seconds · gaps = no neural sample</div>
+      <Trace series={series} field="meanVoltage" endTick={tick} />
+      <Trace series={series} field="spikeFraction" endTick={tick} />
+      <div className="science-time">All {info.groups.length} recorded groups · last 10 simulated seconds · gaps = no sample</div>
     </article>
   );
 }
@@ -392,6 +385,7 @@ export function SciencePanel(props: {
 }) {
   return (
     <div className="fly-roster" aria-label="Fly roster">
+      <BrainView groups={props.info.groups} frame={props.frame} selected={props.selected} />
       {Array.from({ length: props.info.spec.flyCount }, (_, id) => (
         <FlyScienceCard key={id} {...props} id={id} selected={props.selected === id} />
       ))}

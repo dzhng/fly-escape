@@ -1,3 +1,4 @@
+import { FlyOutcomes } from "./fly-outcomes";
 import type { RoomFloor } from "./house";
 export type { RoomFloor } from "./house";
 import * as THREE from "three";
@@ -18,6 +19,7 @@ import { FlyMotion, type FlyAnimation } from "./fly-motion";
 export { flyAnimation, interpolateRotation } from "./fly-motion";
 export type { FlyAnimation } from "./fly-motion";
 import { FlyModel } from "./fly-model";
+import { ExitGlow } from "./exit-glow";
 import { disposeObjectResources } from "./resources";
 export { disposeObjectResources } from "./resources";
 export { loadFlyModel, FlyModel } from "./fly-model";
@@ -50,6 +52,7 @@ export interface FlyPose {
   /** Radians on the x/z floor: zero points +X, positive turns toward +Z. */
   heading: number;
   animation?: FlyAnimation;
+  outcome?: "zapped" | "escaped";
   /** Core-computed native glTF orientation for supported poses. */
   rotation?: readonly [number, number, number, number];
 }
@@ -80,6 +83,8 @@ export class WorldView {
   private nativeSpan = 1;
   private readonly nativeScale = new THREE.Vector3(1, 1, 1);
   private displayScale = 1;
+  private readonly flyScales: number[] = [];
+  private readonly outcomes: FlyOutcomes;
   private modelKind: "placeholder" | "glb" = "placeholder";
   private readonly observer: ResizeObserver;
   private readonly sensorMarkers = [createPointMarker("L"), createPointMarker("R")];
@@ -93,6 +98,7 @@ export class WorldView {
   private readonly placementMarkers = new THREE.Group();
   private readonly contactMarkers = new THREE.Group();
   private readonly contactCenter = createPointMarker("C");
+  private exitGlow: ExitGlow | null = null;
   private fieldOverlay: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial> | null = null;
   private fieldTexture: THREE.DataTexture | null = null;
 
@@ -105,6 +111,9 @@ export class WorldView {
     if (!Number.isInteger(flyCount) || flyCount < 1 || flyCount > 100)
       throw new Error("Scene requires 1..100 flies");
     while (this.flies.length < flyCount) this.flies.push(this.flies[0].clone(true));
+    this.flyScales.push(...this.flies.map(() => 1));
+    this.outcomes = new FlyOutcomes(flyCount);
+    this.scene.add(this.outcomes.root);
     this.house = new HouseGeometry(geometry, roomFloors);
     this.exterior = new ExteriorGrass(geometry);
     this.scene.add(this.exterior.root);
@@ -363,6 +372,11 @@ export class WorldView {
     doorway.position.set((exit.a.x + exit.b.x) / 2, 0.04, (exit.a.z + exit.b.z) / 2);
     doorway.rotation.y = -Math.atan2(exit.b.z - exit.a.z, exit.b.x - exit.a.x);
     this.contactMarkers.add(doorway);
+    if (!this.exitGlow?.matches(exit)) {
+      this.exitGlow?.dispose();
+      this.exitGlow = new ExitGlow(exit);
+      this.scene.add(this.exitGlow.root);
+    }
   }
 
   setPose(pose: FlyPose): void {
@@ -437,6 +451,7 @@ export class WorldView {
     poses.forEach((pose, index) => {
       const fly = this.flies[index];
       fly.visible = true;
+      this.outcomes.set(index, pose.outcome);
       this.motions[index]?.sample(pose.animation);
       fly.position.set(pose.x, pose.y, pose.z);
       if (pose.rotation) fly.quaternion.fromArray(pose.rotation);
@@ -586,7 +601,7 @@ export class WorldView {
       flies: this.flies.map((fly, id) => ({
         id,
         ...this.navigation.project(
-          this.flyCenter(fly, this.displayScale),
+          this.flyCenter(fly, this.flyScales[id]),
         ),
       })),
     };
@@ -727,8 +742,14 @@ export class WorldView {
 
   render(timeSeconds = performance.now() / 1000): void {
     this.controls?.update(performance.now());
-    this.displayScale = this.navigation.displayScale(this.nativeSpan);
-    for (const fly of this.flies) fly.scale.copy(this.nativeScale).multiplyScalar(this.displayScale);
+    this.flies.forEach((fly, id) => {
+      const scale = this.navigation.displayScale(this.nativeSpan, fly.position);
+      this.flyScales[id] = scale;
+      fly.scale.copy(this.nativeScale).multiplyScalar(scale);
+    });
+    this.displayScale = this.selectedFly === null
+      ? this.navigation.displayScale(this.nativeSpan)
+      : this.flyScales[this.selectedFly];
     this.selectionRing.scale.setScalar(this.displayScale);
     let selectedTarget: THREE.Vector3 | undefined;
     if (this.selectedFly !== null) {
@@ -741,6 +762,7 @@ export class WorldView {
       this.selectionRing.updateMatrixWorld(true);
       this.updateSelectionRing();
     }
+    this.outcomes.update(this.flies, this.nativeSpan, this.nativeScale);
     this.house.updateWallVisibility(this.navigation.camera);
     // Furniture cutaway follows the selected fly; wall cutaway exposes rooms.
     if (selectedTarget && this.navigation.project(selectedTarget).visible) {
@@ -760,6 +782,8 @@ export class WorldView {
   }
 
   dispose(): void {
+    this.scene.remove(this.outcomes.root);
+    this.outcomes.dispose();
     this.clearSpawnArea();
     this.scene.remove(this.placementModels.root);
     this.placementModels.dispose();
@@ -858,3 +882,5 @@ function createPointMarker(label: "L" | "R" | "C"): THREE.Group {
   group.add(pin, leader, sprite);
   return group;
 }
+
+export { mountBrainView, groupColor } from "./brain-view";

@@ -6,7 +6,7 @@ export type FlyAnimation = { clip: "Walk" | "Fly" | "Land" | "Feed"; seconds: nu
 /** Clip phase follows the recorded physical mode; presentation does not move the body. */
 export function flyAnimation(motion: RecordedMotion, tickSeconds: number): FlyAnimation {
   const seconds = (motion.cursorTick - motion.startedTick) * tickSeconds;
-  if (motion.mode === "flying") return { clip: "Fly", seconds };
+  if (motion.mode === "flying") return { clip: "Fly", seconds: seconds * 5 };
   if (motion.mode === "landing") return { clip: "Land", seconds };
   if (motion.mode === "feeding") return { clip: "Feed", seconds };
   return { clip: "Walk", seconds };
