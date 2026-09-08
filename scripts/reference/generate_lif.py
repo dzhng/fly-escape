@@ -112,6 +112,31 @@ def cases():
             {"noise": [0, 0, 0, 0], "external_by_body": {"20": 1.0}},
         ],
     }
+    yield {
+        # A spiking neuron resets to its floor, so the group that just fired reads
+        # lowest in voltage. Every tick here separates the two possible readouts:
+        # the firing difference and the voltage difference disagree in sign or in
+        # which of them is zero, so a voltage-based turn cannot reproduce this case.
+        "name": "olfactory_turn_follows_firing_not_reset_voltage",
+        "body_ids": ["10", "20", "30", "40"],
+        "params": asdict(LIFParams(tau=100, threshold=1, reset=0.125, dt=1,
+                                   refractory=2, noise_std=0.1, input_scale=1,
+                                   baseline_drive=0)),
+        "edges": [],
+        "initial": {"voltage": [0.9, 0.9, -0.5, 0.25], "spikes": [False] * 4,
+                    "refractory": [0, 0, 0, 0]},
+        "motor_groups": groups,
+        "ticks": [
+            # Right fires and resets below the silent left group: firing says turn
+            # right, the voltages say the opposite.
+            {"noise": [0, 0, 0, 0], "external_by_body": {"20": 0.5}},
+            # Left fires while the right group sits at the same reset floor:
+            # firing says turn left, the voltages are equal and say nothing.
+            {"noise": [0, 0, 0, 0], "external_by_body": {"10": 0.5}},
+            # Neither fires though their voltages still differ: no olfactory turn.
+            {"noise": [0, 0, 0, 0], "external_by_body": {}},
+        ],
+    }
 
 
 def generate():

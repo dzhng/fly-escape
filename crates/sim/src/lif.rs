@@ -29,6 +29,11 @@ impl Default for LifParams {
         }
     }
 }
+
+/// Scale on the olfactory spike-fraction steering term, internal to the readout.
+/// Mirrors `OLFACTORY_SPIKE_SCALE` in the Python oracle.
+const OLFACTORY_SPIKE_SCALE: f64 = 4.0;
+
 #[derive(Clone, Debug, Serialize, Deserialize, TS, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct MotorOutput {
@@ -316,18 +321,21 @@ impl Brain {
                 .map(|g| GroupActivity {
                     id: g.id.clone(),
                     mean_voltage: self.mean(&g.indices),
-                    spike_fraction: if g.indices.is_empty() {
-                        0.0
-                    } else {
-                        g.indices
-                            .iter()
-                            .filter(|&&i| self.state.spikes[i as usize])
-                            .count() as f64
-                            / g.indices.len() as f64
-                    },
+                    spike_fraction: self.spike_fraction(&g.indices),
                 })
                 .collect(),
             spike_count: self.state.spikes.iter().filter(|&&v| v).count() as u32,
+        }
+    }
+    /// Fraction of `ids` that spiked on the current tick.
+    fn spike_fraction(&self, ids: &[u32]) -> f64 {
+        if ids.is_empty() {
+            0.0
+        } else {
+            ids.iter()
+                .filter(|&&i| self.state.spikes[i as usize])
+                .count() as f64
+                / ids.len() as f64
         }
     }
     fn mean(&self, ids: &[u32]) -> f64 {
@@ -352,7 +360,11 @@ impl Brain {
         let or = self.graph.pathway("OLFACTORY_DN_RIGHT");
         let has_olf = !ol.is_empty() && !or.is_empty();
         let olf = if has_olf {
-            self.mean(or) - self.mean(ol)
+            // Steering reads the olfactory groups' firing, not their membrane voltage:
+            // a spiking neuron resets to its floor, so the group that just fired most
+            // reads lowest in voltage. The scale was fixed from measured fixed-input
+            // response magnitudes; it is a calibration, not a measured neural gain.
+            OLFACTORY_SPIKE_SCALE * (self.spike_fraction(or) - self.spike_fraction(ol))
         } else {
             0.0
         };

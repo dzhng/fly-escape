@@ -21,7 +21,7 @@ const channelFor = (scenario: FieldScenario) =>
     ? "brightness"
     : scenario === "exit"
       ? "exitCue"
-      : scenario === "excitatoryOdor"
+      : scenario === "inhibitoryOdor"
         ? "repellentOdor"
         : "attractiveOdor";
 
@@ -189,7 +189,7 @@ export function FieldsLab() {
               </div>
               {(
                 [
-                  scenario === "excitatoryOdor" ? "repellentOdor" : "attractiveOdor",
+                  scenario === "inhibitoryOdor" ? "repellentOdor" : "attractiveOdor",
                   "brightness",
                   "exitCue",
                 ] as const
@@ -210,7 +210,7 @@ export function FieldsLab() {
                 const prefix =
                   scenario === "lamp" || scenario === "shade"
                     ? "vision"
-                    : scenario === "inhibitoryOdor" || scenario === "exit"
+                    : scenario === "inhibitoryOdor"
                       ? "odorInh"
                       : "odorExc";
                 const activity = ["L", "R"].map((side) =>

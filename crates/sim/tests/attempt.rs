@@ -205,6 +205,7 @@ fn identities_reject_changed_content_and_preserve_full_width_seeds() {
 fn sensory_and_taste_currents_sum_without_direct_motor_injection() {
     let graph = graph();
     let mut definition = level(1);
+    definition.sources[0].kind = SourceKind::AttractiveOdor;
     definition.sources[0].position.z = 1.6;
     definition.sources[0].radius = 0.8;
     definition.food.push(sim::food::FoodDef {
@@ -389,7 +390,9 @@ fn simultaneous_senses_sum_and_each_channel_can_be_ablated() {
                         .map(|(s, _)| s)
                         .collect();
                 }
-                let cues: Vec<_> = [InhibitoryOdor, ExcitatoryOdor, Vision]
+                // Paired with the source list above: attractive odor feeds the
+                // excitatory-labelled groups, repellent odor the inhibitory ones.
+                let cues: Vec<_> = [ExcitatoryOdor, InhibitoryOdor, Vision]
                     .into_iter()
                     .zip(enabled)
                     .filter(|(_, on)| *on)

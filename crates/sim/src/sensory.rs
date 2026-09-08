@@ -13,9 +13,10 @@ pub enum CuePathway {
     None,
 }
 
-/// The measured chamber maps attractive odor to inhibitory-labeled inputs and
-/// repellent odor to excitatory-labeled inputs. These source bindings are modeling
-/// assumptions, not universal biological functions of excitation or inhibition.
+/// The measured chamber maps attractive odor and the room-local exit cue to
+/// excitatory-labeled inputs and repellent odor to inhibitory-labeled inputs.
+/// These source bindings are modeling assumptions, not universal biological
+/// functions of excitation or inhibition.
 /// Local contrast selects sensory input. Side identity is retained;
 /// whether a pathway attracts or repels is an empirical result, not a sign flip.
 pub fn cue_currents(
@@ -30,14 +31,14 @@ pub fn cue_currents(
     let (ids, mut values) = match pathway {
         CuePathway::ExcitatoryOdor => (
             ["odorExcL", "odorExcR"],
-            [sample.left.repellent_odor, sample.right.repellent_odor],
-        ),
-        CuePathway::InhibitoryOdor => (
-            ["odorInhL", "odorInhR"],
             [
                 sample.left.attractive_odor + sample.left.exit_cue,
                 sample.right.attractive_odor + sample.right.exit_cue,
             ],
+        ),
+        CuePathway::InhibitoryOdor => (
+            ["odorInhL", "odorInhR"],
+            [sample.left.repellent_odor, sample.right.repellent_odor],
         ),
         CuePathway::Vision => (
             ["visionL", "visionR"],
@@ -125,15 +126,16 @@ pub fn motor_readout_indices(graph: &Graph) -> HashSet<u32> {
 mod tests {
     use super::*;
     use crate::environment::{FieldSample, Point};
-    #[test]
-    fn mirrored_senses_swap_currents_without_stimulating_motor_readouts() {
-        let graph = Graph {
+    fn fixture_graph() -> Graph {
+        Graph {
             manifest: serde_json::from_value(serde_json::json!({
                 "schemaVersion":1,"neuronCount":4,"edgeCount":0,"graphHash":"fixture",
                 "bodyIds":["1","2","3","4"],"motor":{"dnL":[3],"dnR":[],"mnL":[],"mnR":[]},
                 "pathways":{},"groups":[
                     {"id":"odorExcL","label":"Left","indices":[0,2,3]},
-                    {"id":"odorExcR","label":"Right","indices":[1,2]}],
+                    {"id":"odorExcR","label":"Right","indices":[1,2]},
+                    {"id":"odorInhL","label":"Left inhibitory","indices":[0]},
+                    {"id":"odorInhR","label":"Right inhibitory","indices":[1]}],
                 "groupLinks":[],"pathwayProvenance":"synthetic adapter fixture"
             }))
             .unwrap(),
@@ -141,18 +143,74 @@ mod tests {
             targets: vec![],
             weights: vec![],
             body_lookup: Default::default(),
+        }
+    }
+    /// Each odor channel reaches its own labelled population, so a pathway ablation
+    /// removes one smell rather than silently re-routing the other.
+    #[test]
+    fn each_odor_channel_and_the_exit_cue_reach_their_own_labelled_pathway() {
+        let graph = fixture_graph();
+        let opposed = SensorySample {
+            left: FieldSample {
+                attractive_odor: 0.8,
+                repellent_odor: 0.2,
+                ..Default::default()
+            },
+            right: FieldSample {
+                attractive_odor: 0.2,
+                repellent_odor: 0.8,
+                ..Default::default()
+            },
+            wind: Point::default(),
         };
+        assert_eq!(
+            cue_currents(&graph, &opposed, CuePathway::ExcitatoryOdor, 1.).unwrap(),
+            vec![(0, 1.0), (1, 0.0), (2, 1.0)],
+            "attractive odor drives the excitatory-labelled side that smells it more"
+        );
+        assert_eq!(
+            cue_currents(&graph, &opposed, CuePathway::InhibitoryOdor, 1.).unwrap(),
+            vec![(0, 0.0), (1, 1.0)],
+            "repellent odor drives the inhibitory-labelled side independently"
+        );
+        let exit_only = SensorySample {
+            left: FieldSample {
+                exit_cue: 0.8,
+                ..Default::default()
+            },
+            right: FieldSample {
+                exit_cue: 0.2,
+                ..Default::default()
+            },
+            wind: Point::default(),
+        };
+        assert_eq!(
+            cue_currents(&graph, &exit_only, CuePathway::ExcitatoryOdor, 1.).unwrap(),
+            vec![(0, 1.0), (1, 0.0), (2, 1.0)],
+            "the room-local exit cue adds into the same excitatory channel"
+        );
+        assert!(
+            cue_currents(&graph, &exit_only, CuePathway::InhibitoryOdor, 1.)
+                .unwrap()
+                .iter()
+                .all(|(_, current)| *current == 0.),
+            "the exit cue must not leak into the repellent channel"
+        );
+    }
+    #[test]
+    fn mirrored_senses_swap_currents_without_stimulating_motor_readouts() {
+        let graph = fixture_graph();
         assert_eq!(
             group_currents(&graph, ["odorExcL", "odorExcR"], [0.25, 0.75]).unwrap(),
             vec![(0, 0.25), (1, 0.75), (2, 1.0)],
             "manual sensory input sums overlapping groups and excludes motor neuron 3"
         );
         let strong = FieldSample {
-            repellent_odor: 0.8,
+            attractive_odor: 0.8,
             ..Default::default()
         };
         let weak = FieldSample {
-            repellent_odor: 0.2,
+            attractive_odor: 0.2,
             ..Default::default()
         };
         let mut sample = SensorySample {
@@ -171,11 +229,11 @@ mod tests {
         );
         let anatomical = SensorySample {
             left: FieldSample {
-                repellent_odor: 0.5002,
+                attractive_odor: 0.5002,
                 ..Default::default()
             },
             right: FieldSample {
-                repellent_odor: 0.5,
+                attractive_odor: 0.5,
                 ..Default::default()
             },
             wind: Point::default(),
@@ -188,11 +246,11 @@ mod tests {
         for [left, right] in [[0., 0.], [0.8, 0.8], [0.049, 0.], [0., 0.049]] {
             let neutral = SensorySample {
                 left: FieldSample {
-                    repellent_odor: left,
+                    attractive_odor: left,
                     ..Default::default()
                 },
                 right: FieldSample {
-                    repellent_odor: right,
+                    attractive_odor: right,
                     ..Default::default()
                 },
                 wind: Point::default(),

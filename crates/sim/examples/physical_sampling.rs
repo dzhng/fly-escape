@@ -35,8 +35,8 @@ fn sampling(fields: &FieldSet, pose: BodyPose, offset: f64, forward: f64) -> Sen
 }
 fn values(sample: &SensorySample, cue: CuePathway) -> [f64; 2] {
     match cue {
-        CuePathway::ExcitatoryOdor => [sample.left.repellent_odor, sample.right.repellent_odor],
-        CuePathway::InhibitoryOdor => [sample.left.attractive_odor, sample.right.attractive_odor],
+        CuePathway::ExcitatoryOdor => [sample.left.attractive_odor, sample.right.attractive_odor],
+        CuePathway::InhibitoryOdor => [sample.left.repellent_odor, sample.right.repellent_odor],
         _ => [sample.left.brightness, sample.right.brightness],
     }
 }

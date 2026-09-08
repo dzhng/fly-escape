@@ -3,7 +3,7 @@
   "purpose": "Tiny numerical porting oracle; not a biological graph or real-data acceptance",
   "oracle": {
     "path": "scripts/reference/lif_sim.py",
-    "sha256": "fe8cfe229b538d01715f77baa0d93237398fe3cc783500e0a2e3894351cec1b5"
+    "sha256": "e0a1fae65e146e32817371f6186f0dffaa6d7cc25963f7e4dcbf928cacde7a82"
   },
   "edge_columns": [
     "presynaptic_index",
@@ -191,9 +191,9 @@
             0
           ],
           "thrust": 0.125,
-          "turn": -0.4375,
+          "turn": 4.0,
           "flight_thrust": 0.296875,
-          "flight_turn": 0.234375
+          "flight_turn": 4.671875
         },
         {
           "synaptic_input": [
@@ -239,9 +239,9 @@
             0
           ],
           "thrust": 0.29296875,
-          "turn": 0.0078125,
+          "turn": 0.0,
           "flight_thrust": 0.755859375,
-          "flight_turn": 0.345703125
+          "flight_turn": 0.337890625
         },
         {
           "synaptic_input": [
@@ -287,9 +287,9 @@
             2
           ],
           "thrust": 0.1300048828125,
-          "turn": -0.0400390625,
+          "turn": 0.0,
           "flight_thrust": 0.2550048828125,
-          "flight_turn": -0.0400390625
+          "flight_turn": 0.0
         },
         {
           "synaptic_input": [
@@ -335,9 +335,9 @@
             1
           ],
           "thrust": 0.1469573974609375,
-          "turn": -0.2225341796875,
+          "turn": 0.0,
           "flight_thrust": 0.2719573974609375,
-          "flight_turn": -0.2225341796875
+          "flight_turn": 0.0
         }
       ]
     },
@@ -584,6 +584,252 @@
           "turn": -0.3125,
           "flight_thrust": 0.125,
           "flight_turn": -0.5
+        }
+      ]
+    },
+    {
+      "name": "olfactory_turn_follows_firing_not_reset_voltage",
+      "body_ids": [
+        "10",
+        "20",
+        "30",
+        "40"
+      ],
+      "params": {
+        "tau": 100,
+        "threshold": 1,
+        "reset": 0.125,
+        "dt": 1,
+        "refractory": 2,
+        "noise_std": 0.1,
+        "input_scale": 1,
+        "baseline_drive": 0
+      },
+      "edges": [],
+      "initial": {
+        "voltage": [
+          0.9,
+          0.9,
+          -0.5,
+          0.25
+        ],
+        "spikes": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "refractory": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "motor_groups": {
+        "dn_left": [
+          0,
+          2
+        ],
+        "dn_right": [
+          1
+        ],
+        "mn_left": [
+          2
+        ],
+        "mn_right": [
+          3
+        ],
+        "olf_dn_left": [
+          0
+        ],
+        "olf_dn_right": [
+          1
+        ],
+        "flight_dn_left": [
+          2
+        ],
+        "flight_dn_right": [
+          3
+        ]
+      },
+      "ticks": [
+        {
+          "noise": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "external_by_body": {
+            "20": 0.5
+          }
+        },
+        {
+          "noise": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "external_by_body": {
+            "10": 0.5
+          }
+        },
+        {
+          "noise": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "external_by_body": {}
+        }
+      ],
+      "expected": [
+        {
+          "synaptic_input": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "dV": [
+            -0.009000000000000001,
+            0.491,
+            0.005,
+            -0.0025
+          ],
+          "can_spike": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "external_current": [
+            0.0,
+            0.5,
+            0.0,
+            0.0
+          ],
+          "voltage": [
+            0.891,
+            0.125,
+            -0.495,
+            0.2475
+          ],
+          "spikes": [
+            false,
+            true,
+            false,
+            false
+          ],
+          "refractory": [
+            0,
+            1,
+            0,
+            0
+          ],
+          "thrust": 0.018875000000000003,
+          "turn": 4.0,
+          "flight_thrust": -0.10487499999999998,
+          "flight_turn": 4.37125
+        },
+        {
+          "synaptic_input": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "dV": [
+            0.49109,
+            -0.00125,
+            0.0049499999999999995,
+            -0.0024749999999999998
+          ],
+          "can_spike": [
+            true,
+            false,
+            true,
+            true
+          ],
+          "external_current": [
+            0.5,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "voltage": [
+            0.125,
+            0.125,
+            -0.49005,
+            0.245025
+          ],
+          "spikes": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "refractory": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "thrust": -0.07563749999999998,
+          "turn": -4.0,
+          "flight_thrust": -0.19815,
+          "flight_turn": -3.6324625
+        },
+        {
+          "synaptic_input": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "dV": [
+            -0.00125,
+            -0.00125,
+            0.0049004999999999995,
+            -0.0024502499999999997
+          ],
+          "can_spike": [
+            false,
+            true,
+            true,
+            true
+          ],
+          "external_current": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "voltage": [
+            0.125,
+            0.12375,
+            -0.4851495,
+            0.24257475
+          ],
+          "spikes": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "refractory": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "thrust": -0.07472487500000001,
+          "turn": 0.0,
+          "flight_thrust": -0.19601225000000003,
+          "flight_turn": 0.36386212500000004
         }
       ]
     }

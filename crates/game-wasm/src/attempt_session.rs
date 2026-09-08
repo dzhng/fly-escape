@@ -301,7 +301,8 @@ pub fn swarm_request(
         level,
         tuning: sim::attempt::AttemptTuning {
             cues: vec![sim::attempt::CueInput {
-                pathway: sim::sensory::CuePathway::ExcitatoryOdor,
+                // Paired with the lab level's repellent source.
+                pathway: sim::sensory::CuePathway::InhibitoryOdor,
                 gain: 1.0,
             }],
             ..Default::default()

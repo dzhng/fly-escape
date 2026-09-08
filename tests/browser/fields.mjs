@@ -42,10 +42,10 @@ try {
   await tick();
   const odor = await sample();
   assert.equal(odor.info.brain.neuronCount, 70000);
-  assert.ok(odor.frame.flies[0].sensory.left.attractiveOdor > odor.frame.flies[0].sensory.right.attractiveOdor);
-  assert.ok(odor.frame.flies[1].sensory.left.attractiveOdor < odor.frame.flies[1].sensory.right.attractiveOdor);
+  assert.ok(odor.frame.flies[0].sensory.left.repellentOdor > odor.frame.flies[0].sensory.right.repellentOdor);
+  assert.ok(odor.frame.flies[1].sensory.left.repellentOdor < odor.frame.flies[1].sensory.right.repellentOdor);
   assert.ok(
-    Math.abs(odor.frame.flies[0].sensory.left.attractiveOdor - odor.frame.flies[1].sensory.right.attractiveOdor) <
+    Math.abs(odor.frame.flies[0].sensory.left.repellentOdor - odor.frame.flies[1].sensory.right.repellentOdor) <
       1e-12,
   );
   const grid = odor.frame.grids[0];
@@ -66,10 +66,10 @@ try {
     values[cue] = await sample();
     if (cue === "excitatoryOdor") {
       const fly = values[cue].frame.flies[0];
-      assert.ok(fly.sensory.left.repellentOdor > fly.sensory.right.repellentOdor);
-      assert.equal(fly.sensory.left.attractiveOdor, 0);
+      assert.ok(fly.sensory.left.attractiveOdor > fly.sensory.right.attractiveOdor);
+      assert.equal(fly.sensory.left.repellentOdor, 0);
       const row = page.locator(".sensor-row").filter({ has: page.locator("span", { hasText: /^Odor$/ }) }).first();
-      assert.deepEqual(await row.locator("output").allTextContents(), [fly.sensory.left.repellentOdor.toFixed(3), fly.sensory.right.repellentOdor.toFixed(3)]);
+      assert.deepEqual(await row.locator("output").allTextContents(), [fly.sensory.left.attractiveOdor.toFixed(3), fly.sensory.right.attractiveOdor.toFixed(3)]);
     }
     await page.screenshot({ path: new URL(`fields-${cue}.png`, output).pathname });
   }

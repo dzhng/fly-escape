@@ -64,10 +64,11 @@ export function NeuralExplanations() {
         </p>
         <p>
           Sensory signals enter selected neuron groups as modeled electrical input. Here, attractive
-          odor drives inhibitory-labeled odor groups and repellent odor drives excitatory-labeled
-          groups, following measured responses of this simulated circuit. This binding is a modeling
-          assumption: excitation and inhibition describe effects between neurons, not a universal
-          preference for a smell. Odor and visual inputs can arrive together and combine in a neuron.
+          odor and the local exit cue drive excitatory-labeled odor groups and repellent odor drives
+          inhibitory-labeled groups, following measured responses of this simulated circuit. This
+          binding is a modeling assumption: excitation and inhibition describe effects between
+          neurons, not a universal preference for a smell. Odor and visual inputs can arrive
+          together and combine in a neuron.
         </p>
       </details>
     </>

@@ -128,11 +128,11 @@ pub fn fixture(scenario: FieldScenario, mirror: f64) -> Result<(FieldSet, CuePat
         kind: SourceKind::AttractiveOdor,
     };
     let cue = match scenario {
-        FieldScenario::ExcitatoryOdor => {
+        FieldScenario::ExcitatoryOdor => CuePathway::ExcitatoryOdor,
+        FieldScenario::InhibitoryOdor => {
             source.kind = SourceKind::RepellentOdor;
-            CuePathway::ExcitatoryOdor
+            CuePathway::InhibitoryOdor
         }
-        FieldScenario::InhibitoryOdor => CuePathway::InhibitoryOdor,
         FieldScenario::Lamp => {
             source.kind = SourceKind::Lamp;
             source.radius = 1.5;
@@ -155,7 +155,7 @@ pub fn fixture(scenario: FieldScenario, mirror: f64) -> Result<(FieldSet, CuePat
                 radius: 3.,
                 strength: 1.,
             });
-            CuePathway::InhibitoryOdor
+            CuePathway::ExcitatoryOdor
         }
     };
     let sources = if matches!(scenario, FieldScenario::Exit) {

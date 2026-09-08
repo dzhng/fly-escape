@@ -26,8 +26,11 @@ binary values to distinguish `>` from `>=`; other spike comparisons stay clear
 of the threshold boundary. `dV` is the computed increment before refractory
 masking; `can_spike` is the mask before the end-of-tick decrement.
 
-Motor groups are explicit, noncontiguous and overlapping. The captured ground
-and flight readouts use membrane voltage after reset and clamp, rather than
-spike counts. The input group lists are deliberately assigned directly: this
-fixture tests neural/readout semantics, while graph extraction owns real group
-membership and body-side annotation evidence.
+Motor groups are explicit, noncontiguous and overlapping. The captured thrust
+readouts, and the flight steering term, use membrane voltage after reset and
+clamp. The olfactory turn term instead reads the same tick's spike fractions,
+so one case deliberately makes the firing and voltage differences disagree in
+sign or in which of them is zero; a voltage-based turn cannot reproduce it. The
+input group lists are deliberately assigned directly: this fixture tests
+neural/readout semantics, while graph extraction owns real group membership and
+body-side annotation evidence.

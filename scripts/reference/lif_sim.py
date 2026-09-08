@@ -9,6 +9,7 @@ The LIF model:
 Motor output:
 - DN (descending) and MN (motor) neurons drive locomotion
 - L/R asymmetry maps to thrust/turn unicycle control
+- Thrust reads membrane voltage; the olfactory turn term reads spike fractions
 
 CRITICAL: Motor turn must emerge from graph dynamics, not external bias.
 """
@@ -71,6 +72,10 @@ FLIGHT_DN_RIGHT = [
     13922,   # DNb02 R
     10989,   # DNp03 R - flight
 ]
+
+
+# Scale on the olfactory spike-fraction steering term, internal to the readout.
+OLFACTORY_SPIKE_SCALE = 4.0
 
 
 class LIFSimulator:
@@ -205,6 +210,10 @@ class LIFSimulator:
         
         return self.spikes.copy(), thrust, turn
     
+    def _spike_fraction(self, idx: List[int]) -> float:
+        """Fraction of the indexed neurons that spiked on the current tick."""
+        return float(np.mean(self.spikes[idx])) if idx else 0.0
+
     def _compute_motor_output(self) -> Tuple[float, float]:
         """
         Compute thrust/turn from DN/MN L/R asymmetry.
@@ -225,11 +234,14 @@ class LIFSimulator:
         thrust = (dn_l + dn_r + mn_l + mn_r) / 4.0
         
         # Turn from olfactory-specific DNs
-        # These are the DNs that receive input from excitatory LH neurons
+        # These are the DNs that receive input from excitatory LH neurons.
+        # Read their firing, not their voltage: a spiking neuron resets to its
+        # floor, so the group that just fired most reads lowest in voltage.
         if self.olf_dn_left_idx and self.olf_dn_right_idx:
-            olf_dn_l = np.mean(self.V[self.olf_dn_left_idx])
-            olf_dn_r = np.mean(self.V[self.olf_dn_right_idx])
-            turn = (olf_dn_r - olf_dn_l)  # R > L → turn right
+            turn = OLFACTORY_SPIKE_SCALE * (
+                self._spike_fraction(self.olf_dn_right_idx)
+                - self._spike_fraction(self.olf_dn_left_idx)
+            )  # R > L → turn right
         else:
             # Fallback to all DNs if olfactory DNs not available
             turn = ((dn_r + mn_r) - (dn_l + mn_l)) / 4.0
@@ -255,11 +267,12 @@ class LIFSimulator:
             flight_thrust = 0.0
             flight_turn = 0.0
         
-        # Olfactory turn contribution
+        # Olfactory turn contribution, on the same firing basis as walking
         if self.olf_dn_left_idx and self.olf_dn_right_idx:
-            olf_dn_l = np.mean(self.V[self.olf_dn_left_idx])
-            olf_dn_r = np.mean(self.V[self.olf_dn_right_idx])
-            olf_turn = (olf_dn_r - olf_dn_l)
+            olf_turn = OLFACTORY_SPIKE_SCALE * (
+                self._spike_fraction(self.olf_dn_right_idx)
+                - self._spike_fraction(self.olf_dn_left_idx)
+            )
         else:
             olf_turn = 0.0
         

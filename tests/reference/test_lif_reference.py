@@ -45,17 +45,33 @@ class LIFReferenceTests(unittest.TestCase):
         self.assertEqual(second["external_current"], [0.0, 0.0, 8.0, 0.0])
         self.assertEqual(third["external_current"], [0.0, 0.0, 0.0, 0.0])
 
-    def test_motor_readouts_use_post_reset_voltage_and_overlapping_group_means(self):
+    def test_thrust_uses_post_reset_voltage_and_turn_uses_olfactory_firing(self):
         first = run_case(next(cases()))[0]
         self.assertEqual(first["dV"], [0.0625, 1.15625, 0.0, 0.09375])
         self.assertEqual(first["voltage"], [0.5625, 0.125, -0.5, 0.84375])
         self.assertEqual(first["thrust"], 0.125)
-        self.assertEqual(first["turn"], -0.4375)
+        # Only the right olfactory neuron spiked, so the turn term is the full scale.
+        self.assertEqual(first["turn"], 4.0)
         self.assertEqual(first["flight_thrust"], 0.296875)
-        self.assertEqual(first["flight_turn"], 0.234375)
+        # Voltage-based flight steering survives alongside the same olfactory term.
+        self.assertEqual(first["flight_turn"], 0.671875 + 4.0)
         fallback = run_case(list(cases())[1])[0]
         self.assertEqual(fallback["thrust"], 0.40625)
         self.assertEqual(fallback["turn"], -1.34375)
+
+    def test_olfactory_turn_follows_firing_where_reset_voltage_would_disagree(self):
+        fired_right, fired_left, silent = run_case(list(cases())[2])
+        self.assertEqual(fired_right["spikes"], [False, True, False, False])
+        # The group that fired now sits below the silent one, so a voltage readout
+        # would steer the other way here.
+        self.assertLess(fired_right["voltage"][1], fired_right["voltage"][0])
+        self.assertEqual(fired_right["turn"], 4.0)
+        self.assertEqual(fired_left["spikes"], [True, False, False, False])
+        self.assertEqual(fired_left["voltage"][0], fired_left["voltage"][1])
+        self.assertEqual(fired_left["turn"], -4.0)
+        self.assertEqual(silent["spikes"], [False] * 4)
+        self.assertNotEqual(silent["voltage"][0], silent["voltage"][1])
+        self.assertEqual(silent["turn"], 0.0)
 
 
 if __name__ == "__main__":
