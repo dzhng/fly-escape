@@ -29,10 +29,7 @@ try {
     () => !document.querySelector(".run-setup").disabled,
   );
   await page.mouse.move(680, 520);
-  await page
-    .getByTestId("placement-feedback")
-    .filter({ hasText: "Valid placement" })
-    .waitFor();
+  await page.locator('.setup-canvas[data-placement-valid="true"]').waitFor();
   await page.screenshot({ path: output + "/setup-ghost.png" });
   await page.mouse.click(680, 520);
   await page
@@ -40,10 +37,7 @@ try {
     .waitFor();
   await page.getByRole("button", { name: /Scent crumbs.*left/ }).click();
   await page.mouse.move(760, 600);
-  await page
-    .getByTestId("placement-feedback")
-    .filter({ hasText: "Valid placement" })
-    .waitFor();
+  await page.locator('.setup-canvas[data-placement-valid="true"]').waitFor();
   await page.mouse.click(760, 600);
   await page.mouse.move(1430, 20);
   await page.screenshot({ path: output + "/setup-placed.png" });

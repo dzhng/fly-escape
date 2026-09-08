@@ -118,3 +118,26 @@ for (const [kind, folder] of [
     models.dispose();
   });
 }
+
+test("placement preview preserves the object's materials unless the position is invalid", () => {
+  const models = new PlacementModels();
+  const source = new THREE.Group();
+  const material = new THREE.MeshStandardMaterial({ color: '#a63322' });
+  source.add(new THREE.Mesh(new THREE.BoxGeometry(.1, .1, .1), material));
+  models.replace('fruit', source);
+  const placement = { id: 1, kind: 'fruit' as const, position: { x: 2, z: 2 }, heading: 0 };
+  const catalog = [{kind: 'fruit' as const, footprintRadius: .1, contact: 'apple' as const,
+    contactHazard: null, edible: true,
+    effect: {type: 'source' as const, kind: 'attractiveOdor' as const, radius: .75, rate: 1}}];
+  for (const valid of [null, true, false, true]) {
+    models.setPlacements([], catalog, {placement, valid});
+    const mesh = models.root.children[0].children[0] as THREE.Mesh;
+    if (valid === false) {
+      const tint = mesh.material as THREE.MeshStandardMaterial;
+      expect(tint.color.r).toBeGreaterThan(tint.color.g * 3);
+      expect(tint.color.r).toBeGreaterThan(tint.color.b * 3);
+    } else expect(mesh.material).toBe(material);
+    expect((source.children[0] as THREE.Mesh).material).toBe(material);
+  }
+  models.dispose();
+});

@@ -86,7 +86,7 @@ try {
     const report = JSON.parse(await page.getByTestId("playback-report").textContent());
     report.rendererDevice = rendererDevice;
     await writeFile(`${output}/attempt-${run + 1}.json`, JSON.stringify(report, null, 2) + "\n");
-    assert.equal(report.spec.flyCount, 20);
+    assert.equal(report.spec.flyCount, 16);
     if (fullAttempts) {
       assert.ok(rendererDevice && !/SwiftShader|Software|llvmpipe/i.test(rendererDevice),
         "frame timing acceptance requires an identified hardware renderer");

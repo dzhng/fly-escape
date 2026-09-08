@@ -1,3 +1,5 @@
+import { frameBesidePanel } from "./world-framing";
+import { Stars } from "./stars";
 import { DepartureTail } from "./departure-tail";
 import type { PreviewUpdate } from "./fly-preview";
 import type { RoomDetail, RoomFloor } from "@fly-escape/game-renderer";
@@ -28,7 +30,7 @@ import { SciencePanel } from "./science-panel";
 import { NeuralExplanations } from "./neural-explanations";
 import "./playback.css";
 
-const FLY_COUNT = 20;
+const LAB_FLY_COUNT = 20;
 const DURATION_TICKS = 6000;
 const TICK_SECONDS = 0.1;
 class TimingSamples {
@@ -163,6 +165,10 @@ export function AttemptPlayback({
   const restart = useRef<() => void>(() => {});
   const interactionAt = useRef<number | null>(null);
   const [info, setInfo] = useState<AttemptInfo>();
+  useEffect(() => {
+    if (!input || !info || !scene.current || !container.current) return;
+    return frameBesidePanel(scene.current, container.current, container.current.closest(".playback-lab")!.querySelector("aside")!);
+  }, [input, info]);
   const [display, setDisplay] = useState(initialDisplay);
   const [selected, setSelected] = useState(0);
   const cards = useRef(new Map<number, HTMLButtonElement>());
@@ -314,7 +320,7 @@ export function AttemptPlayback({
       lastFrameAt = null;
       requestedAt = performance.now();
       if (input) observer.start(input);
-      else observer.startLab(crypto.randomUUID(), "42", FLY_COUNT, DURATION_TICKS);
+      else observer.startLab(crypto.randomUUID(), "42", LAB_FLY_COUNT, DURATION_TICKS);
     };
     const visibility = () => {
       observer.setHidden(document.hidden);
@@ -513,7 +519,7 @@ export function AttemptPlayback({
     ((input?.level.durationTicks ?? DURATION_TICKS) - display.cursor) * TICK_SECONDS));
   return (
     <main
-      className="playback-lab"
+      className={`playback-lab${input ? " campaign-playback" : ""}`}
       data-testid="playback-lab"
       data-attempt-id={info?.spec.attemptId ?? ""}
       data-cursor-tick={display.cursor}
@@ -522,7 +528,7 @@ export function AttemptPlayback({
       data-world-state={error ? "error" : worldReady ? "ready" : "loading"}
       data-fly-count={info?.spec.flyCount ?? 0}
     >
-      <header>
+      {!input && <header>
         <div>
           <span className="eyebrow">
             {input ? "Fly escape · attempt" : "Fly escape · playback lab"}
@@ -530,7 +536,7 @@ export function AttemptPlayback({
           <h1>{input ? (error ? "Flight interrupted" : "Off they go!") : "Twenty lives, one shared clock."}</h1>
         </div>
         {!input && <a href="/lab/lifecycle">Lifecycle lab</a>}
-      </header>
+      </header>}
       <section className="workspace">
         <div className={`world playback-world${input ? " game-world" : ""}`}>
           <div className="canvas" ref={container} />
@@ -541,7 +547,7 @@ export function AttemptPlayback({
             </div>
           )}
           <div className="playback-counters" aria-label="Outcomes at playback time">
-            <b data-testid="active-count">{FLY_COUNT - terminalCount} {error ? "paused" : "active"}</b>
+            <b data-testid="active-count">{(info?.spec.flyCount ?? input?.flyCount ?? LAB_FLY_COUNT) - terminalCount} {error ? "paused" : "active"}</b>
             {Object.entries(counts).filter(([name]) => !timedRound || name !== "starved").map(([name, count]) => (
               <span key={name} data-testid={`outcome-${name}`}>
                 {count} {name === "timedOut" ? "dead" : name}
@@ -556,7 +562,7 @@ export function AttemptPlayback({
                   : !worldReady && info
                     ? "Loading world assets…"
                     : display.state === "loading"
-                      ? (input ? "Waking up twenty tiny brains…" : "Loading the connectome…")
+                      ? (input ? "Waking up tiny brains…" : "Loading the connectome…")
                       : display.state === "buffering"
                         ? (input ? "One moment…" : "Buffering — building enough lead")
                         : display.state === "ended"
@@ -647,15 +653,17 @@ export function AttemptPlayback({
           </div>
         </div>
         <aside aria-label="All fly neural activity">
+          {!input && <>
           <span className="eyebrow">Inside a tiny brain</span>
           <h2>What are they sensing?</h2>
           <p className="intro">
             Neurons combine incoming signals and send brief electrical pulses called spikes.
             These charts show each fly’s neural activity.
           </p>
+          </>}
           {input && display.state === "ended" && run.current?.archive.result && (
             <p role="status" data-testid="attempt-result">
-              {run.current.archive.result.stars} {run.current.archive.result.stars === 1 ? "star" : "stars"} ·{" "}
+              <Stars count={run.current.archive.result.stars} />{" "}
               {run.current.archive.result.outcomes.escaped} escaped
             </p>
           )}

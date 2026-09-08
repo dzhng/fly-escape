@@ -263,3 +263,44 @@ test("ground coverage is reused across a turn, and panning follows the turned sc
     expect(Math.abs(moved.y - start.y)).toBeLessThan(1);
   }
 });
+
+test("overlay framing keeps the house and followed fly in the unobscured viewport", () => {
+  const rig = new WorldCamera(bounds, 1);
+  rig.resize(1000, 600);
+  rig.setRightInset(300);
+  rig.overview();
+  const center = bounds.getCenter(new THREE.Vector3());
+  expect(rig.project(center).x).toBeCloseTo(350);
+  for (const x of [bounds.min.x, bounds.max.x])
+    for (const y of [bounds.min.y, bounds.max.y])
+      for (const z of [bounds.min.z, bounds.max.z]) {
+        const point = rig.project(new THREE.Vector3(x, y, z));
+        expect(point.x).toBeGreaterThanOrEqual(0);
+        expect(point.x).toBeLessThanOrEqual(700);
+      }
+  rig.follow(center);
+  rig.zoom(-80);
+  rig.rotate(30, 10);
+  expect(rig.project(center).x).toBeCloseTo(350);
+  rig.resize(800, 600);
+  expect(rig.project(center).x).toBeCloseTo(250);
+  rig.setRightInset(0);
+  expect(rig.project(center).x).toBeCloseTo(400);
+});
+
+test("meadow still covers the view after proportional resizing beside a fixed overlay", () => {
+  const rig = new WorldCamera(bounds, 1);
+  rig.resize(1440, 900);
+  rig.setRightInset(338);
+  rig.exteriorGroundCircle();
+  rig.resize(720, 450);
+  rig.follow(bounds.max.clone());
+  rig.zoom(100000);
+  const circle = rig.exteriorGroundCircle();
+  for (const x of [-1, 1]) for (const y of [-1, 1]) {
+    const ray = new THREE.Raycaster();
+    ray.setFromCamera(new THREE.Vector2(x, y), rig.camera);
+    const point = ray.ray.intersectPlane(new THREE.Plane(new THREE.Vector3(0, 1, 0), 0), new THREE.Vector3());
+    if (point) expect(Math.hypot(point.x - circle.x, point.z - circle.z)).toBeLessThanOrEqual(circle.radius);
+  }
+});

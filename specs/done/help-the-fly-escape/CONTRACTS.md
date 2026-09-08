@@ -36,7 +36,7 @@ Use the existing visual/motor extraction target of approximately 70,000 neurons 
 
 Port the LIF update and motor readout with injected noise fixtures: previous spikes drive current, strict threshold, refractory update order, clamping and both the voltage-based and spike-fraction readouts must match. Compare f64 intermediate values with stated tolerances and spike outcomes away from threshold boundaries. Exact NumPy RNG replication is unnecessary: production gets a specified stable PRNG with independent streams derived from root seed and fly ID. Same build, graph, tuning and seed must produce the same recorded attempt; cross-browser bit identity is not promised without evidence. Replay displays stored records and is exact.
 
-Initial cadence remains one neural update per 0.1 game seconds, matching the prototype's coupling. LIF `dt=1` is a model unit, not a claim of a millisecond of biology. Rendering interpolates; it does not increase neural cadence. Do not shrink the graph, lower 20 flies, or silently alter model cadence to pass performance.
+Initial cadence remains one neural update per 0.1 game seconds, matching the prototype's coupling. LIF `dt=1` is a model unit, not a claim of a millisecond of biology. Rendering interpolates; it does not increase neural cadence. Do not shrink the graph or silently alter model cadence to pass performance. The campaign uses the user-requested sixteen flies; diagnostics may choose another count.
 
 ## Environment, body and result
 
@@ -62,7 +62,7 @@ Terminal outcome is exactly `escaped | starved | zapped | caught | timedOut`. Te
 
 Share one immutable graph among fly states. Never store full-neuron history. Copy WASM output into independently owned ArrayBuffers and transfer those buffers; never transfer WASM memory or retain stale views across memory growth. Archive append takes exclusive ownership by transfer and detaches the caller’s buffers, preventing later mutation from changing replay. Allow at most two unacknowledged chunks. Worker yields between small batches and produces only when credited. Chunk size starts at ten ticks and is delegated downwards if cancellation or transfer latency misses budget.
 
-Keep the current attempt's complete compact record in RAM for replay and scrubbing through already-computed time. Maximum authored horizon is 6,000 ticks (ten game minutes); bound the archive at 128 MiB for 20 flies. Calculate this bound from actual schema before allocation, including events. Release the previous archive when starting another attempt. A record-cap failure is an explicit error, not silent history truncation. No persistent replay library or save-file compatibility in MVP.
+Keep the current attempt's complete compact record in RAM for replay and scrubbing through already-computed time. Maximum authored horizon is 6,000 ticks (ten game minutes); bound the archive at 128 MiB and validate against the actual fly count. Calculate this bound from actual schema before allocation, including events. Release the previous archive when starting another attempt. A record-cap failure is an explicit error, not silent history truncation. No persistent replay library or save-file compatibility in MVP.
 
 ## Playback and responsiveness
 

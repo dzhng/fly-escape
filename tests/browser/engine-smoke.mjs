@@ -47,7 +47,7 @@ try {
     const lab=document.querySelector('[data-testid="playback-lab"]');
     if(!el||!lab) return false;
     const current=JSON.parse(el.textContent);
-    return current.spec?.flyCount===20&&current.renderer?.modelKind==='glb'
+    return current.spec?.flyCount===16&&current.renderer?.modelKind==='glb'
       &&lab.dataset.worldState==='ready'&&lab.dataset.playbackState==='playing';
   });
   await waitForPlaying();

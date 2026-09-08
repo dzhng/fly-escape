@@ -10,6 +10,7 @@ import { BrainClient, type BrainFrame, type BrainInfo } from "@fly-escape/sim-cl
 import "./style.css";
 import { FieldsLab } from "./fields";
 import { NeuralExplanations } from "./neural-explanations";
+import "./game-hud.css";
 
 function BrainLab() {
   const container = useRef<HTMLDivElement>(null);
@@ -264,7 +265,7 @@ createRoot(document.getElementById("root")!).render(
       ) : (
         <BrainLab />
       )}
-      <footer className="app-information">
+      <footer className={`app-information${location.pathname === "/" ? " game-information" : ""}`}>
         <a href="/?about">About the data and models</a>
       </footer>
     </>

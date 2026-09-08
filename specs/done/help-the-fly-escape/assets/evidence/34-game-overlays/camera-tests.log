@@ -1,0 +1,23 @@
+bun test v1.3.14 (0d9b296a)
+
+packages/game-renderer/src/camera.test.ts:
+(pass) follow keeps a moving and terminal target centered while zoom preserves it [2.32ms]
+(pass) overview fits every room corner and pan releases follow without rotating [0.53ms]
+(pass) maximum zoom keeps an edge fly centered; Overview restores the whole house [0.21ms]
+(pass) millimetre subjects stay in the frustum at follow and extra-close household framing [0.22ms]
+(pass) zoom changes fly size gently and stops changing it at the camera limit [0.94ms]
+(pass) inspection focus preserves fixed camera orientation and ignores fly tracking [0.25ms]
+(pass) diagnostic mounting elevation never leaks into follow or Overview [0.21ms]
+(pass) circular exterior contains every ground ray across normal camera limits [2.00ms]
+(pass) every fly keeps its readable size at its own depth, however close the view gets [0.21ms]
+(pass) world enlargement is capped, so the farthest view shrinks flies instead of growing them [0.10ms]
+(pass) orbit turns the view only: target, zoom and follow survive, and reset restores the default [0.36ms]
+(pass) orbit keeps the camera above the floor, the house framed and the ground under every ray [1.27ms]
+(pass) ground coverage is reused across a turn, and panning follows the turned screen axes [0.14ms]
+(pass) overlay framing keeps the house and followed fly in the unobscured viewport [0.29ms]
+(pass) meadow still covers the view after proportional resizing beside a fixed overlay [0.18ms]
+
+ 15 pass
+ 0 fail
+ 2297 expect() calls
+Ran 15 tests across 1 file. [94.00ms]

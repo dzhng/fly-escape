@@ -45,7 +45,7 @@ try {
   assert.equal(await nav.getByRole("button", { name: /Second/ }).isDisabled(), true);
   assert.equal(await page.locator(".tool-palette button").count(), 1);
   await page.mouse.move(680, 520);
-  await page.getByTestId("placement-feedback").filter({ hasText: "Valid placement" }).waitFor();
+  await page.locator('.setup-canvas[data-placement-valid="true"]').waitFor();
   await page.mouse.click(680, 520);
   await page.getByRole("button", { name: "Remove Apple 1", exact: true }).waitFor();
   assert.equal(await page.locator(".tool-palette button").isDisabled(), true);

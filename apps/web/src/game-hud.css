@@ -1,0 +1,39 @@
+/* Campaign overlays never reserve space in the world viewport. Labs retain their layout. */
+.campaign-shell { position: relative; width: 100%; height: 100dvh; overflow: hidden; }
+.campaign-levels { position: absolute; z-index: 5; top: 18px; left: 18px; display: flex; gap: 8px; max-width: calc(100% - 330px); }
+.campaign-levels button { display: flex; align-items: center; gap: 9px; border-radius: 15px; padding: 10px 13px; background: #fff9e9ed; border-color: #ece3c7; box-shadow: 0 3px 15px #34472420; }
+.campaign-levels button[aria-current="step"] { border-color: #c39839; background: #fff0c6f5; }
+.campaign-levels button:disabled { opacity: .75; }
+.level-lock { font-size: 10px; color: #6e765d; }
+.game-stars { display: inline-flex; flex: 0 0 auto; gap: 2px; vertical-align: middle; }
+.game-stars svg { width: 19px; height: 19px; stroke-width: 1.2; stroke-linejoin: round; }
+.game-stars .earned { fill: #f4c23b; stroke: #aa7a1c; }
+.game-stars .unearned { fill: #dcdcc8; stroke: #a7ad90; }
+.campaign-shell > p { position: absolute; top: 80px; left: 18px; padding: 12px; border-radius: 12px; background: #fff9e9ed; z-index: 5; }
+.campaign-playback, .campaign-playback .workspace, .campaign-playback .playback-world { position: absolute; inset: 0; height: 100%; min-height: 0; display: block; }
+.campaign-playback .playback-world > .canvas { inset: 0; }
+.campaign-playback .workspace > aside { position: absolute; z-index: 3; top: 18px; bottom: 42px; right: 18px; width: 320px; padding: 12px; border: 1px solid #ece3c7; border-radius: 20px; background: #fff9e9ed; box-shadow: 0 6px 30px #34472426; overflow: auto; overscroll-behavior: contain; }
+.campaign-playback .science-panel { margin-top: 0; }
+.campaign-playback .playback-counters { top: 80px; left: 18px; right: auto; max-width: calc(100% - 375px); padding: 9px 13px; gap: 12px; background: #fff9e9ed; border-radius: 14px; }
+.campaign-playback .playback-controls { left: 18px; bottom: 18px; right: auto; width: min(540px, calc(100% - 375px)); padding: 12px; border-radius: 18px; background: #fff9e9ed; }
+.campaign-playback [data-testid="reset-rotation"] { top: auto !important; right: auto !important; left: 18px; bottom: 190px; z-index: 2; }
+.campaign-playback [data-testid="attempt-result"] { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px; margin: 0 0 12px; background: #f8e8b6; border-radius: 14px; font-weight: 700; }
+.campaign-playback [data-testid="attempt-result"] svg { width: 30px; height: 30px; }
+@media (max-width: 1000px) {
+  .campaign-levels button { flex-wrap: wrap; gap: 4px 8px; padding: 8px 10px; }
+  .campaign-levels button > span:first-child { width: 100%; }
+  .campaign-playback .playback-counters { top: 100px; }
+}
+@media (max-width: 700px) {
+  .campaign-levels { top: 10px; left: 10px; max-width: calc(100% - 20px); gap: 5px; }
+  .campaign-levels button { padding: 5px 8px; font-size: 10px; }
+  .game-stars svg { width: 14px; height: 14px; }
+  .campaign-playback .workspace > aside { top: 76px; right: 10px; bottom: 10px; width: 226px; padding: 9px; }
+  .campaign-playback .playback-counters { top: 76px; left: 10px; max-width: calc(100% - 256px); gap: 5px; padding: 8px; font-size: 10px; }
+  .campaign-playback .playback-controls { left: 10px; bottom: 10px; width: calc(100% - 256px); gap: 5px; padding: 8px; }
+  .campaign-playback .playback-controls button { padding: 6px; font-size: 10px; }
+  .campaign-playback [data-testid="reset-rotation"] { left: 10px; bottom: 270px; }
+}
+
+.game-information { position: fixed; z-index: 5; bottom: 12px; right: 18px; padding: 0; font-size: 11px; }
+.game-information a { padding: 5px 9px; border-radius: 9px; background: #fff9e9ed; color: #425b3e; }

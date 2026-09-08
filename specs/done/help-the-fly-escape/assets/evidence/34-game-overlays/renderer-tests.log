@@ -1,0 +1,119 @@
+$ bun test packages/game-renderer/src
+bun test v1.3.14 (0d9b296a)
+
+packages/game-renderer/src/house.test.ts:
+(pass) full-height walls expose rooms with a low solid base and a faint upper wall [13.32ms]
+THREE.GLTFLoader: Couldn't load texture blob:d51ff855-1b5a-4357-bf21-3aba10df32d9
+THREE.GLTFLoader: Couldn't load texture blob:dcc0129b-2079-43c7-a287-8313e364f6de
+THREE.GLTFLoader: Couldn't load texture blob:4bb2d6d8-8940-4579-bf7c-4748114eab9d
+(pass) authored meshes leave every geometry doorway open and release replaced resources [11.90ms]
+(pass) shared wall endpoints close the outside corner without filling doorway ends [0.93ms]
+(pass) solid GLB matches core bounds, retains its footprint during cutaway, and restores [2.84ms]
+(pass) native furnishings match core footprints through rotation and independent replacement [5.13ms]
+(pass) prepared household shapes retain native envelopes and reject mismatched replacements [4.42ms]
+(pass) nearby flies preserve back walls and only expose foreground wall shells [0.48ms]
+
+packages/game-renderer/src/camera-input.test.ts:
+(pass) the right button orbits while the left button still pans and picks [1.73ms]
+(pass) a right click neither selects a fly nor opens the browser menu [0.38ms]
+(pass) the reset control appears once turned and restores orientation alone [0.61ms]
+(pass) disposal releases every canvas listener [0.35ms]
+
+packages/game-renderer/src/camera.test.ts:
+(pass) follow keeps a moving and terminal target centered while zoom preserves it [0.44ms]
+(pass) overview fits every room corner and pan releases follow without rotating [0.46ms]
+(pass) maximum zoom keeps an edge fly centered; Overview restores the whole house [0.23ms]
+(pass) millimetre subjects stay in the frustum at follow and extra-close household framing [0.24ms]
+(pass) zoom changes fly size gently and stops changing it at the camera limit [0.72ms]
+(pass) inspection focus preserves fixed camera orientation and ignores fly tracking [0.19ms]
+(pass) diagnostic mounting elevation never leaks into follow or Overview [0.21ms]
+(pass) circular exterior contains every ground ray across normal camera limits [1.84ms]
+(pass) every fly keeps its readable size at its own depth, however close the view gets [0.24ms]
+(pass) world enlargement is capped, so the farthest view shrinks flies instead of growing them [0.15ms]
+(pass) orbit turns the view only: target, zoom and follow survive, and reset restores the default [0.28ms]
+(pass) orbit keeps the camera above the floor, the house framed and the ground under every ray [1.98ms]
+(pass) ground coverage is reused across a turn, and panning follows the turned screen axes [0.22ms]
+(pass) overlay framing keeps the house and followed fly in the unobscured viewport [0.33ms]
+(pass) meadow still covers the view after proportional resizing beside a fixed overlay [0.24ms]
+
+packages/game-renderer/src/fly-model.test.ts:
+(pass) replacement with geometry far from its pivot is rejected instead of disappearing from follow [0.40ms]
+(pass) authored GLB has finite grounded bounds and independently poseable clones [9.99ms]
+(pass) authored clips restore identical skinned mesh phase after reverse seek without root motion [34.36ms]
+(pass) cloned flies preserve shared bone textures and independent animation [31.48ms]
+
+packages/game-renderer/src/placement-models.test.ts:
+THREE.GLTFLoader: Couldn't load texture blob:62da4ba9-73f7-425d-a707-45cb6499216a
+(pass) edible assets preserve native metres while floor cues retain catalog scaling [5.69ms]
+THREE.GLTFLoader: Couldn't load texture blob:56b94afb-28d5-4876-917b-34cb145de17d
+THREE.GLTFLoader: Couldn't load texture blob:767f9cb3-df66-4c89-9a3d-86c305265e1e
+(pass) fruit shared geometry survives edits and is released once when replaced [4.20ms]
+THREE.GLTFLoader: Couldn't load texture blob:6b9491e7-b720-48c1-95cc-c91719d76982
+THREE.GLTFLoader: Couldn't load texture blob:c481e9cb-bbbb-487a-91ee-1324396e55b9
+(pass) banana shared geometry survives edits and is released once when replaced [15.10ms]
+(pass) crumbs shared geometry survives edits and is released once when replaced [1.47ms]
+(pass) vinegar shared geometry survives edits and is released once when replaced [5.06ms]
+(pass) fan shared geometry survives edits and is released once when replaced [6.58ms]
+(pass) lamp shared geometry survives edits and is released once when replaced [4.24ms]
+(pass) shade shared geometry survives edits and is released once when replaced [1.22ms]
+(pass) lamp is a finite static floor surface within its placement footprint [0.53ms]
+(pass) shade is a finite static floor surface within its placement footprint [0.55ms]
+THREE.GLTFLoader: Couldn't load texture blob:3ac1e1e6-9043-46b8-8d43-51133a389eca
+THREE.GLTFLoader: Couldn't load texture blob:7bb13386-2e09-4e36-a5dd-5caa4ac7da29
+(pass) banana stays native sized after placement and rejects mismatched apple geometry [10.65ms]
+(pass) spiderWeb renders its exact native contact mesh without footprint scaling [2.29ms]
+(pass) bugZapper renders its exact native contact mesh without footprint scaling [2.65ms]
+(pass) fan renders its exact native contact mesh without footprint scaling [3.13ms]
+(pass) vinegar renders its exact native contact mesh without footprint scaling [1.98ms]
+(pass) wornShoes renders its exact native contact mesh without footprint scaling [3.40ms]
+(pass) dirtyDishes renders its exact native contact mesh without footprint scaling [4.31ms]
+(pass) laundry renders its exact native contact mesh without footprint scaling [4.48ms]
+(pass) sleepingCat renders its exact native contact mesh without footprint scaling [3.01ms]
+(pass) placement preview preserves the object's materials unless the position is invalid [0.39ms]
+
+packages/game-renderer/src/fly-departure.test.ts:
+(pass) escape departure heads outward, climbs, shrinks and restores on backward seek [0.11ms]
+
+packages/game-renderer/src/exit-glow.test.ts:
+(pass) the spill is framed by the opening's own outward normal, whatever its orientation [4.41ms]
+(pass) the glow is drawn as light: additive, depth-tested and never depth-writing [0.51ms]
+(pass) the pool peaks at the opening and fades out before either end [0.06ms]
+(pass) the haze fades out well below its top edge, so it never reads as a pane [0.24ms]
+(pass) an unchanged opening reuses the glow, and disposal releases every field once [0.54ms]
+(pass) an opening without a width or an outward direction is rejected rather than drawn [0.04ms]
+
+packages/game-renderer/src/house-materials.test.ts:
+(pass) house replacement preserves authored materials and floor grain density across room sizes [1.10ms]
+(pass) tile replacement preserves wood resources and one physical floor per room [1.09ms]
+THREE.GLTFLoader: Couldn't load texture blob:da891b46-4898-4a6f-a105-479fc3f893b6
+THREE.GLTFLoader: Couldn't load texture blob:5b1e7f30-038d-4b10-a2e6-fa462d2a63c8
+THREE.GLTFLoader: Couldn't load texture blob:26745bc8-585c-4787-a016-0951c479b0d6
+THREE.GLTFLoader: Couldn't load texture blob:991996f2-4b67-43b8-9b4b-1b2e4417c77f
+(pass) tile kit preserves the exact floor triangle coordinates [7.24ms]
+THREE.GLTFLoader: Couldn't load texture blob:872d844a-f932-4dfb-8dd0-1aeb86cf34bb
+(pass) authored tile UV density stays constant across different room sizes [1.94ms]
+
+packages/game-renderer/src/trails.test.ts:
+(pass) trail geometry is bounded, fades by playback time and restores exact seek state [1.30ms]
+(pass) discontinuities stop paths and fresh attempts contain no old vertices [0.11ms]
+(pass) recorded trails preserve physical height, detect input discontinuity and stop at terminal [0.14ms]
+(pass) trail width follows shared projection and the head gap excludes the fly footprint [0.52ms]
+(pass) vertical trails retain recorded centres and pixel width at both perspective depths [0.29ms]
+
+packages/game-renderer/src/fly-motion.test.ts:
+(pass) recorded airborne landing plays Land, touchdown immediately plays Walk [0.08ms]
+(pass) recorded orientation sampling is absolute, normalized and takes the short arc [0.19ms]
+
+packages/game-renderer/src/brain-view.test.ts:
+(pass) legend colours are understood by the renderer and distinguish groups [0.17ms]
+
+packages/game-renderer/src/exterior-grass.test.ts:
+(pass) grass masks actual rooms and joined wall thickness, retaining concave exterior [0.12ms]
+(pass) packed field is repeatable, bounded, uniformly covers circle and respects blade clearance [285.96ms]
+(pass) resizing replaces the owned batches and releases shared resources once [49.96ms]
+(pass) terrain keeps house approaches level and distant hills bounded [0.24ms]
+
+ 73 pass
+ 0 fail
+ 1645062 expect() calls
+Ran 73 tests across 12 files. [687.00ms]

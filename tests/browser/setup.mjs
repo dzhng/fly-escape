@@ -23,13 +23,13 @@ try {
   assert.equal(await page.locator(".tool-palette [title]").count(), 0);
   await page.screenshot({ path: output + "/setup.png" });
   await page.mouse.move(80, 300);
-  await page.getByTestId("placement-feedback").filter({ hasText: "open floor" }).waitFor();
+  await page.locator('.setup-canvas[data-placement-valid="false"]').waitFor();
   await page.screenshot({ path: output + "/invalid.png" });
   await page.mouse.click(80, 300);
   await page.waitForTimeout(150);
   assert.equal(await page.getByRole("button", { name: "Remove Apple 1", exact: true }).count(), 0);
   await page.mouse.move(680, 520);
-  await page.getByTestId("placement-feedback").filter({ hasText: "Valid placement" }).waitFor();
+  await page.locator('.setup-canvas[data-placement-valid="true"]').waitFor();
   await page.screenshot({ path: output + "/ghost.png" });
   await page.mouse.click(680, 520);
   await page.getByRole("button", { name: "Remove Apple 1", exact: true }).waitFor();
@@ -61,7 +61,7 @@ try {
   assert.ok(diagnostics.some(line => line.startsWith("[Fly escape] attempt ready")));
   assert.ok(diagnostics.some(line => line.startsWith("[Fly escape] playback")));
   const first = JSON.parse(await page.getByTestId("playback-report").textContent());
-  assert.equal(first.spec.flyCount, 20);
+  assert.equal(first.spec.flyCount, 16);
   assert.equal(first.spec.placements.length, 2);
   await page.getByRole("button", { name: "Cancel attempt", exact: true }).click();
   await page.getByTestId("setup-game").waitFor();

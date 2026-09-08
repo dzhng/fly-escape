@@ -6,7 +6,7 @@
 
 Arrange household objects, release the flies, and see how many find their way outside before time runs out. You shape their surroundings; their simulated neurons drive their movement. Watch the swarm, follow one curious fly, or peek inside its brain as it explores.
 
-![The first house, with a sunlit exit and household objects ready to place](specs/done/help-the-fly-escape/assets/evidence/release-final/campaign/level-1-setup.png)
+![The first house, with a sunlit exit and household objects ready to place](specs/done/help-the-fly-escape/assets/evidence/34-game-overlays/setup.png)
 
 A fully 3D browser game that runs locally, with Rust compiled to WebAssembly for the simulation and TypeScript for the world and interface. No account or application backend required.
 

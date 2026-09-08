@@ -43,8 +43,8 @@ try {
     ]) {
       await page.mouse.move(x, y);
       await page.waitForTimeout(120);
-      const text = await page.getByTestId("placement-feedback").innerText();
-      if (!text.includes("Valid placement")) continue;
+      const valid = await page.locator(".setup-canvas").getAttribute("data-placement-valid");
+      if (valid !== "true") continue;
       await page.mouse.click(x, y);
       id++;
       await page.getByRole("button", { name: `Remove ${name} ${id}`, exact: true }).waitFor();

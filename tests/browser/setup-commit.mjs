@@ -24,9 +24,20 @@ try {
   });
   await page.goto((process.env.BRAIN_URL ?? "http://127.0.0.1:5173") + "/lab/setup");
   await page.waitForFunction(() => document.querySelector(".run-setup")?.disabled === false);
-  async function commitThenSelect(x, y, otherControl, placedName) {
-    await page.mouse.move(x, y);
-    await page.getByTestId("placement-feedback").filter({ hasText: "Valid placement" }).waitFor();
+  async function commitThenSelect(otherControl, placedName) {
+    let point;
+    for (const py of [450, 550, 650, 350, 250]) {
+      for (const px of [650, 750, 550, 850, 450, 350, 950]) {
+        await page.mouse.move(px, py);
+        await page.waitForTimeout(150);
+        if (await page.locator(".setup-canvas").getAttribute("data-placement-valid") === "true") {
+          point = {x: px, y: py}; break;
+        }
+      }
+      if (point) break;
+    }
+    assert.ok(point, "The fixture must offer an open placement");
+    const {x, y} = point;
     await page.evaluate(() => {
       window.holdSetupReplies = true;
     });
@@ -43,15 +54,11 @@ try {
     await page.getByRole("button", { name: placedName, exact: true }).waitFor({ timeout: 1500 });
   }
   await commitThenSelect(
-    680,
-    520,
     page.getByRole("button", { name: "Fan 2 left", exact: true }),
     "Remove Apple 1",
   );
   await page.getByRole("button", { name: "Fan 2 left", exact: true }).click();
   await commitThenSelect(
-    560,
-    440,
     page.getByRole("button", { name: "Apple #1", exact: true }),
     "Remove Fan 2",
   );

@@ -46,6 +46,7 @@ export class WorldCamera {
   private readonly target = new THREE.Vector3();
   private width = 1;
   private height = 1;
+  private rightInset = 0;
   private distance = 1;
   private fitDistance = 1;
   private closeDistance = 1;
@@ -61,6 +62,10 @@ export class WorldCamera {
   }
   setSubjectHeight(height: number) {
     this.subjectHeight = height;
+    this.resize(this.width, this.height);
+  }
+  setRightInset(pixels: number) {
+    this.rightInset = Math.max(0, pixels);
     this.resize(this.width, this.height);
   }
   resize(width: number, height: number) {
@@ -195,7 +200,7 @@ export class WorldCamera {
       MIN_ELEVATION,
       Math.floor(this.elevation / COVERAGE_ELEVATION_STEP) * COVERAGE_ELEVATION_STEP,
     );
-    const key = [...targets.min.toArray(), ...targets.max.toArray(), this.camera.aspect, elevation].join(",");
+    const key = [...targets.min.toArray(), ...targets.max.toArray(), this.camera.aspect, this.rightInset / this.width, elevation].join(",");
     if (this.grassCoverage?.key === key) return this.grassCoverage.circle;
     let radius = 0;
     for (let step = 0; step < 8; step++) {
@@ -203,7 +208,7 @@ export class WorldCamera {
       const { backward, right, up } = basis;
       const distance = this.requiredFit(center, basis);
       for (const nx of [-1, 1]) for (const ny of [-1, 1]) {
-        const ray = backward.clone().negate().addScaledVector(right, nx * vertical * this.camera.aspect).addScaledVector(up, ny * vertical);
+        const ray = backward.clone().negate().addScaledVector(right, (nx + Math.min(this.rightInset / this.width, 0.75)) * vertical * this.camera.aspect).addScaledVector(up, ny * vertical);
         for (const x of [targets.min.x, targets.max.x])
           for (const y of [targets.min.y, targets.max.y])
             for (const z of [targets.min.z, targets.max.z])
@@ -254,7 +259,7 @@ export class WorldCamera {
   }
   private requiredFit(target: THREE.Vector3, basis = this.orientation) {
     const vertical = Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2));
-    const horizontal = vertical * this.camera.aspect;
+    const horizontal = vertical * Math.max(this.width * 0.25, this.width - this.rightInset) / this.height;
     const { backward, right, up } = basis;
     let fit = 0;
     for (const x of [this.bounds.min.x, this.bounds.max.x])
@@ -294,6 +299,8 @@ export class WorldCamera {
         coverage.radius +
         this.camera.position.y,
     );
+    // Shift the optical center into the unobscured play area without cropping the canvas.
+    this.camera.setViewOffset(this.width, this.height, Math.min(this.rightInset, this.width * 0.75) / 2, 0, this.width, this.height);
     this.camera.updateProjectionMatrix();
     this.camera.updateMatrixWorld();
   }

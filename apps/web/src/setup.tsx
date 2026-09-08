@@ -18,6 +18,9 @@ import { WorldView } from "@fly-escape/game-renderer";
 import { AttemptPlayback } from "./playback";
 import { type Progress, awardResult } from "./progress";
 import "./setup.css";
+import { frameBesidePanel } from "./world-framing";
+
+const FLY_COUNT = 16;
 
 type Intent = { edit: PlacementEdit; placement?: Placement; commit: boolean };
 const names: Record<ToolKind, string> = {
@@ -67,9 +70,10 @@ export function SetupGame({
   const intentRef = useRef<Intent | undefined>(undefined);
   intentRef.current = intent;
   const checked = useRef<Intent | undefined>(undefined);
-  const [busy, setBusy] = useState(false);
+  const [checking, setChecking] = useState(false);
+  const [clearing, setClearing] = useState(false);
   const [valid, setValid] = useState<boolean | null>(null);
-  const [message, setMessage] = useState("Loading placement objects…");
+  const [error, setError] = useState("");
   const [worldState, setWorldState] = useState("loading");
   const world = useRef<WorldView | undefined>(undefined);
   const container = useRef<HTMLDivElement>(null);
@@ -95,10 +99,10 @@ export function SetupGame({
         }
         if (live) {
           setSetup(resolved.state);
-          setMessage("Choose an object, then click open floor.");
+
         }
       } catch (error) {
-        if (live) setMessage(String(error));
+        if (live) setError(String(error));
       }
     })();
     return () => {
@@ -112,8 +116,9 @@ export function SetupGame({
   }, [input, onAttemptChange]);
   useEffect(() => {
     if (input || !container.current) return;
-    const view = new WorldView(container.current, content.level.geometry, 20, content.roomFloors);
+    const view = new WorldView(container.current, content.level.geometry, FLY_COUNT, content.roomFloors);
     world.current = view;
+    const stopFraming = frameBesidePanel(view, container.current, container.current.closest(".setup-game")!.querySelector("aside")!);
     const spawn = content.level.spawn;
     if (spawn.kind === "cluster") view.setSpawnArea(spawn.min, spawn.max);
     view.setContactGeometry([], [], content.level.exit);
@@ -137,6 +142,7 @@ export function SetupGame({
     return () => {
       live = false;
       cancelAnimationFrame(raf);
+      stopFraming();
       view.dispose();
       world.current = undefined;
     };
@@ -144,6 +150,9 @@ export function SetupGame({
   useEffect(() => {
     if (!setup) return;
     world.current?.setContactGeometry(setup.food.slice(0, content.level.food.length), content.level.zappers, content.level.exit, false);
+  }, [content, setup, input]);
+  useEffect(() => {
+    if (!setup) return;
     world.current?.setPlacements(
       setup.placements,
       content.catalog,
@@ -152,9 +161,9 @@ export function SetupGame({
     );
   }, [content, setup, intent, valid, input]);
   useEffect(() => {
-    if (!intent || checked.current === intent || busy || !setup || input) return;
+    if (!intent || checked.current === intent || checking || clearing || !setup || input) return;
     checked.current = intent;
-    setBusy(true);
+    setChecking(true);
     void client
       .setup({
         type: "edit",
@@ -165,7 +174,7 @@ export function SetupGame({
       .then((state: PlacementState) => {
         if (intentRef.current !== intent) return;
         setValid(true);
-        setMessage(intent.commit ? "Setup updated." : "Valid placement — click to place.");
+        if (intent.commit) setError("");
         if (intent.commit) {
           setSetup(state);
           setIntent(undefined);
@@ -179,14 +188,27 @@ export function SetupGame({
       .catch((error) => {
         if (intentRef.current !== intent) return;
         setValid(false);
-        setMessage(String(error).replace(/^Error: /, ""));
+        if (intent.commit) console.debug("[Fly escape] placement rejected", error);
         if (intent.commit) setIntent(undefined);
       })
-      .finally(() => setBusy(false));
-  }, [intent, busy, content, setup, input]);
+      .finally(() => setChecking(false));
+  }, [intent, checking, clearing, content, setup, input]);
+  useEffect(() => {
+    if (!clearing || checking) return;
+    setChecking(true);
+    void client.setup({ type: "resolve", level: content.level, placements: [] })
+      .then((resolved) => {
+        setSetup(resolved.state);
+        setProgress((p) => ({ ...p, setups: { ...p.setups, [content.level.id]: [] } }));
+        setSelected(undefined);
+        setError("");
+      })
+      .catch((error) => setError(String(error)))
+      .finally(() => { setClearing(false); setChecking(false); });
+  }, [clearing, checking, client, content, setProgress]);
   const pointerDown = useRef<{ x: number; y: number } | undefined>(undefined);
   const propose = (event: { clientX: number; clientY: number }, commit: boolean) => {
-    if (intentRef.current?.commit) return;
+    if (intentRef.current?.commit || clearing) return;
     if (!setup) return;
     const position = world.current?.floorPoint(event.clientX, event.clientY);
     if (!position) return;
@@ -221,7 +243,7 @@ export function SetupGame({
           client.cancel();
           setInput(undefined);
           setIntent(undefined);
-          setMessage("Try a new arrangement. Every swarm explores a little differently.");
+          setError("");
         }}
         onResult={(result) => {
           if (awarded.current === input.attemptId) return;
@@ -232,16 +254,9 @@ export function SetupGame({
     );
   return (
     <main className="setup-game" data-testid="setup-game" data-world-state={worldState}>
-      <header>
-        <div>
-          <span className="eyebrow">Fly escape</span>
-          <h1>{content.title}</h1>
-        </div>
-        <span>Best: {progress.bestStars[content.level.id] ?? 0} / 3 stars</span>
-      </header>
-      {worldState !== "ready" && (
-        <p role={worldState === "loading" ? "status" : "alert"}>
-          {worldState === "loading" ? "Loading world assets…" : worldState}
+      {(worldState !== "ready" || error) && (
+        <p className="setup-error" role={error || worldState !== "loading" ? "alert" : "status"}>
+          {error || (worldState === "loading" ? "Loading the house…" : worldState)}
         </p>
       )}
       <section className="setup-layout">
@@ -249,6 +264,7 @@ export function SetupGame({
           <div
             ref={container}
             className="setup-canvas"
+            data-placement-valid={intent?.placement ? (valid === null ? "pending" : String(valid)) : undefined}
             onPointerMove={(e) => {
               if (!e.buttons) propose(e, false);
             }}
@@ -263,25 +279,10 @@ export function SetupGame({
               if (!intent?.commit) setIntent(undefined);
             }}
           />
-          <div className="setup-note">
-            {content.level.geometry.rooms.length} rooms · 20 flies ·{" "}
-            {content.level.durationTicks / 10} game seconds
-            <span>{content.description}</span>
-            <small>Scroll to zoom · move to the edge or drag to explore</small>
-          </div>
-          <div
-            className={`placement-feedback ${valid === false ? "invalid" : ""}`}
-            role="status"
-            data-testid="placement-feedback"
-          >
-            {busy ? "Checking floor…" : message}
-          </div>
         </div>
-        <aside>
-          <h2>What will they follow?</h2>
-          <p>
-            Pick an object, find it a spot, then let the flies explore.
-          </p>
+        <aside aria-label="Objects">
+          <h2 className="objects-title">Help the flies escape</h2>
+          <p className="objects-instructions">Choose an object, then click an open spot in the house. Release the flies and get as many outside as you can before time runs out.</p>
           <div className="tool-palette">
             {setup?.remaining
               .filter((stock) =>
@@ -293,9 +294,10 @@ export function SetupGame({
                 <button
                   key={stock.kind}
                   aria-pressed={tool === stock.kind && selected === undefined}
-                  disabled={stock.count === 0 || !!intent?.commit}
+                  disabled={stock.count === 0 || clearing || !!intent?.commit}
                   onClick={() => {
                     setTool(stock.kind);
+                    setValid(null);
                     setSelected(undefined);
                     setIntent(undefined);
                   }}
@@ -311,18 +313,18 @@ export function SetupGame({
               <div key={p.id}>
                 <button
                   aria-pressed={selected === p.id}
-                  disabled={!!intent?.commit}
+                  disabled={clearing || !!intent?.commit}
                   onClick={() => {
                     setSelected(p.id);
                     setTool(p.kind);
                     setIntent(undefined);
-                    setMessage("Click open floor to move this object.");
+                    setValid(null);
                   }}
                 >
                   {names[p.kind]} #{p.id}
                 </button>
                 <button
-                  disabled={busy || !!intent?.commit}
+                  disabled={clearing || !!intent?.commit}
                   aria-label={`Remove ${names[p.kind]} ${p.id}`}
                   onClick={() =>
                     setIntent({
@@ -338,7 +340,7 @@ export function SetupGame({
           </div>
           <button
             className="run-setup"
-            disabled={!setup || worldState !== "ready" || busy || !!intent?.commit}
+            disabled={!setup || worldState !== "ready" || clearing || !!intent?.commit}
             onClick={() => {
               if (!setup) return;
               setIntent(undefined);
@@ -346,7 +348,7 @@ export function SetupGame({
                 level: content.level,
                 tuning: content.tuning,
                 placements: structuredClone(setup.placements),
-                flyCount: 20,
+                flyCount: FLY_COUNT,
                 attemptId: crypto.randomUUID(),
                 rootSeed: crypto.getRandomValues(new BigUint64Array(1))[0].toString(),
               });
@@ -354,7 +356,7 @@ export function SetupGame({
           >
             Release the flies
           </button>
-          {content.level.fixedObjects.length > 0 && (
+          {!!setup?.placements.length && content.level.fixedObjects.length > 0 && (
             <details className="household-objects">
               <summary>Already in this house</summary>
               <ul>
@@ -364,30 +366,16 @@ export function SetupGame({
               </ul>
             </details>
           )}
-          <button
+          {!!setup?.placements.length && <button
             className="put-away"
-            disabled={busy || !!intent?.commit || !setup?.placements.length}
+            disabled={clearing || !!intent?.commit || !setup?.placements.length}
             onClick={() => {
-              setBusy(true);
+              setClearing(true);
               setIntent(undefined);
-              void client
-                .setup({
-                  type: "resolve",
-                  level: content.level,
-                  placements: [],
-                })
-                .then((resolved) => {
-                  setSetup(resolved.state);
-                  setProgress((p) => ({ ...p, setups: { ...p.setups, [content.level.id]: [] } }));
-                  setSelected(undefined);
-                  setMessage("Objects put away. Try a different arrangement.");
-                })
-                .catch((error) => setMessage(String(error)))
-                .finally(() => setBusy(false));
             }}
           >
             Put objects away
-          </button>
+          </button>}
           {storageFailed && (
             <p role="status">
               Storage is unavailable. This session remains playable; changes may not survive reload.

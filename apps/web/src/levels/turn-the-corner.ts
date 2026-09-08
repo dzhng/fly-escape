@@ -482,7 +482,7 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
         "x": 2.7,
         "z": 9.7
       },
-      "flyingCount": 10
+      "flyingCount": 8
     }
   },
   "tuning": {

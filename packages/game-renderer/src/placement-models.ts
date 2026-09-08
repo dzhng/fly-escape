@@ -117,12 +117,10 @@ export class PlacementModels {
       instance.rotation.y = -p.heading;
       if (!tool.contact) instance.scale.set(tool.footprintRadius, 1, tool.footprintRadius);
       if (item.ghost) {
-        this.ghostMaterial.color.set(
-          item.valid === null ? "#e5dbaf" : item.valid ? "#67e5ae" : "#ff657f",
-        );
+        this.ghostMaterial.color.set("#ff3044");
         instance.position.y = 0.008;
         instance.traverse((o) => {
-          if (o instanceof THREE.Mesh) o.material = this.ghostMaterial;
+          if (item.valid === false && o instanceof THREE.Mesh) o.material = this.ghostMaterial;
         });
       }
       this.root.add(instance);

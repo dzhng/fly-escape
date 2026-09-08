@@ -21,7 +21,7 @@ try {
   await page.waitForFunction(()=>JSON.parse(document.querySelector('[data-testid="playback-report"]').textContent).renderer?.modelKind==='glb');
   await page.getByRole('button',{name:'Pause',exact:true}).click();
   const report=async()=>JSON.parse(await page.getByTestId('playback-report').textContent());
-  assert.equal((await report()).spec.flyCount,20);
+  assert.equal((await report()).spec.flyCount,16);
   assert.equal((await report()).spec.rootSeed,'42');
   const settle=()=>page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
   const seek=async tick=>{

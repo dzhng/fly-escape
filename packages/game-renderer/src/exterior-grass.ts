@@ -88,12 +88,16 @@ export class ExteriorGrass {
   readonly root = new THREE.Group();
   private circle?: GrassCircle;
   private readonly windTime = { value: 0 };
+  private readonly sunDirection = { value: new THREE.Vector2(-1, 0) };
   private readonly mask: ReturnType<typeof grassMask>;
   stats = { batches: 0, clumps: 0, candidateCells: 0, packedBytes: 0, spacing: 0, radius: 0 };
   constructor(geometry: Geometry) {
     this.mask = grassMask(geometry);
     // Stable opaque ordering preserves antialiased wall edges across field rebuilds.
     this.root.renderOrder = -1;
+  }
+  setSunDirection(direction: { x: number; z: number }) {
+    this.sunDirection.value.set(direction.x, direction.z).normalize();
   }
   update(circle: GrassCircle, timeSeconds = 0) {
     this.windTime.value = timeSeconds;
@@ -103,15 +107,37 @@ export class ExteriorGrass {
     disposeObjectResources(this.root); this.root.clear(); this.circle = { ...circle, radius };
     const { geometry, reach } = bladeGeometry();
     const sampled = grassRecords(this.circle, this.mask, reach);
+    // Meadow-only atmosphere uses distance outside the house, so close greenery
+    // retains contrast and neither indoor surfaces nor flies inherit a fog layer.
+    const roomDistanceCode = this.mask.filter(r => !r.wall).map(r =>
+      `meadowDistance=min(meadowDistance,length(max(abs(p-vec2(${r.x.toFixed(8)},${r.z.toFixed(8)}))-vec2(${r.halfX.toFixed(8)},${r.halfZ.toFixed(8)}),vec2(0.0))));`
+    ).join("\n");
+    const atmosphereCode = `
+      float meadowHaze(vec2 p) {
+        float meadowDistance=10000.0;
+        ${roomDistanceCode}
+        return smoothstep(3.0,${Math.max(9, radius * 0.7).toFixed(8)},meadowDistance)*0.30;
+      }
+    `;
+    const atmosphereFragment = `
+      gl_FragColor.rgb=mix(gl_FragColor.rgb,vec3(0.88,0.77,0.48),meadowHaze(grassWorld));
+    `;
     const material = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.95, side: THREE.DoubleSide });
     material.onBeforeCompile = shader => {
       shader.uniforms.meadowTime = this.windTime;
-      shader.vertexShader = "uniform float meadowTime; attribute float grassElevation; attribute vec4 grassPlacement; attribute vec4 grassStyle; varying vec3 grassTint;\n" + shader.vertexShader;
+      shader.uniforms.meadowSunDirection = this.sunDirection;
+      shader.vertexShader = "uniform float meadowTime; uniform vec2 meadowSunDirection; attribute float grassElevation; attribute vec4 grassPlacement; attribute vec4 grassStyle; varying vec3 grassTint; varying vec2 grassWorld; varying float grassTip; varying float grassSheen;\n" + shader.vertexShader;
       shader.vertexShader = shader.vertexShader.replace("#include <beginnormal_vertex>", `vec3 objectNormal = vec3(normal); float cy=cos(grassPlacement.z), sy=sin(grassPlacement.z); objectNormal/=vec3(grassStyle.x,grassPlacement.w,grassStyle.x); objectNormal.xz=mat2(cy,-sy,sy,cy)*objectNormal.xz;`);
-      shader.vertexShader = shader.vertexShader.replace("#include <begin_vertex>", `vec3 transformed=position; transformed.xz*=grassStyle.x; transformed.y*=grassPlacement.w; transformed.xz=mat2(cy,-sy,sy,cy)*transformed.xz+grassPlacement.xy; float tip=position.y/0.32; float breeze=sin(meadowTime*1.7+grassPlacement.x*0.65+grassPlacement.y*0.43)*0.065+sin(meadowTime*2.8+grassPlacement.y*1.2)*0.025; transformed.xz+=vec2(breeze,breeze*0.45)*tip*tip; transformed.y+=grassElevation; grassTint=grassStyle.yzw*(0.55+0.45*tip);`);
-      shader.fragmentShader = "varying vec3 grassTint;\n" + shader.fragmentShader;
+      shader.vertexShader = shader.vertexShader.replace("#include <begin_vertex>", `vec3 transformed=position; transformed.xz*=grassStyle.x; transformed.y*=grassPlacement.w; transformed.xz=mat2(cy,-sy,sy,cy)*transformed.xz+grassPlacement.xy; float tip=position.y/0.32; float breeze=sin(meadowTime*1.7+grassPlacement.x*0.65+grassPlacement.y*0.43)*0.065+sin(meadowTime*2.8+grassPlacement.y*1.2)*0.025; transformed.xz+=vec2(breeze,breeze*0.45)*tip*tip; transformed.y+=grassElevation; grassWorld=(modelMatrix*vec4(transformed,1.0)).xz; grassTip=tip;
+        float sunFacing=0.5+0.5*dot(normalize(objectNormal.xz+vec2(0.0001)),meadowSunDirection);
+        float windShimmer=0.5+0.5*sin(meadowTime*1.7+dot(grassPlacement.xy,vec2(0.65,0.43)));
+        grassSheen=pow(sunFacing,3.0)*(0.55+0.45*windShimmer);
+        grassTint=mix(grassStyle.yzw,vec3(0.40,0.39,0.075),tip*tip*0.52)*(0.55+0.45*tip);`);
+      shader.fragmentShader = "varying vec3 grassTint; varying vec2 grassWorld; varying float grassTip; varying float grassSheen;\n" + atmosphereCode + shader.fragmentShader;
       shader.fragmentShader = shader.fragmentShader.replace("#include <color_fragment>", "#include <color_fragment>\ndiffuseColor.rgb *= grassTint;");
+      shader.fragmentShader = shader.fragmentShader.replace("#include <opaque_fragment>", `outgoingLight+=vec3(0.42,0.29,0.035)*grassSheen*pow(grassTip,2.0);\n#include <opaque_fragment>\n${atmosphereFragment}`);
     };
+    material.customProgramCacheKey = () => atmosphereCode;
     const batchCount = Math.ceil(sampled.count / BATCH_CELLS);
     const buffers = new Map<number, { data: Float32Array; count: number; bounds: THREE.Box3 }>();
     for (let i = 0; i < sampled.records.length; i += 8) {
@@ -151,10 +177,11 @@ export class ExteriorGrass {
     groundMaterial.onBeforeCompile = shader => {
       shader.vertexShader = "varying vec2 grassWorld;\n" + shader.vertexShader;
       shader.vertexShader = shader.vertexShader.replace("#include <begin_vertex>", "#include <begin_vertex>\ngrassWorld=(modelMatrix*vec4(position,1.0)).xz;");
-      shader.fragmentShader = `varying vec2 grassWorld; float lawnHash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);} float lawnNoise(vec2 p){vec2 i=floor(p),f=fract(p); f=f*f*(3.0-2.0*f); return mix(mix(lawnHash(i),lawnHash(i+vec2(1,0)),f.x),mix(lawnHash(i+vec2(0,1)),lawnHash(i+vec2(1,1)),f.x),f.y);}\n` + shader.fragmentShader;
+      shader.fragmentShader = atmosphereCode + `varying vec2 grassWorld; float lawnHash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);} float lawnNoise(vec2 p){vec2 i=floor(p),f=fract(p); f=f*f*(3.0-2.0*f); return mix(mix(lawnHash(i),lawnHash(i+vec2(1,0)),f.x),mix(lawnHash(i+vec2(0,1)),lawnHash(i+vec2(1,1)),f.x),f.y);}\n` + shader.fragmentShader;
       shader.fragmentShader = shader.fragmentShader.replace("#include <color_fragment>", `#include <color_fragment>\n${maskCode}\nfloat coarse=lawnNoise(grassWorld*3.0); float fine=lawnNoise(grassWorld*450.0); float detail=1.0-smoothstep(0.001,0.008,length(fwidth(grassWorld))); float tone=mix(0.5,fine,detail)*0.55+coarse*0.45; diffuseColor.rgb*=mix(vec3(0.022,0.068,0.012),vec3(0.05,0.12,0.022),tone);`);
+      shader.fragmentShader = shader.fragmentShader.replace("#include <opaque_fragment>", `#include <opaque_fragment>\n${atmosphereFragment}`);
     };
-    groundMaterial.customProgramCacheKey = () => maskCode;
+    groundMaterial.customProgramCacheKey = () => maskCode + atmosphereCode;
     // A bounded grid covers the camera footprint, with shared terrain heights for plants and props.
     const groundGeometry = new THREE.PlaneGeometry(radius*2, radius*2, 160, 160);
     groundGeometry.rotateX(-Math.PI/2);

@@ -47,5 +47,5 @@ try {
  const final=await read();
  await writeFile(`${out}/report.json`,JSON.stringify({frames,resizeResources,errors,pixelChecks,gpu,final},null,2));
  assert.equal(final.complete,true);assert.equal(final.underruns,0);assert.ok(final.result);
- assert.deepEqual(errors,[]);assert.ok(pixelChecks.every(check=>check.equal),JSON.stringify(pixelChecks));assert.equal(frames[0].report.spec.flyCount,20);assert.equal(frames[0].report.spec.rootSeed,'42');
+ assert.deepEqual(errors,[]);assert.ok(pixelChecks.every(check=>check.equal),JSON.stringify(pixelChecks));assert.equal(frames[0].report.spec.flyCount,16);assert.equal(frames[0].report.spec.rootSeed,'42');
 }finally{await browser.close()}

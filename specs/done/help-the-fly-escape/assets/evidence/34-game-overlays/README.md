@@ -1,0 +1,17 @@
+# Game overlays, swarm size and sunlight
+
+The user requested a full-window scene with overlay controls, graphic stars, no page headers, no placement-status labels and red invalid objects. Follow-up requests add a short instruction above the object tray, hide secondary object controls until a placement exists, shift the scene beside the right panel, launch sixteen flies, and illuminate the meadow from the exit side.
+
+The [before view](before.png) is the local pre-change capture. [Setup](setup.png), [compact setup](compact.png), [invalid preview](invalid.png) with its [crop](invalid-crop.png), [playback](playback.png), [second house](second.png) and [rotated second house](rotated.png) preserve the final visual states. These are actual browser renders. The object-panel [close view](panel-crop.png) records the instructional copy.
+
+Hover validation previously set the same busy state that disabled Release. Validation stays serialized, but only committed edits or clearing lock mutation-dependent controls. New proposals have pending validity without player-facing status text; accepted previews preserve their native material, invalid previews turn red. Clearing queues behind outstanding validation. The renderer’s projection accounts for the measured right overlay and its meadow coverage includes the normalized inset in its cache identity.
+
+Both campaign levels launch sixteen flies, split evenly between walking and flying. The HUD derives its counts from attempt metadata. Existing thresholds remain 1/8/15; this change does not claim recalibrated difficulty. Standalone playback laboratory fixtures still use their own twenty-fly count. Earlier twenty-fly experiment reports remain historical evidence.
+
+Sunlight and atmospheric glow follow the physical exit’s outward direction, not a fixed screen corner. Golden blade-tip sheen and a warm, bounded meadow haze affect presentation only. House contact, sensed fields, neural inputs and outcomes are unchanged by the visual effects.
+
+Verification: [production browser regression](browser.log) covers held hover replies, continuous pointer movement, valid placement, rejected placement, clearing behind pending validation, fullscreen setup/playback, sixteen roster entries, cancellation and compact framing. The original held-hover probe reproduced Release being disabled before the fix. [Committed-edit checks](committed-edits.log) preserve atomic editing, and [result checks](results.log) exercise an accelerated-horizon real-core attempt with sixteen flies and progress awarded only at replay completion. Renderer and camera checks cover material preservation, overlay framing, orbit/resize and meadow coverage.
+
+Independent code review found the clearing race, stale validity, the proportional-resize coverage cache and stale twenty-fly campaign test expectations. All were corrected. Earlier screenshot reviews flagged narrow-window house overlap, which the overlay-aware framing resolves. Existing tiny world-scale food, close follow-camera framing and scrollable neural details remain intentional or known presentation limits. Instructions were restored in the object tray at the user's explicit request; status labels and page headers remain absent.
+
+The [final independent visual review](visual-review.md) passed with cosmetic limitations: small food remains hard to identify at overview scale, and the neural details require panel scrolling.

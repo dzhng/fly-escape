@@ -16,7 +16,7 @@ try {
   });
   await page.goto(process.env.BRAIN_URL ?? 'http://127.0.0.1:5320/');
   await page.getByRole('button', {name: 'Release the flies'}).click();
-  await page.waitForFunction(() => document.querySelector('[data-testid=playback-lab]')?.dataset.flyCount === '20');
+  await page.waitForFunction(() => document.querySelector('[data-testid=playback-lab]')?.dataset.flyCount === '16');
   await page.getByRole('button', {name: 'Pause', exact: true}).click();
   await page.waitForSelector('[data-playback-state=paused]');
   await page.waitForFunction(() => {

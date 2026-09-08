@@ -24,7 +24,7 @@ for (const name of (process.env.SMOKE_ENGINES ?? "chromium,firefox,webkit").spli
     await page.waitForFunction(() => document.querySelector('[data-testid="playback-lab"]')?.dataset.playbackState === "paused");
     const report = () => page.getByTestId("playback-report").textContent().then(JSON.parse);
     const paused = await report();
-    assert.equal(paused.spec.flyCount, 20);
+    assert.equal(paused.spec.flyCount, 16);
     await page.waitForTimeout(200);
     assert.equal((await report()).cursorTick, paused.cursorTick);
     await zoomOut(page);

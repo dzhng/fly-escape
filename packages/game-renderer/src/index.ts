@@ -25,6 +25,7 @@ import { ExitGlow } from "./exit-glow";
 import { disposeObjectResources } from "./resources";
 export { disposeObjectResources } from "./resources";
 export { loadFlyModel, FlyModel } from "./fly-model";
+import { sunGlow } from "./sun-glow";
 import { ExteriorGrass } from "./exterior-grass";
 import { WorldCamera } from "./camera";
 import { cameraInput } from "./camera-input";
@@ -82,6 +83,8 @@ export class WorldView {
   private readonly raycaster = new THREE.Raycaster();
   private readonly house: HouseGeometry;
   private readonly exterior: ExteriorGrass;
+  private readonly sunlight = sunGlow();
+  private readonly sun = new THREE.DirectionalLight("#ffe0a0", 3.4);
   private readonly renderer: THREE.WebGLRenderer;
   private readonly flies: THREE.Object3D[] = [createPlaceholderFly()];
   private motions: FlyMotion[] = [];
@@ -183,8 +186,8 @@ export class WorldView {
     );
     container.appendChild(canvas);
 
-    this.scene.add(new THREE.HemisphereLight("#fff8e8", "#718d80", 2.5));
-    const sun = new THREE.DirectionalLight("#fff4dc", 3);
+    this.scene.add(new THREE.HemisphereLight("#fff0cb", "#718d80", 2.5));
+    const sun = this.sun;
     sun.position.copy(center).add(new THREE.Vector3(radius, radius * 2, radius));
     sun.target.position.copy(center);
     sun.castShadow = true;
@@ -198,6 +201,7 @@ export class WorldView {
     this.scene.add(
       sun,
       sun.target,
+      this.sunlight,
       this.house.root,
       ...this.flies,
       this.contactMarkers,
@@ -324,7 +328,7 @@ export class WorldView {
       ...(ghost ? [{ ...ghost, ghost: true }] : []),
     ]) {
       const p = item.placement;
-      const color = item.ghost ? item.valid === null ? "#e5dbaf" : item.valid ? "#67e5ae" : "#ff657f" : "#d9eacf";
+      const color = item.ghost && item.valid === false ? "#ff3044" : "#d9eacf";
       if (p.kind === "fan")
         this.placementMarkers.add(
           new THREE.ArrowHelper(
@@ -340,6 +344,13 @@ export class WorldView {
   }
 
   setContactGeometry(food: ContactSurface[], hazards: ContactRegion[], exit: ExitOpening, diagnostic = true): void {
+    const center = this.bounds.getCenter(new THREE.Vector3());
+    const radius = this.bounds.getSize(new THREE.Vector3()).length() / 2;
+    this.sun.position.set(center.x + exit.outward.x * radius * 1.5, radius * 2,
+      center.z + exit.outward.z * radius * 1.5);
+    this.sunlight.position.copy(this.sun.position);
+    this.sunlight.scale.setScalar(radius * 3);
+    this.exterior.setSunDirection(exit.outward);
     this.contactCenter.visible = diagnostic && food.length > 0;
     for (const child of [...this.contactMarkers.children]) {
       if (child instanceof THREE.Mesh) {
@@ -740,6 +751,10 @@ export class WorldView {
       );
     }
     vertices.needsUpdate = true;
+  }
+
+  setRightInset(pixels: number): void {
+    this.navigation.setRightInset(pixels);
   }
 
   resize(): void {

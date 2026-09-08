@@ -1,3 +1,4 @@
+import { Stars } from "./stars";
 import type { RoomDetail, RoomFloor } from "@fly-escape/game-renderer";
 import React, { useEffect, useMemo, useState } from "react";
 import {
@@ -80,8 +81,9 @@ export function Campaign({ levels }: { levels: readonly CampaignLevel[] }) {
             aria-current={i === index ? "step" : undefined}
             onClick={() => setSelected(i)}
           >
-            {i + 1}. {entry.title} · {progress.bestStars[entry.level.id] ?? 0}/3 stars
-            {i >= count ? " · Locked" : ""}
+            <span>{i + 1}. {entry.title}</span>
+            <Stars count={progress.bestStars[entry.level.id] ?? 0} />
+            {i >= count && <span className="level-lock">Locked</span>}
           </button>
         ))}
       </nav>
@@ -134,7 +136,7 @@ export function DiagnosticSetup() {
       fixture
         ? {
             ...fixture,
-            title: "Give twenty flies a way out.",
+            title: "Give the flies a way out.",
             description: "Integration fixture — campaign difficulty is still being authored.",
           }
         : undefined,
