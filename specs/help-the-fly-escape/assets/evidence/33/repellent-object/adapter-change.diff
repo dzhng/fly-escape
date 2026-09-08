@@ -1,0 +1,78 @@
+diff --git a/crates/sim/src/chamber.rs b/crates/sim/src/chamber.rs
+index e5ac9a1..f39040e 100644
+--- a/crates/sim/src/chamber.rs
++++ b/crates/sim/src/chamber.rs
+@@ -78,6 +78,10 @@ pub struct Chamber {
+     pose: Pose,
+     pub fields: FieldSet,
+     cue: Option<(CuePathway, f64)>,
++    /// SCRATCH (repellent-object spike): (left receptor indices, right receptor indices, scale).
++    /// When set, the repellent-odor concentration at each antenna drives that side's receptors
++    /// through `graded_side_currents`. Off by default; production paths never set it.
++    pub receptor_drive: Option<(Vec<u32>, Vec<u32>, f64)>,
+ }
+ 
+ impl Chamber {
+@@ -96,6 +100,7 @@ impl Chamber {
+             fields,
+             cue,
+             brain: Brain::new(graph.clone(), seed),
++            receptor_drive: None,
+             graph,
+             tick: 0,
+             pose: Pose {
+@@ -148,6 +153,15 @@ impl Chamber {
+             self.pose.heading,
+             self.tick,
+         );
++        if let Some((left, right, scale)) = self.receptor_drive.as_ref() {
++            self.brain
++                .set_external_current(&crate::sensory::graded_side_currents(
++                    &self.graph,
++                    [left, right],
++                    [sensory.left.repellent_odor, sensory.right.repellent_odor],
++                    *scale,
++                )?)?;
++        }
+         if let Some((pathway, gain)) = self.cue {
+             self.brain.set_external_current(&cue_currents(
+                 &self.graph,
+diff --git a/crates/sim/src/sensory.rs b/crates/sim/src/sensory.rs
+index 2aee34d..afad29c 100644
+--- a/crates/sim/src/sensory.rs
++++ b/crates/sim/src/sensory.rs
+@@ -92,6 +92,34 @@ pub fn group_currents(
+     Ok(currents.into_iter().collect())
+ }
+ 
++/// SCRATCH (repellent-object spike): graded same-side receptor drive.
++/// The local field concentration measured at each antenna scales the external current on that
++/// side's receptor indices. Same-side wiring only: no sign flip, no binarized lateral detector,
++/// no motor injection, and readout populations are excluded exactly as `group_currents` does.
++/// `scale` is an input-current amplitude supplied by the caller, not fitted to any outcome.
++pub fn graded_side_currents(
++    graph: &Graph,
++    sides: [&[u32]; 2],
++    values: [f64; 2],
++    scale: f64,
++) -> Result<Vec<(u32, f64)>, String> {
++    if !scale.is_finite() || !(0.0..=3.0).contains(&scale) {
++        return Err("receptor drive scale must be between zero and three".into());
++    }
++    if values.iter().any(|v| !v.is_finite() || *v < 0.0) {
++        return Err("field concentrations must be finite and nonnegative".into());
++    }
++    let readouts = motor_readout_indices(graph);
++    let mut currents = BTreeMap::new();
++    for (indices, value) in sides.into_iter().zip(values) {
++        let current = scale * value.clamp(0.0, 1.0);
++        for &index in indices.iter().filter(|i| !readouts.contains(i)) {
++            *currents.entry(index).or_insert(0.0) += current;
++        }
++    }
++    Ok(currents.into_iter().collect())
++}
++
+ /// All neuronal populations consumed by the current body/movement decoders.
+ pub fn motor_readout_indices(graph: &Graph) -> HashSet<u32> {
+     let m = &graph.manifest.motor;

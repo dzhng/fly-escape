@@ -1,4 +1,4 @@
-# 33 — Biological sensory grounding before game mechanics
+# 33 — Biologically motivated sensory inputs
 
 Status: active. The user’s biology-first clarification supersedes interpreting generic attractive/inhibitory input channels as validated chemical perception. This slice documents sensory assumptions and bounded behavioral experiments; it does not require a complete explanation of each circuit before playable integration or reopen accepted presentation work.
 
@@ -22,3 +22,5 @@ The remaining household, contact, two-level and release requirements stay open. 
 ## Bounded repellent search
 
 The user requested a 30-minute search for a useful repellent object. Test geosmin-associated mold through the retained DA2 circuit with moving flies, mirrored source locations and matched controls, without a fan or artificial repulsion force. Keep neural activation separate from observed avoidance. Stop the search at its time box even if negative and continue building around the available mechanics.
+
+The [completed moving-fly and house evidence](../assets/evidence/33/repellent-object/README.md) closes the bounded search. Geosmin remains a plausible exploratory input but is not a demonstrated reliable repeller. No runtime change or further repellent investigation is required by this result; return to aggregate object-placement control and level balance.
