@@ -63,12 +63,13 @@ export function NeuralExplanations() {
           alone does not establish its biological function.
         </p>
         <p>
-          Sensory signals enter selected neuron groups as modeled electrical input. Here, attractive
-          odor and the local exit cue drive excitatory-labeled odor groups and repellent odor drives
-          inhibitory-labeled groups, following measured responses of this simulated circuit. This
-          binding is a modeling assumption: excitation and inhibition describe effects between
-          neurons, not a universal preference for a smell. Odor and visual inputs can arrive
-          together and combine in a neuron.
+          In a living fly, odor molecules activate sensory neurons that relay signals into the
+          brain. The current smell model starts farther along that route, by applying electrical
+          input to selected neurons in the lateral horn, an odor-processing region. This bypasses
+          the chemical-specific sensory response, so an object's name does not mean its smell has
+          been faithfully reproduced.
+          Measuring a response in this model tests the model; biological experiments are needed
+          to establish whether the same response occurs in a fly.
         </p>
       </details>
     </>
