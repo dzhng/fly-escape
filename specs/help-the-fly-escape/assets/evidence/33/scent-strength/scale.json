@@ -1,0 +1,595 @@
+{
+  "arms": [
+    {
+      "allActiveCells": {
+        "count": 1692,
+        "max": 1.1801379168580552,
+        "median": 0.5409371948007247,
+        "min": 0.04080296554585933,
+        "p10": 0.09516344679078126,
+        "p25": 0.22218500192779733,
+        "p75": 0.6589376838822399,
+        "p90": 0.835394172557695,
+        "p99": 1.0779498082829895
+      },
+      "arm": "banana1x",
+      "cellsAboveDetectionFloor": {
+        "count": 1636,
+        "max": 1.1801379168580552,
+        "median": 0.547852701978905,
+        "min": 0.05065631298412972,
+        "p10": 0.16959597883444694,
+        "p25": 0.2511166037388025,
+        "p75": 0.6660372220002888,
+        "p90": 0.8396536664229327,
+        "p99": 1.08175738084443
+      },
+      "placedBananaRate": 1.0,
+      "traces": [
+        {
+          "at": [
+            {
+              "attractiveOdor": 0.11235152957639741,
+              "name": "banana"
+            },
+            {
+              "attractiveOdor": 0.04953568791923911,
+              "name": "doorwayRoom1Entrance"
+            },
+            {
+              "attractiveOdor": 0.04953568791923899,
+              "name": "halfMetreInsideRoom1"
+            },
+            {
+              "attractiveOdor": 0.002216387218356498,
+              "name": "oneMetreFromBanana"
+            },
+            {
+              "attractiveOdor": 0.0,
+              "name": "exitMouth"
+            },
+            {
+              "attractiveOdor": 0.00004804087001885965,
+              "name": "room2Middle"
+            },
+            {
+              "attractiveOdor": 0.0,
+              "name": "spawnCluster"
+            }
+          ],
+          "tick": 1
+        },
+        {
+          "at": [
+            {
+              "attractiveOdor": 0.8187332807961372,
+              "name": "banana"
+            },
+            {
+              "attractiveOdor": 0.6740199562753357,
+              "name": "doorwayRoom1Entrance"
+            },
+            {
+              "attractiveOdor": 0.6616467651203899,
+              "name": "halfMetreInsideRoom1"
+            },
+            {
+              "attractiveOdor": 0.46881990536061086,
+              "name": "oneMetreFromBanana"
+            },
+            {
+              "attractiveOdor": 0.24963330644187673,
+              "name": "exitMouth"
+            },
+            {
+              "attractiveOdor": 0.47130615279852295,
+              "name": "room2Middle"
+            },
+            {
+              "attractiveOdor": 0.004309172927505414,
+              "name": "spawnCluster"
+            }
+          ],
+          "tick": 100
+        },
+        {
+          "at": [
+            {
+              "attractiveOdor": 1.0132036225600292,
+              "name": "banana"
+            },
+            {
+              "attractiveOdor": 0.8716533738787123,
+              "name": "doorwayRoom1Entrance"
+            },
+            {
+              "attractiveOdor": 0.8539444982214419,
+              "name": "halfMetreInsideRoom1"
+            },
+            {
+              "attractiveOdor": 0.6591192770469975,
+              "name": "oneMetreFromBanana"
+            },
+            {
+              "attractiveOdor": 0.4301630940359578,
+              "name": "exitMouth"
+            },
+            {
+              "attractiveOdor": 0.6787286500785052,
+              "name": "room2Middle"
+            },
+            {
+              "attractiveOdor": 0.03294513698260599,
+              "name": "spawnCluster"
+            }
+          ],
+          "tick": 300
+        },
+        {
+          "at": [
+            {
+              "attractiveOdor": 1.0402519237865129,
+              "name": "banana"
+            },
+            {
+              "attractiveOdor": 0.8982457173749869,
+              "name": "doorwayRoom1Entrance"
+            },
+            {
+              "attractiveOdor": 0.8812206596570903,
+              "name": "halfMetreInsideRoom1"
+            },
+            {
+              "attractiveOdor": 0.6865331387572715,
+              "name": "oneMetreFromBanana"
+            },
+            {
+              "attractiveOdor": 0.4578318090821959,
+              "name": "exitMouth"
+            },
+            {
+              "attractiveOdor": 0.7046894827044687,
+              "name": "room2Middle"
+            },
+            {
+              "attractiveOdor": 0.04442332239492491,
+              "name": "spawnCluster"
+            }
+          ],
+          "tick": 600
+        },
+        {
+          "at": [
+            {
+              "attractiveOdor": 1.0415945051521909,
+              "name": "banana"
+            },
+            {
+              "attractiveOdor": 0.8995602018228499,
+              "name": "doorwayRoom1Entrance"
+            },
+            {
+              "attractiveOdor": 0.8825779151722524,
+              "name": "halfMetreInsideRoom1"
+            },
+            {
+              "attractiveOdor": 0.6879000113879103,
+              "name": "oneMetreFromBanana"
+            },
+            {
+              "attractiveOdor": 0.45922209008550074,
+              "name": "exitMouth"
+            },
+            {
+              "attractiveOdor": 0.7059545572349257,
+              "name": "room2Middle"
+            },
+            {
+              "attractiveOdor": 0.04534015555107487,
+              "name": "spawnCluster"
+            }
+          ],
+          "tick": 1500
+        },
+        {
+          "at": [
+            {
+              "attractiveOdor": 1.0415946596957575,
+              "name": "banana"
+            },
+            {
+              "attractiveOdor": 0.8995603553526699,
+              "name": "doorwayRoom1Entrance"
+            },
+            {
+              "attractiveOdor": 0.8825780702485747,
+              "name": "halfMetreInsideRoom1"
+            },
+            {
+              "attractiveOdor": 0.6879001668171818,
+              "name": "oneMetreFromBanana"
+            },
+            {
+              "attractiveOdor": 0.4592222464000802,
+              "name": "exitMouth"
+            },
+            {
+              "attractiveOdor": 0.7059547089262053,
+              "name": "room2Middle"
+            },
+            {
+              "attractiveOdor": 0.0453402995389744,
+              "name": "spawnCluster"
+            }
+          ],
+          "tick": 3000
+        },
+        {
+          "at": [
+            {
+              "attractiveOdor": 1.0415946596958028,
+              "name": "banana"
+            },
+            {
+              "attractiveOdor": 0.8995603553527143,
+              "name": "doorwayRoom1Entrance"
+            },
+            {
+              "attractiveOdor": 0.8825780702486202,
+              "name": "halfMetreInsideRoom1"
+            },
+            {
+              "attractiveOdor": 0.6879001668172274,
+              "name": "oneMetreFromBanana"
+            },
+            {
+              "attractiveOdor": 0.45922224640012654,
+              "name": "exitMouth"
+            },
+            {
+              "attractiveOdor": 0.7059547089262495,
+              "name": "room2Middle"
+            },
+            {
+              "attractiveOdor": 0.045340299539019496,
+              "name": "spawnCluster"
+            }
+          ],
+          "tick": 4500
+        },
+        {
+          "at": [
+            {
+              "attractiveOdor": 1.0415946596958028,
+              "name": "banana"
+            },
+            {
+              "attractiveOdor": 0.8995603553527143,
+              "name": "doorwayRoom1Entrance"
+            },
+            {
+              "attractiveOdor": 0.8825780702486202,
+              "name": "halfMetreInsideRoom1"
+            },
+            {
+              "attractiveOdor": 0.6879001668172275,
+              "name": "oneMetreFromBanana"
+            },
+            {
+              "attractiveOdor": 0.4592222464001266,
+              "name": "exitMouth"
+            },
+            {
+              "attractiveOdor": 0.7059547089262495,
+              "name": "room2Middle"
+            },
+            {
+              "attractiveOdor": 0.045340299539019496,
+              "name": "spawnCluster"
+            }
+          ],
+          "tick": 6000
+        }
+      ]
+    },
+    {
+      "allActiveCells": {
+        "count": 1692,
+        "max": 2.712944668455208,
+        "median": 0.817187686201991,
+        "min": 0.057357094748541636,
+        "p10": 0.13385402865853027,
+        "p25": 0.2854784490604645,
+        "p75": 1.125375505967266,
+        "p90": 1.3954055237907455,
+        "p99": 2.317421778596094
+      },
+      "arm": "banana3x",
+      "cellsAboveDetectionFloor": {
+        "count": 1692,
+        "max": 2.712944668455208,
+        "median": 0.817187686201991,
+        "min": 0.057357094748541636,
+        "p10": 0.13385402865853027,
+        "p25": 0.2854784490604645,
+        "p75": 1.125375505967266,
+        "p90": 1.3954055237907455,
+        "p99": 2.317421778596094
+      },
+      "placedBananaRate": 3.0,
+      "traces": [
+        {
+          "at": [
+            {
+              "attractiveOdor": 0.33705458872919225,
+              "name": "banana"
+            },
+            {
+              "attractiveOdor": 0.14860706375771732,
+              "name": "doorwayRoom1Entrance"
+            },
+            {
+              "attractiveOdor": 0.148607063757717,
+              "name": "halfMetreInsideRoom1"
+            },
+            {
+              "attractiveOdor": 0.006649161655069492,
+              "name": "oneMetreFromBanana"
+            },
+            {
+              "attractiveOdor": 0.0,
+              "name": "exitMouth"
+            },
+            {
+              "attractiveOdor": 0.00004804087001885965,
+              "name": "room2Middle"
+            },
+            {
+              "attractiveOdor": 0.0,
+              "name": "spawnCluster"
+            }
+          ],
+          "tick": 1
+        },
+        {
+          "at": [
+            {
+              "attractiveOdor": 2.2569593124159666,
+              "name": "banana"
+            },
+            {
+              "attractiveOdor": 1.7338346057159069,
+              "name": "doorwayRoom1Entrance"
+            },
+            {
+              "attractiveOdor": 1.8107556916136769,
+              "name": "halfMetreInsideRoom1"
+            },
+            {
+              "attractiveOdor": 1.2255785394624295,
+              "name": "oneMetreFromBanana"
+            },
+            {
+              "attractiveOdor": 0.3987920208135835,
+              "name": "exitMouth"
+            },
+            {
+              "attractiveOdor": 0.6942720986430952,
+              "name": "room2Middle"
+            },
+            {
+              "attractiveOdor": 0.005380270870968161,
+              "name": "spawnCluster"
+            }
+          ],
+          "tick": 100
+        },
+        {
+          "at": [
+            {
+              "attractiveOdor": 2.64862319614195,
+              "name": "banana"
+            },
+            {
+              "attractiveOdor": 2.1075284707537834,
+              "name": "doorwayRoom1Entrance"
+            },
+            {
+              "attractiveOdor": 2.209568225578439,
+              "name": "halfMetreInsideRoom1"
+            },
+            {
+              "attractiveOdor": 1.6265705814523583,
+              "name": "oneMetreFromBanana"
+            },
+            {
+              "attractiveOdor": 0.782427042005474,
+              "name": "exitMouth"
+            },
+            {
+              "attractiveOdor": 1.034547279767731,
+              "name": "room2Middle"
+            },
+            {
+              "attractiveOdor": 0.045372367196392094,
+              "name": "spawnCluster"
+            }
+          ],
+          "tick": 300
+        },
+        {
+          "at": [
+            {
+              "attractiveOdor": 2.700785960755929,
+              "name": "banana"
+            },
+            {
+              "attractiveOdor": 2.157186965856028,
+              "name": "doorwayRoom1Entrance"
+            },
+            {
+              "attractiveOdor": 2.263031778992387,
+              "name": "halfMetreInsideRoom1"
+            },
+            {
+              "attractiveOdor": 1.6808787515377877,
+              "name": "oneMetreFromBanana"
+            },
+            {
+              "attractiveOdor": 0.838729542630039,
+              "name": "exitMouth"
+            },
+            {
+              "attractiveOdor": 1.0798525368017469,
+              "name": "room2Middle"
+            },
+            {
+              "attractiveOdor": 0.062361253825892075,
+              "name": "spawnCluster"
+            }
+          ],
+          "tick": 600
+        },
+        {
+          "at": [
+            {
+              "attractiveOdor": 2.703296714292515,
+              "name": "banana"
+            },
+            {
+              "attractiveOdor": 2.159598957976838,
+              "name": "doorwayRoom1Entrance"
+            },
+            {
+              "attractiveOdor": 2.2655942858457605,
+              "name": "halfMetreInsideRoom1"
+            },
+            {
+              "attractiveOdor": 1.6834753809197194,
+              "name": "oneMetreFromBanana"
+            },
+            {
+              "attractiveOdor": 0.8414106842219258,
+              "name": "exitMouth"
+            },
+            {
+              "attractiveOdor": 1.0820879328834558,
+              "name": "room2Middle"
+            },
+            {
+              "attractiveOdor": 0.06376582252841143,
+              "name": "spawnCluster"
+            }
+          ],
+          "tick": 1500
+        },
+        {
+          "at": [
+            {
+              "attractiveOdor": 2.7032969843612977,
+              "name": "banana"
+            },
+            {
+              "attractiveOdor": 2.159599223634544,
+              "name": "doorwayRoom1Entrance"
+            },
+            {
+              "attractiveOdor": 2.2655945582252293,
+              "name": "halfMetreInsideRoom1"
+            },
+            {
+              "attractiveOdor": 1.683475654822126,
+              "name": "oneMetreFromBanana"
+            },
+            {
+              "attractiveOdor": 0.841410961895201,
+              "name": "exitMouth"
+            },
+            {
+              "attractiveOdor": 1.0820881906683852,
+              "name": "room2Middle"
+            },
+            {
+              "attractiveOdor": 0.06376605055661516,
+              "name": "spawnCluster"
+            }
+          ],
+          "tick": 3000
+        },
+        {
+          "at": [
+            {
+              "attractiveOdor": 2.7032969843613746,
+              "name": "banana"
+            },
+            {
+              "attractiveOdor": 2.1595992236346215,
+              "name": "doorwayRoom1Entrance"
+            },
+            {
+              "attractiveOdor": 2.265594558225305,
+              "name": "halfMetreInsideRoom1"
+            },
+            {
+              "attractiveOdor": 1.683475654822202,
+              "name": "oneMetreFromBanana"
+            },
+            {
+              "attractiveOdor": 0.8414109618952763,
+              "name": "exitMouth"
+            },
+            {
+              "attractiveOdor": 1.0820881906684607,
+              "name": "room2Middle"
+            },
+            {
+              "attractiveOdor": 0.06376605055668716,
+              "name": "spawnCluster"
+            }
+          ],
+          "tick": 4500
+        },
+        {
+          "at": [
+            {
+              "attractiveOdor": 2.7032969843613746,
+              "name": "banana"
+            },
+            {
+              "attractiveOdor": 2.159599223634622,
+              "name": "doorwayRoom1Entrance"
+            },
+            {
+              "attractiveOdor": 2.2655945582253056,
+              "name": "halfMetreInsideRoom1"
+            },
+            {
+              "attractiveOdor": 1.6834756548222023,
+              "name": "oneMetreFromBanana"
+            },
+            {
+              "attractiveOdor": 0.8414109618952765,
+              "name": "exitMouth"
+            },
+            {
+              "attractiveOdor": 1.082088190668461,
+              "name": "room2Middle"
+            },
+            {
+              "attractiveOdor": 0.06376605055668717,
+              "name": "spawnCluster"
+            }
+          ],
+          "tick": 6000
+        }
+      ]
+    }
+  ],
+  "contentHash": "bb3b008ff847d438412db5fb4681aeab3a7aa991e846a2136c83e4a87f5120e0",
+  "contentPath": "/tmp/fly-five-bananas.json",
+  "detectionFloor": 0.05,
+  "probeSourceHash": "45ac5fe5ade0151472a6b7d1281427915727a37abcb4547d902e7a4deea79e39",
+  "purpose": "field-only attractive-odor range for choosing the saturating half-concentration",
+  "sensorySourceHash": "10de151d03942070594204944e53082e1ed96ac0c94d7605c7ed366524140ec1",
+  "settleTicks": 6000
+}

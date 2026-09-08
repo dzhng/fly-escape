@@ -1,0 +1,98 @@
+[
+  {
+    "encoding": "binary",
+    "seedIndex": 0,
+    "condition": "binary-empty",
+    "flies": 16,
+    "arrivals": 4,
+    "escapes": 3
+  },
+  {
+    "encoding": "binary",
+    "seedIndex": 0,
+    "condition": "binary-banana1x",
+    "flies": 16,
+    "arrivals": 6,
+    "escapes": 2
+  },
+  {
+    "encoding": "binary",
+    "seedIndex": 0,
+    "condition": "binary-banana3x",
+    "flies": 16,
+    "arrivals": 7,
+    "escapes": 4
+  },
+  {
+    "encoding": "binary",
+    "seedIndex": 1,
+    "condition": "binary-empty",
+    "flies": 16,
+    "arrivals": 5,
+    "escapes": 2
+  },
+  {
+    "encoding": "binary",
+    "seedIndex": 1,
+    "condition": "binary-banana1x",
+    "flies": 16,
+    "arrivals": 7,
+    "escapes": 1
+  },
+  {
+    "encoding": "binary",
+    "seedIndex": 1,
+    "condition": "binary-banana3x",
+    "flies": 16,
+    "arrivals": 9,
+    "escapes": 5
+  },
+  {
+    "encoding": "saturating",
+    "seedIndex": 0,
+    "condition": "saturating-empty",
+    "flies": 16,
+    "arrivals": 3,
+    "escapes": 0
+  },
+  {
+    "encoding": "saturating",
+    "seedIndex": 0,
+    "condition": "saturating-banana1x",
+    "flies": 16,
+    "arrivals": 6,
+    "escapes": 2
+  },
+  {
+    "encoding": "saturating",
+    "seedIndex": 0,
+    "condition": "saturating-banana3x",
+    "flies": 16,
+    "arrivals": 8,
+    "escapes": 6
+  },
+  {
+    "encoding": "saturating",
+    "seedIndex": 1,
+    "condition": "saturating-empty",
+    "flies": 16,
+    "arrivals": 8,
+    "escapes": 3
+  },
+  {
+    "encoding": "saturating",
+    "seedIndex": 1,
+    "condition": "saturating-banana1x",
+    "flies": 16,
+    "arrivals": 7,
+    "escapes": 4
+  },
+  {
+    "encoding": "saturating",
+    "seedIndex": 1,
+    "condition": "saturating-banana3x",
+    "flies": 16,
+    "arrivals": 10,
+    "escapes": 5
+  }
+]
