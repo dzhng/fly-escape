@@ -1,0 +1,39 @@
+{
+  "articleDOI": "10.7554/eLife.51040",
+  "dataDOI": "10.7554/eLife.51040.009",
+  "sourceFile": "elife-51040-fig2-data1.xlsx",
+  "sourceSha256": "5ec72e8a62a71c8858c4f34bac72f1659403a6441c5db360a8be0f9a01f6fd5b",
+  "sheet": "Sheet1",
+  "columns": "C:H, genetic-background controls (not mutants)",
+  "responseDefinition": "stimulated minus unstimulated firing, figure axis spikes/sec; not total firing rate",
+  "rows": [
+    {
+      "sourceRow": 22,
+      "solutionConcentration": "0.2ug/ml",
+      "controlEvokedSpikesPerSecond": [
+        12.0,
+        18.0,
+        14.0,
+        20.0,
+        22.0,
+        16.0
+      ],
+      "mean": 17.0,
+      "sampleSD": 3.7416573867739413
+    },
+    {
+      "sourceRow": 23,
+      "solutionConcentration": "20ug/ml",
+      "controlEvokedSpikesPerSecond": [
+        70.0,
+        92.0,
+        84.0,
+        72.0,
+        94.0,
+        72.0
+      ],
+      "mean": 80.66666666666667,
+      "sampleSD": 10.782702196883056
+    }
+  ]
+}
