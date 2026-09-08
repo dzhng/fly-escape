@@ -1,0 +1,37 @@
+--- source/sensory.rs.baseline	2026-09-08 09:55:18
++++ source/sensory.rs.candidate	2026-09-08 10:02:15
+@@ -48,14 +48,29 @@
+     // A modeled lateral detector: local field contrast chooses the sensory
+     // population, never a motor command or a direction to a remote target.
+     // The 0.01% contrast floor is calibrated at anatomical spacing, not a biological threshold.
+-    let detected = values[0].max(values[1]) >= 0.05
+-        && (values[0] - values[1]).abs() > 0.0001 * (values[0] + values[1]);
+-    values = if !detected {
++    // SCRATCH CANDIDATE (bounded presence encoding, odor pathways only): the concentration
++    // threshold and the contrast floor are both unchanged. Odor that clears the threshold
++    // without a resolvable lateral difference now enters its sensory groups bilaterally at
++    // 0.25 instead of being suppressed to silence, and the non-favoured side of a resolved
++    // contrast keeps that same 0.25 floor. Side identity, positivity, gain multiplication
++    // and motor exclusion are untouched; vision keeps the original all-or-nothing encoding.
++    // This is a modeling choice in an encoder, not a claim about antennal physiology.
++    let odor = matches!(
++        pathway,
++        CuePathway::ExcitatoryOdor | CuePathway::InhibitoryOdor
++    );
++    let present = values[0].max(values[1]) >= 0.05;
++    let detected =
++        present && (values[0] - values[1]).abs() > 0.0001 * (values[0] + values[1]);
++    let floor = if odor { 0.25 } else { 0.0 };
++    values = if !present {
+         [0.0, 0.0]
++    } else if !detected {
++        [floor, floor]
+     } else if values[0] > values[1] {
+-        [1.0, 0.0]
++        [1.0, floor]
+     } else {
+-        [0.0, 1.0]
++        [floor, 1.0]
+     };
+     group_currents(graph, ids, values.map(|value| gain * value.clamp(0.0, 1.0)))
+ }
