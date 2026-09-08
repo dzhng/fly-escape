@@ -79,19 +79,21 @@ test("depleted buffers freeze and rebuild a substantial lead before resuming", (
   expect(clock.cursorTick).toBeCloseTo(31);
 });
 
-test("a worse production estimate and fast consumption require renewed buffering", () => {
+test("a worse production estimate plays on, while faster consumption renews buffering", () => {
   const clock = new PlaybackClock(1200);
   clock.play();
   clock.update(0, { computedTick: 100, complete: false, productionRate: 2 });
+  // Ten buffered game seconds keep playing however bad the estimate turns.
   clock.update(100, {
     computedTick: 100,
     complete: false,
     productionRate: 0.1,
   });
-  expect(clock.cursorTick).toBe(0);
-  expect(clock.state).toBe("buffering");
+  expect(clock.cursorTick).toBeCloseTo(1);
+  expect(clock.state).toBe("playing");
   clock.update(200, { computedTick: 100, complete: false, productionRate: 2 });
   expect(clock.state).toBe("playing");
+  // Doubling consumption is a fresh start, which waits for the full lead again.
   clock.setMode("fast");
   clock.update(300, { computedTick: 100, complete: false, productionRate: 2 });
   expect(clock.state).toBe("buffering");
@@ -228,4 +230,51 @@ test("hidden tabs and pauses behave the same in fast mode", () => {
   clock.update(90000, progress);
   expect(clock.state).toBe("paused");
   expect(clock.cursorTick).toBe(200);
+});
+
+test("a transient production slowdown never interrupts a replay that stays ahead of the cursor", () => {
+  // A synthetic throughput dip leaves a deep buffer of recorded frames intact.
+  // Prediction alone must not interrupt those frames.
+  const clock = new PlaybackClock(3000, 0.1, "fast");
+  clock.play();
+  let computed = 1770;
+  clock.update(0, { computedTick: computed, complete: false, productionRate: 2.8 });
+  expect(clock.state).toBe("playing");
+  for (let second = 1; second <= 20; second++) {
+    const slow = second >= 5 && second <= 12;
+    computed += slow ? 12 : 28;
+    clock.update(second * 1000, {
+      computedTick: computed,
+      complete: false,
+      productionRate: slow ? 1.2 : 2.8,
+    });
+    expect(clock.state).toBe("playing");
+    expect(computed - clock.cursorTick).toBeGreaterThan(0);
+  }
+  // Twenty wall seconds at 5× advance a thousand ticks with no pause.
+  expect(clock.cursorTick).toBeCloseTo(1000);
+});
+
+test("a stalled producer still freezes playback before its frames run out", () => {
+  const clock = new PlaybackClock(3000, 0.1, "fast");
+  clock.play();
+  const stalled = { computedTick: 2900, complete: false, productionRate: 2.8 };
+  clock.update(0, stalled);
+  expect(clock.state).toBe("playing");
+  // Two wall seconds of frames are left, so the replay is still running.
+  clock.update(56000, stalled);
+  expect(clock.cursorTick).toBeCloseTo(2800);
+  expect(clock.state).toBe("playing");
+  clock.update(57600, stalled);
+  expect(clock.cursorTick).toBeCloseTo(2880);
+  clock.update(58000, stalled);
+  expect(clock.state).toBe("buffering");
+  expect(clock.cursorTick).toBeCloseTo(2880);
+  // Resuming waits for a lead again rather than for the next single tick.
+  clock.update(58100, { ...stalled, computedTick: 2940 });
+  expect(clock.state).toBe("buffering");
+  clock.update(58200, { computedTick: 3000, complete: true, productionRate: 2.8 });
+  expect(clock.state).toBe("playing");
+  clock.update(58300, { computedTick: 3000, complete: true, productionRate: 2.8 });
+  expect(clock.cursorTick).toBeCloseTo(2885);
 });

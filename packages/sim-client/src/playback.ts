@@ -132,9 +132,11 @@ export class PlaybackClock {
       // Starting/resuming consumes no time spent waiting for this lead.
       return this.cursor;
     }
-    // A lower running threshold retains one wall second of reserve, avoiding
-    // threshold flicker as individual production ticks arrive.
-    if (!progress.complete && buffered < deficit + speed) {
+    // The deficit estimate decides when it is safe to start, never whether to
+    // keep going: a momentarily worse estimate must not pause a deep buffer.
+    // Playing stops only on frames running out, one wall second of reserve ahead
+    // of empty so arriving production ticks are not raced.
+    if (!progress.complete && buffered < speed) {
       this.currentState = "buffering";
       return this.cursor;
     }

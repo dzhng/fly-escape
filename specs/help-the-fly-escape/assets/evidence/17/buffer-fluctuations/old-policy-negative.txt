@@ -1,0 +1,68 @@
+bun test v1.3.14 (0d9b296a)
+
+../../../../private/tmp/replay-buffer-negative/playback.test.ts:
+(pass) initial lead covers sustained underproduction rather than a short buffer [0.25ms]
+(pass) pause, hidden time, mode changes and seeking preserve one cursor without catch-up [0.11ms]
+(pass) depleted buffers freeze and rebuild a substantial lead before resuming [0.03ms]
+87 |   clock.update(100, {
+88 |     computedTick: 100,
+89 |     complete: false,
+90 |     productionRate: 0.1,
+91 |   });
+92 |   expect(clock.cursorTick).toBeCloseTo(1);
+                                ^
+error: expect(received).toBeCloseTo(expected, precision)
+
+Expected: 1
+Received: 0
+
+Expected precision: 2
+Expected difference: < 0.005
+Received difference: 1
+
+      at <anonymous> (/private/tmp/replay-buffer-negative/playback.test.ts:92:28)
+(fail) a worse production estimate plays on, while faster consumption renews buffering [0.09ms]
+(pass) completed records can replay at zero production rate and stop at early terminal time [0.02ms]
+(pass) fast mode plays the authored horizon in one wall minute [0.08ms]
+(pass) playback offers exactly two modes and no other speed [0.04ms]
+(pass) switching modes keeps the cursor and rechecks lead instead of jumping [0.02ms]
+(pass) fast playback sizes its lead by the fast multiplier, not by real time [0.02ms]
+(pass) a fast attempt that ends early finishes sooner and is never stretched [0.02ms]
+(pass) hidden tabs and pauses behave the same in fast mode [0.02ms]
+246 |     clock.update(second * 1000, {
+247 |       computedTick: computed,
+248 |       complete: false,
+249 |       productionRate: slow ? 1.2 : 2.8,
+250 |     });
+251 |     expect(clock.state).toBe("playing");
+                              ^
+error: expect(received).toBe(expected)
+
+Expected: "playing"
+Received: "buffering"
+
+      at <anonymous> (/private/tmp/replay-buffer-negative/playback.test.ts:251:25)
+(fail) a transient production slowdown never interrupts a replay that stays ahead of the cursor [0.09ms]
+264 |   // Two wall seconds of frames are left, so the replay is still running.
+265 |   clock.update(56000, stalled);
+266 |   expect(clock.cursorTick).toBeCloseTo(2800);
+267 |   expect(clock.state).toBe("playing");
+268 |   clock.update(57600, stalled);
+269 |   expect(clock.cursorTick).toBeCloseTo(2880);
+                                 ^
+error: expect(received).toBeCloseTo(expected, precision)
+
+Expected: 2880
+Received: 2800
+
+Expected precision: 2
+Expected difference: < 0.005
+Received difference: 80
+
+      at <anonymous> (/private/tmp/replay-buffer-negative/playback.test.ts:269:28)
+(fail) a stalled producer still freezes playback before its frames run out [0.05ms]
+
+ 10 pass
+ 3 fail
+ 83 expect() calls
+Ran 13 tests across 1 file. [11.00ms]

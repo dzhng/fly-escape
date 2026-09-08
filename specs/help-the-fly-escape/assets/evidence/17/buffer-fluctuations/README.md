@@ -1,0 +1,11 @@
+# Keep buffered frames playing through a rate dip
+
+A full Fast run previously recorded one interruption under concurrent native load, while the isolated run passed. Its aggregate report does not prove when or why its buffer paused. The delegate's claim that an average production rate proves the buffer never emptied was rejected; its quoted framep959.5ms was also incorrect (actual17ms).
+
+Source inspection does identify an unnecessary interruption mechanism: while playing, the clock required the buffer to cover a newly forecast shortfall for the entire remaining round. A temporary worse estimate could stop playback with many frames already available. The starting forecast still governs start/resume; active playback now pauses only when the actual buffer falls below one wall second. Every pause remains counted. A lasting producer stall still rebuilds a substantial buffer before resuming.
+
+The synthetic throughput-dip test keeps the cursor moving through available frames; a stalled-producer test pins safe freezing and conservative resumption. The old policy fails these and the revised policy test ([negative output](old-policy-negative.txt)). Root client tests pass31tests/323assertions, typecheck and production build pass. No noise, simulation, speed modes, cursor skipping or rate-measurement change.
+
+A full actual Chrome Fast run alongside two native campaign processes passes:42.719s initial wait,90.097s production, no underruns, framep9517ms. [Attempt](attempt-1.json), [resource report](report.json). Final image SHA2564f91a98469f7d4fd7f80b5a051bd7af629e9236e283e42e302558f5d77906f81 matches the preceding production frames exactly. This is bounded loaded-run evidence, not proof that arbitrary future stalls never require buffering. Initial wait remains above target.
+
+Review: one existing clock policy changes; no new owner, setting, timer or telemetry exception. The old prediction-pause test encoded the stricter plan policy; that policy is explicitly corrected in CONTRACTS to serve the user's smooth-playback requirement. The numerical data and renderer are unaffected. The regression test describes a synthetic trace, not an unrecorded reconstruction of the original browser failure.
