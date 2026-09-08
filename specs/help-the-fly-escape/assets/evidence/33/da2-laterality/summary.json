@@ -1,0 +1,940 @@
+{
+  "primary": {
+    "leftMinusNone": {
+      "n": 30,
+      "mean": -9.159420289855151e-06,
+      "sd": 0.00019668694987799433,
+      "se": 3.590995973835516e-05,
+      "ci95": [
+        -8.260353439453105e-05,
+        6.428469381482075e-05
+      ],
+      "min": -0.00041391304347826105,
+      "max": 0.0006017391304347828,
+      "positiveSeeds": 10,
+      "negativeSeeds": 19,
+      "zeroSeeds": 1
+    },
+    "rightMinusNone": {
+      "n": 30,
+      "mean": 3.3855072463768046e-05,
+      "sd": 0.00023414260410112246,
+      "se": 4.274839531306213e-05,
+      "ci95": [
+        -5.3575212784113335e-05,
+        0.00012128535771164942
+      ],
+      "min": -0.0005947826086956519,
+      "max": 0.000580869565217391,
+      "positiveSeeds": 17,
+      "negativeSeeds": 13,
+      "zeroSeeds": 0
+    },
+    "leftMinusRight": {
+      "n": 30,
+      "mean": -4.30144927536232e-05,
+      "sd": 0.0002283909512497826,
+      "se": 4.169829197652288e-05,
+      "ci95": [
+        -0.00012829707553031205,
+        4.2268090023065644e-05
+      ],
+      "min": -0.0005008695652173913,
+      "max": 0.0003339130434782609,
+      "positiveSeeds": 11,
+      "negativeSeeds": 18,
+      "zeroSeeds": 1
+    }
+  },
+  "turnGroups": {
+    "none.before.turnLSpikeFraction": {
+      "n": 30,
+      "mean": 0.020320000000000043,
+      "sd": 0.0002826475812251261,
+      "se": 5.160415202042508e-05,
+      "ci95": [
+        0.02021445765863075,
+        0.020425542341369337
+      ],
+      "min": 0.01960000000000004,
+      "max": 0.020880000000000044,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "none.before.turnRSpikeFraction": {
+      "n": 30,
+      "mean": 0.02088115942028981,
+      "sd": 0.0002456673207396787,
+      "se": 4.4852511070326254e-05,
+      "ci95": [
+        0.020789425735124694,
+        0.020972893105454925
+      ],
+      "min": 0.020434782608695606,
+      "max": 0.021304347826086915,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "none.during.turnLSpikeFraction": {
+      "n": 30,
+      "mean": 0.02174933333333338,
+      "sd": 0.00035012247446634606,
+      "se": 6.39233257182481e-05,
+      "ci95": [
+        0.021618595452750716,
+        0.021880071213916046
+      ],
+      "min": 0.020960000000000045,
+      "max": 0.022400000000000045,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "none.during.turnRSpikeFraction": {
+      "n": 30,
+      "mean": 0.022185507246376763,
+      "sd": 0.00027377696658796683,
+      "se": 4.99846067751892e-05,
+      "ci95": [
+        0.0220832772469498,
+        0.022287737245803727
+      ],
+      "min": 0.021739130434782563,
+      "max": 0.022695652173912995,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "none.after.turnLSpikeFraction": {
+      "n": 30,
+      "mean": 0.021650666666666714,
+      "sd": 0.00031477340874123293,
+      "se": 5.74694988234557e-05,
+      "ci95": [
+        0.02153312834415447,
+        0.021768204989178957
+      ],
+      "min": 0.021040000000000045,
+      "max": 0.022160000000000044,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "none.after.turnRSpikeFraction": {
+      "n": 30,
+      "mean": 0.022130434782608652,
+      "sd": 0.00030273722476808617,
+      "se": 5.527200233399749e-05,
+      "ci95": [
+        0.02201739084505513,
+        0.022243478720162174
+      ],
+      "min": 0.021652173913043433,
+      "max": 0.02278260869565213,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "left.before.turnLSpikeFraction": {
+      "n": 30,
+      "mean": 0.020320000000000043,
+      "sd": 0.0002826475812251261,
+      "se": 5.160415202042508e-05,
+      "ci95": [
+        0.02021445765863075,
+        0.020425542341369337
+      ],
+      "min": 0.01960000000000004,
+      "max": 0.020880000000000044,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "left.before.turnRSpikeFraction": {
+      "n": 30,
+      "mean": 0.02088115942028981,
+      "sd": 0.0002456673207396787,
+      "se": 4.4852511070326254e-05,
+      "ci95": [
+        0.020789425735124694,
+        0.020972893105454925
+      ],
+      "min": 0.020434782608695606,
+      "max": 0.021304347826086915,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "left.during.turnLSpikeFraction": {
+      "n": 30,
+      "mean": 0.021744000000000048,
+      "sd": 0.0003530517203489878,
+      "se": 6.44581304003821e-05,
+      "ci95": [
+        0.021612168321028732,
+        0.021875831678971364
+      ],
+      "min": 0.020960000000000045,
+      "max": 0.022320000000000048,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "left.during.turnRSpikeFraction": {
+      "n": 30,
+      "mean": 0.022171014492753573,
+      "sd": 0.00026284443218882887,
+      "se": 4.798860820815285e-05,
+      "ci95": [
+        0.022072866768761565,
+        0.022269162216745582
+      ],
+      "min": 0.021739130434782563,
+      "max": 0.022695652173912995,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "left.after.turnLSpikeFraction": {
+      "n": 30,
+      "mean": 0.021648000000000046,
+      "sd": 0.00029080625141504336,
+      "se": 5.309371458784596e-05,
+      "ci95": [
+        0.02153941116111405,
+        0.02175658883888604
+      ],
+      "min": 0.021120000000000045,
+      "max": 0.022240000000000048,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "left.after.turnRSpikeFraction": {
+      "n": 30,
+      "mean": 0.02212463768115937,
+      "sd": 0.000282172038011741,
+      "se": 5.151733010541191e-05,
+      "ci95": [
+        0.022019272910544247,
+        0.022230002451774495
+      ],
+      "min": 0.021565217391304303,
+      "max": 0.022608695652173865,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "leftMinusNone.during.turnLSpikeFraction": {
+      "n": 30,
+      "mean": -5.333333333333347e-06,
+      "sd": 0.00012056571632940727,
+      "se": 2.2012187498461773e-05,
+      "ci95": [
+        -5.0353311693370276e-05,
+        3.9686645026703585e-05
+      ],
+      "min": -0.00032000000000000084,
+      "max": 0.0002400000000000041,
+      "positiveSeeds": 8,
+      "negativeSeeds": 12,
+      "zeroSeeds": 10
+    },
+    "leftMinusNone.during.turnRSpikeFraction": {
+      "n": 30,
+      "mean": -1.44927536231886e-05,
+      "sd": 0.00015332965837816742,
+      "se": 2.7994037542761092e-05,
+      "ci95": [
+        -7.174698900861932e-05,
+        4.2761481762242125e-05
+      ],
+      "min": -0.00026086956521739063,
+      "max": 0.0005217391304347813,
+      "positiveSeeds": 7,
+      "negativeSeeds": 14,
+      "zeroSeeds": 9
+    },
+    "right.before.turnLSpikeFraction": {
+      "n": 30,
+      "mean": 0.020320000000000043,
+      "sd": 0.0002826475812251261,
+      "se": 5.160415202042508e-05,
+      "ci95": [
+        0.02021445765863075,
+        0.020425542341369337
+      ],
+      "min": 0.01960000000000004,
+      "max": 0.020880000000000044,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "right.before.turnRSpikeFraction": {
+      "n": 30,
+      "mean": 0.02088115942028981,
+      "sd": 0.0002456673207396787,
+      "se": 4.4852511070326254e-05,
+      "ci95": [
+        0.020789425735124694,
+        0.020972893105454925
+      ],
+      "min": 0.020434782608695606,
+      "max": 0.021304347826086915,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "right.during.turnLSpikeFraction": {
+      "n": 30,
+      "mean": 0.021738666666666715,
+      "sd": 0.0003674678811517562,
+      "se": 6.709014922181478e-05,
+      "ci95": [
+        0.021601451904783152,
+        0.02187588142855028
+      ],
+      "min": 0.020960000000000045,
+      "max": 0.022480000000000045,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "right.during.turnRSpikeFraction": {
+      "n": 30,
+      "mean": 0.022208695652173868,
+      "sd": 0.0002991415917866317,
+      "se": 5.461553256984677e-05,
+      "ci95": [
+        0.022096994346041152,
+        0.022320396958306583
+      ],
+      "min": 0.021565217391304306,
+      "max": 0.022782608695652122,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "right.after.turnLSpikeFraction": {
+      "n": 30,
+      "mean": 0.021714666666666712,
+      "sd": 0.00032047091786214073,
+      "se": 5.850971691249325e-05,
+      "ci95": [
+        0.021595000859284487,
+        0.021834332474048937
+      ],
+      "min": 0.021120000000000045,
+      "max": 0.022320000000000048,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "right.after.turnRSpikeFraction": {
+      "n": 30,
+      "mean": 0.022136231884057927,
+      "sd": 0.0003694079096077505,
+      "se": 6.744434833766477e-05,
+      "ci95": [
+        0.02199829270364341,
+        0.022274171064472444
+      ],
+      "min": 0.02121739130434778,
+      "max": 0.02278260869565213,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "rightMinusNone.during.turnLSpikeFraction": {
+      "n": 30,
+      "mean": -1.0666666666666464e-05,
+      "sd": 0.00012905313883698535,
+      "se": 2.3561771752620964e-05,
+      "ci95": [
+        -5.885590067629187e-05,
+        3.752256734295893e-05
+      ],
+      "min": -0.00032000000000000084,
+      "max": 0.00024000000000000063,
+      "positiveSeeds": 12,
+      "negativeSeeds": 10,
+      "zeroSeeds": 8
+    },
+    "rightMinusNone.during.turnRSpikeFraction": {
+      "n": 30,
+      "mean": 2.3188405797101504e-05,
+      "sd": 0.00016770530075353003,
+      "se": 3.061865874529884e-05,
+      "ci95": [
+        -3.94337826711294e-05,
+        8.581059426533241e-05
+      ],
+      "min": -0.00043478260869565105,
+      "max": 0.00034782608695652084,
+      "positiveSeeds": 15,
+      "negativeSeeds": 10,
+      "zeroSeeds": 5
+    }
+  },
+  "receptorAndPnLaterality": {
+    "none.evokedHz.ornL": {
+      "n": 30,
+      "mean": 0.9142857142857124,
+      "sd": 0.5728499017460046,
+      "se": 0.10458760441696825,
+      "ci95": [
+        0.7003800455324797,
+        1.1281913830389452
+      ],
+      "min": -0.3809523809523814,
+      "max": 2.0952380952380896,
+      "positiveSeeds": 28,
+      "negativeSeeds": 2,
+      "zeroSeeds": 0
+    },
+    "none.evokedHz.ornR": {
+      "n": 30,
+      "mean": 0.8799999999999971,
+      "sd": 0.5155512617075766,
+      "se": 0.09412635186249635,
+      "ci95": [
+        0.6874899950650069,
+        1.0725100049349874
+      ],
+      "min": 0.0,
+      "max": 1.9999999999999964,
+      "positiveSeeds": 29,
+      "negativeSeeds": 0,
+      "zeroSeeds": 1
+    },
+    "none.evokedHz.ornunknown": {
+      "n": 30,
+      "mean": 0.6190476190476206,
+      "sd": 1.0639861934025998,
+      "se": 0.19425641300021942,
+      "ci95": [
+        0.2217486450051993,
+        1.016346593090042
+      ],
+      "min": -1.428571428571436,
+      "max": 2.5714285714285783,
+      "positiveSeeds": 22,
+      "negativeSeeds": 8,
+      "zeroSeeds": 0
+    },
+    "none.evokedHz.ornAll": {
+      "n": 30,
+      "mean": 0.8569444444444395,
+      "sd": 0.42880080562746703,
+      "se": 0.07828795797285062,
+      "ci95": [
+        0.6968275921763262,
+        1.017061296712553
+      ],
+      "min": -0.041666666666660745,
+      "max": 1.7499999999999787,
+      "positiveSeeds": 29,
+      "negativeSeeds": 1,
+      "zeroSeeds": 0
+    },
+    "none.evokedHz.pnL": {
+      "n": 30,
+      "mean": 0.8800000000000007,
+      "sd": 1.0886245671836843,
+      "se": 0.1987547440336007,
+      "ci95": [
+        0.47350090598798256,
+        1.2864990940120187
+      ],
+      "min": -1.200000000000001,
+      "max": 2.8000000000000007,
+      "positiveSeeds": 21,
+      "negativeSeeds": 5,
+      "zeroSeeds": 4
+    },
+    "none.evokedHz.pnR": {
+      "n": 30,
+      "mean": 0.693333333333332,
+      "sd": 1.081165824575436,
+      "se": 0.19739297017454654,
+      "ci95": [
+        0.2896193795837329,
+        1.097047287082931
+      ],
+      "min": -1.599999999999996,
+      "max": 2.399999999999995,
+      "positiveSeeds": 21,
+      "negativeSeeds": 8,
+      "zeroSeeds": 1
+    },
+    "none.evokedHz.pnAll": {
+      "n": 30,
+      "mean": 0.7866666666666647,
+      "sd": 0.8912344532022481,
+      "se": 0.1627164046815512,
+      "ci95": [
+        0.4538742525506957,
+        1.119459080782634
+      ],
+      "min": -0.800000000000006,
+      "max": 2.1999999999999975,
+      "positiveSeeds": 23,
+      "negativeSeeds": 7,
+      "zeroSeeds": 0
+    },
+    "left.evokedHz.ornL": {
+      "n": 30,
+      "mean": 81.22857142857174,
+      "sd": 0.5510033214554185,
+      "se": 0.10059898280713434,
+      "ci95": [
+        81.0228234069662,
+        81.43431945017728
+      ],
+      "min": 80.38095238095273,
+      "max": 82.5714285714289,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "left.evokedHz.ornR": {
+      "n": 30,
+      "mean": 0.9433333333333297,
+      "sd": 0.5360669884370353,
+      "se": 0.09787199396694175,
+      "ci95": [
+        0.7431626301375074,
+        1.143504036529152
+      ],
+      "min": -0.10000000000000142,
+      "max": 2.099999999999989,
+      "positiveSeeds": 29,
+      "negativeSeeds": 1,
+      "zeroSeeds": 0
+    },
+    "left.evokedHz.ornunknown": {
+      "n": 30,
+      "mean": 0.6095238095238109,
+      "sd": 1.068342572719962,
+      "se": 0.1950517754072755,
+      "ci95": [
+        0.21059813671024047,
+        1.0084494823373813
+      ],
+      "min": -1.4285714285714342,
+      "max": 2.5714285714285783,
+      "positiveSeeds": 23,
+      "negativeSeeds": 7,
+      "zeroSeeds": 0
+    },
+    "left.evokedHz.ornAll": {
+      "n": 30,
+      "mean": 36.01944444444445,
+      "sd": 0.43061889288182037,
+      "se": 0.07861989377309127,
+      "ci95": [
+        35.8586487072384,
+        36.180240181650504
+      ],
+      "min": 35.04166666666667,
+      "max": 36.79166666666665,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "left.evokedHz.pnL": {
+      "n": 30,
+      "mean": 4.453333333333324,
+      "sd": 1.1964699034597797,
+      "se": 0.21844451850031657,
+      "ci95": [
+        4.0065641289350715,
+        4.900102537731577
+      ],
+      "min": 1.9999999999999947,
+      "max": 6.3999999999999915,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "left.evokedHz.pnR": {
+      "n": 30,
+      "mean": 7.186666666666647,
+      "sd": 1.0424551039148675,
+      "se": 0.190325391866855,
+      "ci95": [
+        6.797407533570032,
+        7.575925799763262
+      ],
+      "min": 5.199999999999985,
+      "max": 8.799999999999976,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "left.evokedHz.pnAll": {
+      "n": 30,
+      "mean": 5.819999999999983,
+      "sd": 0.8731236038420932,
+      "se": 0.15940983110483958,
+      "ci95": [
+        5.493970288176998,
+        6.146029711822969
+      ],
+      "min": 3.999999999999977,
+      "max": 7.199999999999973,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "leftMinusNone.evokedHz.pnL": {
+      "n": 30,
+      "mean": 3.573333333333324,
+      "sd": 0.7348156387751316,
+      "se": 0.1341583669882358,
+      "ci95": [
+        3.298948664428867,
+        3.847718002237781
+      ],
+      "min": 1.999999999999993,
+      "max": 5.599999999999989,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "leftMinusNone.evokedHz.pnR": {
+      "n": 30,
+      "mean": 6.4933333333333145,
+      "sd": 0.4290593828632444,
+      "se": 0.07833516750114816,
+      "ci95": [
+        6.333119926738536,
+        6.653546739928093
+      ],
+      "min": 5.59999999999998,
+      "max": 7.599999999999978,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "right.evokedHz.ornL": {
+      "n": 30,
+      "mean": 0.9587301587301563,
+      "sd": 0.5293383884248445,
+      "se": 0.09664352529790628,
+      "ci95": [
+        0.7610719560706767,
+        1.156388361389636
+      ],
+      "min": -0.19047619047619158,
+      "max": 1.999999999999993,
+      "positiveSeeds": 28,
+      "negativeSeeds": 2,
+      "zeroSeeds": 0
+    },
+    "right.evokedHz.ornR": {
+      "n": 30,
+      "mean": 81.29333333333331,
+      "sd": 0.5085024214727736,
+      "se": 0.09283941559554582,
+      "ci95": [
+        81.10345540859902,
+        81.4832112580676
+      ],
+      "min": 80.49999999999994,
+      "max": 82.19999999999997,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "right.evokedHz.ornunknown": {
+      "n": 30,
+      "mean": 0.6380952380952396,
+      "sd": 1.0415257938991553,
+      "se": 0.19015572384734797,
+      "ci95": [
+        0.24918311506144303,
+        1.0270073611290362
+      ],
+      "min": -1.428571428571436,
+      "max": 2.5714285714285783,
+      "positiveSeeds": 23,
+      "negativeSeeds": 7,
+      "zeroSeeds": 0
+    },
+    "right.evokedHz.ornAll": {
+      "n": 30,
+      "mean": 34.38472222222224,
+      "sd": 0.3764631947973701,
+      "se": 0.0687324612869937,
+      "ci95": [
+        34.24414855502134,
+        34.525295889423134
+      ],
+      "min": 33.50000000000001,
+      "max": 35.12499999999999,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "right.evokedHz.pnL": {
+      "n": 30,
+      "mean": 5.933333333333321,
+      "sd": 1.1748318539507967,
+      "se": 0.2144939692281554,
+      "ci95": [
+        5.494643909409198,
+        6.372022757257445
+      ],
+      "min": 3.599999999999996,
+      "max": 8.399999999999984,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "right.evokedHz.pnR": {
+      "n": 30,
+      "mean": 6.893333333333313,
+      "sd": 1.0747680851149262,
+      "se": 0.19622490810135915,
+      "ci95": [
+        6.492008334759648,
+        7.294658331906978
+      ],
+      "min": 4.799999999999979,
+      "max": 8.79999999999998,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "right.evokedHz.pnAll": {
+      "n": 30,
+      "mean": 6.413333333333314,
+      "sd": 0.8467924605618335,
+      "se": 0.15460244405834,
+      "ci95": [
+        6.097135831999034,
+        6.729530834667593
+      ],
+      "min": 4.599999999999975,
+      "max": 7.799999999999978,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "rightMinusNone.evokedHz.pnL": {
+      "n": 30,
+      "mean": 5.053333333333321,
+      "sd": 0.6846762805847741,
+      "se": 0.12500421448833907,
+      "ci95": [
+        4.797671008470256,
+        5.308995658196387
+      ],
+      "min": 3.5999999999999908,
+      "max": 6.399999999999986,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "rightMinusNone.evokedHz.pnR": {
+      "n": 30,
+      "mean": 6.199999999999981,
+      "sd": 0.4785034140331487,
+      "se": 0.08736237123639654,
+      "ci95": [
+        6.021323888740301,
+        6.378676111259661
+      ],
+      "min": 5.199999999999985,
+      "max": 6.7999999999999865,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "none.evokedHz.pnR-minus-pnL": {
+      "n": 30,
+      "mean": -0.18666666666666867,
+      "sd": 1.2372754643621784,
+      "se": 0.2258945605596148,
+      "ci95": [
+        -0.6486729179197338,
+        0.2753395845863965
+      ],
+      "min": -2.799999999999997,
+      "max": 2.400000000000004,
+      "positiveSeeds": 11,
+      "negativeSeeds": 17,
+      "zeroSeeds": 2
+    },
+    "left.evokedHz.pnR-minus-pnL": {
+      "n": 30,
+      "mean": 2.7333333333333214,
+      "sd": 1.4096547225408083,
+      "se": 0.25736656327642893,
+      "ci95": [
+        2.206959609226547,
+        3.259707057440096
+      ],
+      "min": -0.40000000000000924,
+      "max": 5.19999999999999,
+      "positiveSeeds": 28,
+      "negativeSeeds": 2,
+      "zeroSeeds": 0
+    },
+    "right.evokedHz.pnR-minus-pnL": {
+      "n": 30,
+      "mean": 0.9599999999999919,
+      "sd": 1.4840763991859327,
+      "se": 0.2709540402983923,
+      "ci95": [
+        0.405836765126101,
+        1.5141632348738827
+      ],
+      "min": -2.3999999999999986,
+      "max": 3.999999999999984,
+      "positiveSeeds": 22,
+      "negativeSeeds": 8,
+      "zeroSeeds": 0
+    },
+    "leftMinusNone.evokedHz.pnR-minus-pnL": {
+      "n": 30,
+      "mean": 2.91999999999999,
+      "sd": 0.8478776749768414,
+      "se": 0.15480057619661652,
+      "ci95": [
+        2.603397272943448,
+        3.2366027270565323
+      ],
+      "min": 0.7999999999999918,
+      "max": 4.7999999999999865,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    },
+    "rightMinusNone.evokedHz.pnR-minus-pnL": {
+      "n": 30,
+      "mean": 1.1466666666666605,
+      "sd": 0.8186335685398123,
+      "se": 0.14946135727340223,
+      "ci95": [
+        0.840983868417712,
+        1.452349464915609
+      ],
+      "min": -0.40000000000000213,
+      "max": 2.79999999999999,
+      "positiveSeeds": 25,
+      "negativeSeeds": 5,
+      "zeroSeeds": 0
+    },
+    "leftMinusRight.evokedHz.pnR-minus-pnL": {
+      "n": 30,
+      "mean": 1.7733333333333297,
+      "sd": 0.6448380354430262,
+      "se": 0.11773077931648708,
+      "ci95": [
+        1.5325468536838667,
+        2.0141198129827926
+      ],
+      "min": 0.7999999999999936,
+      "max": 2.8000000000000007,
+      "positiveSeeds": 30,
+      "negativeSeeds": 0,
+      "zeroSeeds": 0
+    }
+  },
+  "verification": {
+    "beforePhaseIdenticalAcrossArms": true,
+    "leftRightDisjoint": true,
+    "note": "Asserted per seed by exact f64 comparison; the run aborts on any divergence.",
+    "prePulseVoltageSumIdenticalAcrossArms": true,
+    "unknownSideStimulatedInAnyArm": false
+  },
+  "protocol": {
+    "afterSteps": [
+      1000,
+      1500
+    ],
+    "arms": [
+      {
+        "arm": "none",
+        "stimulatedNeurons": 0
+      },
+      {
+        "arm": "left",
+        "stimulatedNeurons": 21
+      },
+      {
+        "arm": "right",
+        "stimulatedNeurons": 20
+      }
+    ],
+    "beforeSteps": [
+      0,
+      500
+    ],
+    "bodyOrField": false,
+    "brainDynamicsChanged": false,
+    "currentSource": "/tmp/fly-da2-rate-output/rate-calibration.json calibration.high.chosenCurrent (frozen, not re-fitted)",
+    "decoderChanged": false,
+    "directMotorInput": false,
+    "dtMsAssumed": 1.0,
+    "dtMsMeaning": "experiment-local unit assignment only; explicitly unvalidated timing, not the gameplay timebase",
+    "externalCurrentPerNeuron": 0.08203125,
+    "forcedTurn": false,
+    "gainChanged": false,
+    "groupSizes": {
+      "ornL": 21,
+      "ornR": 20,
+      "ornunknown": 7,
+      "pnL": 5,
+      "pnR": 5
+    },
+    "notATest": "This is not a geosmin-behaviour test, not an attraction test and not an avoidance test.",
+    "primaryMetric": "during-pulse (turnR spike fraction minus turnL spike fraction), stimulated arm minus same-seed no-current arm",
+    "pulseSteps": [
+      500,
+      1000
+    ],
+    "question": "Does unilateral ORN_DA2 stimulation move the existing turning readouts, and with which sign per side?",
+    "seeds": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39
+    ],
+    "sourceBearing": false,
+    "steps": 1500,
+    "unknownSideNeverStimulated": 7,
+    "windowSeconds": 0.5
+  },
+  "limits": "Observation only. A phenomenological external current on retained ORN_DA2 bodies is not a geosmin dose, not a receptor model and not an odor field. No body, no movement, no source bearing. Timing is an unvalidated experiment-local 1 ms/step. Intervals are descriptive across 30 seeds of one model, not inference about flies. Sign of a turning readout is not attraction or avoidance; bilateral cancellation is not a failure."
+}

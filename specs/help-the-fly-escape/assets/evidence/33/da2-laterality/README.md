@@ -1,0 +1,11 @@
+# Fixed DA2 input: lateralized observations
+
+Thirty seeds10–39, paired no-current/left/right stimulation, reuse the frozen high input and DA2 scratch graph from the prior calibration. Each run has1500 neural steps with input only500–999; the experiment-local1ms/step remains an unvalidated timing assumption. Unknown-side receptors remain unforced. There is no body, field, gain change, decoder change or required behavioral outcome.
+
+The stimulated receptor side responds; both projection-neuron populations respond to either side. The current turnR-minus-turnL spike-fraction contrast has descriptive95% t intervals covering zero for left, right and paired left-minus-right comparisons. Root independently recomputed these intervals with scipy. This does not demonstrate repeatable directional readout or prove that biological flies fail to avoid geosmin.
+
+A second observation run adds DNa01/DNa02 populations selected from source annotations and motivated by the [walking-steering study](https://elifesciences.org/articles/102230). It uses the identical compiled binary and graph; only the extra observation groups differ. Root verified that every original observation is exactly reproduced. Those cells are observed, not substituted into the motor decoder. The study concerns walking and broad fictive odor/heat stimuli, not selective DA2 stimulation.
+
+DNa02 active-minus-control right-minus-left rates average+0.667 for left stimulation (CI0.068…1.266) and+0.200 for right (CI−0.543…0.943), under the local time assignment. The paired stimulus-side difference has CI−0.204…1.137 and does not establish mirrored directional coding. DNa01 intervals likewise cover zero. These are exploratory descriptive intervals, not multiple-comparison-adjusted evidence for a biological response. A positive result in one contrast does not justify replacing the decoder.
+
+The first90-run batch took112.8seconds; the added-observer batch115.2seconds. Raw observations, added group IDs, exact probe and analysis are retained here. No experimental graph/input/readout change is adopted into production. This ends the fixed-input laterality branch without a supported avoidance mechanism; do not strengthen currents, flip signs or select a different readout by escape score. A further experiment needs a specific independent modeling hypothesis rather than another parameter variant.
