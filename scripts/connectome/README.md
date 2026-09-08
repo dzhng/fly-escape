@@ -2,7 +2,17 @@
 
 This pipeline is the browser graph's sole data owner. It preserves signed seed-touching extraction, makes selection stable, and exports incoming-current CSR plus source-defined pathways. The runtime never needs raw Feathers or Python.
 
-After the [initial checkout setup](../../README.md#run-locally), run `.venv/bin/python scripts/prepare-graph.py --download --verify-reference` from the repository root. Sources go into ignored `data/raw`; prepared artifacts and the inspection report go into ignored `data/processed/brain`. A second run without `--download` verifies local source hashes before extracting. `--output` supports independent reproducibility comparisons.
+Ordinary builds use the committed `data/processed/brain/graph.bin` and `manifest.json`; no Python environment or raw dataset is needed. Regenerate them when changing the source data or extraction logic, and commit the graph and manifest together. The build checks that the binary matches its manifest hash.
+
+For regeneration or offline reference tests, install Python and uv, then run from the repository root:
+
+```sh
+uv venv .venv
+uv pip install --python .venv/bin/python -r scripts/requirements.txt
+.venv/bin/python scripts/prepare-graph.py --download --verify-reference
+```
+
+Regeneration downloads roughly 1.1 GB of source data into ignored `data/raw`. The graph and manifest are tracked; inspection reports beside them remain ignored. A second run without `--download` verifies local source hashes before extracting. `--output` supports independent reproducibility comparisons.
 
 The manifest identifies the dataset, actual source hashes/generations, exporter content hash, stable-selection correction, byte format and pathway memberships. Olfactory turning readout candidates are verified against the source annotations first: a candidate that is not a descending neuron on its named soma side fails the export by body ID instead of being dropped or relabelled. Brain group links summarize real selected edges, including overlapping groups; they are not a substitute for behavior probes. Unknown transmitter signs preserve the spike's positive fallback and are reported explicitly.
 

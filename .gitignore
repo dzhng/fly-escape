@@ -2,7 +2,11 @@
 # Keep .gitkeep files to preserve directory structure
 data/*.feather
 data/raw/*.feather
-data/processed/
+data/processed/*
+!data/processed/brain/
+data/processed/brain/*
+!data/processed/brain/graph.bin
+!data/processed/brain/manifest.json
 
 # But keep the raw directory structure
 !data/raw/.gitkeep

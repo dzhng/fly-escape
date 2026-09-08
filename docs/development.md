@@ -4,7 +4,7 @@ The browser owns a complete playable session. A static host only delivers files;
 
 ## Build and serve
 
-After preparing the graph, `bun run build` generates the wire types, copies verified brain data, compiles Rust to WebAssembly and builds the browser applications. Serve the game distribution at the origin root:
+`bun run build` generates the wire types, copies verified brain data, compiles Rust to WebAssembly and builds the browser applications. Serve the game distribution at the origin root:
 
 ```sh
 python3 -m http.server 4173 --bind 127.0.0.1 --directory apps/web/dist
@@ -12,7 +12,7 @@ python3 -m http.server 4173 --bind 127.0.0.1 --directory apps/web/dist
 
 Open `http://127.0.0.1:4173/`. Use HTTP rather than opening the HTML file directly: Worker, graph and asset loading depend on it. The game and About page work on a plain static file server. Direct diagnostic `/lab/*` URLs need a host that falls back to `index.html`.
 
-During development, rebuild WASM after changing Rust; the web development server does not compile Rust for you. Prepared graph files are ignored build inputs, so a fresh checkout must run data preparation before building. The [graph preparation guide](../scripts/connectome/README.md) owns download, extraction and provenance details.
+During development, rebuild WASM after changing Rust; the web development server does not compile Rust for you. The prepared graph and its manifest are versioned build inputs; a fresh checkout can build without downloading the original dataset. The [graph preparation guide](../scripts/connectome/README.md) owns download, extraction and provenance details.
 
 ## Where changes belong
 
@@ -28,7 +28,7 @@ The [architecture contracts](../specs/done/help-the-fly-escape/CONTRACTS.md) rec
 
 ## Verify the behavior you change
 
-`bun run test` runs the offline graph/reference checks, Rust tests, and client, renderer, workbench and game unit tests. `bun run typecheck` checks the TypeScript boundary. Browser harnesses live under [tests/browser](../tests/browser/); use the relevant harness against a built or development site when changing interaction, transport or rendering. They are separate from the default unit suite.
+`bun run test` requires the optional Python environment described in [graph preparation](../scripts/connectome/README.md) and runs the offline graph/reference checks, Rust tests, and client, renderer, workbench and game unit tests. `bun run typecheck` checks the TypeScript boundary. Browser harnesses live under [tests/browser](../tests/browser/); use the relevant harness against a built or development site when changing interaction, transport or rendering. They are separate from the default unit suite.
 
 A deterministic fixture checks reproducibility. It does not establish how an object affects a swarm. For sensory changes, compare the same seeds and environment with and without the changed placement; distinguish approaching an object, remaining near it and escaping. Keep physical assistance identical between comparisons. The [reference oracles](../scripts/reference/README.md) protect numerical fidelity, while [release evidence](../specs/done/help-the-fly-escape/assets/evidence/release-final/README.md) records what was actually exercised in the browser.
 

@@ -28,19 +28,16 @@ That uncertainty is part of the game. An object need not affect every fly in the
 
 ## Run locally
 
-Install Bun, Rust, wasm-pack, and Python with uv. From a checkout of this repository:
+Install Bun, Rust, and wasm-pack. From a checkout of this repository:
 
 ```sh
 rustup target add wasm32-unknown-unknown
-uv venv .venv
-uv pip install --python .venv/bin/python -r scripts/requirements.txt
 bun install
-bun run data:prepare
 bun run build
 bun run dev
 ```
 
-Open the URL printed by the development server. The first data preparation downloads roughly 1.1 GB of source data; it creates the smaller graph bundled with the game. Python is only needed for offline preparation and reference checks. The game itself runs in the browser.
+Open the URL printed by the development server. The prepared connectome graph and its provenance manifest are committed with the game, so ordinary builds need neither Python nor a source-data download. Python is only needed to regenerate the graph or run the offline reference checks; see [graph preparation](scripts/connectome/README.md).
 
 To serve the finished build, or work on the simulation and artwork, see the [development guide](docs/development.md).
 
