@@ -1,32 +1,9 @@
 # Household props
 
-These props make occupied rooms legible through familiar domestic objects. Warm,
-muted materials and mesh silhouettes carry their identity without external
-textures or shader-specific effects. Their appearance does not imply simulation
-behavior; integration owns attraction, feeding, collision, and hazards.
+Familiar domestic objects make rooms readable. Appearance does not establish an effect on a fly: the [placement owner](../../crates/sim/src/placement.rs) defines modeled odor, physical roles and hazards separately from the mesh. Timed campaign food does not replenish energy.
 
-[The authoring source](author.py) builds isolated native-metre Blender scenes.
-Each export is grounded at zero and re-imported to check its measured envelope.
-The adjacent envelope files describe glTF Y-up bounds; use those actual bounds
-when mounting an object, rather than stretching the model to a nominal box.
-The web is a vertical surface intended to be mounted beside a wall or in a corner.
+[Authoring](author.py) creates isolated scenes in metres and checks each exported envelope through re-import. Use actual glTF Y-up bounds when mounting props rather than stretching them to a nominal box. Materials are embedded; the staging camera and lighting are not part of the game model.
 
-Blender staging is authoring evidence, not production acceptance. The cloth is
-loose linen rather than a recognizably cut garment; the cat is a simplified
-sculpture. Both need judgment at the gameplay camera scale. Web threads and
-appliance grille detail particularly need checking against real room lighting.
+Native contact preserves baked geometry. Disconnected mesh pieces become separate edge-connected support surfaces, retaining closed-component boundaries. A supporting surface is not automatically edible. For the spider web, only the strands and spider catch flies; gaps remain passable. Catching is an authored game rule, not simulated adhesive mechanics.
 
-Native contact preserves the complete baked mesh. Disconnected authored pieces
-become stable, edge-connected support surfaces so each closed piece keeps the
-contact engine's manifold-boundary guarantees. A placement's edible role is
-separate from its geometry: shoes, dishes, linens, and the cat support bodies
-without granting taste or energy. Odor strengths are explicit game assumptions
-owned by the placement catalog.
-
-The web uses an open fan of strands between the wall and floor, with separate
-anchor endpoints that preserve closed manifold components. Native web contact acts
-only on those strands and the visible spider; gaps remain passable. Catching on
-contact is a game rule, not a model of adhesive mechanics. Mounting uses the
-actual rendered wall face while respecting placement clearance. Dotted silk at
-room scale, stiff legs, and upper attachment against a transparent cutaway wall
-remain appearance limitations; the fan does not establish full art acceptance.
+The [fan](fan/README.md) documents its directional convention and open guard. The [vinegar bottle](vinegar/README.md) explains its contact shell. Other models share this authoring contract; their exact registration belongs to the [object registry](../tools/README.md).

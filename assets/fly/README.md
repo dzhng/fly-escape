@@ -11,12 +11,7 @@ Regenerate from the repository root with:
 bun apps/asset-lab/scripts/export-fly-contact.ts assets/fly/fly.glb assets/fly/contact-hull.json
 ```
 
-The exporter samples each animation using the production pose sampler and takes
-the convex union. This is a **provisional finite-sample envelope**, not a guarantee
-that every intermediate animated vertex lies inside it. Moving contact acceptance
-must still establish acquisition, supported movement and departure; this asset
-alone proves none of those behaviors. The convex union also fills the spaces
-between legs and wings, so it is an envelope rather than an exact body surface.
+The exporter samples animation through the production pose sampler and takes the convex union. It is a finite-sample envelope, not a guarantee that every intermediate animated vertex lies inside it. Filling the spaces between wings and legs makes this conservative geometry different from an exact body surface. The [body owner](../../crates/sim/src/body/) defines acquisition, supported movement and departure; the asset alone does not establish those behaviors.
 
 ## Conservative derivative candidate
 
@@ -47,14 +42,14 @@ outward support error of nested convex bodies over all directions, subject to th
 reported numerical containment residual and projection accuracy. The validation
 roundoff allowance is only a rejection check; it never changes geometry or query
 clearance. This derivative inherits the finite-animation limitation above and
-still needs moving-contact acceptance before adoption.
+is reserved for diagnostic comparisons rather than production selection.
 
 The generator validates halfspace feasibility, edge incidence and closed face
 cycles. Very short positive edges retain their identities; coordinate proximity
 never merges them. Floating-point validation and deterministic regeneration do
 not prove the exact signs of all near-zero clipping intervals. Exact offline
 plane audits must use the serialized units, since unit conversion can round plane
-offsets. The boundary remains a candidate pending those audits and moving cases.
+offsets. The candidate does not replace the production hull.
 
 The [core contact boundary](../../crates/sim/src/surface/README.md) owns validation
-and the bounded fixed-orientation support query; body adoption remains separate.
+and the bounded fixed-orientation support query.

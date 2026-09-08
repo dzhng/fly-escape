@@ -1,0 +1,22 @@
+[
+  {
+    "name": "firefox",
+    "errors": [],
+    "version": "155.0",
+    "state": "buffering",
+    "computedTick": 30,
+    "flyCount": 20,
+    "passed": true,
+    "scope": "setup rendering, native twenty-fly frame production, cancel to setup; no full performance test"
+  },
+  {
+    "name": "webkit",
+    "errors": [],
+    "version": "26.6",
+    "state": "buffering",
+    "computedTick": 40,
+    "flyCount": 20,
+    "passed": true,
+    "scope": "setup rendering, native twenty-fly frame production, cancel to setup; no full performance test"
+  }
+]

@@ -77,7 +77,7 @@ try {
   assert.equal(result.shortHorizon.spec.flyCount, 100);
   assert.equal(result.shortHorizon.result.outcomes.timedOut, 100);
   assert.ok(result.shortHorizon.archiveOwnedBytes <= result.shortHorizon.archiveBoundBytes);
-  const output = new URL("../../specs/help-the-fly-escape/assets/evidence/05/", import.meta.url);
+  const output = new URL("../../specs/done/help-the-fly-escape/assets/evidence/05/", import.meta.url);
   await mkdir(output, { recursive: true });
   await writeFile(
     new URL("browser-capacity.json", output),

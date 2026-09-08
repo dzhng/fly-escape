@@ -1,5 +1,5 @@
 # Double bed
 
-This native double bed occupies 1.6 × 2.1 metres with a 1.05-metre headboard. A continuous grounded platform matches its catalog solid footprint. The mattress, pillows and folded blue cover provide a recognizable bedroom silhouette without suggesting traversable space beneath the bed.
+The [catalogue](../catalog.json) owns its native envelope. A continuous grounded platform prevents an apparent under-bed passage from contradicting the rectangular physical solid. The origin is the footprint centre, with the headboard toward −Z.
 
-The grounded origin is at the footprint centre; the headboard is on −Z and the foot on +Z. The [shared authoring source](../author-study-bedroom.py) owns the geometry and portable walnut/cotton finishes. Cloth folds and texture detail remain simplified.
+The [shared author](../author-study-bedroom.py) owns geometry and materials. Bedding detail is visual and does not create separate physical layers.

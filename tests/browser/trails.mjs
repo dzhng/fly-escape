@@ -3,7 +3,7 @@ import { equalPixels } from "./equal-pixels.mjs";
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
-const output=process.env.TRAILS_EVIDENCE ?? 'specs/help-the-fly-escape/assets/evidence/09/browser/candidate';
+const output=process.env.TRAILS_EVIDENCE ?? 'specs/done/help-the-fly-escape/assets/evidence/09/browser/candidate';
 const ticks=(process.env.TRAILS_TICKS ?? '10.3,30.5,60.5,100.5').split(',').map(Number);
 await mkdir(output,{recursive:true});
 const browser=await chromium.launch({channel:'chrome',headless:true});

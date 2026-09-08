@@ -1,0 +1,489 @@
+$ bun run test:graph && bun run test:reference && cargo test && bun run test:client && bun run test:renderer && bun run test:assets && bun run test:web
+$ .venv/bin/python -m unittest discover -s tests/connectome -v
+test_overlapping_groups_count_each_directed_edge_once_per_pair (test_artifact.ArtifactTests.test_overlapping_groups_count_each_directed_edge_once_per_pair) ... ok
+test_round_trip_preserves_signed_incoming_current (test_artifact.ArtifactTests.test_round_trip_preserves_signed_incoming_current) ... ok
+test_mbon_truncation_is_stable (test_extract.ExtractionTests.test_mbon_truncation_is_stable) ... ok
+test_signed_incoming_edges_and_seed_touching_rule (test_extract.ExtractionTests.test_signed_incoming_edges_and_seed_touching_rule) ... ok
+test_tied_neighbors_choose_body_id_independent_of_source_order (test_extract.ExtractionTests.test_tied_neighbors_choose_body_id_independent_of_source_order) ... ok
+test_descending_candidates_on_their_named_side_export_as_readout_indices (test_pathways.ExporterValidationTests.test_descending_candidates_on_their_named_side_export_as_readout_indices) ... ok
+test_misclassified_candidate_fails_the_export_naming_its_body (test_pathways.ExporterValidationTests.test_misclassified_candidate_fails_the_export_naming_its_body) ... ok
+test_unannotated_candidate_fails_instead_of_being_dropped_from_the_readout (test_pathways.ExporterValidationTests.test_unannotated_candidate_fails_instead_of_being_dropped_from_the_readout) ... ok
+test_wrong_side_candidate_fails_the_export_naming_its_body (test_pathways.ExporterValidationTests.test_wrong_side_candidate_fails_the_export_naming_its_body) ... ok
+test_intrinsic_cell_rejected_as_a_readout_keeps_its_lateral_horn_membership (test_pathways.ShippedRegistryTests.test_intrinsic_cell_rejected_as_a_readout_keeps_its_lateral_horn_membership) ... ok
+test_shipped_olfactory_readouts_match_recorded_source_annotations (test_pathways.ShippedRegistryTests.test_shipped_olfactory_readouts_match_recorded_source_annotations) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.063s
+
+OK
+$ .venv/bin/python -m unittest discover -s tests/reference -v
+test_external_current_replaces_previous_tick_and_ignores_unknown_bodies (test_lif_reference.LIFReferenceTests.test_external_current_replaces_previous_tick_and_ignores_unknown_bodies) ... ok
+test_fixture_is_reproducible_from_actual_oracle (test_lif_reference.LIFReferenceTests.test_fixture_is_reproducible_from_actual_oracle) ... ok
+test_olfactory_turn_follows_firing_where_reset_voltage_would_disagree (test_lif_reference.LIFReferenceTests.test_olfactory_turn_follows_firing_where_reset_voltage_would_disagree) ... ok
+test_signed_edges_use_previous_spikes_in_source_to_destination_direction (test_lif_reference.LIFReferenceTests.test_signed_edges_use_previous_spikes_in_source_to_destination_direction) ... ok
+test_threshold_is_strict_and_refractory_decrements_after_spiking (test_lif_reference.LIFReferenceTests.test_threshold_is_strict_and_refractory_decrements_after_spiking) ... ok
+test_thrust_uses_post_reset_voltage_and_turn_uses_olfactory_firing (test_lif_reference.LIFReferenceTests.test_thrust_uses_post_reset_voltage_and_turn_uses_olfactory_firing) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.318s
+
+OK
+   Compiling sim v0.1.0 (/Users/david/dev/fly-escape/crates/sim)
+   Compiling game-wasm v0.1.0 (/Users/david/dev/fly-escape/crates/game-wasm)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.11s
+     Running unittests src/lib.rs (target/debug/deps/game_wasm-4baa6cac9e2dd41e)
+
+running 3 tests
+test attempt_session::tests::invalid_seed_and_oversized_archive_fail_before_brain_allocation ... ok
+test attempt_session::tests::motion_archive_overflow_keeps_chunk_pending_and_fails_explicitly ... ok
+test attempt_session::tests::one_tick_backpressure_flush_and_terminal_result_preserve_frames ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+
+     Running unittests src/lib.rs (target/debug/deps/sim-abeddb545bbfe822)
+
+running 39 tests
+test body::motion::coalescing_tests::collision_hold_and_support_boundaries_survive_coalescing ... ok
+test body::motion::coalescing_tests::straight_knots_coalesce_without_moving_any_intermediate_pose ... ok
+test body::motion_consumer::closed_food_containment_is_not_mistaken_for_surface_separation ... ok
+test body::motion::coalescing_tests::recovery_requires_a_physically_valid_start_and_preserves_native_errors ... ok
+test body::motion::coalescing_tests::stopped_support_rejects_selected_surface_penetration_and_query_exhaustion ... ok
+test body::contact_hazards::starvation_before_native_impact_keeps_the_earlier_terminal_time ... ok
+test body::contact_hazards::native_zapper_leaves_overflight_and_lateral_misses_safe ... ok
+test body::contact_hazards::native_zapper_stops_walking_and_flight_at_the_cast_contact_time ... ok
+test body::contact_hazards::turning_toward_a_zapper_preserves_the_reachable_contact ... ok
+test body::contact_hazards::native_web_empty_gap_and_overflight_remain_passable ... ok
+test body::contact_hazards::hazard_roles_reject_missing_edible_and_duplicate_surface_ids ... ok
+test body::motion_consumer::an_initial_pose_inside_a_closed_surface_stays_an_error ... ok
+test body::contact_hazards::native_web_strands_catch_walk_and_flight_at_actual_contact_time ... ok
+test body::contact_hazards::native_zapper_initial_contact_and_acquired_support_cannot_feed ... ok
+test environment::fields::reconstruction_tests::constants_survive_domain_edges_and_invalid_points_return_zero ... ok
+test environment::fields::reconstruction_tests::visible_support_is_bounded_and_does_not_leak_through_walls_or_solids ... ok
+test environment::fields::reconstruction_tests::linear_fields_are_exact_through_centres_and_former_cell_boundaries ... ok
+test sensory::tests::each_odor_channel_and_the_exit_cue_reach_their_own_labelled_pathway ... ok
+test sensory::tests::mirrored_senses_swap_currents_without_stimulating_motor_readouts ... ok
+test sensory::tests::stronger_odor_delivers_more_current_with_bounded_diminishing_returns ... ok
+test sensory::tests::vision_reports_a_side_without_reporting_how_bright_it_is ... ok
+test surface::path::tests::adjacent_float_knots_do_not_bridge_an_uncovered_interval ... ok
+test surface::path::tests::merging_tiny_intervals_cannot_cut_a_steep_join ... ok
+test body::contact_hazards::native_web_initial_contact_catches_without_feeding ... ok
+test body::motion_consumer::retained_root_turn_accounts_for_floor_between_clear_endpoints ... ok
+test body::motion_consumer::numerical_producer_handles_actual_requests ... ok
+test body::motion_consumer::landing_tilt_that_overlaps_a_shoe_holds_the_verified_pose ... ok
+test body::motion_consumer::a_blocked_departure_keeps_the_walking_fly_on_its_support ... ok
+test body::motion_consumer::native_shoe_rim_blocks_supported_motion_without_aborting_the_tick ... ok
+test body::motion_consumer::descending_shoe_rim_contact_keeps_a_verified_prefix ... ok
+test body::motion_consumer::query_exhaustion_after_partial_contact_restores_the_start ... ok
+test body::motion_consumer::unresolved_shoe_rim_landing_declines_support_at_the_verified_pose ... ok
+test body::motion_consumer::free_space_turns_remain_available_and_zero_time_landing_records_support ... ok
+test body::motion_consumer::a_blocked_shoe_landing_turns_at_the_retained_root_instead_of_freezing ... ok
+test body::motion_consumer::free_flight_into_a_closed_cat_part_holds_the_verified_pose ... ok
+test body::motion_consumer::free_rotation_cannot_push_a_blocked_fly_into_neighboring_shoe_mesh ... ok
+test body::motion_consumer::an_absent_tilted_support_root_departs_instead_of_aborting ... ok
+test body::motion_consumer::a_blocked_body_keeps_turning_instead_of_repeating_one_frozen_request ... ok
+test body::motion_consumer::motion_requests_advance_within_budget ... ok
+
+test result: ok. 39 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.87s
+
+     Running tests/attempt.rs (target/debug/deps/attempt-e6dcc3885f6b787a)
+
+running 20 tests
+test an_authored_suction_without_a_room_pull_keeps_its_prior_json ... ok
+test exit_suction_is_absent_unless_a_level_authors_it ... ok
+test solid_footprints_reject_spawns_before_simulation ... ok
+test cluster_rejects_hazards_and_exhaustion_and_reserves_unsampled_area ... ok
+test placement_reserves_the_whole_cluster_before_seed_resolution ... ok
+test identities_reject_changed_content_and_preserve_full_width_seeds ... ok
+test timed_round_with_only_hazard_victims_keeps_the_authored_timer ... ok
+test only_physical_escape_contributes_to_attempt_score_and_stars ... ok
+test terminal_flies_stop_updates_while_other_flies_finish_and_timeout_scores_zero ... ok
+test fixed_ablation_is_hashed_validated_and_clamps_neural_readouts ... ok
+test all_escaped_ends_a_timed_round_before_its_horizon ... ok
+test seeded_cluster_is_legal_reproducible_and_does_not_consume_neural_noise ... ok
+test a_timed_level_reaches_its_horizon_where_a_finite_life_level_starves ... ok
+test twenty_flies_share_one_field_evolution_and_keep_independent_seed_streams ... ok
+test authored_exit_suction_only_reaches_the_body_at_the_doorway ... ok
+test invalid_spawn_footprints_and_capacity_are_rejected_before_simulation ... ok
+test resolved_placements_preserve_surface_only_taste_local_wind_and_replay ... ok
+test map_owned_fan_headings_can_start_and_resolve_repeatedly ... ok
+test simultaneous_senses_sum_and_each_channel_can_be_ablated ... ok
+test sensory_and_taste_currents_sum_without_direct_motor_injection ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.02s
+
+     Running tests/body.rs (target/debug/deps/body-7329a2bb32efbfd4)
+
+running 35 tests
+test exit_suction_is_rejected_outside_its_authored_bounds ... ok
+test exit_suction_does_not_reach_into_an_adjacent_open_room ... ok
+test landing_spike_enforces_one_game_second_of_ground_dwell ... ok
+test exit_suction_stops_at_its_reach_and_never_pulls_through_a_wall ... ok
+test authored_exit_suction_carries_a_drifting_body_through_either_facing_doorway ... ok
+test oblique_wind_slides_at_actual_contact_time_and_a_corner_stops_both_axes ... ok
+test recorded_orientation_tracks_turns_and_freezes_with_terminal_pose ... ok
+test a_timed_round_outlives_starvation_and_ends_at_its_horizon ... ok
+test room_pull_is_rejected_outside_its_authored_bounds ... ok
+test room_pull_never_crosses_a_wall_or_an_obstacle ... ok
+test room_pull_stops_at_the_exit_room_even_through_an_open_doorway ... ok
+test swept_outward_exit_counts_once_and_adjacent_or_covering_wall_never_escapes ... ok
+test swept_zapper_or_earlier_starvation_preempts_exit ... ok
+test room_pull_carries_a_body_the_near_door_falloff_cannot_reach ... ok
+test takeoff_and_landing_require_their_neural_readouts_and_flight_cannot_feed ... ok
+test the_life_model_owns_energy_validation_without_an_immortality_loophole ... ok
+test household_meshes_do_not_block_the_air_above_their_native_height ... ok
+test wind_is_world_space_without_a_hidden_turn_and_inward_crossing_is_not_escape ... ok
+test feeding_does_not_exempt_a_body_from_net_energy_loss ... ok
+test tonic_voltage_without_spikes_does_not_initiate_feeding_or_landing ... ok
+test airborne_landing_is_latched_and_terminal_height_freezes_at_the_actual_time ... ok
+test household_surfaces_support_walking_but_never_feed_even_with_proboscis_spikes ... ok
+test feeding_prefix_energy_and_terminal_hold_share_the_motion_clock ... ok
+test native_fly_can_land_and_feed_on_the_authored_banana ... ok
+test native_fly_lands_on_authored_apple_before_it_can_feed ... ok
+test a_new_bout_requires_motor_rearming_after_contact_loss ... ok
+test food_contact_without_proboscis_motor_activity_never_starts_feeding ... ok
+test feeding_replenishes_within_capacity_then_contact_loss_allows_later_starvation ... ok
+test a_proboscis_spike_starts_a_bout_that_stays_latched_between_pulses ... ok
+test apple_support_follows_walking_and_is_lost_at_the_edge ... ok
+test takeoff_from_tilted_apple_makes_progress ... ok
+test neighboring_apple_blocks_while_time_advances ... ok
+test a_timed_fly_walks_on_food_without_feeding_or_moving_its_horizon ... ok
+test meal_plus_timeout_scores_zero_and_terminal_body_is_frozen ... ok
+test feeding_is_capped_and_cannot_restart_until_motor_resets ... ok
+
+test result: ok. 35 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.77s
+
+     Running tests/environment.rs (target/debug/deps/environment-c75acf4b2ba6699a)
+
+running 14 tests
+test walls_block_visibility_and_fast_motion_but_doorways_admit_both ... ok
+test forward_and_lateral_sample_points_rotate_with_the_body ... ok
+test exit_cue_requires_same_room_radius_and_clear_sight ... ok
+test dead_end_branch_has_one_physical_connection_and_no_remote_exit_cue ... ok
+test lamps_add_shade_subtracts_and_darkness_never_goes_negative ... ok
+test fan_wind_is_local_directional_and_blocked_by_walls ... ok
+test local_fans_advect_odor_conservatively_without_global_drift ... ok
+test decay_reduces_total_concentration_at_the_declared_rate ... ok
+test bounded_solver_preserves_mass_positivity_and_state_on_rejection ... ok
+test mirrored_fields_swap_antennae_and_export_exact_sampled_values ... ok
+test wind_moves_plume_downwind_and_rotates_in_world_space ... ok
+test mixed_odors_transport_independently_through_the_same_doorway ... ok
+test odor_crosses_open_doorway_but_not_solid_wall_at_two_resolutions ... ok
+test doorway_transport_converges_with_grid_refinement ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.83s
+
+     Running tests/fly_contact_asset.rs (target/debug/deps/fly_contact_asset-63a623ae88057a93)
+
+running 1 test
+test native_contact_hull_matches_source_and_constructs_at_metre_scale ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/food.rs (target/debug/deps/food-38361831a23c7841)
+
+running 4 tests
+test floor_patches_share_the_surface_query_and_stable_contact_identity ... ok
+test edible_contact_uses_actual_transformed_surface_not_a_planar_or_solid_volume ... ok
+test native_food_keeps_exact_baked_vertex_and_triangle_order ... ok
+test banana_contact_preserves_native_curved_surface_and_rotated_footprint ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+
+     Running tests/house_geometry.rs (target/debug/deps/house_geometry-9423b3a951dcef53)
+
+running 5 tests
+test solid_footprint_stops_sweeps_and_visibility_while_detour_stays_open ... ok
+test invalid_solid_bounds_overlap_and_wall_intersections_are_rejected ... ok
+test furnished_props_keep_native_dimensions_and_the_existing_collision_owner ... ok
+test five_room_review_house_has_a_route_and_one_door_pantry ... ok
+test solids_exclude_field_cells_and_tool_placement ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+
+     Running tests/lifecycle_lab.rs (target/debug/deps/lifecycle_lab-c4126acf44603f09)
+
+running 2 tests
+test actual_graph_lifecycle_probe ... ignored, requires BRAIN_ARTIFACT_DIR containing the real graph
+test wind_exit_pair_scores_only_the_opening_and_records_terminal_once ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.24s
+
+     Running tests/placement.rs (target/debug/deps/placement-0eec8ac92cd9958d)
+
+running 11 tests
+test placement_rejects_walls_spawn_props_exit_and_overlap ... ok
+test banana_spends_its_own_stock_and_resolves_native_edible_geometry ... ok
+test map_fan_rule_requires_a_finite_canonical_heading ... ok
+test invalid_edits_do_not_spend_inventory_and_removal_refunds_it ... ok
+test fan_direction_is_owned_by_the_map_for_place_repeat_move_and_fixed_objects ... ok
+test repeating_a_fan_with_ignored_input_headings_is_idempotent ... ok
+test canonical_resolution_binds_each_tool_without_mixing_food_and_odor ... ok
+test fixed_objects_keep_effects_and_space_without_spending_editable_stock ... ok
+test native_web_resolves_only_non_edible_contact_hazards ... ok
+test native_zapper_resolves_only_non_edible_contact_hazards ... ok
+test household_native_contacts_keep_their_non_edible_role_and_modeled_odor_sources ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.38s
+
+     Running tests/record.rs (target/debug/deps/record-41a79b71bc074890)
+
+running 8 tests
+test horizon_and_event_budget_fail_explicitly_before_encoding ... ok
+test caught_roundtrips_body_terminal_event_and_summary ... ok
+test malformed_transport_buffers_are_errors_not_panics_or_partial_replays ... ok
+test packed_motion_preserves_curvature_and_terminal_hold ... ok
+test replay_preserves_precision_optional_measurements_events_and_result ... ok
+test support_and_orientation_roundtrip_and_reject_invalid_payloads ... ok
+test records_remain_tick_major_and_fly_major_across_a_full_chunk ... ok
+test dense_real_body_transitions_fit_and_replay_in_order ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests/reference.rs (target/debug/deps/reference-0fae380dd85ea487)
+
+running 6 tests
+test drawn_noise_is_the_box_muller_stream_bit_for_bit ... ok
+test silenced_neuron_rejects_external_noise_and_network_drive ... ok
+test spiking_sources_deliver_exactly_what_an_incoming_scan_accumulates ... ok
+test injected_noise_matches_python_intermediates_and_readouts ... ok
+test fly_streams_are_reproducible_and_independent ... ok
+test malformed_artifacts_fail_without_panicking ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/support_path.rs (target/debug/deps/support_path-216d2c311e201d7d)
+
+running 10 tests
+test touching_wall_inward_motion_does_not_emit_a_zero_width_segment ... ok
+test gaps_stop_the_prefix_without_connecting_disconnected_patches ... ok
+test other_food_blocks_without_transferring_support ... ok
+test start_mismatch_point_only_hull_and_exhaustion_are_explicit ... ok
+test flat_seams_are_continuous_but_a_different_height_branch_stops ... ok
+test a_closed_component_cannot_be_hidden_by_an_open_component ... ok
+test disconnected_closed_food_and_nonmanifold_edges_are_rejected ... ok
+test open_patches_are_not_volumes_and_closed_winding_is_validated ... ok
+test a_root_supported_inside_authored_closed_food_is_blocked ... ok
+test authored_apple_paths_match_core_support_and_preserve_the_supplied_start ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.76s
+
+     Running tests/surface.rs (target/debug/deps/surface-d8888cb9ddb8e4e2)
+
+running 11 tests
+test native_hull_fragment_can_slide_tangent_to_a_surface ... ok
+test support_sampling_uses_surface_bounds_and_rejects_invalid_pose_inputs ... ok
+test surface_normal_orients_the_native_pivot_without_an_added_height_offset ... ok
+test support_sampling_preserves_the_root_instead_of_snapping_to_the_witness ... ok
+test tangent_motion_still_hits_another_face_in_the_same_mesh ... ok
+test supported_translation_is_not_tied_to_horizontal_world_axes ... ok
+test malformed_contact_inputs_fail_before_querying ... ok
+test first_contact_keeps_world_identity_and_native_support_pivot ... ok
+test exported_float_vertices_survive_the_core_json_boundary_exactly ... ok
+test curved_contact_allows_departure_and_does_not_tunnel_at_fly_scale ... ok
+test authored_apple_has_closed_outward_geometry_and_queryable_metres ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+   Doc-tests game_wasm
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests sim
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+$ bun test packages/sim-client/src
+bun test v1.3.14 (0d9b296a)
+
+packages/sim-client/src/record.test.ts:
+(pass) Rust packed records decode exactly across flies, chunks, events and terminal absence [4.65ms]
+(pass) metadata field order determines the consumer offsets [0.29ms]
+(pass) stale attempts are ignored and invalid current chunks fail without changing history [0.76ms]
+(pass) archive limits count retained backing allocations, and reject unsupported metadata [0.22ms]
+(pass) accepting a chunk takes ownership and snapshots metadata and results [0.19ms]
+(pass) missing or malformed results cannot finish the archive [0.37ms]
+(pass) motion phase freezes at terminal and reverse seek restores the prior phase [0.18ms]
+(pass) motion follows packed mode transitions across chunk boundaries and resets on clear [0.14ms]
+(pass) bounded neural traces match recorded frames across seek and terminal gaps [0.21ms]
+(pass) pose-only windows preserve recorded positions and terminal states across chunks and seeks [0.26ms]
+(pass) tick zero and rewind preserve immutable core initial poses and mixed modes [0.14ms]
+(pass) support identity and quaternion corruption fail before archive mutation [0.17ms]
+(pass) malformed motion fails atomically before any buffer is detached [0.40ms]
+(pass) motion backing allocations count against the same archive capacity [0.06ms]
+(pass) the core sampler replays interior knots, seeks across chunks, and releases history [17.46ms]
+(pass) caught survives Rust packing and validates its summary count [0.41ms]
+
+packages/sim-client/src/attempt-client.test.ts:
+(pass) reusing an attempt ID cannot deliver a queued failure to the new run [1.08ms]
+(pass) a fatal setup failure permits a fresh worker and stale faults cannot reject its reply [0.17ms]
+
+packages/sim-client/src/playback.test.ts:
+(pass) initial lead covers sustained underproduction rather than a short buffer [0.30ms]
+(pass) pause, hidden time, mode changes and seeking preserve one cursor without catch-up [0.07ms]
+(pass) depleted buffers freeze and rebuild a substantial lead before resuming [0.02ms]
+(pass) a worse production estimate plays on, while faster consumption renews buffering [0.02ms]
+(pass) completed records can replay at zero production rate and stop at early terminal time [0.02ms]
+(pass) fast mode plays the authored horizon in one wall minute [0.04ms]
+(pass) playback offers exactly two modes and no other speed [0.03ms]
+(pass) switching modes keeps the cursor and rechecks lead instead of jumping [0.02ms]
+(pass) fast playback sizes its lead by the fast multiplier, not by real time [0.02ms]
+(pass) a fast attempt that ends early finishes sooner and is never stretched [0.01ms]
+(pass) hidden tabs and pauses behave the same in fast mode [0.04ms]
+(pass) a transient production slowdown never interrupts a replay that stays ahead of the cursor [0.04ms]
+(pass) a stalled producer still freezes playback before its frames run out [0.02ms]
+
+ 31 pass
+ 0 fail
+ 323 expect() calls
+Ran 31 tests across 3 files. [1.85s]
+$ bun test packages/game-renderer/src
+bun test v1.3.14 (0d9b296a)
+
+packages/game-renderer/src/house.test.ts:
+(pass) full-height walls expose rooms with a low solid base and a faint upper wall [9.73ms]
+THREE.GLTFLoader: Couldn't load texture blob:81d11a79-e525-44d0-a369-2de21ed6ee73
+THREE.GLTFLoader: Couldn't load texture blob:714944bc-b2ab-4cdf-b2a4-6248ad4b1cb4
+THREE.GLTFLoader: Couldn't load texture blob:418bb541-e57f-42ac-b90b-2a1cf8f5e55d
+(pass) authored meshes leave every geometry doorway open and release replaced resources [8.90ms]
+(pass) shared wall endpoints close the outside corner without filling doorway ends [0.68ms]
+(pass) solid GLB matches core bounds, retains its footprint during cutaway, and restores [1.42ms]
+(pass) native furnishings match core footprints through rotation and independent replacement [3.16ms]
+(pass) prepared household shapes retain native envelopes and reject mismatched replacements [3.51ms]
+(pass) nearby flies preserve back walls and only expose foreground wall shells [0.41ms]
+
+packages/game-renderer/src/camera-input.test.ts:
+(pass) the right button orbits while the left button still pans and picks [1.03ms]
+(pass) a right click neither selects a fly nor opens the browser menu [0.15ms]
+(pass) the reset control appears once turned and restores orientation alone [0.65ms]
+(pass) disposal releases every canvas listener [0.22ms]
+
+packages/game-renderer/src/camera.test.ts:
+(pass) follow keeps a moving and terminal target centered while zoom preserves it [0.26ms]
+(pass) overview fits every room corner and pan releases follow without rotating [0.32ms]
+(pass) maximum zoom keeps an edge fly centered; Overview restores the whole house [0.16ms]
+(pass) millimetre subjects stay in the frustum at follow and extra-close household framing [0.15ms]
+(pass) zoom changes fly size gently and stops changing it at the camera limit [0.59ms]
+(pass) inspection focus preserves fixed camera orientation and ignores fly tracking [0.16ms]
+(pass) diagnostic mounting elevation never leaks into follow or Overview [0.14ms]
+(pass) circular exterior contains every ground ray across normal camera limits [1.42ms]
+(pass) every fly keeps its readable size at its own depth, however close the view gets [0.23ms]
+(pass) world enlargement is capped, so the farthest view shrinks flies instead of growing them [0.11ms]
+(pass) orbit turns the view only: target, zoom and follow survive, and reset restores the default [0.19ms]
+(pass) orbit keeps the camera above the floor, the house framed and the ground under every ray [1.12ms]
+(pass) ground coverage is reused across a turn, and panning follows the turned screen axes [0.14ms]
+
+packages/game-renderer/src/fly-model.test.ts:
+(pass) replacement with geometry far from its pivot is rejected instead of disappearing from follow [0.28ms]
+(pass) authored GLB has finite grounded bounds and independently poseable clones [5.43ms]
+(pass) authored clips restore identical skinned mesh phase after reverse seek without root motion [22.56ms]
+(pass) cloned flies preserve shared bone textures and independent animation [21.95ms]
+
+packages/game-renderer/src/placement-models.test.ts:
+THREE.GLTFLoader: Couldn't load texture blob:61df83e1-ab3e-4876-8402-d42ae99aafee
+(pass) edible assets preserve native metres while floor cues retain catalog scaling [3.78ms]
+THREE.GLTFLoader: Couldn't load texture blob:306361a6-0bcd-4ebb-b16d-5ec03f6cdd1c
+THREE.GLTFLoader: Couldn't load texture blob:6fd73522-9c91-4310-bee7-2713913fc029
+(pass) fruit shared geometry survives edits and is released once when replaced [2.88ms]
+THREE.GLTFLoader: Couldn't load texture blob:5434d091-4874-4e0e-89cd-b85a3a7ee00a
+THREE.GLTFLoader: Couldn't load texture blob:1cb87dc8-06b1-4926-8906-a03737ca8907
+(pass) banana shared geometry survives edits and is released once when replaced [10.45ms]
+(pass) crumbs shared geometry survives edits and is released once when replaced [3.11ms]
+(pass) vinegar shared geometry survives edits and is released once when replaced [2.95ms]
+(pass) fan shared geometry survives edits and is released once when replaced [4.28ms]
+(pass) lamp shared geometry survives edits and is released once when replaced [0.77ms]
+(pass) shade shared geometry survives edits and is released once when replaced [0.48ms]
+(pass) lamp is a finite static floor surface within its placement footprint [0.34ms]
+(pass) shade is a finite static floor surface within its placement footprint [0.18ms]
+THREE.GLTFLoader: Couldn't load texture blob:8d0e4df1-b41a-4c83-befd-3f3dbafc926d
+THREE.GLTFLoader: Couldn't load texture blob:5f1d0ec9-3352-453c-9505-fb7fefe43bd5
+(pass) banana stays native sized after placement and rejects mismatched apple geometry [7.22ms]
+(pass) spiderWeb renders its exact native contact mesh without footprint scaling [1.89ms]
+(pass) bugZapper renders its exact native contact mesh without footprint scaling [1.45ms]
+(pass) fan renders its exact native contact mesh without footprint scaling [2.22ms]
+(pass) vinegar renders its exact native contact mesh without footprint scaling [1.35ms]
+(pass) wornShoes renders its exact native contact mesh without footprint scaling [2.00ms]
+(pass) dirtyDishes renders its exact native contact mesh without footprint scaling [2.59ms]
+(pass) laundry renders its exact native contact mesh without footprint scaling [3.06ms]
+(pass) sleepingCat renders its exact native contact mesh without footprint scaling [1.67ms]
+
+packages/game-renderer/src/fly-departure.test.ts:
+(pass) escape departure heads outward, climbs, shrinks and restores on backward seek [0.10ms]
+
+packages/game-renderer/src/exit-glow.test.ts:
+(pass) the spill is framed by the opening's own outward normal, whatever its orientation [2.89ms]
+(pass) the glow is drawn as light: additive, depth-tested and never depth-writing [0.39ms]
+(pass) the pool peaks at the opening and fades out before either end [0.04ms]
+(pass) the haze fades out well below its top edge, so it never reads as a pane [0.18ms]
+(pass) an unchanged opening reuses the glow, and disposal releases every field once [0.39ms]
+(pass) an opening without a width or an outward direction is rejected rather than drawn [0.04ms]
+
+packages/game-renderer/src/house-materials.test.ts:
+(pass) house replacement preserves authored materials and floor grain density across room sizes [0.77ms]
+(pass) tile replacement preserves wood resources and one physical floor per room [0.72ms]
+THREE.GLTFLoader: Couldn't load texture blob:f26cf897-231f-4106-9786-4eac68aeebe0
+THREE.GLTFLoader: Couldn't load texture blob:5b35fa46-89e5-4486-8f60-665fa35ecad4
+THREE.GLTFLoader: Couldn't load texture blob:f332a910-d84f-4e65-ae7a-7d31ccec02b7
+THREE.GLTFLoader: Couldn't load texture blob:cc228bec-28e7-41af-8c5b-5b9742f6ebcc
+(pass) tile kit preserves the exact floor triangle coordinates [3.23ms]
+THREE.GLTFLoader: Couldn't load texture blob:5a34b941-bd22-4e5f-81f2-10fbf62b99e7
+(pass) authored tile UV density stays constant across different room sizes [1.35ms]
+
+packages/game-renderer/src/trails.test.ts:
+(pass) trail geometry is bounded, fades by playback time and restores exact seek state [2.12ms]
+(pass) discontinuities stop paths and fresh attempts contain no old vertices [0.17ms]
+(pass) recorded trails preserve physical height, detect input discontinuity and stop at terminal [0.11ms]
+(pass) trail width follows shared projection and the head gap excludes the fly footprint [0.24ms]
+(pass) vertical trails retain recorded centres and pixel width at both perspective depths [0.18ms]
+
+packages/game-renderer/src/fly-motion.test.ts:
+(pass) recorded airborne landing plays Land, touchdown immediately plays Walk [0.04ms]
+(pass) recorded orientation sampling is absolute, normalized and takes the short arc [0.12ms]
+
+packages/game-renderer/src/brain-view.test.ts:
+(pass) legend colours are understood by the renderer and distinguish groups [0.10ms]
+
+packages/game-renderer/src/exterior-grass.test.ts:
+(pass) grass masks actual rooms and joined wall thickness, retaining concave exterior [0.09ms]
+(pass) packed field is repeatable, bounded, uniformly covers circle and respects blade clearance [191.67ms]
+(pass) resizing replaces the owned batches and releases shared resources once [33.15ms]
+(pass) terrain keeps house approaches level and distant hills bounded [0.22ms]
+
+ 70 pass
+ 0 fail
+ 1645029 expect() calls
+Ran 70 tests across 12 files. [467.00ms]
+$ bun test apps/asset-lab/scripts
+bun test v1.3.14 (0d9b296a)
+
+apps/asset-lab/scripts/export-contact.test.ts:
+(pass) apple contact geometry reproduces from its rendered asset [34.45ms]
+(pass) banana contact geometry reproduces from its rendered asset [35.21ms]
+
+ 2 pass
+ 0 fail
+ 2 expect() calls
+Ran 2 tests across 1 file. [130.00ms]
+$ bun test apps/web/src
+bun test v1.3.14 (0d9b296a)
+
+apps/web/src/campaign.test.ts:
+(pass) one earned star unlocks only the next sequential level and a reset relocks later levels [0.56ms]
+
+apps/web/src/progress.test.ts:
+(pass) a worse retry cannot reduce a level's saved best stars or overwrite another level [0.03ms]
+
+apps/web/src/departure-tail.test.ts:
+(pass) last escape finishes after early completion, pauses, and resets when replay rewinds [0.17ms]
+
+apps/web/src/levels/routes.test.ts:
+(pass) open-window: the swarm starts far from the exit and must cross several rooms [0.38ms]
+(pass) turn-the-corner: the swarm starts far from the exit and must cross several rooms [0.06ms]
+
+ 5 pass
+ 0 fail
+ 22 expect() calls
+Ran 5 tests across 4 files. [91.00ms]

@@ -5,7 +5,7 @@ import { mkdir, writeFile, realpath } from "node:fs/promises";
 import assert from "node:assert/strict";
 const base = process.env.BRAIN_URL ?? "http://127.0.0.1:5212";
 const output =
-  process.env.TOOL_EVIDENCE ?? "specs/help-the-fly-escape/assets/evidence/14/tools/candidate";
+  process.env.TOOL_EVIDENCE ?? "specs/done/help-the-fly-escape/assets/evidence/14/tools/candidate";
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ channel: "chrome", headless: true });
 try {

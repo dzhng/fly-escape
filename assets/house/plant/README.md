@@ -1,7 +1,7 @@
-# Potted plant shape proposal
+# Potted plant study
 
-This original Blender study uses a closed square planter and separated, bowed and twisted cupped leaves to make a recognizable upright household plant. A softened upper lip and shallow band distinguish the container while its main walls stay straight. Leaf bases enter the authored soil by 1 mm; this is visual attachment, not a runtime contact decision. The planter fills the diagnostic solid's floor rectangle: no feet, tapered base or open floor passage imply space that flies cannot enter. The foliage stays inside that horizontal footprint.
+This diagnostic Blender study uses a closed planter and separate cupped leaves. Its [author](author.py) validates a visual envelope outside the production furniture catalogue. Leaf attachment to soil is visible geometry, not a physical support guarantee.
 
-The [authoring source](author.py) uses the shared house export validator with a **proposed visual envelope**, separate from the production furniture catalogue. Its foliage rises above the existing physical planter; neither invisible collision through the leaf gaps nor nonphysical fly penetration is accepted by this study. Before integration, decide the foliage's collision and occlusion ownership and verify fly contact in the browser. The recessed soil also requires an explicit top-contact decision. Do not enlarge the existing solid to the full foliage envelope as an expedient.
+The study must not be promoted into a floor obstacle by enclosing all foliage in an invisible box: leaf gaps and recessed soil need an explicit contact model. The campaign's [wall-mounted derivative](../wall-plant/README.md) is decoration with its own mounting convention.
 
-[Preparation evidence](../../../specs/help-the-fly-escape/assets/evidence/21/plant-refined/README.md) records authoring views, export measurements and outstanding visual concerns. Neutral material is deliberate; leaf colour, soil and ceramic treatment belong to the later material pass. Blender scenes and source remain separate from the exported static model so staging lights and cameras cannot become game assets.
+[Preparation evidence](../../../specs/done/help-the-fly-escape/assets/evidence/21/plant-refined/README.md) preserves shape studies and their limitations. Staging lights and cameras remain separate from the exported mesh.

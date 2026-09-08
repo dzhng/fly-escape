@@ -1,19 +1,7 @@
 # Closed household window
 
-This original Blender shape uses two closed panes, inset sash frames and a single
-handle to distinguish its front. Rebates back the sash clearance; a dark reveal
-must not imply an accidental through-gap. The authored GLB carries ivory paint, muted opaque glass and brass hardware.
-Physical glass optics remain open; the renderer preserves these materials.
+Closed panes and an inset sash distinguish this model from the exit opening. It mounts on an existing wall and never cuts a physical route. The muted opaque glass is an authored material, not optical glass simulation.
 
-The [authoring source](author.py) inherits the proposed window dimensions from
-the [room-scale fixture](../../proportions/scale.json). Its local origin is the
-bottom centre of the sill, with GLB +Y up and +Z toward the room. Installation
-height belongs to room placement. The shared house exporter validates native
-bounds without stretching and keeps the neutral stage outside the GLB.
+[author.py](author.py) inherits dimensions from the [scale fixture](../../proportions/scale.json). The local origin is the sill's bottom centre, with glTF +Y up and +Z toward the room. Installation height belongs to room placement; shared export validation checks bounds without stretching.
 
-Campaign scene details mount this closed model on existing walls. It neither
-cuts a physical opening nor creates an escape route. Optical glass and daylight
-remain separate from this authored material finish.
-[Authoring evidence](../../../specs/help-the-fly-escape/assets/evidence/21/window-prepared/README.md)
-records the neutral review and remaining integration gates. No downloaded assets
-or textures are used.
+[Authoring evidence](../../../specs/done/help-the-fly-escape/assets/evidence/21/window-prepared/README.md) preserves the neutral shape review. Staging context remains outside the exported model.

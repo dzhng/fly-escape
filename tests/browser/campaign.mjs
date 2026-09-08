@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { chromium } from "playwright";
 import { mkdir, writeFile } from "node:fs/promises";
 const base = process.env.BRAIN_URL ?? "http://127.0.0.1:5215";
-const out = "specs/help-the-fly-escape/assets/evidence/16/progression";
+const out = "specs/done/help-the-fly-escape/assets/evidence/16/progression";
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ channel: "chrome", headless: true });
 try {

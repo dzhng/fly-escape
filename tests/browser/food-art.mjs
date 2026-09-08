@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 const base = process.env.BRAIN_URL ?? "http://127.0.0.1:5209";
 const output =
   process.env.FOOD_EVIDENCE ??
-  "specs/help-the-fly-escape/assets/evidence/14/food/candidate";
+  "specs/done/help-the-fly-escape/assets/evidence/14/food/candidate";
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ channel: "chrome", headless: true });
 try {

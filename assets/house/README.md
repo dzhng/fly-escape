@@ -1,24 +1,11 @@
 # House assets
 
-Furniture is authored in metres at its native size. The [catalogue](catalog.json) is the shared envelope contract for Blender export, simulation placement validation and browser loading. A placed furnishing adds appearance identity to the existing solid; it does not introduce another collision shape. Quarter turns preserve the axis-aligned physical footprint while allowing asymmetric models to face into a room.
+Furniture is authored in metres at native size. The [catalogue](catalog.json) is the shared envelope contract for authoring, placement validation and loading. Appearance is attached to an existing solid; it does not create another collision shape. Closed bases deliberately avoid suggesting under-furniture routes that the rectangular physical footprint cannot provide.
 
-[Authoring validation](authoring.py) checks both the source scene and exported GLB against that contract. It rejects a mismatched envelope instead of stretching the model to conceal it. The same helper owns neutral authoring lights and render settings while individual assets own their framing. The [cabinet](cabinet/README.md) and [sofa](sofa/README.md) notes explain their authored shape constraints.
+[Authoring validation](authoring.py) checks source scenes and exported GLBs against that envelope instead of stretching them to pass. Stage lights and cameras remain outside the game model. The [material author](finish-materials.py) owns production surfaces; imported materials remain authoritative in the browser. Physical floor UVs expand with room dimensions while textures stay shared. [Oak texture provenance](textures/wood-floor/source.json) identifies the local Poly Haven CC0 inputs.
 
-Native geometry, material appearance and visibility have separate acceptance gates. A correctly sized mesh is not evidence of finished house art or readable fly contact. The active specification owns those remaining gates.
+The [cabinet](cabinet/README.md) and [sofa](sofa/README.md) explain grounded furnishing conventions. The shared study/bedroom author is documented through the [desk](desk/README.md), [chair](chair/README.md) and [bed](bed/README.md); the [kitchen](kitchen/README.md) explains its combined solid footprint.
 
-The [potted plant study](plant/README.md) is a prepared appearance proposal with unresolved foliage contact ownership; it is not a catalogue entry.
+Presentation fixtures use existing room geometry without creating escape routes or sensory sources. The [doorway](doorway/README.md) and [exit window](exit-window/README.md) preserve clear physical openings; the [closed window](window/README.md), [sconce](sconce/README.md) and [wall plant](wall-plant/README.md) explain their mounting conventions. The [floor finish](tile-floor/README.md) changes appearance without adding a second surface.
 
-The [closed window study](window/README.md) preserves the room-scale fixture's
-native dimensions; installed materials and closed panes remain separate from final glass/daylight acceptance.
-
-The [wall sconce](sconce/README.md) is installed as household decoration, separate from the gameplay floor-light cue.
-
-The [material finishing pass](finish-materials.py) applies production surfaces after shape authoring and saves the exported GLBs and individual blend files. Imported materials remain authoritative in the browser; semantic colors only serve temporary geometry while assets load. Floor UVs use a physical texture scale and are expanded with room dimensions, while textures remain shared. [Oak texture provenance](textures/wood-floor/source.json) records the local Poly Haven CC0 inputs. Fabric detail, plant/fruit surfaces and final lighting remain in progress.
-
-The [open doorway](doorway/README.md) frames an ordinary clear passage beneath a lintel. Its posts sit outside the core wall gap, so dressing does not narrow traversal. The [wall-mounted plant](wall-plant/README.md) adds greenery above floor circulation space.
-
-The [study and bedroom furnishings](author-study-bedroom.py) use native-sized closed bases so their visible floor occupancy agrees with the existing rectangular collision contract. The [kitchen run](kitchen/README.md) combines appliances and counter space under one placed footprint.
-
-The [open French window](exit-window/README.md) dresses a floor-level escape opening with outward-facing leaves; its clear passage must agree with the simulation exit.
-
-The [kitchen ceramic finish](tile-floor/README.md) reuses the physical floor kit with a portable material variant. Room appearance references existing room IDs; it cannot create simulation surfaces.
+The [potted plant study](plant/README.md) remains a diagnostic source outside the furniture catalogue. Its foliage must not be treated as validated physical occupancy. Model appearance alone does not establish contact behavior or biological effects.

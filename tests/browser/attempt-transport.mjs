@@ -136,7 +136,7 @@ try {
   assert.equal(report.afterCancellation, report.cancellationMessages);
   assert.deepEqual(report.errors, []);
   assert.equal(report.finalTick, 20);
-  const output = process.env.TRANSPORT_OUTPUT ? pathToFileURL(process.env.TRANSPORT_OUTPUT + "/") : new URL("../../specs/help-the-fly-escape/assets/evidence/05/", import.meta.url);
+  const output = process.env.TRANSPORT_OUTPUT ? pathToFileURL(process.env.TRANSPORT_OUTPUT + "/") : new URL("../../specs/done/help-the-fly-escape/assets/evidence/05/", import.meta.url);
   await mkdir(output, { recursive: true });
   await writeFile(
     new URL("browser-transport.json", output),

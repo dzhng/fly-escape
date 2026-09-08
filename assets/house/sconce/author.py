@@ -7,7 +7,7 @@ from mathutils import Vector
 
 OUT=Path(__file__).resolve().parent
 shared=run_path(str(OUT.parent/'authoring.py'))
-EVIDENCE=OUT.parents[2]/'specs/help-the-fly-escape/assets/evidence/21/sconce-prepared'
+EVIDENCE=OUT.parents[2]/'specs/done/help-the-fly-escape/assets/evidence/21/sconce-prepared'
 EVIDENCE.mkdir(parents=True,exist_ok=True)
 asset=bpy.data.scenes.new('Sconce-Metres')
 asset.unit_settings.system='METRIC'

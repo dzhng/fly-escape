@@ -15,7 +15,7 @@ pub enum CuePathway {
 
 /// Modeled half-gain scale chosen from uniform settled-field samples, not receptor
 /// measurements or the concentrations experienced by moving flies. See the
-/// scent-strength evidence under specs/help-the-fly-escape/assets/evidence/33/.
+/// scent-strength evidence under specs/done/help-the-fly-escape/assets/evidence/33/.
 const ODOR_HALF_CONCENTRATION: f64 = 0.55;
 
 /// The measured chamber maps attractive odor and the room-local exit cue to

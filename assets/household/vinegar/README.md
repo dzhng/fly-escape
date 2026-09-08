@@ -7,6 +7,6 @@ mark supplies a food cue at closer views; the palette name supplies the contents
 at small thumbnail sizes.
 
 The native grounded mesh uses embedded materials and closed components. Source
-strength and contact roles belong to integration; appearance does not establish
+strength and contact roles belong to the placement owner; appearance does not establish
 odor concentration or a biological response. Blender staging is authoring
 evidence, not production acceptance.

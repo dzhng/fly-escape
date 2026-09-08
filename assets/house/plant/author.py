@@ -10,7 +10,7 @@ import bpy, bmesh, json
 OUT = Path(__file__).resolve().parent
 authoring = run_path(str(OUT.parent / 'authoring.py'))
 export_static = authoring['export_static']
-EVIDENCE = OUT.parents[2] / 'specs/help-the-fly-escape/assets/evidence/21/plant-refined'
+EVIDENCE = OUT.parents[2] / 'specs/done/help-the-fly-escape/assets/evidence/21/plant-refined'
 EVIDENCE.mkdir(parents=True, exist_ok=True)
 asset = bpy.data.scenes.new('Plant-Metres')
 asset.unit_settings.system = 'METRIC'

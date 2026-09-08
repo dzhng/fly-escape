@@ -6,7 +6,7 @@ const root = fileURLToPath(new URL('../../', import.meta.url));
 const output = process.env.RECOVERY_OUTPUT ?? '/tmp/fly-wasm-recovery';
 assert.ok(process.env.TRAP_WASM_PATH, "TRAP_WASM_PATH must name the historical panic fixture WASM (see recovery evidence)");
 const faultWasm = await readFile(process.env.TRAP_WASM_PATH);
-const input = JSON.parse(await readFile(root + 'specs/help-the-fly-escape/assets/evidence/30/seed42-contact/seed42-request.json', 'utf8'));
+const input = JSON.parse(await readFile(root + 'specs/done/help-the-fly-escape/assets/evidence/30/seed42-contact/seed42-request.json', 'utf8'));
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 const report = { console: [], errors: [], wasmRequests: 0 };

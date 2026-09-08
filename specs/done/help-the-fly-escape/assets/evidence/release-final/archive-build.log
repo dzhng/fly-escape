@@ -1,0 +1,128 @@
+$ bun run types:generate && bun run assets:brain && bun run build:wasm && bun run --cwd apps/web build && bun run --cwd apps/asset-lab build
+$ cargo run -q -p sim --example export_types > packages/sim-client/src/generated/sim.ts
+$ bun scripts/copy-brain.ts
+Prepared 70,000 mapped neurons for static browser loading.
+$ wasm-pack build crates/game-wasm --target web --release --out-dir ../../packages/sim-client/src/wasm
+[INFO]: 🎯  Checking for the Wasm target...
+[INFO]: 🌀  Compiling to Wasm...
+   Compiling sim v0.1.0 (/Users/david/dev/fly-escape/crates/sim)
+   Compiling game-wasm v0.1.0 (/Users/david/dev/fly-escape/crates/game-wasm)
+    Finished `release` profile [optimized] target(s) in 4.62s
+[INFO]: ⬇️  Installing wasm-bindgen...
+[WARN  wasm_pack::install] could not download pre-built `wasm-bindgen`: no prebuilt wasm-bindgen binaries are available for this platform: Unrecognized target!. Falling back to `cargo install`.
+[INFO]: Optimizing wasm binaries with `wasm-opt`...
+[INFO]: Optional fields missing from Cargo.toml: 'description', 'repository', and 'license'. These are not necessary, but recommended
+[INFO]: ✨   Done in 5.65s
+[INFO]: 📦   Your wasm pkg is ready to publish at packages/sim-client/src/wasm.
+$ vite build
+vite v8.2.2 building client environment for production...
+transforming...
+✓ 128 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                 0.37 kB │ gzip:     0.28 kB
+dist/assets/lamp-Bapp5bB3.png                   7.00 kB
+dist/assets/shade-DlZmPlzy.png                  8.02 kB
+dist/assets/crumbs-B740nM6U.png                 8.06 kB
+dist/assets/house-probe-worker-CoULtYCd.js      9.20 kB
+dist/assets/worker-hYe6RRYv.js                 10.55 kB
+dist/assets/shade-ByQD8-3_.glb                 10.96 kB
+dist/assets/lamp-D7bX1F7V.glb                  13.13 kB
+dist/assets/attempt-worker-Dn74n3El.js         13.94 kB
+dist/assets/doorway-bOmbiQ6W.glb               14.50 kB
+dist/assets/spiderWeb-B_YAys88.png             19.68 kB
+dist/assets/crumbs-DsKjrqwK.glb                19.77 kB
+dist/assets/banana-P5d5Uoyi.png                20.24 kB
+dist/assets/vinegar-D92ailKX.png               26.73 kB
+dist/assets/chair-C6SsO7ej.glb                 29.49 kB
+dist/assets/fruit-EZTC8_l7.png                 29.85 kB
+dist/assets/laundry-CRpCNfY0.png               36.59 kB
+dist/assets/sleepingCat-Ce7qyZhu.png           37.71 kB
+dist/assets/dirtyDishes-tPZZeAey.png           39.69 kB
+dist/assets/fan-DXjWjBCX.png                   39.83 kB
+dist/assets/bed-BAtm8UL6.glb                   40.26 kB
+dist/assets/bugZapper-CuCV-NMR.png             41.36 kB
+dist/assets/wornShoes-Dt1B-PN9.png             41.79 kB
+dist/assets/corner-spider-C4Eb2fi5.glb         46.64 kB
+dist/assets/bug-zapper-CMFOC8K4.glb            50.90 kB
+dist/assets/vinegar-DIfAr2vf.glb               60.60 kB
+dist/assets/sleeping-cat-CvrZjof7.glb          72.07 kB
+dist/assets/sconce-CqhfygL7.glb                83.00 kB
+dist/assets/worn-shoes-T9hDUp5C.glb            84.59 kB
+dist/assets/cabinet-CQhECtzS.glb               98.58 kB
+dist/assets/fan-D2OltmOR.glb                  104.53 kB
+dist/assets/window-D0F6K1F7.glb               109.26 kB
+dist/assets/exit-window-BZ-EvLG2.glb          113.96 kB
+dist/assets/crumpled-laundry-D-9r_zaW.glb     116.63 kB
+dist/assets/wall-plant-BH3kXnr0.glb           130.48 kB
+dist/assets/desk-Ctq-uvrh.glb                 134.40 kB
+dist/assets/dirty-dishes-U8YVj2x7.glb         155.07 kB
+dist/assets/sofa-Ht1b2HT8.glb                 230.01 kB
+dist/assets/kitchen-AXOHy94n.glb              242.06 kB
+dist/assets/fly-BMIKK5wf.glb                  307.67 kB
+dist/assets/tile-floor-DMqAzEt4.glb           325.50 kB
+dist/assets/banana-pYrTQDC8.glb               963.48 kB
+dist/assets/apple-Be8DVIkK.glb              1,019.68 kB
+dist/assets/game_wasm_bg-CbWuNNO-.wasm      3,346.07 kB │ gzip:   994.79 kB
+dist/assets/floor-CWY_kn0a.glb              8,561.02 kB
+dist/assets/index-CA6I8SUd.css                 13.66 kB │ gzip:     3.80 kB
+dist/assets/game_wasm-Bxoxdp-B.js               9.28 kB │ gzip:     2.29 kB
+dist/assets/index-Cdg1S4xp.js               4,876.07 kB │ gzip: 1,533.97 kB
+
+✓ built in 366ms
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+$ vite build
+vite v8.2.2 building client environment for production...
+transforming...
+✓ 91 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                    0.43 kB │ gzip:   0.28 kB
+dist/assets/house-probe-worker-DtIH4huZ.js         9.22 kB
+dist/assets/worker-CoX8Srd0.js                    10.55 kB
+dist/assets/shade-ByQD8-3_.glb                    10.96 kB
+dist/assets/lamp-D7bX1F7V.glb                     13.13 kB
+dist/assets/attempt-worker-C_HlfSps.js            13.92 kB
+dist/assets/doorway-bOmbiQ6W.glb                  14.50 kB
+dist/assets/crumbs-DsKjrqwK.glb                   19.77 kB
+dist/assets/chair-C6SsO7ej.glb                    29.49 kB
+dist/assets/bed-BAtm8UL6.glb                      40.26 kB
+dist/assets/corner-spider-C4Eb2fi5.glb            46.64 kB
+dist/assets/bug-zapper-CMFOC8K4.glb               50.90 kB
+dist/assets/neutral-floor-fKR96qEU.glb            51.67 kB
+dist/assets/vinegar-DIfAr2vf.glb                  60.60 kB
+dist/assets/sleeping-cat-CvrZjof7.glb             72.07 kB
+dist/assets/sconce-CqhfygL7.glb                   83.00 kB
+dist/assets/worn-shoes-T9hDUp5C.glb               84.59 kB
+dist/assets/cabinet-CQhECtzS.glb                  98.58 kB
+dist/assets/fan-D2OltmOR.glb                     104.53 kB
+dist/assets/window-D0F6K1F7.glb                  109.26 kB
+dist/assets/exit-window-BZ-EvLG2.glb             113.96 kB
+dist/assets/crumpled-laundry-D-9r_zaW.glb        116.63 kB
+dist/assets/plant-jjqQVVkg.glb                   124.96 kB
+dist/assets/wall-plant-BH3kXnr0.glb              130.48 kB
+dist/assets/desk-Ctq-uvrh.glb                    134.40 kB
+dist/assets/dirty-dishes-U8YVj2x7.glb            155.07 kB
+dist/assets/sofa-Ht1b2HT8.glb                    230.01 kB
+dist/assets/kitchen-AXOHy94n.glb                 242.06 kB
+dist/assets/fly-BMIKK5wf.glb                     307.67 kB
+dist/assets/tile-floor-DMqAzEt4.glb              325.50 kB
+dist/assets/banana-pYrTQDC8.glb                  963.48 kB
+dist/assets/apple-Be8DVIkK.glb                 1,019.68 kB
+dist/assets/game_wasm_bg-CbWuNNO-.wasm         3,346.07 kB │ gzip: 994.79 kB
+dist/assets/floor-CWY_kn0a.glb                 8,561.02 kB
+dist/assets/index-Cya575l3.css                     1.16 kB │ gzip:   0.60 kB
+dist/assets/proportions-workbench-CEQXhPm3.js     11.38 kB │ gzip:   5.14 kB
+dist/assets/contact-workbench-D7Fu8aNF.js         75.69 kB │ gzip:  17.15 kB
+dist/assets/index-CnTJhUJr.js                  2,640.55 kB │ gzip: 679.14 kB
+
+✓ built in 220ms
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.

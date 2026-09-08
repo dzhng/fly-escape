@@ -3,7 +3,7 @@ import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { chromium } from "playwright";
 import { pathToFileURL } from "node:url";
 const base = process.env.BRAIN_URL ?? "http://127.0.0.1:5184";
-const baseline = new URL("../../specs/help-the-fly-escape/assets/evidence/05/", import.meta.url);
+const baseline = new URL("../../specs/done/help-the-fly-escape/assets/evidence/05/", import.meta.url);
 const output = process.env.MEMORY_OUTPUT
   ? pathToFileURL(process.env.MEMORY_OUTPUT + "/")
   : baseline;

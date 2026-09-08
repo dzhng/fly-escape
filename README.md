@@ -1,18 +1,37 @@
 # Help the Fly Escape
 
-A local browser game where a fly connectome drives the flies and the player shapes their environment to help them escape.
+**A little house. A swarm of flies. A real connectome behind every wrong turn.**
 
-**Biology → simulation → observed behavior → game design.**
+Arrange household objects, release the flies, and see how many find their way outside before time runs out. You shape their surroundings; their simulated neurons drive their movement. Watch the swarm, follow one curious fly, or peek inside its brain as it explores.
 
-We build game mechanics around the behavior we discover, rather than forcing the simulation to produce mechanics chosen in advance. Real connectivity is the foundation; sensory inputs and modeled dynamics still need biological grounding. We document those assumptions, observe the results, then craft interesting puzzles around the behavior that emerges. Biologically motivated circuits can remain available even when responses are variable or not fully explained: discovery through play is part of the game. The practical requirement is that players can meaningfully influence the swarm, not predict every fly.
+![The first house, with a sunlit exit and household objects ready to place](specs/done/help-the-fly-escape/assets/evidence/release-final/campaign/level-1-setup.png)
 
-The home route opens the in-progress two-level campaign, where placements precede a buffered attempt. Diagnostic views include a neural observation chamber at `/lab/brain`, matched sensory chambers at `/lab/fields`, finite-life probes at `/lab/lifecycle`, and buffered swarm replay at `/lab/playback`: the real neural graph runs in Rust/WASM in a Worker, while the 3D view and measured activity stay responsive. Randomized starting swarms and furnished houses are integrated. The current appearance is accepted for MVP; object-effect calibration, puzzle balance and release verification remain under development. Follow the [active specification](specs/help-the-fly-escape/README.md) for completed gates and the next checkpoint.
+A fully 3D browser game that runs locally, with Rust compiled to WebAssembly for the simulation and TypeScript for the world and interface. No account or application backend required.
+
+## Play, observe, try again
+
+Place objects around the house, then **Release the flies**. Earn stars for the flies that escape and change your arrangement for the next attempt. The fun is discovering what they respond to—and whether that response actually helps them leave.
+
+- **Explore two furnished houses.** Work around the surroundings already there, with a limited selection of objects of your own.
+- **Follow an individual.** Click a fly or its roster card to follow it and inspect its simulated neural activity. The brain view and traces come with plain-language explanations.
+- **Watch at your own pace.** Choose real time or a fast replay that fits the full round into about a minute. Pause and rewind to inspect a moment.
+
+Scroll to zoom, move to the screen edge or drag to pan, and hold the right mouse button while dragging to rotate. The rotation-reset button restores the original angle. Progress and arrangements are saved in your browser.
+
+## Biology → simulation → observed behavior → game design
+
+We build the game around the behavior we discover. We do not start with a desired strategy and force the neurons to make it work.
+
+A **connectome** is a map of neurons and their connections. This game uses a selected part of the MaleCNS fly connectome, giving each fly its own simulated electrical activity and randomness. The connections come from real data; the neuron equations, sensory inputs and movement rules are models. This is an experiment with biological structure, not a validated digital replica of a living fly.
+
+That uncertainty is part of the game. An object need not affect every fly in the same way to make an interesting decision. The aim is to influence the swarm while discovering how it responds. Neural explanations describe the model without revealing a recipe for each object.
 
 ## Run locally
 
-Requires Bun, Rust with the `wasm32-unknown-unknown` target, wasm-pack, and Python/uv. On a fresh checkout:
+Install Bun, Rust, wasm-pack, and Python with uv. From a checkout of this repository:
 
 ```sh
+rustup target add wasm32-unknown-unknown
 uv venv .venv
 uv pip install --python .venv/bin/python -r scripts/requirements.txt
 bun install
@@ -21,30 +40,18 @@ bun run build
 bun run dev
 ```
 
-Open the printed local URL. Source preparation downloads about 1.1 GB once and produces a small static graph artifact. See [graph preparation](scripts/connectome/README.md) for provenance and reproducibility, and [reference fixtures](scripts/reference/README.md) for the numerical oracle.
+Open the URL printed by the development server. The first data preparation downloads roughly 1.1 GB of source data; it creates the smaller graph bundled with the game. Python is only needed for offline preparation and reference checks. The game itself runs in the browser.
 
-## Serve the static build
+To serve the finished build, or work on the simulation and artwork, see the [development guide](docs/development.md).
 
-After `bun run build`, serve the game distribution:
+## Current limits
 
-```sh
-python3 -m http.server 4173 --bind 127.0.0.1 --directory apps/web/dist
-```
+The two-level game loop is playable, but difficulty is still experimental. Object placement changes observed outcomes; consistent repulsion and the frequency of higher star scores are not established. Feeding and life extension are deferred.
 
-Open `http://127.0.0.1:4173/`. Keep the distribution at the origin root: workers load `/brain/` data, and asset URLs are rooted there. Serve through HTTP rather than opening the HTML file directly. No application backend is needed. The About link uses a query on the root document, so this simple server needs no route fallback for it; direct `/lab/*` diagnostic routes require a server with an index fallback.
+The simulation buffers before playback, and that initial wait can exceed a minute. Larger swarms and broader performance tuning remain future work. See the [release checks](specs/done/help-the-fly-escape/assets/evidence/release-final/README.md) for measured results and browser coverage.
 
-The in-app About page explains data attribution and modeling limits and links to the bundled graph manifest. Static serving alone is not release acceptance; production performance and platform gates remain in the active specification.
+## Data and credits
 
-## Ownership
+The game uses a selected subgraph of **Janelia FlyEM’s MaleCNS v1.0**. See the [graph preparation guide](scripts/connectome/README.md#data-attribution) for source credits, the dataset license and how the data is transformed. The game’s About page also links to its bundled provenance manifest.
 
-Browser applications live under `apps/`: `apps/web` is the game and [`apps/asset-lab`](apps/asset-lab/README.md) provides local model replacement and inspection. `packages/` holds the client and renderer; `crates/` owns simulation and its thin WASM boundary. The browser requires no application backend.
-
-Python is used only for offline graph preparation and faithful numerical reference evidence. Historical experiments and their interpretation remain in the [spike archive](specs/help-the-fly-escape/spikes/README.md); they are not runtime behavior or release guarantees. The [architecture contract](specs/help-the-fly-escape/CONTRACTS.md) defines the final shape and the [roadmap](specs/help-the-fly-escape/visualizations/roadmap.html) shows the remaining work.
-
-[Native fly contact](assets/fly/README.md) describes the physical envelope and its animation-sampling limits.
-
-[House assets](assets/house/README.md) describes the shared native furniture envelope and authoring contract.
-
-[Food assets](assets/food/README.md) separates edible geometry, scent cues and unregistered shape studies.
-
-[Household assets](assets/household/README.md) describes native room props; runtime integration follows the active specification.
+For contributors, the [development guide](docs/development.md) explains the code and asset boundaries. The [design rationale](specs/done/help-the-fly-escape/README.md) preserves the reasoning, research and modeling decisions behind the game.

@@ -7,7 +7,7 @@ OUT = Path(__file__).resolve().parent
 shared = run_path(str(OUT.parent / 'authoring.py'))
 proposal = json.loads((OUT.parents[1] / 'proportions/scale.json').read_text())['visualOnly']['window']
 width, height, depth = (proposal[key] for key in ('width', 'height', 'depth'))
-EVIDENCE = OUT.parents[2] / 'specs/help-the-fly-escape/assets/evidence/21/window-prepared'
+EVIDENCE = OUT.parents[2] / 'specs/done/help-the-fly-escape/assets/evidence/21/window-prepared'
 EVIDENCE.mkdir(parents=True, exist_ok=True)
 scene = bpy.data.scenes.new('Window-Metres')
 scene.unit_settings.system = 'METRIC'

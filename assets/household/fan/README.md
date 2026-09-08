@@ -5,7 +5,6 @@ The front and blowing direction are local +X; native glTF is grounded Y-up in
 metres. Rotation belongs to the map policy, not the authoring camera.
 
 Closed blade solids and periodic grille rings retain exact component boundaries.
-The shared contact baker preserves every piece; native integration must split
+The shared contact baker preserves every piece; the contact owner splits
 edge-connected components without replacing the guard with a filled disc.
-Materials are embedded, with no external textures. Small grille detail needs
-judgment in production lighting; Blender staging is authoring evidence only.
+Materials are embedded, with no external textures. Openings in the guard remain physical gaps; Blender staging alone does not verify moving contact.

@@ -5,7 +5,7 @@ import { chromium } from "playwright";
 const base = process.env.BRAIN_URL ?? "http://127.0.0.1:5184";
 const output =
   process.env.CAMERA_OUTPUT ??
-  new URL("../../specs/help-the-fly-escape/assets/evidence/06/", import.meta.url).pathname;
+  new URL("../../specs/done/help-the-fly-escape/assets/evidence/06/", import.meta.url).pathname;
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({
   headless: true,

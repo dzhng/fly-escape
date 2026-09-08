@@ -9,7 +9,7 @@ from mathutils import Vector
 OUT = Path(__file__).resolve().parent
 authoring = run_path(str(OUT.parent / 'authoring.py'))
 export_static = authoring['export_static']
-EVIDENCE = OUT.parents[2] / 'specs/help-the-fly-escape/assets/evidence/21/cabinet-prepared'
+EVIDENCE = OUT.parents[2] / 'specs/done/help-the-fly-escape/assets/evidence/21/cabinet-prepared'
 OUT.mkdir(parents=True, exist_ok=True)
 EVIDENCE.mkdir(parents=True, exist_ok=True)
 catalog_size = json.loads((OUT.parent / 'catalog.json').read_text())['cabinet']

@@ -6,4 +6,4 @@ A light matte floor distinguishes a kitchen from adjoining wood rooms without ad
 
 The image repeats in physical metres. Room instances expand the imported UVs together with the existing room dimensions, so tile size does not stretch with the kitchen. The renderer owns one floor placement per actual room and shares the finish material/image among its room instances; replacing tile must not release neighbouring wood resources.
 
-Grout is colour detail on the unchanged plane, deliberately without raised geometry or a second surface. This bounded pass distinguishes room use; convincing recessed joints and less uniform close stone remain art work.
+Grout is colour detail on the unchanged plane, deliberately without raised geometry or a second surface. This texture does not model physical recessed joints.

@@ -2,7 +2,7 @@ import { chromium } from "playwright";
 import { mkdir, writeFile } from "node:fs/promises";
 import assert from "node:assert/strict";
 const out =
-  process.env.TOOL_EVIDENCE ?? "specs/help-the-fly-escape/assets/evidence/14/tools/workbench";
+  process.env.TOOL_EVIDENCE ?? "specs/done/help-the-fly-escape/assets/evidence/14/tools/workbench";
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ channel: "chrome", headless: true });
 try {

@@ -6,7 +6,7 @@ import bpy, bmesh, json, os
 
 OUT = Path(__file__).resolve().parent
 shared = run_path(str(OUT.parents[1] / 'house/authoring.py'))
-EVIDENCE = Path(os.environ.get('BANANA_EVIDENCE', OUT.parents[2] / 'specs/help-the-fly-escape/assets/evidence/21/banana-terminal'))
+EVIDENCE = Path(os.environ.get('BANANA_EVIDENCE', OUT.parents[2] / 'specs/done/help-the-fly-escape/assets/evidence/21/banana-terminal'))
 EVIDENCE.mkdir(parents=True, exist_ok=True)
 scene = bpy.data.scenes.new('Banana-Metres')
 scene.unit_settings.system = 'METRIC'

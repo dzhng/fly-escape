@@ -1,5 +1,5 @@
-# Compact study chair
+# Study chair
 
-This upholstered chair uses a 0.6 × 0.65 metre closed grounded footprint and a 0.95-metre back height. Its +Z side is the front; turn it toward the desk independently. The closed upholstered base agrees with the current rectangular solid contract without implying a passage between chair legs.
+The [catalogue](../catalog.json) owns its native envelope. The closed upholstered base matches the rectangular physical footprint without implying passages between legs. +Z faces forward; placement can orient it independently toward the desk.
 
-The [shared authoring source](../author-study-bedroom.py) owns geometry and ochre fabric/dark plinth materials. No runtime scaling, recolouring or alternate collision owner is required.
+The [shared author](../author-study-bedroom.py) owns geometry and materials. Appearance must not require a second collision owner or runtime stretching.
