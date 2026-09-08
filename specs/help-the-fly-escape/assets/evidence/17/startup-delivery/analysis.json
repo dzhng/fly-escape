@@ -1,0 +1,11 @@
+{
+  "workerReadyMs": 3092.8000000715256,
+  "assetsReadyAfterWorkerMs": 1346.0,
+  "firstPlayAfterWorkerMs": 50994.299999952316,
+  "earliestRetrospectiveNoGapAfterWorkerMs": 38811.199999928474,
+  "withOneSecondReserveAfterWorkerMs": 39811.199999928474,
+  "excessAboveRetrospectiveReserveMs": 11183.100000023842,
+  "zeroUnderruns": true,
+  "frameP95Ms": 34,
+  "caveat": "Offline hindsight for this delivery trace only, not a safe predictor for other seeds or future load; other integration work was active."
+}
