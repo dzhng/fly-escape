@@ -11,4 +11,4 @@ Both conditions average four escapes. More exit-room arrivals in the combined co
 
 The actual browser combination finishes with three escapes, matching the first native seed. Its replay and coordinates are banked. Performance under concurrent native computation is not a release gate result. The earlier empty-house comparison remains the control for added-object usefulness; it averaged14/3 escapes.
 
-Level1 star thresholds are provisionally1,4,8 after these playtests: a few escapes should receive intermediate feedback, with the third star above the outcomes in these tuning samples. This is not proof of the requested roughly10% player attainment. Level2 and held-out balance remain open.
+The proposed lower first-level thresholds were rejected by the user and reverted. Both levels retain1,8,15. Level2 and held-out balance remain open.
