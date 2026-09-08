@@ -1,0 +1,10 @@
+[
+  { "label": "empty", "placements": [] },
+  { "label": "apple", "placements": [
+    { "id": 10, "kind": "fruit", "position": { "x": 1.6, "z": 2.3 }, "heading": 0 } ] },
+  { "label": "vinegar", "placements": [
+    { "id": 11, "kind": "vinegar", "position": { "x": 4.2, "z": 2.35 }, "heading": 0 } ] },
+  { "label": "combined", "placements": [
+    { "id": 10, "kind": "fruit", "position": { "x": 1.6, "z": 2.3 }, "heading": 0 },
+    { "id": 11, "kind": "vinegar", "position": { "x": 4.2, "z": 2.35 }, "heading": 0 } ] }
+]
