@@ -382,11 +382,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             v != "--empty-control"
                 && v != "--reference-empty"
                 && v != "--detector-controls"
-                && v != "--no-fans-control"
+                && v != "--fan-only-control"
         })
     {
         return Err(
-            "Usage: campaign_probe GRAPH_DIR CONTENT_JSON tuning|heldout COUNT OUTPUT_JSON [--empty-control|--reference-empty|--detector-controls|--no-fans-control]".into(),
+            "Usage: campaign_probe GRAPH_DIR CONTENT_JSON tuning|heldout COUNT OUTPUT_JSON [--empty-control|--reference-empty|--detector-controls|--fan-only-control]".into(),
         );
     }
     let content_text = std::fs::read_to_string(&args[2])?;
@@ -401,7 +401,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     {
         return Err("reference-empty diagnostic requires at most three seeds and exactly one inhibitory odor cue".into());
     }
-    let no_fans = args.get(6).is_some_and(|v| v == "--no-fans-control");
+    let fan_only = args.get(6).is_some_and(|v| v == "--fan-only-control");
+    if fan_only
+        && content
+            .reference
+            .iter()
+            .filter(|p| p.kind == sim::placement::ToolKind::Fan)
+            .count()
+            != 1
+    {
+        return Err("fan-only comparison requires exactly one fan in the reference setup".into());
+    }
     let topology = topology(&content.level)?;
     let thresholds = content.level.star_thresholds;
     if thresholds[0] == 0 || thresholds[2] > 20 || thresholds.windows(2).any(|v| v[0] >= v[1]) {
@@ -442,18 +452,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     for &seed in seeds.iter().take(count) {
         let mut conditions = vec![];
         let empty = vec![];
-        let without_fans: Vec<_> = content
+        let only_fans: Vec<_> = content
             .reference
             .iter()
-            .filter(|p| p.kind != sim::placement::ToolKind::Fan)
+            .filter(|p| p.kind == sim::placement::ToolKind::Fan)
             .cloned()
             .collect();
         let mut arms = vec![("reference", &content.reference)];
         if !reference_empty {
             arms.push(("poor", &content.poor));
         }
-        if no_fans {
-            arms.push(("no-fans", &without_fans));
+        if fan_only {
+            arms.push(("fan-only", &only_fans));
         } else if args.len() == 7 {
             arms.push(("empty", &empty));
         }
@@ -508,7 +518,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             count == 30 && pairs.len() == 30,
             content.frozen,
             detector,
-            no_fans,
+            fan_only,
         );
         let report = json!({"acceptance":acceptance,"summaries":summaries,"topology":topology,"contentHash":format!("{:x}",Sha256::digest(content_text.as_bytes())),"content":serde_json::from_str::<Value>(&content_text)?,"graphHash":graph.manifest.graph_hash,"neurons":graph.neuron_count(),"edges":graph.edge_count(),"manifestHash":format!("{:x}",Sha256::digest(manifest.as_bytes())),"simulationBuildId":SIMULATION_BUILD_ID,"probeSourceHash":format!("{:x}",Sha256::digest(include_bytes!("campaign_probe.rs"))),"graphLoadSeconds":graph_load_seconds,"seedSet":args[3],"requestedPairs":count,"completedPairs":pairs.len(),"oneStarReferenceAttempts":stars,"medianPairedEscapeDifference":median(diffs),"wallSeconds":start.elapsed().as_secs_f64(),"pairs":pairs});
         std::fs::write(&args[5], serde_json::to_string_pretty(&report)?)?;
@@ -521,7 +531,7 @@ fn acceptance(
     full: bool,
     frozen: bool,
     diagnostic: bool,
-    require_no_fans: bool,
+    require_fan_only: bool,
 ) -> Value {
     let benefit = |arm: &str| {
         summaries
@@ -534,7 +544,7 @@ fn acceptance(
         .and_then(|s| s["oneStarAttempts"].as_u64())
         .is_some_and(|n| n >= 27);
     json!({"diagnosticOnly":!full || diagnostic,"completeSeedSet":full,
-        "seedSetPassed":full && frozen && !diagnostic && enough_stars && benefit("poor") && (!require_no_fans || benefit("no-fans")),
+        "seedSetPassed":full && frozen && !diagnostic && enough_stars && benefit("poor") && (!require_fan_only || benefit("fan-only")),
         "campaignAccepted":false,
         "remaining":"Need matching frozen 30-seed tuning and disjoint 30-seed heldout reports, plus integration/human gates; one partial or individual report cannot accept campaign content"})
 }
@@ -558,7 +568,7 @@ mod tests {
                 json!({"oneStarAttempts":30,"medianEscapes":10}),
             ),
             ("poor".into(), json!({"medianReferenceMinusThis":8})),
-            ("no-fans".into(), json!({"medianReferenceMinusThis":5})),
+            ("fan-only".into(), json!({"medianReferenceMinusThis":5})),
         ]);
         assert_eq!(
             acceptance(&summaries, true, true, false, true)["seedSetPassed"],
@@ -573,7 +583,13 @@ mod tests {
             assert_eq!(gate["seedSetPassed"], false);
             assert_eq!(gate["campaignAccepted"], false);
         }
-        summaries.remove("no-fans");
+        summaries.insert("fan-only".into(), json!({"medianReferenceMinusThis":3}));
+        assert_eq!(
+            acceptance(&summaries, true, true, false, true)["seedSetPassed"],
+            false,
+            "a fan-dominated setup does not prove the other objects add enough value"
+        );
+        summaries.remove("fan-only");
         assert_eq!(
             acceptance(&summaries, true, true, false, true)["seedSetPassed"],
             false
