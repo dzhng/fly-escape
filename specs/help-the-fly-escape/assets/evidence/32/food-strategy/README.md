@@ -26,3 +26,7 @@ Keeping the route food unchanged, adding vinegar beside the fixed Study banana p
 The actual browser counter attempt also finished with1/20 escaped, matching its route-only comparison. The extra object was accepted through the placement UI; the three route positions and seed matched. Native coordinates and browser coordinates remain separate comparisons.
 
 Use room occupancy for this comparison. The counter probe targets the Study banana, whereas the original route probe targets the exit; their target-distance metrics are not comparable. Likewise, adding vinegar changes the set measured by near-added-object metrics. These results support prioritizing food placement and clock/layout balance, without assuming vinegar can already redirect flies away from household distractions.
+
+## Ten-minute continuation diagnostic
+
+The same three seeds and nominal route-food input were run continuously to6000ticks with an empty control. Empty escaped7,4,5; route food escaped7,3,1. A longer horizon alone therefore did not establish a placement benefit. The complete report is `route-food-10min-results.json.gz`; its identity records the pre-anatomical-correction manifest. This is evidence about the old model, not chemical-specific biological validation or accepted level balance.

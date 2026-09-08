@@ -10,8 +10,7 @@ from connectome.artifact import check_olfactory_readouts, metadata
 
 ROOT = Path(__file__).resolve().parents[2]
 REGISTRY = json.loads((ROOT / 'scripts/connectome/pathways.json').read_text())['bodies']
-RECORDED = json.loads((ROOT / 'specs/help-the-fly-escape/assets/evidence/32/food-strategy'
-                       '/input-annotations.json').read_text())['rows']
+RECORDED = json.loads((Path(__file__).with_name('olfactory-annotations.json')).read_text())['rows']
 
 SYNTHETIC_ANNOTATIONS = [
     {'bodyId': 1, 'type': 'DNp01', 'superclass': 'descending_neuron', 'somaSide': 'L'},
