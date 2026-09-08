@@ -467,7 +467,7 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
     },
     "sources": [],
     "starThresholds": [
-      1,
+      5,
       8,
       15
     ],

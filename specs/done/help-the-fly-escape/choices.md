@@ -15,7 +15,7 @@ Final state: graded odor is committed at `c4d6e28`; normal emissions and the gen
 
 A fly wanders into the exit room. From then on, as long as it has an unobstructed line to the window opening, the world adds a steady velocity of 0.06 world units per second toward a point just outside the opening — everywhere in that room — rising to 0.5 within 0.9 m of the opening, the two combined by taking the larger (`crates/sim/src/body.rs`; authored per level as `exitSuction` in `apps/web/src/levels/open-window.ts` and `turn-the-corner.ts`). It is a physical force on the body, not a signal to the brain: it respects walls, line of sight and normal swept-collision/crossing checks, and escape still counts only on a swept outward crossing. You asked for exactly this assistance.
 
-A no-added-object control can earn the first star: the final campaign produced 2 escapes in house 1 and 6 in house 2, against a first threshold of 1. This is a furnished house, not an empty environment. It shows that earning a star need not demonstrate successful placement for every seed; it does not establish a free unlock for every player. Suction and thresholds were chosen separately, and the user explicitly retained both.
+The historical twenty-fly release check produced 2 escapes in house 1 and 6 in house 2 against the then-current first threshold of 1. The user has since raised the first threshold to 5, with sixteen campaign flies. This is a furnished house, not an empty environment. It shows that earning a star need not demonstrate successful placement for every seed; it does not establish a free unlock for every player. Suction and thresholds were chosen separately, and the user explicitly retained both.
 
 - **Provisional call:** keep physical assistance and count every valid escape. Compare placements against the same no-added-object control when doing future balance work.
 - **Confidence:** low in calibrated difficulty; high in the intended physical crossing rule. No threshold change is authorized by this ledger.
@@ -23,7 +23,7 @@ A no-added-object control can earn the first star: the final campaign produced 2
 ### N2. Stars two and three stay at 8 and 15 escapes of 16
 **User decision, recorded for its consequence.**
 
-The thresholds remain 1/8/15 in both authored levels. An earlier reduction was reverted at the user's instruction. No held-out player study establishes attainability or the intended roughly ten-percent three-star rate; the small observed samples cannot justify predicting what most players will achieve.
+The thresholds are 5/8/15 in both authored levels. The user explicitly raised the first-star threshold to five; the higher tiers are unchanged. No held-out player study establishes attainability or the intended roughly ten-percent three-star rate; the small observed samples cannot justify predicting what most players will achieve.
 
 - **Provisional call:** retain the user-selected thresholds and defer difficulty calibration.
 - **Confidence:** low in star-frequency predictions, high that the shipped values match the user's decision.
