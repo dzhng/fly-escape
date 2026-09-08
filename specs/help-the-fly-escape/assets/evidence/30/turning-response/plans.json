@@ -1,0 +1,11 @@
+[
+  { "label": "t16-empty", "speedScale": 1.0, "turnScale": 2.0, "placements": [] },
+  { "label": "t16-cornerfan-only", "speedScale": 1.0, "turnScale": 2.0, "placements": [
+    { "id": 13, "kind": "fan",     "position": { "x": 2.60, "z": 2.55 }, "heading": 0 }
+  ] },
+  { "label": "t16-backpush-cornerfan", "speedScale": 1.0, "turnScale": 2.0, "placements": [
+    { "id": 11, "kind": "vinegar", "position": { "x": 1.90, "z": 8.90 }, "heading": 0 },
+    { "id": 12, "kind": "vinegar", "position": { "x": 2.90, "z": 8.90 }, "heading": 0 },
+    { "id": 13, "kind": "fan",     "position": { "x": 2.60, "z": 2.55 }, "heading": 0 }
+  ] }
+]
