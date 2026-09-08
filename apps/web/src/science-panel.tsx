@@ -239,11 +239,18 @@ function RosterEntry({
     >
       <canvas
         className="fly-preview"
+        hidden={fly?.body.outcome === "escaped"}
         width={PREVIEW_PIXELS}
         height={PREVIEW_PIXELS}
         aria-hidden="true"
         ref={(canvas) => registerPreview(id, canvas)}
       />
+      {fly?.body.outcome === "escaped" && (
+        <svg className="fly-preview escaped-check" viewBox="0 0 46 46" aria-hidden="true">
+          <circle cx="23" cy="23" r="17" fill="#e3f0dd" stroke="#b4d1a5" />
+          <path d="m15 23 5 5 11-12" fill="none" stroke="#347448" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      )}
       <strong>{String(id + 1).padStart(2, "0")}</strong>
       <span>{(fly?.body.outcome ?? fly?.body.mode ?? "initial").replace("timedOut", "dead")}</span>
     </button>

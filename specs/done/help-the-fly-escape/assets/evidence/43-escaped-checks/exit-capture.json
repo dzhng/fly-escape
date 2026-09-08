@@ -1,0 +1,29 @@
+{
+  "spec": {
+    "schemaVersion": 1,
+    "attemptId": "bad9e41e-3980-4042-b68d-2e00932507d0",
+    "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+    "graphManifestHash": "458f8e27d389e2b0f6a706009a49b661f19a6515c8742ef8ff4084efe98a8db3",
+    "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+    "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb",
+    "placements": [],
+    "levelHash": "79970c5ec7ba7b08f398ca71c3aa87038fbb051aec8e0d47f664fa7a7e86a292",
+    "levelId": "open-window",
+    "rootSeed": "3471598828362488033",
+    "flyCount": 16,
+    "durationTicks": 100
+  },
+  "result": {
+    "attemptId": "bad9e41e-3980-4042-b68d-2e00932507d0",
+    "completedTick": 16,
+    "outcomes": {
+      "escaped": 16,
+      "starved": 0,
+      "zapped": 0,
+      "caught": 0,
+      "timedOut": 0,
+      "score": 16
+    },
+    "stars": 3
+  }
+}

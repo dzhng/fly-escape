@@ -33,8 +33,13 @@ try {
  for(const [name,tick] of [['near-exit',0],['drawn-through',Math.floor(completed.computedTick/2)],['escaped',completed.computedTick]]){
   await seek.fill(String(tick));await seek.dispatchEvent('input');
   await page.waitForFunction(t=>Math.abs(Number(document.querySelector('[data-cursor-tick]').dataset.cursorTick)-t)<0.1,tick);
+  if(name==='near-exit') assert.equal(await page.locator('.escaped-check').count(),0);
+  if(name==='escaped') assert.equal(await page.locator('.escaped-check').count(),16);
   await page.screenshot({path:output+'/'+name+'.png'});
  }
+ await seek.fill('0');await seek.dispatchEvent('input');
+ await page.waitForFunction(()=>document.querySelectorAll('.escaped-check').length===0);
+ assert.equal(await page.locator('canvas.fly-preview:visible').count(),16);
  await writeFile(output+'/exit-capture.json',JSON.stringify({spec:completed.spec,result:completed.result},null,2));
  console.log(`All sixteen nearby flies physically escaped by tick ${completed.result.completedTick}.`);
 } finally {await browser.close();}
