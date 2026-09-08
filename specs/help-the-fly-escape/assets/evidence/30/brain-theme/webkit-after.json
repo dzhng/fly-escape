@@ -1,0 +1,1686 @@
+{
+  "engine": "webkit",
+  "url": "http://127.0.0.1:5322",
+  "checks": [
+    "setup models ready",
+    "twenty flies playing with native models ready",
+    "pause and reverse/forward seek",
+    "cancel returns to ready setup",
+    "new retry attempt playing with native models ready"
+  ],
+  "errors": [],
+  "console": [
+    "[Fly escape] attempt ready {schemaVersion: 1, attemptId: f16c42e7-aa3b-42de-802e-ea54c30ffaa0, graphHash: 6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454, graphManifestHash: 3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5, simulationBuildId: 5fe7c75c705d2bb97d2f7cfb2a4849f85181ec6f63b58a27834bc3b6c28876f7}",
+    "[Fly escape] playback {spec: Object, initialBodies: Array, userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap… (KHTML, like Gecko) Version/26.6 Safari/605.1.15, viewport: undefined, devicePixelRatio: 1}",
+    "[Fly escape] playback {spec: Object, initialBodies: Array, userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap… (KHTML, like Gecko) Version/26.6 Safari/605.1.15, viewport: undefined, devicePixelRatio: 1}",
+    "[Fly escape] attempt ready {schemaVersion: 1, attemptId: 22bfc142-efe0-4777-af3f-c6f2d10c635d, graphHash: 6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454, graphManifestHash: 3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5, simulationBuildId: 5fe7c75c705d2bb97d2f7cfb2a4849f85181ec6f63b58a27834bc3b6c28876f7}",
+    "[Fly escape] playback {spec: Object, initialBodies: Array, userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap… (KHTML, like Gecko) Version/26.6 Safari/605.1.15, viewport: undefined, devicePixelRatio: 1}",
+    "[Fly escape] playback {spec: Object, initialBodies: Array, userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap… (KHTML, like Gecko) Version/26.6 Safari/605.1.15, viewport: undefined, devicePixelRatio: 1}"
+  ],
+  "models": [
+    {
+      "url": "http://127.0.0.1:5322/assets/floor-CWY_kn0a.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/tile-floor-DMqAzEt4.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sofa-Ht1b2HT8.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/desk-Ctq-uvrh.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/kitchen-AXOHy94n.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/chair-C6SsO7ej.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/window-D0F6K1F7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sconce-CqhfygL7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/bed-BAtm8UL6.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/wall-plant-BH3kXnr0.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/doorway-bOmbiQ6W.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/exit-window-BZ-EvLG2.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/vinegar-DIfAr2vf.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/apple-Be8DVIkK.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/crumbs-DsKjrqwK.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/fan-D2OltmOR.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/banana-pYrTQDC8.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/lamp-D7bX1F7V.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/shade-ByQD8-3_.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/dirty-dishes-U8YVj2x7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/worn-shoes-T9hDUp5C.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sleeping-cat-CvrZjof7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/crumpled-laundry-D-9r_zaW.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/bug-zapper-CMFOC8K4.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/fly-BMIKK5wf.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/corner-spider-C4Eb2fi5.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/floor-CWY_kn0a.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/tile-floor-DMqAzEt4.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sofa-Ht1b2HT8.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/kitchen-AXOHy94n.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/desk-Ctq-uvrh.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/chair-C6SsO7ej.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/bed-BAtm8UL6.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/window-D0F6K1F7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sconce-CqhfygL7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/wall-plant-BH3kXnr0.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/doorway-bOmbiQ6W.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/exit-window-BZ-EvLG2.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/apple-Be8DVIkK.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/banana-pYrTQDC8.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/crumbs-DsKjrqwK.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/vinegar-DIfAr2vf.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/lamp-D7bX1F7V.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/fan-D2OltmOR.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/shade-ByQD8-3_.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/worn-shoes-T9hDUp5C.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/crumpled-laundry-D-9r_zaW.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/dirty-dishes-U8YVj2x7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/bug-zapper-CMFOC8K4.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sleeping-cat-CvrZjof7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/corner-spider-C4Eb2fi5.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/fly-BMIKK5wf.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/floor-CWY_kn0a.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/tile-floor-DMqAzEt4.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sofa-Ht1b2HT8.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/desk-Ctq-uvrh.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/chair-C6SsO7ej.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/kitchen-AXOHy94n.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/bed-BAtm8UL6.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/window-D0F6K1F7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sconce-CqhfygL7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/exit-window-BZ-EvLG2.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/wall-plant-BH3kXnr0.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/doorway-bOmbiQ6W.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/apple-Be8DVIkK.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/banana-pYrTQDC8.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/crumbs-DsKjrqwK.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/vinegar-DIfAr2vf.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/fan-D2OltmOR.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/lamp-D7bX1F7V.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/shade-ByQD8-3_.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/worn-shoes-T9hDUp5C.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/dirty-dishes-U8YVj2x7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/crumpled-laundry-D-9r_zaW.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/bug-zapper-CMFOC8K4.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sleeping-cat-CvrZjof7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/fly-BMIKK5wf.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/corner-spider-C4Eb2fi5.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/floor-CWY_kn0a.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/tile-floor-DMqAzEt4.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/kitchen-AXOHy94n.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sofa-Ht1b2HT8.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/desk-Ctq-uvrh.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/chair-C6SsO7ej.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/bed-BAtm8UL6.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/window-D0F6K1F7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/wall-plant-BH3kXnr0.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sconce-CqhfygL7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/doorway-bOmbiQ6W.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/exit-window-BZ-EvLG2.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/apple-Be8DVIkK.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/banana-pYrTQDC8.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/crumbs-DsKjrqwK.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/vinegar-DIfAr2vf.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/fan-D2OltmOR.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/lamp-D7bX1F7V.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/shade-ByQD8-3_.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/worn-shoes-T9hDUp5C.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/dirty-dishes-U8YVj2x7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/crumpled-laundry-D-9r_zaW.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sleeping-cat-CvrZjof7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/bug-zapper-CMFOC8K4.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/corner-spider-C4Eb2fi5.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/fly-BMIKK5wf.glb",
+      "status": 200
+    }
+  ],
+  "version": "26.6",
+  "capabilities": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Safari/605.1.15",
+    "webgpu": true,
+    "adapter": true
+  },
+  "setupRaster": [
+    {
+      "attempt": 0,
+      "quantizedColors": 316
+    }
+  ],
+  "webgl": {
+    "available": true,
+    "version": "WebGL 2.0",
+    "renderer": "Apple GPU"
+  },
+  "attempt": {
+    "spec": {
+      "schemaVersion": 1,
+      "attemptId": "f16c42e7-aa3b-42de-802e-ea54c30ffaa0",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+      "simulationBuildId": "5fe7c75c705d2bb97d2f7cfb2a4849f85181ec6f63b58a27834bc3b6c28876f7",
+      "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb",
+      "placements": [],
+      "levelHash": "59992fd13e6ad976841264cc734967053eb8249338ed7fe592c55c861222b456",
+      "levelId": "open-window",
+      "rootSeed": "11828552775441969501",
+      "flyCount": 20,
+      "durationTicks": 3000
+    },
+    "initialBodies": [
+      {
+        "pose": {
+          "position": {
+            "x": 3.08575527843461,
+            "z": 2.1695234252845244
+          },
+          "heading": 0.7850810314468707
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.3828299234126608,
+          0,
+          0.9238188403252318
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.1667316329071706,
+            "z": 2.0833337578573192
+          },
+          "heading": 2.6621976673854615
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          -0.5190171254910382,
+          0,
+          0.8547638407460975
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.060857071443693,
+            "z": 2.5493393166591347
+          },
+          "heading": 1.001166554861833
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.28097979963978037,
+          0,
+          0.9597136824044913
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.2691990345410806,
+            "z": 2.425413011591452
+          },
+          "heading": 4.624657729568793
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9990380577155176,
+          0,
+          -0.04385155910576322
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.1026139568087423,
+            "z": 2.1785269707278947
+          },
+          "heading": 4.56654724099382
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9973424513104995,
+          0,
+          -0.07285626132299103
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.171324999875086,
+            "z": 2.3973888762103917
+          },
+          "heading": 4.329513766084613
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9817317155520925,
+          0,
+          -0.19027043564133972
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.3137477774514044,
+            "z": 2.340021782262376
+          },
+          "heading": 0.8015626508798216
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.3752039952072666,
+          0,
+          0.9269422646424671
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.0452069572389626,
+            "z": 2.073159982155395
+          },
+          "heading": 0.691308938041111
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.4257075581392102,
+          0,
+          0.904860804181036
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.0601181042103436,
+            "z": 2.037025521226716
+          },
+          "heading": 2.351106090786661
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          -0.3803316623237269,
+          0,
+          0.9248501644234436
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.2192216020424884,
+            "z": 2.1577242529406004
+          },
+          "heading": 1.4911935713268432
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.03979087000978765,
+          0,
+          0.9992080297234727
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.3643761579680733,
+            "z": 2.2381207044023235
+          },
+          "heading": 0.20582935092542928
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.6307221753925503,
+          0,
+          0.7760087225463959
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.331753899665582,
+            "z": 2.670676484653068
+          },
+          "heading": 0.46395021414285675
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.525602400447635,
+          0,
+          0.8507303430839198
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.022692277048542,
+            "z": 2.0242802190964224
+          },
+          "heading": 3.764613621067031
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.8898008782343028,
+          0,
+          -0.45634898607695357
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.3014267088242795,
+            "z": 2.3201940798310865
+          },
+          "heading": 1.37725097732913
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.09662170022435251,
+          0,
+          0.9953211778344492
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.2643831644697245,
+            "z": 2.628589242822062
+          },
+          "heading": 4.688737818850274
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9999300786346073,
+          0,
+          -0.011825305145671653
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.0291753494617453,
+            "z": 2.448409347468837
+          },
+          "heading": 1.0872648513484418
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.23941738308202928,
+          0,
+          0.9709167403429364
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.2810731026510482,
+            "z": 2.1667085447563985
+          },
+          "heading": 4.105157959795168
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9542617910721636,
+          0,
+          -0.2989722965422488
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.205884350682895,
+            "z": 2.5852050127337547
+          },
+          "heading": 2.558103120689464
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          -0.47384625238128536,
+          0,
+          0.8806075908736032
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.0374526832422215,
+            "z": 2.0549861039273156
+          },
+          "heading": 3.7283316698450295
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.8813763059825063,
+          0,
+          -0.4724148677302941
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.1852395755112104,
+            "z": 2.211463363688215
+          },
+          "heading": 3.291395050783537
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.7580378439159816,
+          0,
+          -0.6522105696714904
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      }
+    ],
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Safari/605.1.15",
+    "viewport": [
+      1440,
+      900
+    ],
+    "devicePixelRatio": 1,
+    "cursorTick": 0,
+    "sampleTick": 0,
+    "computedTick": 820,
+    "state": "playing",
+    "mode": "fast",
+    "speed": 5,
+    "fastMultiplier": 5,
+    "complete": false,
+    "initialWaitMs": 15140,
+    "warmWaitMs": 15008,
+    "productionMs": 14556,
+    "activeNeuralSteps": 13703,
+    "activeEquivalentProductionRate": 4.706993679582304,
+    "underruns": 0,
+    "frameIntervals": {
+      "count": 831,
+      "p95Ms": 17,
+      "p95Capped": false,
+      "maxMs": 475,
+      "histogramResolutionMs": 1
+    },
+    "interactions": {
+      "count": 0,
+      "p95Ms": null,
+      "p95Capped": false,
+      "maxMs": 0,
+      "histogramResolutionMs": 1,
+      "measurement": "control callback to synchronous scene render completion; excludes browser paint"
+    },
+    "memory": {
+      "wasmBytes": 102825984,
+      "archiveOwnedChunkBytes": 14928316,
+      "archiveBoundBytes": 134217728,
+      "graphBytes": 9864584,
+      "brainStateBytes": 64400000,
+      "observedJSHeapBytes": null,
+      "note": "WASM includes graph and brain state; do not add those again. Download report includes an on-demand GPU memory estimate."
+    },
+    "renderer": {
+      "flyCount": 20,
+      "modelKind": "glb",
+      "drawCalls": 1177,
+      "triangles": 435848,
+      "geometries": 307,
+      "textures": 30
+    },
+    "camera": {
+      "near": 0.0013973753773755602,
+      "far": 58.864041043888655,
+      "fov": 38,
+      "following": true,
+      "distance": 0.027947507547511206,
+      "minDistance": 0.013973753773755603,
+      "maxDistance": 20.745148090393798,
+      "closeDistance": 0.027947507547511206,
+      "target": [
+        3.08575527843461,
+        0.6009010391100541,
+        2.1695234252845244
+      ],
+      "yaw": 0.7853981633974483,
+      "elevation": 0.9048518739413057,
+      "rotated": false,
+      "width": 1075,
+      "height": 534,
+      "selectedFlyId": 0,
+      "displayScale": 1,
+      "flies": [
+        {
+          "id": 0,
+          "x": 537.5000000000031,
+          "y": 267,
+          "visible": true
+        },
+        {
+          "id": 1,
+          "x": 3570.041632849118,
+          "y": 192.63314381963355,
+          "visible": false
+        },
+        {
+          "id": 2,
+          "x": 2283.4451731084405,
+          "y": -936.9730597179598,
+          "visible": false
+        },
+        {
+          "id": 3,
+          "x": 408.0178449514235,
+          "y": 1819.3125633293218,
+          "visible": false
+        },
+        {
+          "id": 4,
+          "x": 546.355267299667,
+          "y": 878.3015875991751,
+          "visible": false
+        },
+        {
+          "id": 5,
+          "x": 1253.446055585737,
+          "y": -973.0609324631733,
+          "visible": false
+        },
+        {
+          "id": 6,
+          "x": 321.77690417465294,
+          "y": -908.7047383534585,
+          "visible": false
+        },
+        {
+          "id": 7,
+          "x": 886.231444404097,
+          "y": -405.64645767361935,
+          "visible": false
+        },
+        {
+          "id": 8,
+          "x": 640.9649059869788,
+          "y": 651.4512806858722,
+          "visible": false
+        },
+        {
+          "id": 9,
+          "x": 716.5835041013503,
+          "y": 1028.6967764238743,
+          "visible": false
+        },
+        {
+          "id": 10,
+          "x": -393.17569181560117,
+          "y": -942.8723809741318,
+          "visible": false
+        },
+        {
+          "id": 11,
+          "x": -270.84722789771337,
+          "y": 3788.063099982838,
+          "visible": false
+        },
+        {
+          "id": 12,
+          "x": 614.1201293074237,
+          "y": 600.2937801080013,
+          "visible": false
+        },
+        {
+          "id": 13,
+          "x": 267.68024091763743,
+          "y": -928.7733886281854,
+          "visible": false
+        },
+        {
+          "id": 14,
+          "x": -159.47820049969462,
+          "y": 2814.577499455791,
+          "visible": false
+        },
+        {
+          "id": 15,
+          "x": 3196.827363505157,
+          "y": -1118.7392475763822,
+          "visible": false
+        },
+        {
+          "id": 16,
+          "x": 799.9120259033513,
+          "y": 1159.3374116326022,
+          "visible": false
+        },
+        {
+          "id": 17,
+          "x": 1323.701270655006,
+          "y": -853.7720523670234,
+          "visible": false
+        },
+        {
+          "id": 18,
+          "x": 601.3993203242301,
+          "y": 646.4872441156591,
+          "visible": false
+        },
+        {
+          "id": 19,
+          "x": 609.8365238683617,
+          "y": 1063.2808138531338,
+          "visible": false
+        }
+      ]
+    },
+    "result": null
+  },
+  "retry": {
+    "spec": {
+      "schemaVersion": 1,
+      "attemptId": "22bfc142-efe0-4777-af3f-c6f2d10c635d",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+      "simulationBuildId": "5fe7c75c705d2bb97d2f7cfb2a4849f85181ec6f63b58a27834bc3b6c28876f7",
+      "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb",
+      "placements": [],
+      "levelHash": "59992fd13e6ad976841264cc734967053eb8249338ed7fe592c55c861222b456",
+      "levelId": "open-window",
+      "rootSeed": "6087205101098975252",
+      "flyCount": 20,
+      "durationTicks": 3000
+    },
+    "initialBodies": [
+      {
+        "pose": {
+          "position": {
+            "x": 3.0446179191235543,
+            "z": 2.404213951667589
+          },
+          "heading": 3.7173468389826914
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.8787683262767694,
+          0,
+          -0.4772486026514121
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.2910109382569614,
+            "z": 2.0729882163592377
+          },
+          "heading": 6.171222212323127
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.7455633166132973,
+          0,
+          0.6664347987017036
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.446893981149218,
+            "z": 2.6927437163264956
+          },
+          "heading": 4.20085656663537
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9674697394968184,
+          0,
+          -0.2529867647881177
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.1004491786970596,
+            "z": 2.344536760535293
+          },
+          "heading": 5.943527990271751
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.8164447337334669,
+          0,
+          0.5774235852118345
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.351160756143761,
+            "z": 2.417342618985646
+          },
+          "heading": 1.5407321496812212
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.015031522445543066,
+          0,
+          0.9998870202842765
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.242248264616422,
+            "z": 2.3540260799517654
+          },
+          "heading": 1.399217408760977
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.08568426507759942,
+          0,
+          0.9963223407703512
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.39982543185761,
+            "z": 2.57210034158092
+          },
+          "heading": 3.619813233831507
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.8544589249957537,
+          0,
+          -0.5195189558573402
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.264406794760134,
+            "z": 2.582213365286298
+          },
+          "heading": 1.6195773864980363
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          -0.02438811161081439,
+          0,
+          0.9997025657724692
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.0104353082657602,
+            "z": 2.5257117557193878
+          },
+          "heading": 5.443660256499975
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9338966819140472,
+          0,
+          0.35754298693993863
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.006857304507311,
+            "z": 2.026968777544469
+          },
+          "heading": 4.282855055680388
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.977026085661172,
+          0,
+          -0.2131197502288521
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.4203182292069005,
+            "z": 2.1399247091663627
+          },
+          "heading": 2.841548634377866
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          -0.5934803031548777,
+          0,
+          0.8048485135522053
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.107493623860746,
+            "z": 2.136260027046505
+          },
+          "heading": 1.1191306350315788
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.22391813791854767,
+          0,
+          0.9746079558012496
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.1867502347054435,
+            "z": 2.232859988486564
+          },
+          "heading": 2.924301121569755
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          -0.6262644653517141,
+          0,
+          0.7796106845328198
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.2987269347645545,
+            "z": 2.3252868612378466
+          },
+          "heading": 4.438300188801486
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.99062410476864,
+          0,
+          -0.1366158228439541
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.222903548183375,
+            "z": 2.0688281256298904
+          },
+          "heading": 2.6469290325260637
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          -0.5124765255780679,
+          0,
+          0.8587012348491366
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.204377544275874,
+            "z": 2.424232346105933
+          },
+          "heading": 5.560030110144297
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9115244047940839,
+          0,
+          0.41124598413211383
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.185873429920116,
+            "z": 2.479066742539267
+          },
+          "heading": 3.098323070118165
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          -0.6916443873938546,
+          0,
+          0.7222382165093313
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.1121125924699267,
+            "z": 2.6025487300667476
+          },
+          "heading": 4.9469217926867595
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9931321706033054,
+          0,
+          0.1169978278121743
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.2333488802481813,
+            "z": 2.3938360310947018
+          },
+          "heading": 4.939896126472877
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9935370359835856,
+          0,
+          0.11350840554316567
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.4079601184899833,
+            "z": 2.3988948084262995
+          },
+          "heading": 4.351006547062438
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9837197095433463,
+          0,
+          -0.17970957975565524
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      }
+    ],
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Safari/605.1.15",
+    "viewport": [
+      1440,
+      900
+    ],
+    "devicePixelRatio": 1,
+    "cursorTick": 0,
+    "sampleTick": 0,
+    "computedTick": 900,
+    "state": "playing",
+    "mode": "fast",
+    "speed": 5,
+    "fastMultiplier": 5,
+    "complete": false,
+    "initialWaitMs": 18440,
+    "warmWaitMs": 18363,
+    "productionMs": 17928,
+    "activeNeuralSteps": 16300,
+    "activeEquivalentProductionRate": 4.538235294117647,
+    "underruns": 0,
+    "frameIntervals": {
+      "count": 1019,
+      "p95Ms": 18,
+      "p95Capped": false,
+      "maxMs": 497,
+      "histogramResolutionMs": 1
+    },
+    "interactions": {
+      "count": 0,
+      "p95Ms": null,
+      "p95Capped": false,
+      "maxMs": 0,
+      "histogramResolutionMs": 1,
+      "measurement": "control callback to synchronous scene render completion; excludes browser paint"
+    },
+    "memory": {
+      "wasmBytes": 102825984,
+      "archiveOwnedChunkBytes": 16726680,
+      "archiveBoundBytes": 134217728,
+      "graphBytes": 9864584,
+      "brainStateBytes": 64400000,
+      "observedJSHeapBytes": null,
+      "note": "WASM includes graph and brain state; do not add those again. Download report includes an on-demand GPU memory estimate."
+    },
+    "renderer": {
+      "flyCount": 20,
+      "modelKind": "glb",
+      "drawCalls": 1217,
+      "triangles": 440368,
+      "geometries": 307,
+      "textures": 30
+    },
+    "camera": {
+      "near": 0.0013973753773755602,
+      "far": 58.864041043888655,
+      "fov": 38,
+      "following": true,
+      "distance": 0.027947507547511206,
+      "minDistance": 0.013973753773755603,
+      "maxDistance": 20.745148090393798,
+      "closeDistance": 0.027947507547511206,
+      "target": [
+        3.0446179191235543,
+        0.6009010391100541,
+        2.404213951667589
+      ],
+      "yaw": 0.7853981633974483,
+      "elevation": 0.9048518739413057,
+      "rotated": false,
+      "width": 1075,
+      "height": 534,
+      "selectedFlyId": 0,
+      "displayScale": 1,
+      "flies": [
+        {
+          "id": 0,
+          "x": 537.5,
+          "y": 266.99999999998766,
+          "visible": true
+        },
+        {
+          "id": 1,
+          "x": 1130.0810573321978,
+          "y": 733.6952814382546,
+          "visible": false
+        },
+        {
+          "id": 2,
+          "x": 309.74033422277995,
+          "y": -820.6831532010382,
+          "visible": false
+        },
+        {
+          "id": 3,
+          "x": 664.3497582554046,
+          "y": 836.7579466277685,
+          "visible": false
+        },
+        {
+          "id": 4,
+          "x": -902.7767651547653,
+          "y": -966.8877649264913,
+          "visible": false
+        },
+        {
+          "id": 5,
+          "x": 850.8998379929862,
+          "y": 1074.0875524952469,
+          "visible": false
+        },
+        {
+          "id": 6,
+          "x": 25.403963239317886,
+          "y": -857.4785664190103,
+          "visible": false
+        },
+        {
+          "id": 7,
+          "x": 608.0406785316093,
+          "y": 1677.7352895090723,
+          "visible": false
+        },
+        {
+          "id": 8,
+          "x": 8909.231443522214,
+          "y": -3425.138539913221,
+          "visible": false
+        },
+        {
+          "id": 9,
+          "x": 812.0939161895913,
+          "y": 424.22149895501565,
+          "visible": true
+        },
+        {
+          "id": 10,
+          "x": -16396.21102047375,
+          "y": -2051.005473263532,
+          "visible": false
+        },
+        {
+          "id": 11,
+          "x": 2080.8223031052653,
+          "y": -485.27847352625173,
+          "visible": false
+        },
+        {
+          "id": 12,
+          "x": 874.330183093695,
+          "y": 802.9365525974033,
+          "visible": false
+        },
+        {
+          "id": 13,
+          "x": -3221.2949891046887,
+          "y": -1287.7246188909533,
+          "visible": false
+        },
+        {
+          "id": 14,
+          "x": 1035.243086888325,
+          "y": 652.5479864484837,
+          "visible": false
+        },
+        {
+          "id": 15,
+          "x": 720.1384247922216,
+          "y": 1134.4571350507779,
+          "visible": false
+        },
+        {
+          "id": 16,
+          "x": 627.678931805745,
+          "y": 1207.2955397014907,
+          "visible": false
+        },
+        {
+          "id": 17,
+          "x": 1351.064724681086,
+          "y": -1032.7540603055036,
+          "visible": false
+        },
+        {
+          "id": 18,
+          "x": -1647.4281402600693,
+          "y": -1271.9832891941805,
+          "visible": false
+        },
+        {
+          "id": 19,
+          "x": 1128.3804520883584,
+          "y": 1556.2137518633888,
+          "visible": false
+        }
+      ]
+    },
+    "result": null
+  },
+  "passed": true
+}

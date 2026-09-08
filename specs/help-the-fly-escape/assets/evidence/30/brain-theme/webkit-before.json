@@ -1,0 +1,1691 @@
+{
+  "engine": "webkit",
+  "url": "http://127.0.0.1:5322",
+  "checks": [
+    "setup models ready",
+    "twenty flies playing with native models ready",
+    "pause and reverse/forward seek",
+    "cancel returns to ready setup",
+    "new retry attempt playing with native models ready"
+  ],
+  "errors": [
+    "ResizeObserver loop completed with undelivered notifications.",
+    "ResizeObserver loop completed with undelivered notifications."
+  ],
+  "console": [
+    "[Fly escape] attempt ready {schemaVersion: 1, attemptId: 44bba95b-d406-4e94-95cd-03cada257ee1, graphHash: 6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454, graphManifestHash: 3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5, simulationBuildId: 5fe7c75c705d2bb97d2f7cfb2a4849f85181ec6f63b58a27834bc3b6c28876f7}",
+    "[Fly escape] playback {spec: Object, initialBodies: Array, userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap… (KHTML, like Gecko) Version/26.6 Safari/605.1.15, viewport: undefined, devicePixelRatio: 1}",
+    "[Fly escape] playback {spec: Object, initialBodies: Array, userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap… (KHTML, like Gecko) Version/26.6 Safari/605.1.15, viewport: undefined, devicePixelRatio: 1}",
+    "[Fly escape] attempt ready {schemaVersion: 1, attemptId: b79d48b6-31be-468f-8f90-8dd574efe79d, graphHash: 6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454, graphManifestHash: 3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5, simulationBuildId: 5fe7c75c705d2bb97d2f7cfb2a4849f85181ec6f63b58a27834bc3b6c28876f7}",
+    "[Fly escape] playback {spec: Object, initialBodies: Array, userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap… (KHTML, like Gecko) Version/26.6 Safari/605.1.15, viewport: undefined, devicePixelRatio: 1}",
+    "[Fly escape] playback {spec: Object, initialBodies: Array, userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap… (KHTML, like Gecko) Version/26.6 Safari/605.1.15, viewport: undefined, devicePixelRatio: 1}"
+  ],
+  "models": [
+    {
+      "url": "http://127.0.0.1:5322/assets/floor-CWY_kn0a.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/tile-floor-DMqAzEt4.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sofa-Ht1b2HT8.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/kitchen-AXOHy94n.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/desk-Ctq-uvrh.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/chair-C6SsO7ej.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/bed-BAtm8UL6.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/window-D0F6K1F7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sconce-CqhfygL7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/wall-plant-BH3kXnr0.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/doorway-bOmbiQ6W.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/exit-window-BZ-EvLG2.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/apple-Be8DVIkK.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/banana-pYrTQDC8.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/crumbs-DsKjrqwK.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/vinegar-DIfAr2vf.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/fan-D2OltmOR.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/lamp-D7bX1F7V.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/shade-ByQD8-3_.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/worn-shoes-T9hDUp5C.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/dirty-dishes-U8YVj2x7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sleeping-cat-CvrZjof7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/crumpled-laundry-D-9r_zaW.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/bug-zapper-CMFOC8K4.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/corner-spider-C4Eb2fi5.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/fly-BMIKK5wf.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/floor-CWY_kn0a.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/tile-floor-DMqAzEt4.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sofa-Ht1b2HT8.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/kitchen-AXOHy94n.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/desk-Ctq-uvrh.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/chair-C6SsO7ej.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/bed-BAtm8UL6.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/window-D0F6K1F7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/doorway-bOmbiQ6W.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/wall-plant-BH3kXnr0.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sconce-CqhfygL7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/exit-window-BZ-EvLG2.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/apple-Be8DVIkK.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/banana-pYrTQDC8.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/crumbs-DsKjrqwK.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/vinegar-DIfAr2vf.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/fan-D2OltmOR.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/lamp-D7bX1F7V.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/shade-ByQD8-3_.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/worn-shoes-T9hDUp5C.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/crumpled-laundry-D-9r_zaW.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sleeping-cat-CvrZjof7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/dirty-dishes-U8YVj2x7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/bug-zapper-CMFOC8K4.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/corner-spider-C4Eb2fi5.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/fly-BMIKK5wf.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/floor-CWY_kn0a.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/tile-floor-DMqAzEt4.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sofa-Ht1b2HT8.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/kitchen-AXOHy94n.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/desk-Ctq-uvrh.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/chair-C6SsO7ej.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/bed-BAtm8UL6.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/wall-plant-BH3kXnr0.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sconce-CqhfygL7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/window-D0F6K1F7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/doorway-bOmbiQ6W.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/exit-window-BZ-EvLG2.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/banana-pYrTQDC8.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/apple-Be8DVIkK.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/crumbs-DsKjrqwK.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/vinegar-DIfAr2vf.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/fan-D2OltmOR.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/lamp-D7bX1F7V.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/shade-ByQD8-3_.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/worn-shoes-T9hDUp5C.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/dirty-dishes-U8YVj2x7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/crumpled-laundry-D-9r_zaW.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/bug-zapper-CMFOC8K4.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sleeping-cat-CvrZjof7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/corner-spider-C4Eb2fi5.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/fly-BMIKK5wf.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/floor-CWY_kn0a.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/tile-floor-DMqAzEt4.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/kitchen-AXOHy94n.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sofa-Ht1b2HT8.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/desk-Ctq-uvrh.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/chair-C6SsO7ej.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/bed-BAtm8UL6.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/window-D0F6K1F7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/doorway-bOmbiQ6W.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sconce-CqhfygL7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/exit-window-BZ-EvLG2.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/wall-plant-BH3kXnr0.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/apple-Be8DVIkK.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/banana-pYrTQDC8.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/crumbs-DsKjrqwK.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/vinegar-DIfAr2vf.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/fan-D2OltmOR.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/lamp-D7bX1F7V.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/shade-ByQD8-3_.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/worn-shoes-T9hDUp5C.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/dirty-dishes-U8YVj2x7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/crumpled-laundry-D-9r_zaW.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/sleeping-cat-CvrZjof7.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/bug-zapper-CMFOC8K4.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/corner-spider-C4Eb2fi5.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5322/assets/fly-BMIKK5wf.glb",
+      "status": 200
+    }
+  ],
+  "version": "26.6",
+  "capabilities": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Safari/605.1.15",
+    "webgpu": true,
+    "adapter": true
+  },
+  "setupRaster": [
+    {
+      "attempt": 0,
+      "quantizedColors": 314
+    }
+  ],
+  "webgl": {
+    "available": true,
+    "version": "WebGL 2.0",
+    "renderer": "Apple GPU"
+  },
+  "attempt": {
+    "spec": {
+      "schemaVersion": 1,
+      "attemptId": "44bba95b-d406-4e94-95cd-03cada257ee1",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+      "simulationBuildId": "5fe7c75c705d2bb97d2f7cfb2a4849f85181ec6f63b58a27834bc3b6c28876f7",
+      "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb",
+      "placements": [],
+      "levelHash": "59992fd13e6ad976841264cc734967053eb8249338ed7fe592c55c861222b456",
+      "levelId": "open-window",
+      "rootSeed": "15866954243243631773",
+      "flyCount": 20,
+      "durationTicks": 3000
+    },
+    "initialBodies": [
+      {
+        "pose": {
+          "position": {
+            "x": 3.1987594364391163,
+            "z": 2.3821250422980436
+          },
+          "heading": 1.220829455365107
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.17409182627857017,
+          0,
+          0.9847294227466712
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.05036615092282,
+            "z": 2.0086798620851547
+          },
+          "heading": 2.6455957079593913
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          -0.5119039480123732,
+          0,
+          0.8590426927745475
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.4001920835652966,
+            "z": 2.47009718850421
+          },
+          "heading": 1.8723846128943187
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          -0.15022331094780025,
+          0,
+          0.9886520909035093
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.2233226510395205,
+            "z": 2.57116445175679
+          },
+          "heading": 2.7749355947241274
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          -0.5663494055063732,
+          0,
+          0.8241652448887768
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.37364098126385,
+            "z": 2.677695612139426
+          },
+          "heading": 5.069635776875562
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9840892129274935,
+          0,
+          0.1776750432664815
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.0372848806841346,
+            "z": 2.5101007275308582
+          },
+          "heading": 5.444182370496256
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9338033109933482,
+          0,
+          0.3577867750181109
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.06804236136287,
+            "z": 2.621905474794047
+          },
+          "heading": 3.4391966168454884
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.8041238521618578,
+          0,
+          -0.5944617989277148
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.0024559424577553,
+            "z": 2.5595233926462218
+          },
+          "heading": 5.6831905852472335
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.8844880206113488,
+          0,
+          0.46656290186320887
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.05487228003584,
+            "z": 2.5123747787361586
+          },
+          "heading": 2.647306375760455
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          -0.5126385290064654,
+          0,
+          0.8586045297912698
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.3402596891034335,
+            "z": 2.5303460289083475
+          },
+          "heading": 2.2081887985686905
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          -0.3133287145435242,
+          0,
+          0.9496447318036902
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.041603622248667,
+            "z": 2.4550627933721465
+          },
+          "heading": 3.1975251449022015
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.7266028255748239,
+          0,
+          -0.6870577369236754
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.40415632360328,
+            "z": 2.218038392662043
+          },
+          "heading": 2.9288067477567568
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          -0.6280191918264129,
+          0,
+          0.7781978506123616
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.3070205160019426,
+            "z": 2.2757927623251644
+          },
+          "heading": 2.363122139288452
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          -0.3858812868389427,
+          0,
+          0.9225484445098379
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.2157182240145104,
+            "z": 2.0861613965775163
+          },
+          "heading": 3.824008036751937
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9029588373874767,
+          0,
+          -0.4297270505609999
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.2604818636906048,
+            "z": 2.63547049615124
+          },
+          "heading": 1.0830206718792776
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.2414772149037053,
+          0,
+          0.9704064894065528
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.068507655627082,
+            "z": 2.128777453971879
+          },
+          "heading": 4.464189319301881
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9923094936100594,
+          0,
+          -0.12378153695663827
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.152574030094295,
+            "z": 2.4617905854962694
+          },
+          "heading": 3.294398760493238
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.7590165142554034,
+          0,
+          -0.6510713717309163
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.243201850075905,
+            "z": 2.113189177111368
+          },
+          "heading": 4.245993138678944
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9729323634797729,
+          0,
+          -0.23109006056873813
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.3777349937198475,
+            "z": 2.491059228546209
+          },
+          "heading": 1.7736511778179669
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          -0.10125360878665932,
+          0,
+          0.9948606468785857
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.2487887223407834,
+            "z": 2.0248839355082984
+          },
+          "heading": 0.8271234924641718
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.3633269631829904,
+          0,
+          0.9316616970897892
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      }
+    ],
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Safari/605.1.15",
+    "viewport": [
+      1440,
+      900
+    ],
+    "devicePixelRatio": 1,
+    "cursorTick": 0,
+    "sampleTick": 0,
+    "computedTick": 840,
+    "state": "playing",
+    "mode": "fast",
+    "speed": 5,
+    "fastMultiplier": 5,
+    "complete": false,
+    "initialWaitMs": 17860,
+    "warmWaitMs": 17716,
+    "productionMs": 16616,
+    "activeNeuralSteps": 15519,
+    "activeEquivalentProductionRate": 4.669896485315359,
+    "underruns": 0,
+    "frameIntervals": {
+      "count": 954,
+      "p95Ms": 18,
+      "p95Capped": false,
+      "maxMs": 814,
+      "histogramResolutionMs": 1
+    },
+    "interactions": {
+      "count": 0,
+      "p95Ms": null,
+      "p95Capped": false,
+      "maxMs": 0,
+      "histogramResolutionMs": 1,
+      "measurement": "control callback to synchronous scene render completion; excludes browser paint"
+    },
+    "memory": {
+      "wasmBytes": 102825984,
+      "archiveOwnedChunkBytes": 15660152,
+      "archiveBoundBytes": 134217728,
+      "graphBytes": 9864584,
+      "brainStateBytes": 64400000,
+      "observedJSHeapBytes": null,
+      "note": "WASM includes graph and brain state; do not add those again. Download report includes an on-demand GPU memory estimate."
+    },
+    "renderer": {
+      "flyCount": 20,
+      "modelKind": "glb",
+      "drawCalls": 1259,
+      "triangles": 445552,
+      "geometries": 307,
+      "textures": 30
+    },
+    "camera": {
+      "near": 0.0013973753773755602,
+      "far": 58.864041043888655,
+      "fov": 38,
+      "following": true,
+      "distance": 0.027947507547511206,
+      "minDistance": 0.013973753773755603,
+      "maxDistance": 20.745148090393798,
+      "closeDistance": 0.027947507547511206,
+      "target": [
+        3.1987594364391163,
+        0.6009010391100541,
+        2.3821250422980436
+      ],
+      "yaw": 0.7853981633974483,
+      "elevation": 0.9048518739413057,
+      "rotated": false,
+      "width": 1075,
+      "height": 534,
+      "selectedFlyId": 0,
+      "displayScale": 1,
+      "flies": [
+        {
+          "id": 0,
+          "x": 537.4999999999939,
+          "y": 267,
+          "visible": true
+        },
+        {
+          "id": 1,
+          "x": 707.871479875461,
+          "y": 350.3300698593838,
+          "visible": true
+        },
+        {
+          "id": 2,
+          "x": -94.21762397581668,
+          "y": -1000.0416120483678,
+          "visible": false
+        },
+        {
+          "id": 3,
+          "x": 314.73185458004457,
+          "y": 1202.0895980340324,
+          "visible": false
+        },
+        {
+          "id": 4,
+          "x": 311.85059549494775,
+          "y": 1936.7726294151614,
+          "visible": false
+        },
+        {
+          "id": 5,
+          "x": 227.6238919230969,
+          "y": 797.3791305950995,
+          "visible": false
+        },
+        {
+          "id": 6,
+          "x": 10851.062510480186,
+          "y": -2120.3117688430584,
+          "visible": false
+        },
+        {
+          "id": 7,
+          "x": 132.41305585117846,
+          "y": 816.5088343772264,
+          "visible": false
+        },
+        {
+          "id": 8,
+          "x": 238.9895657497879,
+          "y": 823.5321610406601,
+          "visible": false
+        },
+        {
+          "id": 9,
+          "x": 574.8667898293827,
+          "y": -999.6489920234544,
+          "visible": false
+        },
+        {
+          "id": 10,
+          "x": 301.328245721668,
+          "y": 734.4263613595211,
+          "visible": false
+        },
+        {
+          "id": 11,
+          "x": 959.8539212688121,
+          "y": 900.7873216265272,
+          "visible": false
+        },
+        {
+          "id": 12,
+          "x": 4878.529728890831,
+          "y": 297.6810662077812,
+          "visible": false
+        },
+        {
+          "id": 13,
+          "x": 1683.75884837795,
+          "y": -537.2411691909722,
+          "visible": false
+        },
+        {
+          "id": 14,
+          "x": 1495.3620133470529,
+          "y": -971.415129124605,
+          "visible": false
+        },
+        {
+          "id": 15,
+          "x": 639.1115950383717,
+          "y": 447.90763223531263,
+          "visible": true
+        },
+        {
+          "id": 16,
+          "x": -4642.421213893058,
+          "y": 1350.5794092253038,
+          "visible": false
+        },
+        {
+          "id": 17,
+          "x": 826.2240283052066,
+          "y": 584.5877126029733,
+          "visible": false
+        },
+        {
+          "id": 18,
+          "x": 144.92488600477984,
+          "y": -1001.9115518089465,
+          "visible": false
+        },
+        {
+          "id": 19,
+          "x": 1916.487224988299,
+          "y": -551.7550406500166,
+          "visible": false
+        }
+      ]
+    },
+    "result": null
+  },
+  "retry": {
+    "spec": {
+      "schemaVersion": 1,
+      "attemptId": "b79d48b6-31be-468f-8f90-8dd574efe79d",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "3a1f90af0a1e06733f6be2b8df82467f0312d221bf3a0096cf7c6de67db534e5",
+      "simulationBuildId": "5fe7c75c705d2bb97d2f7cfb2a4849f85181ec6f63b58a27834bc3b6c28876f7",
+      "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb",
+      "placements": [],
+      "levelHash": "59992fd13e6ad976841264cc734967053eb8249338ed7fe592c55c861222b456",
+      "levelId": "open-window",
+      "rootSeed": "11792946796081508713",
+      "flyCount": 20,
+      "durationTicks": 3000
+    },
+    "initialBodies": [
+      {
+        "pose": {
+          "position": {
+            "x": 3.4150356038842427,
+            "z": 2.4297996503698416
+          },
+          "heading": 6.069568751135124
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.7784586156245018,
+          0,
+          0.6276959325660668
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.2043116300856678,
+            "z": 2.2833278870416116
+          },
+          "heading": 1.2817562702704908
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.14401747821599223,
+          0,
+          0.9895751441746635
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.3469321028361834,
+            "z": 2.6310176308013924
+          },
+          "heading": 3.43918772480903
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.8041212091659157,
+          0,
+          -0.5944653740711446
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.383804518670815,
+            "z": 2.0549213459680407
+          },
+          "heading": 5.176436883465476
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9732029856074491,
+          0,
+          0.2299477088486583
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.1178063158885254,
+            "z": 2.1707400782174284
+          },
+          "heading": 0.1133626141764013
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.6659129204469423,
+          0,
+          0.7460294782257766
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.3836263338326127,
+            "z": 2.1293567913828326
+          },
+          "heading": 0.08893803416248452
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.6749737658096988,
+          0,
+          0.7378417279258973
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.3958853482835063,
+            "z": 2.0260015823252773
+          },
+          "heading": 3.897135907376734
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9180643233970466,
+          0,
+          -0.3964314544855429
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.1355828165770347,
+            "z": 2.4835526817538662
+          },
+          "heading": 1.1240170272461483
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.2215363136171924,
+          0,
+          0.9751521223629187
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.1214918953865163,
+            "z": 2.157863520682363
+          },
+          "heading": 0.22904425594719535
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.6216724042098988,
+          0,
+          0.7832773594608005
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.021156326124559,
+            "z": 2.239879046924188
+          },
+          "heading": 3.185174847569729
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.7223463153380258,
+          0,
+          -0.6915314893174261
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.2074391722895874,
+            "z": 2.063288009840864
+          },
+          "heading": 1.657354406729844
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          -0.04326553041595735,
+          0,
+          0.9990636085244151
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.365751138794936,
+            "z": 2.1555908042812097
+          },
+          "heading": 4.36200782056972
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9846933395094003,
+          0,
+          -0.17429580352327761
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.4164468051523187,
+            "z": 2.6142472224847886
+          },
+          "heading": 2.239963899287181
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          -0.32837606484811743,
+          0,
+          0.9445470660771039
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.198819758942372,
+            "z": 2.2821745549545867
+          },
+          "heading": 4.4915863579990525
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9939119626583764,
+          0,
+          -0.1101771776938139
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.1316200726393633,
+            "z": 2.2168539458665424
+          },
+          "heading": 0.5899573178182513
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.4709959893433668,
+          0,
+          0.8821353513052649
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.31054186016198,
+            "z": 2.3364782196689466
+          },
+          "heading": 4.656104428264606
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9996040322835785,
+          0,
+          -0.028138561484382995
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.115096186001881,
+            "z": 2.0275654222838893
+          },
+          "heading": 5.152260013855241
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9759115194602163,
+          0,
+          0.21816669357363427
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.014254260409495,
+            "z": 2.345155528108862
+          },
+          "heading": 0.7120065877429492
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.4163206832623304,
+          0,
+          0.9092178444619236
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.0165631234843833,
+            "z": 2.3849423547136843
+          },
+          "heading": 1.0579695678641272
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.25361283166264864,
+          0,
+          0.9673058108044492
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.3285469193034714,
+            "z": 2.3072978907905597
+          },
+          "heading": 4.654540658280561
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9995817256158799,
+          0,
+          -0.02892012819438373
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      }
+    ],
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Safari/605.1.15",
+    "viewport": [
+      1440,
+      900
+    ],
+    "devicePixelRatio": 1,
+    "cursorTick": 0,
+    "sampleTick": 0,
+    "computedTick": 800,
+    "state": "playing",
+    "mode": "fast",
+    "speed": 5,
+    "fastMultiplier": 5,
+    "complete": false,
+    "initialWaitMs": 15411,
+    "warmWaitMs": 15335,
+    "productionMs": 14953,
+    "activeNeuralSteps": 14517,
+    "activeEquivalentProductionRate": 4.752585965893207,
+    "underruns": 0,
+    "frameIntervals": {
+      "count": 857,
+      "p95Ms": 17,
+      "p95Capped": false,
+      "maxMs": 458,
+      "histogramResolutionMs": 1
+    },
+    "interactions": {
+      "count": 0,
+      "p95Ms": null,
+      "p95Capped": false,
+      "maxMs": 0,
+      "histogramResolutionMs": 1,
+      "measurement": "control callback to synchronous scene render completion; excludes browser paint"
+    },
+    "memory": {
+      "wasmBytes": 102825984,
+      "archiveOwnedChunkBytes": 14846340,
+      "archiveBoundBytes": 134217728,
+      "graphBytes": 9864584,
+      "brainStateBytes": 64400000,
+      "observedJSHeapBytes": null,
+      "note": "WASM includes graph and brain state; do not add those again. Download report includes an on-demand GPU memory estimate."
+    },
+    "renderer": {
+      "flyCount": 20,
+      "modelKind": "glb",
+      "drawCalls": 1470,
+      "triangles": 471080,
+      "geometries": 307,
+      "textures": 30
+    },
+    "camera": {
+      "near": 0.0013973753773755602,
+      "far": 58.864041043888655,
+      "fov": 38,
+      "following": true,
+      "distance": 0.027947507547511206,
+      "minDistance": 0.013973753773755603,
+      "maxDistance": 20.745148090393798,
+      "closeDistance": 0.027947507547511206,
+      "target": [
+        3.4150356038842427,
+        0.6009010391100541,
+        2.4297996503698416
+      ],
+      "yaw": 0.7853981633974483,
+      "elevation": 0.9048518739413057,
+      "rotated": false,
+      "width": 1075,
+      "height": 534,
+      "selectedFlyId": 0,
+      "displayScale": 1,
+      "flies": [
+        {
+          "id": 0,
+          "x": 537.5000000000063,
+          "y": 267,
+          "visible": true
+        },
+        {
+          "id": 1,
+          "x": 483.53002053264834,
+          "y": 468.58678332461074,
+          "visible": true
+        },
+        {
+          "id": 2,
+          "x": 201.7262214575497,
+          "y": 1048.5704373272904,
+          "visible": false
+        },
+        {
+          "id": 3,
+          "x": 817.0545397048263,
+          "y": 430.8336643271455,
+          "visible": true
+        },
+        {
+          "id": 4,
+          "x": 460.0232028043585,
+          "y": -622.7728664169957,
+          "visible": false
+        },
+        {
+          "id": 5,
+          "x": 767.3567372168393,
+          "y": 489.1309346083329,
+          "visible": true
+        },
+        {
+          "id": 6,
+          "x": 1531.3523975579303,
+          "y": -593.7609047492515,
+          "visible": false
+        },
+        {
+          "id": 7,
+          "x": 230.7783687978918,
+          "y": 583.4321123809577,
+          "visible": false
+        },
+        {
+          "id": 8,
+          "x": 494.27974989145594,
+          "y": -624.3209669931266,
+          "visible": false
+        },
+        {
+          "id": 9,
+          "x": 388.62877486186164,
+          "y": 311.6569701397244,
+          "visible": true
+        },
+        {
+          "id": 10,
+          "x": 654.1473145460425,
+          "y": 317.52223410777617,
+          "visible": true
+        },
+        {
+          "id": 11,
+          "x": 730.7641534938025,
+          "y": 496.0622429303863,
+          "visible": true
+        },
+        {
+          "id": 12,
+          "x": 2422.3671107072933,
+          "y": -1237.98880161556,
+          "visible": false
+        },
+        {
+          "id": 13,
+          "x": 335.8822958776678,
+          "y": -575.137159853015,
+          "visible": false
+        },
+        {
+          "id": 14,
+          "x": 379.2066738231031,
+          "y": -611.4373127555787,
+          "visible": false
+        },
+        {
+          "id": 15,
+          "x": 527.0022289996175,
+          "y": 610.6751046648125,
+          "visible": false
+        },
+        {
+          "id": 16,
+          "x": 607.3825565964863,
+          "y": 244.98487934992036,
+          "visible": true
+        },
+        {
+          "id": 17,
+          "x": -186.71876394487762,
+          "y": -609.1027451653589,
+          "visible": false
+        },
+        {
+          "id": 18,
+          "x": -339.5797328565078,
+          "y": -599.1797339609453,
+          "visible": false
+        },
+        {
+          "id": 19,
+          "x": 703.0933745684031,
+          "y": -488.64191799063394,
+          "visible": false
+        }
+      ]
+    },
+    "result": null
+  },
+  "passed": false,
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'ResizeObserver loop completed with undelivered notifications.',\n+   'ResizeObserver loop completed with undelivered notifications.'\n+ ]\n- []\n",
+  "bodyText": "1. Open Window · 0/3 stars\n2. Turn the Corner · 0/3 stars · Locked\nFly escape · attempt\nOff they go!\n20 active\n0 escaped\n0 zapped\n0 caught\n0 timed out\nPlaying fast\n5:00 left\nPause\nReal time\nFast\nReplay\nCancel attempt\nInside a tiny brain\nWhat are they sensing?\n\nNeurons combine incoming signals and send brief electrical pulses called spikes. These charts show each fly’s neural activity.\n\nInside fly 01\n65,044 measured cell positions · drag to rotate\nColour: group activity. Other cells shown dimly. Cells without measured positions omitted.\nFly 01\nFlying\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nFly 02\nWalking\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nFly 03\nWalking\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nFly 04\nWalking\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nFly 05\nFlying\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nFly 06\nWalking\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nFly 07\nFlying\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nFly 08\nWalking\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nFly 09\nFlying\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nFly 10\nWalking\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nFly 11\nWalking\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nFly 12\nWalking\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nFly 13\nFlying\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nFly 14\nFlying\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nFly 15\nFlying\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nFly 16\nWalking\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nFly 17\nWalking\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nFly 18\nFlying\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nFly 19\nFlying\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nFly 20\nFlying\n0.0 s\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nNodes: fraction firing · arrows: selected group’s links\nSmell + L\nSmell + R\nSmell − L\nSmell − R\nVision L\nVision R\nTurning L\nTurning R\nFlight L\nFlight R\nLanding L\nLanding R\nTaste\nFeeding\nMouth\nApproach\nSmell excitation · left\n?\n— voltage\n— firing\nAverage electrical state\n0.0–1.0 model units\n0.0\n0.5\n1.0\n0.0s\n0.0s\n0.0s\nFraction firing this tick\n0–100%\n0%\n50%\n100%\n0.0s\n0.0s\n0.0s\nAll 16 recorded groups · last 10 simulated seconds · gaps = no sample\nWhat do these numbers mean?\nHow do neurons influence one another?\nWhat comes from a real fly?\nPlayback and camera controls\nAbout the data and models"
+}

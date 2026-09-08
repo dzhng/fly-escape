@@ -4,9 +4,11 @@ export const groupColor = (index: number) => `hsl(${index * 137.508 % 360}, 65%,
 
 /** Positions are measured; colours summarize recorded groups rather than individual spikes. */
 export function mountBrainView(container: HTMLElement, positionsData: number[][], groups: Group[], read: () => { frame?: AttemptFrame; selected: number }) {
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-    renderer.setClearColor("#102c2a");
+    renderer.setClearColor(0x000000, 0);
+    renderer.domElement.style.width = "100%";
+    renderer.domElement.style.height = "230px";
     container.append(renderer.domElement);
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(38, 1, 0.01, 10);
@@ -55,7 +57,7 @@ export function mountBrainView(container: HTMLElement, positionsData: number[][]
     const resize = new ResizeObserver(() => {
       const width = Math.max(1, container.clientWidth);
       dirty = true;
-      renderer.setSize(width, 230); camera.aspect = width / 230; camera.updateProjectionMatrix();
+      renderer.setSize(width, 230, false); camera.aspect = width / 230; camera.updateProjectionMatrix();
     });
     resize.observe(container);
     let lastFrame: AttemptFrame | undefined, lastSelected = -1;
