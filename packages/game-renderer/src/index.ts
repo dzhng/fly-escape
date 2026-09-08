@@ -1,3 +1,4 @@
+export { FlyPreviews } from "./fly-preview";
 import { FlyOutcomes } from "./fly-outcomes";
 import type { RoomFloor } from "./house";
 export type { RoomFloor } from "./house";
@@ -16,6 +17,7 @@ export { loadHousePart, loadStaticHouseModel } from "./house";
 export { loadHouseAssets } from "./house-assets";
 export type { HousePart, HouseAsset } from "./house";
 import { FlyMotion, type FlyAnimation } from "./fly-motion";
+export { departingFly } from "./fly-departure";
 export { flyAnimation, interpolateRotation } from "./fly-motion";
 export type { FlyAnimation } from "./fly-motion";
 import { FlyModel } from "./fly-model";
@@ -51,6 +53,10 @@ export interface FlyPose {
   z: number;
   /** Radians on the x/z floor: zero points +X, positive turns toward +Z. */
   heading: number;
+  /** Departure visuals retain the recorded camera anchor. */
+  focus?: readonly [number, number, number];
+  presentationScale?: number;
+  hidden?: boolean;
   animation?: FlyAnimation;
   outcome?: "zapped" | "escaped";
   /** Core-computed native glTF orientation for supported poses. */
@@ -84,6 +90,7 @@ export class WorldView {
   private readonly nativeScale = new THREE.Vector3(1, 1, 1);
   private displayScale = 1;
   private readonly flyScales: number[] = [];
+  private readonly flyWallBounds: THREE.Sphere[] = [];
   private readonly outcomes: FlyOutcomes;
   private modelKind: "placeholder" | "glb" = "placeholder";
   private readonly observer: ResizeObserver;
@@ -112,6 +119,7 @@ export class WorldView {
       throw new Error("Scene requires 1..100 flies");
     while (this.flies.length < flyCount) this.flies.push(this.flies[0].clone(true));
     this.flyScales.push(...this.flies.map(() => 1));
+    this.flyWallBounds.push(...this.flies.map(() => new THREE.Sphere()));
     this.outcomes = new FlyOutcomes(flyCount);
     this.scene.add(this.outcomes.root);
     this.house = new HouseGeometry(geometry, roomFloors);
@@ -450,8 +458,11 @@ export class WorldView {
     this.clearSpawnArea();
     poses.forEach((pose, index) => {
       const fly = this.flies[index];
-      fly.visible = true;
-      this.outcomes.set(index, pose.outcome);
+      fly.visible = !pose.hidden;
+      fly.userData.focus = pose.focus;
+      fly.userData.presentationScale = pose.presentationScale ?? 1;
+      fly.userData.departing = pose.outcome === "escaped";
+      this.outcomes.set(index, pose.hidden ? undefined : pose.outcome);
       this.motions[index]?.sample(pose.animation);
       fly.position.set(pose.x, pose.y, pose.z);
       if (pose.rotation) fly.quaternion.fromArray(pose.rotation);
@@ -579,10 +590,10 @@ export class WorldView {
 
   selectFly(id: number): void {
     const fly = this.flies[id];
-    if (!fly || !fly.visible) throw new Error("Selected fly does not exist or is hidden");
+    if (!fly) throw new Error("Selected fly does not exist");
     this.selectedFly = id;
-    this.selectionRing.visible = true;
-    this.navigation.follow(this.flyCenter(fly, 1));
+    this.selectionRing.visible = fly.visible && !fly.userData.departing;
+    this.navigation.follow(fly.userData.focus ? new THREE.Vector3().fromArray(fly.userData.focus) : this.flyCenter(fly, 1));
   }
 
   zoomClose(): void {
@@ -592,6 +603,8 @@ export class WorldView {
   overview(): void {
     this.navigation.overview();
   }
+
+  get cameraRotation(): readonly [number, number, number, number] { return this.navigation.camera.quaternion.toArray(); }
 
   get cameraState() {
     return {
@@ -743,9 +756,12 @@ export class WorldView {
   render(timeSeconds = performance.now() / 1000): void {
     this.controls?.update(performance.now());
     this.flies.forEach((fly, id) => {
-      const scale = this.navigation.displayScale(this.nativeSpan, fly.position);
+      const scale = this.navigation.displayScale(this.nativeSpan, fly.position) * (fly.userData.presentationScale ?? 1);
       this.flyScales[id] = scale;
       fly.scale.copy(this.nativeScale).multiplyScalar(scale);
+      const bounds = this.flyWallBounds[id];
+      bounds.center.copy(fly.position);
+      bounds.radius = fly.visible ? this.nativeSpan * scale : 0;
     });
     this.displayScale = this.selectedFly === null
       ? this.navigation.displayScale(this.nativeSpan)
@@ -754,7 +770,8 @@ export class WorldView {
     let selectedTarget: THREE.Vector3 | undefined;
     if (this.selectedFly !== null) {
       const fly = this.flies[this.selectedFly];
-      selectedTarget = this.flyCenter(fly, this.displayScale);
+      selectedTarget = fly.userData.focus ? new THREE.Vector3().fromArray(fly.userData.focus) : this.flyCenter(fly, this.displayScale);
+      this.selectionRing.visible = fly.visible && !fly.userData.departing;
       this.navigation.track(selectedTarget);
       const up = new THREE.Vector3(0, 1, 0).applyQuaternion(fly.quaternion);
       this.selectionRing.position.copy(fly.position).addScaledVector(up, this.subjectCenterY * this.displayScale * 0.12);
@@ -763,7 +780,7 @@ export class WorldView {
       this.updateSelectionRing();
     }
     this.outcomes.update(this.flies, this.nativeSpan, this.nativeScale);
-    this.house.updateWallVisibility(this.navigation.camera);
+    this.house.updateWallVisibility(this.navigation.camera, this.flyWallBounds);
     // Furniture cutaway follows the selected fly; wall cutaway exposes rooms.
     if (selectedTarget && this.navigation.project(selectedTarget).visible) {
       const direction = selectedTarget.clone().sub(this.navigation.camera.position);

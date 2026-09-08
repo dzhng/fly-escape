@@ -1,7 +1,9 @@
 import { BrainView } from "./brain-view";
 import { groupColor } from "@fly-escape/game-renderer";
 import React, { useEffect, useId, useMemo, useRef, useState } from "react";
-import type { AttemptFrame, AttemptInfo, FrameArchive, Group } from "@fly-escape/sim-client";
+import type { AttemptFrame, AttemptInfo, FlyFrame, FrameArchive, Group } from "@fly-escape/sim-client";
+import { PREVIEW_PIXELS, useFlyPreviews } from "./fly-preview";
+import type { PreviewUpdate } from "./fly-preview";
 import "./science-panel.css";
 
 type Point = ReturnType<FrameArchive["neuralTrace"]>[number];
@@ -210,39 +212,62 @@ function Trace({
     </div>
   );
 }
-function FlyScienceCard({
+function RosterEntry({
+  id,
+  fly,
+  selected,
+  selectFly,
+  register,
+  registerPreview,
+}: {
+  id: number;
+  fly?: FlyFrame;
+  selected: boolean;
+  selectFly: (id: number) => void;
+  register: (id: number, button: HTMLButtonElement | null) => void;
+  registerPreview: (id: number, canvas: HTMLCanvasElement | null) => void;
+}) {
+  return (
+    <button
+      className="fly-card"
+      data-testid={`fly-card-${id}`}
+      data-fly-id={id}
+      aria-label={`Select fly ${id + 1}`}
+      aria-pressed={selected}
+      ref={(button) => register(id, button)}
+      onClick={() => selectFly(id)}
+    >
+      <canvas
+        className="fly-preview"
+        width={PREVIEW_PIXELS}
+        height={PREVIEW_PIXELS}
+        aria-hidden="true"
+        ref={(canvas) => registerPreview(id, canvas)}
+      />
+      <strong>{String(id + 1).padStart(2, "0")}</strong>
+      <span>{fly?.body.outcome ?? fly?.body.mode ?? "initial"}</span>
+    </button>
+  );
+}
+/** The one open fly: every diagram, chart and explanation reads the selected roster entry. */
+function FlyDetails({
   id,
   info,
   frame,
   archive,
-  selected,
-  selectFly,
-  register,
 }: {
   id: number;
   info: AttemptInfo;
   frame?: AttemptFrame;
   archive?: FrameArchive;
-  selected: boolean;
-  selectFly: (id: number) => void;
-  register: (id: number, button: HTMLButtonElement | null) => void;
 }) {
   const [groupId, setGroupId] = useState(info.groups[0].id);
-  const [visible, setVisible] = useState(false);
-  const container = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), {
-      rootMargin: "100px",
-    });
-    observer.observe(container.current!);
-    return () => observer.disconnect();
-  }, []);
   const tick = frame?.tick ?? 0;
-  const group = info.groups.find((group) => group.id === groupId)!;
+  const group = info.groups.find((group) => group.id === groupId) ?? info.groups[0];
   const fly = frame?.flies[id];
   const series = useMemo(
-    () => info.groups.map(group => ({ group, points: visible && archive ? archive.neuralTrace(id, group.id, tick) : [] })),
-    [visible, archive, id, info.groups, tick],
+    () => info.groups.map(group => ({ group, points: archive ? archive.neuralTrace(id, group.id, tick) : [] })),
+    [archive, id, info.groups, tick],
   );
   const activity = fly?.neural?.groups.find((group) => group.id === groupId);
   const positions = useMemo(
@@ -257,25 +282,16 @@ function FlyScienceCard({
   );
   return (
     <article
-      ref={container}
-      className="science-card"
+      className="science-details"
       data-fly-id={id}
-      data-testid={selected ? "selected-fly" : undefined}
+      data-testid="selected-fly"
       data-sample-tick={tick}
     >
-      <button
-        className="fly-card"
-        data-testid={`fly-card-${id}`}
-        data-fly-id={id}
-        aria-label={`Select fly ${id + 1}`}
-        aria-pressed={selected}
-        ref={(button) => register(id, button)}
-        onClick={() => selectFly(id)}
-      >
-        <strong>Fly {String(id + 1).padStart(2, "0")}</strong>
+      <BrainView groups={info.groups} frame={frame} selected={id} />
+      <div className="science-status">
         <span>{fly?.body.outcome ?? fly?.body.mode ?? "Initial state"}</span>
         <small>{(tick * 0.1).toFixed(1)} s</small>
-      </button>
+      </div>
       <svg
         className="group-network"
         viewBox="0 0 306 194"
@@ -375,20 +391,40 @@ function FlyScienceCard({
     </article>
   );
 }
-export function SciencePanel(props: {
+export function SciencePanel({
+  info,
+  frame,
+  archive,
+  selected,
+  selectFly,
+  register,
+  previews,
+}: {
   info: AttemptInfo;
   frame?: AttemptFrame;
   archive?: FrameArchive;
   selected: number;
   selectFly: (id: number) => void;
   register: (id: number, button: HTMLButtonElement | null) => void;
+  previews: React.RefObject<PreviewUpdate | null>;
 }) {
+  const registerPreview = useFlyPreviews(previews);
   return (
-    <div className="fly-roster" aria-label="Fly roster">
-      <BrainView groups={props.info.groups} frame={props.frame} selected={props.selected} />
-      {Array.from({ length: props.info.spec.flyCount }, (_, id) => (
-        <FlyScienceCard key={id} {...props} id={id} selected={props.selected === id} />
-      ))}
+    <div className="science-panel">
+      <div className="fly-roster" role="group" aria-label="Fly roster">
+        {Array.from({ length: info.spec.flyCount }, (_, id) => (
+          <RosterEntry
+            key={id}
+            id={id}
+            fly={frame?.flies[id]}
+            selected={selected === id}
+            selectFly={selectFly}
+            register={register}
+            registerPreview={registerPreview}
+          />
+        ))}
+      </div>
+      <FlyDetails id={selected} info={info} frame={frame} archive={archive} />
     </div>
   );
 }

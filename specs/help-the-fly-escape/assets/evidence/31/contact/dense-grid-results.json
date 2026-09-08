@@ -1,0 +1,182 @@
+[
+ {
+  "fixture": "apple/upright-fan",
+  "knots": 95,
+  "segments": 94,
+  "queries": 232,
+  "coarse": {
+   "perSegment": 256,
+   "samples": 24158,
+   "penetrationChecks": 24158,
+   "maxPenetrationMicrometres": 0.9862681599571208,
+   "maxNeighborPenetrationMicrometres": 0,
+   "neighborChecks": 0,
+   "rootChecks": 18246,
+   "maxRootErrorMicrometres": 2.2025541293393958,
+   "rootGaps": 0,
+   "contained": 0
+  },
+  "halved": {
+   "perSegment": 512,
+   "samples": 48222,
+   "penetrationChecks": 48222,
+   "maxPenetrationMicrometres": 0.9865937862459715,
+   "maxNeighborPenetrationMicrometres": 0,
+   "neighborChecks": 0,
+   "rootChecks": 36422,
+   "maxRootErrorMicrometres": 2.2025541293393958,
+   "rootGaps": 0,
+   "contained": 0
+  }
+ },
+ {
+  "fixture": "apple/aligned-fan",
+  "knots": 87,
+  "segments": 86,
+  "queries": 217,
+  "coarse": {
+   "perSegment": 256,
+   "samples": 22102,
+   "penetrationChecks": 22102,
+   "maxPenetrationMicrometres": 1.2178778772389296,
+   "maxNeighborPenetrationMicrometres": 0,
+   "neighborChecks": 0,
+   "rootChecks": 16447,
+   "maxRootErrorMicrometres": 1.8691119982316984,
+   "rootGaps": 0,
+   "contained": 0
+  },
+  "halved": {
+   "perSegment": 512,
+   "samples": 44118,
+   "penetrationChecks": 44118,
+   "maxPenetrationMicrometres": 1.2178778772389296,
+   "maxNeighborPenetrationMicrometres": 0,
+   "neighborChecks": 0,
+   "rootChecks": 32831,
+   "maxRootErrorMicrometres": 1.8691119982316984,
+   "rootGaps": 0,
+   "contained": 0
+  }
+ },
+ {
+  "fixture": "apple/center-fan",
+  "knots": 122,
+  "segments": 121,
+  "queries": 306,
+  "coarse": {
+   "perSegment": 256,
+   "samples": 31097,
+   "penetrationChecks": 31097,
+   "maxPenetrationMicrometres": 1.7078161733711088,
+   "maxNeighborPenetrationMicrometres": 0,
+   "neighborChecks": 0,
+   "rootChecks": 24414,
+   "maxRootErrorMicrometres": 1.73639774826706,
+   "rootGaps": 0,
+   "contained": 0
+  },
+  "halved": {
+   "perSegment": 512,
+   "samples": 62073,
+   "penetrationChecks": 62073,
+   "maxPenetrationMicrometres": 1.7145574026316168,
+   "maxNeighborPenetrationMicrometres": 0,
+   "neighborChecks": 0,
+   "rootChecks": 48734,
+   "maxRootErrorMicrometres": 1.7415655986369183,
+   "rootGaps": 0,
+   "contained": 0
+  }
+ },
+ {
+  "fixture": "apple/max-neural",
+  "knots": 123,
+  "segments": 122,
+  "queries": 321,
+  "coarse": {
+   "perSegment": 256,
+   "samples": 31354,
+   "penetrationChecks": 31354,
+   "maxPenetrationMicrometres": 1.7110053418217277,
+   "maxNeighborPenetrationMicrometres": 0,
+   "neighborChecks": 0,
+   "rootChecks": 25442,
+   "maxRootErrorMicrometres": 2.3831681668917692,
+   "rootGaps": 0,
+   "contained": 0
+  },
+  "halved": {
+   "perSegment": 512,
+   "samples": 62586,
+   "penetrationChecks": 62586,
+   "maxPenetrationMicrometres": 1.7148502537748431,
+   "maxNeighborPenetrationMicrometres": 0,
+   "neighborChecks": 0,
+   "rootChecks": 50786,
+   "maxRootErrorMicrometres": 2.3886019699242977,
+   "rootGaps": 0,
+   "contained": 0
+  }
+ },
+ {
+  "fixture": "shoe/supported-rim-walk",
+  "knots": 17,
+  "segments": 16,
+  "queries": 81,
+  "coarse": {
+   "perSegment": 256,
+   "samples": 4112,
+   "penetrationChecks": 4112,
+   "maxPenetrationMicrometres": 1.282199662942572,
+   "maxNeighborPenetrationMicrometres": 0,
+   "neighborChecks": 4112,
+   "rootChecks": 4112,
+   "maxRootErrorMicrometres": 1.2902524422903072,
+   "rootGaps": 0,
+   "contained": 0
+  },
+  "halved": {
+   "perSegment": 512,
+   "samples": 8208,
+   "penetrationChecks": 8208,
+   "maxPenetrationMicrometres": 1.282199662942572,
+   "maxNeighborPenetrationMicrometres": 0,
+   "neighborChecks": 8208,
+   "rootChecks": 8208,
+   "maxRootErrorMicrometres": 1.292590530430071,
+   "rootGaps": 0,
+   "contained": 0
+  }
+ },
+ {
+  "fixture": "shoe/descending-rim-landing",
+  "knots": 12,
+  "segments": 11,
+  "queries": 81,
+  "coarse": {
+   "perSegment": 256,
+   "samples": 2827,
+   "penetrationChecks": 2827,
+   "maxPenetrationMicrometres": 8.763949551473054e-07,
+   "maxNeighborPenetrationMicrometres": 0,
+   "neighborChecks": 2314,
+   "rootChecks": 2314,
+   "maxRootErrorMicrometres": 0.003129515008248873,
+   "rootGaps": 0,
+   "contained": 0
+  },
+  "halved": {
+   "perSegment": 512,
+   "samples": 5643,
+   "penetrationChecks": 5643,
+   "maxPenetrationMicrometres": 8.763949551473054e-07,
+   "maxNeighborPenetrationMicrometres": 0,
+   "neighborChecks": 4618,
+   "rootChecks": 4618,
+   "maxRootErrorMicrometres": 0.003721859737071398,
+   "rootGaps": 0,
+   "contained": 0
+  }
+ }
+]

@@ -11,7 +11,7 @@ const RADIANS_PER_PIXEL = 0.005;
 /** Ground coverage is reused across this much orbit so grass never rebuilds mid-drag. */
 const COVERAGE_ELEVATION_STEP = THREE.MathUtils.degToRad(15);
 /** Screen span a fly keeps while the world enlargement that buys it stays affordable. */
-const READABLE_PIXELS = 24;
+const READABLE_PIXELS = 48;
 /** Enlargement ceiling, as a share of the shortest room span. Without a ceiling the
  * widest views walk knee-high flies through the house; with it the farthest zoom
  * shrinks flies below the readable size instead of inflating the world. */
@@ -161,9 +161,8 @@ export class WorldCamera {
     this.target.z = THREE.MathUtils.clamp(this.target.z, this.bounds.min.z, this.bounds.max.z);
     this.apply();
   }
-  /** World enlargement that keeps a subject readable at its own camera depth.
-   * Scaling everything by the target distance instead leaves every subject off
-   * that depth mis-sized, shrinking as the view closes in on the target. */
+  /** Partial perspective compensation: doubling camera depth shrinks a fly by
+   * about 13%, until the world-size cap takes over at distant views. */
   displayScale(nativeSpan: number, at?: { x: number; y: number; z: number }): number {
     const depth = at
       ? Math.max(
@@ -180,7 +179,7 @@ export class WorldCamera {
       1,
       (MAX_ENLARGED_ROOM_FRACTION * Math.min(size.x, size.z)) / nativeSpan,
     );
-    return THREE.MathUtils.clamp((READABLE_PIXELS * unitsPerPixel) / nativeSpan, 1, ceiling);
+    return Math.min(Math.pow((READABLE_PIXELS * unitsPerPixel) / nativeSpan, 0.8), ceiling);
   }
   /** Conservative normal-RTS ground coverage across the existing target/zoom limits
    * and the whole orbit, so rotating never rebuilds the meadow or bares a sector.

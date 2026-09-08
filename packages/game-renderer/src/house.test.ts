@@ -144,3 +144,22 @@ test("prepared household shapes retain native envelopes and reject mismatched re
     await expect(loadStaticHouseModel(bytes, { name: key, bounds: [-x, 0, -z, x, y, z] })).rejects.toThrow("bounds");
   }
 });
+
+test("a fly intersecting the wall shell exposes both the upper wall and opaque base, then restores", () => {
+  const house = new HouseGeometry({ rooms: [{ id: 0, min: { x: 0, z: 0 }, max: { x: 4, z: 4 } }],
+    walls: [{ a: { x: 0, z: 0 }, b: { x: 0, z: 4 } }], solids: [] });
+  const camera = new THREE.PerspectiveCamera();
+  camera.position.set(4, 4, 4); camera.lookAt(0, 0, 0); camera.updateMatrixWorld(true);
+  const wall = house.walls.children[0];
+  house.updateWallVisibility(camera);
+  const baseline = wall.children.map(child => child.visible);
+  expect(baseline[0]).toBe(true);
+  for (const height of [0, 0.4]) {
+    house.updateWallVisibility(camera, [new THREE.Sphere(new THREE.Vector3(0.002632, height, 2), 0.025)]);
+    expect(wall.children.map(child => child.visible)).toEqual([false, false, false, true]);
+  }
+  house.updateWallVisibility(camera, [new THREE.Sphere(new THREE.Vector3(1, 0, 2), 0.025)]);
+  expect(wall.children.map(child => child.visible)).toEqual(baseline);
+  house.updateWallVisibility(camera, [new THREE.Sphere(new THREE.Vector3(0, 0, 2), 0)]);
+  expect(wall.children.map(child => child.visible)).toEqual(baseline);
+});

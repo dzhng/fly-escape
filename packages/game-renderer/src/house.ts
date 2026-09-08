@@ -80,7 +80,7 @@ export class HouseGeometry {
   readonly walls = new THREE.Group();
   readonly floors = new THREE.Group();
   readonly solids = new THREE.Group();
-  private wallViews: { group: THREE.Group; full: THREE.Group; base: THREE.Group; upper: THREE.Group; segment: Geometry["walls"][number] }[] = [];
+  private wallViews: { group: THREE.Group; full: THREE.Group; base: THREE.Group; upper: THREE.Group; ghost: THREE.Group; bounds: THREE.Box3; segment: Geometry["walls"][number] }[] = [];
   private readonly viewDirection = new THREE.Vector3();
   private readonly solidSources = new Map<"solid" | FurnitureModel, { source: THREE.Group; native: boolean }>();
   constructor(private readonly geometry: Geometry, private readonly roomFloors: readonly RoomFloor[] = []) {
@@ -115,7 +115,7 @@ export class HouseGeometry {
     this.rebuildSolids();
   }
   /** Cut room-facing foreground walls even when no fly is selected. */
-  updateWallVisibility(camera: THREE.Camera): void {
+  updateWallVisibility(camera: THREE.Camera, flies: readonly THREE.Sphere[] = []): void {
     camera.getWorldDirection(this.viewDirection);
     for (const wall of this.wallViews) {
       const { a, b } = wall.segment;
@@ -131,9 +131,13 @@ export class HouseGeometry {
           && Math.min(hi, alongMax) > Math.max(lo, alongMin)
           && ((near + far) / 2 - edge) * direction > 0;
       });
-      wall.full.visible = !cut;
-      wall.base.visible = wall.upper.visible = cut;
-      wall.group.userData.cutaway = cut;
+      // Readability-scaled flies may overlap the decorative wall shell even
+      // when their recorded native bodies clear the physical boundary.
+      const nearFly = flies.some(fly => fly.radius > 0 && wall.bounds.intersectsSphere(fly));
+      wall.full.visible = !cut && !nearFly;
+      wall.base.visible = wall.upper.visible = cut && !nearFly;
+      wall.ghost.visible = nearFly;
+      wall.group.userData.cutaway = cut || nearFly;
     }
   }
   private floorAsset(roomId: number): "floor" | "tileFloor" { return this.roomFloors.some(floor => floor.roomId === roomId) ? "tileFloor" : "floor"; }
@@ -200,12 +204,12 @@ export class HouseGeometry {
       const baseTemplate = source.clone(true);
       baseTemplate.scale.y *= 0.15 / PART_BOUNDS.wall[4];
       const upperTemplate = clipped(1, -0.15, 0.06);
+      const ghostTemplate = clipped(1, -0.001, 0.18);
       for (const { segment, dx, dz, length, start, end } of wallFootprints(this.geometry.walls)) {
         const placement = new THREE.Group();
-        const full = source.clone(true), base = baseTemplate.clone(true), upper = upperTemplate.clone(true);
-        placement.add(full, base, upper);
-        base.visible = upper.visible = false;
-        this.wallViews.push({ group: placement, full, base, upper, segment });
+        const full = source.clone(true), base = baseTemplate.clone(true), upper = upperTemplate.clone(true), ghost = ghostTemplate.clone(true);
+        placement.add(full, base, upper, ghost);
+        base.visible = upper.visible = ghost.visible = false;
         placement.scale.x = length + start + end;
         placement.position.set(
           (segment.a.x + segment.b.x) / 2 + (end - start) * dx / (2 * length),
@@ -213,6 +217,9 @@ export class HouseGeometry {
           (segment.a.z + segment.b.z) / 2 + (end - start) * dz / (2 * length),
         );
         placement.rotation.y = -Math.atan2(dz, dx);
+        placement.updateMatrixWorld(true);
+        const bounds = new THREE.Box3().setFromObject(placement);
+        this.wallViews.push({ group: placement, full, base, upper, ghost, bounds, segment });
         owner.add(placement);
       }
     } else if (isFloor(part)) {

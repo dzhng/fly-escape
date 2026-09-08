@@ -23,7 +23,7 @@ try {
     return lab?.dataset.worldState === 'ready' && Number(lab.dataset.computedTick) >= 70;
   });
   await page.getByRole('button', { name: 'Pause', exact: true }).click();
-  await page.locator('.science-card').first().locator('.science-legend').getByRole('button', { name: 'Mouth', exact: true }).click();
+  await page.locator('.science-details .science-legend').getByRole('button', { name: 'Mouth', exact: true }).click();
   const seek = async tick => {
     await page.getByTestId('playback-seek').fill(String(tick));
     await page.getByTestId('playback-seek').dispatchEvent('input');

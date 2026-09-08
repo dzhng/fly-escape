@@ -1,9 +1,11 @@
+import type { PreviewUpdate } from "./fly-preview";
 import type { RoomDetail, RoomFloor } from "@fly-escape/game-renderer";
 import { loadWorldAssets } from "./world-assets";
 import React, { useEffect, useRef, useState } from "react";
 import {
   WorldView,
   flyAnimation,
+  departingFly,
   recordedTrails,
   type FlyPose,
 } from "@fly-escape/game-renderer";
@@ -120,12 +122,15 @@ function sample(run: Run): FlyPose[] {
       }));
   return poses.map((pose, id) => {
     const outcome = run.lower?.flies[id].body.outcome;
-    return {
+    const rendered: FlyPose = {
       x: pose.x, z: pose.z, heading: pose.heading, y: pose.height,
       rotation: pose.rotation,
       animation: flyAnimation(motions[id], TICK_SECONDS),
       outcome: outcome === "zapped" || outcome === "escaped" ? outcome : undefined,
     };
+    return outcome === "escaped"
+      ? departingFly(rendered, (run.clock.cursorTick - motions[id].cursorTick) * TICK_SECONDS, run.info.level.exit.outward)
+      : rendered;
   });
 }
 
@@ -163,11 +168,9 @@ export function AttemptPlayback({
     interactionAt.current = performance.now();
     setSelected(id);
     scene.current?.selectFly(id);
-    cards.current
-      .get(id)
-      ?.closest("article")
-      ?.scrollIntoView({ block: "start", inline: "nearest" });
+    cards.current.get(id)?.scrollIntoView({ block: "nearest", inline: "nearest" });
   };
+  const previewUpdate = useRef<PreviewUpdate | null>(null);
   const [requested, setRequested] = useState(true);
   const [error, setError] = useState("");
   const [worldReady, setWorldReady] = useState(false);
@@ -323,6 +326,7 @@ export function AttemptPlayback({
     restart.current();
     const draw = (now: number) => {
       const current = run.current;
+      let sampledPoses: FlyPose[] = [];
       if (current) {
         try {
           const rate = productionRate(current);
@@ -341,6 +345,7 @@ export function AttemptPlayback({
               current.underruns++;
             current.previousState = current.clock.state;
             const poses = sample(current);
+            sampledPoses = poses;
             scene.current?.setPoses(poses);
             scene.current?.setTrails(
               recordedTrails(
@@ -357,6 +362,7 @@ export function AttemptPlayback({
             lastFrameAt = now;
             try {
               scene.current?.render(current.clock.cursorTick * TICK_SECONDS);
+              if (scene.current) previewUpdate.current?.(sampledPoses, scene.current.cameraRotation);
             } catch (cause) {
               renderFailed = true;
               throw cause;
@@ -654,7 +660,7 @@ export function AttemptPlayback({
             </p>
           )}
           {info && (
-            <SciencePanel
+            <SciencePanel previews={previewUpdate}
               key={info.spec.attemptId}
               info={info}
               frame={display.frame}

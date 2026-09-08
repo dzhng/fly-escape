@@ -1,0 +1,309 @@
+diff --git a/crates/sim/src/body/motion_consumer.rs b/crates/sim/src/body/motion_consumer.rs
+index 7d8f71b..0af0d13 100644
+--- a/crates/sim/src/body/motion_consumer.rs
++++ b/crates/sim/src/body/motion_consumer.rs
+@@ -869,3 +869,304 @@ fn assert_traversal_clears_contact(world: &BodyWorld, trace: &MotionTrace) {
+         }
+     }
+ }
++
++// ---------------------------------------------------------------------------
++// SCRATCH EVIDENCE ONLY — not a shipped regression. Measures the authoritative
++// sampled trajectory of the current producer on six existing fixtures at a
++// dense temporal grid and at the halved grid. No production behaviour changes.
++// ---------------------------------------------------------------------------
++
++/// One fixture's measured maxima over one temporal grid.
++#[derive(Debug, Default)]
++struct ScratchGrid {
++    samples: usize,
++    segments: usize,
++    penetration_samples: usize,
++    max_penetration_um: f64,
++    contained: usize,
++    neighbor_samples: usize,
++    max_neighbor_penetration_um: f64,
++    root_samples: usize,
++    max_root_error_um: f64,
++    root_gaps: usize,
++}
++
++fn scratch_measure(
++    world: &BodyWorld,
++    trace: &MotionTrace,
++    per_segment: usize,
++    grid: &mut ScratchGrid,
++) {
++    grid.segments = trace.points.len().saturating_sub(1);
++    for pair in trace.points.windows(2) {
++        let span = pair[1].fraction - pair[0].fraction;
++        for i in 0..=per_segment {
++            let t = pair[0].fraction + span * i as f64 / per_segment as f64;
++            let p = trace.at(t.min(1.)).unwrap();
++            grid.samples += 1;
++            let root = [p.pose.position.x, p.height, p.pose.position.z];
++
++            grid.penetration_samples += 1;
++            match world.surfaces.penetration(world.hull, root, p.rotation).unwrap() {
++                crate::surface::Penetration::Depth(d) => {
++                    grid.max_penetration_um = grid.max_penetration_um.max(d * 1e6);
++                }
++                crate::surface::Penetration::Contained => grid.contained += 1,
++            }
++
++            // The supported path's own invariants: neighbour clearance against the
++            // selected surface, and root agreement with the support query.
++            if let (true, Some(id)) = (p.grounded, p.support) {
++                if world.surfaces.has_other_surface(id) {
++                    grid.neighbor_samples += 1;
++                    match world
++                        .surfaces
++                        .neighbor_penetration(world.hull, root, p.rotation, id)
++                        .unwrap()
++                    {
++                        crate::surface::Penetration::Depth(d) => {
++                            grid.max_neighbor_penetration_um =
++                                grid.max_neighbor_penetration_um.max(d * 1e6);
++                        }
++                        crate::surface::Penetration::Contained => grid.contained += 1,
++                    }
++                }
++                match world
++                    .surfaces
++                    .support_at(
++                        world.hull,
++                        id,
++                        [p.pose.position.x, p.pose.position.z],
++                        p.pose.heading,
++                        motion::up(p.rotation),
++                    )
++                    .unwrap()
++                {
++                    Some(sample) => {
++                        grid.root_samples += 1;
++                        grid.max_root_error_um =
++                            grid.max_root_error_um.max((sample.root[1] - p.height).abs() * 1e6);
++                    }
++                    None => grid.root_gaps += 1,
++                }
++            }
++        }
++    }
++}
++
++fn scratch_report(name: &str, world: &BodyWorld, trace: &MotionTrace, coarse: usize) {
++    let mut a = ScratchGrid::default();
++    let mut b = ScratchGrid::default();
++    scratch_measure(world, trace, coarse, &mut a);
++    scratch_measure(world, trace, coarse * 2, &mut b);
++    println!(
++        "SCRATCH {{\"fixture\":{:?},\"knots\":{},\"segments\":{},\"queries\":{},\
++         \"coarse\":{{\"perSegment\":{},\"samples\":{},\"penetrationChecks\":{},\
++         \"maxPenetrationMicrometres\":{},\"maxNeighborPenetrationMicrometres\":{},\
++         \"neighborChecks\":{},\"rootChecks\":{},\"maxRootErrorMicrometres\":{},\
++         \"rootGaps\":{},\"contained\":{}}},\
++         \"halved\":{{\"perSegment\":{},\"samples\":{},\"penetrationChecks\":{},\
++         \"maxPenetrationMicrometres\":{},\"maxNeighborPenetrationMicrometres\":{},\
++         \"neighborChecks\":{},\"rootChecks\":{},\"maxRootErrorMicrometres\":{},\
++         \"rootGaps\":{},\"contained\":{}}}}}",
++        name,
++        trace.points.len(),
++        a.segments,
++        trace.queries,
++        coarse,
++        a.samples,
++        a.penetration_samples,
++        a.max_penetration_um,
++        a.max_neighbor_penetration_um,
++        a.neighbor_samples,
++        a.root_samples,
++        a.max_root_error_um,
++        a.root_gaps,
++        a.contained,
++        coarse * 2,
++        b.samples,
++        b.penetration_samples,
++        b.max_penetration_um,
++        b.max_neighbor_penetration_um,
++        b.neighbor_samples,
++        b.root_samples,
++        b.max_root_error_um,
++        b.root_gaps,
++        b.contained,
++    );
++    // The provisional gate: zero containment, no excursion above 3 um.
++    assert_eq!(b.contained, 0, "{name}: containment at a sampled pose");
++    assert!(b.max_penetration_um <= 3., "{name}: penetration {} um", b.max_penetration_um);
++    assert!(
++        b.max_neighbor_penetration_um <= 3.,
++        "{name}: neighbour penetration {} um",
++        b.max_neighbor_penetration_um
++    );
++    assert!(
++        b.max_root_error_um <= 3.,
++        "{name}: root deviation {} um",
++        b.max_root_error_um
++    );
++}
++
++#[test]
++fn scratch_dense_grid_and_halved_convergence_evidence() {
++    const PER_SEGMENT: usize = 256;
++
++    // --- Four supported apple fixtures, production native hull, catalog fan ---
++    let geometry = Geometry {
++        rooms: vec![crate::environment::RectRoom {
++            id: 1,
++            min: Point { x: -1., z: -1. },
++            max: Point { x: 1., z: 1. },
++        }],
++        walls: vec![],
++        solids: vec![],
++    };
++    let apple: ContactSurface =
++        serde_json::from_str(include_str!("../../../../assets/food/apple/contact.json")).unwrap();
++    let world = BodyWorld::new(
++        &geometry,
++        std::slice::from_ref(&apple),
++        &[],
++        &[],
++        ExitOpening {
++            a: Point { x: 1., z: -0.1 },
++            b: Point { x: 1., z: 0.1 },
++            outward: Point { x: 1., z: 0. },
++        },
++        100,
++    )
++    .unwrap();
++    let crate::placement::ToolEffect::Fan { speed, .. } =
++        crate::placement::tool_def(crate::placement::ToolKind::Fan).effect
++    else {
++        panic!("fan catalog entry must resolve to wind");
++    };
++
++    for (name, heading, thrust, turn, aligned, wind, center) in [
++        ("apple/upright-fan", 0.70408, 0., 0., false, speed, false),
++        ("apple/aligned-fan", 0.70408, 0., 0., true, speed, false),
++        ("apple/center-fan", 0., 0., 0., false, speed, true),
++        ("apple/max-neural", 0., 2., 0., false, 0., true),
++    ] {
++        let (x, z) = if center { (0., 0.) } else { (0.02, -0.003) };
++        let mut up = [0., 1., 0.];
++        if aligned {
++            up = world.surfaces.below([x, 0.2, z], 0.4).unwrap().unwrap().normal;
++        }
++        let sample = world
++            .surfaces
++            .support_at(world.hull, apple.id, [x, z], heading, up)
++            .unwrap()
++            .unwrap();
++        let mut body = Body::new(
++            BodyPose {
++                position: Point { x, z },
++                heading,
++            },
++            BodyConfig::default(),
++        )
++        .unwrap();
++        body.state.height = sample.root[1];
++        body.state.rotation = sample.rotation;
++        body.state.support = Some(apple.id);
++        let neural = StepOutput {
++            motor: MotorOutput {
++                thrust,
++                turn,
++                flight_thrust: 0.,
++                flight_turn: 0.,
++            },
++            groups: Vec::<GroupActivity>::new(),
++            spike_count: 0,
++        };
++        if aligned {
++            for i in 1..=12 {
++                let previous = body.state.rotation;
++                let mut idle = neural.clone();
++                idle.motor.thrust = 0.;
++                idle.motor.turn = 0.;
++                body.step(&idle, &world, Point::default(), 0.1, i).unwrap();
++                if previous
++                    .iter()
++                    .zip(body.state.rotation)
++                    .all(|(a, b)| (a - b).abs() < 1e-12)
++                {
++                    break;
++                }
++            }
++        }
++        let result = body
++            .step(&neural, &world, Point { x: wind, z: 0. }, 0.1, 20)
++            .unwrap();
++        assert!(body.state.pose.position.x > x, "{name} must advance");
++        scratch_report(name, &world, &result.motion, PER_SEGMENT);
++    }
++
++    // --- Neighbour fixture 1: supported walk on the worn-shoe rim (support 25) ---
++    let state: BodyState = BodyState {
++        height: 0.11172231836479321,
++        mode: BodyMode::Walking,
++        outcome: None,
++        pose: BodyPose {
++            heading: 2.8234335720516226,
++            position: Point {
++                x: 2.6755426166459073,
++                z: 6.711418810252831,
++            },
++        },
++        reserve: 9.800000000000102,
++        rotation: [
++            0.03067463703697428,
++            -0.5850770845133865,
++            0.03628180674069793,
++            0.8095847715462514,
++        ],
++        support: Some(25),
++    };
++    let objects = crate::native_object::NativeObjectShape::WornShoes
++        .placed_surfaces(Point { x: 2.6, z: 6.7 }, 0.8, 2)
++        .unwrap();
++    let shoe_geometry = Geometry {
++        rooms: vec![crate::environment::RectRoom {
++            id: 1,
++            min: Point { x: 0., z: 0. },
++            max: Point { x: 10., z: 10. },
++        }],
++        walls: vec![],
++        solids: vec![],
++    };
++    let shoe_world = BodyWorld::new(
++        &shoe_geometry,
++        &[],
++        &objects,
++        &[],
++        ExitOpening {
++            a: Point { x: 10., z: 1. },
++            b: Point { x: 10., z: 2. },
++            outward: Point { x: 1., z: 0. },
++        },
++        1000,
++    )
++    .unwrap();
++    let desired = desired_pose(
++        state.pose,
++        Locomotion {
++            thrust: 0.6814009710002883,
++            turn: 0.02024135047684794,
++            speed: 0.12,
++            turn_gain: 8.,
++        },
++        Point::default(),
++        0.1,
++    );
++    let trace = motion::advance(&shoe_world, &state, desired, 0.1, 0.002632).unwrap();
++    scratch_report("shoe/supported-rim-walk", &shoe_world, &trace, PER_SEGMENT);
++
++    // --- Neighbour fixture 2: descending shoe-rim landing with a verified prefix ---
++    let landing: BodyState = serde_json::from_str(r#"{"height":0.14999999999999958,"mode":"landing","outcome":null,"pose":{"heading":5.304068424713702,"position":{"x":2.709540733051919,"z":6.6953914094828}},"reserve":15.760000000000085,"rotation":[0.0,0.9565576643169392,0.0,0.2915431954900029],"support":null}"#).unwrap();
++    let landing_desired: BodyPose = serde_json::from_str(r#"{"heading":5.225575491531906,"position":{"x":2.7256588747519683,"z":6.666790309504627}}"#).unwrap();
++    let trace = motion::advance(&shoe_world, &landing, landing_desired, 0.1, 0.002632).unwrap();
++    scratch_report("shoe/descending-rim-landing", &shoe_world, &trace, PER_SEGMENT);
++}

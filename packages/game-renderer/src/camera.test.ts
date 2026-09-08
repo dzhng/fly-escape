@@ -76,27 +76,25 @@ test("millimetre subjects stay in the frustum at follow and extra-close househol
     expect(rig.project(new THREE.Vector3(x, y, z)).visible).toBe(true);
 });
 
-test("zoom compensation grows continuously at wide views and retains native close size", () => {
-  const camera = new WorldCamera(new THREE.Box3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(4, 2.6, 4)), 0.0018);
+test("zoom changes fly size gently and stops changing it at the camera limit", () => {
+  const camera = new WorldCamera(bounds, 0.0018);
   camera.resize(1120, 794);
-  camera.follow(new THREE.Vector3(2, 0.0009, 2));
-  expect(camera.displayScale(0.00386)).toBe(1);
-  let previous = 1;
-  for (let i = 0; i < 60; i++) {
-    camera.zoom(70);
-    const scale = camera.displayScale(0.00386);
-    expect(scale).toBeGreaterThanOrEqual(previous);
-    expect(scale / previous).toBeLessThanOrEqual(Math.exp(70 * 0.0015) + 1e-10);
-    expect(camera.displayScale(0.00386)).toBe(scale);
-    previous = scale;
+  const target = new THREE.Vector3(2, 0.0009, 2);
+  camera.follow(target);
+  let previous = screenSpan(camera, target, 0.00386);
+  for (let i = 0; i < 20; i++) {
+    camera.zoom(-20);
+    const pixels = screenSpan(camera, target, 0.00386);
+    expect(pixels).toBeGreaterThanOrEqual(previous - 1e-8);
+    expect(pixels / previous).toBeLessThan(1.02);
+    previous = pixels;
   }
-  expect(previous).toBeGreaterThan(10);
-  camera.resize(1120, 397);
-  expect(camera.displayScale(0.00386)).toBeCloseTo(previous);
-  camera.resize(1120, 794);
-  expect(camera.displayScale(0.00386)).toBeCloseTo(previous);
-  camera.zoomClose();
-  expect(camera.displayScale(0.00386)).toBe(1);
+  camera.zoom(-100000);
+  const position = camera.camera.position.clone();
+  const stopped = screenSpan(camera, target, 0.00386);
+  for (let i = 0; i < 10; i++) camera.zoom(-100);
+  expect(camera.camera.position.equals(position)).toBe(true);
+  expect(screenSpan(camera, target, 0.00386)).toBe(stopped);
 });
 
 test("inspection focus preserves fixed camera orientation and ignores fly tracking", () => {
@@ -167,14 +165,14 @@ test("every fly keeps its readable size at its own depth, however close the view
   for (const wheel of [-100000, -700, 700, 1400]) {
     rig.zoom(wheel);
     // The neighbour a metre deeper used to collapse as the view closed in.
-    expect(screenSpan(rig, behind, 0.00386)).toBeCloseTo(24, 0);
-    // A neighbour at the followed depth is only ever larger, never enlarged past native.
+    expect(screenSpan(rig, behind, 0.00386)).toBeGreaterThan(20);
+    // A neighbour at the followed depth also stays readable.
     expect(screenSpan(rig, beside, 0.00386)).toBeGreaterThanOrEqual(23.5);
   }
   rig.zoomClose();
-  // The followed fly is past its readable size at this range, so it stays native.
-  expect(rig.displayScale(0.00386, followed)).toBe(1);
-  expect(screenSpan(rig, behind, 0.00386)).toBeCloseTo(24, 0);
+  // Close inspection grows the fly smoothly without a separate native-size plateau.
+  expect(screenSpan(rig, followed, 0.00386)).toBeGreaterThan(40);
+  expect(screenSpan(rig, behind, 0.00386)).toBeGreaterThan(20);
 });
 
 test("world enlargement is capped, so the farthest view shrinks flies instead of growing them", () => {
@@ -191,7 +189,7 @@ test("world enlargement is capped, so the farthest view shrinks flies instead of
   // Halfway back in, the readable size is restored rather than exceeded.
   rig.zoom(-1200);
   expect(rig.displayScale(0.00386, centre)).toBeLessThan(capped);
-  expect(screenSpan(rig, centre, 0.00386)).toBeCloseTo(24, 0);
+  expect(screenSpan(rig, centre, 0.00386)).toBeGreaterThan(span);
 });
 
 test("orbit turns the view only: target, zoom and follow survive, and reset restores the default", () => {
