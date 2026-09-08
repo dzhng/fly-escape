@@ -10,15 +10,9 @@ Build a local, fully 3D browser game in which the player places environmental ob
 
 **Shipped foundation:** timed policy and two replay modes are integrated. Fast fits the authored horizon into one minute after buffering; Real time remains available. Source-oriented neural delivery is integrated at518b184 with exact arithmetic preserved. The captured second-house startup improved from98seconds to48seconds, with zero underruns and a byte-identical final screenshot. Startup remains above target; final balance and release acceptance are open. Production initialization and random streams remain unchanged. Do not resume old finite-energy warmup/feeding work or cosmetic refinements.
 
-**Current parallel work** (all from518b184; inspect handles before treating jobs as live):
+**Current work:** [first-house trials](assets/evidence/30/timed-fan-comparison/README.md) show the aligned fan alone wins13/13/15escapes, while the mixed arrangement scores10/10/12. The [second-house route](assets/evidence/30/second-house-route/README.md) scores2/1versus0/0empty. [Doubling movement speed](assets/evidence/30/second-house-pacing/README.md) raises empty to4/3 but the revised route only3/3. None establishes accepted balance. A scratch design task is choosing three minimal doorway arrangements at2× speed in `/tmp/fly-second-house-timed-pilot`, session6642, artifacts `/tmp/second-house-doorway/`. It must only validate plans; root runs the bounded six-attempt comparison after the isolated browser run (now finished). Verify handle before treating it as live.
 
-| Work | Claude worktree / process | Artifacts |
-| --- | --- | --- |
-| First-level object/fan comparison,18attempts maximum | `/tmp/fly-timed-placement-pilot`, session42087 | `/tmp/level1-timed-calibration/` |
-| Second-house route and optional pacing pilot,10attempts maximum | `/tmp/fly-second-house-timed-pilot`, session74516 | `/tmp/second-house-timed-pilot/` |
-| Shared sine/cosine calculation, exact WASM noise required | `/tmp/fly-timed-rounds`, session58771 | `/tmp/noise-sincos/` |
-
-The two gameplay tasks are scratch-only; root chooses any content changes after reviewing results. Noise work may change only its scoped implementation and must demonstrate actual WASM equivalence and measured gain before integration. The [fan-only calibration control](assets/evidence/30/fan-only-control/README.md) now measures other objects' contribution; actual CLI wiring checks and focused acceptance tests pass.
+Shared WASM sine/cosine is integrated with [equivalence and production evidence](assets/evidence/17/shared-trig/README.md): root500-tick digest matches, isolated full Chrome passes with45.5s initial wait and no underruns. A concurrent-load run interrupted once; a scoped buffer-policy task is active in `/tmp/fly-replay-buffer`, session24711, output `/tmp/replay-buffer-report.md`. Verify its handle and review before integration. No random-stream or UI changes were made.
 
 **Next:** review these results; integrate only verified improvements; choose useful reference/poor setups and tune both houses within the time limit. Then freeze thresholds/content for paired30-seed tuning and disjoint30-seed validation, complete sustained production performance/memory/cancellation/input/hidden-tab checks and available platform coverage. Preserve sensory-only neural input, native contact and recorded replay; no invisible food enlargement or target steering. Actual Safari and the older microscopic contact-interpolation limitation remain explicit open coverage/issues.
 

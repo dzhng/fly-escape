@@ -1,0 +1,16 @@
+[
+  { "label": "empty", "placements": [] },
+  { "label": "route", "placements": [
+    { "id": 10, "kind": "laundry",     "position": { "x": 1.90, "z": 6.50 }, "heading": 0 },
+    { "id": 11, "kind": "wornShoes",   "position": { "x": 2.30, "z": 5.40 }, "heading": 0 },
+    { "id": 12, "kind": "vinegar",     "position": { "x": 4.80, "z": 5.30 }, "heading": 0 },
+    { "id": 13, "kind": "banana",      "position": { "x": 4.50, "z": 2.55 }, "heading": 0 },
+    { "id": 14, "kind": "vinegar",     "position": { "x": 0.70, "z": 2.20 }, "heading": 0 },
+    { "id": 15, "kind": "fruit",       "position": { "x": 6.30, "z": 2.40 }, "heading": 0 },
+    { "id": 16, "kind": "fan",         "position": { "x": 7.60, "z": 2.25 }, "heading": 0 },
+    { "id": 17, "kind": "dirtyDishes", "position": { "x": 8.85, "z": 2.25 }, "heading": 0 }
+  ] },
+  { "label": "fan-only", "placements": [
+    { "id": 16, "kind": "fan", "position": { "x": 7.60, "z": 2.25 }, "heading": 0 }
+  ] }
+]

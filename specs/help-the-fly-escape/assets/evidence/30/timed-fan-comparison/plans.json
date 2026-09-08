@@ -1,0 +1,21 @@
+[
+  { "label": "empty", "placements": [] },
+  { "label": "apple", "placements": [
+    { "id": 10, "kind": "fruit", "position": { "x": 0.35, "z": 2.25 }, "heading": 0 }
+  ] },
+  { "label": "vinegar", "placements": [
+    { "id": 11, "kind": "vinegar", "position": { "x": 5.4, "z": 2.55 }, "heading": 0 }
+  ] },
+  { "label": "both", "placements": [
+    { "id": 10, "kind": "fruit", "position": { "x": 0.35, "z": 2.25 }, "heading": 0 },
+    { "id": 11, "kind": "vinegar", "position": { "x": 5.4, "z": 2.55 }, "heading": 0 }
+  ] },
+  { "label": "fan", "placements": [
+    { "id": 12, "kind": "fan", "position": { "x": 3.8, "z": 2.25 }, "heading": 3.141592653589793 }
+  ] },
+  { "label": "both-fan", "placements": [
+    { "id": 10, "kind": "fruit", "position": { "x": 0.35, "z": 2.25 }, "heading": 0 },
+    { "id": 11, "kind": "vinegar", "position": { "x": 5.4, "z": 2.55 }, "heading": 0 },
+    { "id": 12, "kind": "fan", "position": { "x": 3.8, "z": 2.25 }, "heading": 3.141592653589793 }
+  ] }
+]
