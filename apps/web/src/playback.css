@@ -8,19 +8,17 @@
 .playback-lab .game-world > .canvas {
   top: 48px;
 }
-.game-world .playback-counters {
-  top: 18px;
-}
 .playback-counters {
-  position: absolute;
-  top: 78px;
-  left: 24px;
-  right: 24px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px 12px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #d9dbc4;
   font-size: 12px;
+  font-variant-numeric: tabular-nums;
 }
+.playback-counters b { grid-column: 1 / -1; font-size: 15px; }
 .playback-world .playback-controls {
   max-width: none;
   gap: 8px;
@@ -76,9 +74,6 @@
   }
   .playback-lab .game-world > .canvas {
     top: 66px;
-  }
-  .playback-counters {
-    gap: 8px;
   }
 }
 

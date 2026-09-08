@@ -564,14 +564,6 @@ export function AttemptPlayback({
               <span>Seed 42 · {DURATION_TICKS * TICK_SECONDS} game seconds</span>
             </div>
           )}
-          <div className="playback-counters" aria-label="Outcomes at playback time">
-            <b data-testid="active-count">{(info?.spec.flyCount ?? input?.flyCount ?? LAB_FLY_COUNT) - terminalCount} {error ? "paused" : "active"}</b>
-            {Object.entries(counts).filter(([name]) => !timedRound || name !== "starved").map(([name, count]) => (
-              <span key={name} data-testid={`outcome-${name}`}>
-                {count} {name === "timedOut" ? "dead" : name}
-              </span>
-            ))}
-          </div>
           <div className="controls playback-controls">
             <div className="playback-status" role="status" data-testid="playback-status">
               <strong>
@@ -667,6 +659,14 @@ export function AttemptPlayback({
               {input ? "This flight was interrupted. You can try again from setup." : error}
             </p>
           )}
+          <div className="playback-counters" aria-label="Outcomes at playback time">
+            <b data-testid="active-count">{(info?.spec.flyCount ?? input?.flyCount ?? LAB_FLY_COUNT) - terminalCount} {error ? "paused" : "active"}</b>
+            {Object.entries(counts).filter(([name]) => !timedRound || name !== "starved").map(([name, count]) => (
+              <span key={name} data-testid={`outcome-${name}`}>
+                {count} {name === "timedOut" ? "dead" : name}
+              </span>
+            ))}
+          </div>
           {info && (
             <SciencePanel previews={previewUpdate}
               key={info.spec.attemptId}
