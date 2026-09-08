@@ -544,7 +544,7 @@ export function AttemptPlayback({
             <b data-testid="active-count">{FLY_COUNT - terminalCount} {error ? "paused" : "active"}</b>
             {Object.entries(counts).filter(([name]) => !timedRound || name !== "starved").map(([name, count]) => (
               <span key={name} data-testid={`outcome-${name}`}>
-                {count} {name === "timedOut" ? "timed out" : name}
+                {count} {name === "timedOut" ? "dead" : name}
               </span>
             ))}
           </div>
