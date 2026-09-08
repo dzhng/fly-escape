@@ -8,6 +8,18 @@ try {
   const page = await browser.newPage({viewport:{width:1440,height:900}});
   page.setDefaultTimeout(60000);
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.addInitScript(() => {
+    const NativeWorker = window.Worker;
+    window.Worker = class extends NativeWorker {
+      postMessage(message, ...rest) {
+        // Pin a final-item fixture independently of campaign inventory tuning.
+        const level = message.command?.level;
+        const stock = level?.placementRules.inventory.find(item => item.kind === 'dirtyDishes');
+        if (stock) stock.count = 1;
+        super.postMessage(message, ...rest);
+      }
+    };
+  });
   await page.goto(process.env.BRAIN_URL ?? 'http://127.0.0.1:5173');
   await page.getByRole('button',{name:'Dirty dishes 1 left',exact:true}).click();
   let point;

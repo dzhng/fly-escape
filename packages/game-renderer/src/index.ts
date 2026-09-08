@@ -394,6 +394,7 @@ export class WorldView {
     if (!this.exitGlow?.matches(exit)) {
       this.exitGlow?.dispose();
       this.exitGlow = new ExitGlow(exit);
+      this.exitGlow.root.add(finishLabel(length, exit.outward));
       this.scene.add(this.exitGlow.root);
     }
   }
@@ -927,3 +928,33 @@ function createPointMarker(label: "L" | "R" | "C"): THREE.Group {
 }
 
 export { mountBrainView, groupColor } from "./brain-view";
+
+/** Painted floor objective, oriented with the doorway and occluded by real geometry. */
+function finishLabel(openingWidth: number, outward: Point): THREE.Mesh {
+  const canvas = document.createElement("canvas");
+  canvas.width = 512;
+  canvas.height = 160;
+  const context = canvas.getContext("2d")!;
+  context.fillStyle = "#fff4c8";
+  context.fillRect(0, 0, 512, 160);
+  context.strokeStyle = "#365443";
+  context.lineWidth = 8;
+  context.strokeRect(7, 7, 498, 146);
+  context.fillStyle = "#294637";
+  context.font = "bold 96px sans-serif";
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  context.fillText("Finish", 256, 84);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  const label = new THREE.Mesh(
+    new THREE.PlaneGeometry(Math.max(1.1, openingWidth * 1.2), 0.38),
+    new THREE.MeshBasicMaterial({ map: texture, transparent: true, depthWrite: false, toneMapped: false }),
+  );
+  label.name = "finish-label";
+  label.rotation.x = -Math.PI / 2;
+  if (outward.x > 0 || outward.z > 0) label.rotateZ(Math.PI);
+  label.position.set(0, 0.025, 1.15);
+  label.renderOrder = 1;
+  return label;
+}
