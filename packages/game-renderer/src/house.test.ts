@@ -145,7 +145,7 @@ test("prepared household shapes retain native envelopes and reject mismatched re
   }
 });
 
-test("a fly intersecting the wall shell exposes both the upper wall and opaque base, then restores", () => {
+test("nearby flies preserve back walls and only expose foreground wall shells", () => {
   const house = new HouseGeometry({ rooms: [{ id: 0, min: { x: 0, z: 0 }, max: { x: 4, z: 4 } }],
     walls: [{ a: { x: 0, z: 0 }, b: { x: 0, z: 4 } }], solids: [] });
   const camera = new THREE.PerspectiveCamera();
@@ -156,8 +156,12 @@ test("a fly intersecting the wall shell exposes both the upper wall and opaque b
   expect(baseline[0]).toBe(true);
   for (const height of [0, 0.4]) {
     house.updateWallVisibility(camera, [new THREE.Sphere(new THREE.Vector3(0.002632, height, 2), 0.025)]);
-    expect(wall.children.map(child => child.visible)).toEqual([false, false, false, true]);
+    expect(wall.children.map(child => child.visible)).toEqual(baseline);
   }
+  camera.position.set(-4, 4, 4); camera.lookAt(0, 0, 0); camera.updateMatrixWorld(true);
+  house.updateWallVisibility(camera, [new THREE.Sphere(new THREE.Vector3(0.002632, 0.4, 2), 0.025)]);
+  expect(wall.children.map(child => child.visible)).toEqual([false, false, false, true]);
+  camera.position.set(4, 4, 4); camera.lookAt(0, 0, 0); camera.updateMatrixWorld(true);
   house.updateWallVisibility(camera, [new THREE.Sphere(new THREE.Vector3(1, 0, 2), 0.025)]);
   expect(wall.children.map(child => child.visible)).toEqual(baseline);
   house.updateWallVisibility(camera, [new THREE.Sphere(new THREE.Vector3(0, 0, 2), 0)]);

@@ -131,9 +131,9 @@ export class HouseGeometry {
           && Math.min(hi, alongMax) > Math.max(lo, alongMin)
           && ((near + far) / 2 - edge) * direction > 0;
       });
-      // Readability-scaled flies may overlap the decorative wall shell even
-      // when their recorded native bodies clear the physical boundary.
-      const nearFly = flies.some(fly => fly.radius > 0 && wall.bounds.intersectsSphere(fly));
+      // Shell overlap only affects foreground cutaways. Nearby flies must not
+      // dissolve the back walls that provide the room's visual boundary.
+      const nearFly = cut && flies.some(fly => fly.radius > 0 && wall.bounds.intersectsSphere(fly));
       wall.full.visible = !cut && !nearFly;
       wall.base.visible = wall.upper.visible = cut && !nearFly;
       wall.ghost.visible = nearFly;
