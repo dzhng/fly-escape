@@ -1,5 +1,7 @@
 # Office release and stronger finish pull
 
+These measurements describe the layout shipped in `17a2402`. The user subsequently requested closing the hall-to-living-room shortcut; they do not measure that later, indirect route.
+
 The first house now releases on open office floor. A broader office opening and a direct hall-to-living doorway shorten the route to the exit room. The original office banana remains a distraction: player placements must overcome built-in lures. Both houses use stronger physical exit suction, still gated by room membership, visibility and swept collision/escape checks.
 
 ## Progression evidence

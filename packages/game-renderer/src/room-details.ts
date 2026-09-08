@@ -1,6 +1,9 @@
 import * as THREE from "three";
 import { loadStaticHouseModel } from "./house";
 import type { WorldView } from "./index";
+import type { Geometry } from "@fly-escape/sim-client";
+import { doorwayOpenings } from "./doorways";
+import doorwayEnvelope from "../../../assets/house/doorway/envelope.json";
 import exitWindowUrl from "../../../assets/house/exit-window/exit-window.glb?url";
 import exitWindowEnvelope from "../../../assets/house/exit-window/envelope.json";
 import doorwayUrl from "../../../assets/house/doorway/doorway.glb?url";
@@ -10,18 +13,53 @@ import sconceUrl from "../../../assets/house/sconce/sconce.glb?url";
 
 /** Wall attachments in metres. Local +Z faces into the room; no core occupancy or sensory cue is added. */
 export type RoomDetail = {
-  kind: "window" | "sconce" | "plant" | "doorway" | "exitWindow";
   position: readonly [number, number, number];
   quarterTurns: 0 | 1 | 2 | 3;
-};
+} & ({ kind: "doorway"; width: number } | { kind: "window" | "sconce" | "plant" | "exitWindow" });
 const [left, floor, outward, right, top, inward] = exitWindowEnvelope.bounds;
+const [doorLeft, doorFloor, doorBack, doorRight, doorTop, doorFront] = doorwayEnvelope.bounds;
 const assets = {
   window: { url: windowUrl, size: [1.4, 1.1, 0.08] },
   sconce: { url: sconceUrl, size: [0.22, 0.32, 0.16] },
   plant: { url: plantUrl, size: [0.34, 1.265, 0.38] },
-  doorway: { url: doorwayUrl, size: [1.02, 2.5, 0.16] },
+  doorway: { url: doorwayUrl, bounds: [doorLeft, doorFloor, doorBack, doorRight, doorTop, doorFront] },
   exitWindow: { url: exitWindowUrl, bounds: [left, floor, outward, right, top, inward] },
 } as const;
+
+/** Decorative frames follow physical openings; they never carry their own layout. */
+export function doorwayDetails(geometry: Geometry): RoomDetail[] {
+  return doorwayOpenings(geometry).map(({ a, b }) => ({
+    kind: "doorway", position: [(a.x + b.x) / 2, 0, (a.z + b.z) / 2],
+    quarterTurns: a.x === b.x ? 1 : 0, width: Math.hypot(b.x - a.x, b.z - a.z),
+  }));
+}
+
+/** Spread posts without thickening them; only the lintel spans the wider gap. */
+export function fitDoorway(model: THREE.Group, width: number): void {
+  const half = doorwayEnvelope.clearWidth / 2;
+  const extra = (width - doorwayEnvelope.clearWidth) / 2;
+  if (Math.abs(extra) < 1e-8) return;
+  model.updateMatrixWorld(true);
+  const rootInverse = model.matrixWorld.clone().invert();
+  const point = new THREE.Vector3();
+  model.traverse(object => {
+    if (!(object instanceof THREE.Mesh)) return;
+    const transform = rootInverse.clone().multiply(object.matrixWorld);
+    const inverse = transform.clone().invert();
+    object.geometry = object.geometry.clone();
+    const positions = object.geometry.getAttribute("position");
+    for (let i = 0; i < positions.count; i++) {
+      point.fromBufferAttribute(positions, i).applyMatrix4(transform);
+      point.x += Math.max(-1, Math.min(1, point.x / half)) * extra;
+      point.applyMatrix4(inverse);
+      positions.setXYZ(i, point.x, point.y, point.z);
+    }
+    positions.needsUpdate = true;
+    object.geometry.computeVertexNormals();
+    object.geometry.computeBoundingBox();
+    object.geometry.computeBoundingSphere();
+  });
+}
 
 export class RoomDetails {
   readonly root = new THREE.Group();
@@ -45,6 +83,7 @@ export class RoomDetails {
       mount.rotation.y = detail.quarterTurns * Math.PI / 2;
       const model = sources.get(detail.kind)!.clone(true);
       model.name = `RoomDetail-${detail.kind}`;
+      if (detail.kind === "doorway") fitDoorway(model, detail.width);
       mount.add(model);
       if (detail.kind === "sconce") {
         const light = new THREE.PointLight("#ffca88", 0.45, 2.5, 2);

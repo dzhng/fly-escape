@@ -109,3 +109,30 @@ function skinnedVertices(root: THREE.Object3D): number[] {
   });
   return result;
 }
+
+test("animated clearance bounds contain the posed fly through clip changes and reverse seeking", async () => {
+  const { FlyMotion } = await import("./fly-motion");
+  const model = await loadFlyModel(await Bun.file(new URL("../../../assets/fly/fly.glb", import.meta.url)).arrayBuffer());
+  const motion = new FlyMotion(model.root, model.clips);
+  try {
+    for (const clip of ["Walk", "Feed", "Land", "Fly"] as const) for (const seconds of [0, 0.13, 0.37, 0.08]) {
+      motion.sample({ clip, seconds });
+      model.root.position.set(2, 0.4, -3);
+      model.root.rotation.set(0.2, 0.7, -0.1);
+      model.root.scale.setScalar(5);
+      const bounds = motion.bounds.local.clone().expandByScalar(1e-9);
+      model.root.updateMatrixWorld(true);
+      const inverse = model.root.matrixWorld.clone().invert();
+      let outside = 0;
+      model.root.traverse(node => {
+        if (!(node instanceof THREE.Mesh)) return;
+        if (node instanceof THREE.SkinnedMesh) node.skeleton.update();
+        for (let i = 0; i < node.geometry.attributes.position.count; i++) {
+          const vertex = node.getVertexPosition(i, new THREE.Vector3()).applyMatrix4(node.matrixWorld).applyMatrix4(inverse);
+          if (!bounds.containsPoint(vertex)) outside++;
+        }
+      });
+      expect(outside).toBe(0);
+    }
+  } finally { motion.dispose(); model.dispose(); }
+});

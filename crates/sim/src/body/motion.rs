@@ -521,14 +521,40 @@ fn advance_bounded(
             } else {
                 point.height >= floor - MOTION_ERROR
             };
-            // A turn-only fallback may defer ordinary contact, but must not
-            // suppress an otherwise reachable terminal hazard.
+            // A safe turn must not postpone a reachable landing forever. Test
+            // the retained orientation's contact before choosing turn-only work;
+            // the normal translation path below still verifies the impact.
             work.query()?;
-            let reachable_hazard = world
-                .surfaces
-                .cast_at_rotation(world.hull, point.root(), point.rotation, delta)?
-                .is_some_and(|hit| world.contact_hazards.contains_key(&hit.surface_id));
+            let contact =
+                world
+                    .surfaces
+                    .cast_at_rotation(world.hull, point.root(), point.rotation, delta)?;
+            let reachable_hazard =
+                contact.is_some_and(|hit| world.contact_hazards.contains_key(&hit.surface_id));
+            let reachable_landing =
+                if let Some(hit) = contact.filter(|hit| descending && hit.normal[1] > 0.) {
+                    work.query()?;
+                    world
+                        .surfaces
+                        .support_at(
+                            world.hull,
+                            hit.surface_id,
+                            [
+                                point.pose.position.x + delta[0] * hit.fraction,
+                                point.pose.position.z + delta[2] * hit.fraction,
+                            ],
+                            point.pose.heading,
+                            current_up,
+                        )?
+                        .is_some_and(|sample| {
+                            (sample.root[1] - (point.height + delta[1] * hit.fraction)).abs()
+                                <= CONTACT_PRECISION
+                        })
+                } else {
+                    false
+                };
             if !reachable_hazard
+                && !reachable_landing
                 && turn == crate::surface::RotationClearance::Clear
                 && rests_on_floor
                 && point.height + MOTION_ERROR
@@ -644,7 +670,14 @@ fn advance_bounded(
                     if point.fraction > trace.end().fraction {
                         append_point(&mut trace.points, point.clone())?;
                     }
-                    continue;
+                    // Finish acquisition at impact: feeding the leftover flight
+                    // velocity into supported walking can exhaust its budget
+                    // and discard the landing that just succeeded.
+                    if point.fraction < 1. {
+                        return hold(world, trace, point, work);
+                    }
+                    trace.queries = work.queries;
+                    return Ok(trace);
                 }
             }
             // Preserve impact time before the stationary remainder, so terminal

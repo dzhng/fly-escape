@@ -8,7 +8,7 @@ Paths are repository-root paths from `/Users/david/dev/fly-escape`. From `specs/
 
 Final state: graded odor is committed at `c4d6e28`; normal emissions and the strong exit-room pull ship. The final static campaign and integration evidence are in [release checks](assets/evidence/release-final/README.md). This ledger separates uncertain tuning from established ownership choices. The user accepted these provisional mechanics for MVP; none of the following asks for another approval or blocks shipping.
 
-The later [room progression check](assets/evidence/41-room-progression/README.md) moves the first release into the office and opens its route through the hall. The user requested the office release and stronger finish pull; doorway widths are implementation tuning. Built-in lures deliberately remain distractions, including the original office banana. Player placements provide the guidance. Object contact sticking remains deferred.
+The later [room progression check](assets/evidence/41-room-progression/README.md) moves the first release into the office and widens its opening into the hall. The user subsequently requested closing the direct hall-to-living-room doorway, so the route bends through the kitchen. The user requested the office release and stronger finish pull; doorway widths are implementation tuning. Built-in lures deliberately remain distractions, including the original office banana. Player placements provide the guidance. Object contact sticking remains deferred.
 
 ## Provisional — accepted for MVP, least certain first
 
@@ -70,6 +70,9 @@ A walking fly crosses out at floor level. The art is outward-opening full-height
 - **Reach:** final exit art must stay a physically clear floor-level route unless the core exit changes.
 - **Provisional (in effect):** keep the dressing. **Reversal:** art-only swap.
 - **Confidence: medium.**
+
+### N7. Display clearance for enlarged flies
+**Implementation decision, inside the user-requested surface fix.** Native collision keeps the millimetre-sized body safe, while zoom enlarges its visible mesh. Landing and grounded display poses therefore receive a vertical lift against the resolved contact triangles, using bounds of their current animation. The conservative box can leave small gaps on curved detail; it prevents embedding without changing native motion, neural input, horizontal position or orientation. Recorded and displayed heights remain distinct in diagnostics. [Surface and landing evidence](assets/evidence/42-surface-landing/README.md) records the checks and limitations.
 
 ## Maintenance concern — non-blocking
 

@@ -281,16 +281,6 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
             "z": 4.5
           },
           "b": {
-            "x": 0.9,
-            "z": 4.5
-          }
-        },
-        {
-          "a": {
-            "x": 2.4,
-            "z": 4.5
-          },
-          "b": {
             "x": 6,
             "z": 4.5
           }

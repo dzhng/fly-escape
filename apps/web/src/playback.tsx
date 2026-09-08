@@ -130,6 +130,7 @@ function sample(run: Run): FlyPose[] {
     const rendered: FlyPose = {
       x: pose.x, z: pose.z, heading: pose.heading, y: pose.height,
       rotation: pose.rotation,
+      bodyMode: motions[id].mode,
       animation: flyAnimation(motions[id], TICK_SECONDS),
       outcome: outcome === "zapped" || outcome === "escaped" ? outcome : undefined,
     };
@@ -265,6 +266,9 @@ export function AttemptPlayback({
           reply.info.level.exit,
           false,
         );
+        scene.current.setSupportSurfaces([
+          ...reply.info.resolvedSetup.state.food, ...reply.info.resolvedSetup.state.objects,
+        ]);
         scene.current.setPlacements(reply.info.spec.placements, catalog, undefined, reply.info.level.fixedObjects);
         scene.current.setPoses(sample(run.current));
         scene.current.enableSelection(selectFly);

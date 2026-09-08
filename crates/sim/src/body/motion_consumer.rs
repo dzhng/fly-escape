@@ -542,78 +542,24 @@ fn descending_shoe_rim_contact_keeps_a_verified_prefix() {
     let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
     assert_eq!(trace.end().fraction, 1.);
     assert!(trace.end().pose.position.distance(desired.position) > 0.01);
-    // The descent advances to the rim it verified and holds that root for the
-    // rest of the tick; only the separately proven turn keeps going.
-    let held = &trace.points[1];
-    assert!(held.fraction > 0. && held.fraction < 1.);
-    assert!(held.height < state.height);
-    assert!(held.pose.position.distance(state.pose.position) > 0.);
-    for point in &trace.points[1..] {
-        assert_eq!(point.pose.position, held.pose.position);
-        assert_eq!(point.height, held.height);
-    }
-    assert!((trace.end().pose.heading - desired.heading).abs() < 1e-12);
-    for pair in trace.points.windows(2) {
-        for i in 0..=100 {
-            let t = pair[0].fraction + (pair[1].fraction - pair[0].fraction) * i as f64 / 100.;
-            let p = trace.at(t).unwrap();
-            let depth = world
-                .surfaces
-                .penetration(
-                    world.hull,
-                    [p.pose.position.x, p.height, p.pose.position.z],
-                    p.rotation,
-                )
-                .unwrap();
-            assert!(
-                !depth.exceeds(3e-6),
-                "rim motion penetrates by {depth:?} at {t}"
-            );
-        }
-    }
+    assert!(trace.end().height < state.height);
+    assert!(trace.end().pose.position.distance(state.pose.position) > 0.);
+    assert_landing_rests_on_surface(&world, &trace);
 }
 
 #[test]
-fn a_blocked_shoe_landing_turns_at_the_retained_root_instead_of_freezing() {
+fn a_blocked_shoe_descent_finishes_landing_before_ground_movement() {
     let (state, desired, world) = blocked_shoe_landing();
     let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
     assert_eq!(trace.end().fraction, 1.);
     assert!(trace.queries < 512);
     assert!(trace.end().pose.position.distance(desired.position) > 0.01);
-    // Nothing translates, so the shoe never admits the request; the turn it
-    // leaves clear resolves the tick instead of searching until the budget ends.
-    for point in &trace.points {
-        assert_eq!(point.pose.position, state.pose.position);
-        assert_eq!(point.height, state.height);
-    }
+    assert_landing_rests_on_surface(&world, &trace);
     assert_eq!(trace.points[0].rotation, state.rotation);
-    assert!((trace.end().pose.heading - desired.heading).abs() < 1e-12);
-    assert!(trace
-        .points
-        .windows(2)
-        .all(|p| p[0].fraction < p[1].fraction));
-    for pair in trace.points.windows(2) {
-        for i in 0..=100 {
-            let t = pair[0].fraction + (pair[1].fraction - pair[0].fraction) * i as f64 / 100.;
-            let p = trace.at(t).unwrap();
-            let depth = world
-                .surfaces
-                .penetration(
-                    world.hull,
-                    [p.pose.position.x, p.height, p.pose.position.z],
-                    p.rotation,
-                )
-                .unwrap();
-            assert!(
-                !depth.exceeds(3e-6),
-                "rim motion penetrates by {depth:?} at {t}"
-            );
-        }
-    }
 }
 
 #[test]
-fn unresolved_shoe_rim_landing_declines_support_at_the_verified_pose() {
+fn an_unresolved_combined_turn_can_land_at_the_retained_orientation() {
     let state: BodyState = serde_json::from_str(r#"{"height":0.12772274883536788,"mode":"landing","outcome":null,"pose":{"heading":5.533412896370883,"position":{"x":2.601077926533136,"z":6.593480566087955}},"reserve":13.960000000000088,"rotation":[7.746681504404701e-14,0.9169166314048016,-1.7693246061555225e-13,0.39907880306184046],"support":null}"#).unwrap();
     let desired: BodyPose = serde_json::from_str(
         r#"{"heading":5.677330636512726,"position":{"x":2.627205032953626,"z":6.57538058512456}}"#,
@@ -647,33 +593,7 @@ fn unresolved_shoe_rim_landing_declines_support_at_the_verified_pose() {
     let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
     assert_eq!(trace.end().fraction, 1.);
     assert!(trace.end().pose.position.distance(desired.position) > 0.01);
-    // The landing is declined, not snapped onto the rim it grazed, and the turn
-    // the unresolved sweep never proved translating is taken on its own proof.
-    for point in &trace.points {
-        assert_eq!(point.support, None);
-        assert!(!point.grounded);
-        assert_eq!(point.pose.position, state.pose.position);
-        assert_eq!(point.height, state.height);
-    }
-    assert!((trace.end().pose.heading - desired.heading).abs() < 1e-12);
-    for pair in trace.points.windows(2) {
-        for i in 0..=100 {
-            let t = pair[0].fraction + (pair[1].fraction - pair[0].fraction) * i as f64 / 100.;
-            let p = trace.at(t).unwrap();
-            let depth = world
-                .surfaces
-                .penetration(
-                    world.hull,
-                    [p.pose.position.x, p.height, p.pose.position.z],
-                    p.rotation,
-                )
-                .unwrap();
-            assert!(
-                !depth.exceeds(3e-6),
-                "declined landing penetrates by {depth:?} at {t}"
-            );
-        }
-    }
+    assert_landing_rests_on_surface(&world, &trace);
 }
 
 #[test]
@@ -895,16 +815,91 @@ fn assert_traversal_clears_contact(world: &BodyWorld, trace: &MotionTrace) {
 }
 
 #[test]
-fn query_exhaustion_after_partial_contact_restores_the_start() {
+fn near_zero_time_landing_finishes_without_query_exhaustion() {
     let (state, mut desired, world) = blocked_shoe_landing();
     desired.heading = state.pose.heading;
     let trace = motion::advance(&world, &state, desired, 0.1, 0.002632).unwrap();
-    assert_eq!(trace.queries, 512);
-    assert_eq!(trace.points.len(), 2);
-    assert_eq!(trace.end().pose, state.pose);
-    assert_eq!(trace.end().rotation, state.rotation);
-    assert_eq!(trace.end().height, state.height);
+    assert!(trace.queries < 512);
+    assert_landing_rests_on_surface(&world, &trace);
+}
+
+fn assert_landing_rests_on_surface(world: &BodyWorld, trace: &MotionTrace) {
     assert_eq!(trace.end().fraction, 1.);
+    let landed = trace
+        .points
+        .iter()
+        .find(|point| point.grounded)
+        .expect("landing acquires support");
+    let surface = landed.support.expect("landing rests on the object");
+    let sample = world
+        .surfaces
+        .support_at(
+            world.hull,
+            surface,
+            [landed.pose.position.x, landed.pose.position.z],
+            landed.pose.heading,
+            parry3d_f64::math::Rotation::from_array(landed.rotation)
+                .mul_vec3(parry3d_f64::math::Vector::Y)
+                .to_array(),
+        )
+        .unwrap()
+        .unwrap();
+    assert!((sample.root[1] - landed.height).abs() <= 3e-6);
+    for point in trace
+        .points
+        .iter()
+        .filter(|point| point.fraction >= landed.fraction)
+    {
+        assert!(point.grounded);
+        assert_eq!(point.support, Some(surface));
+        assert_eq!(point.pose, landed.pose);
+        assert_eq!(point.rotation, landed.rotation);
+        assert_eq!(point.height, landed.height);
+    }
+    assert!(trace
+        .points
+        .windows(2)
+        .all(|points| points[0].fraction < points[1].fraction));
+    assert_traversal_clears_contact(world, trace);
+}
+
+#[test]
+fn exhausted_supported_travel_restores_its_verified_start() {
+    let surface = ContactSurface {
+        id: 7,
+        vertices: vec![[0.2, 0.1, 1.], [4., 0.1, 1.], [4., 0.1, 3.], [0.2, 0.1, 3.]],
+        triangles: vec![[0, 2, 1], [0, 3, 2]],
+    };
+    let world = first_house_room(vec![surface]);
+    let mut state = Body::new(
+        BodyPose {
+            position: Point { x: 1., z: 2. },
+            heading: 0.,
+        },
+        BodyConfig::default(),
+    )
+    .unwrap()
+    .state;
+    let support = world
+        .surfaces
+        .support_at(world.hull, 7, [1., 2.], 0., [0., 1., 0.])
+        .unwrap()
+        .unwrap();
+    state.height = support.root[1];
+    state.support = Some(7);
+    let desired = BodyPose {
+        position: Point { x: 3., z: 2. },
+        heading: 0.,
+    };
+    let trace = motion::advance(&world, &state, desired, 1., 0.002632).unwrap();
+    assert!(trace.queries <= 512);
+    assert_eq!(trace.end().fraction, 1.);
+    for point in &trace.points {
+        assert_eq!(point.pose, state.pose);
+        assert_eq!(point.height, state.height);
+        assert_eq!(point.rotation, state.rotation);
+        assert_eq!(point.support, state.support);
+    }
     assert_traversal_clears_contact(&world, &trace);
 }
 

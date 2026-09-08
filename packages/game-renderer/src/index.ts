@@ -4,7 +4,8 @@ import type { RoomFloor } from "./house";
 export type { RoomFloor } from "./house";
 import * as THREE from "three";
 import type { RoomDetails } from "./room-details";
-export { loadRoomDetails } from "./room-details";
+export { loadRoomDetails, doorwayDetails } from "./room-details";
+export { doorwayOpenings } from "./doorways";
 export type { RoomDetail } from "./room-details";
 import { housePalette } from "./house-materials";
 import { PlacementModels, type PlacementKind } from "./placement-models";
@@ -21,6 +22,7 @@ export { departingFly } from "./fly-departure";
 export { flyAnimation, interpolateRotation } from "./fly-motion";
 export type { FlyAnimation } from "./fly-motion";
 import { FlyModel } from "./fly-model";
+import { SurfaceClearance } from "./surface-clearance";
 import { ExitGlow } from "./exit-glow";
 import { disposeObjectResources } from "./resources";
 export { disposeObjectResources } from "./resources";
@@ -29,7 +31,7 @@ import { sunGlow } from "./sun-glow";
 import { ExteriorGrass } from "./exterior-grass";
 import { WorldCamera } from "./camera";
 import { cameraInput } from "./camera-input";
-import type { Geometry, FieldGrid, ContactRegion, ContactSurface, ExitOpening, Placement, ToolDef, Point } from "@fly-escape/sim-client";
+import type { BodyMode, Geometry, FieldGrid, ContactRegion, ContactSurface, ExitOpening, Placement, ToolDef, Point } from "@fly-escape/sim-client";
 
 export type FieldChannel = "attractiveOdor" | "repellentOdor" | "brightness" | "shade" | "exitCue";
 /** Fixed modeled cue value at half overlay strength; never normalized per frame. */
@@ -52,6 +54,8 @@ export interface FlyPose {
   x: number;
   y: number;
   z: number;
+  /** Descent and ground movement need clearance at the displayed body size. */
+  bodyMode?: BodyMode;
   /** Radians on the x/z floor: zero points +X, positive turns toward +Z. */
   heading: number;
   /** Departure visuals retain the recorded camera anchor. */
@@ -93,6 +97,8 @@ export class WorldView {
   private readonly nativeScale = new THREE.Vector3(1, 1, 1);
   private displayScale = 1;
   private readonly flyScales: number[] = [];
+  private readonly recordedPositions: THREE.Vector3[] = [];
+  private readonly surfaceClearance = new SurfaceClearance();
   private readonly flyWallBounds: THREE.Sphere[] = [];
   private readonly outcomes: FlyOutcomes;
   private modelKind: "placeholder" | "glb" = "placeholder";
@@ -122,6 +128,7 @@ export class WorldView {
       throw new Error("Scene requires 1..100 flies");
     while (this.flies.length < flyCount) this.flies.push(this.flies[0].clone(true));
     this.flyScales.push(...this.flies.map(() => 1));
+    this.recordedPositions.push(...this.flies.map(() => new THREE.Vector3()));
     this.flyWallBounds.push(...this.flies.map(() => new THREE.Sphere()));
     this.outcomes = new FlyOutcomes(flyCount);
     this.scene.add(this.outcomes.root);
@@ -274,7 +281,7 @@ export class WorldView {
       fly.visible = old.visible;
       fly.position.copy(old.position);
       fly.quaternion.copy(old.quaternion);
-      fly.userData.flyId = id;
+      fly.userData = { ...old.userData, ...fly.userData, flyId: id };
       removed.add(old);
       this.scene.add(fly);
       return fly;
@@ -343,6 +350,10 @@ export class WorldView {
     }
   }
 
+  setSupportSurfaces(surfaces: readonly ContactSurface[]): void {
+    this.surfaceClearance.setSurfaces(surfaces);
+  }
+
   setContactGeometry(food: ContactSurface[], hazards: ContactRegion[], exit: ExitOpening, diagnostic = true): void {
     const center = this.bounds.getCenter(new THREE.Vector3());
     const radius = this.bounds.getSize(new THREE.Vector3()).length() / 2;
@@ -400,12 +411,8 @@ export class WorldView {
   }
 
   setPose(pose: FlyPose): void {
-    this.motions[0]?.sample(pose.animation);
-    this.flies[0].position.set(pose.x, pose.y, pose.z);
+    this.applyPose(pose, 0);
     this.contactCenter.position.set(pose.x, 0, pose.z);
-    // The replaceable model is +Y up, +Z forward, with its pivot at foot contact.
-    if (pose.rotation) this.flies[0].quaternion.fromArray(pose.rotation);
-    else this.flies[0].rotation.set(0, Math.PI / 2 - pose.heading, 0);
   }
 
   /** Authored release region only; no speculative fly positions before Run. */
@@ -468,18 +475,22 @@ export class WorldView {
     if (poses.length !== this.flies.length)
       throw new Error("Pose count differs from scene population");
     this.clearSpawnArea();
-    poses.forEach((pose, index) => {
-      const fly = this.flies[index];
-      fly.visible = !pose.hidden;
-      fly.userData.focus = pose.focus;
-      fly.userData.presentationScale = pose.presentationScale ?? 1;
-      fly.userData.departing = pose.outcome === "escaped";
-      this.outcomes.set(index, pose.hidden ? undefined : pose.outcome);
-      this.motions[index]?.sample(pose.animation);
-      fly.position.set(pose.x, pose.y, pose.z);
-      if (pose.rotation) fly.quaternion.fromArray(pose.rotation);
-      else fly.rotation.set(0, Math.PI / 2 - pose.heading, 0);
-    });
+    poses.forEach((pose, index) => this.applyPose(pose, index));
+  }
+
+  private applyPose(pose: FlyPose, index: number): void {
+    const fly = this.flies[index];
+    fly.visible = !pose.hidden;
+    fly.userData.focus = pose.focus;
+    fly.userData.bodyMode = pose.bodyMode;
+    this.recordedPositions[index].set(pose.x, pose.y, pose.z);
+    fly.userData.presentationScale = pose.presentationScale ?? 1;
+    fly.userData.departing = pose.outcome === "escaped";
+    this.outcomes.set(index, pose.hidden ? undefined : pose.outcome);
+    this.motions[index]?.sample(pose.animation);
+    fly.position.set(pose.x, pose.y, pose.z);
+    if (pose.rotation) fly.quaternion.fromArray(pose.rotation);
+    else fly.rotation.set(0, Math.PI / 2 - pose.heading, 0);
   }
 
   /** Explicit detailed snapshot; never collected on the render/report hot path. */
@@ -636,6 +647,9 @@ export class WorldView {
       displayScale: this.displayScale,
       flies: this.flies.map((fly, id) => ({
         id,
+        worldPosition: fly.position.toArray(),
+        recordedPosition: this.recordedPositions[id].toArray(),
+        displayScale: this.flyScales[id],
         ...this.navigation.project(
           this.flyCenter(fly, this.flyScales[id]),
         ),
@@ -783,9 +797,14 @@ export class WorldView {
   render(timeSeconds = performance.now() / 1000): void {
     this.controls?.update(performance.now());
     this.flies.forEach((fly, id) => {
-      const scale = this.navigation.displayScale(this.nativeSpan, fly.position) * (fly.userData.presentationScale ?? 1);
+      const recorded = this.recordedPositions[id];
+      fly.position.copy(recorded);
+      const scale = this.navigation.displayScale(this.nativeSpan, recorded) * (fly.userData.presentationScale ?? 1);
       this.flyScales[id] = scale;
       fly.scale.copy(this.nativeScale).multiplyScalar(scale);
+      if (fly.visible && fly.userData.bodyMode && fly.userData.bodyMode !== "flying" && !fly.userData.departing && this.motions[id]) {
+        fly.position.y = this.surfaceClearance.height(recorded, fly.quaternion, fly.scale, this.motions[id].bounds.local);
+      }
       const bounds = this.flyWallBounds[id];
       bounds.center.copy(fly.position);
       bounds.radius = fly.visible ? this.nativeSpan * scale : 0;

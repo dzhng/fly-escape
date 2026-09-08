@@ -1,9 +1,12 @@
 """Native open doorway: a human-sized clear passage beneath a full-height lintel."""
 from pathlib import Path
 from runpy import run_path
-import bpy, bmesh
+import bpy, bmesh, json
 
 OUT = Path(__file__).resolve().parent
+envelope = json.loads((OUT / 'envelope.json').read_text())
+clear_width = envelope['clearWidth']
+outer_width = envelope['bounds'][3] - envelope['bounds'][0]
 shared = run_path(str(OUT.parent / 'authoring.py'))
 material = run_path(str(OUT.parent / 'finish-details.py'))['material']
 asset = bpy.data.scenes.new('Doorway-Metres')
@@ -28,17 +31,17 @@ def box(name, center, size, finish):
     asset.collection.objects.link(obj)
 
 
-# Blender Z is vertical; the complete GLB opening is x in (-.45,.45), y in (0,2.05).
+# Blender Z is vertical; the opening uses the shared clear width.
 for side in [-1, 1]:
-    box('DoorFrameLeft' if side < 0 else 'DoorFrameRight', (side * .48, 0, 1.05), (.06, .16, 2.1), frame)
-box('DoorFrameHeader', (0, 0, 2.075), (.9, .16, .05), frame)
-box('DoorWallLintel', (0, 0, 2.3), (1.02, .12, .4), plaster)
+    box('DoorFrameLeft' if side < 0 else 'DoorFrameRight', (side * (clear_width / 2 + .03), 0, 1.05), (.06, .16, 2.1), frame)
+box('DoorFrameHeader', (0, 0, 2.075), (clear_width, .16, .05), frame)
+box('DoorWallLintel', (0, 0, 2.3), (outer_width, .12, .4), plaster)
 
 # Every vertex belongs outside the clear passage; there is no threshold or door leaf.
 for obj in asset.objects:
     for vertex in obj.data.vertices:
         x, depth, height = vertex.co
-        assert abs(x) >= .45 - 1e-7 or height >= 2.05 - 1e-7, (obj.name, vertex.co)
-shared['export_static'](asset, OUT / 'doorway.glb', [1.02, 2.5, .16])
+        assert abs(x) >= clear_width / 2 - 1e-7 or height >= 2.05 - 1e-7, (obj.name, vertex.co)
+shared['export_static'](asset, OUT / 'doorway.glb', [outer_width, 2.5, .16])
 bpy.data.libraries.write(str(OUT / 'doorway.blend'), {asset}, fake_user=True, compress=True)
-print('Exported 0.9m x 2.05m clear doorway with 2.5m lintel')
+print(f'Exported {clear_width}m x 2.05m clear doorway with 2.5m lintel')

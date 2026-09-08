@@ -105,7 +105,7 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
         "kind": "bugZapper",
         "position": {
           "x": 6.8,
-          "z": 5.2
+          "z": 4.72
         },
         "heading": 0
       }
@@ -475,12 +475,12 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
     "spawn": {
       "kind": "cluster",
       "min": {
-        "x": 2.05,
-        "z": 9.15
+        "x": 7.8,
+        "z": 9.05
       },
       "max": {
-        "x": 2.7,
-        "z": 9.7
+        "x": 8.45,
+        "z": 9.55
       },
       "flyingCount": 8
     }

@@ -1502,3 +1502,46 @@ fn finish_pull_overcomes_maximum_away_motion_from_two_metres_in_seconds() {
         }
     }
 }
+
+#[test]
+fn a_turning_fly_finishes_landing_on_dishes_instead_of_turning_above_them_forever() {
+    use sim::native_object::NativeObjectShape;
+    let dishes = NativeObjectShape::DirtyDishes
+        .placed_surfaces(Point { x: 2., z: 2. }, 0., 1)
+        .unwrap();
+    let world = BodyWorld::new(&geometry(), &[], &dishes, &[], exit(), 100).unwrap();
+    for position in [Point { x: 1.98, z: 2.08 }, Point { x: 2.04, z: 1.98 }] {
+        for turn in [-0.5, 0.5] {
+            let mut b = Body::new_in_mode(
+                BodyPose {
+                    position: position,
+                    heading: 0.,
+                },
+                timed_config(),
+                BodyMode::Flying,
+            )
+            .unwrap();
+            let mut landing = neural(0., 0.);
+            landing.motor.flight_turn = turn;
+            landing.groups.push(GroupActivity {
+                id: "landingL".into(),
+                mean_voltage: 0.,
+                spike_fraction: 1.,
+            });
+            for tick in 1..=30 {
+                b.step(&landing, &world, Point::default(), 0.1, tick)
+                    .unwrap();
+                if b.state().mode == BodyMode::Walking {
+                    break;
+                }
+            }
+            assert_eq!(
+                b.state().mode,
+                BodyMode::Walking,
+                "landing never reaches the plate: {:?}",
+                b.state()
+            );
+            assert!(b.state().support.is_some());
+        }
+    }
+}

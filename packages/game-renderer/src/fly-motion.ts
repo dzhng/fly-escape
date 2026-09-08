@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { FlyBounds } from "./fly-bounds";
 import type { RecordedMotion } from "@fly-escape/sim-client";
 
 export type FlyAnimation = { clip: "Walk" | "Fly" | "Land" | "Feed"; seconds: number };
@@ -15,15 +16,18 @@ export function flyAnimation(motion: RecordedMotion, tickSeconds: number): FlyAn
 /** Absolute sampling restores bindings when clips change; pause and backwards seeks
  * cannot accumulate mixer time or leave another clip's bones behind. */
 export class FlyMotion {
+  readonly bounds: FlyBounds;
   private readonly mixer: THREE.AnimationMixer;
   private last?: FlyAnimation;
   private readonly actions = new Map<string, THREE.AnimationAction>();
   constructor(root: THREE.Object3D, clips: THREE.AnimationClip[]) {
+    this.bounds = new FlyBounds(root);
     this.mixer = new THREE.AnimationMixer(root);
     for (const clip of clips) this.actions.set(clip.name, this.mixer.clipAction(clip));
   }
   sample(sample: FlyAnimation | undefined): void {
     if (this.last?.clip === sample?.clip && this.last?.seconds === sample?.seconds) return;
+    this.bounds.invalidate();
     if (this.last?.clip !== sample?.clip) this.mixer.stopAllAction();
     this.last = sample && { ...sample };
     if (!sample) return;
