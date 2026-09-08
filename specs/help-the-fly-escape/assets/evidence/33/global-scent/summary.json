@@ -1,0 +1,58 @@
+[
+  {
+    "file": "binary-0.json",
+    "condition": "binary-global3x-empty",
+    "arrivals": 4,
+    "escaped": 2,
+    "flies": 16
+  },
+  {
+    "file": "binary-0.json",
+    "condition": "binary-global3x-banana",
+    "arrivals": 7,
+    "escaped": 2,
+    "flies": 16
+  },
+  {
+    "file": "binary-1.json",
+    "condition": "binary-global3x-empty",
+    "arrivals": 5,
+    "escaped": 3,
+    "flies": 16
+  },
+  {
+    "file": "binary-1.json",
+    "condition": "binary-global3x-banana",
+    "arrivals": 8,
+    "escaped": 1,
+    "flies": 16
+  },
+  {
+    "file": "saturating-0.json",
+    "condition": "saturating-global3x-empty",
+    "arrivals": 9,
+    "escaped": 5,
+    "flies": 16
+  },
+  {
+    "file": "saturating-0.json",
+    "condition": "saturating-global3x-banana",
+    "arrivals": 8,
+    "escaped": 1,
+    "flies": 16
+  },
+  {
+    "file": "saturating-1.json",
+    "condition": "saturating-global3x-empty",
+    "arrivals": 7,
+    "escaped": 3,
+    "flies": 16
+  },
+  {
+    "file": "saturating-1.json",
+    "condition": "saturating-global3x-banana",
+    "arrivals": 9,
+    "escaped": 6,
+    "flies": 16
+  }
+]
