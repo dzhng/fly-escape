@@ -2,6 +2,8 @@
 
 **A little house. A swarm of flies. A real connectome behind every wrong turn.**
 
+[Play in your browser](https://fly-escape.vercel.app)
+
 Arrange household objects, release the flies, and see how many find their way outside before time runs out. You shape their surroundings; their simulated neurons drive their movement. Watch the swarm, follow one curious fly, or peek inside its brain as it explores.
 
 ![The first house, with a sunlit exit and household objects ready to place](specs/done/help-the-fly-escape/assets/evidence/release-final/campaign/level-1-setup.png)

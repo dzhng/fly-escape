@@ -7,6 +7,7 @@
     "test:graph": ".venv/bin/python -m unittest discover -s tests/connectome -v",
     "test:reference": ".venv/bin/python -m unittest discover -s tests/reference -v",
     "dev": "bun run --cwd apps/web dev",
+    "build:vercel": "bun run build && bun scripts/package-vercel.ts",
     "build:wasm": "wasm-pack build crates/game-wasm --target web --release --out-dir ../../packages/sim-client/src/wasm",
     "build": "bun run types:generate && bun run assets:brain && bun run build:wasm && bun run --cwd apps/web build && bun run --cwd apps/asset-lab build",
     "typecheck": "tsc --noEmit",

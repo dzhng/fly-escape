@@ -33,3 +33,14 @@ The [architecture contracts](../specs/done/help-the-fly-escape/CONTRACTS.md) rec
 A deterministic fixture checks reproducibility. It does not establish how an object affects a swarm. For sensory changes, compare the same seeds and environment with and without the changed placement; distinguish approaching an object, remaining near it and escaping. Keep physical assistance identical between comparisons. The [reference oracles](../scripts/reference/README.md) protect numerical fidelity, while [release evidence](../specs/done/help-the-fly-escape/assets/evidence/release-final/README.md) records what was actually exercised in the browser.
 
 Historical experiments are retained in the [research archive](../specs/done/help-the-fly-escape/spikes/README.md). They are evidence to interpret, not a second runtime or a promise of a particular biological response.
+
+## Deploy to Vercel
+
+Vercel hosts the static game; the Rust and asset build runs locally. Link the checkout once with `vercel link`, selecting the intended organization and project. Then run:
+
+```sh
+bun run build:vercel
+vercel deploy --prebuilt --prod
+```
+
+The packaging step copies only the game distribution into Vercel's Build Output format. Existing files resolve directly; diagnostic `/lab/*` routes fall back to the game document. Missing asset URLs remain errors rather than returning HTML. Local project metadata and deployment credentials stay ignored. This workflow does not enable automatic Git-based builds.
