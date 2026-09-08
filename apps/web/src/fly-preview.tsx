@@ -9,7 +9,7 @@ let loading: Promise<FlyModel> | undefined;
 const previewModel = () => (loading ??= fetch(flyModelUrl).then(async response => {
   if (!response.ok) throw new Error(`Fly preview model request failed (${response.status})`);
   return loadFlyModel(await response.arrayBuffer());
-}));
+}).catch(cause => { loading = undefined; throw cause; }));
 
 /** The world publishes its exact sampled poses after rendering, including while seeking. */
 export function useFlyPreviews(update: RefObject<PreviewUpdate | null>) {

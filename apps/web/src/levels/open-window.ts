@@ -84,7 +84,10 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
       {
         "id": 5,
         "kind": "spiderWeb",
-        "position": { "x": 4.4923, "z": 8.9 },
+        "position": {
+          "x": 4.4923,
+          "z": 8.9
+        },
         "heading": 0
       }
     ],
@@ -209,26 +212,6 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
         },
         {
           "a": {
-            "x": 0,
-            "z": 4.5
-          },
-          "b": {
-            "x": 1.8,
-            "z": 4.5
-          }
-        },
-        {
-          "a": {
-            "x": 2.7,
-            "z": 4.5
-          },
-          "b": {
-            "x": 6.0,
-            "z": 4.5
-          }
-        },
-        {
-          "a": {
             "x": 6.9,
             "z": 4.5
           },
@@ -285,6 +268,16 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
           "b": {
             "x": 8.4,
             "z": 9.2
+          }
+        },
+        {
+          "a": {
+            "x": 0,
+            "z": 4.5
+          },
+          "b": {
+            "x": 6,
+            "z": 4.5
           }
         }
       ],
@@ -408,12 +401,12 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
     "spawn": {
       "kind": "cluster",
       "min": {
-        "x": 3.0,
-        "z": 2.0
+        "x": 7.55,
+        "z": 8.15
       },
       "max": {
-        "x": 3.45,
-        "z": 2.7
+        "x": 8.05,
+        "z": 8.8
       },
       "flyingCount": 10
     }

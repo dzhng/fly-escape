@@ -28,7 +28,7 @@ Progress uses localStorage: best stars per level and last editable placements. U
 
 ## Timed attempts and replay
 
-The user replaced food-dependent survival with timed rounds on2026-09-08. Start calibration at five simulated minutes per level; the hard maximum is ten minutes. Score only physical escapes before the timer ends. End the campaign round when the timer expires or all flies have escaped. If a level needs longer to pass, improve its layout, object effects or movement pace instead of extending the horizon beyond ten minutes.
+The user replaced food-dependent survival with timed rounds on2026-09-08. Start calibration at five simulated minutes per level; the hard maximum is ten minutes. Duration within that range is an explicit balancing lever alongside placement, layout, object effects and movement pace. Both levels start far from the exit and require passage through several rooms; wrong turns and dead ends make guiding the swarm the player’s task. Actual browser playtests must establish that this loop is playable before statistical setup comparisons count toward balance acceptance. Score only physical escapes before the timer ends. A short-range physical suction at the exit may help flies complete the final crossing, as requested by the user. It must remain local to the opening, respect intervening walls and normal collision/escape checks, and be distinguishable from neural attraction in scientific explanations. Diagnostic runs may extend to sixty simulated minutes to distinguish slow progress from trapping; this is not the intended player round length. End the campaign round when the timer expires or all flies have escaped. If a level needs longer to pass, improve its layout, object effects or movement pace instead of extending the horizon beyond ten minutes.
 
 Offer exactly two playback choices: **Real time** and **Fast**. Real time advances at1×. Fast uses the authored attempt duration divided by60seconds, with a minimum1×, so a full five-minute attempt takes one minute to watch and a ten-minute attempt uses10×. Early completion may finish sooner. The planner selects Fast as the initial campaign choice. Initial buffering is allowed and must be sufficient to avoid stuttering; switching speed may refill the buffer. Both modes consume the same recorded attempt, preserve pause/seek/follow and never change simulation outcomes.
 
@@ -66,7 +66,7 @@ Feeding, life extension, starvation and the food-energy ablation are explicitly 
 
 ## Science panel and honest explanations
 
-Render all 20 cards in a scrollable panel, keeping each card's grouped network and trace visible together when the card is in view. Off-screen plots may pause drawing; their sampled data remains available. Do not replace all-card information with a selected-fly-only inspector. Label fly number, mode, terminal state and currently visible simulation time. Timed campaign cards do not show an inactive life reserve.
+Keep a compact roster and one selected-fly details section. The roster shows stable fly numbers, mode/outcome and small 3D previews. Selecting a model or roster entry changes the same details owner, which contains the brain, grouped network, all-group traces and explanations. Previews mirror the world's sampled orientation and animation phase relative to the current camera, including paused and walking poses; they do not run an independent animation clock. Timed campaign entries do not show an inactive life reserve.
 
 Use friendly headings such as “Smell”, “Turning”, “Taking off” and “Eating”; let tooltips reveal anatomy and computation. Descriptions and detailed tooltips teach how neurons work, not game mechanics or puzzle strategy. Explain signal integration, spikes, synapses, excitation/inhibition and the relevant circuit in accessible language; keep instructions for controls and objects separate. Each tooltip answers: what this means in plain language, what the simulation measures, which data/pathway it uses, and what is approximated. Distinguish “average electrical state” from “fraction firing this tick”; do not call a voltage trace firing rate. Group links indicate the model's grouped connectivity, not a live animation of every synapse. Explain that the structural connectome is real data, while neural dynamics, sensory injection, movement decoding and energy rules are models.
 
@@ -78,7 +78,7 @@ Use `assets/ui/` for approved framing/panel examples and the explicit negative s
 
 Deferred: mobile layout, procedural levels, accounts, shop/currency, full-neuron inspection, persistent replay sharing, GPU neural compute, multiplayer, and 100-fly performance optimization. Feeding, life extension and starvation are also deferred for MVP. Actual3D assets remain required.
 
-At wide zoom, enlarge the 3D fly models dynamically so players can still see and select them. Return to native size at close zoom. The user explicitly prefers readability over exact visual proportions at wide zoom; this affects display size, not simulation physics.
+At wide zoom, enlarge the 3D fly models dynamically so players can still see and select them. Let flies grow gently as the camera zooms closer, with a smooth compensation curve and a ceiling on world enlargement. At the closest camera limit, further wheel input must not enlarge the fly. The user explicitly prefers readability over exact visual proportions at wide zoom; this affects display size, not simulation physics.
 
 Camera navigation uses scroll-wheel zoom and RTS edge panning over the 3D viewport. There is no Overview button. Selecting a fly enters close follow; wheel zoom preserves follow, while panning releases it without clearing selection.
 
@@ -92,4 +92,6 @@ Developer diagnostics remain in the console: attempt identity, bounded playback/
 
 The brain viewer uses measured soma positions, omits missing positions, and colours recorded groups by their aggregate firing activity. Other cells remain neutral; do not fabricate individual-cell activity from group averages. Show all recorded groups together in the electrical-state and firing-history charts, with a colour legend and neuron explanations instead of a trace dropdown.
 
-Zapped flies have a skull billboard and escaped flies a success billboard, both scaled with the displayed model. Flying wing animation runs five times the authored rate using replay time; physical flight speed is unchanged.
+Zapped flies have a skull billboard scaled with the displayed model. Escaped flies leave the recorded exit pose in a scripted outward departure, climbing and shrinking off camera; the camera stays at the exit. The departure is presentation only and cannot change the score. Flying wing animation runs five times the authored rate using replay time; physical flight speed is unchanged.
+
+Walking wings remain stationary. Nearby wall shells also become transparent when their visible thickness would hide an enlarged fly, including the low base; the recorded physical position is preserved.

@@ -10,17 +10,17 @@ const shared: readonly RoomDetail[] = [
 ];
 const sharedDoors: readonly RoomDetail[] = [
   { kind: "doorway", position: [4.8, 0, 2.55], quarterTurns: 1 },
-  { kind: "doorway", position: [2.25, 0, 4.5], quarterTurns: 0 },
-  { kind: "doorway", position: [6.45, 0, 4.5], quarterTurns: 0 },
   { kind: "doorway", position: [1.65, 0, 6], quarterTurns: 0 },
 ];
 export const openWindowDetails: readonly RoomDetail[] = [
   ...shared, ...sharedDoors,
+  { kind: "doorway", position: [6.45, 0, 4.5], quarterTurns: 0 },
   { kind: "doorway", position: [6.45, 0, 6], quarterTurns: 0 },
   { kind: "exitWindow", position: [0, 0, 2.25], quarterTurns: 1 },
 ];
 export const turnTheCornerDetails: readonly RoomDetail[] = [
   ...shared, ...sharedDoors,
+  { kind: "doorway", position: [2.25, 0, 4.5], quarterTurns: 0 },
   { kind: "doorway", position: [4.8, 0, 6], quarterTurns: 0 },
   { kind: "doorway", position: [7.35, 0, 6], quarterTurns: 0 },
   { kind: "sconce", position: [0.14, 1.45, 7.1], quarterTurns: 1 },

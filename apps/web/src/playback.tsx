@@ -1,3 +1,4 @@
+import { DepartureTail } from "./departure-tail";
 import type { PreviewUpdate } from "./fly-preview";
 import type { RoomDetail, RoomFloor } from "@fly-escape/game-renderer";
 import { loadWorldAssets } from "./world-assets";
@@ -63,6 +64,7 @@ type Run = {
   motionSampler?: MotionSampler;
   archive: FrameArchive;
   clock: PlaybackClock;
+  departureTail: DepartureTail;
   requestedAt: number;
   readyAt: number;
   firstPlayAt: number | null;
@@ -129,7 +131,7 @@ function sample(run: Run): FlyPose[] {
       outcome: outcome === "zapped" || outcome === "escaped" ? outcome : undefined,
     };
     return outcome === "escaped"
-      ? departingFly(rendered, (run.clock.cursorTick - motions[id].cursorTick) * TICK_SECONDS, run.info.level.exit.outward)
+      ? departingFly(rendered, (run.clock.cursorTick - motions[id].cursorTick) * TICK_SECONDS + run.departureTail.seconds, run.info.level.exit.outward)
       : rendered;
   });
 }
@@ -230,6 +232,7 @@ export function AttemptPlayback({
           firstPlayAt: null,
           productionMs: 0,
           activeNeuralSteps: 0,
+          departureTail: new DepartureTail(),
           rateWindow: [],
           wasmBytes: reply.wasmBytes,
           underruns: 0,
@@ -317,6 +320,7 @@ export function AttemptPlayback({
       observer.setHidden(document.hidden);
       if (run.current) {
         run.current.clock.setHidden(document.hidden);
+        run.current.departureTail.suspend();
         run.current.previousState = run.current.clock.state;
       }
       lastFrameAt = null;
@@ -344,6 +348,7 @@ export function AttemptPlayback({
             if (current.previousState === "playing" && current.clock.state === "buffering")
               current.underruns++;
             current.previousState = current.clock.state;
+            current.departureTail.update(now, current.clock, current.archive.complete ? current.archive.computedTick : undefined);
             const poses = sample(current);
             sampledPoses = poses;
             scene.current?.setPoses(poses);
@@ -650,7 +655,7 @@ export function AttemptPlayback({
           </p>
           {input && display.state === "ended" && run.current?.archive.result && (
             <p role="status" data-testid="attempt-result">
-              {run.current.archive.result.stars} stars ·{" "}
+              {run.current.archive.result.stars} {run.current.archive.result.stars === 1 ? "star" : "stars"} ·{" "}
               {run.current.archive.result.outcomes.escaped} escaped
             </p>
           )}

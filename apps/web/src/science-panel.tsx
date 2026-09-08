@@ -245,7 +245,7 @@ function RosterEntry({
         ref={(canvas) => registerPreview(id, canvas)}
       />
       <strong>{String(id + 1).padStart(2, "0")}</strong>
-      <span>{fly?.body.outcome ?? fly?.body.mode ?? "initial"}</span>
+      <span>{(fly?.body.outcome ?? fly?.body.mode ?? "initial").replace("timedOut", "timed out")}</span>
     </button>
   );
 }
@@ -289,7 +289,7 @@ function FlyDetails({
     >
       <BrainView groups={info.groups} frame={frame} selected={id} />
       <div className="science-status">
-        <span>{fly?.body.outcome ?? fly?.body.mode ?? "Initial state"}</span>
+        <span>{(fly?.body.outcome ?? fly?.body.mode ?? "Initial state").replace("timedOut", "timed out")}</span>
         <small>{(tick * 0.1).toFixed(1)} s</small>
       </div>
       <svg
