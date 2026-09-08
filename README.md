@@ -2,6 +2,10 @@
 
 A local browser game where a fly connectome drives the flies and the player shapes their environment to help them escape.
 
+**Biology → simulation → observed behavior → game design.**
+
+We build game mechanics around the behavior we discover, rather than forcing the simulation to produce mechanics chosen in advance. Real connectivity is the foundation; sensory inputs and modeled dynamics still need biological grounding. We validate those assumptions, observe the results, then craft interesting puzzles around supported behavior.
+
 The home route opens the in-progress two-level campaign, where placements precede a buffered attempt. Diagnostic views include a neural observation chamber at `/lab/brain`, matched sensory chambers at `/lab/fields`, finite-life probes at `/lab/lifecycle`, and buffered swarm replay at `/lab/playback`: the real neural graph runs in Rust/WASM in a Worker, while the 3D view and measured activity stay responsive. Randomized starting swarms and furnished houses are integrated. The current appearance is accepted for MVP; object-effect calibration, puzzle balance and release verification remain under development. Follow the [active specification](specs/help-the-fly-escape/README.md) for completed gates and the next checkpoint.
 
 ## Run locally
