@@ -8,6 +8,7 @@ import type { CaptureCommand, CaptureReady, CaptureReply, CaptureResult } from "
 import contactFixture from "../../../assets/proportions/contact-fixture.json";
 import { loadRetinaRigView } from "./retina-rig-view";
 import "./retina.css";
+import { mountRetinaAttempt } from "./retina-attempt";
 
 export async function retinaWorkbench() {
   const app = document.querySelector<HTMLDivElement>("#app")!;
@@ -46,6 +47,7 @@ export async function retinaWorkbench() {
   let reject: ((error: Error) => void) | undefined;
   let profile = { ...retinaProfile };
   let sceneId = "";
+  let catalog: CaptureReady["catalog"] = [];
   const fail = (error: Error) => {
     clearTimeout(requestTimer);
     const no = reject; resolve = undefined; reject = undefined;
@@ -98,6 +100,7 @@ export async function retinaWorkbench() {
     const ready = await request({ type: "start", profile: next, placements: support
       ? [...content.level.fixedObjects, { id: 902, kind: "fruit", position: { x: 2, z: 7.5 }, heading: 0 }]
       : undefined }) as CaptureReady;
+    catalog = ready.catalog;
     view.setPlacements([], ready.catalog, undefined, ready.placements);
     profile = next;
     sceneId = ready.sceneId;
@@ -116,6 +119,10 @@ export async function retinaWorkbench() {
       }
     }
   };
+  mountRetinaAttempt(app.querySelector("aside")!, (current, info) => {
+    view.setPlacements(info.resolvedSetup.state.placements, catalog, undefined, info.resolvedSetup.fixedPlacements);
+    inspect(current);
+  });
   let captureCount = 0;
   const capture = async (flies = 1) => {
     app.dataset.retinaReady = "false";
@@ -136,7 +143,7 @@ export async function retinaWorkbench() {
     return { ...result, samples: Array.from(samples) };
   };
   const act = async (operation: () => Promise<unknown>) => {
-    app.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLButtonElement>("input, select, button").forEach(control => control.disabled = true);
+    app.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLButtonElement>("input, select, button").forEach(control => { if (!control.closest(".retina-attempt")) control.disabled = true; });
     status.textContent = "Acquiring optical samples…";
     try { await operation(); status.textContent = "Showing the acquired color samples."; }
     catch (error) {
@@ -145,7 +152,7 @@ export async function retinaWorkbench() {
       report.textContent = "";
       app.querySelectorAll<HTMLCanvasElement>("[data-eye]").forEach(canvas => canvas.getContext("2d")!.clearRect(0, 0, canvas.width, canvas.height));
     }
-    finally { app.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLButtonElement>("input, select, button").forEach(control => control.disabled = false); }
+    finally { app.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLButtonElement>("input, select, button").forEach(control => { if (!control.closest(".retina-attempt")) control.disabled = false; }); }
   };
   const configure = async () => {
     const size = Number(app.querySelector<HTMLSelectElement>("#retina-size")!.value);
@@ -153,7 +160,7 @@ export async function retinaWorkbench() {
     await capture();
   };
   app.querySelector("#retina-capture")!.addEventListener("click", () => void act(() => capture()));
-  app.querySelectorAll("input[type=range]").forEach(input => input.addEventListener("change", () => { app.querySelector<HTMLSelectElement>("#retina-pose")!.value = "landmarks"; void act(configure); }));
+  app.querySelectorAll("#retina-heading, #retina-height").forEach(input => input.addEventListener("change", () => { app.querySelector<HTMLSelectElement>("#retina-pose")!.value = "landmarks"; void act(configure); }));
   app.querySelectorAll("#retina-size, #retina-radius").forEach(select => select.addEventListener("change", () => void act(configure)));
   app.querySelector("#retina-rig")!.addEventListener("change", () => inspect(pose(), true));
   app.querySelector("#retina-pose")!.addEventListener("change", () => {

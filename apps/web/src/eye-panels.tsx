@@ -55,6 +55,6 @@ export function EyePanels({ flyId, tick, config, expectedConfig, archive }: {
       </figure>)}
     </div>
     <p className="eye-time">{present ? `Recorded input · ${(tick * 0.1).toFixed(1)} seconds` : unavailable}</p>
-    <p className="eye-explanation">Model color inputs, not a picture of a fly’s subjective experience.</p>
+    <p className="eye-explanation">Recorded color input to this fly’s circuit.</p>
   </section>;
 }

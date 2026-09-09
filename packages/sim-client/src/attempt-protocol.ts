@@ -33,7 +33,7 @@ export type AttemptReply =
   | { type: "complete"; attemptId: string; result: AttemptResult }
   | { type: "error"; attemptId: string; message: string; recordError?: "unsupported-record" | "invalid-record" };
 
-export type WorkerProgress = { type: "progress"; generation: number; attemptId: string; phase: "capture" | "compute" | "idle" };
+export type WorkerProgress = { type: "progress"; generation: number; attemptId: string; phase: "capture" | "compute" | "idle"; tick?: number };
 
 export type WorkerFailure = { type: "fatal"; message: string };
 

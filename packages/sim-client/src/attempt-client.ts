@@ -36,7 +36,7 @@ export class AttemptClient {
     this.watchdog = setTimeout(() => this.retireWorker(worker,
       "Simulation stopped making progress. Start a new attempt to retry."), ms);
   }
-  constructor(private receive: (reply: AttemptReply) => void) {}
+  constructor(private receive: (reply: AttemptReply) => void, private observeProgress?: (progress: WorkerProgress) => void) {}
   setReceiver(receive: (reply: AttemptReply) => void) {
     this.receive = receive;
   }
@@ -77,8 +77,10 @@ export class AttemptClient {
         return;
       }
       if ("type" in event.data && event.data.type === "progress") {
-        if (event.data.generation === this.generation && event.data.attemptId === this.attemptId)
+        if (event.data.generation === this.generation && event.data.attemptId === this.attemptId) {
+          this.observeProgress?.(event.data);
           this.monitor(event.data.phase === "capture" ? 5000 : event.data.phase === "compute" || this.outstandingCredits > 0 ? 30000 : 0);
+        }
         return;
       }
       if (!("generation" in event.data)) return;

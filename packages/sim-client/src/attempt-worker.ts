@@ -111,8 +111,8 @@ function fail(id: string, error: unknown) {
   if (error instanceof WebAssembly.RuntimeError) retire(error);
   else send({ type: "error", attemptId: id, message: error instanceof RecordDecodeError ? error.userMessage : String(error), ...(error instanceof RecordDecodeError ? {recordError:error.code} : {}) });
 }
-function progress(run: NonNullable<typeof active>, phase: WorkerProgress["phase"]) {
-  self.postMessage({ type: "progress", attemptId: run.id, generation: run.clientGeneration, phase } satisfies WorkerProgress);
+function progress(run: NonNullable<typeof active>, phase: WorkerProgress["phase"], tick?: number) {
+  self.postMessage({ type: "progress", attemptId: run.id, generation: run.clientGeneration, phase, tick } satisfies WorkerProgress);
 }
 async function pump() {
   if (pumping) return;
@@ -131,10 +131,10 @@ async function pump() {
           const requestText = run.core.prepare_tick();
           const request = JSON.parse(requestText) as VisionRequest | null;
           if (!request) throw new Error("Retinal producer prepared no tick");
-          progress(run, "capture");
+          progress(run, "capture", request.tick);
           const rgb = request.poses.length ? (await run.optics.capture.acquire(request.poses)).samples : new Uint8Array();
           if (active !== run) return;
-          progress(run, "compute");
+          progress(run, "compute", request.tick);
           status = JSON.parse(run.core.commit_tick(requestText, rgb)) as AttemptStep;
         } else status = JSON.parse(run.core.step()) as AttemptStep;
         run.neuralSteps = status.neuralSteps;

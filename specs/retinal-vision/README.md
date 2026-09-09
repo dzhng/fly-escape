@@ -8,9 +8,9 @@ This is a plan, not an implemented or verified feature. Spatial and color input,
 
 **Status: optics, input map, tick rendezvous and exact replay are integrated; downstream scientific gates are still red.** The accepted profile is 128×128 RGB → 721 samples per eye at 10 Hz. Preserve the original negative [spatial/color results](assets/08/) and the [input-only reslice proposal](assets/08-reslice/proposal.md). The proposal changes stimuli using only pre-neural evidence; it does not change gain, model coefficients, endpoints or significance criteria.
 
-**Current pickup:** finish the slice-11 removal of the old eight-direction path and publish its source-bound budget metadata. Then freeze the revised neural protocol against the final source and run reserved seeds 200–229. Do not run it against an intermediate manifest. In parallel, finish actual one-fly native/WASM reconsumption and real-capture eye-panel browser review. The UI and recovery commits are integrated; their synthetic-input pixel/replay gates already pass.
+**Current pickup:** bank the completed v2 neural results: color passes; three spatial voltage contrasts fail. The old eight-direction path is removed and the final source-bound budget is published. Prepare a new spatial input-only reslice with larger geometric patches and a nearer physical occlusion pair; preserve v1/v2 failures and all neural endpoints and settings. No new Brain run is authorized before its input evidence and protocol are frozen. In parallel, finish the final campaign resource matrix and ten warm retries. The one-fly native/browser comparison and physical eye panels pass. The user-requested horizontal fly strip is integrated and reviewed.
 
-**Remaining order:** final runtime cutover → frozen neural reslice and complete one-fly proof → full campaign resource/retry gates with the final eye UI → whole-feature review, choices consolidation and close-spec. A failed scientific gate remains failed; no grayscale shortcut, endpoint substitution, gain search or invented steering is allowed.
+**Remaining order:** frozen spatial reslice and final resource/retry gates → whole-feature review, choices consolidation and close-spec. A failed scientific gate remains failed; no grayscale shortcut, endpoint substitution, gain search or invented steering is allowed.
 
 Evidence: [reference](assets/01/review.md), [shared world](assets/03/verification.md), [color model](assets/04/verification.md), [tick transaction and cancellation](assets/06/browser-integration.md), [record recovery](assets/07/recovery/), and [eye panels](assets/10/). Initial production resource runs of both rooms at a diagnostic 6,000-tick horizon fit the 512 MiB archive cap; [reports](assets/11/campaign-before-cutover/) precede the final eye panels and runtime cutover and must not stand in for final verification. Preserve each room’s authored production timer.
 
@@ -25,7 +25,7 @@ The model is Tm2 brightness plus Tm20 blue with explicitly unmeasured coefficien
 - [x] [07 Exact replay](slices/07-records.md): retain consumed bytes and reject old records without crashing.
 - [ ] [08 Spatial neural proof](slices/08-neural-proof.md): verify the complete one-fly spatial/brightness chain.
 - [ ] [09 Chromatic neural proof](slices/09-color-proof.md): separate color responses from brightness and total dose.
-- [ ] [10 Paired eye panels](slices/10-panels.md): show each fly’s paired color previews in its right-column detail view during playback, pause and rewind.
+- [x] [10 Paired eye panels](slices/10-panels.md): show each fly’s paired color previews in its right-column detail view during playback, pause and rewind.
 - [ ] [11 Campaign cutover](slices/11-campaign.md): verify sixteen flies, remove the old visual input, and close the feature.
 
 If a technical gate fails, record the negative result and reslice the affected work; do not weaken the gate, invent steering, silently lower quality, or mark the entire feature complete. Human visual review is non-blocking; failed correctness and resource gates remain real failures.
