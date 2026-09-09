@@ -1,0 +1,50 @@
+Bounded neural-vision pilot, 2026-09-09
+
+Verdict: no eligible candidate. No freeze.json was written, no held-out seeds
+were run, and no winner was published. The predeclared stop rule requires
+reslicing before expanding the candidate/gain/seed search.
+
+Six candidate/gain pairs, each with seeds 1..6, 60 unstimulated warmup ticks,
+100 measured ticks, and 12 conditions: dark, uniform, eight equal-brightness
+basis directions, and actual left/right lamps. Total: 432 seed-condition runs.
+The graph, LIF parameters and motor readouts were unchanged. Each condition
+uses a fresh Brain initialized with the same per-seed PRNG stream.
+
+The strongest mirrored-lamp motor paired absolute t was Tm20, gain 2,
+flightTurn: left-minus-right mean +0.0016062674756514208, paired 95% t interval
+[-0.001501249580110729, +0.004713784531413571], |t|=1.3287270587938453.
+Every candidate's intervals include zero on both existing motor readouts.
+Pilot relay intervals are descriptive, not multiplicity-adjusted evidence of
+a selected causal route. They cannot replace the failed motor criterion.
+
+pilot-summary.json preserves the exact ranking and selected:null. The six
+pilot-Tm*.json reports preserve all sensory samples, requested/effective current
+checksums, seed-level input and relay measurements, existing motor outputs,
+full measured neural-trajectory hashes, source hashes, and map hashes. Reported
+relay paths were verified against actual committed incoming CSR edges.
+
+Validation:
+- cargo test -p sim --example neural_vision_probe: 2 passed. Checks actual
+  wall/furniture/opening optical controls, equal-dose basis stimuli and paired
+  statistics. Passed before and after syncing runtime commit 56179b2.
+- Release compilation passed; complete pilot exited 0, 278.3 s after graph setup.
+- Report audit: exactly 6 candidate reports, 12 conditions each, 6 ordered
+  seeds each; relay-vector lengths match declared populations. Across basis
+  directions, summed current differs by at most 1.92e-13 from summation order.
+- Independent Codex review found one selection-wording mismatch: the initial
+  slice said rank relay separation, while the clarified experiment protocol
+  ranks actual-lamp motor |t|. The probe follows the clarified rule and the
+  main slice was updated before the pilot. No other actionable issue reported.
+- Own code review corrected requested-versus-effective current reporting for
+  silenced inputs. The confirmatory mode fixes the pilot motor axis before any
+  held-out computation, but this mode has not been executed.
+
+Pilot command from the main repository:
+CARGO_TARGET_DIR=/tmp/fly-neural-experiments/target cargo run -p sim --release --example neural_vision_probe -- pilot data/processed/brain specs/neural-vision/assets/input-map /tmp/fly-neural-experiments/specs/neural-vision/assets/experiments
+
+The pilot compiled the graded adapter before runtime commit 56179b2's final
+metadata guard. That commit requires matching annotation-source provenance;
+the pilot manifests already supplied it. Current math was unchanged; the
+sensory source hash in each report identifies the exact compiled source.
+The later formatting/guard revision does not justify reclassifying this failed
+pilot or selecting an otherwise ineligible candidate.
