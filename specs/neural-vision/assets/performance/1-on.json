@@ -1,0 +1,532 @@
+{
+  "activeNeuralSteps": 1600,
+  "activeNeuralStepsPerSecond": 1237.7581608151488,
+  "blocks": [
+    {
+      "activeNeuralSteps": 1600,
+      "firstTick": 1,
+      "lastTick": 100,
+      "neuralStepsPerSecond": 1237.8231966810667,
+      "wallSeconds": 1.292591708
+    }
+  ],
+  "constructSeconds": 0.01843825,
+  "graphEdges": 798715,
+  "graphNeurons": 70000,
+  "level": {
+    "bodyConfig": {
+      "bodyRadius": 0.002632,
+      "flightSpeed": 0.24,
+      "landingDwellSeconds": 1.0,
+      "landingThreshold": 0.2,
+      "life": {
+        "kind": "timed"
+      },
+      "proboscisThreshold": 0.2,
+      "takeoffThreshold": 0.2,
+      "turnGain": 8.0,
+      "walkSpeed": 0.12
+    },
+    "durationTicks": 100,
+    "exit": {
+      "a": {
+        "x": 0.0,
+        "z": 1.8
+      },
+      "b": {
+        "x": 0.0,
+        "z": 2.7
+      },
+      "outward": {
+        "x": -1.0,
+        "z": 0.0
+      }
+    },
+    "exitCue": null,
+    "exitSuction": {
+      "reach": 2.0,
+      "roomSpeed": 1.5,
+      "speed": 2.0
+    },
+    "fieldConfig": {
+      "antennaForward": 0.0014145078816978176,
+      "antennaOffset": 0.00020207253103162883,
+      "baselineBrightness": 1.0,
+      "cellSize": 0.2,
+      "decay": 0.1,
+      "diffusion": 0.5,
+      "fans": [],
+      "wind": {
+        "x": 0.0,
+        "z": 0.0
+      }
+    },
+    "fixedObjects": [
+      {
+        "heading": 0.3,
+        "id": 1,
+        "kind": "fruit",
+        "position": {
+          "x": 7.4,
+          "z": 3.2
+        }
+      },
+      {
+        "heading": 0.8,
+        "id": 2,
+        "kind": "banana",
+        "position": {
+          "x": 2.5,
+          "z": 8.0
+        }
+      },
+      {
+        "heading": 0.6,
+        "id": 3,
+        "kind": "wornShoes",
+        "position": {
+          "x": 1.2,
+          "z": 3.4
+        }
+      },
+      {
+        "heading": 0.0,
+        "id": 4,
+        "kind": "sleepingCat",
+        "position": {
+          "x": 2.2,
+          "z": 1.65
+        }
+      },
+      {
+        "heading": 0.0,
+        "id": 5,
+        "kind": "spiderWeb",
+        "position": {
+          "x": 4.4923,
+          "z": 8.9
+        }
+      }
+    ],
+    "food": [],
+    "geometry": {
+      "rooms": [
+        {
+          "id": 1,
+          "max": {
+            "x": 4.8,
+            "z": 4.5
+          },
+          "min": {
+            "x": 0.0,
+            "z": 0.0
+          }
+        },
+        {
+          "id": 2,
+          "max": {
+            "x": 8.4,
+            "z": 4.5
+          },
+          "min": {
+            "x": 4.8,
+            "z": 0.0
+          }
+        },
+        {
+          "id": 3,
+          "max": {
+            "x": 8.4,
+            "z": 6.0
+          },
+          "min": {
+            "x": 0.0,
+            "z": 4.5
+          }
+        },
+        {
+          "id": 4,
+          "max": {
+            "x": 4.8,
+            "z": 9.2
+          },
+          "min": {
+            "x": 0.0,
+            "z": 6.0
+          }
+        },
+        {
+          "id": 5,
+          "max": {
+            "x": 8.4,
+            "z": 9.2
+          },
+          "min": {
+            "x": 4.8,
+            "z": 6.0
+          }
+        }
+      ],
+      "solids": [
+        {
+          "furnishing": {
+            "model": "sofa",
+            "quarterTurns": 0
+          },
+          "height": 0.85,
+          "id": 1,
+          "max": {
+            "x": 2.2,
+            "z": 1.1
+          },
+          "min": {
+            "x": 0.3,
+            "z": 0.25
+          }
+        },
+        {
+          "furnishing": {
+            "model": "kitchen",
+            "quarterTurns": 0
+          },
+          "height": 2.1,
+          "id": 2,
+          "max": {
+            "x": 7.7,
+            "z": 0.85
+          },
+          "min": {
+            "x": 5.3,
+            "z": 0.2
+          }
+        },
+        {
+          "furnishing": {
+            "model": "desk",
+            "quarterTurns": 2
+          },
+          "height": 1.05,
+          "id": 5,
+          "max": {
+            "x": 1.8,
+            "z": 9.05
+          },
+          "min": {
+            "x": 0.4,
+            "z": 8.35
+          }
+        },
+        {
+          "furnishing": {
+            "model": "chair",
+            "quarterTurns": 0
+          },
+          "height": 0.95,
+          "id": 6,
+          "max": {
+            "x": 1.4,
+            "z": 7.9
+          },
+          "min": {
+            "x": 0.8,
+            "z": 7.25
+          }
+        },
+        {
+          "furnishing": {
+            "model": "bed",
+            "quarterTurns": 2
+          },
+          "height": 1.05,
+          "id": 7,
+          "max": {
+            "x": 7.25,
+            "z": 9.05
+          },
+          "min": {
+            "x": 5.65,
+            "z": 6.95
+          }
+        }
+      ],
+      "walls": [
+        {
+          "a": {
+            "x": 0.0,
+            "z": 0.0
+          },
+          "b": {
+            "x": 0.0,
+            "z": 1.8
+          }
+        },
+        {
+          "a": {
+            "x": 0.0,
+            "z": 2.7
+          },
+          "b": {
+            "x": 0.0,
+            "z": 9.2
+          }
+        },
+        {
+          "a": {
+            "x": 4.8,
+            "z": 0.0
+          },
+          "b": {
+            "x": 4.8,
+            "z": 2.1
+          }
+        },
+        {
+          "a": {
+            "x": 4.8,
+            "z": 3.0
+          },
+          "b": {
+            "x": 4.8,
+            "z": 4.5
+          }
+        },
+        {
+          "a": {
+            "x": 4.8,
+            "z": 6.0
+          },
+          "b": {
+            "x": 4.8,
+            "z": 9.2
+          }
+        },
+        {
+          "a": {
+            "x": 0.0,
+            "z": 0.0
+          },
+          "b": {
+            "x": 8.4,
+            "z": 0.0
+          }
+        },
+        {
+          "a": {
+            "x": 6.9,
+            "z": 4.5
+          },
+          "b": {
+            "x": 8.4,
+            "z": 4.5
+          }
+        },
+        {
+          "a": {
+            "x": 8.4,
+            "z": 0.0
+          },
+          "b": {
+            "x": 8.4,
+            "z": 9.2
+          }
+        },
+        {
+          "a": {
+            "x": 0.0,
+            "z": 6.0
+          },
+          "b": {
+            "x": 0.9,
+            "z": 6.0
+          }
+        },
+        {
+          "a": {
+            "x": 3.6,
+            "z": 6.0
+          },
+          "b": {
+            "x": 6.0,
+            "z": 6.0
+          }
+        },
+        {
+          "a": {
+            "x": 6.9,
+            "z": 6.0
+          },
+          "b": {
+            "x": 8.4,
+            "z": 6.0
+          }
+        },
+        {
+          "a": {
+            "x": 0.0,
+            "z": 9.2
+          },
+          "b": {
+            "x": 8.4,
+            "z": 9.2
+          }
+        },
+        {
+          "a": {
+            "x": 0.0,
+            "z": 4.5
+          },
+          "b": {
+            "x": 6.0,
+            "z": 4.5
+          }
+        }
+      ]
+    },
+    "id": "open-window",
+    "placementRules": {
+      "fanHeading": 3.141592653589793,
+      "inventory": [
+        {
+          "count": 3,
+          "kind": "fruit"
+        },
+        {
+          "count": 3,
+          "kind": "banana"
+        },
+        {
+          "count": 3,
+          "kind": "dirtyDishes"
+        },
+        {
+          "count": 3,
+          "kind": "vinegar"
+        },
+        {
+          "count": 1,
+          "kind": "fan"
+        }
+      ],
+      "reserved": []
+    },
+    "sources": [
+      {
+        "kind": "lamp",
+        "position": {
+          "x": 2.6,
+          "z": 6.9
+        },
+        "radius": 3.0,
+        "rate": 2.0
+      }
+    ],
+    "spawn": {
+      "flyingCount": 8,
+      "kind": "cluster",
+      "max": {
+        "x": 3.1,
+        "z": 7.15
+      },
+      "min": {
+        "x": 2.2,
+        "z": 6.55
+      }
+    },
+    "starThresholds": [
+      2,
+      5,
+      10
+    ],
+    "zappers": []
+  },
+  "loadSeconds": 0.028388625,
+  "machine": {
+    "architecture": "arm64",
+    "compiler": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: aarch64-apple-darwin\nrelease: 1.94.1\nLLVM version: 21.1.8",
+    "cpu": "Apple M5 Pro",
+    "logicalCores": "18",
+    "memoryBytes": "51539607552",
+    "model": "Mac17,9",
+    "os": "Darwin 25.4.0 Darwin Kernel Version 25.4.0: Thu Mar 19 19:33:50 PDT 2026; root:xnu-12377.101.15~1/RELEASE_ARM64_T6050",
+    "physicalCores": "18"
+  },
+  "manifestFileHash": "19a0714e8055051dfb8457873911c70538589e3e96784d258943640656292620",
+  "measuredTicks": 100,
+  "measurementScope": "Every counted neural step is confirmed by AttemptFrame.neural_steps delta and present neural output; no terminal no-op contributes. Wall time includes step calls, frame destruction and light telemetry; excludes graph loading, construction, RSS commands, serialization and I/O. Frames are dropped each tick, so this does not measure replay archive/Worker transfer/rendering. RSS includes allocator/runtime/manifest overhead; graph+brain byte counts are exact owner-reported array payload only, excluding field arrays and allocation headers. A disconnected exit annex and timed life policy keep the neural workload active; benchmark content is not campaign tuning. Native feasibility is not browser acceptance.",
+  "modeObservations": {
+    "feeding": 0,
+    "flying": 1153,
+    "landing": 202,
+    "walking": 245
+  },
+  "payloadBytes": {
+    "allBrainArrays": 51520000,
+    "graphAndBrainArrays": 61384584,
+    "graphArrays": 9864584,
+    "perBrainArrays": 3220000
+  },
+  "probeSourceHash": "6bf1337a06611be291a7859a8c446be9f65249f3470fc4f2527c796a17f8ef63",
+  "productionGameSecondsPerWallSecond": 7.735988505094681,
+  "profile": "cargo release; workspace opt-level3, thin LTO; single-threaded Attempt, graph shared by Arc",
+  "projection6000TicksWallSeconds": 77.5595775,
+  "projectionIsNotMeasurement": true,
+  "result": {
+    "attemptId": "native-throughput",
+    "completedTick": 100,
+    "outcomes": {
+      "caught": 0,
+      "escaped": 0,
+      "score": 0,
+      "starved": 0,
+      "timedOut": 16,
+      "zapped": 0
+    },
+    "stars": 0
+  },
+  "rssKiB": {
+    "afterStepping": 105776,
+    "attemptInitialized": 57056,
+    "graphLoadedAfterTemporaryBrainCalibration": 38544
+  },
+  "sharedField": {
+    "activeCells": 1692,
+    "dimensions": [
+      42,
+      46
+    ],
+    "evolutions": 100
+  },
+  "simulatedSeconds": 10.0,
+  "spec": {
+    "attemptId": "native-throughput",
+    "durationTicks": 100,
+    "flyCount": 16,
+    "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+    "graphManifestHash": "24c24f7fbdf3199c75848e5320c53879ada32e51e2c83be60c83eebc41d15570",
+    "levelHash": "ee49479af51e1e0b542e41b1dcdc4ce2001e6d96a9e30497e8e6e613bd674806",
+    "levelId": "open-window",
+    "placements": [],
+    "rootSeed": "42",
+    "schemaVersion": 1,
+    "simulationBuildId": "70f076d6268e84f7fb5035411412d929919c61701f5174599fb0bcd8edfe011e",
+    "tuningHash": "8f03a0d509f66b3248e4bec8fc3f2d081d661858d210abeac8ad46a3401c3644"
+  },
+  "stepCallLatencyMs": {
+    "max": 17.085292,
+    "p50": 13.021166000000001,
+    "p95": 14.893084,
+    "p99": 17.085292
+  },
+  "terminalFliesAtLastTick": 16,
+  "tuning": {
+    "cues": [
+      {
+        "gain": 3.0,
+        "pathway": "vision"
+      }
+    ],
+    "silencedNeurons": [],
+    "tasteGain": 0.0
+  },
+  "wallSeconds": 1.292659625
+}

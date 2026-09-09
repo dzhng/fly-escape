@@ -1,0 +1,5 @@
+Extended the existing active-work Attempt benchmark with optional level/tuning JSON; default workload remains unchanged. The same runtime rejects inactive neural steps and embeds actual content, so no separate measurement loop is introduced.
+
+Cargo check passed. Independent Codex review found no actionable issue. Local documentation review corrected the default-only measurementScope wording; numerical implementation is unchanged and exact tested source is retained.
+
+Six real Graph+Attempt runs completed, 1600 active neural steps each. Three alternating off/on pairs: median paired overhead 0.07095%, maximum4.00489%; required median under10%. This is bounded native throughput, not a browser or behavior result.
