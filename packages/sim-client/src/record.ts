@@ -1,5 +1,8 @@
 import type {
   AttemptFrame,
+  EyePose,
+  RetinaBatch,
+  ChunkHeader,
   BodyMode,
   BodyState,
   AttemptResult,
@@ -13,8 +16,9 @@ import type {
 
 export type TransferChunk = Omit<
   PackedChunk,
-  "values" | "states" | "events" | "tickNeuralSteps" | "motionOffsets" | "motionValues" | "motionStates"
+  "retinaRgb" | "values" | "states" | "events" | "tickNeuralSteps" | "motionOffsets" | "motionValues" | "motionStates"
 > & {
+  retinaRgb: Uint8Array;
   values: Float64Array;
   states: Uint32Array;
   events: Uint32Array;
@@ -49,10 +53,46 @@ export type RecordedTransform = {
 const MOTION_VALUES = ["fraction", "x", "z", "heading", "height", "rotationX", "rotationY", "rotationZ", "rotationW"];
 const MOTION_STATES = ["support", "grounded"];
 const MOTION_SAMPLE = MOTION_VALUES.slice(1);
-const ARCHIVE_CAP = 128 * 1024 * 1024;
+const ARCHIVE_CAP = 512 * 1024 * 1024;
+const CHUNK_ENVELOPE_BYTES = 8 * 1024;
 const integer = (n: number) => Number.isSafeInteger(n) && n >= 0;
+export class RecordDecodeError extends Error {
+  constructor(readonly code: "unsupported-record" | "invalid-record", message: string) {
+    super(message);
+    this.name = "RecordDecodeError";
+  }
+  get userMessage() {
+    return this.code === "invalid-record" ? "This recording is damaged or incomplete. Start a new attempt." : this.message;
+  }
+}
 function require(condition: unknown, message: string): asserts condition {
-  if (!condition) throw new Error(message);
+  if (!condition) throw new RecordDecodeError("invalid-record", message);
+}
+function requireSchema(value: unknown): void {
+  require(typeof value === "object" && value !== null && "schemaVersion" in value,
+    "This recording has an invalid header. Start a new attempt.");
+  const version = (value as { schemaVersion: unknown }).schemaVersion;
+  require(typeof version === "number" && Number.isSafeInteger(version) && version > 0,
+    "This recording has an invalid header. Start a new attempt.");
+  if (version !== 6) throw new RecordDecodeError("unsupported-record", version < 6
+    ? "This recording uses an older format. Start a new attempt to view the fly's eyes."
+    : "This recording uses a newer unsupported format. Start a new attempt to view the fly's eyes.");
+}
+
+/** Validates the JSON envelope before the worker takes any numeric buffers. */
+export function parseRecordHeader(raw: string): ChunkHeader {
+  let value: unknown;
+  try { value = JSON.parse(raw); }
+  catch { throw new RecordDecodeError("invalid-record", "This recording has a corrupt header. Start a new attempt."); }
+  requireSchema(value);
+  const header = value as ChunkHeader;
+  require(typeof header.attemptId === "string" && header.attemptId.length > 0 && header.attemptId.length <= 256 &&
+    integer(header.sequence) && integer(header.startTick) && header.startTick > 0 &&
+    integer(header.tickCount) && header.tickCount > 0 && header.tickCount <= 10 &&
+    integer(header.flyCount) && header.flyCount > 0 && header.flyCount <= 100 &&
+    header.startTick + header.tickCount - 1 <= 6000 && "result" in header,
+    "This recording has an invalid header. Start a new attempt.");
+  return header;
 }
 
 /** Owns transferred numeric buffers, never decoded frame history. Tick zero is
@@ -79,25 +119,38 @@ export class FrameArchive {
     readonly archiveByteBound: number,
     initialBodies: readonly BodyState[],
   ) {
+    requireSchema(layout);
+    require(["valueFields", "motionValueFields", "motionStateFields", "motionSampleFields",
+      "stateFields", "eventFields", "groupIds", "groupFields", "modes", "outcomes", "feedingEnds", "eventKinds"]
+      .every(key => Array.isArray((layout as unknown as Record<string, unknown>)[key])),
+      "This recording has invalid layout metadata. Start a new attempt.");
+    require([layout.valueFields, layout.motionValueFields, layout.motionStateFields, layout.motionSampleFields, layout.stateFields, layout.eventFields, layout.groupIds, layout.groupFields, layout.eventKinds]
+      .every(names => names.length <= 64 && names.every(name => typeof name === "string" && name.length > 0 && name.length <= 256) && new Set(names).size === names.length), "Invalid record field names");
+    require(layout.valueFields.length === 33 && layout.stateFields.length === 5 && layout.eventFields.length === 5 && layout.groupFields.length === 2 &&
+      layout.maxChunkTicks === 10 && layout.maxEventsPerFlyTick === 8 &&
+      JSON.stringify(layout.modes) === JSON.stringify(["walking","flying","feeding","landing"]) &&
+      JSON.stringify(layout.outcomes) === JSON.stringify([null,"escaped","starved","zapped","timedOut","caught"]) &&
+      JSON.stringify(layout.feedingEnds) === JSON.stringify(["contactLost","satiated","boutLimit","terminal"]), "Invalid record codes or bounds");
     require(integer(archiveByteBound) &&
       archiveByteBound <= ARCHIVE_CAP &&
-      archiveByteBound > 0, "Record archive exceeds 128 MiB");
-    require(integer(spec.flyCount) &&
+      archiveByteBound > 0, "Record archive exceeds 512 MiB");
+    require(typeof spec === "object" && spec !== null && typeof spec.attemptId === "string" && spec.attemptId.length > 0 && spec.attemptId.length <= 256 && integer(spec.flyCount) &&
       spec.flyCount >= 1 &&
       spec.flyCount <= 100 &&
       integer(spec.durationTicks) &&
       spec.durationTicks >= 1 &&
       spec.durationTicks <= 6000, "Invalid attempt horizon");
-    require(layout.schemaVersion === 5 && integer(layout.noSupport) && layout.noSupport <= 0xffffffff &&
+    require(layout.schemaVersion === 6 && integer(layout.noSupport) && layout.noSupport <= 0xffffffff &&
       layout.groupIds.length <= 16, "Unsupported record layout");
     // The core sampler consumes this version's canonical wire order directly.
     require(layout.maxMotionPoints === 129 &&
       JSON.stringify(layout.motionValueFields) === JSON.stringify(MOTION_VALUES) &&
       JSON.stringify(layout.motionStateFields) === JSON.stringify(MOTION_STATES) &&
       JSON.stringify(layout.motionSampleFields) === JSON.stringify(MOTION_SAMPLE), "Unsupported motion layout");
-    require(initialBodies.length === spec.flyCount &&
+    require(Array.isArray(initialBodies) && initialBodies.length === spec.flyCount &&
       initialBodies.every(
         (b) =>
+          typeof b === "object" && b !== null && typeof b.pose === "object" && b.pose !== null && typeof b.pose.position === "object" && b.pose.position !== null &&
           (b.mode === "walking" || b.mode === "flying") &&
           b.outcome === null &&
           [b.pose.position.x, b.pose.position.z, b.pose.heading, b.reserve, b.height].every(
@@ -105,6 +158,16 @@ export class FrameArchive {
           ) &&
           b.reserve >= 0 && validSupport(b.support, b.rotation, b.mode, layout.noSupport),
       ), "Invalid initial bodies");
+    const config = layout.retinalConfig;
+    require(config === null || (typeof config === "object" && config !== null &&
+      typeof config.mapHash === "string" && /^[0-9a-f]{64}$/.test(config.mapHash) && integer(config.clientGeneration) && config.clientGeneration <= 0xffffffff && spec.flyCount <= 16 && typeof config.sceneId === "string" && config.sceneId.length > 0 && config.sceneId.length <= 256 &&
+      typeof config.profile === "object" && config.profile !== null &&
+      [config.profile.profileHash, config.profile.layoutHash, config.profile.rigHash, config.profile.colorModelHash].every(h => typeof h === "string" && /^[0-9a-f]{64}$/.test(h)) &&
+      [config.profile.width, config.profile.height].every(n => integer(n) && n > 0 && n <= 256) &&
+      integer(config.profile.sampleCount) && config.profile.sampleCount > 0 && config.profile.sampleCount <= config.profile.width * config.profile.height), "Invalid retinal record profile");
+    require(layout.retinalPresentMask === 4 && layout.sensoryPresentMask === 1 && layout.neuralPresentMask === 2, "Invalid record presence masks");
+    const fixedBytes = spec.durationTicks * (spec.flyCount * ((layout.valueFields.length + layout.groupIds.length * layout.groupFields.length) * 8 + layout.stateFields.length * 4 + (config?.profile.sampleCount ?? 0) * 6 + 8 * 20) + 4) + Math.ceil(spec.durationTicks / layout.maxChunkTicks) * CHUNK_ENVELOPE_BYTES + 16384;
+    require(fixedBytes <= archiveByteBound, "Record archive cannot retain the authored fixed history");
     this.initialBodies = structuredClone(initialBodies) as BodyState[];
     this.spec = {
       attemptId: spec.attemptId,
@@ -145,8 +208,7 @@ export class FrameArchive {
       "windZ",
       "height",
       "rotationX", "rotationY", "rotationZ", "rotationW",
-      ...Array.from({ length: 8 }, (_, i) => `visionBrightness${i}`),
-      ...Array.from({ length: 8 }, (_, i) => `visionBlocked${i}`),
+      "inputHeight", "inputRotationX", "inputRotationY", "inputRotationZ", "inputRotationW",
     ])
       require(name in this.valueOffsets, `Missing record field ${name}`);
     for (const name of ["mode", "outcome", "presence", "spikeCount", "support"])
@@ -184,7 +246,9 @@ export class FrameArchive {
    * chunks fail atomically so callers can report a fatal production error.
    * Successful append detaches every supplied numeric buffer. */
   append(chunk: TransferChunk): boolean {
+    require(typeof chunk === "object" && chunk !== null, "Invalid chunk header");
     if (chunk.attemptId !== this.spec.attemptId) return false;
+    requireSchema(chunk);
     require(!this.complete &&
       chunk.schemaVersion === this.layout.schemaVersion &&
       chunk.sequence === this.chunks.length &&
@@ -196,14 +260,15 @@ export class FrameArchive {
     const end = chunk.startTick + chunk.tickCount - 1;
     require(end <= this.spec.durationTicks, "Chunk exceeds authored horizon");
     const count = chunk.tickCount * chunk.flyCount;
-    require(chunk.values instanceof Float64Array &&
+    require(chunk.retinaRgb instanceof Uint8Array && chunk.values instanceof Float64Array &&
       chunk.states instanceof Uint32Array &&
       chunk.events instanceof Uint32Array &&
       chunk.tickNeuralSteps instanceof Uint32Array &&
       chunk.motionOffsets instanceof Uint32Array &&
       chunk.motionValues instanceof Float64Array &&
       chunk.motionStates instanceof Uint32Array, "Chunk requires transferred typed buffers");
-    require(chunk.values.length === count * this.valueStride &&
+    require(chunk.mapHash === (this.layout.retinalConfig?.mapHash ?? null) && chunk.profileHash === (this.layout.retinalConfig?.profile.profileHash ?? null) && chunk.sceneId === (this.layout.retinalConfig?.sceneId ?? null), "Retinal chunk identity mismatch");
+    require(chunk.retinaRgb.length === count * (this.layout.retinalConfig?.profile.sampleCount ?? 0) * 6 && chunk.values.length === count * this.valueStride &&
       chunk.states.length === count * this.layout.stateFields.length &&
       chunk.tickNeuralSteps.length === chunk.tickCount &&
       chunk.events.length % this.layout.eventFields.length === 0 &&
@@ -212,6 +277,7 @@ export class FrameArchive {
           this.layout.maxEventsPerFlyTick *
           this.layout.eventFields.length, "Invalid chunk buffer lengths");
     const buffers = new Set([
+      chunk.retinaRgb.buffer,
       chunk.motionOffsets.buffer,
       chunk.motionValues.buffer,
       chunk.motionStates.buffer,
@@ -225,17 +291,24 @@ export class FrameArchive {
     ), "Archive requires owned ArrayBuffers");
     // Match the core's envelope allowance and count backing allocations, including
     // any larger buffers retained by a subview. Shared graph metadata lives outside.
-    const bytes = [...buffers].reduce((sum, buffer) => sum + buffer.byteLength, 1024);
+    const bytes = [...buffers].reduce((sum, buffer) => sum + buffer.byteLength, CHUNK_ENVELOPE_BYTES);
     require(this.bytes + bytes + 16384 <=
       this.archiveByteBound, "Record archive capacity exceeded");
     require(chunk.values.every(Number.isFinite), "Nonfinite recorded value");
-    const flags = this.layout.sensoryPresentMask | this.layout.neuralPresentMask;
+    const flags = this.layout.sensoryPresentMask | this.layout.neuralPresentMask | (this.layout.retinalConfig ? this.layout.retinalPresentMask : 0);
     for (let i = 0; i < count; i++) {
       const s = i * this.layout.stateFields.length;
       require(chunk.states[s + this.stateOffsets.mode] < this.layout.modes.length &&
         chunk.states[s + this.stateOffsets.outcome] < this.layout.outcomes.length &&
         (chunk.states[s + this.stateOffsets.presence] & ~flags) ===
           0, "Invalid recorded state code");
+      const presence = chunk.states[s + this.stateOffsets.presence];
+      const retinal = !!(presence & this.layout.retinalPresentMask);
+      if (this.layout.retinalConfig) {
+        require(retinal === !!(presence & this.layout.neuralPresentMask), "Retinal presence differs from neural input");
+        const width = this.layout.retinalConfig.profile.sampleCount * 6;
+        require(retinal || chunk.retinaRgb.subarray(i * width, (i + 1) * width).every(v => v === 0), "Absent retinal slot contains bytes");
+      }
       const v = i * this.valueStride;
       const support = chunk.states[s + this.stateOffsets.support];
       require(validSupport(support === this.layout.noSupport ? null : support,
@@ -243,6 +316,13 @@ export class FrameArchive {
         this.layout.modes[chunk.states[s + this.stateOffsets.mode]], this.layout.noSupport), "Invalid recorded support or rotation");
     }
     this.validateMotion(chunk, count);
+    for (let record = 0; record < count; record++) {
+      const start = chunk.motionOffsets[record] * this.layout.motionValueFields.length;
+      const value = record * this.valueStride;
+      for (const [input, motion] of [["inputX","x"],["inputZ","z"],["inputHeight","height"],["inputRotationX","rotationX"],["inputRotationY","rotationY"],["inputRotationZ","rotationZ"],["inputRotationW","rotationW"]]) {
+        require(chunk.values[value + this.valueOffsets[input]] === chunk.motionValues[start + this.layout.motionValueFields.indexOf(motion)], "Input transform differs from motion start");
+      }
+    }
     const eventCounts = new Uint8Array(count);
     for (let i = 0; i < chunk.events.length; i += this.layout.eventFields.length) {
       const tick = chunk.events[i + this.eventOffsets.tick];
@@ -497,6 +577,27 @@ export class FrameArchive {
     return points;
   }
 
+  /** Fresh selected-fly bytes; no observer state or decoded history is retained. */
+  retina(tick: number, flyId: number): { pose: EyePose; rgb: Uint8Array } | null {
+    require(integer(tick) && tick <= this.lastTick && integer(flyId) && flyId < this.spec.flyCount, "Retinal selection has not been recorded");
+    const config = this.layout.retinalConfig;
+    if (tick === 0 || !config) return null;
+    const chunk = this.chunkAt(tick);
+    const record = (tick - chunk.startTick) * chunk.flyCount + flyId;
+    if (!(chunk.states[record * this.layout.stateFields.length + this.stateOffsets.presence] & this.layout.retinalPresentMask)) return null;
+    const v = (name: string) => chunk.values[record * this.valueStride + this.valueOffsets[name]];
+    const width = config.profile.sampleCount * 6;
+    return { pose: { flyId, position: [v("inputX"),v("inputHeight"),v("inputZ")], rotation: [v("inputRotationX"),v("inputRotationY"),v("inputRotationZ"),v("inputRotationW")] }, rgb: chunk.retinaRgb.slice(record * width, (record + 1) * width) };
+  }
+  private retinalFrame(tick: number): RetinaBatch | null {
+    const config = this.layout.retinalConfig;
+    if (!config) return null;
+    const inputs = Array.from({length:this.spec.flyCount}, (_, id) => this.retina(tick,id)).filter(input => input !== null);
+    const rgb = new Uint8Array(inputs.length * config.profile.sampleCount * 6);
+    inputs.forEach((input,index) => rgb.set(input.rgb,index * config.profile.sampleCount * 6));
+    return { request: { attemptId:this.spec.attemptId,clientGeneration:config.clientGeneration,tick,profileHash:config.profile.profileHash,sceneId:config.sceneId,poses:inputs.map(input=>input.pose) }, rgb };
+  }
+
   frame(tick: number): AttemptFrame {
     if (tick === 0)
       return {
@@ -549,8 +650,8 @@ export class FrameArchive {
                 right: side("right"),
                 wind: { x: v("windX"), z: v("windZ") },
                 vision: {
-                  brightness: Array.from({ length: 8 }, (_, i) => v(`visionBrightness${i}`)) as SensorySample["vision"]["brightness"],
-                  blocked: Array.from({ length: 8 }, (_, i) => v(`visionBlocked${i}`)) as SensorySample["vision"]["blocked"],
+                  brightness: Array.from({ length: 8 }, () => 0) as SensorySample["vision"]["brightness"],
+                  blocked: Array.from({ length: 8 }, () => 0) as SensorySample["vision"]["blocked"],
                 },
               }
             : null,
@@ -590,6 +691,7 @@ export class FrameArchive {
     return {
       tick,
       neuralSteps: chunk.tickNeuralSteps[tickIndex],
+      ...(this.layout.retinalConfig ? { retina: this.retinalFrame(tick)! } : {}),
       flies,
       result: chunk.result?.completedTick === tick ? structuredClone(chunk.result) : null,
     };

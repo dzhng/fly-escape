@@ -1,0 +1,144 @@
+{
+  "cases": [
+    {
+      "fault": "standard-error",
+      "deliveredChunks": 0,
+      "messageBounds": {
+        "x": 1115,
+        "y": 43,
+        "width": 294,
+        "height": 54
+      },
+      "returnBounds": {
+        "x": 231,
+        "y": 931,
+        "width": 42,
+        "height": 38
+      },
+      "message": "This flight was interrupted. You can try again from setup.",
+      "usableSetup": true,
+      "progressUnchanged": true,
+      "errors": []
+    },
+    {
+      "fault": "old-layout",
+      "deliveredChunks": 0,
+      "messageBounds": {
+        "x": 1115,
+        "y": 43,
+        "width": 294,
+        "height": 54
+      },
+      "returnBounds": {
+        "x": 231,
+        "y": 931,
+        "width": 42,
+        "height": 38
+      },
+      "message": "This recording uses an older format. Start a new attempt to view the fly's eyes.",
+      "usableSetup": true,
+      "progressUnchanged": true,
+      "errors": []
+    },
+    {
+      "fault": "future-layout",
+      "deliveredChunks": 0,
+      "messageBounds": {
+        "x": 1115,
+        "y": 43,
+        "width": 294,
+        "height": 69
+      },
+      "returnBounds": {
+        "x": 231,
+        "y": 931,
+        "width": 42,
+        "height": 38
+      },
+      "message": "This recording uses a newer unsupported format. Start a new attempt to view the fly's eyes.",
+      "usableSetup": true,
+      "progressUnchanged": true,
+      "errors": []
+    },
+    {
+      "fault": "truncated-layout",
+      "deliveredChunks": 0,
+      "messageBounds": {
+        "x": 1115,
+        "y": 43,
+        "width": 294,
+        "height": 54
+      },
+      "returnBounds": {
+        "x": 231,
+        "y": 931,
+        "width": 42,
+        "height": 38
+      },
+      "message": "This recording is damaged or incomplete. Start a new attempt.",
+      "usableSetup": true,
+      "progressUnchanged": true,
+      "errors": []
+    },
+    {
+      "fault": "corrupt-layout",
+      "deliveredChunks": 0,
+      "messageBounds": {
+        "x": 1115,
+        "y": 43,
+        "width": 294,
+        "height": 54
+      },
+      "returnBounds": {
+        "x": 231,
+        "y": 931,
+        "width": 42,
+        "height": 38
+      },
+      "message": "This recording is damaged or incomplete. Start a new attempt.",
+      "usableSetup": true,
+      "progressUnchanged": true,
+      "errors": []
+    },
+    {
+      "fault": "old-after-valid",
+      "deliveredChunks": 2,
+      "messageBounds": {
+        "x": 1115,
+        "y": 43,
+        "width": 294,
+        "height": 54
+      },
+      "returnBounds": {
+        "x": 231,
+        "y": 931,
+        "width": 42,
+        "height": 38
+      },
+      "message": "This recording uses an older format. Start a new attempt to view the fly's eyes.",
+      "usableSetup": true,
+      "progressUnchanged": true,
+      "errors": []
+    },
+    {
+      "fault": "invalid-payload",
+      "deliveredChunks": 2,
+      "messageBounds": {
+        "x": 1115,
+        "y": 43,
+        "width": 294,
+        "height": 54
+      },
+      "returnBounds": {
+        "x": 231,
+        "y": 931,
+        "width": 42,
+        "height": 38
+      },
+      "message": "This recording is damaged or incomplete. Start a new attempt.",
+      "usableSetup": true,
+      "progressUnchanged": true,
+      "errors": []
+    }
+  ]
+}

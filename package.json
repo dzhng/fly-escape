@@ -33,7 +33,8 @@
     "dev:retina": "bun run --cwd apps/asset-lab dev --open /retina",
     "probe:retina-capture": "node tests/browser/retina-capture.mjs",
     "assets:retina": "bun scripts/export-retina-scene-revision.ts",
-    "test:retina-optics": "bun tests/browser/retina-optics.mjs"
+    "test:retina-optics": "bun tests/browser/retina-optics.mjs",
+    "test:retina-record": "bun test packages/sim-client/src/record.test.ts packages/sim-client/src/record-errors.test.ts packages/sim-client/src/retina-record.test.ts && bun tests/retina-record-memory.ts && node tests/browser/retina-record-wasm.mjs && node tests/browser/retina-record.mjs"
   },
   "type": "module",
   "workspaces": [

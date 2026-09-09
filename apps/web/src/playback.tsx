@@ -193,6 +193,7 @@ export function AttemptPlayback({
   const requestedRef = useRef(requested);
   requestedRef.current = requested;
   const [error, setError] = useState("");
+  const [recordError, setRecordError] = useState(false);
   const [worldReady, setWorldReady] = useState(false);
 
   useEffect(() => {
@@ -206,13 +207,14 @@ export function AttemptPlayback({
     let lastDiagnosticAt = -Infinity;
     let renderFailed = false;
     let sampledPoses: FlyPose[] = [];
-    const fail = (message: string) => {
+    const fail = (message: string, recordFailure = false) => {
       console.error("[Fly escape] attempt failed", { message, spec: run.current?.info.spec });
       if (run.current) {
         run.current.failed = true;
         run.current.clock.pause();
       }
       setError(message);
+      setRecordError(recordFailure);
       setRequested(false);
       setDisplay((previous) => ({
         ...previous,
@@ -319,7 +321,7 @@ export function AttemptPlayback({
           if (current.rateWindow.length > 20) current.rateWindow.shift();
         }
       } else if (reply.type === "error") {
-        fail(reply.message);
+        fail(reply.message, !!reply.recordError);
       }
     });
     restart.current = () => {
@@ -343,6 +345,7 @@ export function AttemptPlayback({
       lastState = "";
       lastMode = "";
       setError("");
+      setRecordError(false);
       renderFailed = false;
       setRequested(true);
       setSelected(null);
@@ -681,7 +684,7 @@ export function AttemptPlayback({
           )}
           {error && (
             <p role="alert" className="error">
-              {input ? "This flight was interrupted. You can try again from setup." : error}
+              {input && !recordError ? "This flight was interrupted. You can try again from setup." : error}
             </p>
           )}
           <div className="playback-counters" aria-label="Outcomes at playback time">

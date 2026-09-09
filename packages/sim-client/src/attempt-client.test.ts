@@ -1,5 +1,6 @@
 import { expect, test } from "bun:test";
 import { AttemptClient } from "./attempt-client";
+import { RecordDecodeError } from "./record";
 import type { AttemptEnvelope, AttemptRequest, SetupRequest, SetupReply, WorkerFailure } from "./attempt-protocol";
 
 // The Worker is the browser boundary: deliver a reply already queued before restart.
@@ -97,6 +98,33 @@ test("leaving a setup lets the next level resolve without accepting the old repl
     expect(await next).toEqual({ value: [] });
     expect(await prior).toBe("Setup cancelled");
     expect(worker.terminated).toBe(false);
+  } finally {
+    client.dispose();
+    globalThis.Worker = original;
+  }
+});
+
+test("record decode failures cancel production and preserve a recoverable message", () => {
+  const original = globalThis.Worker;
+  globalThis.Worker = WorkerBoundary as unknown as typeof Worker;
+  const received: import('./attempt-protocol').AttemptReply[] = [];
+  const failure = new RecordDecodeError('unsupported-record', 'This recording uses an older format. Start a new attempt to view the fly\'s eyes.');
+  const client = new AttemptClient(reply => {
+    if (received.length === 0) {
+      received.push(reply);
+      throw failure;
+    }
+    received.push(reply);
+  });
+  try {
+    client.startLab('record', '1', 2, 100);
+    const worker = WorkerBoundary.latest;
+    const generation = worker.sent.at(-1)!.generation;
+    worker.deliver(generation, 'record');
+    expect(worker.sent.at(-1)?.type).toBe('cancel');
+    expect(received.at(-1)).toEqual({ type: 'error', attemptId: 'record', message: failure.message, recordError: 'unsupported-record' });
+    worker.deliver(generation, 'record');
+    expect(received).toHaveLength(2);
   } finally {
     client.dispose();
     globalThis.Worker = original;

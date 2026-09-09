@@ -1,0 +1,15 @@
+# Preparation closeout
+
+Independent `codex review --uncommitted` found no actionable regressions. The reviewer independently passed typechecking, the client/web suite, native record tests and WASM host tests; it explicitly did not rerun browser probes. The implementing pass separately ran the complete retinal-record command, including the browser probes and retained-memory stress case, successfully.
+
+Verification: 191 native workspace tests and 46 client/web tests passed. The combined retinal-record gate passed 21 focused consumer tests, exact full-history byte checks, controlled WASM-to-browser transfer, and all seven browser recovery cases. A deliberate one-bit packed-byte change caused the exact consumer comparison to fail; restoring the packer restored green. A corrupted native input height was also observed to pass incorrectly before the additional native decode consistency gate was implemented; the regression now fails safely.
+
+The shape review found one archive owner throughout. Retinal record invariants live in the native helper; transfer ownership and seeking stay in `FrameArchive`. There is no second history, compression layer, migration or renderer dependency in the decoder. The source adds no production dependency. The public API adds selected retinal reads, structured decode errors and validated JSON-header parsing; generated wire types carry the new byte stream and identities.
+
+Manual review corrected the per-chunk envelope allowance for long escaped identities. Production fixed admission counts maximum-size worker chunks; public callers using smaller chunks still meet the cumulative quota or fail explicitly. The stress case leaves 2,952,928 bytes after record metadata within the current target. This small margin is measured evidence for the stated six-point/eight-event case, not a guarantee for arbitrary motion or whole-process memory.
+
+Before this review note, textual changes were: production including generated types +392/-77 (net +315), of which comment lines +9/-3; tests/harness +1023/-40 (net +983). Inline WASM host tests are counted as tests. Binary screenshots and documentary evidence are separate. The increase pays for exact packing/decoding, identity and corruption guards, and a full-horizon resource probe; existing direction-array storage was removed rather than wrapped.
+
+The last visual assessment is recorded in [visual-review.md](visual-review.md). The final browser run retained identical message/action bounds and content; tiny background/compositing differences between repeated captures were at most three RGB levels in the message crops. Preview was opened for non-blocking human review and closed after independent work continued without feedback. The icon-only recovery affordance remains an explicit usability limitation of the existing controls.
+
+**Verdict: preparation verified and ready to integrate.** Physical camera acquisition through the production worker and full campaign memory measurements remain the integrating task's gates. This note does not close slice 07 or claim the retinal feature shipped.

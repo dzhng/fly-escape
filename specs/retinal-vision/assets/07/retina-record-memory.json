@@ -1,0 +1,36 @@
+{
+  "fixture": "synthetic RGB, native record layout; six motion points and eight events every fly/tick",
+  "groupCount": 16,
+  "motionPointsPerFlyTick": 6,
+  "eventsPerFlyTick": 8,
+  "flyCount": 16,
+  "horizon": 6000,
+  "sampleCount": 721,
+  "checkedBytes": 415296000,
+  "archiveOwnedBytes": 533901600,
+  "archiveCap": 536870912,
+  "maxChunkBytes": 881644,
+  "baselineMemory": {
+    "rss": 36732928,
+    "heapTotal": 2083840,
+    "heapUsed": 175406,
+    "external": 30916,
+    "arrayBuffers": 18390
+  },
+  "peakBuildMemory": {
+    "rss": 705724416,
+    "heapTotal": 89179136,
+    "heapUsed": 571715262,
+    "external": 794416694,
+    "arrayBuffers": 792522712
+  },
+  "finalMemory": {
+    "rss": 1017856000,
+    "heapTotal": 94196736,
+    "heapUsed": 571715262,
+    "external": 530515184,
+    "arrayBuffers": 529524112
+  },
+  "allTicksRetained": true,
+  "exactAllFlyBytes": true
+}

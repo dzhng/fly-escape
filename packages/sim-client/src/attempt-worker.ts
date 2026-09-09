@@ -8,7 +8,7 @@ import init, {
   type InitOutput,
 } from "./wasm/game_wasm";
 import type { AttemptInfo, AttemptStep } from "./generated/sim";
-import type { TransferChunk } from "./record";
+import { parseRecordHeader, RecordDecodeError, type TransferChunk } from "./record";
 import type { AttemptRequest, AttemptReply, SetupRequest, WorkerFailure } from "./attempt-protocol";
 
 let generation = 0;
@@ -95,7 +95,7 @@ function fail(id: string, error: unknown) {
   if (currentAttemptId === id) currentAttemptId = undefined;
   // A trap can strand a borrowed Rust value; retire the whole instance.
   if (error instanceof WebAssembly.RuntimeError) retire(error);
-  else send({ type: "error", attemptId: id, message: String(error) });
+  else send({ type: "error", attemptId: id, message: error instanceof RecordDecodeError ? error.userMessage : String(error), ...(error instanceof RecordDecodeError ? {recordError:error.code} : {}) });
 }
 async function pump() {
   if (pumping) return;
@@ -120,7 +120,8 @@ async function pump() {
       let chunk: TransferChunk;
       try {
         chunk = {
-          ...JSON.parse(packed.header()),
+          ...parseRecordHeader(packed.header()),
+          retinaRgb: packed.take_retina_rgb(),
           motionOffsets: packed.take_motion_offsets(),
           motionValues: packed.take_motion_values(),
           motionStates: packed.take_motion_states(),
@@ -143,6 +144,7 @@ async function pump() {
       send(
         { type: "frames", attemptId: run.id, chunk, metrics },
         [
+          chunk.retinaRgb.buffer as ArrayBuffer,
           chunk.motionOffsets.buffer as ArrayBuffer,
           chunk.motionValues.buffer as ArrayBuffer,
           chunk.motionStates.buffer as ArrayBuffer,

@@ -1,0 +1,66 @@
+{
+  "target": "The recording message must remain readable, with no clipped text, and the existing return control must remain visible and usable. Compare only message crops; world brightness is outside this change.",
+  "images": {
+    "corrupt-layout-message.png": {
+      "width": 294,
+      "height": 54,
+      "meanLuminance": 225.79673721340387,
+      "luminanceStd": 31.485675506378275,
+      "edgeEnergy": 17.090060694965803,
+      "darkTextFraction": 0.053728898966994204
+    },
+    "future-layout-message.png": {
+      "width": 294,
+      "height": 69,
+      "meanLuminance": 224.7179335502317,
+      "luminanceStd": 32.95281329059605,
+      "edgeEnergy": 19.07940738990358,
+      "darkTextFraction": 0.06097801439416346
+    },
+    "invalid-payload-message.png": {
+      "width": 294,
+      "height": 54,
+      "meanLuminance": 225.7948475686571,
+      "luminanceStd": 31.484664968066085,
+      "edgeEnergy": 17.088213201866918,
+      "darkTextFraction": 0.053728898966994204
+    },
+    "old-after-valid-message.png": {
+      "width": 294,
+      "height": 54,
+      "meanLuminance": 223.8260267069791,
+      "luminanceStd": 34.396015517165424,
+      "edgeEnergy": 21.03335000903145,
+      "darkTextFraction": 0.06500377928949358
+    },
+    "old-layout-message.png": {
+      "width": 294,
+      "height": 54,
+      "meanLuminance": 223.8279163517259,
+      "luminanceStd": 34.39707432051589,
+      "edgeEnergy": 21.03475215974871,
+      "darkTextFraction": 0.06500377928949358
+    },
+    "standard-error-message.png": {
+      "width": 294,
+      "height": 54,
+      "meanLuminance": 226.88051146384478,
+      "luminanceStd": 29.451105576753026,
+      "edgeEnergy": 14.987353118421257,
+      "darkTextFraction": 0.04799697656840514
+    },
+    "truncated-layout-message.png": {
+      "width": 294,
+      "height": 54,
+      "meanLuminance": 225.79667422524565,
+      "luminanceStd": 31.485620084952775,
+      "edgeEnergy": 17.0890406834953,
+      "darkTextFraction": 0.053728898966994204
+    }
+  },
+  "standardVsUnsupported": {
+    "meanAbsoluteGrayDifference": 11.894494834971026,
+    "pixelsDifferent": 2699,
+    "diffRatio16": 0.13353489543965735
+  }
+}

@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test";
 import { fileURLToPath } from "node:url";
 import type { AttemptFrame, PackedChunk, RecordLayout } from "./generated/sim";
-import { FrameArchive, type TransferChunk } from "./record";
+import { FrameArchive, RecordDecodeError, type TransferChunk } from "./record";
 
 const exported = Bun.spawnSync(
   ["cargo", "run", "--quiet", "-p", "sim", "--example", "record_fixture"],
@@ -17,6 +17,7 @@ const fixture = JSON.parse(exported.stdout.toString()) as {
 const transfer = (chunk: PackedChunk): TransferChunk => ({
   ...chunk,
   result: structuredClone(chunk.result),
+  retinaRgb: new Uint8Array(chunk.retinaRgb),
   values: new Float64Array(chunk.values),
   states: new Uint32Array(chunk.states),
   events: new Uint32Array(chunk.events),
@@ -144,10 +145,10 @@ test("archive limits count retained backing allocations, and reject unsupported 
       new FrameArchive(
         { attemptId: "a", flyCount: 20, durationTicks: 6000 },
         fixture.layout,
-        128 * 1024 * 1024 + 1,
+        512 * 1024 * 1024 + 1,
         initialBodies,
       ),
-  ).toThrow("128 MiB");
+  ).toThrow("512 MiB");
   const chunk = transfer(fixture.chunks[0]);
   chunk.values = new Float64Array(
     new ArrayBuffer(fixture.archiveByteBound * 2),
@@ -165,7 +166,7 @@ test("archive limits count retained backing allocations, and reject unsupported 
         fixture.archiveByteBound,
         initialBodies,
       ),
-  ).toThrow("Missing record field");
+  ).toThrow(RecordDecodeError);
   expect(
     () =>
       new FrameArchive(
@@ -174,7 +175,7 @@ test("archive limits count retained backing allocations, and reject unsupported 
         fixture.archiveByteBound,
         initialBodies,
       ),
-  ).toThrow("Unsupported");
+  ).toThrow("unsupported");
 });
 
 test("accepting a chunk takes ownership and snapshots metadata and results", () => {

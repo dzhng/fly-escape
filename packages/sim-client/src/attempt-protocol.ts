@@ -31,7 +31,7 @@ export type AttemptReply =
       };
     }
   | { type: "complete"; attemptId: string; result: AttemptResult }
-  | { type: "error"; attemptId: string; message: string };
+  | { type: "error"; attemptId: string; message: string; recordError?: "unsupported-record" | "invalid-record" };
 
 export type WorkerFailure = { type: "fatal"; message: string };
 

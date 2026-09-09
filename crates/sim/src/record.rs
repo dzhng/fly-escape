@@ -4,6 +4,8 @@ use crate::{attempt::*, body::*, environment::*, GroupActivity, MotorOutput, Ste
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 mod motion;
+mod retina;
+use crate::vision::RetinalConfig;
 pub use motion::sample_motion;
 
 #[derive(Serialize, TS)]
@@ -15,18 +17,23 @@ pub struct ChunkHeader {
     pub start_tick: u32,
     pub tick_count: u32,
     pub fly_count: u32,
+    pub map_hash: Option<String>,
+    pub profile_hash: Option<String>,
+    pub scene_id: Option<String>,
     pub result: Option<AttemptResult>,
 }
 
-pub const RECORD_SCHEMA_VERSION: u32 = 5;
+pub const RECORD_SCHEMA_VERSION: u32 = 6;
 pub const MAX_CHUNK_TICKS: u32 = 10;
-pub const ARCHIVE_CAP_BYTES: u64 = 128 * 1024 * 1024;
+pub const ARCHIVE_CAP_BYTES: u64 = 512 * 1024 * 1024;
+// Covers bounded identities, JSON escaping, result metadata and per-chunk ownership.
+pub const CHUNK_ENVELOPE_BYTES: u64 = 8 * 1024;
 // Landing, starting/ending feeding and termination emit at most six events.
 // Eight slots keep the archive bound conservative; larger output is an error.
 pub const MAX_EVENTS_PER_FLY_TICK: usize = 8;
 pub const NO_SUPPORT: u32 = u32::MAX;
 const STATE_STRIDE: usize = 5;
-const VALUE_FIELDS: [&str; 44] = [
+const VALUE_FIELDS: [&str; 33] = [
     "inputX",
     "inputZ",
     "inputHeading",
@@ -55,28 +62,19 @@ const VALUE_FIELDS: [&str; 44] = [
     "rotationY",
     "rotationZ",
     "rotationW",
-    "visionBrightness0",
-    "visionBrightness1",
-    "visionBrightness2",
-    "visionBrightness3",
-    "visionBrightness4",
-    "visionBrightness5",
-    "visionBrightness6",
-    "visionBrightness7",
-    "visionBlocked0",
-    "visionBlocked1",
-    "visionBlocked2",
-    "visionBlocked3",
-    "visionBlocked4",
-    "visionBlocked5",
-    "visionBlocked6",
-    "visionBlocked7",
+    "inputHeight",
+    "inputRotationX",
+    "inputRotationY",
+    "inputRotationZ",
+    "inputRotationW",
 ];
 
 #[derive(Clone, Debug, Serialize, TS)]
 #[serde(rename_all = "camelCase")]
 pub struct RecordLayout {
     schema_version: u32,
+    retinal_config: Option<RetinalConfig>,
+    retinal_present_mask: u32,
     no_support: u32,
     value_fields: Vec<String>,
     motion_value_fields: Vec<String>,
@@ -110,6 +108,8 @@ impl RecordLayout {
         }
         Ok(Self {
             schema_version: RECORD_SCHEMA_VERSION,
+            retinal_config: None,
+            retinal_present_mask: 4,
             no_support: NO_SUPPORT,
             value_fields: VALUE_FIELDS.map(String::from).to_vec(),
             motion_value_fields: motion::VALUE_FIELDS.map(String::from).to_vec(),
@@ -153,13 +153,24 @@ impl RecordLayout {
             max_events_per_fly_tick: MAX_EVENTS_PER_FLY_TICK as u32,
         })
     }
+    pub fn with_retinal(mut self, config: RetinalConfig) -> Result<Self, String> {
+        config.validate()?;
+        self.retinal_config = Some(config);
+        Ok(self)
+    }
+    pub fn retina_bytes_per_fly(&self) -> usize {
+        self.retinal_config
+            .as_ref()
+            .map_or(0, |config| config.profile.bytes_per_fly())
+    }
     pub fn value_stride(&self) -> usize {
         VALUE_FIELDS.len() + self.group_ids.len() * 2
     }
     /// Reserves fixed records plus bounded motion storage, capped at the archive quota.
     /// The producer and consumer enforce cumulative bytes; a variable-motion overflow
-    /// is explicit, never history truncation. Includes worst-case events and a 1 KiB envelope allowance per chunk,
-    /// even if the producer sends one tick per chunk, plus 16 KiB record-layout/result metadata. Graph metadata is shared
+    /// is explicit, never history truncation. Fixed admission assumes production-sized chunks;
+    /// smaller public-API chunks consume the same cumulative quota. Includes bounded events,
+    /// chunk envelopes and 16 KiB record metadata. Graph metadata is shared
     /// with the graph and accounted separately in total runtime memory.
     pub fn archive_bytes(&self, fly_count: u32, ticks: u32) -> Result<u64, String> {
         if !(1..=100).contains(&fly_count)
@@ -174,9 +185,10 @@ impl RecordLayout {
             * (u64::from(fly_count)
                 * (self.value_stride() as u64 * 8
                     + STATE_STRIDE as u64 * 4
+                    + self.retina_bytes_per_fly() as u64
                     + MAX_EVENTS_PER_FLY_TICK as u64 * 20)
-                + 4
-                + 1024)
+                + 4)
+            + u64::from(ticks.div_ceil(MAX_CHUNK_TICKS)) * CHUNK_ENVELOPE_BYTES
             + 16384;
         if bytes > ARCHIVE_CAP_BYTES {
             return Err(format!(
@@ -200,6 +212,7 @@ pub struct PackedChunk {
     pub start_tick: u32,
     pub tick_count: u32,
     pub fly_count: u32,
+    pub retina_rgb: Vec<u8>,
     pub motion_offsets: Vec<u32>,
     pub motion_values: Vec<f64>,
     pub motion_states: Vec<u32>,
@@ -207,22 +220,56 @@ pub struct PackedChunk {
     pub states: Vec<u32>,
     pub events: Vec<u32>,
     pub tick_neural_steps: Vec<u32>,
+    pub map_hash: Option<String>,
+    pub profile_hash: Option<String>,
+    pub scene_id: Option<String>,
     pub result: Option<AttemptResult>,
 }
 impl PackedChunk {
+    /// Computes owned wire bytes without allocating the packed buffers.
+    pub fn encoded_bytes(layout: &RecordLayout, frames: &[AttemptFrame]) -> Result<u64, String> {
+        let first = frames.first().ok_or("empty frame chunk")?;
+        if frames.len() > MAX_CHUNK_TICKS as usize
+            || first.flies.is_empty()
+            || first.flies.len() > 100
+        {
+            return Err("invalid chunk dimensions".into());
+        }
+        let records = frames.len() * first.flies.len();
+        let mut points = 0usize;
+        let mut events = 0usize;
+        for frame in frames {
+            if frame.flies.len() != first.flies.len() {
+                return Err("inconsistent chunk population".into());
+            }
+            for fly in &frame.flies {
+                if !(2..=MAX_MOTION_POINTS).contains(&fly.motion.len())
+                    || fly.events.len() > MAX_EVENTS_PER_FLY_TICK
+                {
+                    return Err("record motion or event budget exceeded".into());
+                }
+                points += fly.motion.len();
+                events += fly.events.len();
+            }
+        }
+        Ok(CHUNK_ENVELOPE_BYTES
+            + records as u64
+                * (layout.value_stride() as u64 * 8
+                    + STATE_STRIDE as u64 * 4
+                    + layout.retina_bytes_per_fly() as u64)
+            + (records as u64 + 1) * 4
+            + frames.len() as u64 * 4
+            + points as u64 * motion::POINT_BYTES
+            + events as u64 * 20)
+    }
     pub fn encode(
         attempt_id: &str,
         sequence: u32,
         layout: &RecordLayout,
         frames: &[AttemptFrame],
     ) -> Result<Self, String> {
+        Self::encoded_bytes(layout, frames)?;
         let first = frames.first().ok_or("empty frame chunk")?;
-        if frames.iter().any(|frame| frame.retina.is_some()) {
-            return Err(
-                "retinal frames require the optical record schema; refusing to discard RGB input"
-                    .into(),
-            );
-        }
         let count = frames.len();
         if attempt_id.is_empty()
             || attempt_id.len() > 256
@@ -243,6 +290,15 @@ impl PackedChunk {
             start_tick: first.tick,
             tick_count: count as u32,
             fly_count: first.flies.len() as u32,
+            map_hash: layout.retinal_config.as_ref().map(|c| c.map_hash.clone()),
+            profile_hash: layout
+                .retinal_config
+                .as_ref()
+                .map(|c| c.profile.profile_hash.clone()),
+            scene_id: layout.retinal_config.as_ref().map(|c| c.scene_id.clone()),
+            retina_rgb: Vec::with_capacity(
+                count * first.flies.len() * layout.retina_bytes_per_fly(),
+            ),
             motion_offsets: vec![0],
             motion_values: vec![],
             motion_states: vec![],
@@ -259,6 +315,7 @@ impl PackedChunk {
             {
                 return Err("noncontiguous frames or result before final tick".into());
             }
+            retina::validate_frame(attempt_id, layout, frame)?;
             chunk.tick_neural_steps.push(frame.neural_steps);
             for (id, fly) in frame.flies.iter().enumerate() {
                 if fly.id != id as u32 || fly.events.len() > MAX_EVENTS_PER_FLY_TICK {
@@ -325,8 +382,21 @@ impl PackedChunk {
                 }
                 chunk.values.extend([sense.wind.x, sense.wind.z, b.height]);
                 chunk.values.extend(b.rotation);
-                chunk.values.extend(sense.vision.brightness);
-                chunk.values.extend(sense.vision.blocked);
+                let start = fly.motion.first().ok_or("missing motion start")?;
+                let input = frame.retina.as_ref().and_then(|batch| {
+                    batch
+                        .request
+                        .poses
+                        .iter()
+                        .find(|pose| pose.fly_id == fly.id)
+                });
+                chunk
+                    .values
+                    .push(input.map_or(start.height, |pose| pose.position[1]));
+                chunk
+                    .values
+                    .extend(input.map_or(start.rotation, |pose| pose.rotation));
+                let has_retina = retina::encode_fly(layout, frame, id, &mut chunk.retina_rgb);
                 if let Some(neural) = &fly.neural {
                     if neural
                         .groups
@@ -349,7 +419,9 @@ impl PackedChunk {
                 chunk.states.extend([
                     code(&layout.modes, &b.mode)?,
                     code(&layout.outcomes, &b.outcome)?,
-                    u32::from(fly.sensory.is_some()) | (u32::from(fly.neural.is_some()) * 2),
+                    u32::from(fly.sensory.is_some())
+                        | (u32::from(fly.neural.is_some()) * 2)
+                        | (u32::from(has_retina) * 4),
                     fly.neural.as_ref().map_or(0, |n| n.spike_count),
                     b.support.unwrap_or(NO_SUPPORT),
                 ]);
@@ -398,6 +470,7 @@ impl PackedChunk {
             return Err("invalid chunk schema or range".into());
         }
         layout.archive_bytes(self.fly_count, self.start_tick + self.tick_count - 1)?;
+        retina::validate_chunk(self, layout)?;
         let records = self.tick_count as usize * self.fly_count as usize;
         if self.values.len() != records * layout.value_stride()
             || self.states.len() != records * STATE_STRIDE
@@ -422,7 +495,7 @@ impl PackedChunk {
                 let v = &self.values
                     [index * layout.value_stride()..(index + 1) * layout.value_stride()];
                 let s = &self.states[index * STATE_STRIDE..(index + 1) * STATE_STRIDE];
-                if s[2] > 3 {
+                if s[2] > 7 || (layout.retinal_config.is_none() && s[2] & 4 != 0) {
                     return Err("invalid presence flags".into());
                 }
                 let support = (s[4] != NO_SUPPORT).then_some(s[4]);
@@ -448,10 +521,7 @@ impl PackedChunk {
                         outcome: at(&layout.outcomes, s[1])?,
                     },
                     sensory: (s[2] & 1 != 0).then(|| SensorySample {
-                        vision: VisionSample {
-                            brightness: std::array::from_fn(|i| v[28 + i]),
-                            blocked: std::array::from_fn(|i| v[36 + i]),
-                        },
+                        vision: VisionSample::default(),
                         left: field(11),
                         right: field(16),
                         wind: Point { x: v[21], z: v[22] },
@@ -487,12 +557,15 @@ impl PackedChunk {
                 });
             }
             frames.push(AttemptFrame {
-                retina: None,
+                retina: retina::decode_frame(self, layout, tick)?,
                 tick: self.start_tick + tick as u32,
                 neural_steps: self.tick_neural_steps[tick],
                 flies,
                 result: None,
             });
+        }
+        for frame in &frames {
+            retina::validate_frame(&self.attempt_id, layout, frame)?;
         }
         for fly in frames.iter().flat_map(|frame| &frame.flies) {
             let end = fly.motion.last().ok_or("missing motion endpoint")?;

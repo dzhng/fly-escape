@@ -1,7 +1,25 @@
 //! Cross-language consumer fixture: expected domain frames and their Rust packing.
 use sim::{attempt::*, body::*, environment::*, record::*, GroupActivity, MotorOutput, StepOutput};
 fn main() {
-    let layout = RecordLayout::new(vec!["left".into(), "right".into()]).unwrap();
+    let retinal = std::env::args().any(|arg| arg == "--retinal");
+    let config = sim::vision::RetinalConfig {
+        client_generation: 7,
+        scene_id: "record-fixture".into(),
+        map_hash: "e".repeat(64),
+        profile: sim::vision::EyeProfile {
+            profile_hash: "a".repeat(64),
+            layout_hash: "b".repeat(64),
+            rig_hash: "c".repeat(64),
+            color_model_hash: "d".repeat(64),
+            width: 4,
+            height: 4,
+            sample_count: 7,
+        },
+    };
+    let mut layout = RecordLayout::new(vec!["left".into(), "right".into()]).unwrap();
+    if retinal {
+        layout = layout.with_retinal(config.clone()).unwrap();
+    }
     let mut frames = vec![];
     for tick in 1..=4 {
         let mut flies = vec![];
@@ -79,12 +97,7 @@ fn main() {
                         shade: 0.7,
                         exit_cue: 0.8,
                     },
-                    vision: VisionSample {
-                        brightness: std::array::from_fn(|i| {
-                            (f64::from(tick) + f64::from(id) + i as f64 / 17.) / 7.
-                        }),
-                        blocked: std::array::from_fn(|i| (f64::from(tick) + i as f64 / 13.) / 11.),
-                    },
+                    vision: VisionSample::default(),
                     wind: Point { x: -0.9, z: 1.1 },
                 }),
                 neural: (tick != 4 && !(tick == 2 && id == 0)).then_some(StepOutput {
@@ -132,6 +145,49 @@ fn main() {
                 stars: 0,
             }),
         });
+    }
+    if retinal {
+        for frame in &mut frames {
+            let poses: Vec<_> = frame
+                .flies
+                .iter()
+                .filter(|fly| fly.neural.is_some())
+                .map(|fly| sim::vision::EyePose {
+                    fly_id: fly.id,
+                    position: [
+                        fly.input_pose.position.x,
+                        fly.motion[0].height,
+                        fly.input_pose.position.z,
+                    ],
+                    rotation: fly.motion[0].rotation,
+                })
+                .collect();
+            let tick = frame.tick;
+            let rgb = poses
+                .iter()
+                .flat_map(|pose| {
+                    (0..config.profile.bytes_per_fly()).map(move |sample| {
+                        if tick == 1 && pose.fly_id == 0 {
+                            0
+                        } else {
+                            ((tick as usize * 71 + pose.fly_id as usize * 43 + sample * 13) % 256)
+                                as u8
+                        }
+                    })
+                })
+                .collect();
+            frame.retina = Some(sim::vision::RetinaBatch {
+                request: sim::vision::VisionRequest {
+                    attempt_id: "fixture".into(),
+                    client_generation: config.client_generation,
+                    tick: frame.tick,
+                    profile_hash: config.profile.profile_hash.clone(),
+                    scene_id: config.scene_id.clone(),
+                    poses,
+                },
+                rgb,
+            });
+        }
     }
     let chunks = vec![
         PackedChunk::encode("fixture", 0, &layout, &frames[..2]).unwrap(),

@@ -43,12 +43,7 @@ fn frame(tick: u32) -> AttemptFrame {
                     shade: 0.7,
                     exit_cue: 0.8,
                 },
-                vision: VisionSample {
-                    brightness: std::array::from_fn(|i| {
-                        (f64::from(tick) + 0. + i as f64 / 17.) / 7.
-                    }),
-                    blocked: std::array::from_fn(|i| (f64::from(tick) + i as f64 / 13.) / 11.),
-                },
+                vision: VisionSample::default(),
                 wind: Point { x: -0.9, z: 1.1 },
             }),
             neural: Some(StepOutput {
@@ -139,16 +134,9 @@ fn horizon_and_event_budget_fail_explicitly_before_encoding() {
     let layout = RecordLayout::new((0..16).map(|n| n.to_string()).collect()).unwrap();
     let bytes = layout.archive_bytes(20, 6000).unwrap();
     assert!(bytes <= ARCHIVE_CAP_BYTES);
-    // A 100-fly capacity probe can record a short run, but cannot silently
-    // allocate a full horizon five times the MVP archive.
+    // Nonvisual capacity probes share the larger quota but still enforce authored bounds.
     assert!(layout.archive_bytes(100, 100).is_ok());
-    for (flies, ticks) in [
-        (100, 6000),
-        (u32::MAX, 6000),
-        (20, u32::MAX),
-        (0, 1),
-        (1, 0),
-    ] {
+    for (flies, ticks) in [(u32::MAX, 6000), (20, u32::MAX), (0, 1), (1, 0)] {
         assert!(layout.archive_bytes(flies, ticks).is_err());
     }
     let layout = RecordLayout::new(vec!["left".into(), "right".into()]).unwrap();
@@ -486,4 +474,126 @@ fn caught_roundtrips_body_terminal_event_and_summary() {
     sync_motion(&mut f.flies[0]);
     let packed = PackedChunk::encode("web", 0, &layout, &[f.clone()]).unwrap();
     assert_eq!(packed.decode(&layout).unwrap(), vec![f]);
+}
+
+fn retinal_config() -> sim::vision::RetinalConfig {
+    sim::vision::RetinalConfig {
+        client_generation: 7,
+        scene_id: "record-fixture".into(),
+        map_hash: "e".repeat(64),
+        profile: sim::vision::EyeProfile {
+            profile_hash: "a".repeat(64),
+            layout_hash: "b".repeat(64),
+            rig_hash: "c".repeat(64),
+            color_model_hash: "d".repeat(64),
+            width: 4,
+            height: 4,
+            sample_count: 3,
+        },
+    }
+}
+#[test]
+fn retinal_bytes_preserve_black_terminal_transition_absence_and_full_input_transform() {
+    use sim::vision::*;
+    let config = retinal_config();
+    let layout = RecordLayout::new(vec!["left".into(), "right".into()])
+        .unwrap()
+        .with_retinal(config.clone())
+        .unwrap();
+    let mut frames: Vec<_> = (1..=3).map(frame).collect();
+    for frame in &mut frames {
+        frame.flies[0].sensory.as_mut().unwrap().vision = VisionSample::default();
+        let poses = if frame.tick < 3 {
+            vec![EyePose {
+                fly_id: 0,
+                position: [
+                    frame.flies[0].input_pose.position.x,
+                    0.123456789012345,
+                    frame.flies[0].input_pose.position.z,
+                ],
+                rotation: sim::surface::support_rotation(1.2, [0., 0.6, 0.8]).unwrap(),
+            }]
+        } else {
+            vec![]
+        };
+        if let Some(pose) = poses.first() {
+            frame.flies[0].motion[0].height = pose.position[1];
+            frame.flies[0].motion[0].rotation = pose.rotation;
+        }
+        let rgb = if frame.tick == 1 {
+            vec![0; 18]
+        } else if frame.tick == 2 {
+            (0..18).map(|n| (n * 13 + 7) as u8).collect()
+        } else {
+            vec![]
+        };
+        frame.retina = Some(RetinaBatch {
+            request: VisionRequest {
+                attempt_id: "retinal".into(),
+                client_generation: config.client_generation,
+                tick: frame.tick,
+                profile_hash: config.profile.profile_hash.clone(),
+                scene_id: config.scene_id.clone(),
+                poses,
+            },
+            rgb,
+        });
+        if frame.tick >= 2 {
+            frame.flies[0].body.outcome = Some(TerminalOutcome::Caught);
+        }
+        if frame.tick == 3 {
+            frame.flies[0].sensory = None;
+            frame.flies[0].neural = None;
+        }
+    }
+    let packed = PackedChunk::encode("retinal", 0, &layout, &frames).unwrap();
+    assert_eq!(packed.retina_rgb.len(), 3 * 18);
+    assert_eq!(&packed.retina_rgb[..18], &[0; 18]);
+    assert_eq!(
+        &packed.retina_rgb[18..36],
+        frames[1].retina.as_ref().unwrap().rgb
+    );
+    assert_eq!(&packed.retina_rgb[36..], &[0; 18]);
+    let restored = packed.decode(&layout).unwrap();
+    for (actual, expected) in restored.iter().zip(&frames) {
+        assert_eq!(actual.retina, expected.retina);
+    }
+    assert_eq!(packed.states[2] & 4, 4);
+    assert_eq!(packed.states[7] & 4, 4);
+    assert_eq!(packed.states[12] & 4, 0);
+    let mut corrupt = packed.clone();
+    corrupt.values[28] += 1.;
+    assert!(corrupt.decode(&layout).is_err());
+}
+
+#[test]
+fn retinal_horizon_reserves_every_eye_and_preflights_owned_bytes() {
+    let mut config = retinal_config();
+    config.profile.width = 128;
+    config.profile.height = 128;
+    config.profile.sample_count = 721;
+    let layout = RecordLayout::new((0..16).map(|n| n.to_string()).collect())
+        .unwrap()
+        .with_retinal(config)
+        .unwrap();
+    assert_eq!(
+        layout.retina_bytes_per_fly() as u64 * 16 * 6000,
+        415_296_000
+    );
+    assert_eq!(layout.archive_bytes(16, 6000).unwrap(), ARCHIVE_CAP_BYTES);
+    assert!(layout.archive_bytes(20, 6000).is_err());
+    let simple = RecordLayout::new(vec!["left".into(), "right".into()]).unwrap();
+    let frames = vec![frame(1), frame(2)];
+    let expected = PackedChunk::encoded_bytes(&simple, &frames).unwrap();
+    let chunk = PackedChunk::encode("budget", 0, &simple, &frames).unwrap();
+    let actual = CHUNK_ENVELOPE_BYTES
+        + (chunk.values.len() + chunk.motion_values.len()) as u64 * 8
+        + (chunk.states.len()
+            + chunk.events.len()
+            + chunk.tick_neural_steps.len()
+            + chunk.motion_offsets.len()
+            + chunk.motion_states.len()) as u64
+            * 4
+        + chunk.retina_rgb.len() as u64;
+    assert_eq!(expected, actual);
 }

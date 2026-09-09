@@ -1,3 +1,4 @@
+import { RecordDecodeError } from "./record";
 import type {
   StartAttempt,
   ToolDef,
@@ -79,7 +80,11 @@ export class AttemptClient {
         const id = reply.attemptId;
         if (this.generation !== generation) return;
         this.cancel();
-        this.receive({ type: "error", attemptId: id, message: String(error) });
+        this.receive({
+          type: "error", attemptId: id,
+          message: error instanceof RecordDecodeError ? error.userMessage : error instanceof Error ? error.message : String(error),
+          ...(error instanceof RecordDecodeError ? { recordError: error.code } : {}),
+        });
         return;
       }
       if (this.generation !== generation) return;

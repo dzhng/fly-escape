@@ -71,8 +71,11 @@ impl AttemptSession {
         if seed.to_string() != request.root_seed {
             return Err("root seed must be a canonical decimal u64".into());
         }
-        let layout =
+        let mut layout =
             RecordLayout::new(graph.manifest.groups.iter().map(|g| g.id.clone()).collect())?;
+        if let Some((config, _)) = &retinal {
+            layout = layout.with_retinal(config.clone())?;
+        }
         // Reject an oversized fixed record before allocating brains; variable motion
         // remains subject to the cumulative archive quota during production.
         let archive_bytes =
@@ -162,23 +165,16 @@ impl AttemptSession {
         if self.frames.is_empty() {
             return Ok(None);
         }
+        let bytes = PackedChunk::encoded_bytes(&self.info.record_layout, &self.frames)?;
+        if self.archive_bytes + bytes > u64::from(self.info.archive_bytes) {
+            return Err("record archive capacity exceeded".into());
+        }
         let chunk = PackedChunk::encode(
             &self.info.spec.attempt_id,
             self.sequence,
             &self.info.record_layout,
             &self.frames,
         )?;
-        let bytes = 1024
-            + (chunk.values.len() + chunk.motion_values.len()) as u64 * 8
-            + (chunk.states.len()
-                + chunk.events.len()
-                + chunk.tick_neural_steps.len()
-                + chunk.motion_offsets.len()
-                + chunk.motion_states.len()) as u64
-                * 4;
-        if self.archive_bytes + bytes > u64::from(self.info.archive_bytes) {
-            return Err("record archive capacity exceeded".into());
-        }
         self.archive_bytes += bytes;
         self.frames.clear();
         self.sequence += 1;
@@ -200,12 +196,18 @@ impl AttemptChunk {
             start_tick: c.start_tick,
             tick_count: c.tick_count,
             fly_count: c.fly_count,
+            map_hash: c.map_hash.clone(),
+            profile_hash: c.profile_hash.clone(),
+            scene_id: c.scene_id.clone(),
             result: c.result.clone(),
         })
         .map_err(js_error)
     }
     // wasm-bindgen copies returned Vec data into owned JS typed arrays before
     // freeing its WASM allocation. These methods drain each buffer exactly once.
+    pub fn take_retina_rgb(&mut self) -> Vec<u8> {
+        std::mem::take(&mut self.chunk.retina_rgb)
+    }
     pub fn take_motion_values(&mut self) -> Vec<f64> {
         std::mem::take(&mut self.chunk.motion_values)
     }
@@ -290,7 +292,13 @@ mod tests {
                 (status.tick, status.neural_steps, status.complete),
                 (tick, tick * 2, false)
             );
-            expected.push(direct.step().unwrap().unwrap());
+            let mut frame = direct.step().unwrap().unwrap();
+            for fly in &mut frame.flies {
+                if let Some(sense) = &mut fly.sensory {
+                    sense.vision = sim::environment::VisionSample::default();
+                }
+            }
+            expected.push(frame);
         }
         assert!(session.advance().is_err());
         let first = session.flush().unwrap().unwrap();
@@ -303,7 +311,13 @@ mod tests {
         expected.clear();
         for _ in 0..2 {
             session.advance().unwrap();
-            expected.push(direct.step().unwrap().unwrap());
+            let mut frame = direct.step().unwrap().unwrap();
+            for fly in &mut frame.flies {
+                if let Some(sense) = &mut fly.sensory {
+                    sense.vision = sim::environment::VisionSample::default();
+                }
+            }
+            expected.push(frame);
         }
         let complete = session.advance().unwrap();
         assert_eq!(
@@ -333,9 +347,13 @@ mod tests {
             assert_eq!(Arc::strong_count(&graph), 1);
         }
         let mut r = request();
-        r.fly_count = 100;
-        r.level = sim::swarm_lab::level(100).unwrap();
-        assert!(AttemptSession::build(graph.clone(), r, None).is_err());
+        r.fly_count = 20;
+        r.level = sim::swarm_lab::level(20).unwrap();
+        let (_, mut config, map) = super::retinal_fixture::fixture();
+        config.profile.width = 128;
+        config.profile.height = 128;
+        config.profile.sample_count = 721;
+        assert!(AttemptSession::build(graph.clone(), r, Some((config, &map.to_string()))).is_err());
         assert_eq!(Arc::strong_count(&graph), 1);
         let layout = RecordLayout::new((0..16).map(|n| n.to_string()).collect()).unwrap();
         assert!(layout.archive_bytes(20, 6000).is_ok());
@@ -415,13 +433,25 @@ mod tests {
             })
             .unwrap_err()
             .contains("no retinal tick"));
-        assert!(session
-            .flush()
-            .err()
-            .unwrap()
-            .contains("refusing to discard RGB"));
-        assert_eq!(session.frames.len(), MAX_CHUNK_TICKS as usize);
-        assert_eq!(session.sequence, 0);
+        let mut expected = session.frames.clone();
+        for frame in &mut expected {
+            for fly in &mut frame.flies {
+                if let Some(sense) = &mut fly.sensory {
+                    sense.vision = sim::environment::VisionSample::default();
+                }
+            }
+        }
+        let mut chunk = session.flush().unwrap().unwrap();
+        assert_eq!(
+            chunk.chunk.decode(&session.info.record_layout).unwrap(),
+            expected
+        );
+        let rgb = chunk.take_retina_rgb();
+        assert_eq!(rgb.len(), MAX_CHUNK_TICKS as usize * 24);
+        assert!(chunk.take_retina_rgb().is_empty());
+        assert!(session.frames.is_empty());
+        assert_eq!(session.sequence, 1);
+        assert!(session.prepare().unwrap().is_some());
     }
 }
 
