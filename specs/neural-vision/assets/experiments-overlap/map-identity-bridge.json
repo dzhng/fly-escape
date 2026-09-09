@@ -1,0 +1,31 @@
+{
+  "scope": "Wording-only identity bridge after the completed failed pilot; original tested maps and hashes remain immutable. No weights or model behavior changed, and no candidate is frozen.",
+  "maps": [
+    {
+      "family": "Tm2",
+      "testedMapHash": "65cafc02672b82542050062ceb26599139e082300b7b67d28972ef2d3d7bf0dc",
+      "correctedMapHash": "c0ac5957037012b486cc7300ccad56015fd3215ad4c764ce4ba0b27c82a262da",
+      "testedCommit": "28daa3f",
+      "correctedCommit": "45be336",
+      "changedFields": [
+        "registration"
+      ],
+      "testedRegistration": "MODELED, not calibrated retinal azimuth or measured receptive fields: u=(assignedOlHex1-min)/(max-min) over the full annotated family per somaSide; angle=+pi*u for R and -pi*u for L. raw[i,b]=max(0,cos(angle_i-b*pi/4)); raw<1e-12 becomes zero; divide each column by its sum, then the entire matrix by its largest row sum. Axis, orientation, mirroring and half-circle field of view are assumptions. Source hex1 ranges: L=[1.0, 36.0], R=[1.0, 36.0].",
+      "correctedRegistration": "MODELED, not calibrated retinal azimuth or measured receptive fields: u=(assignedOlHex1-min)/(max-min) over the full annotated family per somaSide; angle=+pi*u for R and -pi*u for L. raw[i,b]=max(0,cos(angle_i-b*pi/4)); raw<1e-12 becomes zero; divide each column by its sum, then the entire matrix by its largest row sum. Axis, orientation, mirroring and half-circle preferred-angle range are assumptions. Source hex1 ranges: L=[1.0, 36.0], R=[1.0, 36.0].",
+      "numericAndIdentityFieldsEqual": true
+    },
+    {
+      "family": "Tm20",
+      "testedMapHash": "84b307feb817894bdf3331f651d6fad51e4c7abc79ce83bb2a859e967e7fec43",
+      "correctedMapHash": "2ee6bd1d45769268c28297167a653ff3832eb1f7cf830db39b2f19cdb49b8b66",
+      "testedCommit": "28daa3f",
+      "correctedCommit": "45be336",
+      "changedFields": [
+        "registration"
+      ],
+      "testedRegistration": "MODELED, not calibrated retinal azimuth or measured receptive fields: u=(assignedOlHex1-min)/(max-min) over the full annotated family per somaSide; angle=+pi*u for R and -pi*u for L. raw[i,b]=max(0,cos(angle_i-b*pi/4)); raw<1e-12 becomes zero; divide each column by its sum, then the entire matrix by its largest row sum. Axis, orientation, mirroring and half-circle field of view are assumptions. Source hex1 ranges: L=[1.0, 36.0], R=[1.0, 36.0].",
+      "correctedRegistration": "MODELED, not calibrated retinal azimuth or measured receptive fields: u=(assignedOlHex1-min)/(max-min) over the full annotated family per somaSide; angle=+pi*u for R and -pi*u for L. raw[i,b]=max(0,cos(angle_i-b*pi/4)); raw<1e-12 becomes zero; divide each column by its sum, then the entire matrix by its largest row sum. Axis, orientation, mirroring and half-circle preferred-angle range are assumptions. Source hex1 ranges: L=[1.0, 36.0], R=[1.0, 36.0].",
+      "numericAndIdentityFieldsEqual": true
+    }
+  ]
+}

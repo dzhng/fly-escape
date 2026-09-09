@@ -1,0 +1,53 @@
+Overlapping-input pilot, 2026-09-09
+
+Verdict: both candidates fail; selected:null. No freeze, held-out run, decoder
+change or further motor search was performed. This failed motor gate remains
+failed independently of any later, separately preregistered neural experiment.
+
+Protocol overlapping-cosine-gain3-v1: exactly Tm2/Tm20, gain 3, original seeds 1..6,
+60 unstimulated warmup ticks, 100 measured ticks, original 12 conditions. Total
+144 seed-condition runs. Same signed graph, neural/body parameters and existing
+turn/flightTurn readouts. Pilot completed in 41.7 s after graph setup.
+
+Paired actual-lamp left minus right, means and 95% t intervals:
+Tm2 turn: -0.0002666667 [-0.001530645, +0.000997312]
+Tm2 flightTurn: -0.0008089089 [-0.005242410, +0.003624592]
+Tm20 turn: +0.0000231884 [-0.002454944, +0.002501321]
+Tm20 flightTurn: +0.0023662835 [-0.004741341, +0.009473908]
+Strongest |t| is 0.8558028585 (Tm20 flightTurn), below the pilot gate.
+
+The same 366/810 cells remain; each direction's summed map weight is
+30.7191280319 for Tm2 and 76.4166241491 for Tm20. Maximum row sum is 1. Individual
+cell/current nonlinearities and graph asymmetries remain; equal summed weights
+are not a claim of equal downstream response.
+
+Validation:
+- Two existing probe tests pass (actual optical controls and paired-statistics/
+  equal-brightness-basis checks).
+- Independent Codex review of the protocol/map-interface diff found no
+  actionable defect. The runtime owner reported 176 native tests passed before
+  authorizing the run.
+- Full release pilot exited 0. Exactly 2 reports x 12 conditions x 6 ordered seeds
+  were verified. Basis total-current sums agree within 1e-10.
+- All seed-level observations, requested/effective current hashes, actual
+  sensory samples, graph/map/source hashes and neural trajectory hashes remain.
+- No relay was selected by its observed effect. Per-relay intervals in these
+  exploratory reports remain descriptive and uncorrected for multiplicity.
+
+Identity preservation:
+tested-Tm2-map.json and tested-Tm20-map.json are the exact inputs used. The
+producer subsequently corrected registration wording from a half-circle field
+of view to a half-circle preferred-angle range. map-identity-bridge.json records
+both hashes and confirms equality of the entire maps except registration text.
+The original tested identities were not rewritten. neural_vision_probe.rs is
+the exact compiled probe source, checked against the report's source hash.
+
+Command from the main repository with its stable runtime work in progress:
+CARGO_TARGET_DIR=/tmp/fly-neural-experiments/target cargo run -p sim --release --example neural_vision_probe -- pilot data/processed/brain specs/neural-vision/assets/input-overlap /tmp/fly-neural-experiments/specs/neural-vision/assets/experiments-overlap
+
+The observation population is the union of non-input/non-readout interior
+cells on deterministic audited relayPath and readoutPath witnesses, checked
+against the actual CSR. relayPath ends at an annotated LC/LPLC; additional
+readout-path intermediates need not be LC/LPLC. The probe assigns no anatomical
+sides to this observation union. A new population-level neural endpoint must
+be declared before confirmation, not selected from these per-cell intervals.
