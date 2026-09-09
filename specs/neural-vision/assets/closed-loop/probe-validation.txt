@@ -1,0 +1,24 @@
+Closed-loop motion probe implementation verification
+
+Runtime integration: 56179b2 (local cherry-pick cfcd159).
+Command: cargo test -p sim --example vision_motion_probe --quiet
+Result: 2 passed, 0 failed.
+
+The fixture test reads the authored Open Window content, preserves its complete
+BodyConfig, confirms a walking origin/heading-zero start, clears its fixed
+objects and exit suction, and verifies zero odor/wind alongside directional
+lamp input. A deliberate mutation retaining ambient wind failed with
+actual Point { x: 3.0, z: -2.0 } versus expected Point { x: 0.0, z: 0.0 }.
+Restoring wind removal passed both tests.
+
+Independent Codex review found no actionable defects; both example tests passed
+there as well. No closed-loop neural panel has been executed. Family and gain
+must come from the frozen pilot winner before that execution is authorized.
+
+CLI:
+vision_motion_probe GRAPH_DIR MAP_JSON CONTENT_JSON GAIN OUTPUT_JSON
+CONTENT_JSON contains the level object from the authored campaign content.
+The output reports the input/content/graph identities, supplied body settings,
+per-seed dark and lamp runs, actual outcomes and boundary observations, and
+paired seed-level intervals. Approach/avoidance labels describe the distance
+change relative to dark, not proof of absolute attraction or campaign utility.
