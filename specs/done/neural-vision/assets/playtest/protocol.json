@@ -1,0 +1,21 @@
+{
+  "baselineRevision": "2269e2fb120f1b6f097c094ff9f0e32c195de08a",
+  "currentRevision": "d47f2600a3ae0e45f4df74518c03b6a00df8561e",
+  "nativeProbe": "playtest_probe.rs",
+  "build": "Copy identical playtest_probe.rs into crates/sim/examples/ in each isolated revision; cargo build --release -p sim --example playtest_probe",
+  "invocation": "playtest_probe GRAPH_DIR CONTENT_JSON OUTPUT_JSON REVISION",
+  "graphDirectory": "data/processed/brain from the corresponding revision",
+  "contentExtraction": "Parse JSON literal between = { and final }; in apps/web/src/levels/open-window.ts and turn-the-corner.ts from each revision. No authored content differs between these revisions.",
+  "visionOnDifference": "Append only {gain:3,pathway:vision} to current content tuning.cues; retain baselineBrightness1, actual authored sources, all body/timing/other cues. No directional lamp added.",
+  "seed": 42,
+  "flies": 16,
+  "placements": [],
+  "rooms": {
+    "open-window": 6000,
+    "turn-the-corner": 3000
+  },
+  "hashMethod": "On each native Attempt frame, JSON encode tick plus each fly id/inputPose/body/events, prefix little-endian u64 byte length, append into SHA256. Excludes neural/sensory/display telemetry.",
+  "timingScope": "Wall times include Attempt construction/steps/body serialization/hash. Runs shared this host concurrently and are not a performance benchmark.",
+  "scope": "Eight full native attempts: baseline/current/uniform vision-on/visible-emitter model for each room, one paired seed42 each. Behavioral spot check, not statistical balance evaluation; additional light model is experimental, not shipped content.",
+  "physicalOnDifference": "Current vision-on content plus normal lamp sources at visible sconce positions and visible exit PointLight position; explicit modeled rates reuse render intensity numbers and are not calibrated photometry. Baseline ambient1 retained. Sources use production FieldSet LOS; no exit-bearing signal is injected into Brain."
+}

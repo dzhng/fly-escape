@@ -1,0 +1,215 @@
+{
+  "scope": "Two authored rooms, one paired seed42 each, sixteen flies, empty placements, natural full horizons. Before versus after production tuning tests regressions. Separate vision-on arm adds only vision gain3 under the existing uniform ambient1 with no directional light sources; the fourth arm adds explicitly modeled visible lamp sources through normal FieldSet LOS. Neither establishes broad difficulty/balance from one seed per room.",
+  "rooms": [
+    {
+      "room": "open-window",
+      "seed": 42,
+      "flies": 16,
+      "durationTicks": 6000,
+      "unchangedAuthoredContent": true,
+      "visionOnOnlyAddsGain3Cue": true,
+      "beforeAfterBodyTrajectoryEqual": true,
+      "visionOnBodyTrajectoryEqual": false,
+      "physicalOnBodyTrajectoryEqual": false,
+      "runs": {
+        "before": {
+          "revision": "2269e2f",
+          "result": {
+            "attemptId": "empty-seed42",
+            "completedTick": 6000,
+            "outcomes": {
+              "caught": 0,
+              "escaped": 4,
+              "score": 4,
+              "starved": 0,
+              "timedOut": 12,
+              "zapped": 0
+            },
+            "stars": 1
+          },
+          "wallSeconds": 118.392070625,
+          "bodyTrajectoryHash": "aada29b7144d46f2f3167ea3ff7ce9395fe120adba3ca7b22aa3e1710183b58c",
+          "contentHash": "b52fa2357bb25894cc322ea21142b1ceecf37a900aa8d3b1f697d7a6a5333301",
+          "manifestHash": "6ee37f36706c9b5da0168f1932b6c765f2468f4fa6f1aacf14f2e6d4e8e6a757",
+          "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+          "simulationBuildId": "0756a1dbe1644ce59f667a699b95de193442e937844edd5f2a8063906817dd05",
+          "probeSourceHash": "0a3631efd4e5e0faacc43545b9baf5a18e2b7c65ab0eb9ff405291fe87fe1bfb"
+        },
+        "after": {
+          "revision": "d47f2600a3ae0e45f4df74518c03b6a00df8561e",
+          "result": {
+            "attemptId": "empty-seed42",
+            "completedTick": 6000,
+            "outcomes": {
+              "caught": 0,
+              "escaped": 4,
+              "score": 4,
+              "starved": 0,
+              "timedOut": 12,
+              "zapped": 0
+            },
+            "stars": 1
+          },
+          "wallSeconds": 140.52064125,
+          "bodyTrajectoryHash": "aada29b7144d46f2f3167ea3ff7ce9395fe120adba3ca7b22aa3e1710183b58c",
+          "contentHash": "b52fa2357bb25894cc322ea21142b1ceecf37a900aa8d3b1f697d7a6a5333301",
+          "manifestHash": "e545579d7de5311e4d5348034d781bcaeaf6548c6a340205d3ec5cde4b23c45f",
+          "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+          "simulationBuildId": "70f076d6268e84f7fb5035411412d929919c61701f5174599fb0bcd8edfe011e",
+          "probeSourceHash": "0a3631efd4e5e0faacc43545b9baf5a18e2b7c65ab0eb9ff405291fe87fe1bfb"
+        },
+        "vision-on": {
+          "revision": "d47f2600a3ae0e45f4df74518c03b6a00df8561e",
+          "result": {
+            "attemptId": "empty-seed42",
+            "completedTick": 6000,
+            "outcomes": {
+              "caught": 2,
+              "escaped": 3,
+              "score": 3,
+              "starved": 0,
+              "timedOut": 11,
+              "zapped": 0
+            },
+            "stars": 1
+          },
+          "wallSeconds": 217.6463985,
+          "bodyTrajectoryHash": "ad8e293776dffa7699a6494713322af38ffe589483877a1f3af5fd404eea5237",
+          "contentHash": "731c70dfac1037e4414fac23c282fa14678ada735d926e0c0454a3dfb8c190b4",
+          "manifestHash": "e545579d7de5311e4d5348034d781bcaeaf6548c6a340205d3ec5cde4b23c45f",
+          "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+          "simulationBuildId": "70f076d6268e84f7fb5035411412d929919c61701f5174599fb0bcd8edfe011e",
+          "probeSourceHash": "0a3631efd4e5e0faacc43545b9baf5a18e2b7c65ab0eb9ff405291fe87fe1bfb"
+        },
+        "physical-on": {
+          "revision": "d47f2600a3ae0e45f4df74518c03b6a00df8561e",
+          "result": {
+            "attemptId": "empty-seed42",
+            "completedTick": 6000,
+            "outcomes": {
+              "caught": 2,
+              "escaped": 3,
+              "score": 3,
+              "starved": 0,
+              "timedOut": 11,
+              "zapped": 0
+            },
+            "stars": 1
+          },
+          "wallSeconds": 156.281873291,
+          "bodyTrajectoryHash": "1262a441ed9b35dd004bddb3f1454d54d5063a8c11019e070dafb1fca7e5ee7b",
+          "contentHash": "5ba1e91af4904b6da226b33045bd9676cf3e4cc311d012d99107618e9df54a98",
+          "manifestHash": "e545579d7de5311e4d5348034d781bcaeaf6548c6a340205d3ec5cde4b23c45f",
+          "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+          "simulationBuildId": "70f076d6268e84f7fb5035411412d929919c61701f5174599fb0bcd8edfe011e",
+          "probeSourceHash": "0a3631efd4e5e0faacc43545b9baf5a18e2b7c65ab0eb9ff405291fe87fe1bfb"
+        }
+      }
+    },
+    {
+      "room": "turn-the-corner",
+      "seed": 42,
+      "flies": 16,
+      "durationTicks": 3000,
+      "unchangedAuthoredContent": true,
+      "visionOnOnlyAddsGain3Cue": true,
+      "beforeAfterBodyTrajectoryEqual": true,
+      "visionOnBodyTrajectoryEqual": false,
+      "physicalOnBodyTrajectoryEqual": false,
+      "runs": {
+        "before": {
+          "revision": "2269e2f",
+          "result": {
+            "attemptId": "empty-seed42",
+            "completedTick": 3000,
+            "outcomes": {
+              "caught": 0,
+              "escaped": 2,
+              "score": 2,
+              "starved": 0,
+              "timedOut": 13,
+              "zapped": 1
+            },
+            "stars": 1
+          },
+          "wallSeconds": 148.04105525,
+          "bodyTrajectoryHash": "6cdcbb26b592cf19d14fbe97f8e52630b518e01b3fb84a3f45f3de5acd8a7d9e",
+          "contentHash": "5bbf0c77e997acd085e4f673397cb5305de8e5ddf294691aeb8593e64b7b1ea0",
+          "manifestHash": "6ee37f36706c9b5da0168f1932b6c765f2468f4fa6f1aacf14f2e6d4e8e6a757",
+          "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+          "simulationBuildId": "0756a1dbe1644ce59f667a699b95de193442e937844edd5f2a8063906817dd05",
+          "probeSourceHash": "0a3631efd4e5e0faacc43545b9baf5a18e2b7c65ab0eb9ff405291fe87fe1bfb"
+        },
+        "after": {
+          "revision": "d47f2600a3ae0e45f4df74518c03b6a00df8561e",
+          "result": {
+            "attemptId": "empty-seed42",
+            "completedTick": 3000,
+            "outcomes": {
+              "caught": 0,
+              "escaped": 2,
+              "score": 2,
+              "starved": 0,
+              "timedOut": 13,
+              "zapped": 1
+            },
+            "stars": 1
+          },
+          "wallSeconds": 145.089000416,
+          "bodyTrajectoryHash": "6cdcbb26b592cf19d14fbe97f8e52630b518e01b3fb84a3f45f3de5acd8a7d9e",
+          "contentHash": "5bbf0c77e997acd085e4f673397cb5305de8e5ddf294691aeb8593e64b7b1ea0",
+          "manifestHash": "e545579d7de5311e4d5348034d781bcaeaf6548c6a340205d3ec5cde4b23c45f",
+          "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+          "simulationBuildId": "70f076d6268e84f7fb5035411412d929919c61701f5174599fb0bcd8edfe011e",
+          "probeSourceHash": "0a3631efd4e5e0faacc43545b9baf5a18e2b7c65ab0eb9ff405291fe87fe1bfb"
+        },
+        "vision-on": {
+          "revision": "d47f2600a3ae0e45f4df74518c03b6a00df8561e",
+          "result": {
+            "attemptId": "empty-seed42",
+            "completedTick": 3000,
+            "outcomes": {
+              "caught": 0,
+              "escaped": 4,
+              "score": 4,
+              "starved": 0,
+              "timedOut": 11,
+              "zapped": 1
+            },
+            "stars": 1
+          },
+          "wallSeconds": 97.734383166,
+          "bodyTrajectoryHash": "9341640e709d66901b13ec15558472e46bd7ca8665a28a20552087fc3df90cd1",
+          "contentHash": "b3ec2a928c59fc7667186f16211c0efeecc082c82f562b26c7061bfbb2c54790",
+          "manifestHash": "e545579d7de5311e4d5348034d781bcaeaf6548c6a340205d3ec5cde4b23c45f",
+          "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+          "simulationBuildId": "70f076d6268e84f7fb5035411412d929919c61701f5174599fb0bcd8edfe011e",
+          "probeSourceHash": "0a3631efd4e5e0faacc43545b9baf5a18e2b7c65ab0eb9ff405291fe87fe1bfb"
+        },
+        "physical-on": {
+          "revision": "d47f2600a3ae0e45f4df74518c03b6a00df8561e",
+          "result": {
+            "attemptId": "empty-seed42",
+            "completedTick": 3000,
+            "outcomes": {
+              "caught": 0,
+              "escaped": 2,
+              "score": 2,
+              "starved": 0,
+              "timedOut": 13,
+              "zapped": 1
+            },
+            "stars": 1
+          },
+          "wallSeconds": 61.15279125,
+          "bodyTrajectoryHash": "c494ee6a894c3f04fd3d5393446dc2ae00e489a3b17719bee2aa3b3eec5204a5",
+          "contentHash": "a8a555bd29a67560c3660508e1b86c865703cc052ceb35ee5857d170ca00974b",
+          "manifestHash": "e545579d7de5311e4d5348034d781bcaeaf6548c6a340205d3ec5cde4b23c45f",
+          "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+          "simulationBuildId": "70f076d6268e84f7fb5035411412d929919c61701f5174599fb0bcd8edfe011e",
+          "probeSourceHash": "0a3631efd4e5e0faacc43545b9baf5a18e2b7c65ab0eb9ff405291fe87fe1bfb"
+        }
+      }
+    }
+  ]
+}

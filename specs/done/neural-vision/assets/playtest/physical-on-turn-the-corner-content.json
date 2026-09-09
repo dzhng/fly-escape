@@ -1,0 +1,546 @@
+{
+  "level": {
+    "bodyConfig": {
+      "life": {
+        "kind": "timed"
+      },
+      "bodyRadius": 0.002632,
+      "walkSpeed": 0.24,
+      "flightSpeed": 0.48,
+      "turnGain": 8,
+      "takeoffThreshold": 0.2,
+      "landingThreshold": 0.2,
+      "landingDwellSeconds": 1,
+      "proboscisThreshold": 0.2
+    },
+    "durationTicks": 3000,
+    "exit": {
+      "a": {
+        "x": 9.6,
+        "z": 1.8
+      },
+      "b": {
+        "x": 9.6,
+        "z": 2.7
+      },
+      "outward": {
+        "x": 1,
+        "z": 0
+      }
+    },
+    "exitCue": null,
+    "exitSuction": {
+      "reach": 2,
+      "speed": 2,
+      "roomSpeed": 1.5
+    },
+    "fieldConfig": {
+      "antennaOffset": 0.00020207253103162883,
+      "baselineBrightness": 1,
+      "cellSize": 0.2,
+      "decay": 0.1,
+      "diffusion": 0.5,
+      "fans": [],
+      "wind": {
+        "x": 0,
+        "z": 0
+      },
+      "antennaForward": 0.0014145078816978176
+    },
+    "food": [],
+    "fixedObjects": [
+      {
+        "id": 1,
+        "kind": "banana",
+        "position": {
+          "x": 3.4,
+          "z": 3.3
+        },
+        "heading": 0.5
+      },
+      {
+        "id": 2,
+        "kind": "fruit",
+        "position": {
+          "x": 8.7,
+          "z": 8.2
+        },
+        "heading": 0.2
+      },
+      {
+        "id": 3,
+        "kind": "wornShoes",
+        "position": {
+          "x": 2.6,
+          "z": 6.7
+        },
+        "heading": 0.8
+      },
+      {
+        "id": 4,
+        "kind": "laundry",
+        "position": {
+          "x": 5.6,
+          "z": 6.7
+        },
+        "heading": 0.3
+      },
+      {
+        "id": 5,
+        "kind": "dirtyDishes",
+        "position": {
+          "x": 7.3,
+          "z": 8.6
+        },
+        "heading": 0
+      },
+      {
+        "id": 6,
+        "kind": "sleepingCat",
+        "position": {
+          "x": 2,
+          "z": 1.6
+        },
+        "heading": 0
+      },
+      {
+        "id": 7,
+        "kind": "bugZapper",
+        "position": {
+          "x": 6.8,
+          "z": 4.72
+        },
+        "heading": 0
+      }
+    ],
+    "geometry": {
+      "rooms": [
+        {
+          "id": 1,
+          "min": {
+            "x": 0,
+            "z": 0
+          },
+          "max": {
+            "x": 4.8,
+            "z": 4.5
+          }
+        },
+        {
+          "id": 2,
+          "min": {
+            "x": 4.8,
+            "z": 0
+          },
+          "max": {
+            "x": 9.6,
+            "z": 4.5
+          }
+        },
+        {
+          "id": 3,
+          "min": {
+            "x": 0,
+            "z": 4.5
+          },
+          "max": {
+            "x": 9.6,
+            "z": 6
+          }
+        },
+        {
+          "id": 4,
+          "min": {
+            "x": 0,
+            "z": 6
+          },
+          "max": {
+            "x": 3.3,
+            "z": 10.4
+          }
+        },
+        {
+          "id": 5,
+          "min": {
+            "x": 3.3,
+            "z": 6
+          },
+          "max": {
+            "x": 6.3,
+            "z": 10.4
+          }
+        },
+        {
+          "id": 6,
+          "min": {
+            "x": 6.3,
+            "z": 6
+          },
+          "max": {
+            "x": 9.6,
+            "z": 10.4
+          }
+        }
+      ],
+      "walls": [
+        {
+          "a": {
+            "x": 0,
+            "z": 0
+          },
+          "b": {
+            "x": 0,
+            "z": 10.4
+          }
+        },
+        {
+          "a": {
+            "x": 4.8,
+            "z": 0
+          },
+          "b": {
+            "x": 4.8,
+            "z": 2.1
+          }
+        },
+        {
+          "a": {
+            "x": 4.8,
+            "z": 3.0
+          },
+          "b": {
+            "x": 4.8,
+            "z": 4.5
+          }
+        },
+        {
+          "a": {
+            "x": 0,
+            "z": 0
+          },
+          "b": {
+            "x": 9.6,
+            "z": 0
+          }
+        },
+        {
+          "a": {
+            "x": 0,
+            "z": 4.5
+          },
+          "b": {
+            "x": 1.8,
+            "z": 4.5
+          }
+        },
+        {
+          "a": {
+            "x": 9.6,
+            "z": 0
+          },
+          "b": {
+            "x": 9.6,
+            "z": 1.8
+          }
+        },
+        {
+          "a": {
+            "x": 9.6,
+            "z": 2.7
+          },
+          "b": {
+            "x": 9.6,
+            "z": 10.4
+          }
+        },
+        {
+          "a": {
+            "x": 0,
+            "z": 6
+          },
+          "b": {
+            "x": 1.2,
+            "z": 6
+          }
+        },
+        {
+          "a": {
+            "x": 2.1,
+            "z": 6
+          },
+          "b": {
+            "x": 4.35,
+            "z": 6
+          }
+        },
+        {
+          "a": {
+            "x": 5.25,
+            "z": 6
+          },
+          "b": {
+            "x": 6.9,
+            "z": 6
+          }
+        },
+        {
+          "a": {
+            "x": 7.8,
+            "z": 6
+          },
+          "b": {
+            "x": 9.6,
+            "z": 6
+          }
+        },
+        {
+          "a": {
+            "x": 3.3,
+            "z": 6
+          },
+          "b": {
+            "x": 3.3,
+            "z": 10.4
+          }
+        },
+        {
+          "a": {
+            "x": 0,
+            "z": 10.4
+          },
+          "b": {
+            "x": 9.6,
+            "z": 10.4
+          }
+        },
+        {
+          "a": {
+            "x": 6.3,
+            "z": 6
+          },
+          "b": {
+            "x": 6.3,
+            "z": 10.4
+          }
+        },
+        {
+          "a": {
+            "x": 2.7,
+            "z": 4.5
+          },
+          "b": {
+            "x": 9.6,
+            "z": 4.5
+          }
+        }
+      ],
+      "solids": [
+        {
+          "id": 1,
+          "furnishing": {
+            "model": "sofa",
+            "quarterTurns": 0
+          },
+          "min": {
+            "x": 0.3,
+            "z": 0.25
+          },
+          "max": {
+            "x": 2.2,
+            "z": 1.1
+          },
+          "height": 0.85
+        },
+        {
+          "id": 2,
+          "furnishing": {
+            "model": "kitchen",
+            "quarterTurns": 0
+          },
+          "min": {
+            "x": 5.3,
+            "z": 0.2
+          },
+          "max": {
+            "x": 7.7,
+            "z": 0.85
+          },
+          "height": 2.1
+        },
+        {
+          "id": 4,
+          "furnishing": {
+            "model": "cabinet",
+            "quarterTurns": 0
+          },
+          "min": {
+            "x": 6.8,
+            "z": 9.75
+          },
+          "max": {
+            "x": 8.0,
+            "z": 10.2
+          },
+          "height": 0.85
+        },
+        {
+          "id": 5,
+          "furnishing": {
+            "model": "desk",
+            "quarterTurns": 2
+          },
+          "min": {
+            "x": 0.4,
+            "z": 9.55
+          },
+          "max": {
+            "x": 1.8,
+            "z": 10.25
+          },
+          "height": 1.05
+        },
+        {
+          "id": 6,
+          "furnishing": {
+            "model": "chair",
+            "quarterTurns": 0
+          },
+          "min": {
+            "x": 0.8,
+            "z": 8.45
+          },
+          "max": {
+            "x": 1.4,
+            "z": 9.1
+          },
+          "height": 0.95
+        },
+        {
+          "id": 7,
+          "furnishing": {
+            "model": "bed",
+            "quarterTurns": 2
+          },
+          "min": {
+            "x": 4,
+            "z": 8.15
+          },
+          "max": {
+            "x": 5.6,
+            "z": 10.25
+          },
+          "height": 1.05
+        }
+      ]
+    },
+    "id": "turn-the-corner",
+    "placementRules": {
+      "inventory": [
+        {
+          "kind": "fruit",
+          "count": 3
+        },
+        {
+          "kind": "banana",
+          "count": 3
+        },
+        {
+          "kind": "dirtyDishes",
+          "count": 3
+        },
+        {
+          "kind": "wornShoes",
+          "count": 3
+        },
+        {
+          "kind": "laundry",
+          "count": 3
+        },
+        {
+          "kind": "vinegar",
+          "count": 6
+        },
+        {
+          "kind": "fan",
+          "count": 1
+        }
+      ],
+      "reserved": [],
+      "fanHeading": 0
+    },
+    "sources": [
+      {
+        "kind": "lamp",
+        "position": {
+          "x": 3.8,
+          "z": 0.36
+        },
+        "rate": 0.45,
+        "radius": 2.5
+      },
+      {
+        "kind": "lamp",
+        "position": {
+          "x": 8.05,
+          "z": 0.36
+        },
+        "rate": 0.45,
+        "radius": 2.5
+      },
+      {
+        "kind": "lamp",
+        "position": {
+          "x": 0.36,
+          "z": 7.1
+        },
+        "rate": 0.45,
+        "radius": 2.5
+      },
+      {
+        "kind": "lamp",
+        "position": {
+          "x": 9.049999999999999,
+          "z": 2.25
+        },
+        "rate": 9,
+        "radius": 4.6
+      }
+    ],
+    "starThresholds": [
+      2,
+      5,
+      10
+    ],
+    "zappers": [],
+    "spawn": {
+      "kind": "cluster",
+      "min": {
+        "x": 7.8,
+        "z": 9.05
+      },
+      "max": {
+        "x": 8.45,
+        "z": 9.55
+      },
+      "flyingCount": 8
+    }
+  },
+  "tuning": {
+    "cues": [
+      {
+        "gain": 2,
+        "pathway": "excitatoryOdor"
+      },
+      {
+        "gain": 2,
+        "pathway": "inhibitoryOdor"
+      },
+      {
+        "gain": 3,
+        "pathway": "vision"
+      }
+    ],
+    "silencedNeurons": [],
+    "tasteGain": 1
+  }
+}
