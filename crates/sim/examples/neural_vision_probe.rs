@@ -13,6 +13,7 @@ use sim::{
 use std::{
     collections::{BTreeSet, HashMap, HashSet},
     fs,
+    io::Write,
     path::Path,
     sync::Arc,
     time::Instant,
@@ -21,6 +22,8 @@ use std::{
 const WARMUP: usize = 60;
 const TICKS: usize = 100;
 const PROTOCOL: &str = "overlapping-cosine-gain3-v1";
+const NEURAL_PROTOCOL: &str = "overlapping-Tm2-neural-confirmation-v1";
+const NEURAL_MAP_HASH: &str = "c0ac5957037012b486cc7300ccad56015fd3215ad4c764ce4ba0b27c82a262da";
 
 fn hash(bytes: &[u8]) -> String {
     format!("{:x}", Sha256::digest(bytes))
@@ -30,7 +33,9 @@ fn hash(bytes: &[u8]) -> String {
 #[serde(rename_all = "camelCase")]
 struct Observation {
     seed: u64,
+    thrust: f64,
     turn: f64,
+    flight_thrust: f64,
     flight_turn: f64,
     input_voltage: f64,
     input_spikes: f64,
@@ -201,6 +206,21 @@ fn stimuli(confirm: bool) -> Result<Vec<(String, SensorySample, &'static str)>, 
     Ok(out)
 }
 
+fn neural_stimuli() -> Result<Vec<(String, SensorySample, &'static str)>, String> {
+    let mut conditions = stimuli(true)?;
+    let mut names: Vec<_> = (0..8).map(|b| format!("basis-{b}")).collect();
+    for side in ["left", "right"] {
+        for rate in ["0.5", "2"] {
+            names.push(format!("lamp-{side}-{rate}"));
+        }
+    }
+    for name in names {
+        let sample = conditions.iter().find(|c| c.0 == name).unwrap().1;
+        conditions.push((format!("{name}-inputs"), sample, "inputs"));
+    }
+    Ok(conditions)
+}
+
 // Parse the validated committed incoming CSR only to choose/verify observation cells.
 fn outgoing(bytes: &[u8]) -> Vec<Vec<u32>> {
     let word = |at| u32::from_le_bytes(bytes[at..at + 4].try_into().unwrap()) as usize;
@@ -336,7 +356,9 @@ fn run(
     brain.set_external_current(currents)?;
     let mut out = Observation {
         seed,
+        thrust: 0.,
         turn: 0.,
+        flight_thrust: 0.,
         flight_turn: 0.,
         input_voltage: 0.,
         input_spikes: 0.,
@@ -348,7 +370,9 @@ fn run(
     let mut state_bytes = Vec::with_capacity(graph.neuron_count() * 13);
     for _ in 0..TICKS {
         let frame = brain.step();
+        out.thrust += frame.motor.thrust;
         out.turn += frame.motor.turn;
+        out.flight_thrust += frame.motor.flight_thrust;
         out.flight_turn += frame.motor.flight_turn;
         for &i in inputs {
             out.input_voltage += brain.voltage()[i as usize];
@@ -371,7 +395,9 @@ fn run(
         }
         digest.update(&state_bytes);
     }
+    out.thrust /= TICKS as f64;
     out.turn /= TICKS as f64;
+    out.flight_thrust /= TICKS as f64;
     out.flight_turn /= TICKS as f64;
     out.input_voltage /= (TICKS * inputs.len()) as f64;
     out.input_spikes /= (TICKS * inputs.len()) as f64;
@@ -387,7 +413,7 @@ fn condition<'a>(conditions: &'a [Condition], name: &str) -> &'a Condition {
 }
 
 fn comparison(a: &Condition, b: &Condition, relays: &[u32]) -> Value {
-    json!({"a":a.name,"b":b.name,"turn":paired(a,b,|o|o.turn),"flightTurn":paired(a,b,|o|o.flight_turn),
+    json!({"a":a.name,"b":b.name,"thrust":paired(a,b,|o|o.thrust),"turn":paired(a,b,|o|o.turn),"flightThrust":paired(a,b,|o|o.flight_thrust),"flightTurn":paired(a,b,|o|o.flight_turn),
         "relayVoltage":relays.iter().enumerate().map(|(j,i)|json!({"index":i,"statistics":paired(a,b,|o|o.relay_voltage[j])})).collect::<Vec<_>>(),
         "relaySpikes":relays.iter().enumerate().map(|(j,i)|json!({"index":i,"statistics":paired(a,b,|o|o.relay_spikes[j])})).collect::<Vec<_>>(),
         "exactNeuralTrajectoriesEqual":a.observations.iter().zip(&b.observations).all(|(a,b)| a.seed==b.seed && a.neural_trajectory_hash==b.neural_trajectory_hash)})
@@ -401,11 +427,14 @@ fn write(path: &Path, value: &Value) -> Result<(), Box<dyn std::error::Error>> {
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<String> = std::env::args().collect();
     if args.len() != 5 {
-        return Err("usage: neural_vision_probe pilot|confirm GRAPH_DIR MAP_DIR OUTPUT_DIR (confirm reads OUTPUT_DIR/freeze.json)".into());
+        return Err("usage: neural_vision_probe pilot|confirm|neural-freeze|neural-confirm GRAPH_DIR MAP_DIR OUTPUT_DIR (confirmation reads OUTPUT_DIR/freeze.json)".into());
     }
+    let neural = matches!(args[1].as_str(), "neural-freeze" | "neural-confirm");
+    let freeze_only = args[1] == "neural-freeze";
+    let protocol = if neural { NEURAL_PROTOCOL } else { PROTOCOL };
     let confirm = match args[1].as_str() {
-        "pilot" => false,
-        "confirm" => true,
+        "pilot" | "neural-freeze" => false,
+        "confirm" | "neural-confirm" => true,
         _ => return Err("unknown mode".into()),
     };
     let graph_dir = Path::new(&args[2]);
@@ -414,7 +443,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     fs::create_dir_all(output)?;
     if output.join("pilot-summary.json").exists() {
         let prior: Value = serde_json::from_slice(&fs::read(output.join("pilot-summary.json"))?)?;
-        if prior["protocol"] != PROTOCOL {
+        if neural || prior["protocol"] != PROTOCOL {
             return Err(
                 "output directory contains a different pilot protocol; preserve its evidence"
                     .into(),
@@ -436,17 +465,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         None
     };
     if let Some(f) = &frozen {
-        if f["protocol"] != PROTOCOL {
+        if f["protocol"] != protocol {
             return Err("freeze belongs to a different projection protocol".into());
         }
         if f["gain"].as_f64() != Some(3.) {
             return Err("overlapping-input protocol freezes gain three".into());
         }
-        if !matches!(f["axis"].as_str(), Some("turn" | "flightTurn")) {
+        if !neural && !matches!(f["axis"].as_str(), Some("turn" | "flightTurn")) {
             return Err("freeze must name the pilot-selected turn or flightTurn axis".into());
         }
     }
-    let families: Vec<&str> = if let Some(f) = &frozen {
+    let families: Vec<&str> = if neural {
+        vec!["Tm2"]
+    } else if let Some(f) = &frozen {
         vec![f["family"]
             .as_str()
             .ok_or("freeze has no selected family")?]
@@ -464,6 +495,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let map_bytes = fs::read(maps.join(format!("{family}.json")))?;
         let mapping: Value = serde_json::from_slice(&map_bytes)?;
         let map_hash = hash(&map_bytes);
+        if neural && map_hash != NEURAL_MAP_HASH {
+            return Err("neural protocol requires its preregistered corrected Tm2 map".into());
+        }
         if let Some(f) = &frozen {
             if f["mappingHash"] != map_hash {
                 return Err("frozen mapping hash differs".into());
@@ -476,6 +510,54 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             &serde_json::to_string(&manifest)?,
         )?);
         let (inputs, relays, sham) = populations(&graph, &mapping, &audit, &edges)?;
+        if neural {
+            let bodies = |indices: &[u32]| {
+                indices
+                    .iter()
+                    .map(|&i| graph.manifest.body_ids[i as usize].clone())
+                    .collect::<Vec<_>>()
+            };
+            let expected = json!({
+                "protocol":NEURAL_PROTOCOL,"family":"Tm2","gain":3,
+                "mappingHash":map_hash,"graphHash":graph.manifest.graph_hash,
+                "annotationHash":mapping["annotationHash"],"auditHash":hash(&audit_bytes),
+                "manifestHash":hash(&serde_json::to_vec(&manifest)?),
+                "probeSourceHash":hash(include_bytes!("neural_vision_probe.rs")),
+                "sensorySourceHash":hash(include_bytes!("../src/sensory.rs")),
+                "lifSourceHash":hash(include_bytes!("../src/lif.rs")),
+                "graphSourceHash":hash(include_bytes!("../src/graph.rs")),
+                "fieldsSourceHash":hash(include_bytes!("../src/environment/fields.rs")),
+                "geometrySourceHash":hash(include_bytes!("../src/environment/mod.rs")),
+                "lifParams":LifParams::default(),"warmupTicks":WARMUP,"measuredTicks":TICKS,
+                "seeds":(100..130).collect::<Vec<u64>>(),
+                "inputs":inputs,"inputBodyIds":bodies(&inputs),
+                "relays":relays,"relayBodyIds":bodies(&relays),
+                "sham":sham,"shamBodyIds":bodies(&sham),
+                "conditions":neural_stimuli()?.into_iter().map(|c|c.0).collect::<Vec<_>>(),
+                "primaryContrasts":[["basis-0","basis-4"],["basis-1","basis-5"],["basis-2","basis-6"],["basis-3","basis-7"],["lamp-left-1","lamp-right-1"],["lamp-left-2","lamp-left-0.5"],["lamp-right-2","lamp-right-0.5"]],
+                "endpoint":"Every cell in the sorted non-input/non-motor union on audited relayPath and readoutPath witnesses. Voltage is primary; no post-hoc neuron selection. This is not a pure anatomical cell class or a unique causal route.",
+                "statistics":"Two-sided simultaneous Bonferroni 95% paired t intervals over 7 * relay count, df29; every contrast needs at least one corrected interval excluding zero. Spikes and all motor outputs are descriptive.",
+                "exactGates":"Input-silenced basis and all lamp rates match dark-inputs full neural trajectories. Wall/furniture match dark; opening matches visible. Zero-outgoing sham retains unsilenced downstream voltage/spike vectors exactly. No post-hoc tolerance."
+            });
+            if freeze_only {
+                let mut file = fs::OpenOptions::new()
+                    .write(true)
+                    .create_new(true)
+                    .open(output.join("freeze.json"))?;
+                file.write_all(&serde_json::to_vec_pretty(&expected)?)?;
+                eprintln!("Frozen {} inputs and {} endpoints; no Brain was instantiated and no held-out seed was run.",inputs.len(),relays.len());
+                return Ok(());
+            }
+            if frozen.as_ref() != Some(&expected) {
+                return Err("neural freeze no longer matches source identities, conditions or endpoint population".into());
+            }
+            // A failed or interrupted execution cannot silently consume the held-out panel again.
+            let mut started_file = fs::OpenOptions::new()
+                .write(true)
+                .create_new(true)
+                .open(output.join("run-started.json"))?;
+            started_file.write_all(&serde_json::to_vec(&json!({"protocol":NEURAL_PROTOCOL,"freezeHash":hash(&fs::read(output.join("freeze.json"))?)}))?)?;
+        }
         let effective_population: [f64; 8] = std::array::from_fn(|b| {
             mapping["entries"]
                 .as_array()
@@ -491,7 +573,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         };
         for gain in gains {
             let mut conditions = vec![];
-            for (name, sample, silence) in stimuli(confirm)? {
+            let conditions_to_run = if neural {
+                neural_stimuli()?
+            } else {
+                stimuli(confirm)?
+            };
+            for (name, sample, silence) in conditions_to_run {
                 let currents = cue_currents(&graph, &sample, CuePathway::Vision, gain)?;
                 let silenced = match silence {
                     "inputs" => inputs.as_slice(),
@@ -534,16 +621,25 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 ));
             }
             if confirm {
-                for (a, b) in [
-                    ("lamp-left-0.5", "lamp-left-2"),
-                    ("lamp-right-0.5", "lamp-right-2"),
+                let intensity = if neural {
+                    [
+                        ("lamp-left-2", "lamp-left-0.5"),
+                        ("lamp-right-2", "lamp-right-0.5"),
+                    ]
+                } else {
+                    [
+                        ("lamp-left-0.5", "lamp-left-2"),
+                        ("lamp-right-0.5", "lamp-right-2"),
+                    ]
+                };
+                for (a, b) in intensity.into_iter().chain([
                     ("wall", "dark"),
                     ("furniture", "dark"),
                     ("opening", "lamp-right-1"),
                     ("lamp-left-inputs", "lamp-right-inputs"),
                     ("lamp-left-inputs", "dark-inputs"),
                     ("lamp-left-sham", "lamp-right-sham"),
-                ] {
+                ]) {
                     comparisons.push(comparison(
                         condition(&conditions, a),
                         condition(&conditions, b),
@@ -551,11 +647,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     ));
                 }
             }
-            let primary = frozen.as_ref().map(|f| {
+            let primary = frozen.as_ref().filter(|_| !neural).map(|f| {
                 let stats=if f["axis"]=="turn" { &turn } else { &flight };
                 json!({"axis":f["axis"],"statistics":stats,"directionalGatePassed":stats.excludes_zero,"pilotMean":f["statistics"]["mean"],"sameSignAsPilot":f["statistics"]["mean"].as_f64().map(|m|m.signum()==stats.mean.signum())})
             });
-            let report = json!({"protocol":PROTOCOL,"mode":args[1],"family":family,"gain":gain,"mappingHash":map_hash,"effectivePopulationPerDirection":effective_population,"graphHash":graph.manifest.graph_hash,"auditHash":hash(&audit_bytes),"probeSourceHash":hash(include_bytes!("neural_vision_probe.rs")),"sensorySourceHash":hash(include_bytes!("../src/sensory.rs")),"frozenPrimary":primary,"warmupTicks":WARMUP,"measuredTicks":TICKS,"lifParams":LifParams::default(),"fixedPose":{"position":{"x":0,"z":0},"heading":0},"inputs":inputs,"relays":relays,"sham":sham,"shamSelection":"Ascending graph indices, zero outgoing edges, matched input count, outside all mapped inputs, audited relay paths and motor readouts; this tests silencing machinery without a connected-neuron perturbation.","conditions":conditions,"comparisons":comparisons,"scope":"Paired seed means. Only frozenPrimary is the confirmatory motor endpoint; other readout and relay coordinate intervals are descriptive, not multiplicity-adjusted. Actual retained paths establish connectivity, not a unique causal route. Basis stimuli replace only recorded brightness at the sensory seam; lamps use production FieldSet. Neural hashes cover voltage, spikes and refractory state on all measured ticks."});
+            let frozen_neural = frozen.as_ref().filter(|_| neural);
+            let freeze_hash = if confirm {
+                Some(hash(&fs::read(output.join("freeze.json"))?))
+            } else {
+                None
+            };
+            let report = json!({"protocol":protocol,"mode":args[1],"family":family,"gain":gain,"mappingHash":map_hash,"effectivePopulationPerDirection":effective_population,"graphHash":graph.manifest.graph_hash,"annotationHash":mapping["annotationHash"],"manifestHash":hash(&serde_json::to_vec(&manifest)?),"auditHash":hash(&audit_bytes),"probeSourceHash":hash(include_bytes!("neural_vision_probe.rs")),"sensorySourceHash":hash(include_bytes!("../src/sensory.rs")),"lifSourceHash":hash(include_bytes!("../src/lif.rs")),"graphSourceHash":hash(include_bytes!("../src/graph.rs")),
+                "fieldsSourceHash":hash(include_bytes!("../src/environment/fields.rs")),
+                "geometrySourceHash":hash(include_bytes!("../src/environment/mod.rs")),"frozenPrimary":primary,"frozenNeural":frozen_neural,"freezeHash":freeze_hash,"warmupTicks":WARMUP,"measuredTicks":TICKS,"lifParams":LifParams::default(),"fixedPose":{"position":{"x":0,"z":0},"heading":0},"inputs":inputs,"relays":relays,"sham":sham,"shamSelection":"Ascending graph indices, zero outgoing edges, matched input count, outside all mapped inputs, audited relay paths and motor readouts; this tests silencing machinery without a connected-neuron perturbation.","conditions":conditions,"comparisons":comparisons,"scope":"Paired seed means. Neural protocol acceptance belongs to the independent Bonferroni analysis of frozenNeural endpoints; all intervals computed here are descriptive for that protocol. In the separate motor protocol only frozenPrimary is confirmatory. Actual retained paths establish connectivity, not a unique causal route. Basis stimuli replace only recorded brightness at the sensory seam; lamps use production FieldSet. Neural hashes cover voltage, spikes and refractory state on all measured ticks."});
             let filename = format!("{}-{family}-{gain}.json", args[1]);
             write(&output.join(&filename), &report)?;
             let (axis, stats) = if flight.absolute_t.unwrap_or(0.) > turn.absolute_t.unwrap_or(0.) {
@@ -596,6 +700,33 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn neural_panel_matches_each_silenced_stimulus_to_its_unsilenced_sample() {
+        let panel = neural_stimuli().unwrap();
+        assert_eq!(panel.len(), 37);
+        assert_eq!(panel.iter().map(|c| &c.0).collect::<HashSet<_>>().len(), 37);
+        let mut pairs: Vec<_> = (0..8)
+            .map(|b| (format!("basis-{b}"), format!("basis-{b}-inputs")))
+            .collect();
+        for side in ["left", "right"] {
+            for rate in ["0.5", "1", "2"] {
+                let silenced = if rate == "1" {
+                    format!("lamp-{side}-inputs")
+                } else {
+                    format!("lamp-{side}-{rate}-inputs")
+                };
+                pairs.push((format!("lamp-{side}-{rate}"), silenced));
+            }
+        }
+        pairs.push(("dark".into(), "dark-inputs".into()));
+        for (plain, silenced) in pairs {
+            let a = panel.iter().find(|c| c.0 == plain).unwrap();
+            let b = panel.iter().find(|c| c.0 == silenced).unwrap();
+            assert_eq!(a.1, b.1);
+            assert_eq!(a.2, "none");
+            assert_eq!(b.2, "inputs");
+        }
+    }
     #[test]
     fn optical_controls_isolate_visibility_at_the_same_pose() {
         let dark = sample(None, 0., "").unwrap();
