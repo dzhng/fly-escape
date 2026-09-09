@@ -67,7 +67,7 @@ try {
                 rootSeed: seed,
                 flyCount: 20,
                 level: fixture.level,
-                tuning: fixture.tuning,
+                tuning: { ...fixture.tuning, cues: fixture.tuning.cues.filter(cue => cue.pathway !== "vision") },
                 placements: [],
               });
             });

@@ -90,7 +90,7 @@ export async function proportionsWorkbench() {
   if (!alive) return;
   const level = structuredClone(fixture.level);
   Object.assign(level, { id: "neutral-proportions-diagnostic", geometry: spec.geometry, spawn: { kind: "fixed", states: initial.map(pose => ({ pose, mode: "walking" })) }, durationTicks: 40, sources: [], food: [], zappers: [], exitCue: null, exit: { a: spec.geometry.walls[3].b, b: spec.geometry.walls[4].a, outward: { x: 1, z: 0 } } });
-  client.start({ attemptId: "proportions-19", rootSeed: "1901", flyCount: 20, level, tuning: fixture.tuning, placements: [] });
+  client.start({ attemptId: "proportions-19", rootSeed: "1901", flyCount: 20, level, tuning: { ...fixture.tuning, cues: fixture.tuning.cues.filter(cue => cue.pathway !== "vision") }, placements: [] });
   app.querySelector("#scale-sheet")!.textContent = `Native authored body ${(nativeBodyLength * 1000).toFixed(1)} mm. Full fly bounds ${(modelSize.x * 1000).toFixed(2)} × ${(modelSize.y * 1000).toFixed(2)} × ${(modelSize.z * 1000).toFixed(2)} mm. Apple/body diameter ratio ${(0.08 / spec.flyBodyLength).toFixed(1)}:1.`;
   function draw() {
     if (!alive) return;

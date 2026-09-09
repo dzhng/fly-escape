@@ -152,3 +152,24 @@ fn rgb_is_transformed_before_spatial_pooling_and_never_accepted_incomplete() {
         vec![(2, 0.), (3, 0.), (4, 0.), (5, 0.)]
     );
 }
+
+#[test]
+fn trusted_source_budget_cannot_be_relabelled_or_expanded() {
+    let faults: [fn(&mut sim::RetinalBudget); 5] = [
+        |budget| budget.source_graph_hash = "a".repeat(64),
+        |budget| budget.annotation_hash = "a".repeat(64),
+        |budget| budget.source_map_hash = "a".repeat(64),
+        |budget| budget.weight_sum *= 2.,
+        |budget| budget.weight_sum = f64::NAN,
+    ];
+    for fault in faults {
+        let (mut graph, config, map) = retinal_fixture::fixture();
+        let graph = std::sync::Arc::get_mut(&mut graph).unwrap();
+        fault(graph.manifest.retinal_budget.as_mut().unwrap());
+        assert!(RetinalMap::from_json(graph, &config.profile, &map.to_string()).is_err());
+    }
+    let (mut graph, config, map) = retinal_fixture::fixture();
+    let graph = std::sync::Arc::get_mut(&mut graph).unwrap();
+    graph.manifest.retinal_budget = None;
+    assert!(RetinalMap::from_json(graph, &config.profile, &map.to_string()).is_err());
+}

@@ -1,6 +1,6 @@
 """Provisional, source-bound two-dimensional retinal registration and dose audit.
 
-The existing vision_map CLI selects this exporter only with an explicit profile.
+The retinal exporter requires an explicit profile and frozen color model.
 It never publishes graph metadata or changes the frozen color coefficients.
 """
 import hashlib
@@ -10,13 +10,26 @@ from pathlib import Path
 
 import numpy as np
 from connectome.color_audit import inventory
-from connectome.vision_map import canonical_bytes, motor_indices
+from connectome.graph_audit import canonical_bytes, motor_indices
 
 FAMILIES = ('Tm2', 'Tm20')
 EYES = ('L', 'R')
 # These shares divide one inherited budget; they are not spectral sensitivity estimates.
 FAMILY_SHARES = (.5, .5)
 TAP_EPSILON = 1e-12
+
+
+def trusted_budget(manifest, annotation_hash):
+    budget = manifest['retinalBudget']
+    identity = budget['sourceMapHash']
+    if (budget['sourceGraphHash'] != manifest['graphHash']
+        or budget['annotationHash'] != annotation_hash
+        or not isinstance(identity,str) or len(identity)!=64
+        or any(c not in '0123456789abcdef' for c in identity)
+        or not isinstance(budget['weightSum'],(int,float))
+        or not math.isfinite(budget['weightSum']) or budget['weightSum']<=0):
+        raise ValueError('Retinal budget must match the source graph, annotations and archived map identity')
+    return budget
 
 
 def digest(value):
@@ -163,19 +176,8 @@ def build_retinal_map(annotations, manifest, matrix, annotation_hash, bundle, mo
     support = (column_sums > 0).reshape(2,2,samples)
     if not np.all(support.any(axis=2)):
         raise ValueError('Both frozen channels require eligible support in both eyes')
-    baseline = manifest['visionInput']
-    old_entries = baseline['entries']
-    old_weights = np.asarray([e['weights'] for e in old_entries],dtype=float)
-    old_indices = [e['index'] for e in old_entries]
-    eligible_tm2 = {cell['index'] for cell in audited if cell['family']=='Tm2' and not cell['rejected']}
-    if (baseline['family'] != 'Tm2' or baseline['graphHash'] != manifest['graphHash']
-        or baseline['annotationHash'] != annotation_hash or len(old_indices) != len(set(old_indices))
-        or set(old_indices) != eligible_tm2 or old_weights.shape != (len(old_indices),8)
-        or not np.isfinite(old_weights).all() or np.any(old_weights<0) or np.max(old_weights.sum(axis=1))>1+1e-12):
-        raise ValueError('Baseline visual budget must be the source-matched bounded Tm2 map')
-    baseline_budget = float(old_weights.sum())
-    if baseline_budget <= 0:
-        raise ValueError('Baseline visual budget is empty')
+    baseline = trusted_budget(manifest, annotation_hash)
+    baseline_budget = baseline['weightSum']
     column_scales = np.zeros(4*samples)
     for channel,share in enumerate(FAMILY_SHARES):
         start,end = channel*2*samples,(channel+1)*2*samples
@@ -196,7 +198,7 @@ def build_retinal_map(annotations, manifest, matrix, annotation_hash, bundle, mo
         baselineMaximumCurrentAtGain3=2*baseline_budget,maximumCurrentAtGain3=2*float(weights.sum()))
     mapping = dict(version=1,status='provisional: final profile and neural proof pending',
         identities=dict(graphHash=manifest['graphHash'],annotationHash=annotation_hash,profileHash=digest(profile),
-                        layoutHash=digest(profile['layout']),rigHash=profile['rigSha256'],colorModelHash=digest(model),baselineMapHash=digest(baseline)),
+                        layoutHash=digest(profile['layout']),rigHash=profile['rigSha256'],colorModelHash=digest(model),baselineMapHash=baseline['sourceMapHash']),
         profile=profile,colorModel=model,registration=dict(eyes=transforms,
             scope='MODELED: shared full-source Tm2/Tm20 Cartesian bounds per eye; isotropic fit to the sample hexagon. Left horizontal mirroring and source embedded +Y to image-up are conventions, not anatomical calibration.'),
         budget=budget,support={family:{side:support[channel,eye].tolist() for eye,side in enumerate(EYES)} for channel,family in enumerate(FAMILIES)},entries=entries)
@@ -237,7 +239,7 @@ def validate_retinal_map(mapping, manifest, bundle, model):
     annotation_hash = next(s['sha256'] for s in manifest['sources'] if s['file']=='body-annotations.feather')
     validate_color_model(model,manifest['graphHash'],annotation_hash)
     expected = dict(graphHash=manifest['graphHash'],annotationHash=annotation_hash,profileHash=digest(profile),
-                    layoutHash=digest(profile['layout']),rigHash=profile['rigSha256'],colorModelHash=digest(model),baselineMapHash=digest(manifest['visionInput']))
+                    layoutHash=digest(profile['layout']),rigHash=profile['rigSha256'],colorModelHash=digest(model),baselineMapHash=trusted_budget(manifest,annotation_hash)['sourceMapHash'])
     if mapping['identities'] != expected or mapping['profile'] != profile or mapping['colorModel'] != model:
         raise ValueError('Retinal map identity differs from graph/profile/layout/rig/color model')
     samples = len(profile['layout']['cells'])
@@ -264,8 +266,10 @@ def validate_retinal_map(mapping, manifest, bundle, model):
     expected_support = {family:{side:support[channel,eye].tolist() for eye,side in enumerate(EYES)} for channel,family in enumerate(FAMILIES)}
     if mapping['support'] != expected_support or not np.all(support.any(axis=2)):
         raise ValueError('Retinal map support masks differ from actual taps')
-    baseline_budget = sum(sum(e['weights']) for e in manifest['visionInput']['entries'])
-    if sum(row_sums) > baseline_budget+1e-9 or not math.isclose(sum(row_sums),mapping['budget']['totalWeight'],abs_tol=1e-9):
+    baseline_budget = trusted_budget(manifest,annotation_hash)['weightSum']
+    if (not math.isclose(mapping['budget']['baselineWeightSum'],baseline_budget,rel_tol=1e-10)
+        or sum(row_sums) > baseline_budget+1e-9
+        or not math.isclose(sum(row_sums),mapping['budget']['totalWeight'],abs_tol=1e-9)):
         raise ValueError('Retinal map exceeds or misreports its one combined visual budget')
 
 
@@ -376,8 +380,31 @@ def export_retinal(annotations, manifest, matrix, annotation_hash, bundle, model
     output.mkdir(parents=True,exist_ok=True)
     for filename,value in [('retinal-map.json',mapping),('audit.json',report),('current-fixtures.json',fixtures),
                            ('profile-canonical.json',bundle['semantic']),('layout-canonical.json',bundle['semantic']['layout']),
-                           ('color-model-canonical.json',model),('baseline-map-canonical.json',manifest['visionInput'])]:
+                           ('color-model-canonical.json',model),('source-budget.json',manifest['retinalBudget'])]:
         (output/filename).write_bytes(canonical_bytes(value))
     (output/'registration-atlas.svg').write_text(registration_atlas(mapping,report))
     print(json.dumps(dict(entries=len(mapping['entries']),budget=mapping['budget'],
                          support={f:{s:sum(v) for s,v in eyes.items()} for f,eyes in mapping['support'].items()}),sort_keys=True))
+
+
+def main():
+    import argparse
+    import pandas as pd
+    from connectome.artifact import read_binary
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--annotations',type=Path,required=True)
+    parser.add_argument('--graph',type=Path,default=Path('data/processed/brain'))
+    parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--profile',type=Path,required=True)
+    parser.add_argument('--color-model',type=Path,required=True)
+    args=parser.parse_args()
+    manifest=json.loads((args.graph/'manifest.json').read_text())
+    if hashlib.sha256((args.graph/'graph.bin').read_bytes()).hexdigest()!=manifest['graphHash']:
+        raise ValueError('Graph binary identity differs from manifest')
+    export_retinal(pd.read_feather(args.annotations),manifest,read_binary(args.graph/'graph.bin'),
+                   hashlib.sha256(args.annotations.read_bytes()).hexdigest(),
+                   json.loads(args.profile.read_text()),json.loads(args.color_model.read_text()),args.output)
+
+
+if __name__ == '__main__':
+    main()

@@ -76,7 +76,6 @@ try {
       cues: [
         { pathway: "inhibitoryOdor", gain: 1 },
         { pathway: "excitatoryOdor", gain: 1 },
-        { pathway: "vision", gain: 1 },
       ],
       tasteGain: 1,
       silencedNeurons: [],

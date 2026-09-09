@@ -162,22 +162,23 @@ impl RetinalMap {
         }
         let baseline = graph
             .manifest
-            .vision_input
+            .retinal_budget
             .as_ref()
-            .ok_or("retinal map requires the declared baseline visual budget")?;
-        // The existing baseline weights have no exponent-form numbers; sorted JSON
-        // with a trailing newline is the exporter's published identity encoding.
-        let baseline_json =
-            serde_json::to_string(&serde_json::to_value(baseline).map_err(|e| e.to_string())?)
-                .map_err(|e| e.to_string())?;
-        if hash_bytes(&baseline_json) != ids.baseline_map_hash {
-            return Err("retinal baseline map identity mismatch".into());
+            .ok_or("retinal map requires a trusted aggregate visual budget")?;
+        if baseline.source_graph_hash != ids.graph_hash
+            || baseline.annotation_hash != ids.annotation_hash
+            || baseline.source_map_hash != ids.baseline_map_hash
+            || baseline.source_map_hash.len() != 64
+            || !baseline
+                .source_map_hash
+                .bytes()
+                .all(|b| b.is_ascii_hexdigit())
+            || !baseline.weight_sum.is_finite()
+            || baseline.weight_sum <= 0.
+        {
+            return Err("retinal source budget identity mismatch".into());
         }
-        let baseline_total: f64 = baseline
-            .entries
-            .iter()
-            .flat_map(|entry| entry.weights)
-            .sum();
+        let baseline_total = baseline.weight_sum;
         let budget = &file.budget;
         if !near(budget.baseline_weight_sum, baseline_total)
             || !budget.global_scale.is_finite()

@@ -60,7 +60,7 @@ def check_olfactory_readouts(candidates, annotations):
                          f'each must be descending_neuron on its named side: {"; ".join(contradicted)}')
 
 
-def metadata(graph, annotations, source=None, vision_input=None):
+def metadata(graph, annotations, source=None, retinal_map=None):
     lookup = {body: i for i, body in enumerate(graph['bodies'])}
     source = source or json.loads(Path(__file__).with_name('pathways.json').read_text())
     check_olfactory_readouts(source['bodies'], annotations)
@@ -88,12 +88,10 @@ def metadata(graph, annotations, source=None, vision_input=None):
         ('proboscis', 'Proboscis motor neurons', pathways['PROBOSCIS_MN_IDS']),
         ('loom', 'Approaching objects', [lookup[int(b)] for b in annotations.loc[annotations.type == 'LC4', 'bodyId'] if int(b) in lookup]),
     ]
-    if vision_input is not None:
-        mapped = {entry['index'] for entry in vision_input['entries']}
-        family = vision_input['family']
-        visual = [(f'vision{side}', f'Modeled vision · {family} · {label}',
-                   [index for index in sorted(mapped) if sides.iloc[index] == side])
-                  for side, label in [('L', 'left'), ('R', 'right')]]
+    if retinal_map is not None:
+        visual = [(f'vision{side}', f'Modeled retina · Tm2 + Tm20 · {label}',
+                   [entry['index'] for entry in retinal_map['entries'] if entry['eye']==side])
+                  for side,label in [('L','left'),('R','right')]]
         definitions[4:4] = visual
     groups = [dict(id=id, label=label, indices=sorted(set(indices))) for id, label, indices in definitions]
     missing = [g['id'] for g in groups if not g['indices']]
@@ -101,6 +99,6 @@ def metadata(graph, annotations, source=None, vision_input=None):
         raise ValueError(f'Required pathway groups are empty: {missing}')
     result = dict(bodyIds=list(map(str, graph['bodies'])), motor=motor, pathways=pathways, groups=groups,
                   groupLinks=group_links(graph['matrix'], groups), pathwayProvenance=source['provenance'])
-    if vision_input is not None:
-        result['visionInput'] = vision_input
+    if retinal_map is not None:
+        result['retinalBudget'] = source['retinalBudget']
     return result

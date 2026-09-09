@@ -53,6 +53,15 @@ pub struct VisionInput {
     pub registration: String,
     pub entries: Vec<VisionNeuron>,
 }
+/// Frozen aggregate dose, bound to the graph and archived source-map identity.
+#[derive(Clone, Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RetinalBudget {
+    pub source_graph_hash: String,
+    pub annotation_hash: String,
+    pub source_map_hash: String,
+    pub weight_sum: f64,
+}
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Manifest {
@@ -68,6 +77,8 @@ pub struct Manifest {
     pub pathway_provenance: String,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub vision_input: Option<VisionInput>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub retinal_budget: Option<RetinalBudget>,
     #[serde(flatten)]
     pub provenance: HashMap<String, serde_json::Value>,
 }

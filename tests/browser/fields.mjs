@@ -59,7 +59,7 @@ try {
   await tick();
   assert.deepEqual((await sample()).frame, odor.frame);
   const values = { odor };
-  for (const cue of ["excitatoryOdor", "lamp", "shade", "wind", "exit"]) {
+  for (const cue of ["excitatoryOdor", "wind", "exit"]) {
     await page.getByLabel("Cue", { exact: true }).selectOption(cue);
     await waitReady();
     await tick();
@@ -73,14 +73,6 @@ try {
     }
     await page.screenshot({ path: new URL(`fields-${cue}.png`, output).pathname });
   }
-  assert.ok(
-    values.lamp.frame.flies[0].sensory.left.brightness >
-      values.lamp.frame.flies[0].sensory.right.brightness,
-  );
-  assert.ok(
-    values.shade.frame.flies[0].sensory.left.brightness <
-      values.shade.frame.flies[0].sensory.right.brightness,
-  );
   for (const fly of values.exit.frame.flies) {
     assert.equal(fly.sensory.left.exitCue, 0);
     assert.equal(fly.sensory.right.exitCue, 0);

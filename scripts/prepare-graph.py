@@ -7,11 +7,13 @@ import json
 from pathlib import Path
 import subprocess
 import time
+import tempfile
 import pyarrow.feather as feather
 from connectome.download import FILES, download, hashes
 from connectome.extract import extract
 from connectome.artifact import metadata, read_binary, write_binary
-from connectome.vision_map import audit
+from connectome.retinal_map import trusted_budget, validate_retinal_map
+from connectome.graph_audit import canonical_bytes
 
 
 def main():
@@ -21,16 +23,12 @@ def main():
     parser.add_argument('--download', action='store_true')
     parser.add_argument('--verify-reference', action='store_true')
     parser.add_argument('--metadata-only', action='store_true', help='Read the existing output graph and update only its manifest and reports')
-    parser.add_argument('--vision-family', choices=['Tm2', 'Tm20'], help='Override the frozen visionFamily in connectome/pathways.json')
+    parser.add_argument('--retinal-profile', type=Path, default=Path('specs/retinal-vision/assets/05/provisional-profile.json'))
+    parser.add_argument('--retinal-map', type=Path, help='Validated retinal artifact to publish; full exports default to the committed map')
     args = parser.parse_args()
     registry = json.loads(Path(__file__).with_name('connectome').joinpath('pathways.json').read_text())
-    family = args.vision_family or registry.get('visionFamily')
     if args.metadata_only and (args.download or args.verify_reference):
         parser.error('--metadata-only cannot download or re-extract reference data')
-    if family is None:
-        parser.error('Choose --vision-family until a pilot winner is frozen in pathways.json')
-    if family not in ['Tm2', 'Tm20']:
-        parser.error('visionFamily must be Tm2 or Tm20')
     start = time.perf_counter()
     if args.metadata_only:
         manifest = json.loads((args.output / 'manifest.json').read_text())
@@ -56,9 +54,11 @@ def main():
         transmitters = feather.read_feather(args.source / 'body-neurotransmitters.feather')
         weights = feather.read_feather(args.source / 'connectome-weights.feather')
         graph = extract(annotations, transmitters, weights)
-        args.output.mkdir(parents=True, exist_ok=True)
-        graph_hash = write_binary(args.output / 'graph.bin', graph['matrix'])
-        loaded = read_binary(args.output / 'graph.bin')
+        with tempfile.TemporaryDirectory() as scratch:
+            staged_graph = Path(scratch) / 'graph.bin'
+            graph_hash = write_binary(staged_graph, graph['matrix'])
+            loaded = read_binary(staged_graph)
+            graph_bytes = staged_graph.read_bytes()
         if (loaded != graph['matrix']).nnz:
             raise AssertionError('Graph binary round-trip changed incoming currents')
         previous_mbons = set(list(set(map(int, annotations.loc[annotations['type'].fillna('').str.startswith('MBON'), 'bodyId'])))[:200])
@@ -75,17 +75,28 @@ def main():
                         header='8-byte magic, u32 version, u32 neurons, u32 edges',
                         arrays='u32 rowOffsets[neurons+1], u32 presynapticIndices[edges], f64 weights[edges]'))
     manifest.update(metadata(graph, annotations, source=registry))
-    maps, evidence = audit(annotations, manifest, graph['matrix'], annotation_source['sha256'])
-    if family not in maps:
-        raise ValueError(f"Rejected visual candidate {family}: {evidence['candidates'][family]['rejectionReasons']}")
-    manifest.update(metadata(graph, annotations, source=registry, vision_input=maps[family]))
+    manifest.pop('visionInput', None)
+    manifest['retinalBudget'] = registry['retinalBudget']
+    trusted_budget(manifest, annotation_source['sha256'])
+    retinal_path = args.retinal_map or (args.output / 'retinal-map.json' if args.metadata_only else Path('data/processed/brain/retinal-map.json'))
+    retinal_bytes = retinal_path.read_bytes()
+    retinal = json.loads(retinal_bytes)
+    if retinal_bytes != canonical_bytes(retinal):
+        raise ValueError("Retinal artifact must use canonical JSON bytes for native identity validation")
+    validate_retinal_map(retinal, manifest, json.loads(args.retinal_profile.read_text()), retinal['colorModel'])
+    manifest.update(metadata(graph, annotations, source=registry, retinal_map=retinal))
     exporter_files = [Path(__file__)] + sorted(Path(__file__).with_name('connectome').glob('*.py')) + [Path(__file__).with_name('connectome') / 'pathways.json']
     manifest['exporterHash'] = hashlib.sha256(b''.join(f.read_bytes() for f in exporter_files)).hexdigest()
     manifest['exporterRevision'] = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+    args.output.mkdir(parents=True, exist_ok=True)
+    if not args.metadata_only:
+        (args.output / 'graph.bin').write_bytes(graph_bytes)
+    if retinal_path.resolve() != (args.output / 'retinal-map.json').resolve():
+        (args.output / 'retinal-map.json').write_bytes(retinal_bytes)
     (args.output / 'manifest.json').write_text(json.dumps(manifest, separators=(',', ':'), sort_keys=True) + '\n')
     summary = {key: manifest[key] for key in ['graphHash', 'exporterHash', 'neuronCount', 'edgeCount', 'fallbackCount', 'missingAnnotations']}
     summary['metadataOnly'] = args.metadata_only
-    summary['visionFamily'] = family
+    summary['retinalFamilies'] = ['Tm2', 'Tm20']
     summary['groups'] = {g['id']: len(g['indices']) for g in manifest['groups']}
     summary['seconds'] = round(time.perf_counter() - start, 3)
     if args.verify_reference:

@@ -73,14 +73,15 @@ class VisualMetadataTests(unittest.TestCase):
         ]
         matrix = sparse.csr_matrix(([7., -4.], ([3, 3], [4, 5])), shape=(12, 12))
         graph = dict(bodies=list(range(1, 13)), matrix=matrix)
-        vision_input = dict(family='Tm2', entries=[dict(index=4 + i, weights=[1. if b == i else 0. for b in range(8)]) for i in range(8)])
-        result = metadata(graph, pd.DataFrame(annotations), source=SYNTHETIC_REGISTRY, vision_input=vision_input)
+        retinal_map = dict(entries=[dict(index=4+i,eye='L' if i%2==0 else 'R',channel=i%2) for i in range(8)])
+        result = metadata(graph, pd.DataFrame(annotations), source={**SYNTHETIC_REGISTRY,'retinalBudget': {'weightSum':8}}, retinal_map=retinal_map)
         groups = {group['id']: group for group in result['groups']}
         self.assertEqual(groups['visionL']['indices'], [4, 6, 8, 10])
         self.assertEqual(groups['visionR']['indices'], [5, 7, 9, 11])
-        self.assertEqual(groups['visionL']['label'], 'Modeled vision · Tm2 · left')
+        self.assertEqual(groups['visionL']['label'], 'Modeled retina · Tm2 + Tm20 · left')
         self.assertIn(dict(source='visionL', target='loom', edgeCount=1, positiveWeight=7., negativeWeight=0.), result['groupLinks'])
-        self.assertEqual(result['visionInput'], vision_input)
+        self.assertEqual(result['retinalBudget'], {'weightSum':8})
+        self.assertNotIn('visionInput', result)
 
 
 if __name__ == '__main__':

@@ -14,8 +14,6 @@ use ts_rs::TS;
 pub enum FieldScenario {
     ExcitatoryOdor,
     InhibitoryOdor,
-    Lamp,
-    Shade,
     Wind,
     Exit,
 }
@@ -132,17 +130,6 @@ pub fn fixture(scenario: FieldScenario, mirror: f64) -> Result<(FieldSet, CuePat
         FieldScenario::InhibitoryOdor => {
             source.kind = SourceKind::RepellentOdor;
             CuePathway::InhibitoryOdor
-        }
-        FieldScenario::Lamp => {
-            source.kind = SourceKind::Lamp;
-            source.radius = 1.5;
-            CuePathway::Vision
-        }
-        FieldScenario::Shade => {
-            source.kind = SourceKind::Shade;
-            source.radius = 1.5;
-            source.rate = 0.2;
-            CuePathway::Vision
         }
         FieldScenario::Wind => {
             config.wind = p(0., mirror * 0.5);

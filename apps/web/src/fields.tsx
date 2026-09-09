@@ -11,19 +11,15 @@ import {
 const scenarios: [FieldScenario, string][] = [
   ["inhibitoryOdor", "Inhibitory smell pathway"],
   ["excitatoryOdor", "Excitatory smell pathway"],
-  ["lamp", "Light"],
-  ["shade", "Shade"],
   ["wind", "Wind and odor"],
   ["exit", "Local exit cue"],
 ];
 const channelFor = (scenario: FieldScenario) =>
-  scenario === "lamp" || scenario === "shade"
-    ? "brightness"
-    : scenario === "exit"
-      ? "exitCue"
-      : scenario === "inhibitoryOdor"
-        ? "repellentOdor"
-        : "attractiveOdor";
+  scenario === "exit"
+    ? "exitCue"
+    : scenario === "inhibitoryOdor"
+      ? "repellentOdor"
+      : "attractiveOdor";
 
 export function FieldsLab() {
   const containers = [useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null)];
@@ -168,7 +164,7 @@ export function FieldsLab() {
           )}
           <p className="field-legend">
             Overlay:{" "}
-            <b>{channelFor(scenario) === "exitCue" ? "local exit signal" : channelFor(scenario) === "brightness" ? "brightness" : "odor"}</b>
+            <b>{channelFor(scenario) === "exitCue" ? "local exit signal" : "odor"}</b>
             <span
               className="legend-ramp"
               style={{
@@ -208,11 +204,7 @@ export function FieldsLab() {
               ))}
               {(() => {
                 const prefix =
-                  scenario === "lamp" || scenario === "shade"
-                    ? "vision"
-                    : scenario === "inhibitoryOdor"
-                      ? "odorInh"
-                      : "odorExc";
+                  scenario === "inhibitoryOdor" ? "odorInh" : "odorExc";
                 const activity = ["L", "R"].map((side) =>
                   fly.neural.groups.find((g) => g.id === prefix + side),
                 );

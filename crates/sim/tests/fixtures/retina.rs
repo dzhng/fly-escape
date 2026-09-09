@@ -17,11 +17,7 @@ pub fn fixture() -> (Arc<Graph>, RetinalConfig, Value) {
     }
     let graph_hash = format!("{:x}", Sha256::digest(&bytes));
     let annotation = "1".repeat(64);
-    let baseline = json!({
-        "graphHash": graph_hash, "annotationHash": annotation,
-        "family": "synthetic", "registration": "synthetic nonmotor budget",
-        "entries": (2..6).map(|index| json!({"index": index, "weights": vec![0.125; 8]})).collect::<Vec<_>>()
-    });
+    let source_map_hash = "3".repeat(64);
     let manifest = json!({
         "schemaVersion":1,"neuronCount":6,"edgeCount":0,"graphHash":graph_hash,
         "bodyIds":["1","2","3","4","5","6"],
@@ -29,7 +25,8 @@ pub fn fixture() -> (Arc<Graph>, RetinalConfig, Value) {
         "pathways":{},"groups":(2..6).map(|index| json!({"id":format!("input-{index}"),"label":format!("Input {index}"),"indices":[index]})).collect::<Vec<_>>(),
         "groupLinks":[],"pathwayProvenance":"synthetic retinal transaction",
         "sources":[{"file":"body-annotations.feather","sha256":annotation}],
-        "visionInput":baseline,
+        "retinalBudget":{"sourceGraphHash":graph_hash,"annotationHash":annotation,
+            "sourceMapHash":source_map_hash,"weightSum":4.0},
     });
     let graph = Arc::new(Graph::from_bytes(&bytes, &manifest.to_string()).unwrap());
     let layout = json!({"cells":[{"q":0,"r":0,"x":0,"y":0},{"q":1,"r":0,"x":1,"y":0}],"radius":1});
@@ -50,7 +47,7 @@ pub fn fixture() -> (Arc<Graph>, RetinalConfig, Value) {
     let map = json!({
         "version":1,"identities":{"graphHash":graph_hash,"annotationHash":annotation,
             "profileHash":profile.profile_hash,"layoutHash":profile.layout_hash,
-            "rigHash":profile.rig_hash,"colorModelHash":profile.color_model_hash,"baselineMapHash":hash(&baseline)},
+            "rigHash":profile.rig_hash,"colorModelHash":profile.color_model_hash,"baselineMapHash":source_map_hash},
         "profile":optical,"colorModel":color,
         "entries":[
             {"index":2,"bodyId":"3","eye":"L","channel":0,"taps":[[0,1.0]]},

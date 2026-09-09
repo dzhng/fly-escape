@@ -88,7 +88,7 @@ fn run(
     Ok(out)
 }
 fn uniform_fields() -> Result<FieldSet, String> {
-    let (fields, _) = fixture(FieldScenario::Lamp, 1.0)?;
+    let (fields, _) = fixture(FieldScenario::ExcitatoryOdor, 1.0)?;
     FieldSet::new(
         fields.geometry().clone(),
         FieldConfig {
@@ -133,15 +133,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let baseline = SEEDS
         .map(|seed| run(&graph, seed, uniform_fields()?, CuePathway::None, &[]))
         .collect::<Result<Vec<_>, String>>()?;
-    let uniform_vision = SEEDS
-        .map(|seed| run(&graph, seed, uniform_fields()?, CuePathway::Vision, &[]))
-        .collect::<Result<Vec<_>, String>>()?;
     let mut results = vec![];
     for (scenario, groups) in [
         (FieldScenario::ExcitatoryOdor, ["odorExcL", "odorExcR"]),
         (FieldScenario::InhibitoryOdor, ["odorInhL", "odorInhR"]),
-        (FieldScenario::Lamp, ["visionL", "visionR"]),
-        (FieldScenario::Shade, ["visionL", "visionR"]),
     ] {
         let silence: Vec<_> = groups
             .iter()
@@ -160,27 +155,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let ablated_baseline = SEEDS
             .map(|seed| run(&graph, seed, uniform_fields()?, CuePathway::None, &silence))
             .collect::<Result<Vec<_>, String>>()?;
-        let is_vision = matches!(scenario, FieldScenario::Lamp | FieldScenario::Shade);
-        let uniform_control = if is_vision {
-            &uniform_vision
-        } else {
-            &baseline
-        };
-        let ablated_uniform = if is_vision {
-            SEEDS
-                .map(|seed| {
-                    run(
-                        &graph,
-                        seed,
-                        uniform_fields()?,
-                        CuePathway::Vision,
-                        &silence,
-                    )
-                })
-                .collect::<Result<Vec<_>, String>>()?
-        } else {
-            ablated_baseline.clone()
-        };
+        let uniform_control = &baseline;
+        let ablated_uniform = &ablated_baseline;
         let mut sides = vec![];
         let mut side_samples = vec![];
         for mirror in [1.0, -1.0] {
@@ -196,7 +172,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     run(&graph, seed, f, c, &silence)
                 })
                 .collect::<Result<Vec<_>, String>>()?;
-            sides.push(json!({"sourceZ":-mirror,"stimulusMinusNoCurrent":contrast(&stimulus,&baseline,mirror),"stimulusMinusUniformControl":contrast(&stimulus,uniform_control,mirror),"ablatedStimulusMinusAblatedNoCurrent":contrast(&ablated,&ablated_baseline,mirror),"ablatedStimulusMinusAblatedUniformControl":contrast(&ablated,&ablated_uniform,mirror),"absoluteStimulus":stats(&stimulus.iter().map(|s|s.metrics(mirror)).collect::<Vec<_>>()),"seedObservations":{"stimulus":stimulus,"noCurrent":baseline,"uniformControl":uniform_control,"ablatedStimulus":ablated,"ablatedNoCurrent":ablated_baseline,"ablatedUniformControl":ablated_uniform}}));
+            sides.push(json!({"sourceZ":-mirror,"stimulusMinusNoCurrent":contrast(&stimulus,&baseline,mirror),"stimulusMinusUniformControl":contrast(&stimulus,uniform_control,mirror),"ablatedStimulusMinusAblatedNoCurrent":contrast(&ablated,&ablated_baseline,mirror),"ablatedStimulusMinusAblatedUniformControl":contrast(&ablated,ablated_uniform,mirror),"absoluteStimulus":stats(&stimulus.iter().map(|s|s.metrics(mirror)).collect::<Vec<_>>()),"seedObservations":{"stimulus":stimulus,"noCurrent":baseline,"uniformControl":uniform_control,"ablatedStimulus":ablated,"ablatedNoCurrent":ablated_baseline,"ablatedUniformControl":ablated_uniform}}));
             side_samples.push(stimulus);
         }
         // Mirrored motor contrast retains raw motor signs; spatial metrics use each source side.

@@ -12,7 +12,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from connectome.artifact import read_binary
-from connectome.vision_map import canonical_bytes, motor_indices, paths_to, witness
+from connectome.graph_audit import canonical_bytes, motor_indices, paths_to, witness
 
 FAMILIES = ('Tm2', 'Tm20', 'Tm5a', 'Tm5b', 'Tm5c')
 COEFFICIENTS = [[0.2126, 0.7152, 0.0722], [0, 0, 1]]

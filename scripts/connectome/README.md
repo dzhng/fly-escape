@@ -12,7 +12,7 @@ uv pip install --python .venv/bin/python -r scripts/requirements.txt
 .venv/bin/python scripts/prepare-graph.py --download --verify-reference
 ```
 
-Regeneration downloads roughly 1.1 GB of source data into ignored `data/raw`. The graph and manifest are tracked; inspection reports beside them remain ignored. A second run without `--download` verifies local source hashes before extracting. `--output` supports independent reproducibility comparisons.
+Regeneration downloads roughly 1.1 GB of source data into ignored `data/raw`. The graph and manifest are tracked; inspection reports beside them remain ignored. A second run without `--download` verifies local source hashes before extracting. `--output` supports independent reproducibility comparisons. Full preparation validates the committed retinal artifact by default; an explicit `--retinal-map` supplies another audited artifact. It publishes that artifact unchanged alongside the extracted graph only after the source budget and profile agree. A new graph therefore requires an explicitly audited budget and retinal map before publication.
 
 The manifest identifies the dataset, actual source hashes/generations, exporter content hash, stable-selection correction, byte format and pathway memberships. Olfactory turning readout candidates are verified against the source annotations first: a candidate that is not a descending neuron on its named soma side fails the export by body ID instead of being dropped or relabelled. Brain group links summarize real selected edges, including overlapping groups; they are not a substitute for behavior probes. Unknown transmitter signs preserve the spike's positive fallback and are reported explicitly.
 
@@ -20,13 +20,15 @@ The manifest identifies the dataset, actual source hashes/generations, exporter 
 
 Run `.venv/bin/python -m unittest discover -s tests/connectome -v` for small synthetic extraction/format contracts. Their graphs are test inputs, never evidence of successful real-fly behavior.
 
-## Visual inputs are metadata
+## Source-bound retinal inputs
 
-The annotation-derived visual map lives inside the graph manifest. Its two display groups follow the mapped cells' source soma sides. Column registration and overlapping directional weights are model assumptions, not retinal reconstruction. The [map exporter](vision_map.py) owns the modeled column registration and connectivity audit. Candidate JSON files are experiment evidence, never a second runtime data channel.
+The [retinal exporter](retinal_map.py) maps both source-annotated Tm2 and Tm20 cells into the paired eye lattice. Its separate retinal artifact owns the spatial taps, color model and support masks. The manifest's two visual activity groups contain exactly those mapped cells, grouped by eye; no additional activity groups are introduced. Registration and visible-RGB responses are modeling assumptions, not retinal reconstruction.
 
-A metadata-only preparation reads the existing graph and verifies its hash plus the annotation source before updating the manifest and group connectivity. It does not read the full source weights, run extraction or rewrite graph bytes. Original extraction provenance is retained separately from the current metadata exporter identity.
+The pathway registry owns a compact `retinalBudget`: the archived source-map hash, the graph and annotation identities that source belongs to, and its aggregate weight sum. Runtime retinal loading checks that identity and dose against the retinal artifact. A different graph requires a newly audited source budget; preparation cannot silently rename an old dose as belonging to new data. The full historical directional map remains archived evidence, outside the production manifest.
 
-Use `--vision-family` for a controlled candidate export. The existing pathway registry's `visionFamily` owns the production choice after its validation gates pass; both export modes require an explicit choice until then. Use `--metadata-only` against an existing graph directory to publish it. Every direction must have equal total input weight, and each cell's combined directional weight is bounded. These dose constraints control modeled input; they do not guarantee turning or attraction.
+A metadata-only preparation reads the existing graph, retinal artifact and declared optical profile. It verifies the graph and annotation source before updating the manifest and group connectivity. It does not read full source weights, run extraction or rewrite graph or retinal bytes. Original extraction provenance stays separate from the metadata export identity. The retinal CLI requires explicit profile and color-model files; neither ordinary preparation nor retinal export selects a directional candidate.
+
+Both color families share one aggregate dose. Each cell's spatial weights remain bounded, and unsupported retinal locations remain unsupported. These constraints limit modeled current; they do not establish turning or attraction.
 
 ## Data attribution
 

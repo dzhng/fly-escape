@@ -129,18 +129,14 @@ fn run(
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<_> = std::env::args().collect();
     if !(3..=5).contains(&args.len()) {
-        return Err("physical_sampling GRAPH_DIR OUTPUT_JSON [odor|vision] [SEEDS:1..30]".into());
+        return Err("physical_sampling GRAPH_DIR OUTPUT_JSON [odor] [SEEDS:1..30]".into());
     }
     let scenarios = match args.get(3).map(String::as_str).unwrap_or("odor") {
         "odor" => [
             (FieldScenario::ExcitatoryOdor, ["odorExcL", "odorExcR"]),
             (FieldScenario::InhibitoryOdor, ["odorInhL", "odorInhR"]),
         ],
-        "vision" => [
-            (FieldScenario::Lamp, ["visionL", "visionR"]),
-            (FieldScenario::Shade, ["visionL", "visionR"]),
-        ],
-        _ => return Err("scenario group must be odor or vision".into()),
+        _ => return Err("scenario group must be odor".into()),
     };
     let seeds = args
         .get(4)

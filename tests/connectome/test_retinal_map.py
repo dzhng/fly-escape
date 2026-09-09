@@ -69,7 +69,7 @@ def fixture(tm20_points=4):
     matrix[-1,-2]=-1
     manifest=dict(bodyIds=list(map(str,bodies)),graphHash='g',sources=[dict(file='body-annotations.feather',sha256='a')],
                   motor=dict(dnR=[len(bodies)-1]),pathways={},groups=[],
-                  visionInput=dict(family='Tm2',graphHash='g',annotationHash='a',entries=[dict(index=i,weights=[.125]*8) for i,b in enumerate(bodies) if b<108]))
+                  retinalBudget=dict(sourceGraphHash='g',annotationHash='a',sourceMapHash='b'*64,weightSum=8.))
     profile=dict(status='provisional',semantic=dict(opticalModelVersion='test-optics',
         capture=dict(width=32,height=32,verticalFovDegrees=157,aspect=1,nearMetres=.001,farMetres=10,distortion=3.8,zoom=2.72),
         layout=dict(radius=3,cells=lattice()),eyeOrder=['L','R'],rgbOrder=['R','G','B'],imageAxes=dict(x='right',y='down'),rigSha256='r',
