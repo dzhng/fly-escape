@@ -1,0 +1,89 @@
+{
+  "scope": "Input-only verification; no neural execution",
+  "sourceHashes": {
+    "prepare.py": "33842999c80fac4e11a4ac638468a5eaba5655366950680313c5d579d7bd6c8e",
+    "summarize.py": "f06a060fd11fbe853e13301a87ebb26494ce974b78a0417c4a4b17b296b3df50",
+    "plot_inputs.py": "3502e1995da6eb4e40e4483aca539aa94adb20d2b26bbe646d84513afe623610",
+    "native/src/main.rs": "7e5769a1a2ad6fe76971b057ea1809bf5f753d282f1a1ad057152ac6682a76e3",
+    "native/Cargo.lock": "21d227e8b739cec1d3afd964a2cf4590d85a4a64e7604151f211ac83610d58ba",
+    "native/Cargo.toml": "b8cddf6bb7557f062f970024a4ec0f4b5a9f6bf6eaa4579d31be590ba0373e0d"
+  },
+  "proposalHash": "0aae0679a659699bae482b920d9abc20e698e090f67617a1319ac8953d650173",
+  "currentEvidenceHash": "9213a24932cc216f572b67682b02598b46386a65ea3a38391452fe6057eb5468",
+  "summaryHash": "3425004181a3d7617f1b2abb83b46cbd22ced2182d88fe611ac029e3a63ef24c",
+  "image": {
+    "sha256": "2a49c9ccf9200a429fa735912a63b5f848eb4e8a6bbc6e828c9fe647b4d3466f",
+    "width": 2560,
+    "height": 1440,
+    "colors": [
+      {
+        "linearRgb8": [
+          128,
+          128,
+          128
+        ],
+        "expectedDisplayRgb8": [
+          188,
+          188,
+          188
+        ],
+        "pixelsWithinOneByte": 6951
+      },
+      {
+        "linearRgb8": [
+          66,
+          120,
+          2
+        ],
+        "expectedDisplayRgb8": [
+          139,
+          182,
+          22
+        ],
+        "pixelsWithinOneByte": 6521
+      },
+      {
+        "linearRgb8": [
+          134,
+          80,
+          198
+        ],
+        "expectedDisplayRgb8": [
+          192,
+          152,
+          228
+        ],
+        "pixelsWithinOneByte": 6477
+      },
+      {
+        "linearRgb8": [
+          166,
+          220,
+          2
+        ],
+        "expectedDisplayRgb8": [
+          211,
+          239,
+          22
+        ],
+        "pixelsWithinOneByte": 6418
+      },
+      {
+        "linearRgb8": [
+          234,
+          180,
+          198
+        ],
+        "expectedDisplayRgb8": [
+          246,
+          219,
+          228
+        ],
+        "pixelsWithinOneByte": 6418
+      }
+    ]
+  },
+  "native": "Rust 1.94.1, offline Cargo lock; shared sim::sensory::retinal_currents, Graph/map validation only",
+  "review": "Independent read-only code review found no actionable findings; reproduced summary with writes suppressed and checked geometry/candidates/hashes/exclusions/contrasts/multiplicity.",
+  "visualLimit": "Direct image inspection and palette checks; fresh visual review belongs to root review checkpoint."
+}

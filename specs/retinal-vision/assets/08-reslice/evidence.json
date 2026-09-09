@@ -1,0 +1,3614 @@
+{
+  "crossIntensityColorDifferenceVectorsExactlyEqual": true,
+  "currentEvidenceHash": "9213a24932cc216f572b67682b02598b46386a65ea3a38391452fe6057eb5468",
+  "nativeAdapterSourceHash": "38044837d7127e1163bfeebde2896144c5fb39b47d73a824433e6c45aa6f9543",
+  "nativeHelperSourceHash": "7e5769a1a2ad6fe76971b057ea1809bf5f753d282f1a1ad057152ac6682a76e3",
+  "panels": {
+    "08": {
+      "conditions": [
+        {
+          "coloredSamples": 0,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 0.0,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 0,
+            "total": 0.0
+          },
+          "name": "dark",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 0.0,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 0,
+            "total": 0.0
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "rgbSha256": "287ee0a91c2d208b23589e89587f718d1c163ec0d54df1813b1e41e47dd4ecf4",
+          "uniqueColorCount": 1
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 51.80156657963447,
+              "L1": 0.0,
+              "R0": 58.485639686684074,
+              "R1": 0.0
+            },
+            "maximum": 1.0026109660574414,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 0,
+              "R0": 238,
+              "R1": 0
+            },
+            "stimulatedInputCount": 366,
+            "total": 110.28720626631855
+          },
+          "name": "gray64",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 51.80156657963447,
+              "L1": 52.75825643274271,
+              "R0": 58.485639686684074,
+              "R1": 57.52894983357583
+            },
+            "maximum": 1.0026109660574414,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 220.5744125326371
+          },
+          "rgbPalette": [
+            [
+              64,
+              64,
+              64
+            ]
+          ],
+          "rgbSha256": "63d6c5cc60b899ce960d717e385d2b2d91759b4de3468cfc3bc1b6a49b48778f",
+          "uniqueColorCount": 1
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 77.65166340508807,
+              "L1": 0.0,
+              "R0": 87.67123287671234,
+              "R1": 0.0
+            },
+            "maximum": 1.5029354207436403,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 0,
+              "R0": 238,
+              "R1": 0
+            },
+            "stimulatedInputCount": 366,
+            "total": 165.3228962818004
+          },
+          "name": "gray128",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 77.65166340508807,
+              "L1": 79.08576208900375,
+              "R0": 87.67123287671234,
+              "R1": 86.23713419279665
+            },
+            "maximum": 1.5029354207436403,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 330.6457925636008
+          },
+          "rgbPalette": [
+            [
+              128,
+              128,
+              128
+            ]
+          ],
+          "rgbSha256": "279208f2fc65f6aea6350c317edf7822c3c6d896a26aedcc97efabfd68d0158e",
+          "uniqueColorCount": 1
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 103.33333333333334,
+              "L1": 0.0,
+              "R0": 116.66666666666667,
+              "R1": 0.0
+            },
+            "maximum": 2.0,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 0,
+              "R0": 238,
+              "R1": 0
+            },
+            "stimulatedInputCount": 366,
+            "total": 220.0
+          },
+          "name": "white",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 103.33333333333334,
+              "L1": 105.24173027989822,
+              "R0": 116.66666666666667,
+              "R1": 114.7582697201018
+            },
+            "maximum": 2.0,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 440.0
+          },
+          "rgbPalette": [
+            [
+              255,
+              255,
+              255
+            ]
+          ],
+          "rgbSha256": "4285745ec3744287022d3b17df3d7d77e38fd1c6866c6ae559eb246cb7ad9b00",
+          "uniqueColorCount": 1
+        },
+        {
+          "coloredSamples": 32,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 16.03131115459883,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 1.1293404679591685,
+            "stimulatedByEyeChannel": {
+              "L0": 30,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 30,
+            "total": 16.03131115459883
+          },
+          "name": "Lupper",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 16.03131115459883,
+              "L1": 13.461406313021916,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 1.1293404679591685,
+            "stimulatedByEyeChannel": {
+              "L0": 30,
+              "L1": 65,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 95,
+            "total": 29.492717467620743
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              128,
+              128,
+              128
+            ]
+          ],
+          "rgbSha256": "e5e57fdfa3a0e56c63d6cf8065287ed35276fe50f33feb93714e67110db122e8",
+          "uniqueColorCount": 2
+        },
+        {
+          "coloredSamples": 32,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 16.03131115459883,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 1.1293404679591685,
+            "stimulatedByEyeChannel": {
+              "L0": 30,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 30,
+            "total": 16.03131115459883
+          },
+          "name": "Lupper-permuted",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 16.03131115459883,
+              "L1": 13.461406313021916,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 1.1293404679591685,
+            "stimulatedByEyeChannel": {
+              "L0": 30,
+              "L1": 65,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 95,
+            "total": 29.492717467620743
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              128,
+              128,
+              128
+            ]
+          ],
+          "rgbSha256": "e5e57fdfa3a0e56c63d6cf8065287ed35276fe50f33feb93714e67110db122e8",
+          "uniqueColorCount": 2
+        },
+        {
+          "coloredSamples": 32,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 16.03131115459883,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 1.2128952518282015,
+            "stimulatedByEyeChannel": {
+              "L0": 38,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 38,
+            "total": 16.03131115459883
+          },
+          "name": "Llower",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 16.03131115459883,
+              "L1": 13.461406313021916,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 1.2128952518282015,
+            "stimulatedByEyeChannel": {
+              "L0": 38,
+              "L1": 62,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 100,
+            "total": 29.492717467620743
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              128,
+              128,
+              128
+            ]
+          ],
+          "rgbSha256": "af80ec29bd493afd1cd98ff5eef525680155ab34975f38ac180592ff7fca1fe6",
+          "uniqueColorCount": 2
+        },
+        {
+          "coloredSamples": 32,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 16.03131115459883,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 1.2128952518282015,
+            "stimulatedByEyeChannel": {
+              "L0": 38,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 38,
+            "total": 16.03131115459883
+          },
+          "name": "Llower-permuted",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 16.03131115459883,
+              "L1": 13.461406313021916,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 1.2128952518282015,
+            "stimulatedByEyeChannel": {
+              "L0": 38,
+              "L1": 62,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 100,
+            "total": 29.492717467620743
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              128,
+              128,
+              128
+            ]
+          ],
+          "rgbSha256": "af80ec29bd493afd1cd98ff5eef525680155ab34975f38ac180592ff7fca1fe6",
+          "uniqueColorCount": 2
+        },
+        {
+          "coloredSamples": 32,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 16.031311154598825,
+              "R1": 0.0
+            },
+            "maximum": 1.3842826243691428,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 48,
+              "R1": 0
+            },
+            "stimulatedInputCount": 48,
+            "total": 16.031311154598825
+          },
+          "name": "Rupper",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 16.031311154598825,
+              "R1": 13.461406313021916
+            },
+            "maximum": 1.3842826243691428,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 48,
+              "R1": 126
+            },
+            "stimulatedInputCount": 174,
+            "total": 29.492717467620743
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              128,
+              128,
+              128
+            ]
+          ],
+          "rgbSha256": "e9804793edd5068da51830a6316ef91ca2785f047f041bd992e5e614612b21cb",
+          "uniqueColorCount": 2
+        },
+        {
+          "coloredSamples": 32,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 16.031311154598825,
+              "R1": 0.0
+            },
+            "maximum": 1.3842826243691428,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 48,
+              "R1": 0
+            },
+            "stimulatedInputCount": 48,
+            "total": 16.031311154598825
+          },
+          "name": "Rupper-permuted",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 16.031311154598825,
+              "R1": 13.461406313021916
+            },
+            "maximum": 1.3842826243691428,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 48,
+              "R1": 126
+            },
+            "stimulatedInputCount": 174,
+            "total": 29.492717467620743
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              128,
+              128,
+              128
+            ]
+          ],
+          "rgbSha256": "e9804793edd5068da51830a6316ef91ca2785f047f041bd992e5e614612b21cb",
+          "uniqueColorCount": 2
+        },
+        {
+          "coloredSamples": 32,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 16.031311154598825,
+              "R1": 0.0
+            },
+            "maximum": 1.5029354207436403,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 41,
+              "R1": 0
+            },
+            "stimulatedInputCount": 41,
+            "total": 16.031311154598825
+          },
+          "name": "Rlower",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 16.031311154598825,
+              "R1": 13.461406313021916
+            },
+            "maximum": 1.5029354207436403,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 41,
+              "R1": 99
+            },
+            "stimulatedInputCount": 140,
+            "total": 29.492717467620743
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              128,
+              128,
+              128
+            ]
+          ],
+          "rgbSha256": "d3bea6f9c5e11754d6a82b943271bb60b17b4b316bf07d0a8026d7d2812c040d",
+          "uniqueColorCount": 2
+        },
+        {
+          "coloredSamples": 32,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 16.031311154598825,
+              "R1": 0.0
+            },
+            "maximum": 1.5029354207436403,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 41,
+              "R1": 0
+            },
+            "stimulatedInputCount": 41,
+            "total": 16.031311154598825
+          },
+          "name": "Rlower-permuted",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 16.031311154598825,
+              "R1": 13.461406313021916
+            },
+            "maximum": 1.5029354207436403,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 41,
+              "R1": 99
+            },
+            "stimulatedInputCount": 140,
+            "total": 29.492717467620743
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              128,
+              128,
+              128
+            ]
+          ],
+          "rgbSha256": "d3bea6f9c5e11754d6a82b943271bb60b17b4b316bf07d0a8026d7d2812c040d",
+          "uniqueColorCount": 2
+        },
+        {
+          "coloredSamples": 0,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 0.0,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 0,
+            "total": 0.0
+          },
+          "name": "dark-repeat",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 0.0,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 0,
+            "total": 0.0
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "rgbSha256": "287ee0a91c2d208b23589e89587f718d1c163ec0d54df1813b1e41e47dd4ecf4",
+          "uniqueColorCount": 1
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 0.0,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 0,
+            "total": 0.0
+          },
+          "name": "white-zero",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 103.33333333333334,
+              "L1": 105.24173027989822,
+              "R0": 116.66666666666667,
+              "R1": 114.7582697201018
+            },
+            "maximum": 2.0,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 440.0
+          },
+          "rgbPalette": [
+            [
+              255,
+              255,
+              255
+            ]
+          ],
+          "rgbSha256": "4285745ec3744287022d3b17df3d7d77e38fd1c6866c6ae559eb246cb7ad9b00",
+          "uniqueColorCount": 1
+        },
+        {
+          "coloredSamples": 0,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 0.0,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 0,
+            "total": 0.0
+          },
+          "name": "dark-silenced",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 0.0,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 0,
+            "total": 0.0
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "rgbSha256": "287ee0a91c2d208b23589e89587f718d1c163ec0d54df1813b1e41e47dd4ecf4",
+          "uniqueColorCount": 1
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 0.0,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 0,
+            "total": 0.0
+          },
+          "name": "white-silenced",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 103.33333333333334,
+              "L1": 105.24173027989822,
+              "R0": 116.66666666666667,
+              "R1": 114.7582697201018
+            },
+            "maximum": 2.0,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 440.0
+          },
+          "rgbPalette": [
+            [
+              255,
+              255,
+              255
+            ]
+          ],
+          "rgbSha256": "4285745ec3744287022d3b17df3d7d77e38fd1c6866c6ae559eb246cb7ad9b00",
+          "uniqueColorCount": 1
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 39.295416016527675,
+              "L1": 19.192852042080514,
+              "R0": 56.318825879473344,
+              "R1": 28.488668772340827
+            },
+            "maximum": 1.149903746626295,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 143.29576271042237
+          },
+          "name": "scene-ground",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 39.295416016527675,
+              "L1": 19.192852042080514,
+              "R0": 56.318825879473344,
+              "R1": 28.488668772340827
+            },
+            "maximum": 1.149903746626295,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 143.29576271042237
+          },
+          "rgbPalette": null,
+          "rgbSha256": "70dd31782da03dd75788f0e3c3208928d971251f2b7a5701c13b38701a146c27",
+          "uniqueColorCount": 408
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 57.113966822393095,
+              "L1": 40.50211709443694,
+              "R0": 64.95659645860198,
+              "R1": 41.98502001822481
+            },
+            "maximum": 1.4302383527948068,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 204.55770039365683
+          },
+          "name": "scene-flight",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 57.113966822393095,
+              "L1": 40.50211709443694,
+              "R0": 64.95659645860198,
+              "R1": 41.98502001822481
+            },
+            "maximum": 1.4302383527948068,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 204.55770039365683
+          },
+          "rgbPalette": null,
+          "rgbSha256": "dfaf6f5bbcb2f988d0aade13f93619d7b3224374d6abded4de0d5bd3082f7013",
+          "uniqueColorCount": 380
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 68.21736942620053,
+              "L1": 62.32012003623465,
+              "R0": 40.92554531339971,
+              "R1": 19.134444956629103
+            },
+            "maximum": 1.604957497899052,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 190.597479732464
+          },
+          "name": "scene-tilted",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 68.21736942620053,
+              "L1": 62.32012003623465,
+              "R0": 40.92554531339971,
+              "R1": 19.134444956629103
+            },
+            "maximum": 1.604957497899052,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 190.597479732464
+          },
+          "rgbPalette": null,
+          "rgbSha256": "bc20ad66df4b34b575465aef84c30a75493ddda7b785b7d8ff200c5cb5ac777b",
+          "uniqueColorCount": 444
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 4.604740296591907,
+              "L1": 2.0858258008578487,
+              "R0": 14.303580583430403,
+              "R1": 4.572818833441428
+            },
+            "maximum": 0.4439324153603156,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 524
+            },
+            "stimulatedInputCount": 1174,
+            "total": 25.566965514321584
+          },
+          "name": "scene-sofa-under",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 4.604740296591907,
+              "L1": 2.0858258008578487,
+              "R0": 14.303580583430403,
+              "R1": 4.572818833441428
+            },
+            "maximum": 0.4439324153603156,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 524
+            },
+            "stimulatedInputCount": 1174,
+            "total": 25.566965514321584
+          },
+          "rgbPalette": null,
+          "rgbSha256": "f4ec6bcdb3d726322d01fd8186f1e69008abed12c95508474b5c0283d7d2776b",
+          "uniqueColorCount": 139
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 56.91872945299901,
+              "L1": 38.55317897240341,
+              "R0": 70.65667195788419,
+              "R1": 53.6785359878236
+            },
+            "maximum": 1.4380513507267563,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 219.8071163711102
+          },
+          "name": "scene-sofa-above",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 56.91872945299901,
+              "L1": 38.55317897240341,
+              "R0": 70.65667195788419,
+              "R1": 53.6785359878236
+            },
+            "maximum": 1.4380513507267563,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 219.8071163711102
+          },
+          "rgbPalette": null,
+          "rgbSha256": "aa36a2f55d8e9335fe3e952ecc6d31e02803b6ef3305217aebd8689528823460",
+          "uniqueColorCount": 444
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 42.25415353149565,
+              "L1": 24.30995889608825,
+              "R0": 54.924742061842736,
+              "R1": 36.4429339916691
+            },
+            "maximum": 1.149903746626295,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 157.93178848109574
+          },
+          "name": "scene-markers-flat",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 42.25415353149565,
+              "L1": 24.30995889608825,
+              "R0": 54.924742061842736,
+              "R1": 36.4429339916691
+            },
+            "maximum": 1.149903746626295,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 157.93178848109574
+          },
+          "rgbPalette": null,
+          "rgbSha256": "86cf2e4a859553bf9957c086089f4c44b4c861d1021cbe5d980f8121dd373fa8",
+          "uniqueColorCount": 404
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 67.08452674938928,
+              "L1": 61.128401084478284,
+              "R0": 40.78165220548198,
+              "R1": 19.915792263683407
+            },
+            "maximum": 1.462296067521734,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 188.91037230303297
+          },
+          "name": "scene-markers-tilted",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 67.08452674938928,
+              "L1": 61.128401084478284,
+              "R0": 40.78165220548198,
+              "R1": 19.915792263683407
+            },
+            "maximum": 1.462296067521734,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 188.91037230303297
+          },
+          "rgbPalette": null,
+          "rgbSha256": "4fa9e25fe9455fda64d0e233c82d3adb59373bf622439ae4f366dc2c0b2a1c36",
+          "uniqueColorCount": 441
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 58.63791095502802,
+              "L1": 44.00638577789533,
+              "R0": 65.9170197146684,
+              "R1": 44.50564244260892
+            },
+            "maximum": 1.149903746626295,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 213.06695889020068
+          },
+          "name": "scene-wall-adjacent",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 58.63791095502802,
+              "L1": 44.00638577789533,
+              "R0": 65.9170197146684,
+              "R1": 44.50564244260892
+            },
+            "maximum": 1.149903746626295,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 213.06695889020068
+          },
+          "rgbPalette": null,
+          "rgbSha256": "784d1a769af46fb53270d6d8934ddbe8e843d827bf7fc470f426d0ab536c8bc9",
+          "uniqueColorCount": 157
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 41.21142479714991,
+              "L1": 21.227063059878112,
+              "R0": 55.80863412142159,
+              "R1": 29.171938734094777
+            },
+            "maximum": 1.149903746626295,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 147.4190607125444
+          },
+          "name": "scene-lamp-near",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 41.21142479714991,
+              "L1": 21.227063059878112,
+              "R0": 55.80863412142159,
+              "R1": 29.171938734094777
+            },
+            "maximum": 1.149903746626295,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 147.4190607125444
+          },
+          "rgbPalette": null,
+          "rgbSha256": "3b22b7e2efa5906392e1ae32bc3a181e34750d870f02bc8221c6849fee4be9fb",
+          "uniqueColorCount": 442
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 39.89428331957931,
+              "L1": 20.131500082162695,
+              "R0": 55.80863412142159,
+              "R1": 29.171938734094777
+            },
+            "maximum": 1.149903746626295,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 145.00635625725837
+          },
+          "name": "scene-lamp-moved",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 39.89428331957931,
+              "L1": 20.131500082162695,
+              "R0": 55.80863412142159,
+              "R1": 29.171938734094777
+            },
+            "maximum": 1.149903746626295,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 145.00635625725837
+          },
+          "rgbPalette": null,
+          "rgbSha256": "e7a5c44bd96fff2024b96116809ee033d43221b1e8b2398c345341f1323c9cdc",
+          "uniqueColorCount": 438
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 53.25430791407301,
+              "L1": 55.64934721137962,
+              "R0": 21.922190435742415,
+              "R1": 5.73085341283008
+            },
+            "maximum": 1.5674300254452926,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 481
+            },
+            "stimulatedInputCount": 1131,
+            "total": 136.55669897402512
+          },
+          "name": "scene-apple-supported",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 53.25430791407301,
+              "L1": 55.64934721137962,
+              "R0": 21.922190435742415,
+              "R1": 5.73085341283008
+            },
+            "maximum": 1.5674300254452926,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 481
+            },
+            "stimulatedInputCount": 1131,
+            "total": 136.55669897402512
+          },
+          "rgbPalette": null,
+          "rgbSha256": "38c77094b2c0fdc91a0ac5b43c79344925fb6796c63df0a4cc23d9c37d628e81",
+          "uniqueColorCount": 330
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 19.583345905443156,
+              "L1": 9.590677738058702,
+              "R0": 27.647151014487733,
+              "R1": 9.763905410706558
+            },
+            "maximum": 1.2852510966156285,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 66.58508006869614
+          },
+          "name": "scene-apple-upright",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 19.583345905443156,
+              "L1": 9.590677738058702,
+              "R0": 27.647151014487733,
+              "R1": 9.763905410706558
+            },
+            "maximum": 1.2852510966156285,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 66.58508006869614
+          },
+          "rgbPalette": null,
+          "rgbSha256": "62dc5b3a50230ad0a30208b6e23283af92b11656b422ba62514de94ba4b6fe8e",
+          "uniqueColorCount": 391
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 57.39855468987351,
+              "L1": 38.994589411723325,
+              "R0": 67.7786027480488,
+              "R1": 46.18348581768481
+            },
+            "maximum": 1.46834334891081,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 210.35523266733045
+          },
+          "name": "scene-turn-corner",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 57.39855468987351,
+              "L1": 38.994589411723325,
+              "R0": 67.7786027480488,
+              "R1": 46.18348581768481
+            },
+            "maximum": 1.46834334891081,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 210.35523266733045
+          },
+          "rgbPalette": null,
+          "rgbSha256": "57adcdd5f6b265049a61fc7311e09face14cd65510b4ce3d5932a01fb4ee82a7",
+          "uniqueColorCount": 157
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 43.77547833927722,
+              "L1": 24.784663390702086,
+              "R0": 56.833174329766194,
+              "R1": 37.05596189444969
+            },
+            "maximum": 1.149903746626295,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 162.4492779541952
+          },
+          "name": "quality-landmarks",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 43.77547833927722,
+              "L1": 24.784663390702086,
+              "R0": 56.833174329766194,
+              "R1": 37.05596189444969
+            },
+            "maximum": 1.149903746626295,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 162.4492779541952
+          },
+          "rgbPalette": null,
+          "rgbSha256": "1873822ebe934edeb2b77bc39160445d1255da26c71aaa48dd060835e99c0c78",
+          "uniqueColorCount": 428
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 47.5131173519352,
+              "L1": 26.83645823250381,
+              "R0": 56.3345842355283,
+              "R1": 34.77132601257907
+            },
+            "maximum": 1.1776113501342673,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 165.45548583254637
+          },
+          "name": "quality-landmarks-turned",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 47.5131173519352,
+              "L1": 26.83645823250381,
+              "R0": 56.3345842355283,
+              "R1": 34.77132601257907
+            },
+            "maximum": 1.1776113501342673,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 165.45548583254637
+          },
+          "rgbPalette": null,
+          "rgbSha256": "f283d1f366e712e8a66d25b7fececc373b4d2dd20f22ad6c9b588052e31ac786",
+          "uniqueColorCount": 439
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 45.64829928394468,
+              "L1": 38.89100932393917,
+              "R0": 59.90345684413313,
+              "R1": 35.475330164336015
+            },
+            "maximum": 1.4428795420308607,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 179.918095616353
+          },
+          "name": "quality-door-floor",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 45.64829928394468,
+              "L1": 38.89100932393917,
+              "R0": 59.90345684413313,
+              "R1": 35.475330164336015
+            },
+            "maximum": 1.4428795420308607,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 179.918095616353
+          },
+          "rgbPalette": null,
+          "rgbSha256": "d483b4c7d5127fc3fc8d1488ab03b9a03953828edee6f2e39f1fc7f6161667a4",
+          "uniqueColorCount": 630
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 53.0220524854515,
+              "L1": 62.79765866176736,
+              "R0": 68.40883011986496,
+              "R1": 53.34389532014711
+            },
+            "maximum": 1.4380513507267563,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 237.57243658723095
+          },
+          "name": "quality-door-flight",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 53.0220524854515,
+              "L1": 62.79765866176736,
+              "R0": 68.40883011986496,
+              "R1": 53.34389532014711
+            },
+            "maximum": 1.4380513507267563,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 237.57243658723095
+          },
+          "rgbPalette": null,
+          "rgbSha256": "19f7bd02fbe0f0b86faf4883318098033572b778ef03db290079dd90ca151715",
+          "uniqueColorCount": 483
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 47.838811863141316,
+              "L1": 0.0,
+              "R0": 59.32591170448653,
+              "R1": 0.0
+            },
+            "maximum": 1.7462275711481667,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 0,
+              "R0": 238,
+              "R1": 0
+            },
+            "stimulatedInputCount": 366,
+            "total": 107.16472356762785
+          },
+          "name": "occlusion-door-floor-open",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 47.838811863141316,
+              "L1": 41.1865777301229,
+              "R0": 59.32591170448653,
+              "R1": 35.31531539027271
+            },
+            "maximum": 1.7462275711481667,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 183.66661668802345
+          },
+          "rgbPalette": null,
+          "rgbSha256": "c9961a4c982d385eeb60e22fec8603255000cb66bc1abe12666833fe201a7431",
+          "uniqueColorCount": 620
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 60.58388980162518,
+              "L1": 0.0,
+              "R0": 59.32591170448653,
+              "R1": 0.0
+            },
+            "maximum": 1.7462275711481667,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 0,
+              "R0": 238,
+              "R1": 0
+            },
+            "stimulatedInputCount": 366,
+            "total": 119.9098015061117
+          },
+          "name": "occlusion-door-floor-blocked",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 60.58388980162518,
+              "L1": 34.49295629446977,
+              "R0": 59.32591170448653,
+              "R1": 35.31531539027271
+            },
+            "maximum": 1.7462275711481667,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 189.7180731908542
+          },
+          "rgbPalette": null,
+          "rgbSha256": "1730cc2e0c73d7fea24183dc66647c4998c74787efa02a2ee75a3d6c33dabf3e",
+          "uniqueColorCount": 601
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 60.426412439355936,
+              "L1": 0.0,
+              "R0": 68.15454834254143,
+              "R1": 0.0
+            },
+            "maximum": 1.7589818573640246,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 0,
+              "R0": 238,
+              "R1": 0
+            },
+            "stimulatedInputCount": 366,
+            "total": 128.58096078189735
+          },
+          "name": "occlusion-door-flight-open",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 60.426412439355936,
+              "L1": 68.34726557545872,
+              "R0": 68.15454834254143,
+              "R1": 53.23336536346329
+            },
+            "maximum": 1.7589818573640246,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 250.16159172081936
+          },
+          "rgbPalette": null,
+          "rgbSha256": "f5e5580989ab5da012affb7ad066c2d18ea30a4822f38b1456e900c598fc3d6d",
+          "uniqueColorCount": 452
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 78.68706222634466,
+              "L1": 0.0,
+              "R0": 68.15454834254143,
+              "R1": 0.0
+            },
+            "maximum": 1.7589818573640246,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 0,
+              "R0": 238,
+              "R1": 0
+            },
+            "stimulatedInputCount": 366,
+            "total": 146.8416105688861
+          },
+          "name": "occlusion-door-flight-blocked",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 78.68706222634466,
+              "L1": 55.037903990716,
+              "R0": 68.15454834254143,
+              "R1": 53.23336536346329
+            },
+            "maximum": 1.7589818573640246,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 255.11287992306538
+          },
+          "rgbPalette": null,
+          "rgbSha256": "5b937f0fdb8632bd20874e9913650115e7ed543ddf04a392958cb583c6ec85fc",
+          "uniqueColorCount": 413
+        }
+      ],
+      "contrasts": [
+        {
+          "a": "gray64",
+          "b": "dark",
+          "changedByChannel": {
+            "0": 366,
+            "1": 0
+          },
+          "changedInjectedCells": 366,
+          "currentDifferenceL1": 110.28720626631855,
+          "currentDifferenceMaximum": 1.0026109660574414,
+          "diagnosticLuminanceExactlyEqual": false,
+          "doseA": {
+            "byEyeChannel": {
+              "L0": 51.80156657963447,
+              "L1": 0.0,
+              "R0": 58.485639686684074,
+              "R1": 0.0
+            },
+            "maximum": 1.0026109660574414,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 0,
+              "R0": 238,
+              "R1": 0
+            },
+            "stimulatedInputCount": 366,
+            "total": 110.28720626631855
+          },
+          "doseB": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 0.0,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 0,
+            "total": 0.0
+          }
+        },
+        {
+          "a": "gray128",
+          "b": "gray64",
+          "changedByChannel": {
+            "0": 366,
+            "1": 0
+          },
+          "changedInjectedCells": 366,
+          "currentDifferenceL1": 55.035690015481855,
+          "currentDifferenceMaximum": 0.5003244546861989,
+          "diagnosticLuminanceExactlyEqual": false,
+          "doseA": {
+            "byEyeChannel": {
+              "L0": 77.65166340508807,
+              "L1": 0.0,
+              "R0": 87.67123287671234,
+              "R1": 0.0
+            },
+            "maximum": 1.5029354207436403,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 0,
+              "R0": 238,
+              "R1": 0
+            },
+            "stimulatedInputCount": 366,
+            "total": 165.3228962818004
+          },
+          "doseB": {
+            "byEyeChannel": {
+              "L0": 51.80156657963447,
+              "L1": 0.0,
+              "R0": 58.485639686684074,
+              "R1": 0.0
+            },
+            "maximum": 1.0026109660574414,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 0,
+              "R0": 238,
+              "R1": 0
+            },
+            "stimulatedInputCount": 366,
+            "total": 110.28720626631855
+          }
+        },
+        {
+          "a": "white",
+          "b": "gray128",
+          "changedByChannel": {
+            "0": 366,
+            "1": 0
+          },
+          "changedInjectedCells": 366,
+          "currentDifferenceL1": 54.67710371819961,
+          "currentDifferenceMaximum": 0.49706457925636016,
+          "diagnosticLuminanceExactlyEqual": false,
+          "doseA": {
+            "byEyeChannel": {
+              "L0": 103.33333333333334,
+              "L1": 0.0,
+              "R0": 116.66666666666667,
+              "R1": 0.0
+            },
+            "maximum": 2.0,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 0,
+              "R0": 238,
+              "R1": 0
+            },
+            "stimulatedInputCount": 366,
+            "total": 220.0
+          },
+          "doseB": {
+            "byEyeChannel": {
+              "L0": 77.65166340508807,
+              "L1": 0.0,
+              "R0": 87.67123287671234,
+              "R1": 0.0
+            },
+            "maximum": 1.5029354207436403,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 0,
+              "R0": 238,
+              "R1": 0
+            },
+            "stimulatedInputCount": 366,
+            "total": 165.3228962818004
+          }
+        },
+        {
+          "a": "Lupper",
+          "b": "Rupper",
+          "changedByChannel": {
+            "0": 78,
+            "1": 0
+          },
+          "changedInjectedCells": 78,
+          "currentDifferenceL1": 32.06262230919765,
+          "currentDifferenceMaximum": 1.3842826243691428,
+          "diagnosticLuminanceExactlyEqual": false,
+          "doseA": {
+            "byEyeChannel": {
+              "L0": 16.03131115459883,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 1.1293404679591685,
+            "stimulatedByEyeChannel": {
+              "L0": 30,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 30,
+            "total": 16.03131115459883
+          },
+          "doseB": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 16.031311154598825,
+              "R1": 0.0
+            },
+            "maximum": 1.3842826243691428,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 48,
+              "R1": 0
+            },
+            "stimulatedInputCount": 48,
+            "total": 16.031311154598825
+          }
+        },
+        {
+          "a": "Llower",
+          "b": "Rlower",
+          "changedByChannel": {
+            "0": 79,
+            "1": 0
+          },
+          "changedInjectedCells": 79,
+          "currentDifferenceL1": 32.06262230919766,
+          "currentDifferenceMaximum": 1.5029354207436403,
+          "diagnosticLuminanceExactlyEqual": false,
+          "doseA": {
+            "byEyeChannel": {
+              "L0": 16.03131115459883,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 1.2128952518282015,
+            "stimulatedByEyeChannel": {
+              "L0": 38,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 38,
+            "total": 16.03131115459883
+          },
+          "doseB": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 16.031311154598825,
+              "R1": 0.0
+            },
+            "maximum": 1.5029354207436403,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 41,
+              "R1": 0
+            },
+            "stimulatedInputCount": 41,
+            "total": 16.031311154598825
+          }
+        },
+        {
+          "a": "Lupper",
+          "b": "Llower",
+          "changedByChannel": {
+            "0": 68,
+            "1": 0
+          },
+          "changedInjectedCells": 68,
+          "currentDifferenceL1": 32.06262230919766,
+          "currentDifferenceMaximum": 1.2128952518282015,
+          "diagnosticLuminanceExactlyEqual": false,
+          "doseA": {
+            "byEyeChannel": {
+              "L0": 16.03131115459883,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 1.1293404679591685,
+            "stimulatedByEyeChannel": {
+              "L0": 30,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 30,
+            "total": 16.03131115459883
+          },
+          "doseB": {
+            "byEyeChannel": {
+              "L0": 16.03131115459883,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 1.2128952518282015,
+            "stimulatedByEyeChannel": {
+              "L0": 38,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 38,
+            "total": 16.03131115459883
+          }
+        },
+        {
+          "a": "Rupper",
+          "b": "Rlower",
+          "changedByChannel": {
+            "0": 89,
+            "1": 0
+          },
+          "changedInjectedCells": 89,
+          "currentDifferenceL1": 32.06262230919765,
+          "currentDifferenceMaximum": 1.5029354207436403,
+          "diagnosticLuminanceExactlyEqual": false,
+          "doseA": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 16.031311154598825,
+              "R1": 0.0
+            },
+            "maximum": 1.3842826243691428,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 48,
+              "R1": 0
+            },
+            "stimulatedInputCount": 48,
+            "total": 16.031311154598825
+          },
+          "doseB": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 16.031311154598825,
+              "R1": 0.0
+            },
+            "maximum": 1.5029354207436403,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 41,
+              "R1": 0
+            },
+            "stimulatedInputCount": 41,
+            "total": 16.031311154598825
+          }
+        },
+        {
+          "a": "occlusion-door-floor-open",
+          "b": "occlusion-door-floor-blocked",
+          "changedByChannel": {
+            "0": 57,
+            "1": 0
+          },
+          "changedInjectedCells": 57,
+          "currentDifferenceL1": 12.745077938483867,
+          "currentDifferenceMaximum": 0.6822309580654398,
+          "diagnosticLuminanceExactlyEqual": false,
+          "doseA": {
+            "byEyeChannel": {
+              "L0": 47.838811863141316,
+              "L1": 0.0,
+              "R0": 59.32591170448653,
+              "R1": 0.0
+            },
+            "maximum": 1.7462275711481667,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 0,
+              "R0": 238,
+              "R1": 0
+            },
+            "stimulatedInputCount": 366,
+            "total": 107.16472356762785
+          },
+          "doseB": {
+            "byEyeChannel": {
+              "L0": 60.58388980162518,
+              "L1": 0.0,
+              "R0": 59.32591170448653,
+              "R1": 0.0
+            },
+            "maximum": 1.7462275711481667,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 0,
+              "R0": 238,
+              "R1": 0
+            },
+            "stimulatedInputCount": 366,
+            "total": 119.9098015061117
+          }
+        },
+        {
+          "a": "occlusion-door-flight-open",
+          "b": "occlusion-door-flight-blocked",
+          "changedByChannel": {
+            "0": 101,
+            "1": 0
+          },
+          "changedInjectedCells": 101,
+          "currentDifferenceL1": 18.92275149805577,
+          "currentDifferenceMaximum": 0.9079184719709255,
+          "diagnosticLuminanceExactlyEqual": false,
+          "doseA": {
+            "byEyeChannel": {
+              "L0": 60.426412439355936,
+              "L1": 0.0,
+              "R0": 68.15454834254143,
+              "R1": 0.0
+            },
+            "maximum": 1.7589818573640246,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 0,
+              "R0": 238,
+              "R1": 0
+            },
+            "stimulatedInputCount": 366,
+            "total": 128.58096078189735
+          },
+          "doseB": {
+            "byEyeChannel": {
+              "L0": 78.68706222634466,
+              "L1": 0.0,
+              "R0": 68.15454834254143,
+              "R1": 0.0
+            },
+            "maximum": 1.7589818573640246,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 0,
+              "R0": 238,
+              "R1": 0
+            },
+            "stimulatedInputCount": 366,
+            "total": 146.8416105688861
+          }
+        }
+      ],
+      "controls": [
+        {
+          "a": "dark",
+          "b": "dark-repeat",
+          "effectiveCurrentVectorsExactlyEqual": true,
+          "limitation": "Input-only equality; downstream trajectory equality remains untested."
+        },
+        {
+          "a": "dark",
+          "b": "white-zero",
+          "effectiveCurrentVectorsExactlyEqual": true,
+          "limitation": "Input-only equality; downstream trajectory equality remains untested."
+        },
+        {
+          "a": "dark-silenced",
+          "b": "white-silenced",
+          "effectiveCurrentVectorsExactlyEqual": true,
+          "limitation": "Input-only equality; downstream trajectory equality remains untested."
+        },
+        {
+          "a": "Lupper",
+          "b": "Rupper",
+          "doseScope": "total",
+          "equalBrightness": false,
+          "maximumDoseDifference": 3.552713678800501e-15
+        },
+        {
+          "a": "Llower",
+          "b": "Rlower",
+          "doseScope": "total",
+          "equalBrightness": false,
+          "maximumDoseDifference": 3.552713678800501e-15
+        },
+        {
+          "a": "Lupper",
+          "b": "Llower",
+          "doseScope": "total",
+          "equalBrightness": false,
+          "maximumDoseDifference": 0.0
+        },
+        {
+          "a": "Rupper",
+          "b": "Rlower",
+          "doseScope": "total",
+          "equalBrightness": false,
+          "maximumDoseDifference": 0.0
+        }
+      ]
+    },
+    "09": {
+      "conditions": [
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 28.131868131868135,
+              "L1": 16.7600083285875,
+              "R0": 28.131868131868135,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 89.78375292091127
+          },
+          "name": "color-1-a",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 28.131868131868135,
+              "L1": 16.7600083285875,
+              "R0": 28.131868131868135,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 89.78375292091127
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              66,
+              120,
+              2
+            ],
+            [
+              134,
+              80,
+              198
+            ]
+          ],
+          "rgbSha256": "0346bcce1569b661d1c5fa528e02238e3a9c534fe6c73c5efd358a79051ae20d",
+          "uniqueColorCount": 3
+        },
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 28.131868131868135,
+              "L1": 0.0,
+              "R0": 28.131868131868135,
+              "R1": 0.0
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 0,
+              "R0": 89,
+              "R1": 0
+            },
+            "stimulatedInputCount": 157,
+            "total": 56.26373626373627
+          },
+          "name": "color-1-a-off",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 28.131868131868135,
+              "L1": 16.7600083285875,
+              "R0": 28.131868131868135,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 89.78375292091127
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              66,
+              120,
+              2
+            ],
+            [
+              134,
+              80,
+              198
+            ]
+          ],
+          "rgbSha256": "0346bcce1569b661d1c5fa528e02238e3a9c534fe6c73c5efd358a79051ae20d",
+          "uniqueColorCount": 3
+        },
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 0.0,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 0,
+            "total": 0.0
+          },
+          "name": "color-1-a-silenced",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 28.131868131868135,
+              "L1": 16.7600083285875,
+              "R0": 28.131868131868135,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 89.78375292091127
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              66,
+              120,
+              2
+            ],
+            [
+              134,
+              80,
+              198
+            ]
+          ],
+          "rgbSha256": "0346bcce1569b661d1c5fa528e02238e3a9c534fe6c73c5efd358a79051ae20d",
+          "uniqueColorCount": 3
+        },
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 28.131868131868135,
+              "L1": 16.7600083285875,
+              "R0": 28.131868131868135,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 89.78375292091127
+          },
+          "name": "color-1-a-permuted",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 28.131868131868135,
+              "L1": 16.7600083285875,
+              "R0": 28.131868131868135,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 89.78375292091127
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              66,
+              120,
+              2
+            ],
+            [
+              134,
+              80,
+              198
+            ]
+          ],
+          "rgbSha256": "0346bcce1569b661d1c5fa528e02238e3a9c534fe6c73c5efd358a79051ae20d",
+          "uniqueColorCount": 3
+        },
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 28.131868131868135,
+              "L1": 16.7600083285875,
+              "R0": 28.131868131868135,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 89.78375292091127
+          },
+          "name": "color-1-b",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 28.131868131868135,
+              "L1": 16.7600083285875,
+              "R0": 28.131868131868135,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 89.78375292091127
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              66,
+              120,
+              2
+            ],
+            [
+              134,
+              80,
+              198
+            ]
+          ],
+          "rgbSha256": "598db5d72ded41095ded85f2492eb727dd6f77e598bb66497e2716136aa19c74",
+          "uniqueColorCount": 3
+        },
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 28.131868131868135,
+              "L1": 0.0,
+              "R0": 28.131868131868135,
+              "R1": 0.0
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 0,
+              "R0": 89,
+              "R1": 0
+            },
+            "stimulatedInputCount": 157,
+            "total": 56.26373626373627
+          },
+          "name": "color-1-b-off",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 28.131868131868135,
+              "L1": 16.7600083285875,
+              "R0": 28.131868131868135,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 89.78375292091127
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              66,
+              120,
+              2
+            ],
+            [
+              134,
+              80,
+              198
+            ]
+          ],
+          "rgbSha256": "598db5d72ded41095ded85f2492eb727dd6f77e598bb66497e2716136aa19c74",
+          "uniqueColorCount": 3
+        },
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 0.0,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 0,
+            "total": 0.0
+          },
+          "name": "color-1-b-silenced",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 28.131868131868135,
+              "L1": 16.7600083285875,
+              "R0": 28.131868131868135,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 89.78375292091127
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              66,
+              120,
+              2
+            ],
+            [
+              134,
+              80,
+              198
+            ]
+          ],
+          "rgbSha256": "598db5d72ded41095ded85f2492eb727dd6f77e598bb66497e2716136aa19c74",
+          "uniqueColorCount": 3
+        },
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 28.131868131868135,
+              "L1": 16.7600083285875,
+              "R0": 28.131868131868135,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 89.78375292091127
+          },
+          "name": "color-1-b-permuted",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 28.131868131868135,
+              "L1": 16.7600083285875,
+              "R0": 28.131868131868135,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 89.78375292091127
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              66,
+              120,
+              2
+            ],
+            [
+              134,
+              80,
+              198
+            ]
+          ],
+          "rgbSha256": "598db5d72ded41095ded85f2492eb727dd6f77e598bb66497e2716136aa19c74",
+          "uniqueColorCount": 3
+        },
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 28.131868131868135,
+              "L1": 16.7600083285875,
+              "R0": 28.131868131868135,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 89.78375292091127
+          },
+          "name": "color-1-a-repeat",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 28.131868131868135,
+              "L1": 16.7600083285875,
+              "R0": 28.131868131868135,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 89.78375292091127
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              66,
+              120,
+              2
+            ],
+            [
+              134,
+              80,
+              198
+            ]
+          ],
+          "rgbSha256": "0346bcce1569b661d1c5fa528e02238e3a9c534fe6c73c5efd358a79051ae20d",
+          "uniqueColorCount": 3
+        },
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 28.13186813186813,
+              "L1": 23.62217934737019,
+              "R0": 28.13186813186813,
+              "R1": 23.62217934737019
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 103.50809495847665
+          },
+          "name": "color-1-gray",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 28.13186813186813,
+              "L1": 23.62217934737019,
+              "R0": 28.13186813186813,
+              "R1": 23.62217934737019
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 103.50809495847665
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              100,
+              100,
+              100
+            ]
+          ],
+          "rgbSha256": "b5aae7bce423cc326bdf78bd521587f37d11b703fd4d70b426ef6318fd822fc1",
+          "uniqueColorCount": 2
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 68.13186813186813,
+              "L1": 2.438032361696484,
+              "R0": 76.92307692307693,
+              "R1": 2.658492734828613
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 150.15147015147016
+          },
+          "name": "uniform-color-1-a",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 68.13186813186813,
+              "L1": 2.438032361696484,
+              "R0": 76.92307692307693,
+              "R1": 2.658492734828613
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 150.15147015147016
+          },
+          "rgbPalette": [
+            [
+              66,
+              120,
+              2
+            ]
+          ],
+          "rgbSha256": "3364090026d1f17f1919fd46a6b099a462934a29f38b4352b51ef2a70eb733b1",
+          "uniqueColorCount": 1
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 68.13186813186813,
+              "L1": 96.02701656875507,
+              "R0": 76.92307692307693,
+              "R1": 104.71031062018506
+            },
+            "maximum": 1.532346009075879,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 345.7922722438852
+          },
+          "name": "uniform-color-1-b",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 68.13186813186813,
+              "L1": 96.02701656875507,
+              "R0": 76.92307692307693,
+              "R1": 104.71031062018506
+            },
+            "maximum": 1.532346009075879,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 345.7922722438852
+          },
+          "rgbPalette": [
+            [
+              134,
+              80,
+              198
+            ]
+          ],
+          "rgbSha256": "aa1942d398f71f90d11a66f03be980a1077eb91c980b7101922d63bc0165075f",
+          "uniqueColorCount": 1
+        },
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 38.52229299363058,
+              "L1": 16.7600083285875,
+              "R0": 38.52229299363058,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 110.56460264443615
+          },
+          "name": "color-2-a",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 38.52229299363058,
+              "L1": 16.7600083285875,
+              "R0": 38.52229299363058,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 110.56460264443615
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              166,
+              220,
+              2
+            ],
+            [
+              234,
+              180,
+              198
+            ]
+          ],
+          "rgbSha256": "ff77377887cf6cd19c35007c999073c1bd8502f1e89dc5c77fab7013b3935fe5",
+          "uniqueColorCount": 3
+        },
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 38.52229299363058,
+              "L1": 0.0,
+              "R0": 38.52229299363058,
+              "R1": 0.0
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 0,
+              "R0": 89,
+              "R1": 0
+            },
+            "stimulatedInputCount": 157,
+            "total": 77.04458598726116
+          },
+          "name": "color-2-a-off",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 38.52229299363058,
+              "L1": 16.7600083285875,
+              "R0": 38.52229299363058,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 110.56460264443615
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              166,
+              220,
+              2
+            ],
+            [
+              234,
+              180,
+              198
+            ]
+          ],
+          "rgbSha256": "ff77377887cf6cd19c35007c999073c1bd8502f1e89dc5c77fab7013b3935fe5",
+          "uniqueColorCount": 3
+        },
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 0.0,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 0,
+            "total": 0.0
+          },
+          "name": "color-2-a-silenced",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 38.52229299363058,
+              "L1": 16.7600083285875,
+              "R0": 38.52229299363058,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 110.56460264443615
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              166,
+              220,
+              2
+            ],
+            [
+              234,
+              180,
+              198
+            ]
+          ],
+          "rgbSha256": "ff77377887cf6cd19c35007c999073c1bd8502f1e89dc5c77fab7013b3935fe5",
+          "uniqueColorCount": 3
+        },
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 38.52229299363058,
+              "L1": 16.7600083285875,
+              "R0": 38.52229299363058,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 110.56460264443615
+          },
+          "name": "color-2-a-permuted",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 38.52229299363058,
+              "L1": 16.7600083285875,
+              "R0": 38.52229299363058,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 110.56460264443615
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              166,
+              220,
+              2
+            ],
+            [
+              234,
+              180,
+              198
+            ]
+          ],
+          "rgbSha256": "ff77377887cf6cd19c35007c999073c1bd8502f1e89dc5c77fab7013b3935fe5",
+          "uniqueColorCount": 3
+        },
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 38.52229299363058,
+              "L1": 16.7600083285875,
+              "R0": 38.52229299363058,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 110.56460264443615
+          },
+          "name": "color-2-b",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 38.52229299363058,
+              "L1": 16.7600083285875,
+              "R0": 38.52229299363058,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 110.56460264443615
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              166,
+              220,
+              2
+            ],
+            [
+              234,
+              180,
+              198
+            ]
+          ],
+          "rgbSha256": "758adf5fb943cd5ff35911ea37cbd8d25e35bbae5a52f4687fe0e432433afaa3",
+          "uniqueColorCount": 3
+        },
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 38.52229299363058,
+              "L1": 0.0,
+              "R0": 38.52229299363058,
+              "R1": 0.0
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 0,
+              "R0": 89,
+              "R1": 0
+            },
+            "stimulatedInputCount": 157,
+            "total": 77.04458598726116
+          },
+          "name": "color-2-b-off",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 38.52229299363058,
+              "L1": 16.7600083285875,
+              "R0": 38.52229299363058,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 110.56460264443615
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              166,
+              220,
+              2
+            ],
+            [
+              234,
+              180,
+              198
+            ]
+          ],
+          "rgbSha256": "758adf5fb943cd5ff35911ea37cbd8d25e35bbae5a52f4687fe0e432433afaa3",
+          "uniqueColorCount": 3
+        },
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 0.0,
+              "L1": 0.0,
+              "R0": 0.0,
+              "R1": 0.0
+            },
+            "maximum": 0.0,
+            "stimulatedByEyeChannel": {
+              "L0": 0,
+              "L1": 0,
+              "R0": 0,
+              "R1": 0
+            },
+            "stimulatedInputCount": 0,
+            "total": 0.0
+          },
+          "name": "color-2-b-silenced",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 38.52229299363058,
+              "L1": 16.7600083285875,
+              "R0": 38.52229299363058,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 110.56460264443615
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              166,
+              220,
+              2
+            ],
+            [
+              234,
+              180,
+              198
+            ]
+          ],
+          "rgbSha256": "758adf5fb943cd5ff35911ea37cbd8d25e35bbae5a52f4687fe0e432433afaa3",
+          "uniqueColorCount": 3
+        },
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 38.52229299363058,
+              "L1": 16.7600083285875,
+              "R0": 38.52229299363058,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 110.56460264443615
+          },
+          "name": "color-2-b-permuted",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 38.52229299363058,
+              "L1": 16.7600083285875,
+              "R0": 38.52229299363058,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 110.56460264443615
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              166,
+              220,
+              2
+            ],
+            [
+              234,
+              180,
+              198
+            ]
+          ],
+          "rgbSha256": "758adf5fb943cd5ff35911ea37cbd8d25e35bbae5a52f4687fe0e432433afaa3",
+          "uniqueColorCount": 3
+        },
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 38.52229299363058,
+              "L1": 16.7600083285875,
+              "R0": 38.52229299363058,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 110.56460264443615
+          },
+          "name": "color-2-a-repeat",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 38.52229299363058,
+              "L1": 16.7600083285875,
+              "R0": 38.52229299363058,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 110.56460264443615
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              166,
+              220,
+              2
+            ],
+            [
+              234,
+              180,
+              198
+            ]
+          ],
+          "rgbSha256": "ff77377887cf6cd19c35007c999073c1bd8502f1e89dc5c77fab7013b3935fe5",
+          "uniqueColorCount": 3
+        },
+        {
+          "coloredSamples": 128,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 38.539781591263655,
+              "L1": 32.36164866441986,
+              "R0": 38.539781591263655,
+              "R1": 32.36164866441986
+            },
+            "maximum": 1.8065522620904841,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 141.80286051136704
+          },
+          "name": "color-2-gray",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 38.539781591263655,
+              "L1": 32.36164866441986,
+              "R0": 38.539781591263655,
+              "R1": 32.36164866441986
+            },
+            "maximum": 1.8065522620904841,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 141.80286051136704
+          },
+          "rgbPalette": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              193,
+              193,
+              193
+            ]
+          ],
+          "rgbSha256": "0e87e74b817de33780003d03314b1b5a4d6c4646e2c458be995d6ffa6d9de037",
+          "uniqueColorCount": 2
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 93.29617834394905,
+              "L1": 2.438032361696484,
+              "R0": 105.3343949044586,
+              "R1": 2.658492734828613
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 203.72709834493276
+          },
+          "name": "uniform-color-2-a",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 93.29617834394905,
+              "L1": 2.438032361696484,
+              "R0": 105.3343949044586,
+              "R1": 2.658492734828613
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 203.72709834493276
+          },
+          "rgbPalette": [
+            [
+              166,
+              220,
+              2
+            ]
+          ],
+          "rgbSha256": "5a6fa076f7d45c677ff869c8e7d1de0d22723b23ce1d285de02495271198b070",
+          "uniqueColorCount": 1
+        },
+        {
+          "coloredSamples": 1442,
+          "effective": {
+            "byEyeChannel": {
+              "L0": 93.29617834394905,
+              "L1": 96.02701656875507,
+              "R0": 105.3343949044586,
+              "R1": 104.71031062018506
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 399.36790043734777
+          },
+          "name": "uniform-color-2-b",
+          "requested": {
+            "byEyeChannel": {
+              "L0": 93.29617834394905,
+              "L1": 96.02701656875507,
+              "R0": 105.3343949044586,
+              "R1": 104.71031062018506
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 128,
+              "L1": 284,
+              "R0": 238,
+              "R1": 526
+            },
+            "stimulatedInputCount": 1176,
+            "total": 399.36790043734777
+          },
+          "rgbPalette": [
+            [
+              234,
+              180,
+              198
+            ]
+          ],
+          "rgbSha256": "c1e6b632fe12cb5b7a06bb647c6c69ad62c39bab63b0e8b4f411d10564cbfb0e",
+          "uniqueColorCount": 1
+        }
+      ],
+      "contrasts": [
+        {
+          "a": "color-1-a",
+          "b": "color-1-b",
+          "changedByChannel": {
+            "0": 0,
+            "1": 352
+          },
+          "changedInjectedCells": 352,
+          "currentDifferenceL1": 63.720159460125,
+          "currentDifferenceMaximum": 1.1378599903593756,
+          "diagnosticLuminanceExactlyEqual": true,
+          "doseA": {
+            "byEyeChannel": {
+              "L0": 28.131868131868135,
+              "L1": 16.7600083285875,
+              "R0": 28.131868131868135,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 89.78375292091127
+          },
+          "doseB": {
+            "byEyeChannel": {
+              "L0": 28.131868131868135,
+              "L1": 16.7600083285875,
+              "R0": 28.131868131868135,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.3186813186813187,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 89.78375292091127
+          }
+        },
+        {
+          "a": "color-2-a",
+          "b": "color-2-b",
+          "changedByChannel": {
+            "0": 0,
+            "1": 352
+          },
+          "changedInjectedCells": 352,
+          "currentDifferenceL1": 63.720159460125,
+          "currentDifferenceMaximum": 1.1378599903593756,
+          "diagnosticLuminanceExactlyEqual": true,
+          "doseA": {
+            "byEyeChannel": {
+              "L0": 38.52229299363058,
+              "L1": 16.7600083285875,
+              "R0": 38.52229299363058,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 110.56460264443615
+          },
+          "doseB": {
+            "byEyeChannel": {
+              "L0": 38.52229299363058,
+              "L1": 16.7600083285875,
+              "R0": 38.52229299363058,
+              "R1": 16.7600083285875
+            },
+            "maximum": 1.8057324840764335,
+            "stimulatedByEyeChannel": {
+              "L0": 68,
+              "L1": 127,
+              "R0": 89,
+              "R1": 225
+            },
+            "stimulatedInputCount": 509,
+            "total": 110.56460264443615
+          }
+        }
+      ],
+      "controls": [
+        {
+          "a": "color-1-a",
+          "b": "color-1-a-repeat",
+          "effectiveCurrentVectorsExactlyEqual": true,
+          "limitation": "Input-only equality; downstream trajectory equality remains untested."
+        },
+        {
+          "a": "color-1-a-silenced",
+          "b": "color-1-b-silenced",
+          "effectiveCurrentVectorsExactlyEqual": true,
+          "limitation": "Input-only equality; downstream trajectory equality remains untested."
+        },
+        {
+          "a": "color-2-a",
+          "b": "color-2-a-repeat",
+          "effectiveCurrentVectorsExactlyEqual": true,
+          "limitation": "Input-only equality; downstream trajectory equality remains untested."
+        },
+        {
+          "a": "color-2-a-silenced",
+          "b": "color-2-b-silenced",
+          "effectiveCurrentVectorsExactlyEqual": true,
+          "limitation": "Input-only equality; downstream trajectory equality remains untested."
+        },
+        {
+          "a": "color-1-a-off",
+          "b": "color-1-b-off",
+          "effectiveCurrentVectorsExactlyEqual": true,
+          "limitation": "Input-only equality; downstream trajectory equality remains untested."
+        },
+        {
+          "a": "color-2-a-off",
+          "b": "color-2-b-off",
+          "effectiveCurrentVectorsExactlyEqual": true,
+          "limitation": "Input-only equality; downstream trajectory equality remains untested."
+        },
+        {
+          "a": "color-1-a",
+          "b": "color-1-b",
+          "doseScope": "eyeChannel",
+          "equalBrightness": true,
+          "maximumDoseDifference": 0.0
+        },
+        {
+          "a": "color-2-a",
+          "b": "color-2-b",
+          "doseScope": "eyeChannel",
+          "equalBrightness": true,
+          "maximumDoseDifference": 0.0
+        }
+      ]
+    }
+  },
+  "patchCount": 32,
+  "proposalHash": "0aae0679a659699bae482b920d9abc20e698e090f67617a1319ac8953d650173",
+  "scope": "Quantized RGB8, fixed support, native adapter currents and input controls only; no voltage, spikes, motor, anatomy, browser or biological claims.",
+  "selectedColorPair": {
+    "a": [
+      66,
+      120,
+      2
+    ],
+    "b": [
+      134,
+      80,
+      198
+    ],
+    "blueContrast": 0.5928509154315607
+  },
+  "status": "INPUT-ONLY checks pass; no Brain has run; requires review and new preregistration/freeze"
+}
