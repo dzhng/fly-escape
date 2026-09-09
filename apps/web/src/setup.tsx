@@ -4,6 +4,7 @@ import { loadWorldAssets } from "./world-assets";
 import React, { useEffect, useRef, useState } from "react";
 import {
   AttemptClient,
+  loadMotionSampler,
   type LevelDef,
   type AttemptTuning,
   type ToolDef,
@@ -19,6 +20,7 @@ import { AttemptPlayback } from "./playback";
 import { type Progress, awardStars } from "./progress";
 import "./setup.css";
 import { frameBesidePanel } from "./world-framing";
+import { loadFlyPreviewBytes } from "./fly-preview";
 
 const FLY_COUNT = 16;
 
@@ -39,11 +41,13 @@ const names: Record<ToolKind, string> = {
   spiderWeb: "Spider web",
 };
 export function SetupGame({
+  client,
   content,
   progress,
   setProgress,
   storageFailed,
 }: {
+  client: AttemptClient;
   content: {
     roomDetails?: readonly RoomDetail[];
     roomFloors?: readonly RoomFloor[];
@@ -57,7 +61,6 @@ export function SetupGame({
   setProgress: React.Dispatch<React.SetStateAction<Progress>>;
   storageFailed: boolean;
 }) {
-  const [client] = useState(() => new AttemptClient(() => {}));
   const [setup, setSetup] = useState<PlacementState>();
   const [input, setInput] = useState<StartAttempt>();
   const [tool, setTool] = useState<ToolKind | undefined>(
@@ -74,6 +77,7 @@ export function SetupGame({
   const [error, setError] = useState("");
   const [worldState, setWorldState] = useState("loading");
   const world = useRef<WorldView | undefined>(undefined);
+  const worldAssets = useRef<Promise<void> | undefined>(undefined);
   const container = useRef<HTMLDivElement>(null);
   useEffect(() => {
     let live = true;
@@ -104,22 +108,34 @@ export function SetupGame({
     })();
     return () => {
       live = false;
-      client.dispose();
+      client.cancel();
+      world.current?.dispose();
+      world.current = undefined;
     };
   }, []);
   useEffect(() => {
     if (input || !container.current) return;
-    const view = new WorldView(container.current, content.level.geometry, FLY_COUNT, content.roomFloors);
-    world.current = view;
+    if (!world.current) {
+      const view = new WorldView(container.current, content.level.geometry, FLY_COUNT, content.roomFloors);
+      world.current = view;
+      worldAssets.current = loadWorldAssets(view, () => world.current === view, content.roomDetails);
+      // Playback retries failed preparation through the sampler's shared loader.
+      void loadMotionSampler().catch(() => {});
+      // The roster retries a failed model load when its preview component mounts.
+      void loadFlyPreviewBytes().catch(() => {});
+    }
+    const view = world.current;
+    view.attach(container.current);
     const stopFraming = frameBesidePanel(view, container.current, container.current.closest(".setup-game")!.querySelector("aside")!);
     const spawn = content.level.spawn;
     if (spawn.kind === "cluster") view.setSpawnArea(spawn.min, spawn.max);
+    else view.resetAttempt();
     view.setContactGeometry([], [], content.level.exit);
     view.overview();
     view.enableCamera();
     let live = true;
     setWorldState("loading");
-    void loadWorldAssets(view, () => live, content.roomDetails)
+    void worldAssets.current!
       .then(() => {
         if (live) setWorldState("ready");
       })
@@ -136,8 +152,6 @@ export function SetupGame({
       live = false;
       cancelAnimationFrame(raf);
       stopFraming();
-      view.dispose();
-      world.current = undefined;
     };
   }, [content, input]);
   useEffect(() => {
@@ -228,6 +242,7 @@ export function SetupGame({
   if (input)
     return (
       <AttemptPlayback
+        world={world.current}
         input={input}
         client={client}
         catalog={content.catalog}

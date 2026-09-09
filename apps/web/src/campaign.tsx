@@ -26,6 +26,7 @@ export function unlockedLevelCount(levels: readonly CampaignLevel[], progress: P
   return count;
 }
 export function Campaign({ levels }: { levels: readonly CampaignLevel[] }) {
+  const [client] = useState(() => new AttemptClient(() => {}));
   const [progress, setProgress] = useState(loadProgress);
   const [storageFailed, setStorageFailed] = useState(false);
   const [selected, setSelected] = useState(0);
@@ -36,23 +37,20 @@ export function Campaign({ levels }: { levels: readonly CampaignLevel[] }) {
   }, [progress]);
   useEffect(() => {
     if (!levels.length) return;
-    const client = new AttemptClient(() => {});
     let live = true;
     void client
       .setup({ type: "catalog" })
       .then((value) => {
-        client.dispose();
         if (live) setCatalog(value);
       })
       .catch((e) => {
-        client.dispose();
         if (live) setError(String(e));
       });
     return () => {
       live = false;
       client.dispose();
     };
-  }, [levels]);
+  }, [levels, client]);
   const count = unlockedLevelCount(levels, progress);
   const index = Math.min(selected, Math.max(0, count - 1));
   useEffect(() => {
@@ -93,6 +91,7 @@ export function Campaign({ levels }: { levels: readonly CampaignLevel[] }) {
       ) : (
         <SetupGame
           key={current.level.id}
+          client={client}
           content={content}
           progress={progress}
           setProgress={setProgress}
@@ -104,6 +103,7 @@ export function Campaign({ levels }: { levels: readonly CampaignLevel[] }) {
 }
 
 export function DiagnosticSetup() {
+  const [client] = useState(() => new AttemptClient(() => {}));
   const [fixture, setFixture] = useState<SetupFixture>();
   const [error, setError] = useState("");
   const [progress, setProgress] = useState(loadProgress);
@@ -112,16 +112,13 @@ export function DiagnosticSetup() {
     setStorageFailed(!saveProgress(progress));
   }, [progress]);
   useEffect(() => {
-    const client = new AttemptClient(() => {});
     let live = true;
     void client
       .setup({ type: "fixture" })
       .then((value) => {
-        client.dispose();
         if (live) setFixture(value);
       })
       .catch((e) => {
-        client.dispose();
         if (live) setError(String(e));
       });
     return () => {
@@ -144,6 +141,7 @@ export function DiagnosticSetup() {
     <p role="alert">{error}</p>
   ) : content ? (
     <SetupGame
+      client={client}
       content={content}
       progress={progress}
       setProgress={setProgress}

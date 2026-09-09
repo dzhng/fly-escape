@@ -1,0 +1,74 @@
+[
+  {
+    "level": 1,
+    "baselineMedianReturnMs": 320,
+    "candidateMedianReturnMs": 43.199999928474426,
+    "medianReturnImprovementPercent": 86.50000002235174,
+    "baselineTimings": [
+      {
+        "startToAdvancingFrameMs": 1493.8000000715256,
+        "confirmationToEditableFrameMs": 325.8000000715256
+      },
+      {
+        "startToAdvancingFrameMs": 1265.1000000238419,
+        "confirmationToEditableFrameMs": 320
+      },
+      {
+        "startToAdvancingFrameMs": 1215.2999999523163,
+        "confirmationToEditableFrameMs": 282.09999990463257
+      }
+    ],
+    "candidateTimings": [
+      {
+        "startToAdvancingFrameMs": 859.8000000715256,
+        "confirmationToEditableFrameMs": 43.199999928474426
+      },
+      {
+        "startToAdvancingFrameMs": 697.6000000238419,
+        "confirmationToEditableFrameMs": 44.40000009536743
+      },
+      {
+        "startToAdvancingFrameMs": 696.8999999761581,
+        "confirmationToEditableFrameMs": 43.199999928474426
+      }
+    ],
+    "candidateColdMs": 993.8999999761581,
+    "candidateBundle": "index-DX089UbV.js"
+  },
+  {
+    "level": 2,
+    "baselineMedianReturnMs": 352,
+    "candidateMedianReturnMs": 43.39999997615814,
+    "medianReturnImprovementPercent": 87.6704545522278,
+    "baselineTimings": [
+      {
+        "startToAdvancingFrameMs": 2145.2999999523163,
+        "confirmationToEditableFrameMs": 384.89999997615814
+      },
+      {
+        "startToAdvancingFrameMs": 1345.1999999284744,
+        "confirmationToEditableFrameMs": 341.7000000476837
+      },
+      {
+        "startToAdvancingFrameMs": 1330,
+        "confirmationToEditableFrameMs": 352
+      }
+    ],
+    "candidateTimings": [
+      {
+        "startToAdvancingFrameMs": 896.1000000238419,
+        "confirmationToEditableFrameMs": 43.89999997615814
+      },
+      {
+        "startToAdvancingFrameMs": 728,
+        "confirmationToEditableFrameMs": 41.60000002384186
+      },
+      {
+        "startToAdvancingFrameMs": 761,
+        "confirmationToEditableFrameMs": 43.39999997615814
+      }
+    ],
+    "candidateColdMs": 1075.2999999523163,
+    "candidateBundle": "index-DX089UbV.js"
+  }
+]

@@ -43,6 +43,35 @@ test("overview fits every room corner and pan releases follow without rotating",
   for (const x of [-5, 8]) for (const y of [0, 1]) for (const z of [-4, 9]) expect(rig.project(new THREE.Vector3(x,y,z)).visible).toBe(true);
 });
 
+test("loading taller artwork preserves the overview target across a retry", () => {
+  const loadedBounds = bounds.clone();
+  const rig = new WorldCamera(loadedBounds, 1);
+  rig.resize(1440, 900);
+  rig.overview();
+  const target = rig.state.target;
+  loadedBounds.max.y = 3;
+  rig.resize(1440, 900);
+  rig.follow(new THREE.Vector3(2, 0.5, 3));
+  rig.overview();
+  expect(rig.state.target).toEqual(target);
+});
+
+test("returning to a narrower panel reuses meadow coverage until viewport dimensions change", () => {
+  const rig = new WorldCamera(bounds, 1);
+  rig.resize(1440, 900);
+  rig.setRightInset(338);
+  const wider = rig.exteriorGroundCircle();
+  rig.setRightInset(298);
+  expect(rig.exteriorGroundCircle()).toEqual(wider);
+  rig.resize(1440, 900);
+  expect(rig.exteriorGroundCircle()).toEqual(wider);
+  rig.resize(1600, 1000);
+  const fresh = new WorldCamera(bounds, 1);
+  fresh.resize(1600, 1000);
+  fresh.setRightInset(298);
+  expect(rig.exteriorGroundCircle()).toEqual(fresh.exteriorGroundCircle());
+});
+
 test("maximum zoom keeps an edge fly centered; Overview restores the whole house", () => {
   const rig = new WorldCamera(bounds, 1);
   rig.resize(1000, 500);

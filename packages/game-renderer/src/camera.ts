@@ -44,6 +44,7 @@ export class WorldCamera {
   private elevation = DEFAULT_ELEVATION;
   private orientation = orbitBasis(DEFAULT_YAW, DEFAULT_ELEVATION);
   private readonly target = new THREE.Vector3();
+  private readonly overviewTarget: THREE.Vector3;
   private width = 1;
   private height = 1;
   private rightInset = 0;
@@ -58,7 +59,9 @@ export class WorldCamera {
     private readonly bounds: THREE.Box3,
     private subjectHeight: number,
   ) {
-    this.target.copy(bounds.getCenter(new THREE.Vector3()));
+    // Artwork may expand the fit bounds after loading; it must not move the level's anchor.
+    this.overviewTarget = bounds.getCenter(new THREE.Vector3());
+    this.target.copy(this.overviewTarget);
   }
   setSubjectHeight(height: number) {
     this.subjectHeight = height;
@@ -69,6 +72,7 @@ export class WorldCamera {
     this.resize(this.width, this.height);
   }
   resize(width: number, height: number) {
+    if (this.width !== Math.max(1, width) || this.height !== Math.max(1, height)) this.grassCoverage = undefined;
     this.width = Math.max(1, width);
     this.height = Math.max(1, height);
     this.camera.aspect = this.width / this.height;
@@ -89,7 +93,7 @@ export class WorldCamera {
     this.mounting = false;
     this.overviewMode = true;
     this.followed = false;
-    this.target.copy(this.bounds.getCenter(new THREE.Vector3()));
+    this.target.copy(this.overviewTarget);
     this.distance = this.fitDistance;
     this.apply();
   }
@@ -219,6 +223,9 @@ export class WorldCamera {
               }
       }
     }
+    // A phase or follow change must not rebuild a meadow that already covers this viewport.
+    const prior = this.grassCoverage?.circle;
+    if (prior?.x === center.x && prior.z === center.z) radius = Math.max(radius, prior.radius);
     const circle = { x: center.x, z: center.z, radius };
     this.grassCoverage = { key, circle };
     return circle;

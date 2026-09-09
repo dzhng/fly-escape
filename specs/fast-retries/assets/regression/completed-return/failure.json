@@ -1,0 +1,20 @@
+{
+  "run": 1,
+  "error": "AssertionError [ERR_ASSERTION]: run 1 confirmation to editable frame took 548 ms (limit 500)",
+  "report": null,
+  "timing": {
+    "starts": [
+      {
+        "clickedAt": 1520.2999999523163,
+        "firstAdvancingFrameMs": 939
+      }
+    ],
+    "returns": [
+      {
+        "clickedAt": 602761.8999999762,
+        "editableFrameMs": 548
+      }
+    ],
+    "coldSetupMs": 1459.2999999523163
+  }
+}

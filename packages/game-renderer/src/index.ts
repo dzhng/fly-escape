@@ -119,7 +119,7 @@ export class WorldView {
   private fieldTexture: THREE.DataTexture | null = null;
 
   constructor(
-    private readonly container: HTMLElement,
+    private container: HTMLElement,
     geometry: Geometry,
     flyCount = 1,
     roomFloors: readonly RoomFloor[] = [],
@@ -236,6 +236,28 @@ export class WorldView {
 
   get houseVisibility() {
     return { segments: this.house.walls.children.length, cutaway: this.house.walls.children.filter(wall => wall.userData.cutaway).length, solids: this.house.solids.children.length, solidsCutaway: this.house.solids.children.filter(prop => prop.scale.y < 1).length };
+  }
+
+  /** Move the owned canvas between phase hosts without rebuilding its GPU resources. */
+  attach(container: HTMLElement): void {
+    this.observer.disconnect();
+    this.container = container;
+    container.appendChild(this.renderer.domElement);
+    this.observer.observe(container);
+    this.resize();
+  }
+
+  /** Clear attempt presentation while retaining this level's world and artwork. */
+  resetAttempt(): void {
+    this.clearSpawnArea();
+    this.selectFly(null);
+    this.navigation.resetRotation();
+    this.flies.forEach((fly, id) => {
+      fly.visible = false;
+      this.outcomes.set(id);
+    });
+    this.trailSample = undefined;
+    this.trails.mesh.geometry.setDrawRange(0, 0);
   }
 
   get exteriorStats() { return { ...this.exterior.stats }; }
@@ -417,12 +439,7 @@ export class WorldView {
 
   /** Authored release region only; no speculative fly positions before Run. */
   setSpawnArea(min: { x: number; z: number }, max: { x: number; z: number }): void {
-    this.clearSpawnArea();
-    this.selectedFly = null;
-    this.selectionRing.visible = false;
-    this.flies.forEach((fly) => {
-      fly.visible = false;
-    });
+    this.resetAttempt();
     const geometry = new THREE.BufferGeometry().setFromPoints([
       new THREE.Vector3(min.x, 0.016, min.z),
       new THREE.Vector3(max.x, 0.016, min.z),

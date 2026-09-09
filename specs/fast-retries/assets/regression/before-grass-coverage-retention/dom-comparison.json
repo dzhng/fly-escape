@@ -1,0 +1,74 @@
+[
+  {
+    "level": 1,
+    "baselineColdMs": 1079.6999999284744,
+    "candidateColdMs": 1327.5999999046326,
+    "baselineTimings": [
+      {
+        "startToAdvancingFrameMs": 1493.8000000715256,
+        "confirmationToEditableFrameMs": 325.8000000715256
+      },
+      {
+        "startToAdvancingFrameMs": 1265.1000000238419,
+        "confirmationToEditableFrameMs": 320
+      },
+      {
+        "startToAdvancingFrameMs": 1215.2999999523163,
+        "confirmationToEditableFrameMs": 282.09999990463257
+      }
+    ],
+    "candidateTimings": [
+      {
+        "startToAdvancingFrameMs": 1126.8000000715256,
+        "confirmationToEditableFrameMs": 359.2999999523163
+      },
+      {
+        "startToAdvancingFrameMs": 1028.3000000715256,
+        "confirmationToEditableFrameMs": 337.7999999523163
+      },
+      {
+        "startToAdvancingFrameMs": 1125.5,
+        "confirmationToEditableFrameMs": 272.3000000715256
+      }
+    ],
+    "baselineMedianReturnMs": 320,
+    "candidateMedianReturnMs": 337.7999999523163,
+    "medianReturnImprovementPercent": -5.562499985098834
+  },
+  {
+    "level": 2,
+    "baselineColdMs": 2466.899999976158,
+    "candidateColdMs": 1448.3999999761581,
+    "baselineTimings": [
+      {
+        "startToAdvancingFrameMs": 2145.2999999523163,
+        "confirmationToEditableFrameMs": 384.89999997615814
+      },
+      {
+        "startToAdvancingFrameMs": 1345.1999999284744,
+        "confirmationToEditableFrameMs": 341.7000000476837
+      },
+      {
+        "startToAdvancingFrameMs": 1330,
+        "confirmationToEditableFrameMs": 352
+      }
+    ],
+    "candidateTimings": [
+      {
+        "startToAdvancingFrameMs": 912.5,
+        "confirmationToEditableFrameMs": 176.40000009536743
+      },
+      {
+        "startToAdvancingFrameMs": 728,
+        "confirmationToEditableFrameMs": 178.29999995231628
+      },
+      {
+        "startToAdvancingFrameMs": 729.5,
+        "confirmationToEditableFrameMs": 177.5
+      }
+    ],
+    "baselineMedianReturnMs": 352,
+    "candidateMedianReturnMs": 177.5,
+    "medianReturnImprovementPercent": 49.57386363636363
+  }
+]

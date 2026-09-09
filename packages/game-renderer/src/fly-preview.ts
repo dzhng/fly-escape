@@ -11,7 +11,7 @@ export class FlyPreviews {
   private readonly camera = new THREE.PerspectiveCamera(30, 1, 0.001, 20);
   private readonly pivot = new THREE.Group();
   private readonly holder = new THREE.Group();
-  private instance?: THREE.Object3D;
+  private model?: FlyModel;
   private motion?: FlyMotion;
   private distance = 1;
   constructor(readonly pixels: number) {
@@ -28,16 +28,16 @@ export class FlyPreviews {
     this.scene.add(this.pivot);
   }
 
-  /** Borrows the model: instances share its resources, so the loader keeps ownership. */
+  /** Owns the parsed model and its GPU resources for this preview renderer's lifetime. */
   setModel(model: FlyModel): void {
-    if (this.instance) {
+    if (this.model) {
       this.motion?.dispose();
-      this.disposeSkeletons();
-      this.holder.remove(this.instance);
+      this.holder.remove(this.model.root);
+      this.model.dispose();
     }
-    this.instance = model.instantiate();
-    this.holder.add(this.instance);
-    this.motion = new FlyMotion(this.instance, model.clips);
+    this.model = model;
+    this.holder.add(model.root);
+    this.motion = new FlyMotion(model.root, model.clips);
     const center = model.bounds.getCenter(new THREE.Vector3());
     this.holder.position.copy(center).negate();
     const radius = model.bounds.getSize(new THREE.Vector3()).length() / 2;
@@ -46,7 +46,7 @@ export class FlyPreviews {
 
   /** Render the atlas before copying any tile, avoiding a GPU readback between flies. */
   paint(entries: readonly { canvas: HTMLCanvasElement; pose?: FlyPose }[], rotation: readonly [number, number, number, number]): void {
-    if (!this.instance || !entries.length) return;
+    if (!this.model || !entries.length) return;
     const columns = Math.ceil(Math.sqrt(entries.length));
     const rows = Math.ceil(entries.length / columns);
     const width = columns * this.pixels, height = rows * this.pixels;
@@ -79,15 +79,9 @@ export class FlyPreviews {
     });
   }
 
-  private disposeSkeletons(): void {
-    const skeletons = new Set<THREE.Skeleton>();
-    this.instance?.traverse(object => { if (object instanceof THREE.SkinnedMesh) skeletons.add(object.skeleton); });
-    skeletons.forEach(skeleton => skeleton.dispose());
-  }
-
   dispose(): void {
     this.motion?.dispose();
-    this.disposeSkeletons();
+    this.model?.dispose();
     this.renderer.dispose();
     this.renderer.forceContextLoss();
   }

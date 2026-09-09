@@ -1,0 +1,131 @@
+{
+  "scope": "All emitted geometry numeric attributes, indices and instance matrices, including terrain heights; actual campaign masks. Node transforms derive from identical input circles.",
+  "results": [
+    {
+      "level": "open-window",
+      "circle": {
+        "x": 4.2,
+        "z": 4.6,
+        "radius": 4
+      },
+      "stats": {
+        "batches": 0,
+        "clumps": 0,
+        "candidateCells": 26896,
+        "packedBytes": 0,
+        "spacing": 0.054878048780487805,
+        "radius": 4.5
+      },
+      "meshes": 4,
+      "arrays": 14,
+      "bytes": 1144856,
+      "geometryHash": "2a1dfafe9bd41d19cd5c449a2663c44e55bc7f9abaf353a90e6217710d1df388",
+      "elapsedMs": 22.227791999999997
+    },
+    {
+      "level": "open-window",
+      "circle": {
+        "x": 4.2,
+        "z": 4.6,
+        "radius": 40
+      },
+      "stats": {
+        "batches": 224,
+        "clumps": 800370,
+        "candidateCells": 1048576,
+        "packedBytes": 25611840,
+        "spacing": 0.0791015625,
+        "radius": 40.5
+      },
+      "meshes": 228,
+      "arrays": 1358,
+      "bytes": 55900832,
+      "geometryHash": "8fbb1299d0efdf5aecbcd47482e5283280f70d0edf882721517957964600b8d7",
+      "elapsedMs": 306.89124999999996
+    },
+    {
+      "level": "open-window",
+      "circle": {
+        "x": 4.2,
+        "z": 4.6,
+        "radius": 90
+      },
+      "stats": {
+        "batches": 224,
+        "clumps": 816673,
+        "candidateCells": 1048576,
+        "packedBytes": 26133536,
+        "spacing": 0.1767578125,
+        "radius": 90.5
+      },
+      "meshes": 228,
+      "arrays": 1358,
+      "bytes": 57010268,
+      "geometryHash": "93af5371b6c7aa81fbbb4278076612ee0631e082efc9bee1389dfec416c3eea6",
+      "elapsedMs": 303.5034580000001
+    },
+    {
+      "level": "turn-the-corner",
+      "circle": {
+        "x": 4.2,
+        "z": 4.6,
+        "radius": 4
+      },
+      "stats": {
+        "batches": 0,
+        "clumps": 0,
+        "candidateCells": 26896,
+        "packedBytes": 0,
+        "spacing": 0.054878048780487805,
+        "radius": 4.5
+      },
+      "meshes": 4,
+      "arrays": 14,
+      "bytes": 1144856,
+      "geometryHash": "2a1dfafe9bd41d19cd5c449a2663c44e55bc7f9abaf353a90e6217710d1df388",
+      "elapsedMs": 12.037333999999987
+    },
+    {
+      "level": "turn-the-corner",
+      "circle": {
+        "x": 4.2,
+        "z": 4.6,
+        "radius": 40
+      },
+      "stats": {
+        "batches": 223,
+        "clumps": 796542,
+        "candidateCells": 1048576,
+        "packedBytes": 25489344,
+        "spacing": 0.0791015625,
+        "radius": 40.5
+      },
+      "meshes": 227,
+      "arrays": 1352,
+      "bytes": 55639232,
+      "geometryHash": "73b7b450d7d055e95709a49e3e6b73445d13647c3e208608c7321164fb6b92c1",
+      "elapsedMs": 317.462042
+    },
+    {
+      "level": "turn-the-corner",
+      "circle": {
+        "x": 4.2,
+        "z": 4.6,
+        "radius": 90
+      },
+      "stats": {
+        "batches": 224,
+        "clumps": 815911,
+        "candidateCells": 1048576,
+        "packedBytes": 26109152,
+        "spacing": 0.1767578125,
+        "radius": 90.5
+      },
+      "meshes": 228,
+      "arrays": 1358,
+      "bytes": 56958452,
+      "geometryHash": "99347c4f79309dec76b16d7ab2d693eb3051dd4eed63c9926fc4a7e698ed47e6",
+      "elapsedMs": 342.459167
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+# Reuse sufficient meadow coverage
+
+The matched DOM-clock comparison exposed a remaining level-1 retry cost: its median return is 337.8 ms against a 320 ms baseline, despite meeting the absolute 500 ms limit. The original baseline included automation overhead and cannot establish the required relative improvement. Retain that failed comparison.
+
+The camera already owns the conservative ground coverage and far clipping. Within a fixed viewport, keep the largest requested coverage radius for the same center. A narrower panel or returning from follow must not rebuild scenery that already covers the view. Actual viewport dimension changes clear that retained coverage; a changed center starts a new circle. The meadow still owns one field, replaces it when necessary, and retains its existing fixed cell cap. No list of cached scenes or new resource manager is introduced.
+
+Pin panel widening/narrowing and viewport reset through camera tests. Check the existing ray-coverage tests and generated field resource bounds. Re-run paired seeds using the same DOM click clock on both baseline and candidate; require at least 40% median return improvement per level and the existing absolute limits. Inspect normal and low-angle/follow return views for bare edges or excessive loss of detail. A large inspected footprint can remain coarser until resize; accept that only if the actual visual review remains readable. Preserve the completed-round correctness evidence; verify the affected return and rendering path on the final build.

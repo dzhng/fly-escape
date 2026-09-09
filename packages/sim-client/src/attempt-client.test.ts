@@ -21,8 +21,8 @@ class WorkerBoundary {
   fatal() {
     this.onmessage?.(new MessageEvent<WorkerFailure>("message", { data: { type: "fatal", message: "native trap" } }));
   }
-  completeSetup() {
-    this.onmessage?.(new MessageEvent<SetupReply>("message", { data: { type: "setup", requestId: this.setupId, value: [] } }));
+  completeSetup(requestId = this.setupId) {
+    this.onmessage?.(new MessageEvent<SetupReply>("message", { data: { type: "setup", requestId, value: [] } }));
   }
   deliver(generation: number, attemptId: string) {
     this.onmessage?.(new MessageEvent<AttemptEnvelope>("message", {
@@ -70,6 +70,33 @@ test("a fatal setup failure permits a fresh worker and stale faults cannot rejec
     expect(current.terminated).toBe(false);
     current.completeSetup();
     expect(await retry).toEqual({ value: [] });
+  } finally {
+    client.dispose();
+    globalThis.Worker = original;
+  }
+});
+
+test("leaving a setup lets the next level resolve without accepting the old reply", async () => {
+  const original = globalThis.Worker;
+  globalThis.Worker = WorkerBoundary as unknown as typeof Worker;
+  const client = new AttemptClient(() => {});
+  try {
+    const prior = client.setup({ type: "catalog" }).catch(error => error.message);
+    const worker = WorkerBoundary.latest;
+    const priorId = worker.setupId;
+    client.cancel();
+    let settled = false;
+    const next = client.setup({ type: "catalog" }).then(
+      value => { settled = true; return { value }; },
+      error => { settled = true; return { error: error.message }; },
+    );
+    worker.completeSetup(priorId);
+    await Promise.resolve();
+    expect(settled).toBe(false);
+    worker.completeSetup();
+    expect(await next).toEqual({ value: [] });
+    expect(await prior).toBe("Setup cancelled");
+    expect(worker.terminated).toBe(false);
   } finally {
     client.dispose();
     globalThis.Worker = original;

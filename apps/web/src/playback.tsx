@@ -70,6 +70,8 @@ type Run = {
   departureTail: DepartureTail;
   requestedAt: number;
   readyAt: number;
+  assetsReadyAt: number | null;
+  firstChunkAt: number | null;
   firstPlayAt: number | null;
   productionMs: number;
   activeNeuralSteps: number;
@@ -146,6 +148,7 @@ export function PlaybackLab() {
 export function AttemptPlayback({
   input,
   client,
+  world,
   catalog = [],
   roomDetails,
   roomFloors,
@@ -154,6 +157,7 @@ export function AttemptPlayback({
 }: {
   input?: StartAttempt;
   client?: AttemptClient;
+  world?: WorldView;
   catalog?: ToolDef[];
   roomDetails?: readonly RoomDetail[];
   roomFloors?: readonly RoomFloor[];
@@ -199,6 +203,7 @@ export function AttemptPlayback({
     let requestedAt = performance.now();
     let lastDiagnosticAt = -Infinity;
     let renderFailed = false;
+    let sampledPoses: FlyPose[] = [];
     const fail = (message: string) => {
       console.error("[Fly escape] attempt failed", { message, spec: run.current?.info.spec });
       if (run.current) {
@@ -241,6 +246,8 @@ export function AttemptPlayback({
           clock,
           requestedAt,
           readyAt: performance.now(),
+          assetsReadyAt: null,
+          firstChunkAt: null,
           firstPlayAt: null,
           productionMs: 0,
           activeNeuralSteps: 0,
@@ -253,13 +260,14 @@ export function AttemptPlayback({
           frameIntervals: new TimingSamples(),
           interactions: new TimingSamples(),
         };
-        scene.current?.dispose();
-        scene.current = new WorldView(
+        if (!world) scene.current?.dispose();
+        scene.current = world ?? new WorldView(
           container.current!,
           reply.info.level.geometry,
           reply.info.spec.flyCount,
           roomFloors,
         );
+        scene.current.attach(container.current!);
         scene.current.setContactGeometry(
           reply.info.resolvedSetup.state.food.slice(0, reply.info.level.food.length),
           reply.info.level.zappers,
@@ -276,12 +284,13 @@ export function AttemptPlayback({
         const target = scene.current;
         setWorldReady(false);
         void Promise.all([
-          loadWorldAssets(target, () => scene.current === target, roomDetails),
+          world ? Promise.resolve() : loadWorldAssets(target, () => scene.current === target, roomDetails),
           loadMotionSampler(),
         ]).then(([, sampler]) => {
           if (scene.current === target && run.current) {
             run.current.motionSampler = sampler;
             run.current.assetsReady = true;
+            run.current.assetsReadyAt = performance.now();
             setWorldReady(true);
           }
         })
@@ -294,6 +303,7 @@ export function AttemptPlayback({
       } else if (reply.type === "frames") {
         const current = run.current;
         if (!current) throw new Error("Frames arrived before attempt metadata");
+        current.firstChunkAt ??= performance.now();
         current.archive.append(reply.chunk); // This takes ownership and detaches the message buffers.
         current.wasmBytes = reply.metrics.wasmBytes;
         if (reply.metrics.activeNeuralSteps > 0) {
@@ -312,8 +322,15 @@ export function AttemptPlayback({
     restart.current = () => {
       run.current?.archive.clear();
       run.current = undefined;
-      scene.current?.dispose();
-      scene.current = undefined;
+      sampledPoses = [];
+      if (!world) scene.current?.dispose();
+      scene.current = world;
+      if (world) {
+        world.attach(container.current!);
+        world.resetAttempt();
+        world.enableCamera();
+        world.render();
+      }
       setInfo(undefined);
       setDisplay(initialDisplay);
       if (seekInput.current) seekInput.current.value = "0";
@@ -345,7 +362,6 @@ export function AttemptPlayback({
     restart.current();
     const draw = (now: number) => {
       const current = run.current;
-      let sampledPoses: FlyPose[] = [];
       if (current) {
         try {
           const rate = productionRate(current);
@@ -437,6 +453,12 @@ export function AttemptPlayback({
                   current.firstPlayAt === null ? null : current.firstPlayAt - current.requestedAt,
                 warmWaitMs:
                   current.firstPlayAt === null ? null : current.firstPlayAt - current.readyAt,
+                startup: {
+                  attemptReadyMs: current.readyAt - current.requestedAt,
+                  firstChunkMs: current.firstChunkAt === null ? null : current.firstChunkAt - current.requestedAt,
+                  assetsReadyMs: current.assetsReadyAt === null ? null : current.assetsReadyAt - current.requestedAt,
+                  firstPlaybackMs: current.firstPlayAt === null ? null : current.firstPlayAt - current.requestedAt,
+                },
                 productionMs: current.productionMs,
                 activeNeuralSteps: current.activeNeuralSteps,
                 activeEquivalentProductionRate: rate,
@@ -501,7 +523,7 @@ export function AttemptPlayback({
         observer.setReceiver(() => {});
       } else observer.dispose();
       run.current?.archive.clear();
-      scene.current?.dispose();
+      if (!world) scene.current?.dispose();
       scene.current = undefined;
     };
   }, []);

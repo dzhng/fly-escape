@@ -1,0 +1,98 @@
+{
+  "browser": "152.0.7977.77",
+  "samples": [
+    {
+      "run": 0,
+      "attemptId": "c32e4a53-d5ba-4ef8-b098-14b045787a36",
+      "rootSeed": "42",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 879.1999999284744,
+        "confirmationToEditableFrameMs": 310.5
+      },
+      "startup": {
+        "attemptReadyMs": 239.10000002384186,
+        "firstChunkMs": 490.7000000476837,
+        "assetsReadyMs": 246.70000004768372,
+        "firstPlaybackMs": 721.8999999761581
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2005,
+        "triangles": 4474514,
+        "geometries": 417,
+        "textures": 31
+      },
+      "wasmBytes": 93192192,
+      "mainHeapAfterReturn": {
+        "usedSize": 51411776,
+        "totalSize": 53084160,
+        "embedderHeapUsedSize": 2205624,
+        "backingStorageSize": 37643499
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 134,
+        "jsEventListeners": 210
+      }
+    }
+  ],
+  "startupAcceptance": true,
+  "coldSetupMs": 1088.3000000715256,
+  "setupAssets": [
+    "http://127.0.0.1:5194/assets/floor-CWY_kn0a.glb",
+    "http://127.0.0.1:5194/assets/tile-floor-DMqAzEt4.glb",
+    "http://127.0.0.1:5194/assets/sofa-Ht1b2HT8.glb",
+    "http://127.0.0.1:5194/assets/kitchen-AXOHy94n.glb",
+    "http://127.0.0.1:5194/assets/cabinet-CQhECtzS.glb",
+    "http://127.0.0.1:5194/assets/desk-Ctq-uvrh.glb",
+    "http://127.0.0.1:5194/assets/chair-C6SsO7ej.glb",
+    "http://127.0.0.1:5194/assets/bed-BAtm8UL6.glb",
+    "http://127.0.0.1:5194/assets/window-D0F6K1F7.glb",
+    "http://127.0.0.1:5194/assets/sconce-CqhfygL7.glb",
+    "http://127.0.0.1:5194/assets/wall-plant-BH3kXnr0.glb",
+    "http://127.0.0.1:5194/assets/doorway-bOmbiQ6W.glb",
+    "http://127.0.0.1:5194/assets/exit-window-BZ-EvLG2.glb",
+    "http://127.0.0.1:5194/assets/apple-Be8DVIkK.glb",
+    "http://127.0.0.1:5194/assets/banana-pYrTQDC8.glb",
+    "http://127.0.0.1:5194/assets/crumbs-DsKjrqwK.glb",
+    "http://127.0.0.1:5194/assets/vinegar-DIfAr2vf.glb",
+    "http://127.0.0.1:5194/assets/fan-D2OltmOR.glb",
+    "http://127.0.0.1:5194/assets/lamp-D7bX1F7V.glb",
+    "http://127.0.0.1:5194/assets/shade-ByQD8-3_.glb",
+    "http://127.0.0.1:5194/assets/worn-shoes-T9hDUp5C.glb",
+    "http://127.0.0.1:5194/assets/dirty-dishes-U8YVj2x7.glb",
+    "http://127.0.0.1:5194/assets/crumpled-laundry-D-9r_zaW.glb",
+    "http://127.0.0.1:5194/assets/sleeping-cat-CvrZjof7.glb",
+    "http://127.0.0.1:5194/assets/bug-zapper-CMFOC8K4.glb",
+    "http://127.0.0.1:5194/assets/corner-spider-C4Eb2fi5.glb",
+    "http://127.0.0.1:5194/assets/fly-BMIKK5wf.glb",
+    "http://127.0.0.1:5194/assets/fly-BMIKK5wf.glb"
+  ],
+  "imageRequests": [
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/wornShoes-Dt1B-PN9.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/laundry-CRpCNfY0.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/wornShoes-Dt1B-PN9.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/laundry-CRpCNfY0.png"
+  ],
+  "timingMaxima": {
+    "startToAdvancingFrameMs": 879.1999999284744,
+    "confirmationToEditableFrameMs": 310.5
+  },
+  "retainedMainHeapChangeBytes": 0,
+  "errors": [],
+  "scope": "1 real 16-fly complete realTime attempts and retries on campaign level 2. Collected main heaps are observations, not process RSS or a proof that Worker/GPU memory cannot leak. Final combined memory, input latency, hidden-tab and platform gates remain separate."
+}

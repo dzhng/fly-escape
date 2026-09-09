@@ -1,0 +1,910 @@
+{
+  "browser": "152.0.7977.77",
+  "samples": [
+    {
+      "run": 0,
+      "attemptId": "8c9604b9-e4fa-4a60-960f-139526aa94c7",
+      "rootSeed": "11190557002130895490",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 877.6999999284744,
+        "confirmationToEditableFrameMs": 327.60000002384186
+      },
+      "startup": {
+        "attemptReadyMs": 240,
+        "firstChunkMs": 567.5,
+        "assetsReadyMs": 246.10000002384186,
+        "firstPlaybackMs": 719.7999999761582
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174092,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 42860768,
+        "totalSize": 44171264,
+        "embedderHeapUsedSize": 1896200,
+        "backingStorageSize": 37580479
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 1,
+      "attemptId": "8b7d956c-6f2c-4307-b99d-ad992f98f161",
+      "rootSeed": "18135048454727071073",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 680.2000000476837,
+        "confirmationToEditableFrameMs": 245.5
+      },
+      "startup": {
+        "attemptReadyMs": 59.200000047683716,
+        "firstChunkMs": 344.10000002384186,
+        "assetsReadyMs": 65.39999997615814,
+        "firstPlaybackMs": 525.8999999761581
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174092,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 43264516,
+        "totalSize": 44171264,
+        "embedderHeapUsedSize": 1977576,
+        "backingStorageSize": 37580515
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 2,
+      "attemptId": "b27062d5-bf53-4e63-89d1-ec32b800c230",
+      "rootSeed": "12141377355009335189",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 680,
+        "confirmationToEditableFrameMs": 244.70000004768372
+      },
+      "startup": {
+        "attemptReadyMs": 56.59999990463257,
+        "firstChunkMs": 344.59999990463257,
+        "assetsReadyMs": 62.299999952316284,
+        "firstPlaybackMs": 526.0999999284741
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174088,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 43457360,
+        "totalSize": 44433408,
+        "embedderHeapUsedSize": 1925904,
+        "backingStorageSize": 37580551
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 3,
+      "attemptId": "7f47e55a-33c6-4931-8023-11b70f1cde0d",
+      "rootSeed": "4597537456525495285",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 696.0999999046326,
+        "confirmationToEditableFrameMs": 245.60000002384186
+      },
+      "startup": {
+        "attemptReadyMs": 57.199999928474426,
+        "firstChunkMs": 338.7999999523163,
+        "assetsReadyMs": 64,
+        "firstPlaybackMs": 525.9999999284746
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174088,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 43636192,
+        "totalSize": 44957696,
+        "embedderHeapUsedSize": 1882296,
+        "backingStorageSize": 37580587
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 4,
+      "attemptId": "ea704214-9887-4f73-946d-a32f2616fcbe",
+      "rootSeed": "2307188626193835454",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 697,
+        "confirmationToEditableFrameMs": 275.7000000476837
+      },
+      "startup": {
+        "attemptReadyMs": 56.200000047683716,
+        "firstChunkMs": 347.5,
+        "assetsReadyMs": 62.200000047683716,
+        "firstPlaybackMs": 542.8999999999996
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174084,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 43696836,
+        "totalSize": 44957696,
+        "embedderHeapUsedSize": 1907736,
+        "backingStorageSize": 37580623
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 5,
+      "attemptId": "e6340578-c1b8-494a-bfed-d2d401d95912",
+      "rootSeed": "8992386593903295179",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 712.3000000715256,
+        "confirmationToEditableFrameMs": 259.7999999523163
+      },
+      "startup": {
+        "attemptReadyMs": 60.10000002384186,
+        "firstChunkMs": 370.39999997615814,
+        "assetsReadyMs": 66.39999997615814,
+        "firstPlaybackMs": 557.5999999761589
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174088,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 43815904,
+        "totalSize": 45219840,
+        "embedderHeapUsedSize": 1915464,
+        "backingStorageSize": 37580659
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 6,
+      "attemptId": "8d236e08-d13c-4d45-95b8-8c2b17c6372e",
+      "rootSeed": "7980651954761437385",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 744.7999999523163,
+        "confirmationToEditableFrameMs": 245.09999990463257
+      },
+      "startup": {
+        "attemptReadyMs": 57.800000071525574,
+        "firstChunkMs": 387.39999997615814,
+        "assetsReadyMs": 64.20000004768372,
+        "firstPlaybackMs": 591.1000000000004
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174088,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 43882248,
+        "totalSize": 45219840,
+        "embedderHeapUsedSize": 1885848,
+        "backingStorageSize": 37580695
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 7,
+      "attemptId": "a2aa8df2-6db1-4f55-9ab7-72caf3da1846",
+      "rootSeed": "7345390603587943656",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 680.1000000238419,
+        "confirmationToEditableFrameMs": 245.40000009536743
+      },
+      "startup": {
+        "attemptReadyMs": 56.59999990463257,
+        "firstChunkMs": 339,
+        "assetsReadyMs": 62.09999990463257,
+        "firstPlaybackMs": 525.6999999284744
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174092,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 44092276,
+        "totalSize": 45219840,
+        "embedderHeapUsedSize": 1930736,
+        "backingStorageSize": 37580731
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 8,
+      "attemptId": "a2720ad4-29ad-4ddf-be41-45b103e90d36",
+      "rootSeed": "4962410835303347820",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 679.7000000476837,
+        "confirmationToEditableFrameMs": 260.39999997615814
+      },
+      "startup": {
+        "attemptReadyMs": 56.10000002384186,
+        "firstChunkMs": 345.39999997615814,
+        "assetsReadyMs": 62.200000047683716,
+        "firstPlaybackMs": 526
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174100,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 44242352,
+        "totalSize": 45744128,
+        "embedderHeapUsedSize": 1833400,
+        "backingStorageSize": 37580767
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 9,
+      "attemptId": "0b133915-3251-4e4e-9e1f-f593ec2de69c",
+      "rootSeed": "11101185509677392070",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 697.1000000238419,
+        "confirmationToEditableFrameMs": 244.80000007152557
+      },
+      "startup": {
+        "attemptReadyMs": 56.200000047683716,
+        "firstChunkMs": 347.5,
+        "assetsReadyMs": 62.10000002384186,
+        "firstPlaybackMs": 542.6999999761574
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174084,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 44295980,
+        "totalSize": 45744128,
+        "embedderHeapUsedSize": 1943152,
+        "backingStorageSize": 37580803
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 10,
+      "attemptId": "5ae2da4c-61d4-40cb-a8cb-d5ebc16e5e38",
+      "rootSeed": "17689877907616914555",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 697.2000000476837,
+        "confirmationToEditableFrameMs": 261.60000002384186
+      },
+      "startup": {
+        "attemptReadyMs": 56.5,
+        "firstChunkMs": 349.5,
+        "assetsReadyMs": 62.300000071525574,
+        "firstPlaybackMs": 542.9000000000015
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174084,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 44328876,
+        "totalSize": 45481984,
+        "embedderHeapUsedSize": 1917696,
+        "backingStorageSize": 37580839
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 11,
+      "attemptId": "245ee004-108d-48a5-9a65-28019200ed0f",
+      "rootSeed": "10453502181265130522",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 713.7000000476837,
+        "confirmationToEditableFrameMs": 261.39999997615814
+      },
+      "startup": {
+        "attemptReadyMs": 56.800000071525574,
+        "firstChunkMs": 393.39999997615814,
+        "assetsReadyMs": 62.700000047683716,
+        "firstPlaybackMs": 559.2999999999993
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174100,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 44402716,
+        "totalSize": 46006272,
+        "embedderHeapUsedSize": 1954648,
+        "backingStorageSize": 37580875
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 12,
+      "attemptId": "fc9df4c0-019d-4aa7-a46b-4cba76a18fc3",
+      "rootSeed": "14537643471717761728",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 697.1999999284744,
+        "confirmationToEditableFrameMs": 261
+      },
+      "startup": {
+        "attemptReadyMs": 56.59999990463257,
+        "firstChunkMs": 352.39999997615814,
+        "assetsReadyMs": 62.299999952316284,
+        "firstPlaybackMs": 543.5999999284759
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174096,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 44439196,
+        "totalSize": 46006272,
+        "embedderHeapUsedSize": 1922688,
+        "backingStorageSize": 37580911
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 13,
+      "attemptId": "99f83850-1452-45bc-98b6-ee8c01e8bbf5",
+      "rootSeed": "5348840356359714338",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 730.2000000476837,
+        "confirmationToEditableFrameMs": 261.39999997615814
+      },
+      "startup": {
+        "attemptReadyMs": 56.40000009536743,
+        "firstChunkMs": 371.90000009536743,
+        "assetsReadyMs": 62.60000002384186,
+        "firstPlaybackMs": 576.1000000238419
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174096,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 44475880,
+        "totalSize": 46006272,
+        "embedderHeapUsedSize": 1951080,
+        "backingStorageSize": 37580947
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 14,
+      "attemptId": "e52bd7bc-a786-46b2-9be0-39f611385df9",
+      "rootSeed": "9348358655410559831",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 730.6999999284744,
+        "confirmationToEditableFrameMs": 261.09999990463257
+      },
+      "startup": {
+        "attemptReadyMs": 57.199999928474426,
+        "firstChunkMs": 368.5,
+        "assetsReadyMs": 63.39999997615814,
+        "firstPlaybackMs": 576.8999999523148
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174100,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 44532128,
+        "totalSize": 45744128,
+        "embedderHeapUsedSize": 1935584,
+        "backingStorageSize": 37580983
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 15,
+      "attemptId": "2d0e7d88-702a-4da2-9e3c-cec362cdae6e",
+      "rootSeed": "1484881355101415625",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 730.6000000238419,
+        "confirmationToEditableFrameMs": 277.5
+      },
+      "startup": {
+        "attemptReadyMs": 59.199999928474426,
+        "firstChunkMs": 370.89999997615814,
+        "assetsReadyMs": 65.60000002384186,
+        "firstPlaybackMs": 576.0999999523192
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174096,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 44518932,
+        "totalSize": 46006272,
+        "embedderHeapUsedSize": 1986816,
+        "backingStorageSize": 37581019
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 16,
+      "attemptId": "7cf0d2c0-3765-4efc-87bf-860929b53a70",
+      "rootSeed": "1100289976728478658",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 729.7999999523163,
+        "confirmationToEditableFrameMs": 310.5
+      },
+      "startup": {
+        "attemptReadyMs": 56.299999952316284,
+        "firstChunkMs": 368,
+        "assetsReadyMs": 62.39999997615814,
+        "firstPlaybackMs": 575.799999928473
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174092,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 44610012,
+        "totalSize": 46006272,
+        "embedderHeapUsedSize": 1946256,
+        "backingStorageSize": 37581055
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 17,
+      "attemptId": "7871c1f1-f910-435e-b2dd-972c8fc61a03",
+      "rootSeed": "4012394608693526837",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 796.2999999523163,
+        "confirmationToEditableFrameMs": 309.89999997615814
+      },
+      "startup": {
+        "attemptReadyMs": 66.80000007152557,
+        "firstChunkMs": 413.2000000476837,
+        "assetsReadyMs": 73.10000002384186,
+        "firstPlaybackMs": 642.1999999999971
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174088,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 44664480,
+        "totalSize": 45744128,
+        "embedderHeapUsedSize": 2061984,
+        "backingStorageSize": 37581091
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 18,
+      "attemptId": "a15cb1c0-f7b6-4033-8f13-dd1358bb7810",
+      "rootSeed": "4276372832429676739",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 828.8999999761581,
+        "confirmationToEditableFrameMs": 326.7000000476837
+      },
+      "startup": {
+        "attemptReadyMs": 69.89999997615814,
+        "firstChunkMs": 439,
+        "assetsReadyMs": 77.60000002384186,
+        "firstPlaybackMs": 674.7999999761596
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174088,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 44701528,
+        "totalSize": 46006272,
+        "embedderHeapUsedSize": 2003032,
+        "backingStorageSize": 37581127
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 19,
+      "attemptId": "63bbf21e-1824-418e-ac95-5c9d531d341b",
+      "rootSeed": "500472745143132501",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 828.8999999761581,
+        "confirmationToEditableFrameMs": 343.3000000715256
+      },
+      "startup": {
+        "attemptReadyMs": 70.89999997615814,
+        "firstChunkMs": 435.10000002384186,
+        "assetsReadyMs": 78.39999997615814,
+        "firstPlaybackMs": 675
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2022,
+        "triangles": 5174092,
+        "geometries": 364,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 44730260,
+        "totalSize": 46006272,
+        "embedderHeapUsedSize": 1960080,
+        "backingStorageSize": 37581163
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 120,
+        "jsEventListeners": 204
+      }
+    }
+  ],
+  "startupAcceptance": true,
+  "coldSetupMs": 1303.3000000715256,
+  "setupAssets": [
+    "http://127.0.0.1:5194/assets/floor-CWY_kn0a.glb",
+    "http://127.0.0.1:5194/assets/tile-floor-DMqAzEt4.glb",
+    "http://127.0.0.1:5194/assets/sofa-Ht1b2HT8.glb",
+    "http://127.0.0.1:5194/assets/kitchen-AXOHy94n.glb",
+    "http://127.0.0.1:5194/assets/desk-Ctq-uvrh.glb",
+    "http://127.0.0.1:5194/assets/chair-C6SsO7ej.glb",
+    "http://127.0.0.1:5194/assets/bed-BAtm8UL6.glb",
+    "http://127.0.0.1:5194/assets/window-D0F6K1F7.glb",
+    "http://127.0.0.1:5194/assets/sconce-CqhfygL7.glb",
+    "http://127.0.0.1:5194/assets/wall-plant-BH3kXnr0.glb",
+    "http://127.0.0.1:5194/assets/doorway-bOmbiQ6W.glb",
+    "http://127.0.0.1:5194/assets/exit-window-BZ-EvLG2.glb",
+    "http://127.0.0.1:5194/assets/apple-Be8DVIkK.glb",
+    "http://127.0.0.1:5194/assets/banana-pYrTQDC8.glb",
+    "http://127.0.0.1:5194/assets/crumbs-DsKjrqwK.glb",
+    "http://127.0.0.1:5194/assets/vinegar-DIfAr2vf.glb",
+    "http://127.0.0.1:5194/assets/fan-D2OltmOR.glb",
+    "http://127.0.0.1:5194/assets/lamp-D7bX1F7V.glb",
+    "http://127.0.0.1:5194/assets/shade-ByQD8-3_.glb",
+    "http://127.0.0.1:5194/assets/worn-shoes-T9hDUp5C.glb",
+    "http://127.0.0.1:5194/assets/dirty-dishes-U8YVj2x7.glb",
+    "http://127.0.0.1:5194/assets/crumpled-laundry-D-9r_zaW.glb",
+    "http://127.0.0.1:5194/assets/sleeping-cat-CvrZjof7.glb",
+    "http://127.0.0.1:5194/assets/bug-zapper-CMFOC8K4.glb",
+    "http://127.0.0.1:5194/assets/corner-spider-C4Eb2fi5.glb",
+    "http://127.0.0.1:5194/assets/fly-BMIKK5wf.glb",
+    "http://127.0.0.1:5194/assets/fly-BMIKK5wf.glb"
+  ],
+  "imageRequests": [
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5194/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5194/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5194/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5194/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5194/assets/dirtyDishes-tPZZeAey.png"
+  ],
+  "timingMaxima": {
+    "startToAdvancingFrameMs": 877.6999999284744,
+    "confirmationToEditableFrameMs": 343.3000000715256
+  },
+  "retainedMainHeapChangeBytes": 1869492,
+  "errors": [],
+  "scope": "20 real 16-fly Run/cancel/edit cycles on campaign level 1. Collected main heaps are observations, not process RSS or a proof that Worker/GPU memory cannot leak. Final combined memory, input latency, hidden-tab and platform gates remain separate."
+}

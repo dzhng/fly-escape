@@ -1,0 +1,168 @@
+{
+  "browser": "152.0.7977.77",
+  "samples": [
+    {
+      "run": 0,
+      "attemptId": "cb1ce8c1-60f9-4a0f-a7e2-895ae213f415",
+      "rootSeed": "1",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 1493.8000000715256,
+        "confirmationToEditableFrameMs": 325.8000000715256
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2015,
+        "triangles": 4485964,
+        "geometries": 357,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 31829600,
+        "totalSize": 33423360,
+        "embedderHeapUsedSize": 1938896,
+        "backingStorageSize": 37473021
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 122,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 1,
+      "attemptId": "f8282dde-d307-4954-b14e-edaf13053afe",
+      "rootSeed": "42",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 1265.1000000238419,
+        "confirmationToEditableFrameMs": 320
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2015,
+        "triangles": 4485968,
+        "geometries": 357,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 32639728,
+        "totalSize": 33947648,
+        "embedderHeapUsedSize": 2123616,
+        "backingStorageSize": 37473057
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 123,
+        "jsEventListeners": 204
+      }
+    },
+    {
+      "run": 2,
+      "attemptId": "092310b1-e8a9-41a1-b11a-eaf4d5e60eeb",
+      "rootSeed": "100",
+      "simulationBuildId": "1203215f917c3e2352faa416aaca715b042d3e1c81effaf9114152a2d31ca3a8",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "rendererDevice": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "timing": {
+        "startToAdvancingFrameMs": 1215.2999999523163,
+        "confirmationToEditableFrameMs": 282.09999990463257
+      },
+      "renderer": {
+        "flyCount": 16,
+        "modelKind": "glb",
+        "drawCalls": 2015,
+        "triangles": 4485956,
+        "geometries": 357,
+        "textures": 29
+      },
+      "wasmBytes": 89980928,
+      "mainHeapAfterReturn": {
+        "usedSize": 33284260,
+        "totalSize": 34996224,
+        "embedderHeapUsedSize": 2092832,
+        "backingStorageSize": 37473093
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 124,
+        "jsEventListeners": 204
+      }
+    }
+  ],
+  "startupAcceptance": false,
+  "coldSetupMs": 1079.6999999284744,
+  "setupAssets": [
+    "http://127.0.0.1:5311/assets/floor-CWY_kn0a.glb",
+    "http://127.0.0.1:5311/assets/tile-floor-DMqAzEt4.glb",
+    "http://127.0.0.1:5311/assets/sofa-Ht1b2HT8.glb",
+    "http://127.0.0.1:5311/assets/kitchen-AXOHy94n.glb",
+    "http://127.0.0.1:5311/assets/desk-Ctq-uvrh.glb",
+    "http://127.0.0.1:5311/assets/chair-C6SsO7ej.glb",
+    "http://127.0.0.1:5311/assets/bed-BAtm8UL6.glb",
+    "http://127.0.0.1:5311/assets/window-D0F6K1F7.glb",
+    "http://127.0.0.1:5311/assets/sconce-CqhfygL7.glb",
+    "http://127.0.0.1:5311/assets/wall-plant-BH3kXnr0.glb",
+    "http://127.0.0.1:5311/assets/doorway-bOmbiQ6W.glb",
+    "http://127.0.0.1:5311/assets/exit-window-BZ-EvLG2.glb",
+    "http://127.0.0.1:5311/assets/apple-Be8DVIkK.glb",
+    "http://127.0.0.1:5311/assets/banana-pYrTQDC8.glb",
+    "http://127.0.0.1:5311/assets/crumbs-DsKjrqwK.glb",
+    "http://127.0.0.1:5311/assets/vinegar-DIfAr2vf.glb",
+    "http://127.0.0.1:5311/assets/fan-D2OltmOR.glb",
+    "http://127.0.0.1:5311/assets/lamp-D7bX1F7V.glb",
+    "http://127.0.0.1:5311/assets/shade-ByQD8-3_.glb",
+    "http://127.0.0.1:5311/assets/worn-shoes-T9hDUp5C.glb",
+    "http://127.0.0.1:5311/assets/dirty-dishes-U8YVj2x7.glb",
+    "http://127.0.0.1:5311/assets/crumpled-laundry-D-9r_zaW.glb",
+    "http://127.0.0.1:5311/assets/sleeping-cat-CvrZjof7.glb",
+    "http://127.0.0.1:5311/assets/bug-zapper-CMFOC8K4.glb",
+    "http://127.0.0.1:5311/assets/corner-spider-C4Eb2fi5.glb",
+    "http://127.0.0.1:5311/assets/fly-BMIKK5wf.glb"
+  ],
+  "imageRequests": [
+    "http://127.0.0.1:5311/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5311/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5311/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5311/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5311/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5311/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5311/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5311/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5311/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5311/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5311/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5311/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5311/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5311/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5311/assets/dirtyDishes-tPZZeAey.png",
+    "http://127.0.0.1:5311/assets/fruit-EZTC8_l7.png",
+    "http://127.0.0.1:5311/assets/banana-P5d5Uoyi.png",
+    "http://127.0.0.1:5311/assets/vinegar-D92ailKX.png",
+    "http://127.0.0.1:5311/assets/fan-DXjWjBCX.png",
+    "http://127.0.0.1:5311/assets/dirtyDishes-tPZZeAey.png"
+  ],
+  "timingMaxima": {
+    "startToAdvancingFrameMs": 1493.8000000715256,
+    "confirmationToEditableFrameMs": 325.8000000715256
+  },
+  "retainedMainHeapChangeBytes": 1454660,
+  "errors": [],
+  "scope": "3 real 16-fly Run/cancel/edit cycles on campaign level 1. Collected main heaps are observations, not process RSS or a proof that Worker/GPU memory cannot leak. Final combined memory, input latency, hidden-tab and platform gates remain separate.",
+  "sourceCommit": "4cb4163",
+  "buildProvenance": {
+    "worktreeHead": "99dc306",
+    "sourceEquivalence": "Source unchanged from 4cb4163; later commits change only spec/harness. Explicit Vite aliases select baseline workspace packages. Immutable current WASM/graph shared with same hash.",
+    "bundle": "index-D4AuuhIK.js",
+    "url": "http://127.0.0.1:5311"
+  },
+  "measurementMethod": "Same tests/browser/retry-resources.mjs capture-phase DOM click to first advancing rendered frame / enabled setup plus two RAFs as candidate. Temporary baseline copy omits only expected canvas-identity and no-world-asset-reload assertions; startup/stability acceptance flags off. Seeds 1,42,100, 3 sequential real campaign early-cancel retries, cold Chrome process per level. All functional playback/cursor checks retained."
+}

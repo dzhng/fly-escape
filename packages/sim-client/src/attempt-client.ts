@@ -144,6 +144,8 @@ export class AttemptClient {
     this.flushCredits();
   }
   cancel() {
+    this.setupPending?.reject(new Error("Setup cancelled"));
+    this.setupPending = undefined;
     if (this.attemptId) this.send({ type: "cancel", attemptId: this.attemptId });
     this.generation++;
     this.attemptId = undefined;

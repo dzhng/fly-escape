@@ -1,0 +1,1407 @@
+{
+  "passed": true,
+  "browser": "152.0.7977.77",
+  "recordedAt": "2026-09-08T18:41:16.925Z",
+  "workersCreated": 1,
+  "method": "SHA-256 for every packed typed-array byte range and normalized chunk metadata, compared per chunk; recordHash hashes ordered chunk signatures. All AttemptInfo fields and results compared except attemptId. Full records are not retained; bounded in-flight chunks only.",
+  "levels": [
+    {
+      "level": "open-window",
+      "seed": "42",
+      "flyCount": 16,
+      "allChunkHashesEqual": true,
+      "allMetadataEqual": true,
+      "allResultsEqual": true,
+      "attempts": [
+        {
+          "attemptId": "worker-open-window-0",
+          "ticks": 6000,
+          "chunkCount": 600,
+          "packedBytes": 89437960,
+          "recordHash": "c636467478607d292702b159225c55bbefca4ee204a35df327ed98f9a74a4d2a",
+          "infoHash": "3cd13b84763ef40368129b6a0fa93854e4dccba1dc159fbafdf4c8884b56d6bf",
+          "initialBodies": [
+            {
+              "pose": {
+                "position": {
+                  "x": 2.675188033540913,
+                  "z": 6.954045723897513
+                },
+                "heading": 0.37250112152182463
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.5639387544487977,
+                0,
+                0.8258166147703365
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.87946632280224,
+                  "z": 6.6676711489727465
+                },
+                "heading": 1.2364998789124853
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.16637099788651621,
+                0,
+                0.9860632287344685
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.626237688087541,
+                  "z": 6.675975967535907
+                },
+                "heading": 6.058878797260349
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.7818025001535847,
+                0,
+                0.6235261427988439
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 3.073622844839691,
+                  "z": 6.772726884003054
+                },
+                "heading": 1.870377540541293
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                -0.14923108733131857,
+                0,
+                0.9888023475770639
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.85889145722414,
+                  "z": 6.709703655205475
+                },
+                "heading": 1.1106384971121368
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.22805435955435646,
+                0,
+                0.9736484011635064
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.7938634965689766,
+                  "z": 6.731072931949964
+                },
+                "heading": 5.556159945323661
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.9123184925465858,
+                0,
+                0.4094813404265516
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.3299783861872645,
+                  "z": 7.130926889665128
+                },
+                "heading": 3.7737734150869695
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.8918815703110365,
+                0,
+                -0.4522690178859476
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 3.067484372167685,
+                  "z": 6.829838728094639
+                },
+                "heading": 1.9977287912591408
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                -0.21184872304103192,
+                0,
+                0.9773024703467622
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.6219296207310085,
+                  "z": 7.0053632778969925
+                },
+                "heading": 6.042104299568234
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.7870046096052066,
+                0,
+                0.6169471164209751
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.7313002809735387,
+                  "z": 6.743467182810003
+                },
+                "heading": 3.3458913316307326
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.7755257806581471,
+                0,
+                -0.6313158983698822
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.302705571239734,
+                  "z": 7.0744720693867365
+                },
+                "heading": 1.3094842976632757
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.13028459372386134,
+                0,
+                0.9914766384732463
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.8280157056993915,
+                  "z": 6.991044158820749
+                },
+                "heading": 4.3393231682866125
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.9826531231346725,
+                0,
+                -0.18545306574353065
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 3.0001851918619176,
+                  "z": 6.594789835260458
+                },
+                "heading": 6.193242568944677
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.7381807092573104,
+                0,
+                0.6746030243634951
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.472269555813208,
+                  "z": 6.7692330934653775
+                },
+                "heading": 4.426059632892876
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.9897694299367907,
+                0,
+                -0.1426761212067403
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.6612019369685163,
+                  "z": 6.728577919692594
+                },
+                "heading": 4.686083808328546
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.999913505987285,
+                0,
+                -0.013152206819237403
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.348030979263474,
+                  "z": 6.992209696048124
+                },
+                "heading": 5.430066509258589
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.9363052659402197,
+                0,
+                0.3511871993290966
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            }
+          ],
+          "result": {
+            "completedTick": 6000,
+            "outcomes": {
+              "escaped": 4,
+              "starved": 0,
+              "zapped": 0,
+              "caught": 0,
+              "timedOut": 12,
+              "score": 4
+            },
+            "stars": 1
+          },
+          "maxPendingChunks": 1,
+          "elapsedMs": 92149.79999995232
+        },
+        {
+          "attemptId": "worker-open-window-1",
+          "ticks": 6000,
+          "chunkCount": 600,
+          "packedBytes": 89437960,
+          "recordHash": "c636467478607d292702b159225c55bbefca4ee204a35df327ed98f9a74a4d2a",
+          "infoHash": "3cd13b84763ef40368129b6a0fa93854e4dccba1dc159fbafdf4c8884b56d6bf",
+          "initialBodies": [
+            {
+              "pose": {
+                "position": {
+                  "x": 2.675188033540913,
+                  "z": 6.954045723897513
+                },
+                "heading": 0.37250112152182463
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.5639387544487977,
+                0,
+                0.8258166147703365
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.87946632280224,
+                  "z": 6.6676711489727465
+                },
+                "heading": 1.2364998789124853
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.16637099788651621,
+                0,
+                0.9860632287344685
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.626237688087541,
+                  "z": 6.675975967535907
+                },
+                "heading": 6.058878797260349
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.7818025001535847,
+                0,
+                0.6235261427988439
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 3.073622844839691,
+                  "z": 6.772726884003054
+                },
+                "heading": 1.870377540541293
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                -0.14923108733131857,
+                0,
+                0.9888023475770639
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.85889145722414,
+                  "z": 6.709703655205475
+                },
+                "heading": 1.1106384971121368
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.22805435955435646,
+                0,
+                0.9736484011635064
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.7938634965689766,
+                  "z": 6.731072931949964
+                },
+                "heading": 5.556159945323661
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.9123184925465858,
+                0,
+                0.4094813404265516
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.3299783861872645,
+                  "z": 7.130926889665128
+                },
+                "heading": 3.7737734150869695
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.8918815703110365,
+                0,
+                -0.4522690178859476
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 3.067484372167685,
+                  "z": 6.829838728094639
+                },
+                "heading": 1.9977287912591408
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                -0.21184872304103192,
+                0,
+                0.9773024703467622
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.6219296207310085,
+                  "z": 7.0053632778969925
+                },
+                "heading": 6.042104299568234
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.7870046096052066,
+                0,
+                0.6169471164209751
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.7313002809735387,
+                  "z": 6.743467182810003
+                },
+                "heading": 3.3458913316307326
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.7755257806581471,
+                0,
+                -0.6313158983698822
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.302705571239734,
+                  "z": 7.0744720693867365
+                },
+                "heading": 1.3094842976632757
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.13028459372386134,
+                0,
+                0.9914766384732463
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.8280157056993915,
+                  "z": 6.991044158820749
+                },
+                "heading": 4.3393231682866125
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.9826531231346725,
+                0,
+                -0.18545306574353065
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 3.0001851918619176,
+                  "z": 6.594789835260458
+                },
+                "heading": 6.193242568944677
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.7381807092573104,
+                0,
+                0.6746030243634951
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.472269555813208,
+                  "z": 6.7692330934653775
+                },
+                "heading": 4.426059632892876
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.9897694299367907,
+                0,
+                -0.1426761212067403
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.6612019369685163,
+                  "z": 6.728577919692594
+                },
+                "heading": 4.686083808328546
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.999913505987285,
+                0,
+                -0.013152206819237403
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 2.348030979263474,
+                  "z": 6.992209696048124
+                },
+                "heading": 5.430066509258589
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.9363052659402197,
+                0,
+                0.3511871993290966
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            }
+          ],
+          "result": {
+            "completedTick": 6000,
+            "outcomes": {
+              "escaped": 4,
+              "starved": 0,
+              "zapped": 0,
+              "caught": 0,
+              "timedOut": 12,
+              "score": 4
+            },
+            "stars": 1
+          },
+          "maxPendingChunks": 1,
+          "elapsedMs": 91700.69999992847
+        }
+      ],
+      "baselineInitialBodiesAndResultsEqual": true
+    },
+    {
+      "level": "turn-the-corner",
+      "seed": "42",
+      "flyCount": 16,
+      "allChunkHashesEqual": true,
+      "allMetadataEqual": true,
+      "allResultsEqual": true,
+      "attempts": [
+        {
+          "attemptId": "worker-turn-the-corner-0",
+          "ticks": 3000,
+          "chunkCount": 300,
+          "packedBytes": 45500180,
+          "recordHash": "4f0d2f035bc58d10d0f43c30af9918c2946c429c7cdc945cd67b667735820bfa",
+          "infoHash": "f86e12e4cb47564fea75afac10283fe159c41a85d869e0e5e34caaf01c83bb6b",
+          "initialBodies": [
+            {
+              "pose": {
+                "position": {
+                  "x": 8.143191357557326,
+                  "z": 9.386704769914594
+                },
+                "heading": 0.37250112152182463
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.5639387544487977,
+                0,
+                0.8258166147703365
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.290725677579395,
+                  "z": 9.148059290810624
+                },
+                "heading": 1.2364998789124853
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.16637099788651621,
+                0,
+                0.9860632287344685
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.107838330285446,
+                  "z": 9.15497997294659
+                },
+                "heading": 6.058878797260349
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.7818025001535847,
+                0,
+                0.6235261427988439
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.43094983238422,
+                  "z": 9.235605736669212
+                },
+                "heading": 1.870377540541293
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                -0.14923108733131857,
+                0,
+                0.9888023475770639
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.275866052439657,
+                  "z": 9.183086379337897
+                },
+                "heading": 1.1106384971121368
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.22805435955435646,
+                0,
+                0.9736484011635064
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.228901414188705,
+                  "z": 9.200894109958304
+                },
+                "heading": 5.556159945323661
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.9123184925465858,
+                0,
+                0.4094813404265516
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 7.893873278913024,
+                  "z": 9.534105741387606
+                },
+                "heading": 3.7737734150869695
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.8918815703110365,
+                0,
+                -0.4522690178859476
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.426516491009995,
+                  "z": 9.283198940078867
+                },
+                "heading": 1.9977287912591408
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                -0.21184872304103192,
+                0,
+                0.9773024703467622
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.104726948305728,
+                  "z": 9.429469398247495
+                },
+                "heading": 6.042104299568234
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.7870046096052066,
+                0,
+                0.6169471164209751
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.183716869591999,
+                  "z": 9.21122265234167
+                },
+                "heading": 3.3458913316307326
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.7755257806581471,
+                0,
+                -0.6313158983698822
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 7.874176245895363,
+                  "z": 9.48706005782228
+                },
+                "heading": 1.3094842976632757
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.13028459372386134,
+                0,
+                0.9914766384732463
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.25356689856067,
+                  "z": 9.417536799017292
+                },
+                "heading": 4.3393231682866125
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.9826531231346725,
+                0,
+                -0.18545306574353065
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.37791152745583,
+                  "z": 9.087324862717049
+                },
+                "heading": 6.193242568944677
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.7381807092573104,
+                0,
+                0.6746030243634951
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 7.996639123642872,
+                  "z": 9.232694244554482
+                },
+                "heading": 4.426059632892876
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.9897694299367907,
+                0,
+                -0.1426761212067403
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.133090287810594,
+                  "z": 9.198814933077163
+                },
+                "heading": 4.686083808328546
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.999913505987285,
+                0,
+                -0.013152206819237403
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 7.9069112628013976,
+                  "z": 9.418508080040104
+                },
+                "heading": 5.430066509258589
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.9363052659402197,
+                0,
+                0.3511871993290966
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            }
+          ],
+          "result": {
+            "completedTick": 3000,
+            "outcomes": {
+              "escaped": 2,
+              "starved": 0,
+              "zapped": 1,
+              "caught": 0,
+              "timedOut": 13,
+              "score": 2
+            },
+            "stars": 1
+          },
+          "maxPendingChunks": 1,
+          "elapsedMs": 47870.09999990463
+        },
+        {
+          "attemptId": "worker-turn-the-corner-1",
+          "ticks": 3000,
+          "chunkCount": 300,
+          "packedBytes": 45500180,
+          "recordHash": "4f0d2f035bc58d10d0f43c30af9918c2946c429c7cdc945cd67b667735820bfa",
+          "infoHash": "f86e12e4cb47564fea75afac10283fe159c41a85d869e0e5e34caaf01c83bb6b",
+          "initialBodies": [
+            {
+              "pose": {
+                "position": {
+                  "x": 8.143191357557326,
+                  "z": 9.386704769914594
+                },
+                "heading": 0.37250112152182463
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.5639387544487977,
+                0,
+                0.8258166147703365
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.290725677579395,
+                  "z": 9.148059290810624
+                },
+                "heading": 1.2364998789124853
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.16637099788651621,
+                0,
+                0.9860632287344685
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.107838330285446,
+                  "z": 9.15497997294659
+                },
+                "heading": 6.058878797260349
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.7818025001535847,
+                0,
+                0.6235261427988439
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.43094983238422,
+                  "z": 9.235605736669212
+                },
+                "heading": 1.870377540541293
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                -0.14923108733131857,
+                0,
+                0.9888023475770639
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.275866052439657,
+                  "z": 9.183086379337897
+                },
+                "heading": 1.1106384971121368
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.22805435955435646,
+                0,
+                0.9736484011635064
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.228901414188705,
+                  "z": 9.200894109958304
+                },
+                "heading": 5.556159945323661
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.9123184925465858,
+                0,
+                0.4094813404265516
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 7.893873278913024,
+                  "z": 9.534105741387606
+                },
+                "heading": 3.7737734150869695
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.8918815703110365,
+                0,
+                -0.4522690178859476
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.426516491009995,
+                  "z": 9.283198940078867
+                },
+                "heading": 1.9977287912591408
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                -0.21184872304103192,
+                0,
+                0.9773024703467622
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.104726948305728,
+                  "z": 9.429469398247495
+                },
+                "heading": 6.042104299568234
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.7870046096052066,
+                0,
+                0.6169471164209751
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.183716869591999,
+                  "z": 9.21122265234167
+                },
+                "heading": 3.3458913316307326
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.7755257806581471,
+                0,
+                -0.6313158983698822
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 7.874176245895363,
+                  "z": 9.48706005782228
+                },
+                "heading": 1.3094842976632757
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.13028459372386134,
+                0,
+                0.9914766384732463
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.25356689856067,
+                  "z": 9.417536799017292
+                },
+                "heading": 4.3393231682866125
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.9826531231346725,
+                0,
+                -0.18545306574353065
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.37791152745583,
+                  "z": 9.087324862717049
+                },
+                "heading": 6.193242568944677
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.7381807092573104,
+                0,
+                0.6746030243634951
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 7.996639123642872,
+                  "z": 9.232694244554482
+                },
+                "heading": 4.426059632892876
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.9897694299367907,
+                0,
+                -0.1426761212067403
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 8.133090287810594,
+                  "z": 9.198814933077163
+                },
+                "heading": 4.686083808328546
+              },
+              "height": 0.6,
+              "rotation": [
+                0,
+                0.999913505987285,
+                0,
+                -0.013152206819237403
+              ],
+              "support": null,
+              "mode": "flying",
+              "reserve": 0,
+              "outcome": null
+            },
+            {
+              "pose": {
+                "position": {
+                  "x": 7.9069112628013976,
+                  "z": 9.418508080040104
+                },
+                "heading": 5.430066509258589
+              },
+              "height": 0,
+              "rotation": [
+                0,
+                0.9363052659402197,
+                0,
+                0.3511871993290966
+              ],
+              "support": null,
+              "mode": "walking",
+              "reserve": 0,
+              "outcome": null
+            }
+          ],
+          "result": {
+            "completedTick": 3000,
+            "outcomes": {
+              "escaped": 2,
+              "starved": 0,
+              "zapped": 1,
+              "caught": 0,
+              "timedOut": 13,
+              "score": 2
+            },
+            "stars": 1
+          },
+          "maxPendingChunks": 1,
+          "elapsedMs": 47368.10000002384
+        }
+      ],
+      "baselineInitialBodiesAndResultsEqual": true
+    }
+  ]
+}

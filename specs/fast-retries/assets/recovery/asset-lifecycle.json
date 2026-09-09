@@ -1,0 +1,50 @@
+{
+  "base": "http://127.0.0.1:5173",
+  "scope": "Main-thread preview/sampler preload faults and world-load level-remount recovery. Delayed preview disposal observed on production FlyModel prototype using development module imports.",
+  "results": [
+    {
+      "mode": "delayed-preview",
+      "errors": [],
+      "evidence": {
+        "flyFetches": 2,
+        "wasmFailures": 0,
+        "previewFailures": 0,
+        "worldFailures": 0,
+        "held": true,
+        "lateDisposals": 1
+      },
+      "liveWorkers": 1,
+      "flyIcons": 16,
+      "cursor": "2.001000000000004",
+      "passed": true
+    },
+    {
+      "mode": "failed-preview-and-sampler",
+      "errors": [],
+      "evidence": {
+        "flyFetches": 3,
+        "wasmFailures": 1,
+        "previewFailures": 1,
+        "worldFailures": 0
+      },
+      "liveWorkers": 1,
+      "flyIcons": 16,
+      "cursor": "2.0000000000000004",
+      "passed": true
+    },
+    {
+      "mode": "failed-world",
+      "errors": [],
+      "evidence": {
+        "flyFetches": 4,
+        "wasmFailures": 0,
+        "previewFailures": 0,
+        "worldFailures": 1
+      },
+      "liveWorkers": 1,
+      "flyIcons": 16,
+      "cursor": "3.166999999999997",
+      "passed": true
+    }
+  ]
+}

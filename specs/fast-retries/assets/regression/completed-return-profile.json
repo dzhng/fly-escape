@@ -1,0 +1,44 @@
+{
+  "scope": "Diagnostic completed level-1 seed-42 return after full archive production and Fast replay. Not real-time acceptance. CDP tracing adds overhead; original real-time failure remains 548 ms.",
+  "tracePath": "completed-return-trace.json",
+  "productionBundle": "index-CF2zllQc.js",
+  "timing": {
+    "startToAdvancingFrameMs": 878.8999999761581,
+    "confirmationToEditableFrameMs": 380.5
+  },
+  "state": "ended",
+  "cursorTick": 6000,
+  "computedTick": 6000,
+  "result": {
+    "attemptId": "6a8139f9-d39c-4ac2-abf7-ee8481e4634b",
+    "completedTick": 6000,
+    "outcomes": {
+      "escaped": 4,
+      "starved": 0,
+      "zapped": 0,
+      "caught": 0,
+      "timedOut": 12,
+      "score": 4
+    },
+    "stars": 1
+  },
+  "clickEventDispatchMs": 363.77,
+  "longTaskMs": 364,
+  "firstEditableToNextRafTimestampGapMs": 350,
+  "finding": "ExteriorGrass.update regenerates grass during synchronous setup first render within confirmation click. Most CPU sampled time is meadowHeight/grassRecords/grassBlocked/update; resize is not the dominant sampled stack.",
+  "cpuSamplesMs": {
+    "meadowHeight": 167.94,
+    "ExteriorGrass.updateSelf": 52.39,
+    "grassRecordsSelf": 34.99,
+    "grassBlocked": 24.62,
+    "getProgramInfoLogUnderInitialSetupRender": 30.3,
+    "forceContextLoss": 1.56
+  },
+  "sampleCaveat": "Approximate self-time summed from V8 samples across trace, not instrumented exact function duration.",
+  "codePositions": {
+    "meadowHeight": "packages/game-renderer/src/exterior-grass.ts:36",
+    "grassRecords": "packages/game-renderer/src/exterior-grass.ts:48",
+    "update": "packages/game-renderer/src/exterior-grass.ts:104"
+  },
+  "resolution": "Reduce meadowHeight to one square root per terrain point; generated geometry hashes match in meadow-before.json and meadow-after.json. Final browser acceptance remains separate."
+}

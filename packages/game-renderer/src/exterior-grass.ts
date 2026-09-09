@@ -34,13 +34,13 @@ export function grassBlocked(mask: ReturnType<typeof grassMask>, x: number, z: n
 
 /** Keep the foundation and exit approaches flat; hills begin beyond the house. */
 export function meadowHeight(mask: ReturnType<typeof grassMask>, x: number, z: number) {
-  let distance = Infinity;
+  let distanceSquared = Infinity;
   for (const r of mask) {
     const dx = Math.max(0, Math.abs((x-r.x)*r.ux+(z-r.z)*r.uz)-r.halfX);
     const dz = Math.max(0, Math.abs(-(x-r.x)*r.uz+(z-r.z)*r.ux)-r.halfZ);
-    distance = Math.min(distance, Math.hypot(dx, dz));
+    distanceSquared = Math.min(distanceSquared, dx * dx + dz * dz);
   }
-  const t = Math.min(1, Math.max(0, (distance - 0.8) / 5));
+  const t = Math.min(1, Math.max(0, (Math.sqrt(distanceSquared) - 0.8) / 5));
   return t*t*(3-2*t) * (0.45 + 0.3*Math.sin(x*0.31+z*0.19) + 0.15*Math.cos(z*0.43-x*0.12));
 }
 

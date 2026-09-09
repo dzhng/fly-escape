@@ -1,0 +1,30 @@
+Relevant web unit suite (before terrain arithmetic; lifecycle code unchanged):
+ 6 pass
+ 0 fail
+ 33 expect() calls
+Ran 6 tests across 5 files. [149.00ms]
+
+Relevant renderer unit suite (before terrain arithmetic; lifecycle code unchanged):
+ 80 pass
+ 0 fail
+ 1645097 expect() calls
+Ran 80 tests across 14 files. [673.00ms]
+
+Relevant client unit suite (before terrain arithmetic; lifecycle code unchanged):
+ 32 pass
+ 0 fail
+ 327 expect() calls
+Ran 32 tests across 3 files. [834.00ms]
+
+After terrain arithmetic: bun test packages/game-renderer/src/exterior-grass.test.ts packages/game-renderer/src/camera.test.ts: 20 passed, 0 failed.
+bun run typecheck: exit 0.
+bun run build (apps/web): exit 0, index-Bwnnxgn9.js.
+All six before/after generated-geometry records identical except elapsedMs.
+
+Independent Codex review (fly-retry-final-review.log):
+No actionable correctness or resource-lifetime regressions were identified. Type checking and all 19 focused camera and attempt-client tests passed. Browser and GPU verification were left to the separately running checks.
+
+Independent Codex review (fly-meadow-review.log):
+No actionable numerical defect found within the actual coordinate ranges. Taking one square root after minimizing squared distances preserves the terrain behavior, including flat regions and empty masks; all six before/after geometry hashes match. Review was limited to source and supplied evidence, without rerunning geometry generation or GPU verification.
+
+Final viewport coverage guard: 21 camera/terrain tests passed; typecheck and web build passed (index-DX089UbV.js). Independent Codex review found no actionable defect in bounded coordinates, far clipping or viewport invalidation; 17 camera tests passed.
