@@ -1,0 +1,139 @@
+{
+  "target": "Patch centers reproduce declared linear RGB8 after sRGB display encoding; matched-pair output bars are legible and match numeric artifact.",
+  "dimensions": [
+    660,
+    960,
+    3
+  ],
+  "lumaStd": 43.35847071301822,
+  "nonBackgroundFraction": 0.16767203282828283,
+  "patchChecks": [
+    {
+      "patch": "black",
+      "expectedSrgb": [
+        0,
+        0,
+        0
+      ],
+      "observedSrgb": [
+        0,
+        0,
+        0
+      ],
+      "maxByteError": 0
+    },
+    {
+      "patch": "gray 64",
+      "expectedSrgb": [
+        137,
+        137,
+        137
+      ],
+      "observedSrgb": [
+        137,
+        137,
+        137
+      ],
+      "maxByteError": 0
+    },
+    {
+      "patch": "gray 128",
+      "expectedSrgb": [
+        188,
+        188,
+        188
+      ],
+      "observedSrgb": [
+        188,
+        188,
+        188
+      ],
+      "maxByteError": 0
+    },
+    {
+      "patch": "white",
+      "expectedSrgb": [
+        255,
+        255,
+        255
+      ],
+      "observedSrgb": [
+        255,
+        255,
+        255
+      ],
+      "maxByteError": 0
+    },
+    {
+      "patch": "red",
+      "expectedSrgb": [
+        255,
+        0,
+        0
+      ],
+      "observedSrgb": [
+        255,
+        0,
+        0
+      ],
+      "maxByteError": 0
+    },
+    {
+      "patch": "green",
+      "expectedSrgb": [
+        0,
+        255,
+        0
+      ],
+      "observedSrgb": [
+        0,
+        255,
+        0
+      ],
+      "maxByteError": 0
+    },
+    {
+      "patch": "blue",
+      "expectedSrgb": [
+        0,
+        0,
+        255
+      ],
+      "observedSrgb": [
+        0,
+        0,
+        255
+      ],
+      "maxByteError": 0
+    },
+    {
+      "patch": "match A",
+      "expectedSrgb": [
+        168,
+        168,
+        168
+      ],
+      "observedSrgb": [
+        168,
+        168,
+        168
+      ],
+      "maxByteError": 0
+    },
+    {
+      "patch": "match B",
+      "expectedSrgb": [
+        104,
+        180,
+        185
+      ],
+      "observedSrgb": [
+        104,
+        180,
+        185
+      ],
+      "maxByteError": 0
+    }
+  ],
+  "verdict": "Every patch center matches exact expected display RGB bytes. This is an atlas-data check, not a physiological image comparison."
+}

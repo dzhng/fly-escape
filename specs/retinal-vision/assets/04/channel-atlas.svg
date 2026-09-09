@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="660" viewBox="0 0 960 660">
+<rect width="960" height="660" fill="#f6f7fa"/>
+<g font-family="Arial,sans-serif" fill="#172234">
+<text x="32" y="38" font-size="24">Visible-color proxy: frozen before neural tests</text>
+<text x="32" y="65" font-size="15">Swatches encode linear RGB8 for sRGB display; bars (0–1) are modeled output, not firing.</text>
+<text x="32" y="96" font-size="14">Patch / canonical bytes</text>
+<text x="420" y="96" font-size="14">Tm2 brightness</text>
+<text x="675" y="96" font-size="14">Tm20 blue proxy</text>
+<rect x="32" y="112" width="65" height="36" fill="#000000" stroke="#778197"/>
+<text x="112" y="135" font-size="15">black: [0, 0, 0]</text>
+<rect x="420" y="120" width="150" height="20" fill="#e0e4ed"/>
+<rect x="420" y="120" width="0.0000" height="20" fill="#416ab5"/>
+<text x="580" y="136" font-size="15">0.0000</text>
+<rect x="675" y="120" width="150" height="20" fill="#e0e4ed"/>
+<rect x="675" y="120" width="0.0000" height="20" fill="#416ab5"/>
+<text x="835" y="136" font-size="15">0.0000</text>
+<rect x="32" y="163" width="65" height="36" fill="#898989" stroke="#778197"/>
+<text x="112" y="186" font-size="15">gray 64: [64, 64, 64]</text>
+<rect x="420" y="171" width="150" height="20" fill="#e0e4ed"/>
+<rect x="420" y="171" width="50.1305" height="20" fill="#416ab5"/>
+<text x="580" y="187" font-size="15">0.3342</text>
+<rect x="675" y="171" width="150" height="20" fill="#e0e4ed"/>
+<rect x="675" y="171" width="50.1305" height="20" fill="#416ab5"/>
+<text x="835" y="187" font-size="15">0.3342</text>
+<rect x="32" y="214" width="65" height="36" fill="#bcbcbc" stroke="#778197"/>
+<text x="112" y="237" font-size="15">gray 128: [128, 128, 128]</text>
+<rect x="420" y="222" width="150" height="20" fill="#e0e4ed"/>
+<rect x="420" y="222" width="75.1468" height="20" fill="#416ab5"/>
+<text x="580" y="238" font-size="15">0.5010</text>
+<rect x="675" y="222" width="150" height="20" fill="#e0e4ed"/>
+<rect x="675" y="222" width="75.1468" height="20" fill="#416ab5"/>
+<text x="835" y="238" font-size="15">0.5010</text>
+<rect x="32" y="265" width="65" height="36" fill="#ffffff" stroke="#778197"/>
+<text x="112" y="288" font-size="15">white: [255, 255, 255]</text>
+<rect x="420" y="273" width="150" height="20" fill="#e0e4ed"/>
+<rect x="420" y="273" width="100.0000" height="20" fill="#416ab5"/>
+<text x="580" y="289" font-size="15">0.6667</text>
+<rect x="675" y="273" width="150" height="20" fill="#e0e4ed"/>
+<rect x="675" y="273" width="100.0000" height="20" fill="#416ab5"/>
+<text x="835" y="289" font-size="15">0.6667</text>
+<rect x="32" y="316" width="65" height="36" fill="#ff0000" stroke="#778197"/>
+<text x="112" y="339" font-size="15">red: [255, 0, 0]</text>
+<rect x="420" y="324" width="150" height="20" fill="#e0e4ed"/>
+<rect x="420" y="324" width="44.7516" height="20" fill="#416ab5"/>
+<text x="580" y="340" font-size="15">0.2983</text>
+<rect x="675" y="324" width="150" height="20" fill="#e0e4ed"/>
+<rect x="675" y="324" width="0.0000" height="20" fill="#416ab5"/>
+<text x="835" y="340" font-size="15">0.0000</text>
+<rect x="32" y="367" width="65" height="36" fill="#00ff00" stroke="#778197"/>
+<text x="112" y="390" font-size="15">green: [0, 255, 0]</text>
+<rect x="420" y="375" width="150" height="20" fill="#e0e4ed"/>
+<rect x="420" y="375" width="88.2818" height="20" fill="#416ab5"/>
+<text x="580" y="391" font-size="15">0.5885</text>
+<rect x="675" y="375" width="150" height="20" fill="#e0e4ed"/>
+<rect x="675" y="375" width="0.0000" height="20" fill="#416ab5"/>
+<text x="835" y="391" font-size="15">0.0000</text>
+<rect x="32" y="418" width="65" height="36" fill="#0000ff" stroke="#778197"/>
+<text x="112" y="441" font-size="15">blue: [0, 0, 255]</text>
+<rect x="420" y="426" width="150" height="20" fill="#e0e4ed"/>
+<rect x="420" y="426" width="18.9269" height="20" fill="#416ab5"/>
+<text x="580" y="442" font-size="15">0.1262</text>
+<rect x="675" y="426" width="150" height="20" fill="#e0e4ed"/>
+<rect x="675" y="426" width="100.0000" height="20" fill="#416ab5"/>
+<text x="835" y="442" font-size="15">0.6667</text>
+<rect x="32" y="469" width="65" height="36" fill="#a8a8a8" stroke="#778197"/>
+<text x="112" y="492" font-size="15">match A: [100, 100, 100]</text>
+<rect x="420" y="477" width="150" height="20" fill="#e0e4ed"/>
+<rect x="420" y="477" width="65.9341" height="20" fill="#416ab5"/>
+<text x="580" y="493" font-size="15">0.4396</text>
+<rect x="675" y="477" width="150" height="20" fill="#e0e4ed"/>
+<rect x="675" y="477" width="65.9341" height="20" fill="#416ab5"/>
+<text x="835" y="493" font-size="15">0.4396</text>
+<rect x="32" y="520" width="65" height="36" fill="#68b4b9" stroke="#778197"/>
+<text x="112" y="543" font-size="15">match B: [35, 117, 123]</text>
+<rect x="420" y="528" width="150" height="20" fill="#e0e4ed"/>
+<rect x="420" y="528" width="65.9341" height="20" fill="#416ab5"/>
+<text x="580" y="544" font-size="15">0.4396</text>
+<rect x="675" y="528" width="150" height="20" fill="#e0e4ed"/>
+<rect x="675" y="528" width="73.6527" height="20" fill="#416ab5"/>
+<text x="835" y="544" font-size="15">0.4910</text>
+<text x="32" y="600" font-size="14">Match A/B have equal Tm2 output. Swapping their locations preserves total dose.</text>
+<text x="32" y="626" font-size="14">No UV. No Tm5 coordinates invented. No hue-calibration or behavioral-success claim.</text>
+</g></svg>
