@@ -4,9 +4,9 @@ Objective 3 connects the recorded eight-direction light sample to the existing M
 
 ## Next Agent Prompt
 
-Start [the mapping audit](slices/01-input-map.md), then implement [the graded adapter and experiments](slices/02-causal-response.md). No production changes have begun. Do not specify the lighting puzzle until this objective is verified and archived. Preserve the user's new panel order: graphs directly below the brain, compact roster. Update this handoff after each committed pass.
+The [mapping audit](assets/input-map/README.md) is complete: both frozen candidates pass, with no graph rebuild. Next implement [the graded adapter and experiments](slices/02-causal-response.md); neither candidate is a behavioral winner yet. Do not specify the lighting puzzle until this objective is verified and archived. Preserve the user's new panel order: graphs directly below the brain, compact roster. Update this handoff after each committed pass.
 
-- [ ] Audit annotations and actual retained paths; freeze two bounded candidate maps.
+- [x] Audit annotations and actual retained paths; freeze two bounded candidate maps.
 - [ ] Implement one graded map adapter, run bounded pilot, freeze the winner and held-out protocol.
 - [ ] Pass paired neural/optical silencing and closed-loop response gates.
 - [ ] Verify actual worker/playback, resource cost, tests and independent review.
