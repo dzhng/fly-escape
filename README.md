@@ -54,3 +54,5 @@ The simulation buffers enough recorded motion before playback to sustain real ti
 The game uses a selected subgraph of **Janelia FlyEM’s MaleCNS v1.0**. See the [graph preparation guide](scripts/connectome/README.md#data-attribution) for source credits, the dataset license and how the data is transformed. The game’s About page also links to its bundled provenance manifest.
 
 For contributors, the [development guide](docs/development.md) explains the code and asset boundaries. The [design rationale](specs/done/help-the-fly-escape/README.md) preserves the reasoning, research and modeling decisions behind the game.
+
+The [directional sensing rationale](specs/done/directional-vision/README.md) records the coarse light model, replay contract and measured limits.

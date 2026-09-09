@@ -9,7 +9,7 @@ import { chromium } from 'playwright';
 // production frame pacing remains the separate playback acceptance surface.
 const base = process.env.BRAIN_URL ?? 'http://127.0.0.1:5173';
 const production = process.env.VISION_PRODUCTION_URL ?? base;
-const output = process.env.VISION_OUTPUT ?? 'specs/directional-vision/assets/browser';
+const output = process.env.VISION_OUTPUT ?? 'specs/done/directional-vision/assets/browser';
 await mkdir(output, { recursive: true });
 const fixture = JSON.parse(execFileSync('cargo', ['run', '-q', '-p', 'sim', '--example', 'record_fixture'], { encoding: 'utf8' }));
 const browser = await chromium.launch({ channel: 'chrome', headless: true });

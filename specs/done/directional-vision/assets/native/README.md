@@ -1,6 +1,6 @@
 # Native directional sensing evidence
 
-[Measurements](measurements.json) preserve the machine, compiler, exact sampling positions, checksums, timing scope, workload and paired results. The release [sampling probe](../../../../crates/sim/examples/vision_probe.rs) measures the production sensory entry point, including antenna diagnostics and wind. Campaign samples span open floor; optical fixture samples lie inside the authored lamp/shade region, because a spatially broad sample set can miss a small source entirely. Checksums agree across repeated runs and differ between the lamp and shade fixtures.
+[Measurements](measurements.json) preserve the machine, compiler, exact sampling positions, checksums, timing scope, workload and paired results. The release [sampling probe](../../../../../crates/sim/examples/vision_probe.rs) measures the production sensory entry point, including antenna diagnostics and wind. Campaign samples span open floor; optical fixture samples lie inside the authored lamp/shade region, because a spatially broad sample set can miss a small source entirely. Checksums agree across repeated runs and differ between the lamp and shade fixtures.
 
 The measured full sixteen-fly sensory tick is below 0.008 ms for both campaign rooms and below 0.004 ms for both optical fixtures. Each timing uses 160,000 samples after warmup. This clears the 1 ms local target; it makes no hardware-independent claim.
 
