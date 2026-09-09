@@ -1,0 +1,53 @@
+$ cargo test -p sim --test retina_tick --test retinal_map && bun test packages/sim-client/src/attempt-client.test.ts packages/sim-client/src/attempt-watchdog.test.ts packages/game-renderer/src/retina-profile.test.ts && node tests/browser/retina-attempt.mjs && node tests/browser/retina-attempt-cancel.mjs && RETINA_CANCEL_TARGET=map node tests/browser/retina-attempt-cancel.mjs && node tests/browser/retina-attempt-faults.mjs && node tests/browser/retina-map-retry.mjs
+   Compiling sim v0.1.0 (/Users/david/dev/fly-escape/crates/sim)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.11s
+     Running tests/retina_tick.rs (target/debug/deps/retina_tick-5817abd64609a666)
+
+running 7 tests
+test initialization_binds_the_exact_spatial_map ... ok
+test each_fly_brain_consumes_its_own_rgb_currents_with_no_directional_vision_added ... ok
+test repeated_prepare_freezes_the_full_native_transform_without_advancing_fields ... ok
+test terminal_flies_stop_requesting_eyes_but_keep_their_transition_batch ... ok
+test commit_consumes_exactly_one_batch_and_preserves_its_original_bytes ... ok
+test cancellation_invalidates_pending_work_and_a_new_generation_rejects_late_completion ... ok
+test malformed_batches_leave_fields_bodies_and_neural_random_state_untouched ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.39s
+
+     Running tests/retinal_map.rs (target/debug/deps/retinal_map-688195d0b065fe39)
+
+running 5 tests
+test rgb_is_transformed_before_spatial_pooling_and_never_accepted_incomplete ... ok
+test trusted_source_budget_cannot_be_relabelled_or_expanded ... ok
+test invalid_map_identity_targets_channels_and_dose_are_rejected_on_load ... ok
+test directional_metadata_is_rejected_instead_of_retained_as_provenance ... ok
+test native_currents_match_the_offline_spatial_and_color_oracle ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.64s
+
+bun test v1.3.14 (0d9b296a)
+
+packages/sim-client/src/attempt-watchdog.test.ts:
+(pass) queued idle cannot disable recovery for credits already sent; hidden time and stale runs are ignored [1.76ms]
+(pass) stalled setup rejects and retires its worker, then a fresh setup succeeds [0.31ms]
+
+packages/sim-client/src/attempt-client.test.ts:
+(pass) reusing an attempt ID cannot deliver a queued failure to the new run [0.24ms]
+(pass) a fatal setup failure permits a fresh worker and stale faults cannot reject its reply [0.25ms]
+(pass) leaving a setup lets the next level resolve without accepting the old reply [0.16ms]
+(pass) record decode failures cancel production and preserve a recoverable message [0.25ms]
+
+packages/game-renderer/src/retina-profile.test.ts:
+(pass) installed optics match the reviewed map without trusting its declared hashes [144.72ms]
+
+ 7 pass
+ 0 fail
+ 36 expect() calls
+Ran 7 tests across 3 files. [439.00ms]
+{"captures":12,"chunks":2,"bytes":103824,"metrics":[{"activeNeuralSteps":20,"productionMs":542,"wasmBytes":45285376},{"activeNeuralSteps":4,"productionMs":42.799999952316284,"wasmBytes":45285376}]}
+Held asset http://127.0.0.1:5173/@fs/Users/david/dev/fly-escape/assets/house/wall.glb
+{"cancelledHangingDownload":"scene","restartedOnSameClient":true,"replies":["ready","frames","complete"],"initializationRecoveryMs":6077,"gpuCancel":{"cancelled":true,"oldFrames":0,"newFrames":1},"errors":[]}
+Held asset http://127.0.0.1:5173/brain/retinal-map.json
+{"cancelledHangingDownload":"map","restartedOnSameClient":true,"replies":["ready","frames","complete"],"initializationRecoveryMs":988,"gpuCancel":{"cancelled":true,"oldFrames":0,"newFrames":1},"errors":[]}
+[{"mode":"context","failure":{"message":"Error: Retinal acquisition cancelled or context lost","settledMs":311.90000009536743},"retryFrames":1},{"mode":"unresponsive","failure":{"message":"Error: Retinal acquisition cancelled or context lost","settledMs":4919.199999928474},"retryFrames":1},{"mode":"late-complete","retryFrames":1},{"mode":"suspended","retryFrames":1}]
+[{"failure":"json","firstError":"SyntaxError: Unexpected token 'o', \"not-json\" is not valid JSON","recovered":true,"requests":2},{"failure":"profile","firstError":"Error: Retinal map does not match the installed optical profile","recovered":true,"requests":2},{"failure":"native-map","firstError":"invalid retinal map: invalid value: integer `-1`, expected u32 at line 1 column 219654","recovered":true,"requests":2}]

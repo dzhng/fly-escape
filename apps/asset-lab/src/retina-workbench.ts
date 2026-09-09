@@ -47,7 +47,7 @@ export async function retinaWorkbench() {
   let reject: ((error: Error) => void) | undefined;
   let profile = { ...retinaProfile };
   let sceneId = "";
-  let catalog: CaptureReady["catalog"] = [];
+  let fixture: CaptureReady;
   const fail = (error: Error) => {
     clearTimeout(requestTimer);
     const no = reject; resolve = undefined; reject = undefined;
@@ -100,7 +100,7 @@ export async function retinaWorkbench() {
     const ready = await request({ type: "start", profile: next, placements: support
       ? [...content.level.fixedObjects, { id: 902, kind: "fruit", position: { x: 2, z: 7.5 }, heading: 0 }]
       : undefined }) as CaptureReady;
-    catalog = ready.catalog;
+    fixture = ready;
     view.setPlacements([], ready.catalog, undefined, ready.placements);
     profile = next;
     sceneId = ready.sceneId;
@@ -119,7 +119,7 @@ export async function retinaWorkbench() {
       }
     }
   };
-  mountRetinaAttempt(app.querySelector("aside")!, (current, info) => {
+  mountRetinaAttempt(app.querySelector("aside")!, (current, info, catalog) => {
     view.setPlacements(info.resolvedSetup.state.placements, catalog, undefined, info.resolvedSetup.fixedPlacements);
     inspect(current);
   });
@@ -136,6 +136,7 @@ export async function retinaWorkbench() {
       canvas.width = profile.width; canvas.height = profile.height;
       canvas.getContext("2d")!.putImageData(new ImageData(projection.image(samples.subarray(eye * bytes, (eye + 1) * bytes)), profile.width, profile.height), 0, 0);
     }
+    view.setPlacements([], fixture.catalog, undefined, fixture.placements);
     inspect(current, rigView.visible);
     report.textContent = JSON.stringify({ profile, sceneId, pose: current, gpu: app.dataset.retinaGpu, ...result, samples: Array.from(samples) }, null, 2);
     app.dataset.retinaReady = "true";

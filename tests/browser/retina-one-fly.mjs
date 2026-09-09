@@ -13,6 +13,11 @@ try {
   page.on("pageerror", error => errors.push(error.message));
   await page.goto(process.env.RETINA_URL ?? "http://127.0.0.1:5174/retina");
   await page.waitForSelector('[data-retina-ready="true"]');
+  const initialCapture = await page.locator("#app").getAttribute("data-retina-capture-count");
+  await page.locator("#retina-pose").selectOption("tilted");
+  await page.waitForFunction(previous => document.querySelector("#app").dataset.retinaCaptureCount !== previous, initialCapture);
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  const fixtureBefore = await page.locator(".retina-world").screenshot();
   const section = page.locator(".retina-attempt");
   assert.equal(await section.locator("[data-tick]").isDisabled(), true);
   await section.locator("[data-run]").click();
@@ -52,6 +57,14 @@ try {
   }
   assert.equal(await page.locator("#app").getAttribute("data-retina-capture-count"), fixtureCaptureCount);
   assert.equal(await page.locator("#app").getAttribute("data-retina-ready"), "true");
+  await page.locator("#retina-capture").click();
+  await page.waitForFunction(previous => document.querySelector("#app").dataset.retinaCaptureCount !== previous, fixtureCaptureCount);
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  const fixtureAfter = await page.locator(".retina-world").screenshot();
+  await writeFile(`${output}/fixture-before.png`, fixtureBefore);
+  await writeFile(`${output}/fixture-after.png`, fixtureAfter);
+  assert.ok(fixtureAfter.equals(fixtureBefore), "Capture must restore its tilted-support scene after the one-fly display");
+  await section.locator("[data-tick]").dispatchEvent("input");
   await page.screenshot({ path: `${output}/one-fly-desktop-full.png`, fullPage: true });
   await section.screenshot({ path: `${output}/one-fly-desktop.png` });
   await page.setViewportSize({ width: 420, height: 900 });

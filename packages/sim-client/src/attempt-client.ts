@@ -51,11 +51,13 @@ export class AttemptClient {
   setup(command: Extract<SetupCommand, { type: "resolve" }>): Promise<ResolvedSetup>;
   setup(command: Extract<SetupCommand, { type: "edit" }>): Promise<PlacementState>;
   setup(command: SetupCommand): Promise<SetupFixture | ToolDef[] | ResolvedSetup | PlacementState> {
+    if (this.attemptId && !this.finished) return Promise.reject(new Error("Setup is frozen during an attempt"));
     if (this.setupPending) return Promise.reject(new Error("Setup validation is already pending"));
     this.worker ??= this.createWorker();
     const id = ++this.setupSequence;
     return new Promise((resolve, reject) => {
       this.setupPending = { id, resolve, reject };
+      this.monitor(30000);
       this.worker!.postMessage({ type: "setup", requestId: id, command });
     });
   }
@@ -72,6 +74,7 @@ export class AttemptClient {
         const pending = this.setupPending;
         if (!pending || pending.id !== event.data.requestId) return;
         this.setupPending = undefined;
+        this.monitor(0);
         if ("error" in event.data) pending.reject(new Error(event.data.error));
         else pending.resolve(event.data.value);
         return;
@@ -173,6 +176,7 @@ export class AttemptClient {
   }
   setHidden(hidden: boolean) {
     this.hidden = hidden;
+    if (this.attemptId) this.send({ type: "visibility", attemptId: this.attemptId, hidden });
     this.monitor(this.deadlineMs);
     this.flushCredits();
   }

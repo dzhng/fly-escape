@@ -1,0 +1,261 @@
+bun test v1.3.14 (0d9b296a)
+
+apps/web/src/campaign.test.ts:
+(pass) one earned star unlocks only the next sequential level and a reset relocks later levels [1.19ms]
+
+apps/web/src/progress.test.ts:
+(pass) watched milestones persist without lowering an earlier best or changing another level [0.12ms]
+
+apps/web/src/departure-tail.test.ts:
+(pass) last escape finishes after early completion, pauses, and resets when replay rewinds [1.68ms]
+
+apps/web/src/eye-panels.test.tsx:
+(pass) recorded black eyes remain present while absent input has an explicit empty state [72.91ms]
+(pass) a mismatched scene, eye layout or selected fly cannot display another input [27.70ms]
+
+apps/web/src/star-celebration.test.ts:
+(pass) stars celebrate when watched, once per milestone despite replay and seeking [0.23ms]
+
+packages/sim-client/src/record.test.ts:
+(pass) Rust packed records decode exactly across flies, chunks, events and terminal absence [3.99ms]
+(pass) metadata field order determines the consumer offsets [0.65ms]
+(pass) stale attempts are ignored and invalid current chunks fail without changing history [1.59ms]
+(pass) archive limits count retained backing allocations, and reject unsupported metadata [0.87ms]
+(pass) accepting a chunk takes ownership and snapshots metadata and results [0.68ms]
+(pass) missing or malformed results cannot finish the archive [1.60ms]
+(pass) motion phase freezes at terminal and reverse seek restores the prior phase [0.71ms]
+(pass) motion follows packed mode transitions across chunk boundaries and resets on clear [0.48ms]
+(pass) bounded neural traces match recorded frames across seek and terminal gaps [0.70ms]
+(pass) pose-only windows preserve recorded positions and terminal states across chunks and seeks [0.80ms]
+(pass) tick zero and rewind preserve immutable core initial poses and mixed modes [0.45ms]
+(pass) support identity and quaternion corruption fail before archive mutation [0.28ms]
+(pass) malformed motion fails atomically before any buffer is detached [1.95ms]
+(pass) motion backing allocations count against the same archive capacity [0.55ms]
+(pass) the core sampler replays interior knots, seeks across chunks, and releases history [13.77ms]
+(pass) caught survives Rust packing and validates its summary count [0.78ms]
+
+packages/sim-client/src/record-errors.test.ts:
+(pass) public archive rejects frozen old schema before touching its layout [0.23ms]
+(pass) malformed current headers and metadata produce handled invalid-record errors [0.11ms]
+(pass) public wire-header parser rejects corrupt JSON and unsupported versions before payload access [0.29ms]
+
+packages/sim-client/src/attempt-watchdog.test.ts:
+(pass) queued idle cannot disable recovery for credits already sent; hidden time and stale runs are ignored [1.03ms]
+(pass) stalled setup rejects and retires its worker, then a fresh setup succeeds [0.58ms]
+
+packages/sim-client/src/attempt-client.test.ts:
+(pass) reusing an attempt ID cannot deliver a queued failure to the new run [0.38ms]
+(pass) a fatal setup failure permits a fresh worker and stale faults cannot reject its reply [0.27ms]
+(pass) leaving a setup lets the next level resolve without accepting the old reply [0.17ms]
+(pass) record decode failures cancel production and preserve a recoverable message [0.22ms]
+
+packages/sim-client/src/playback.test.ts:
+(pass) initial lead covers sustained underproduction rather than a short buffer [0.10ms]
+(pass) pause, hidden time, mode changes and seeking preserve one cursor without catch-up [0.13ms]
+(pass) depleted buffers freeze and rebuild a substantial lead before resuming [0.07ms]
+(pass) a worse production estimate plays on, while faster consumption renews buffering [0.03ms]
+(pass) completed records can replay at zero production rate and stop at early terminal time [0.03ms]
+(pass) fast mode plays the authored horizon in one wall minute [0.09ms]
+(pass) playback offers exactly two modes and no other speed [0.08ms]
+(pass) switching modes keeps the cursor and rechecks lead instead of jumping [0.04ms]
+(pass) fast playback sizes its lead by the fast multiplier, not by real time [0.04ms]
+(pass) a fast attempt that ends early finishes sooner and is never stretched [0.07ms]
+(pass) hidden tabs and pauses behave the same in fast mode [0.04ms]
+(pass) a transient production slowdown never interrupts a replay that stays ahead of the cursor [0.08ms]
+(pass) a stalled producer still freezes playback before its frames run out [0.08ms]
+
+packages/sim-client/src/retina-record.test.ts:
+(pass) native RGB slots survive chunk boundaries, arbitrary selection and seek without aliasing [4.01ms]
+(pass) bad retinal identities, lengths, presence and input transforms cannot poison prior history [0.76ms]
+
+packages/game-renderer/src/world-scene.test.ts:
+THREE.GLTFLoader: Couldn't load texture blob:627757b7-66c3-4eec-9024-a4c513a86928
+THREE.GLTFLoader: Couldn't load texture blob:91c58cba-051c-405d-9b71-6082f51455c3
+THREE.GLTFLoader: Couldn't load texture blob:854ce799-bb1b-49c5-8efb-426efa3d9267
+THREE.GLTFLoader: Couldn't load texture blob:fa2c75cf-45b5-4b80-a7af-ec28b5167b2c
+THREE.GLTFLoader: Couldn't load texture blob:3bfcd797-ca28-4267-bc73-a224fb429289
+THREE.GLTFLoader: Couldn't load texture blob:23e987fb-e6f2-4262-ae62-e7c6d77a0a7e
+THREE.GLTFLoader: Couldn't load texture blob:770378e9-b8e3-4752-a3ad-e05aa8300b9e
+THREE.GLTFLoader: Couldn't load texture blob:828ed65b-2acd-4b4d-9e02-41343408afb0
+THREE.GLTFLoader: Couldn't load texture blob:82c84b3f-c400-47e6-b272-c66926a813ed
+THREE.GLTFLoader: Couldn't load texture blob:6ce66247-362c-455d-a6b0-5594a1de6333
+(pass) physical authored world keeps opaque geometry when the presentation camera cuts away walls [169.93ms]
+THREE.GLTFLoader: Couldn't load texture blob:53729f0a-9fa8-4c4d-9a0d-ce2386b0ca89
+THREE.GLTFLoader: Couldn't load texture blob:b2e93661-59f9-430f-83da-62a0777a2ead
+THREE.GLTFLoader: Couldn't load texture blob:b8337704-c9dc-444f-a199-6a2e50cb13a6
+THREE.GLTFLoader: Couldn't load texture blob:376b745f-3558-4f6d-bdae-cc73014646db
+THREE.GLTFLoader: Couldn't load texture blob:1d4935e2-9226-4f49-8dd1-af1a5d892b31
+THREE.GLTFLoader: Couldn't load texture blob:902a9c8a-603f-41e1-8754-9e8ecc0c96dc
+THREE.GLTFLoader: Couldn't load texture blob:ea79a4bf-c9b1-4685-83c8-c892ee4eecc2
+THREE.GLTFLoader: Couldn't load texture blob:a832e332-e327-40b0-ac5f-44eb58348095
+THREE.GLTFLoader: Couldn't load texture blob:15a91ae1-f951-4328-b9fa-e793fe884497
+THREE.GLTFLoader: Couldn't load texture blob:de11d760-1446-472d-8cbc-32aadf9f337c
+THREE.GLTFLoader: Couldn't load texture blob:501e94e1-469b-4566-9159-271308b13939
+THREE.GLTFLoader: Couldn't load texture blob:f135668c-b860-463a-8c31-a286dd8c6d34
+THREE.GLTFLoader: Couldn't load texture blob:2ce03c2b-f3bc-411d-8be3-a3aa1e649f74
+THREE.GLTFLoader: Couldn't load texture blob:86271436-fb6b-40f4-acfb-6ce5b1670dd2
+THREE.GLTFLoader: Couldn't load texture blob:2a0ce125-93db-4e02-8a57-2cba139fd404
+(pass) failed or stale shared asset loads do not install a partial placement template set [248.41ms]
+(pass) physical light positions come only from explicit authoring and release owned shadow targets [2.27ms]
+(pass) campaign authoring installs identical physical and presentation light transforms and shadow volumes [5.02ms]
+
+packages/game-renderer/src/house.test.ts:
+(pass) full-height walls expose rooms with a low solid base and a faint upper wall [7.64ms]
+THREE.GLTFLoader: Couldn't load texture blob:ef9a8ef3-a39b-416f-8315-2299c2b87527
+THREE.GLTFLoader: Couldn't load texture blob:6edeadc4-f8c6-44ab-b77c-dcef09ff9d3c
+THREE.GLTFLoader: Couldn't load texture blob:f8173f4e-fea7-49f7-8de3-7898bed19292
+(pass) authored meshes leave every geometry doorway open and release replaced resources [12.76ms]
+(pass) shared wall endpoints close the outside corner without filling doorway ends [1.14ms]
+(pass) solid GLB matches core bounds, retains its footprint during cutaway, and restores [5.15ms]
+(pass) native furnishings match core footprints through rotation and independent replacement [13.04ms]
+(pass) prepared household shapes retain native envelopes and reject mismatched replacements [7.69ms]
+(pass) nearby flies preserve back walls and only expose foreground wall shells [5.95ms]
+
+packages/game-renderer/src/camera-input.test.ts:
+(pass) the right button orbits while the left button still pans and picks [2.32ms]
+(pass) a right click reports its button without moving the camera or opening a menu [0.32ms]
+(pass) the reset control appears once turned and restores orientation alone [0.68ms]
+(pass) disposal releases every canvas listener [0.24ms]
+
+packages/game-renderer/src/house-lighting.test.ts:
+(pass) moving and rotating wall fixtures keeps rendered lights on their sensory sources [2.25ms]
+(pass) moving and reorienting an exit keeps its rendered light on its sensory source [5.54ms]
+
+packages/game-renderer/src/retina-profile.test.ts:
+(pass) installed optics match the reviewed map without trusting its declared hashes [285.88ms]
+
+packages/game-renderer/src/camera.test.ts:
+(pass) follow keeps a moving and terminal target centered while zoom preserves it [1.14ms]
+(pass) overview fits every room corner and pan releases follow without rotating [1.07ms]
+(pass) loading taller artwork preserves the overview target across a retry [0.48ms]
+(pass) returning to a narrower panel reuses meadow coverage until viewport dimensions change [1.24ms]
+(pass) maximum zoom keeps an edge fly centered; Overview restores the whole house [0.52ms]
+(pass) millimetre subjects stay in the frustum at follow and extra-close household framing [0.40ms]
+(pass) zoom changes fly size gently and stops changing it at the camera limit [0.49ms]
+(pass) inspection focus preserves fixed camera orientation and ignores fly tracking [0.60ms]
+(pass) diagnostic mounting elevation never leaks into follow or Overview [0.24ms]
+(pass) circular exterior contains every ground ray across normal camera limits [2.20ms]
+(pass) every fly keeps its readable size at its own depth, however close the view gets [0.34ms]
+(pass) world enlargement is capped, so the farthest view shrinks flies instead of growing them [0.13ms]
+(pass) orbit turns the view only: target, zoom and follow survive, and reset restores the default [0.16ms]
+(pass) orbit keeps the camera above the floor, the house framed and the ground under every ray [1.61ms]
+(pass) ground coverage is reused across a turn, and panning follows the turned screen axes [0.26ms]
+(pass) overlay framing keeps the house and followed fly in the unobscured viewport [0.39ms]
+(pass) meadow still covers the view after proportional resizing beside a fixed overlay [0.37ms]
+
+packages/game-renderer/src/retina-projection.test.ts:
+(pass) compound sampling preserves color and eye-image handedness [3.72ms]
+(pass) nonfinite optical pixels fail instead of becoming black neural samples [1.72ms]
+
+packages/game-renderer/src/fly-model.test.ts:
+(pass) replacement with geometry far from its pivot is rejected instead of disappearing from follow [0.57ms]
+(pass) authored GLB has finite grounded bounds and independently poseable clones [17.62ms]
+(pass) authored clips restore identical skinned mesh phase after reverse seek without root motion [53.05ms]
+(pass) cloned flies preserve shared bone textures and independent animation [47.12ms]
+(pass) animated clearance bounds contain the posed fly through clip changes and reverse seeking [28.82ms]
+
+packages/game-renderer/src/placement-models.test.ts:
+THREE.GLTFLoader: Couldn't load texture blob:fb0f019d-12ac-433c-bd0b-dfefa8b89d52
+(pass) edible assets preserve native metres while floor cues retain catalog scaling [13.81ms]
+THREE.GLTFLoader: Couldn't load texture blob:c68f1584-15b8-4d84-ad35-51186a2c404d
+THREE.GLTFLoader: Couldn't load texture blob:98029308-5532-4be2-9313-69edac71ca6b
+(pass) fruit shared geometry survives edits and is released once when replaced [6.55ms]
+THREE.GLTFLoader: Couldn't load texture blob:e21971e7-500e-4c4f-945f-091fa44af706
+THREE.GLTFLoader: Couldn't load texture blob:3ad970e2-efbc-49c4-b73d-bf91f3743e82
+(pass) banana shared geometry survives edits and is released once when replaced [25.14ms]
+(pass) crumbs shared geometry survives edits and is released once when replaced [3.58ms]
+(pass) vinegar shared geometry survives edits and is released once when replaced [9.47ms]
+(pass) fan shared geometry survives edits and is released once when replaced [15.30ms]
+(pass) lamp shared geometry survives edits and is released once when replaced [2.83ms]
+(pass) shade shared geometry survives edits and is released once when replaced [2.01ms]
+(pass) lamp is a finite static floor surface within its placement footprint [1.81ms]
+(pass) shade is a finite static floor surface within its placement footprint [1.11ms]
+THREE.GLTFLoader: Couldn't load texture blob:98f1d79a-274e-460e-980b-73ab35d65e62
+THREE.GLTFLoader: Couldn't load texture blob:75e07d0e-25e6-4fc5-b254-4588c657a779
+(pass) banana stays native sized after placement and rejects mismatched apple geometry [20.79ms]
+(pass) spiderWeb renders its exact native contact mesh without footprint scaling [5.31ms]
+(pass) bugZapper renders its exact native contact mesh without footprint scaling [3.12ms]
+(pass) fan renders its exact native contact mesh without footprint scaling [5.57ms]
+(pass) vinegar renders its exact native contact mesh without footprint scaling [4.02ms]
+(pass) wornShoes renders its exact native contact mesh without footprint scaling [5.61ms]
+(pass) dirtyDishes renders its exact native contact mesh without footprint scaling [9.30ms]
+(pass) laundry renders its exact native contact mesh without footprint scaling [6.58ms]
+(pass) sleepingCat renders its exact native contact mesh without footprint scaling [5.17ms]
+(pass) placement preview preserves the object's materials unless the position is invalid [0.85ms]
+
+packages/game-renderer/src/doorways.test.ts:
+(pass) a widened opening carries its frame to both wall ends without thickening the posts [3.24ms]
+(pass) closing an opening removes its frame instead of retaining a separate decoration [0.15ms]
+
+packages/game-renderer/src/fly-departure.test.ts:
+(pass) escape departure heads outward, climbs, shrinks and restores on backward seek [0.24ms]
+
+packages/game-renderer/src/exit-glow.test.ts:
+(pass) the spill is framed by the opening's own outward normal, whatever its orientation [4.18ms]
+(pass) the glow is drawn as light: additive, depth-tested and never depth-writing [1.13ms]
+(pass) the pool peaks at the opening and fades out before either end [0.19ms]
+(pass) the haze fades out well below its top edge, so it never reads as a pane [0.28ms]
+(pass) an unchanged opening reuses the glow, and disposal releases every field once [2.36ms]
+(pass) an opening without a width or an outward direction is rejected rather than drawn [0.11ms]
+
+packages/game-renderer/src/house-materials.test.ts:
+(pass) house replacement preserves authored materials and floor grain density across room sizes [1.89ms]
+(pass) tile replacement preserves wood resources and one physical floor per room [1.87ms]
+THREE.GLTFLoader: Couldn't load texture blob:a7ab0e4c-a177-488d-8541-527b343b9e79
+THREE.GLTFLoader: Couldn't load texture blob:23f467e7-42ad-43e5-81b6-eba73f75f7fc
+THREE.GLTFLoader: Couldn't load texture blob:beca2fca-3f3e-47f5-920b-d3bbc172300a
+THREE.GLTFLoader: Couldn't load texture blob:dcc5c05d-c4b3-4db1-ab4e-fcc51d5a2d86
+(pass) tile kit preserves the exact floor triangle coordinates [23.96ms]
+THREE.GLTFLoader: Couldn't load texture blob:66bf6e60-3820-4484-9774-3cc129f89d90
+(pass) authored tile UV density stays constant across different room sizes [5.59ms]
+
+packages/game-renderer/src/trails.test.ts:
+(pass) trail geometry is bounded, fades by playback time and restores exact seek state [1.86ms]
+(pass) discontinuities stop paths and fresh attempts contain no old vertices [0.24ms]
+(pass) recorded trails preserve physical height, detect input discontinuity and stop at terminal [0.20ms]
+(pass) trail width follows shared projection and the head gap excludes the fly footprint [5.46ms]
+(pass) vertical trails retain recorded centres and pixel width at both perspective depths [0.74ms]
+
+packages/game-renderer/src/fly-motion.test.ts:
+(pass) recorded airborne landing plays Land, touchdown immediately plays Walk [0.12ms]
+(pass) recorded orientation sampling is absolute, normalized and takes the short arc [0.34ms]
+
+packages/game-renderer/src/retina-world.test.ts:
+(pass) scene identity binds physical authoring and ignores presentation/scoring metadata [1.42ms]
+(pass) asynchronous scene identity snapshots the caller's authoring [0.34ms]
+
+packages/game-renderer/src/brain-view.test.ts:
+(pass) legend colours are understood by the renderer and distinguish groups [0.64ms]
+
+packages/game-renderer/src/retina-eye-rig.test.ts:
+(pass) frozen eye origins match the actual skinned asset in native metres [5.62ms]
+(pass) reference optical axes see the correct asymmetric native-world landmarks [0.24ms]
+(pass) consumers cannot mutate the shared rig or its coordinates [0.04ms]
+
+packages/game-renderer/src/exterior-grass.test.ts:
+(pass) grass masks actual rooms and joined wall thickness, retaining concave exterior [0.32ms]
+(pass) packed field is repeatable, bounded, uniformly covers circle and respects blade clearance [1011.53ms]
+(pass) resizing replaces the owned batches and releases shared resources once [73.72ms]
+(pass) terrain keeps house approaches level and distant hills bounded [0.34ms]
+
+packages/game-renderer/src/static-batches.test.ts:
+(pass) static batching retains transformed surfaces and distinct materials [2.29ms]
+(pass) batching preserves unmerged children beneath a mesh parent [1.14ms]
+
+packages/game-renderer/src/surface-clearance.test.ts:
+(pass) a fly on a lower ledge remains above the overhanging plate as its display size changes [1.60ms]
+(pass) surface-aligned flies rest on a slope without lifting onto its distant high corner [0.09ms]
+(pass) clearance respects the triangle footprint and drops the visual lift after leaving it [0.10ms]
+
+apps/web/src/levels/house-lighting.test.ts:
+(pass) resolved campaign exports enable vision [0.06ms]
+(pass) every visible campaign fixture contributes exactly one resolved source [0.08ms]
+
+apps/web/src/levels/routes.test.ts:
+(pass) open-window: the release has a connected route through multiple rooms [0.30ms]
+(pass) turn-the-corner: the release has a connected route through multiple rooms [0.10ms]
+
+ 147 pass
+ 0 fail
+ 1645773 expect() calls
+Ran 147 tests across 34 files. [3.89s]

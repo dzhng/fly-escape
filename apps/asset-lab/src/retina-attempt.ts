@@ -1,12 +1,12 @@
 import { AttemptClient } from "../../../packages/sim-client/src/attempt-client";
 import { FrameArchive } from "../../../packages/sim-client/src/record";
-import type { AttemptInfo, StartAttempt } from "../../../packages/sim-client/src/generated/sim";
+import type { AttemptInfo, StartAttempt, ToolDef } from "../../../packages/sim-client/src/generated/sim";
 import { RetinaProjection, retinaProfile } from "../../../packages/game-renderer/src/retina-projection";
 import type { RetinalPose } from "../../../packages/game-renderer/src/retina-capture";
 import { campaignLevels } from "../../web/src/campaign-content";
 
 /** The diagnostic drives the same producer as a campaign; its slider only reads history. */
-export function mountRetinaAttempt(parent: HTMLElement, inspect: (pose: RetinalPose, info: AttemptInfo) => void) {
+export function mountRetinaAttempt(parent: HTMLElement, inspect: (pose: RetinalPose, info: AttemptInfo, catalog: ToolDef[]) => void) {
   const content = campaignLevels[0];
   if (!content.lighting) throw new Error("The one-fly room needs authored lighting");
   const lighting = content.lighting;
@@ -32,6 +32,7 @@ export function mountRetinaAttempt(parent: HTMLElement, inspect: (pose: RetinalP
   let archive: FrameArchive | undefined;
   let info: AttemptInfo | undefined;
   let input: StartAttempt;
+  let catalog: ToolDef[] = [];
   let client: AttemptClient | undefined;
   const show = () => {
     if (!archive) return;
@@ -44,7 +45,7 @@ export function mountRetinaAttempt(parent: HTMLElement, inspect: (pose: RetinalP
       context.clearRect(0, 0, width, height);
       if (eye) context.putImageData(new ImageData(projection.image(eye.rgb.subarray(index * eyeBytes, (index + 1) * eyeBytes)), width, height), 0, 0);
     });
-    if (eye && info) inspect(eye.pose, info);
+    if (eye && info) inspect(eye.pose, info, catalog);
     state.textContent = JSON.stringify({ tick, inputPose: eye?.pose ?? null, bodyAfterTick: frame.flies[0].body,
       neural: frame.flies[0].neural, note: "Group readouts include input cells; they are not the downstream causal proof." }, null, 2);
     const neural = frame.flies[0].neural;
@@ -83,7 +84,16 @@ export function mountRetinaAttempt(parent: HTMLElement, inspect: (pose: RetinalP
       if (progress.phase === "capture") status.textContent = `Tick ${progress.tick}: awaiting color input before the neural step…`;
       else if (progress.phase === "compute") status.textContent = progress.tick === undefined ? "Preparing the next native tick…" : `Tick ${progress.tick}: computing the neural and body step from captured input…`;
     });
-    client.start(input, { roomFloors: content.roomFloors ?? [], roomDetails: content.roomDetails ?? [], lighting });
+    client.setHidden(document.hidden);
+    const current = client;
+    void current.setup({ type: "catalog" }).then(value => {
+      if (client !== current) return;
+      catalog = value;
+      current.start(input, { roomFloors: content.roomFloors ?? [], roomDetails: content.roomDetails ?? [], lighting });
+    }, error => {
+      if (client !== current) return;
+      section.dataset.state = "error"; status.textContent = String(error); run.disabled = false;
+    });
   });
   download.addEventListener("click", () => {
     if (!archive || !info) return;
@@ -93,5 +103,10 @@ export function mountRetinaAttempt(parent: HTMLElement, inspect: (pose: RetinalP
     const link = document.createElement("a"); link.href = url; link.download = "retina-one-fly.json"; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 0);
   });
-  window.addEventListener("pagehide", () => client?.dispose(), { once: true });
+  const visibility = () => client?.setHidden(document.hidden);
+  document.addEventListener("visibilitychange", visibility);
+  window.addEventListener("pagehide", () => {
+    document.removeEventListener("visibilitychange", visibility);
+    client?.dispose(); client = undefined;
+  }, { once: true });
 }

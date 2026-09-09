@@ -17,6 +17,8 @@ export class RetinaCapture {
   private readonly camera = new THREE.PerspectiveCamera(retinaCameraProjection.verticalFovDegrees, retinaCameraProjection.aspect, retinaCameraProjection.nearMetres, retinaCameraProjection.farMetres);
   private readonly bodyRotation = new THREE.Quaternion();
   private readonly eyeRotation = new THREE.Quaternion();
+  private suspendedAt?: number;
+  private suspendedDuration = 0;
   private pending = false;
   private disposed = false;
   private cancelReadback?: () => void;
@@ -62,6 +64,18 @@ export class RetinaCapture {
     gl.bindBuffer(gl.PIXEL_PACK_BUFFER, null);
   }
 
+  /** Background suspension does not consume the GPU progress deadline. */
+  setSuspended(suspended: boolean): void {
+    if (suspended && this.suspendedAt === undefined) this.suspendedAt = performance.now();
+    else if (!suspended && this.suspendedAt !== undefined) {
+      this.suspendedDuration += performance.now() - this.suspendedAt;
+      this.suspendedAt = undefined;
+    }
+  }
+  private activeNow(): number {
+    return (this.suspendedAt ?? performance.now()) - this.suspendedDuration;
+  }
+
   async acquire(poses: readonly RetinalPose[], diagnostic = false) {
     if (this.disposed) throw new Error("Retinal capture is disposed");
     if (this.pending) throw new Error("Retinal acquisition already pending");
@@ -71,6 +85,7 @@ export class RetinaCapture {
       || Math.abs(pose.rotation.reduce((sum, value) => sum + value * value, 0) - 1) > 1e-6))
       throw new Error("Retinal poses must be finite and normalized");
     this.pending = true;
+    const deadline = this.activeNow() + 4900;
     const began = performance.now(), views = poses.length * 2;
     const { width, height } = this.projection.profile;
     const sampleBytes = this.projection.cells.length * 3;
@@ -96,7 +111,7 @@ export class RetinaCapture {
       const poolingBegan = performance.now();
       this.pooling.render(this.renderer, views);
       const submitted = performance.now();
-      await this.readback(this.pooling.target, views, this.samplePixels.subarray(0, views * this.projection.cells.length * 4), began + 4900);
+      await this.readback(this.pooling.target, views, this.samplePixels.subarray(0, views * this.projection.cells.length * 4), deadline);
       const read = performance.now();
       for (let cell = 0; cell < samples.length / 3; cell++) {
         if (this.samplePixels[cell * 4 + 3] !== 255) throw new Error("Retinal capture contains invalid optical samples");
@@ -109,7 +124,7 @@ export class RetinaCapture {
       let oracleMaxByteDifference: number | undefined;
       if (diagnostic) {
         const pixels = this.diagnosticPixels ??= new Float32Array(this.target.width * this.target.height * 4);
-        await this.readback(this.target, this.target.height, pixels, began + 4900);
+        await this.readback(this.target, this.target.height, pixels, deadline);
         cameraImages = [0, 1].map(eye => this.projection.cameraImage(pixels, this.target.width, eye * width, 0));
         oracleMaxByteDifference = 0;
         for (let eye = 0; eye < views; eye++) {
@@ -157,9 +172,9 @@ export class RetinaCapture {
         const poll = () => {
           const state = gl.clientWaitSync(sync, 0, 0);
           if (this.disposed || gl.isContextLost() || state === gl.WAIT_FAILED) reject(new Error("Retinal readback failed"));
-          else if (performance.now() >= deadline) this.dispose();
-          else if (state === gl.TIMEOUT_EXPIRED) timer = setTimeout(poll, 1);
-          else resolve();
+          else if (state === gl.ALREADY_SIGNALED || state === gl.CONDITION_SATISFIED) resolve();
+          else if (this.activeNow() >= deadline) this.dispose();
+          else timer = setTimeout(poll, 1);
         };
         timer = setTimeout(poll, 1);
       });

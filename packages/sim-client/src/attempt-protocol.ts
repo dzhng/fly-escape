@@ -10,6 +10,7 @@ export type AttemptCommand =
     }
   | { type: "start"; input: StartAttempt; opticalWorld?: import("./attempt-optics").AttemptWorldAuthoring }
   | { type: "grantCredits"; attemptId: string; count: number }
+  | { type: "visibility"; attemptId: string; hidden: boolean }
   | { type: "cancel"; attemptId: string };
 export type AttemptRequest = AttemptCommand & { generation: number };
 export type AttemptReply =

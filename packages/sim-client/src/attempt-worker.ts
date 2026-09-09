@@ -308,6 +308,9 @@ self.onmessage = async (event: MessageEvent<AttemptRequest | SetupRequest>) => {
     generation++;
     if (!release()) return;
     currentAttemptId = undefined;
+  } else if (message.type === "visibility") {
+    if (active?.id === message.attemptId && active.clientGeneration === message.generation)
+      active.optics?.capture.setSuspended(message.hidden);
   } else if (active?.id === message.attemptId && active.clientGeneration === message.generation) {
     const count = message.count;
     if (

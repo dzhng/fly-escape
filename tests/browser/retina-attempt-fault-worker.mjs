@@ -5,11 +5,28 @@ let injected = false;
 RetinaCapture.prototype.acquire = function(poses,diagnostic) {
   if (!injected) {
     injected = true;
-    if(new URL(self.location.href).searchParams.get("mode")==="context")
+    const mode = new URL(self.location.href).searchParams.get("mode");
+    if(mode === "context")
       setTimeout(()=>this.renderer.forceContextLoss(),0);
     else {
       const gl=this.renderer.getContext();
-      gl.clientWaitSync=()=>gl.TIMEOUT_EXPIRED;
+      if (mode === "unresponsive") gl.clientWaitSync=()=>gl.TIMEOUT_EXPIRED;
+      else {
+        const wait = gl.clientWaitSync.bind(gl), now = performance.now.bind(performance);
+        let offset = 0, polls = 0;
+        performance.now = () => now() + offset;
+        gl.clientWaitSync = (...args) => {
+          if (mode === "suspended" && polls++ === 0) {
+            this.setSuspended(true);
+            offset = 6000;
+            return gl.TIMEOUT_EXPIRED;
+          }
+          const state = wait(...args);
+          if (mode === "late-complete" && (state === gl.ALREADY_SIGNALED || state === gl.CONDITION_SATISFIED)) offset = 6000;
+          if (mode === "suspended") this.setSuspended(false);
+          return state;
+        };
+      }
     }
   }
   return original.call(this,poses,diagnostic);

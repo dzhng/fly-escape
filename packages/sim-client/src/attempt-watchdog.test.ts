@@ -53,3 +53,32 @@ test("queued idle cannot disable recovery for credits already sent; hidden time 
     expect(timers.size).toBe(0);
   } finally { client?.dispose(); Object.assign(globalThis, saved); }
 });
+
+test("stalled setup rejects and retires its worker, then a fresh setup succeeds", async () => {
+  const saved = { Worker: globalThis.Worker, setTimeout: globalThis.setTimeout, clearTimeout: globalThis.clearTimeout };
+  const timers = new Map<number, () => void>();
+  let next = 0;
+  let client: AttemptClient | undefined;
+  try {
+    globalThis.Worker = StalledWorker as unknown as typeof Worker;
+    globalThis.setTimeout = ((fn: () => void) => { const id = ++next; timers.set(id, fn); return id; }) as unknown as typeof setTimeout;
+    globalThis.clearTimeout = ((id: number) => { timers.delete(id); }) as unknown as typeof clearTimeout;
+    client = new AttemptClient(() => {});
+    const pending = client.setup({ type: "catalog" }).catch(error => error.message);
+    const stalled = StalledWorker.latest;
+    expect(timers.size).toBe(1);
+    [...timers.values()][0]();
+    expect(await pending).toContain("stopped making progress");
+    expect(stalled.terminated).toBe(true);
+    const recovered = client.setup({ type: "catalog" });
+    const fresh = StalledWorker.latest;
+    expect(fresh).not.toBe(stalled);
+    fresh.emit({ type: "setup", requestId: 2, value: [] });
+    expect(await recovered).toEqual([]);
+    expect(timers.size).toBe(0);
+    client.startLab("active", "1", 2, 100);
+    const timer = [...timers.values()][0];
+    await expect(client.setup({ type: "catalog" })).rejects.toThrow("frozen");
+    expect([...timers.values()][0]).toBe(timer);
+  } finally { client?.dispose(); Object.assign(globalThis, saved); }
+});
