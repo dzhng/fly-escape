@@ -1,7 +1,9 @@
 import * as THREE from "three";
 import { loadStaticHouseModel } from "./house";
-import type { WorldView } from "./index";
-import { sconceEmitter, type HouseLightMount, type Geometry } from "@fly-escape/sim-client";
+import type { WorldScene } from "./world-scene";
+import { disposeObjectResources } from "./resources";
+import { sconceEmitter, type HouseLightMount } from "../../sim-client/src/house-lighting";
+import type { Geometry } from "@fly-escape/sim-client";
 import { doorwayOpenings } from "./doorways";
 import doorwayEnvelope from "../../../assets/house/doorway/envelope.json";
 import exitWindowUrl from "../../../assets/house/exit-window/exit-window.glb?url";
@@ -62,10 +64,10 @@ export class RoomDetails {
   readonly root = new THREE.Group();
   private readonly direction = new THREE.Vector3();
   private readonly attachments: { model: THREE.Group; inward: THREE.Vector3 }[] = [];
-  constructor(details: readonly RoomDetail[], sources: ReadonlyMap<RoomDetail["kind"], THREE.Group>) {
+  constructor(details: readonly RoomDetail[], private readonly sources: ReadonlyMap<RoomDetail["kind"], THREE.Group>, private readonly presentation = true) {
     this.root.name = "AuthoredRoomDetails";
     // Interior door surrounds remain legible without blocking the cutaway rooms behind them.
-    sources.get("doorway")?.traverse(object => {
+    if (presentation) sources.get("doorway")?.traverse(object => {
       if (!(object instanceof THREE.Mesh)) return;
       object.castShadow = false;
       for (const material of Array.isArray(object.material) ? object.material : [object.material]) {
@@ -82,7 +84,7 @@ export class RoomDetails {
       model.name = `RoomDetail-${detail.kind}`;
       if (detail.kind === "doorway") fitDoorway(model, detail.width);
       mount.add(model);
-      if (detail.kind === "sconce") {
+      if (presentation && detail.kind === "sconce") {
         const emitter = sconceEmitter(detail);
         const light = new THREE.PointLight("#ffca88", emitter.intensity, emitter.source.radius, 2);
         light.position.fromArray(emitter.position);
@@ -93,13 +95,21 @@ export class RoomDetails {
     }
   }
   update(camera: THREE.Camera) {
+    if (!this.presentation) return;
     camera.getWorldDirection(this.direction);
     // Wall-mounted models disappear with the foreground wall; its light remains in the room.
     for (const { model, inward } of this.attachments) model.visible = this.direction.dot(inward) <= 0;
   }
+  dispose(): void {
+    this.root.removeFromParent();
+    const owned = new THREE.Group();
+    owned.add(this.root, ...this.sources.values());
+    disposeObjectResources(owned);
+    owned.clear();
+  }
 }
 
-export async function loadRoomDetails(view: WorldView, details: readonly RoomDetail[], isCurrent: () => boolean) {
+export async function loadRoomDetails(world: WorldScene, details: readonly RoomDetail[], isCurrent: () => boolean) {
   if (details.length > 16 || details.filter(detail => detail.kind === "sconce").length > 4)
     throw new Error("A room scene supports at most 16 wall details and four household lights");
   const results = await Promise.allSettled([...new Set(details.map(detail => detail.kind))].map(async kind => {
@@ -121,7 +131,6 @@ export async function loadRoomDetails(view: WorldView, details: readonly RoomDet
   }
   const sources = new Map<RoomDetail["kind"], THREE.Group>();
   for (const result of results) if (result.status === "fulfilled") sources.set(result.value.kind, result.value.model.root);
-  const scene = new RoomDetails(details, sources);
-  // All source geometry and materials are shared by the installed instances and owned by the view.
-  view.setRoomDetails(scene);
+  const scene = new RoomDetails(details, sources, world.mode === "presentation");
+  world.setRoomDetails(scene);
 }

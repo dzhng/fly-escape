@@ -17,8 +17,9 @@ export async function proportionsWorkbench() {
   let stopInspection = () => {};
   let client: AttemptClient | undefined;
   addEventListener("pagehide", () => { alive = false; stopInspection(); client?.dispose(); view.dispose(); }, { once: true });
-  await loadHouseAssets(view, () => alive, ["cabinet", "sofa"]);
+  await loadHouseAssets(view.world.house, () => alive, ["cabinet", "sofa"]);
   if (!alive) return;
+  view.refreshWorldBounds();
   let selected = 5;
   view.enableSelection(id => { if (id === null) { view.selectFly(null); return; } selected = id; app.querySelector<HTMLSelectElement>("#subject")!.value = String(id); view.selectFly(id); });
   // This one-room composition uses the existing scene owner, without relaxing any GLB kit bounds.

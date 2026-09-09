@@ -3,17 +3,18 @@ import { FlyOutcomes } from "./fly-outcomes";
 import type { RoomFloor } from "./house";
 export type { RoomFloor } from "./house";
 import * as THREE from "three";
-import type { RoomDetails } from "./room-details";
 export { loadRoomDetails, doorwayDetails } from "./room-details";
 export { doorwayOpenings } from "./doorways";
 export type { RoomDetail } from "./room-details";
 import { housePalette } from "./house-materials";
-import { PlacementModels, type PlacementKind } from "./placement-models";
 export { loadPlacementModel } from "./placement-models";
 export type { PlacementKind } from "./placement-models";
 import { FlyTrails, type TrailPoint } from "./trails";
 export { recordedTrails } from "./trails";
-import { HouseGeometry, cutAwayOccluders, type HouseAsset } from "./house";
+import { cutAwayOccluders, type HouseAsset } from "./house";
+import { WorldScene } from "./world-scene";
+export { WorldScene, loadWorldSceneAssets } from "./world-scene";
+export type { WorldLight } from "./world-scene";
 export { loadHousePart, loadStaticHouseModel } from "./house";
 export { loadHouseAssets } from "./house-assets";
 export type { HousePart, HouseAsset } from "./house";
@@ -72,9 +73,7 @@ export interface FlyPose {
 export class WorldView {
   private readonly scene = new THREE.Scene();
   private inspectionModel?: THREE.Group;
-  private roomDetails?: RoomDetails;
   private spawnArea: THREE.LineLoop<THREE.BufferGeometry, THREE.LineBasicMaterial> | null = null;
-  private readonly placementModels = new PlacementModels();
   private readonly trails: FlyTrails;
   private trailSample?: {
     paths: readonly (readonly TrailPoint[])[];
@@ -85,7 +84,7 @@ export class WorldView {
   private selectedFly: number | null = null;
   private readonly selectionRing: THREE.Mesh<THREE.RingGeometry, THREE.MeshBasicMaterial>;
   private readonly raycaster = new THREE.Raycaster();
-  private readonly house: HouseGeometry;
+  readonly world: WorldScene;
   private readonly exterior: ExteriorGrass;
   private readonly sunlight = sunGlow();
   private readonly sun = new THREE.DirectionalLight("#ffe0a0", 3.4);
@@ -132,7 +131,7 @@ export class WorldView {
     this.flyWallBounds.push(...this.flies.map(() => new THREE.Sphere()));
     this.outcomes = new FlyOutcomes(flyCount);
     this.scene.add(this.outcomes.root);
-    this.house = new HouseGeometry(geometry, roomFloors);
+    this.world = new WorldScene({ geometry, roomFloors, mode: "presentation" });
     this.exterior = new ExteriorGrass(geometry);
     this.scene.add(this.exterior.root);
     this.bounds = new THREE.Box3();
@@ -209,7 +208,7 @@ export class WorldView {
       sun,
       sun.target,
       this.sunlight,
-      this.house.root,
+      this.world.root,
       ...this.flies,
       this.contactMarkers,
       this.selectionRing,
@@ -235,7 +234,7 @@ export class WorldView {
   }
 
   get houseVisibility() {
-    return { segments: this.house.walls.children.length, cutaway: this.house.walls.children.filter(wall => wall.userData.cutaway).length, solids: this.house.solids.children.length, solidsCutaway: this.house.solids.children.filter(prop => prop.scale.y < 1).length };
+    return { segments: this.world.house.walls.children.length, cutaway: this.world.house.walls.children.filter(wall => wall.userData.cutaway).length, solids: this.world.house.solids.children.length, solidsCutaway: this.world.house.solids.children.filter(prop => prop.scale.y < 1).length };
   }
 
   /** Move the owned canvas between phase hosts without rebuilding its GPU resources. */
@@ -262,22 +261,16 @@ export class WorldView {
 
   get exteriorStats() { return { ...this.exterior.stats }; }
 
-  get houseAssetKeys(): HouseAsset[] { return this.house.assetKeys; }
-
   setHousePart(part: HouseAsset, source: THREE.Group): void {
-    this.house.replace(part, source);
-    cutAwayOccluders(this.house.solids);
-    this.bounds.max.y = Math.max(1, new THREE.Box3().setFromObject(this.house.root).max.y);
-    this.navigation.resize(this.container.clientWidth, this.container.clientHeight);
+    this.world.house.replace(part, source);
+    this.refreshWorldBounds();
   }
 
-  setRoomDetails(details: RoomDetails): void {
-    if (this.roomDetails) {
-      this.scene.remove(this.roomDetails.root);
-      disposeObjectResources(this.roomDetails.root);
-    }
-    this.roomDetails = details;
-    this.scene.add(details.root);
+  /** Reframe after the shared asset gate installs native-height world geometry. */
+  refreshWorldBounds(): void {
+    cutAwayOccluders(this.world.house.solids);
+    this.bounds.max.y = Math.max(1, new THREE.Box3().setFromObject(this.world.house.root).max.y);
+    this.navigation.resize(this.container.clientWidth, this.container.clientHeight);
   }
 
   /** Diagnostic appearance only: no core occupancy, cutaway, palette or placement semantics. */
@@ -337,18 +330,13 @@ export class WorldView {
     );
     return hit ? { x: hit.x, z: hit.z } : null;
   }
-  setPlacementModel(kind: PlacementKind, root: THREE.Group): void {
-    this.placementModels.replace(kind, root);
-    this.scene.add(this.placementModels.root);
-  }
-
   setPlacements(
     placements: Placement[],
     catalog: ToolDef[],
     ghost?: { placement: Placement; valid: boolean | null },
     fixed: Placement[] = [],
   ): void {
-    this.placementModels.setPlacements([...fixed, ...placements], catalog, ghost);
+    this.world.placements.setPlacements([...fixed, ...placements], catalog, ghost);
     disposeObjectResources(this.placementMarkers);
     this.placementMarkers.clear();
     if (!this.placementMarkers.parent) this.scene.add(this.placementMarkers);
@@ -843,21 +831,21 @@ export class WorldView {
       this.updateSelectionRing();
     }
     this.outcomes.update(this.flies, this.nativeSpan, this.nativeScale);
-    this.house.updateWallVisibility(this.navigation.camera, this.flyWallBounds);
+    this.world.house.updateWallVisibility(this.navigation.camera, this.flyWallBounds);
     // Furniture cutaway follows the selected fly; wall cutaway exposes rooms.
     if (selectedTarget && this.navigation.project(selectedTarget).visible) {
       const direction = selectedTarget.clone().sub(this.navigation.camera.position);
       this.raycaster.set(this.navigation.camera.position, direction.clone().normalize());
       this.raycaster.far = direction.length();
-      cutAwayOccluders(this.house.solids, this.raycaster);
+      cutAwayOccluders(this.world.house.solids, this.raycaster);
       this.raycaster.far = Infinity;
     } else {
-      cutAwayOccluders(this.house.solids);
+      cutAwayOccluders(this.world.house.solids);
     }
     if (this.trailSample) this.trails.sample(this.trailSample.paths, this.trailSample.cursorTick,
       this.selectionRing.geometry.parameters.outerRadius * this.displayScale);
     this.exterior.update(this.navigation.exteriorGroundCircle(), timeSeconds);
-    this.roomDetails?.update(this.navigation.camera);
+    this.world.details?.update(this.navigation.camera);
     this.renderer.render(this.scene, this.navigation.camera);
   }
 
@@ -865,8 +853,7 @@ export class WorldView {
     this.scene.remove(this.outcomes.root);
     this.outcomes.dispose();
     this.clearSpawnArea();
-    this.scene.remove(this.placementModels.root);
-    this.placementModels.dispose();
+    this.world.dispose();
     this.motions.forEach((motion) => motion.dispose());
     this.controls?.dispose();
     this.observer.disconnect();

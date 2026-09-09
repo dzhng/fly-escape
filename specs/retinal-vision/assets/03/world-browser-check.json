@@ -1,0 +1,37 @@
+{
+  "browser": "Chrome headless",
+  "captures": [
+    {
+      "variant": "reference",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 1,
+      "performanceNow": 12345,
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 1000
+      },
+      "errors": []
+    },
+    {
+      "variant": "candidate",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 1,
+      "performanceNow": 12345,
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 1000
+      },
+      "errors": []
+    }
+  ]
+}

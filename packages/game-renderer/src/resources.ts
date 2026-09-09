@@ -6,7 +6,7 @@ export function disposeObjectResources(root: THREE.Object3D): void {
   const materials = new Set<THREE.Material>();
   const textures = new Set<THREE.Texture>();
   root.traverse((object) => {
-    if (object instanceof THREE.DirectionalLight) object.shadow.dispose();
+    if (object instanceof THREE.DirectionalLight || object instanceof THREE.PointLight || object instanceof THREE.SpotLight) object.shadow.dispose();
     if (
       !(
         object instanceof THREE.Mesh ||

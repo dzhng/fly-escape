@@ -51,7 +51,7 @@ export async function placementWorkbench(view: WorldView, panel: HTMLElement) {
         model.dispose();
         return;
       }
-      view.setPlacementModel(kind, model.root);
+      view.world.placements.replace(kind, model.root);
       counts.set(kind, model.triangles);
     };
     const results = await Promise.allSettled(

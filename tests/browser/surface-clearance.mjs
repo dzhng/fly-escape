@@ -18,12 +18,12 @@ try {
     body: '<body style="margin:0"><div id="world" style="width:100vw;height:100vh"></div></body>' }));
   await page.goto((process.env.BRAIN_URL ?? 'http://127.0.0.1:5173') + '/surface-fixture.html');
   await page.evaluate(async root => {
-    const THREE = await import(`/@fs${root}/node_modules/three/build/three.module.js`);
-    const { WorldView, loadFlyModel, loadHouseAssets } = await import(`/@fs${root}/packages/game-renderer/src/index.ts`);
-    const { loadPlacementAssets } = await import('/src/placement-assets.ts');
+    const THREE = await import(`/@fs${root}/packages/game-renderer/node_modules/three/build/three.module.js`);
+    const { WorldView, loadFlyModel, loadWorldSceneAssets } = await import(`/@fs${root}/packages/game-renderer/src/index.ts`);
     const content = (await import('/src/levels/open-window.ts')).default;
     const view = new WorldView(document.querySelector('#world'), content.level.geometry, 16);
-    await Promise.all([loadHouseAssets(view, () => true), loadPlacementAssets(view, () => true)]);
+    await loadWorldSceneAssets(view.world, [], () => true);
+    view.refreshWorldBounds();
     const model = await loadFlyModel(await (await fetch(`/@fs${root}/assets/fly/fly.glb`)).arrayBuffer());
     view.setFlyModel(model);
     view.setContactGeometry([], [], content.level.exit, false);

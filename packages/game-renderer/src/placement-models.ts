@@ -85,6 +85,7 @@ export class PlacementModels {
     opacity: 0.7,
     depthWrite: false,
   });
+  constructor(private readonly presentation = true) {}
   replace(kind: PlacementKind, source: THREE.Group): void {
     const old = this.sources.get(kind);
     this.sources.set(kind, source);
@@ -94,7 +95,7 @@ export class PlacementModels {
   setPlacements(placements: Placement[], catalog: ToolDef[], ghost?: Ghost): void {
     this.placements = placements;
     this.catalog = catalog;
-    this.ghost = ghost;
+    this.ghost = this.presentation ? ghost : undefined;
     this.rebuild();
   }
   private rebuild(): void {
