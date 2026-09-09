@@ -28,4 +28,4 @@ Use [compare-screenshots](../../../.agents/skills/compare-screenshots/SKILL.md) 
 
 Human review is non-blocking: open shots with [preview-shots](../../../.agents/skills/preview-shots/SKILL.md), allow about five minutes while doing independent work, then decide from evidence if no response arrives, record the rationale and close the shots. Correctness/resource failures still fail. Any user feedback changing this slice's named variable must update its contract before further implementation.
 
-**Status:** planned; no implementation or verification result yet. Record the exact artifact, tests, observed limits and pass/fail verdict here when executed, then update the README handoff.
+**Status:** in progress. Initial production runs of both rooms at a diagnostic 6,000-tick horizon fit the archive budget; [reports](../assets/11/campaign-before-cutover/) precede final panels and legacy-input removal. Preserve authored timers (including the shorter second-room timer). Finish the single visual path, final full-UI campaign/retry gates and whole-feature review before acceptance.

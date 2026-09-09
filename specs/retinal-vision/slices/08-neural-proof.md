@@ -28,4 +28,4 @@ Use [compare-screenshots](../../../.agents/skills/compare-screenshots/SKILL.md) 
 
 Human review is non-blocking: open shots with [preview-shots](../../../.agents/skills/preview-shots/SKILL.md), allow about five minutes while doing independent work, then decide from evidence if no response arrives, record the rationale and close the shots. Correctness/resource failures still fail. Any user feedback changing this slice's named variable must update its contract before further implementation.
 
-**Status:** planned; no implementation or verification result yet. Record the exact artifact, tests, observed limits and pass/fail verdict here when executed, then update the README handoff.
+**Status:** failed under the original frozen protocol. Diagnostic and held-out results remain in [evidence](../assets/08/verification.md). The [input-only reslice](../assets/08-reslice/proposal.md) strengthens stimuli without tuning neural parameters or exclusions; its reserved-seed run awaits final cutover source freeze. The production one-fly workbench and cross-target comparison are in progress.

@@ -26,4 +26,4 @@ Use [compare-screenshots](../../../.agents/skills/compare-screenshots/SKILL.md) 
 
 Human review is non-blocking: open shots with [preview-shots](../../../.agents/skills/preview-shots/SKILL.md), allow about five minutes while doing independent work, then decide from evidence if no response arrives, record the rationale and close the shots. Correctness/resource failures still fail. Any user feedback changing this slice's named variable must update its contract before further implementation.
 
-**Status:** planned; no implementation or verification result yet. Record the exact artifact, tests, observed limits and pass/fail verdict here when executed, then update the README handoff.
+**Status:** passed. Schema-6 archives preserve exact RGB and full pre-neural poses; malformed and old records produce recoverable UI without a compatibility decoder. See [record evidence](../assets/07/README.md) and [recovery review](../assets/07/recovery/README.md). Final campaign resource accounting belongs to slice 11.

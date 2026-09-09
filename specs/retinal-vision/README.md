@@ -6,25 +6,23 @@ This is a plan, not an implemented or verified feature. Spatial and color input,
 
 ## Next Agent Prompt
 
-**Status: slices 01–04 passed; native tick and exact-record integration underway (2026-09-09).** Acquisition uses 128×128 cameras and 721 RGB8 samples per eye. [Shared-world verification](assets/03/verification.md) passes physical visibility, full-pose transforms and player-view invariance. The measured complete acquisition/copy p95 is 11.1 ms for sixteen moving flies on the documented hardware, not a full neural budget claim. The 512 MiB archive cap still requires production campaign accounting.
+**Status: optics, input map, tick rendezvous and exact replay are integrated; downstream scientific gates are still red.** The accepted profile is 128×128 RGB → 721 samples per eye at 10 Hz. Preserve the original negative [spatial/color results](assets/08/) and the [input-only reslice proposal](assets/08-reslice/proposal.md). The proposal changes stimuli using only pre-neural evidence; it does not change gain, model coefficients, endpoints or significance criteria.
 
-The schema-6 record and production worker rendezvous are integrated; [browser transaction/failure checks](assets/06/browser-integration.md) pass. Integrate the prepared recorded-eye panel and recovery UI commits next. The sparse map matches the installed optics; final one-fly diagnostics and full campaign resources remain open. Frozen downstream experiments have failed required spatial/color gates; retain the negative results and reslice before release, with no post-hoc tuning or grayscale shortcut.
+**Current pickup:** finish the slice-11 removal of the old eight-direction path and publish its source-bound budget metadata. Then freeze the revised neural protocol against the final source and run reserved seeds 200–229. Do not run it against an intermediate manifest. In parallel, finish actual one-fly native/WASM reconsumption and real-capture eye-panel browser review. The UI and recovery commits are integrated; their synthetic-input pixel/replay gates already pass.
 
-Completed evidence: [reference reproduction](assets/01/review.md), [color audit](assets/04/verification.md). The model is Tm2 brightness plus Tm20 blue, with explicitly unmeasured coefficients; unsupported Tm5 cells are excluded. Freeze the combined dose and spatial map in slice 05 before testing neural color responses. See [choices](choices.md).
+**Remaining order:** final runtime cutover → frozen neural reslice and complete one-fly proof → full campaign resource/retry gates with the final eye UI → whole-feature review, choices consolidation and close-spec. A failed scientific gate remains failed; no grayscale shortcut, endpoint substitution, gain search or invented steering is allowed.
 
-The [native tick seam](assets/06/native-seam.md) is prepared against the provisional sparse map. Integrate exact optical record packing before enabling its worker path; real browser acquisition and cancellation remain slice-06 gates. Preserve the map's exported text when passing it to the native loader.
+Evidence: [reference](assets/01/review.md), [shared world](assets/03/verification.md), [color model](assets/04/verification.md), [tick transaction and cancellation](assets/06/browser-integration.md), [record recovery](assets/07/recovery/), and [eye panels](assets/10/). Initial production resource runs of both rooms at a diagnostic 6,000-tick horizon fit the 512 MiB archive cap; [reports](assets/11/campaign-before-cutover/) precede the final eye panels and runtime cutover and must not stand in for final verification. Preserve each room’s authored production timer.
 
-The code inspected for this plan is `88813fe5c552e42269ba63858fe0e0057fbfcb43`, the integrated `origin/main`. Implementation fast-forwarded local `main` from `2b500c7` to that integrated revision using Git’s no-overwrite-ignore protection. Unrelated local files remain outside the feature. Inspect current Git state before each pass. The user explicitly requested removal of all `codex/` branches: do not recreate one for this work. A detached worktree is available if isolation is necessary.
-
-The next unresolved gates are complete physical-scene invariance, the declared sparse spatial/color map, and atomic tick/replay integration. Retained graph coverage must stay explicit; sampled colors alone do not prove downstream neural responses.
+The model is Tm2 brightness plus Tm20 blue with explicitly unmeasured coefficients; unsupported Tm5 cells remain excluded. The sparse map, dose bounds, sixteen-fly roster, campaign scoring, odor/taste, body dynamics and About remain fixed. See [choices](choices.md). Keep unrelated local files out of commits. The user requested removal of all `codex/` branches: use detached worktrees for isolation.
 
 - [x] [01 Reference optics](slices/01-reference.md): reproduce, pin and measure the reference.
 - [x] [02 Acquisition feasibility](slices/02-feasibility.md): settle capture cost, quality profile and archive arithmetic before integration.
 - [x] [03 Shared world and eye rig](slices/03-world-and-eyes.md): sample the authoritative world with full pre-neural orientation.
 - [x] [04 Color-model feasibility](slices/04-color-model.md): audit retained cells and freeze a defensible rendered-color adapter.
 - [x] [05 Retinal input map](slices/05-input-map.md): export bounded spatial and channel assignments.
-- [ ] [06 Tick rendezvous](slices/06-tick.md): consume exactly one matching eye batch before each neural tick.
-- [ ] [07 Exact replay](slices/07-records.md): retain consumed bytes and reject old records without crashing.
+- [x] [06 Tick rendezvous](slices/06-tick.md): consume exactly one matching eye batch before each neural tick.
+- [x] [07 Exact replay](slices/07-records.md): retain consumed bytes and reject old records without crashing.
 - [ ] [08 Spatial neural proof](slices/08-neural-proof.md): verify the complete one-fly spatial/brightness chain.
 - [ ] [09 Chromatic neural proof](slices/09-color-proof.md): separate color responses from brightness and total dose.
 - [ ] [10 Paired eye panels](slices/10-panels.md): show each fly’s paired color previews in its right-column detail view during playback, pause and rewind.
