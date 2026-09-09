@@ -7,8 +7,9 @@ use crate::{
     food::FoodDef,
     placement::{resolve_placements, Placement, PlacementRules, ResolvedSetup},
     record::RecordLayout,
-    sensory::{cue_currents, motor_readout_indices, CuePathway},
-    Brain, Graph, Group, GroupLink, LifParams, StepOutput,
+    sensory::{cue_currents, motor_readout_indices, retinal_currents, CuePathway},
+    vision::{EyePose, RetinaBatch, RetinalConfig, VisionRequest},
+    Brain, Graph, Group, GroupLink, LifParams, RetinalMap, StepOutput,
 };
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
@@ -39,6 +40,9 @@ pub struct AttemptInfo {
     pub archive_bytes: u32,
     pub graph_bytes: u32,
     pub brain_state_bytes: u32,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[ts(optional = nullable)]
+    pub retinal_config: Option<RetinalConfig>,
 }
 #[derive(Serialize, TS)]
 #[serde(rename_all = "camelCase")]
@@ -134,10 +138,19 @@ pub struct AttemptFrame {
     pub neural_steps: u32,
     pub flies: Vec<FlyFrame>,
     pub result: Option<AttemptResult>,
+    /// Exact pre-neural observations, including terminal-transition ticks.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional = nullable)]
+    pub retina: Option<RetinaBatch>,
 }
 struct Fly {
     brain: Brain,
     body: Body,
+}
+struct RetinalState {
+    config: RetinalConfig,
+    map: RetinalMap,
+    pending: Option<VisionRequest>,
 }
 pub struct Attempt {
     graph: Arc<Graph>,
@@ -154,6 +167,7 @@ pub struct Attempt {
     result: Option<AttemptResult>,
     failure: Option<String>,
     initial_bodies: Vec<BodyState>,
+    retinal: Option<RetinalState>,
 }
 impl Attempt {
     /// Describe content without allocating neural state. Constructor compares all
@@ -198,6 +212,45 @@ impl Attempt {
         level: LevelDef,
         tuning: AttemptTuning,
         spec: AttemptSpec,
+    ) -> Result<Self, String> {
+        Self::build(graph, level, tuning, spec, None)
+    }
+
+    pub fn new_retinal(
+        graph: Arc<Graph>,
+        level: LevelDef,
+        tuning: AttemptTuning,
+        spec: AttemptSpec,
+        config: RetinalConfig,
+        map_json: &str,
+    ) -> Result<Self, String> {
+        config.validate()?;
+        if spec.fly_count > 16 {
+            return Err("retinal acquisition supports at most sixteen flies".into());
+        }
+        if format!("{:x}", Sha256::digest(map_json.as_bytes())) != config.map_hash {
+            return Err("retinal map bytes do not match the attempt configuration".into());
+        }
+        let map = RetinalMap::from_json(&graph, &config.profile, map_json)?;
+        Self::build(
+            graph,
+            level,
+            tuning,
+            spec,
+            Some(RetinalState {
+                config,
+                map,
+                pending: None,
+            }),
+        )
+    }
+
+    fn build(
+        graph: Arc<Graph>,
+        level: LevelDef,
+        tuning: AttemptTuning,
+        spec: AttemptSpec,
+        retinal: Option<RetinalState>,
     ) -> Result<Self, String> {
         let seed = spec
             .root_seed
@@ -255,6 +308,9 @@ impl Attempt {
         };
         let initial_bodies = crate::spawn::resolve(&level, seed, spec.fly_count)?;
         for cue in &tuning.cues {
+            if retinal.is_some() && cue.pathway == CuePathway::Vision {
+                continue;
+            }
             let probe = fields.sample(
                 initial_bodies[0].pose.position,
                 initial_bodies[0].pose.heading,
@@ -292,6 +348,7 @@ impl Attempt {
             result: None,
             failure: None,
             initial_bodies,
+            retinal,
         })
     }
     /// Allocated numeric neural state for every fly, including fixed ablation masks.
@@ -328,6 +385,92 @@ impl Attempt {
     pub fn field_grid(&self) -> FieldGrid {
         self.fields.export_grid()
     }
+    pub fn retinal_config(&self) -> Option<&RetinalConfig> {
+        self.retinal.as_ref().map(|state| &state.config)
+    }
+
+    pub fn prepare_tick(&mut self) -> Result<Option<VisionRequest>, String> {
+        if let Some(error) = &self.failure {
+            return Err(error.clone());
+        }
+        let retinal = self
+            .retinal
+            .as_mut()
+            .ok_or("baseline attempt has no retinal acquisition")?;
+        if self.result.is_some() {
+            return Ok(None);
+        }
+        if let Some(request) = &retinal.pending {
+            return Ok(Some(request.clone()));
+        }
+        let request = VisionRequest {
+            attempt_id: self.spec.attempt_id.clone(),
+            client_generation: retinal.config.client_generation,
+            tick: self.tick + 1,
+            profile_hash: retinal.config.profile.profile_hash.clone(),
+            scene_id: retinal.config.scene_id.clone(),
+            poses: self
+                .flies
+                .iter()
+                .enumerate()
+                .filter_map(|(id, fly)| {
+                    let body = fly.body.state();
+                    body.outcome.is_none().then_some(EyePose {
+                        fly_id: id as u32,
+                        position: [body.pose.position.x, body.height, body.pose.position.z],
+                        rotation: body.rotation,
+                    })
+                })
+                .collect(),
+        };
+        request.validate_poses()?;
+        retinal.pending = Some(request.clone());
+        Ok(Some(request))
+    }
+
+    pub fn commit_tick(&mut self, batch: RetinaBatch) -> Result<AttemptFrame, String> {
+        if let Some(error) = &self.failure {
+            return Err(error.clone());
+        }
+        let retinal = self
+            .retinal
+            .as_mut()
+            .ok_or("baseline attempt has no retinal acquisition")?;
+        let pending = retinal
+            .pending
+            .as_ref()
+            .ok_or("no retinal tick is pending")?;
+        batch.validate(pending, &retinal.config.profile)?;
+        let gain = self
+            .tuning
+            .cues
+            .iter()
+            .find(|cue| cue.pathway == CuePathway::Vision)
+            .map_or(0., |cue| cue.gain);
+        // Validate and convert the entire swarm before advancing fields or a brain.
+        let visual = pending
+            .poses
+            .iter()
+            .zip(
+                batch
+                    .rgb
+                    .chunks_exact(retinal.config.profile.bytes_per_fly()),
+            )
+            .map(|(pose, rgb)| Ok((pose.fly_id, retinal_currents(&retinal.map, rgb, gain)?)))
+            .collect::<Result<BTreeMap<_, _>, String>>()?;
+        retinal.pending = None;
+        let mut frame = self.run_tick(Some(&visual))?;
+        frame.retina = Some(batch);
+        Ok(frame)
+    }
+
+    /// Cancellation is terminal for this native attempt, including late completions.
+    pub fn cancel(&mut self) {
+        if let Some(retinal) = &mut self.retinal {
+            retinal.pending = None;
+        }
+        self.failure = Some("attempt cancelled".into());
+    }
     /// No internal episode loop. A failed tick is fatal to this attempt; callers
     /// report the error rather than retrying partially advanced neural states.
     pub fn step(&mut self) -> Result<Option<AttemptFrame>, String> {
@@ -337,15 +480,29 @@ impl Attempt {
         if self.result.is_some() {
             return Ok(None);
         }
-        match self.advance_tick() {
-            Ok(frame) => Ok(Some(frame)),
+        if self.retinal.is_some() {
+            return Err(
+                "retinal attempt requires prepare and commit with complete RGB input".into(),
+            );
+        }
+        self.run_tick(None).map(Some)
+    }
+    fn run_tick(
+        &mut self,
+        visual: Option<&BTreeMap<u32, Vec<(u32, f64)>>>,
+    ) -> Result<AttemptFrame, String> {
+        match self.advance_tick(visual) {
+            Ok(frame) => Ok(frame),
             Err(error) => {
                 self.failure = Some(error.clone());
                 Err(error)
             }
         }
     }
-    fn advance_tick(&mut self) -> Result<AttemptFrame, String> {
+    fn advance_tick(
+        &mut self,
+        visual: Option<&BTreeMap<u32, Vec<(u32, f64)>>>,
+    ) -> Result<AttemptFrame, String> {
         self.fields.advance(GAME_TICK_SECONDS)?;
         self.tick += 1;
         let world = &self.world;
@@ -364,7 +521,15 @@ impl Attempt {
                     .fields
                     .sample(input_pose.position, input_pose.heading, self.tick);
                 let mut currents = BTreeMap::<u32, f64>::new();
+                if let Some(visual) = visual {
+                    for &(index, value) in &visual[&(id as u32)] {
+                        *currents.entry(index).or_default() += value;
+                    }
+                }
                 for cue in &self.tuning.cues {
+                    if visual.is_some() && cue.pathway == CuePathway::Vision {
+                        continue;
+                    }
                     for (index, value) in cue_currents(&self.graph, &sample, cue.pathway, cue.gain)?
                     {
                         *currents.entry(index).or_default() += value;
@@ -425,6 +590,7 @@ impl Attempt {
             neural_steps: self.neural_steps,
             flies: frames,
             result: self.result.clone(),
+            retina: None,
         })
     }
 }

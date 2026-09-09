@@ -7,6 +7,7 @@ use sim::lifecycle_lab::*;
 use sim::placement::*;
 use sim::record::*;
 use sim::sensory::CuePathway;
+use sim::vision::*;
 use sim::{Group, GroupActivity, GroupLink, MotorOutput, StepOutput};
 use ts_rs::TS;
 fn main() {
@@ -16,6 +17,11 @@ fn main() {
         StartAttempt::decl(),
         AttemptInfo::decl(),
         AttemptStep::decl(),
+        EyeProfile::decl(),
+        RetinalConfig::decl(),
+        EyePose::decl(),
+        VisionRequest::decl(),
+        RetinaBatch::decl(),
         ChunkHeader::decl(),
         sim::spawn::SpawnDef::decl(),
         sim::spawn::SpawnState::decl(),

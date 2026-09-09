@@ -217,6 +217,12 @@ impl PackedChunk {
         frames: &[AttemptFrame],
     ) -> Result<Self, String> {
         let first = frames.first().ok_or("empty frame chunk")?;
+        if frames.iter().any(|frame| frame.retina.is_some()) {
+            return Err(
+                "retinal frames require the optical record schema; refusing to discard RGB input"
+                    .into(),
+            );
+        }
         let count = frames.len();
         if attempt_id.is_empty()
             || attempt_id.len() > 256
@@ -481,6 +487,7 @@ impl PackedChunk {
                 });
             }
             frames.push(AttemptFrame {
+                retina: None,
                 tick: self.start_tick + tick as u32,
                 neural_steps: self.tick_neural_steps[tick],
                 flies,

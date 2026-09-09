@@ -10,6 +10,7 @@ pub mod body;
 pub mod environment;
 pub mod field_lab;
 pub mod sensory;
+pub mod vision;
 
 pub mod attempt;
 

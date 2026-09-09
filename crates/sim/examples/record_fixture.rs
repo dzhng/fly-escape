@@ -117,6 +117,7 @@ fn main() {
             fly.motion[0].pose = fly.input_pose;
         }
         frames.push(AttemptFrame {
+            retina: None,
             tick,
             neural_steps: tick * 2,
             flies,

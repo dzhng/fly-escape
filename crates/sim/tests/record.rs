@@ -10,6 +10,7 @@ fn frame(tick: u32) -> AttemptFrame {
         heading: 0.3,
     };
     let mut frame = AttemptFrame {
+        retina: None,
         tick,
         neural_steps: tick.saturating_mul(2),
         flies: vec![FlyFrame {
@@ -320,6 +321,7 @@ fn dense_real_body_transitions_fit_and_replay_in_order() {
     );
     let layout = RecordLayout::new(neural.groups.iter().map(|g| g.id.clone()).collect()).unwrap();
     let frames = vec![AttemptFrame {
+        retina: None,
         tick: 3,
         neural_steps: 3,
         flies: vec![FlyFrame {

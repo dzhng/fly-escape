@@ -3,6 +3,9 @@ use sha2::{Digest, Sha256};
 use std::collections::{HashMap, HashSet};
 use ts_rs::TS;
 
+mod retinal;
+pub use retinal::RetinalMap;
+
 #[derive(Clone, Debug, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 pub struct Group {

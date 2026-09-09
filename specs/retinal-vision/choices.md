@@ -17,3 +17,26 @@
 - **Replay budget correction:** the earlier 128 MiB ceiling was our assumption. The user delegated practical sizing. Adopt 512 MiB as an engineering target, preserve explicit overflow behavior, and verify full campaigns before claiming completion. Do not ask the user to reconfirm this routine limit.
 - **Batch ownership:** combine compatible leaf meshes by material only after physical authoring is frozen. Independent worlds retain their own mutable assets. Merged geometry is independently disposed; source materials stay with their loader owner. Excluding mesh parents preserves unmerged descendants.
 - **Two failure deadlines:** a worker fence timeout handles GPU nonprogress; a main-thread watchdog also handles a stalled worker event loop. Any failure rejects the batch, and explicit user retry constructs a new capture. No stale or black optical fallback.
+## Native tick preparation — sound
+
+- **Preserve the map export's text when loading it.** When the worker fetches the
+  map, it passes the original JSON text to native code. The loader checks the
+  profile, layout and color descriptions against their SHA-256 identities using
+  their exact exported text. Parsing and rewriting that text first can change
+  how a decimal is written and is therefore rejected. The plan required identity
+  checks but did not choose how two languages would agree on number formatting.
+  This avoids maintaining a second cross-language JSON formatter and binds the
+  actual reviewed artifact. Future consumers must load it as text. **Sound,
+  medium confidence:** a deliberately narrow deterministic artifact interface;
+  semantic reformatting is not supported. Applied in native slice-06 preparation.
+
+- **Derive the allowed visual dose from the validated baseline map.** At optical
+  initialization, native code totals the existing graph's baseline visual weights
+  and checks that both new families together stay within that allowance. It does
+  not trust a new map to announce its own larger allowance. The plan fixed the
+  shared dose requirement but not where runtime would obtain that bound. This
+  keeps the old map as read-only budget provenance; the optical tick does not use
+  its directional sensory signal. Removing that provenance at final cutover
+  requires another trusted owner for the bound. **Sound, high confidence:** the
+  bound is checked against the graph already accepted by native code. Applied in
+  native slice-06 preparation.

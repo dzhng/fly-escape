@@ -4,6 +4,40 @@ use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, HashSet};
 use ts_rs::TS;
 
+/// Canonical linear RGB8 drives two frozen responses before spatial weighting.
+pub fn retinal_currents(
+    map: &crate::RetinalMap,
+    rgb: &[u8],
+    gain: f64,
+) -> Result<Vec<(u32, f64)>, String> {
+    if !gain.is_finite() || !(0. ..=3.).contains(&gain) {
+        return Err("retinal gain must be between zero and three".into());
+    }
+    if rgb.len() != map.sample_count * 2 * 3 {
+        return Err("retinal current requires both complete RGB eyes".into());
+    }
+    Ok(map
+        .entries
+        .iter()
+        .map(|entry| {
+            let signal: f64 = entry
+                .taps
+                .iter()
+                .map(|&(sample, weight)| {
+                    let offset = (entry.eye.index() * map.sample_count + sample) * 3;
+                    let q: f64 = rgb[offset..offset + 3]
+                        .iter()
+                        .zip(map.coefficients[entry.channel])
+                        .map(|(&byte, coefficient)| byte as f64 / 255. * coefficient)
+                        .sum();
+                    weight * q / (q + 0.5)
+                })
+                .sum();
+            (entry.index, gain * signal)
+        })
+        .collect())
+}
+
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 pub enum CuePathway {
