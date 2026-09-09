@@ -198,3 +198,13 @@
 .science-legend button { display: flex; align-items: center; gap: 5px; padding: 3px; font-size: 10px; text-align: left; background: transparent; border: 1px solid transparent; }
 .science-legend button[aria-pressed="true"] { border-color: #acb797; }
 .science-legend button span { width: 10px; height: 3px; flex-shrink: 0; }
+
+.eye-panels { margin: 0 0 12px; }
+.eye-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.eye-pair figure { margin: 0; min-width: 0; }
+.eye-pair figcaption { font-size: 12px; font-weight: 650; margin: 0 0 5px; }
+.eye-pair canvas, .eye-unavailable { display: block; width: 100%; aspect-ratio: 1; border-radius: 6px; background: #e8ecdf; }
+.eye-pair canvas { image-rendering: pixelated; }
+.eye-unavailable { display: grid; place-items: center; color: #5e6c59; font-size: 11px; }
+.eye-time { margin: 7px 0 4px; font-size: 11px; color: #344d39; }
+.eye-explanation, .eye-selection-prompt { margin: 0; font-size: 11px; line-height: 1.4; color: #63705d; }

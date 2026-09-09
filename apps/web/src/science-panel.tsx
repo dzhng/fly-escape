@@ -1,4 +1,5 @@
 import { BrainView } from "./brain-view";
+import { EyePanels } from "./eye-panels";
 import { groupColor } from "@fly-escape/game-renderer";
 import React, { useEffect, useId, useMemo, useRef, useState } from "react";
 import type { AttemptFrame, AttemptInfo, FlyFrame, FrameArchive, Group } from "@fly-escape/sim-client";
@@ -29,7 +30,7 @@ function pathway(group: Group) {
   if (group.id.startsWith("odor"))
     return "This candidate group is labeled as a lateral-horn olfactory pathway in the source model. Excitation and inhibition describe effects on other neurons: they do not mean attraction and avoidance. Several synaptic steps can reverse an input’s net effect.";
   if (group.id.startsWith("vision"))
-    return "This group contains selected MaleCNS optic-lobe neurons. Recorded light enters through eight modeled directions assigned from optic-lobe column coordinates. The angle assignment and injected brightness current are modeling assumptions, not measured receptive fields. Signals must pass through the recorded circuit before reaching movement readouts.";
+    return "This group contains selected MaleCNS optic-lobe neurons. Recorded color samples feed modeled brightness and blue-sensitive inputs distributed to selected Tm2 and Tm20 cells. Sample registration and injected currents are modeling assumptions, not measured receptive fields. Circuit activity and movement remain separate measurements.";
   if (group.id === "taste")
     return "This candidate group combines cells labeled as taste receptors and taste pathways. Sensory neurons turn chemical stimulation into electrical signals that other neurons can integrate.";
   if (group.id === "feeding")
@@ -103,7 +104,7 @@ function Explanation({ group }: { group: Group }) {
           </p>
           <p>
             Candidate group: <code>{group.id}</code>, selected MaleCNS wiring. {group.id.startsWith("vision")
-              ? "Visual cells are selected from MaleCNS type, side and optic-lobe column annotations; their modeled angle assignment is not calibrated retinal azimuth."
+              ? "Visual cells are selected from MaleCNS type, side and optic-lobe column annotations; their modeled sample registration is not a calibrated receptive-field map."
               : "The body-ID selection was inherited from an exploratory model; its circuit label is not independent anatomical validation."} Group membership can overlap. Synaptic signs, injected sensory currents and
             simplified voltage dynamics are modeling assumptions; these units and timing are not
             living-fly measurements.
@@ -270,6 +271,7 @@ function FlyDetails({
 }) {
   const [groupId, setGroupId] = useState(info.groups[0].id);
   const tick = frame?.tick ?? 0;
+  const retinalConfig = useMemo(() => archive?.retinalConfig ?? null, [archive]);
   const group = info.groups.find((group) => group.id === groupId) ?? info.groups[0];
   const fly = frame?.flies[id];
   const series = useMemo(
@@ -294,6 +296,7 @@ function FlyDetails({
       data-testid="selected-fly"
       data-sample-tick={tick}
     >
+      <EyePanels flyId={id} tick={tick} config={retinalConfig} expectedConfig={info.retinalConfig} archive={archive ?? null} />
       <BrainView groups={info.groups} frame={frame} selected={id} />
       <div className="science-group-picker"><span>{group.label}</span><Explanation group={group} /></div>
       <div className="science-current">
@@ -431,7 +434,8 @@ export function SciencePanel({
           />
         ))}
       </div>
-      {selected !== null && <FlyDetails id={selected} info={info} frame={frame} archive={archive} />}
+      {selected !== null ? <FlyDetails id={selected} info={info} frame={frame} archive={archive} />
+        : <p className="eye-selection-prompt">Select a fly to view its recorded eyes and neural activity.</p>}
     </div>
   );
 }

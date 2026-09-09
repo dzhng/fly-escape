@@ -9,7 +9,8 @@ const hash = async (bytes) =>
     new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)),
     (b) => b.toString(16).padStart(2, "0"),
   ).join("");
-self.onmessage = async () => {
+self.onmessage = async (event) => {
+  const {flyCount = 2, attemptId = "record-worker", palette = 0} = event.data;
   let core;
   try {
     const wasm = await init();
@@ -27,7 +28,7 @@ self.onmessage = async () => {
       identity = map.identities;
     const config = {
       clientGeneration: 7,
-      sceneId: "controlled-record-worker",
+      sceneId: palette ? `controlled-record-worker-${palette}` : "controlled-record-worker",
       mapHash: await hash(new TextEncoder().encode(mapText)),
       profile: {
         profileHash: identity.profileHash,
@@ -39,7 +40,7 @@ self.onmessage = async () => {
         sampleCount: map.profile.layout.cells.length,
       },
     };
-    const request = JSON.parse(swarm_request("record-worker", "42", 2, 12));
+    const request = JSON.parse(swarm_request(attemptId, "42", flyCount, 12));
     core = AttemptSession.new_retinal(
       new Uint8Array(graph),
       manifest,
@@ -48,7 +49,7 @@ self.onmessage = async () => {
       mapText,
     );
     const info = JSON.parse(core.info());
-    self.postMessage({ type: "info", info });
+    self.postMessage({ type: "info", info, request });
     let staging = 0,
       maxStaging = 0,
       packedTotal = 0;
@@ -63,7 +64,7 @@ self.onmessage = async () => {
           rgb[fly * width + sample] =
             tick === 1 && pose.flyId === 0
               ? 0
-              : (tick * 17 + pose.flyId * 31 + sample * 13) % 256;
+              : (tick * 17 + pose.flyId * 31 + sample * 13 + palette * 7) % 256;
       });
       expected.push({ tick, request: input, rgb: rgb.slice() });
       staging += rgb.byteLength;
