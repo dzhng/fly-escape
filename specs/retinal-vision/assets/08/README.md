@@ -45,7 +45,7 @@ Raw reports and analyses are losslessly gzipped, with decoded-byte hashes and le
 
 ## What the failure does and does not imply
 
-All four single-sample spatial spots have equal actual injected dose, but their held-out voltage/spike intervals do not pass. Sparse input localization is a plausible sensitivity limit: only a small part of the supported input graph receives each spot. The full reachable population nevertheless changes spike counts under those paired inputs. That is propagation, not sufficient evidence for the frozen endpoint gate.
+All four single-sample spatial spots have equal actual injected dose, but their held-out voltage/spike intervals do not pass. Each paired spatial difference changes only two injected cells (current-difference L1 1.00195695 model units), compared with 366 cells for gray 64 versus dark. These are descriptive measurements of the frozen stimuli. Sparse input localization is a plausible sensitivity limit: only a small part of the supported input graph receives each spot. The full reachable population nevertheless changes spike counts under those paired inputs. That is propagation, not sufficient evidence for the frozen endpoint gate.
 
 The 438-cell witness union samples particular audited paths, while many changed spike counts occur elsewhere among 40,944 reachable cells. Endpoint sensitivity is therefore another plausible limitation. The data do not show that the map is anatomically correct, nor do they justify rotating axes or relabeling cells to improve outcomes.
 

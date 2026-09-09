@@ -25,6 +25,9 @@ def render(report_path, analysis_path, output):
     report = read_json(report_path)
     analysis = read_json(analysis_path)
     frozen = report["frozen"]
+    ticks, dt = frozen["measuredTicks"], frozen["lifParams"]["dt"]
+    window = f"{ticks} neural steps at dt={dt:g} = {ticks * dt:g} model-time units"
+    timing = f"Window: {window}; after {frozen['warmupTicks']} warmup steps. No physical-time calibration claimed."
     require_hash = lambda raw, expected: hashlib.sha256(raw).hexdigest() == expected
     map_bytes = (ROOT / "specs/retinal-vision/assets/05/retinal-map.json").read_bytes()
     assert require_hash(map_bytes, frozen["identities"]["mapHash"])
@@ -51,11 +54,16 @@ def render(report_path, analysis_path, output):
         ax.set_title(label, fontsize=8, pad=2)
         ax.axis("off")
 
-    for page, offset in enumerate(range(0, len(specifications), 8), start=1):
-        group = specifications[offset:offset + 8]
+    input_pages = [specifications[offset:offset + 8] for offset in range(0, len(specifications), 8)]
+    if frozen["slice"] == "08":
+        # Keep each opening/blocker comparison adjacent on the final page.
+        last = input_pages[-1]
+        last.insert(3, None)
+    for page, group in enumerate(input_pages, start=1):
         fig = plt.figure(figsize=(14, 6.8), layout="constrained")
         grid = fig.add_gridspec(2, 4)
         for j, spec in enumerate(group):
+            if spec is None: continue
             sub = grid[j // 4, j % 4].subgridspec(2, 2, height_ratios=[.24, 1])
             title = fig.add_subplot(sub[0, :]); title.axis("off")
             flags = "full RGB adapter" if spec["chromatic"] else "Tm20 off"
@@ -71,9 +79,13 @@ def render(report_path, analysis_path, output):
 
     contrasts = analysis["contrasts"]
     by_name = {c["name"]: c for c in report["conditions"]}
-    fig, axes = plt.subplots(len(contrasts), 3, figsize=(18, 2.35 * len(contrasts)), squeeze=False, layout="constrained")
+    fig = plt.figure(figsize=(18, 4.2 * len(contrasts)), layout="constrained")
+    grid = fig.add_gridspec(len(contrasts), 3)
+    axes = []
     for row, contrast in enumerate(contrasts):
-        current_ax = axes[row, 0]
+        current_ax = fig.add_subplot(grid[row, 0])
+        row_axes = [current_ax]
+        axes.append(row_axes)
         a, b = by_name[contrast["a"]], by_name[contrast["b"]]
         current_difference = np.asarray(a["effectiveCurrentByEntry"]) - np.asarray(b["effectiveCurrentByEntry"])
         current_ax.scatter(np.arange(len(current_difference)), current_difference,
@@ -81,10 +93,14 @@ def render(report_path, analysis_path, output):
         current_ax.axhline(0, color="#404040", linewidth=.7)
         current_ax.set_title(f"{contrast['a']} − {contrast['b']}\nTotal dose A/B: {a['effective']['total']:.5g} / {b['effective']['total']:.5g}", fontsize=9)
         current_ax.set_xlabel("Frozen injected-entry order (all 1,176 cells)")
-        current_ax.set_ylabel("Injected current difference")
+        current_ax.set_ylabel("Injected Δ current (model units)")
         current_ax.grid(axis="y", alpha=.2)
-        for col, (field, ylabel) in enumerate([("cells", "Mean voltage difference"), ("spikeCells", "Spike-count difference")]):
-            ax = axes[row, col + 1]
+        current_ax.text(.01, .98, "Tm2 gray; Tm20 blue", transform=current_ax.transAxes, va="top", fontsize=7)
+        for col, (field, ylabel) in enumerate([("cells", "Mean Δ voltage (model units)"), ("spikeCells", f"Δ spikes / {ticks}-step window")]):
+            neural_grid = grid[row, col + 1].subgridspec(2, 1, height_ratios=[2, 1])
+            ax = fig.add_subplot(neural_grid[0])
+            detail = fig.add_subplot(neural_grid[1])
+            row_axes.extend([ax, detail])
             data = contrast[field]
             means = np.asarray([cell["mean"] for cell in data])
             intervals = np.asarray([cell["interval"] for cell in data])
@@ -97,7 +113,22 @@ def render(report_path, analysis_path, output):
             ax.set_xlabel("Frozen endpoint order (all 438 native indices)")
             ax.set_ylabel(ylabel)
             ax.grid(axis="y", alpha=.2)
-    fig.suptitle(f"Slice {frozen['slice']} — {frozen['phase']}, all preregistered contrasts\nCurrent: Tm2 gray, Tm20 blue. Neural means with simultaneous 95% intervals; orange marks corrected responses. All injected/motor cells excluded from neural endpoints.", fontsize=12)
+            ax.text(.01, .98, "95% simultaneous CI; orange = corrected", transform=ax.transAxes, va="top", fontsize=6)
+            passing = np.flatnonzero(accepted)
+            if len(passing):
+                detail.errorbar(np.arange(len(passing)), means[passing],
+                    yerr=np.stack([means[passing] - intervals[passing, 0], intervals[passing, 1] - means[passing]]),
+                    fmt="o", color="#ae4c15", markersize=3, linewidth=.7)
+                detail.set_xticks(np.arange(len(passing)), passing, fontsize=7, rotation=45 if len(passing) > 5 else 0)
+                detail.tick_params(axis="y", labelsize=7)
+                detail.set_title("Corrected endpoints only — separate y scale; same 95% intervals", fontsize=8, pad=4)
+                detail.set_ylabel("Δ voltage (model units)" if field == "cells" else f"Δ spikes / {ticks}-step window", fontsize=8)
+                detail.set_xlabel("Frozen endpoint order", fontsize=8)
+                detail.grid(axis="y", alpha=.2)
+            else:
+                detail.axis("off")
+                detail.text(.5, .5, "No corrected endpoints to enlarge", ha="center", va="center", fontsize=8)
+    fig.suptitle(f"Slice {frozen['slice']} — {frozen['phase']}, all preregistered contrasts\nCurrent: Tm2 gray, Tm20 blue. Neural means with simultaneous 95% intervals; orange marks corrected responses. All injected/motor cells excluded from neural endpoints.\n{timing} Endpoint means/intervals compare {len(analysis['seeds'])} paired seed windows.", fontsize=11)
     path = output / "responses.png"; fig.savefig(path, dpi=150); paths.append(path.name)
     fig.canvas.draw()
     # Per-row crops retain every endpoint/interval at readable scale, including failed contrasts.
@@ -108,10 +139,14 @@ def render(report_path, analysis_path, output):
         boxes = [ax.get_tightbbox(fig.canvas.get_renderer()).transformed(fig.dpi_scale_trans.inverted()) for ax in axes[row]]
         bottom = min(box.y0 for box in boxes); top = max(box.y1 for box in boxes)
         crop = full.crop((0, max(0, height - math.ceil(top * 150) - 8), width, min(height, height - math.floor(bottom * 150) + 8)))
-        name = f"response-{row + 1:02}-crop.png"; crop.save(output / name); paths.append(name)
+        from PIL import ImageDraw
+        labeled = Image.new("RGB", (crop.width, crop.height + 40), "white")
+        labeled.paste(crop, (0, 0))
+        ImageDraw.Draw(labeled).text((12, crop.height + 10), f"{timing} Means / simultaneous CIs across {len(analysis['seeds'])} paired seed windows.", fill="black", font_size=17)
+        name = f"response-{row + 1:02}-crop.png"; labeled.save(output / name); paths.append(name)
     plt.close(fig)
 
-    fig, axes = plt.subplots(len(contrasts), 1, figsize=(12, 1.45 * len(contrasts)), squeeze=False, layout="constrained")
+    fig, axes = plt.subplots(len(contrasts), 1, figsize=(12, 1.8 * len(contrasts)), squeeze=False, layout="constrained")
     for row, contrast in enumerate(contrasts):
         ax = axes[row, 0]
         differences = contrast["downstreamSpikeDifferences"]
@@ -121,7 +156,7 @@ def render(report_path, analysis_path, output):
         ax.set_title(f"{contrast['a']} − {contrast['b']}: {contrast['downstreamCellCountWithDifferentAggregatedSpikes']} cells have different aggregate counts", fontsize=9)
         ax.set_ylabel("Δ spikes")
     axes[-1, 0].set_xlabel("Prespecified paired seed")
-    fig.suptitle(f"All 40,944 reachable non-input/non-motor neurons — descriptive spike totals\nSlice {frozen['slice']} {frozen['phase']}; signed count differences do not replace the corrected endpoint tests.", fontsize=12)
+    fig.suptitle(f"All 40,944 reachable non-input/non-motor neurons — descriptive spike totals\nSlice {frozen['slice']} {frozen['phase']}; Rows use independent y scales; signed differences do not replace corrected endpoint tests.\nEach bar sums 40,944 cells for ONE paired seed.\n{timing}", fontsize=10)
     path = output / "downstream-counts.png"; fig.savefig(path, dpi=150); paths.append(path.name); plt.close(fig)
 
     if frozen["slice"] == "09":
@@ -130,7 +165,7 @@ def render(report_path, analysis_path, output):
         for row, spec in enumerate(pairs):
             colors = image(spec)
             for side in range(2): eye(axes[row, side], colors[side], spec["name"] + " / " + ["Left", "Right"][side])
-        fig.suptitle("Exact matched-dose color inputs — enlarged retinal samples\nA=[100,100,100], B=[35,117,123]; second level doubles each byte. Colors shown after display transfer.", fontsize=12)
+        fig.suptitle("Exact matched-dose color inputs — enlarged retinal samples\nA=[100,100,100], B=[35,117,123]; second level doubles each byte. Colors shown after display transfer.\nBoth eyes use image-right/down axes, without mirroring. Sample IDs are shown in color-patch-crops.png.", fontsize=12)
         path = output / "color-inputs-enlarged.png"; fig.savefig(path, dpi=150); paths.append(path.name); plt.close(fig)
     if frozen["slice"] == "09":
         selected = [s for s in specifications if s["name"] in ["color-1-a", "color-1-b", "color-2-a", "color-2-b"]]
@@ -145,7 +180,7 @@ def render(report_path, analysis_path, output):
                 eye(ax, colors[side], f"{spec['name']} / {['L','R'][side]}{sample}\nlinear RGB8 {raw[side,sample].tolist()}")
                 x, y = centres[sample]; ax.set_xlim(x - 1.65, x + 1.65); ax.set_ylim(y + 1.65, y - 1.65)
                 checks.append((ax, x, y, np.rint(colors[side, sample] * 255).astype(int).tolist()))
-        fig.suptitle("All four matched-color locations, both intensities and swaps — tight sample crops\nCentral hex is the supplied colored sample; surrounding black samples are retained for context.", fontsize=12)
+        fig.suptitle("All four matched-color locations, both intensities and swaps — tight sample crops\nCentral hex is the supplied colored sample; surrounding black samples are retained for context.\nL/R identify the eye; numbers are zero-based frozen layout sample indices. Image axes right/down; neither eye mirrored.", fontsize=12)
         path = output / "color-patch-crops.png"; fig.savefig(path, dpi=150); paths.append(path.name); fig.canvas.draw()
         pixels = np.asarray(Image.open(path).convert("RGB"))
         observations = []
