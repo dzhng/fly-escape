@@ -121,6 +121,13 @@ class ExportTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'identities must be unique'):
             audit(annotations, manifest, matrix, 'a')
 
+    def test_aotu_inventory_does_not_relabel_current_mapped_vision_groups(self):
+        from connectome.vision_map import audit
+        annotations, manifest, matrix = self.fixture()
+        manifest['groups'] = [dict(id='visionL', indices=[0])]
+        _, report = audit(annotations, manifest, matrix, 'a')
+        self.assertEqual(report['inheritedAotu'], {})
+
     def test_reverse_reachability_uses_retained_edge_direction_not_undirected_contact(self):
         from scipy import sparse
         from connectome.vision_map import paths_to, witness

@@ -157,7 +157,7 @@ def audit(annotations, manifest, matrix, annotation_hash):
                         "angle=+pi*u for R and -pi*u for L. "
                         "raw[i,b]=max(0,cos(angle_i-b*pi/4)); raw<1e-12 becomes zero; "
                         "divide each column by its sum, then the entire matrix by its largest row sum. "
-                        "Axis, orientation, mirroring and half-circle field of view are assumptions. "
+                        "Axis, orientation, mirroring and half-circle preferred-angle range are assumptions. "
                         f"Source hex1 ranges: L={ranges['L']}, R={ranges['R']}.")
         candidate = dict(accepted=not rejected, rejectionReasons=rejected, sourceCount=len(full), selectedCount=len(selected),
                          includedCount=len(included),
@@ -177,13 +177,17 @@ def audit(annotations, manifest, matrix, annotation_hash):
             maps[family] = mapping
         candidates[family] = candidate
     aotu = {}
-    for group in manifest['groups']:
-        if group['id'] not in ['visionL', 'visionR']: continue
-        rows = facts.reindex([bodies[i] for i in group['indices']])
-        aotu[group['id']] = dict(count=len(rows), types=rows.type.value_counts().to_dict(),
-                                superclasses=rows.superclass.value_counts().to_dict(), sides=rows.somaSide.value_counts().to_dict(),
-                                finiteHexCount=int((np.isfinite(rows.assignedOlHex1) & np.isfinite(rows.assignedOlHex2)).sum()),
-                                rejection='No assigned optical columns; heterogeneous AOTU groups are not eight spatial sectors')
+    selected_facts = facts.reindex(bodies)
+    aotu_cells = selected_facts[selected_facts.type.fillna('').str.startswith('AOTU')]
+    for side in ['L', 'R']:
+        rows = aotu_cells[aotu_cells.somaSide == side]
+        if rows.empty:
+            continue
+        aotu[side] = dict(count=len(rows), types=rows.type.value_counts().to_dict(),
+                          superclasses=rows.superclass.value_counts().to_dict(), sides=rows.somaSide.value_counts().to_dict(),
+                          finiteHexCount=int((np.isfinite(rows.assignedOlHex1) & np.isfinite(rows.assignedOlHex2)).sum()),
+                          selection='Selected source-annotated AOTU types on the named soma side, independent of current display groups',
+                          rejection='No assigned optical columns; heterogeneous AOTU populations are not directional input coordinates')
     return maps, dict(annotationHash=annotation_hash, graphHash=manifest['graphHash'],
                       eyemapSource=EYEMAP_SOURCE, registrationEvidence='The documentation describes ipsilateral hexagonal column coverage, not calibrated visual azimuth.',
                       motorExclusionCount=len(motor), relayTargetCount=len(relays),
