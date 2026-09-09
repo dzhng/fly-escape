@@ -1,0 +1,635 @@
+{
+  "annotationHash": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "conditions": [
+    {
+      "currentsHash": "ace010a386511a58a52fe9c5b9cc5c6007308c06658f36653d0058e752f25fd7",
+      "name": "lamp-left",
+      "observations": [
+        {
+          "flightTurn": -0.0013904323769814448,
+          "leftMeanVoltage": 0.5904505452383756,
+          "leftMinusRightVoltage": 0.029833418936413447,
+          "leftSpikeFraction": 0.03,
+          "rightMeanVoltage": 0.5606171263019621,
+          "rightMinusLeftVoltage": -0.029833418936413447,
+          "rightSpikeFraction": 0.03,
+          "seed": 1,
+          "turn": 0.0022956521739130346
+        },
+        {
+          "flightTurn": 0.010286699403939925,
+          "leftMeanVoltage": 0.5791573507782654,
+          "leftMinusRightVoltage": 0.003982717297130178,
+          "leftSpikeFraction": 0.03,
+          "rightMeanVoltage": 0.5751746334811352,
+          "rightMinusLeftVoltage": -0.003982717297130178,
+          "rightSpikeFraction": 0.03,
+          "seed": 2,
+          "turn": 0.002156521739130428
+        },
+        {
+          "flightTurn": -0.0003484400901863857,
+          "leftMeanVoltage": 0.5764316211752546,
+          "leftMinusRightVoltage": -0.008063009396241605,
+          "leftSpikeFraction": 0.03,
+          "rightMeanVoltage": 0.5844946305714962,
+          "rightMinusLeftVoltage": 0.008063009396241605,
+          "rightSpikeFraction": 0.03,
+          "seed": 3,
+          "turn": -0.01064347826086957
+        },
+        {
+          "flightTurn": 0.037117277621661095,
+          "leftMeanVoltage": 0.5927573759600936,
+          "leftMinusRightVoltage": -0.018647234010576108,
+          "leftSpikeFraction": 0.03,
+          "rightMeanVoltage": 0.6114046099706697,
+          "rightMinusLeftVoltage": 0.018647234010576108,
+          "rightSpikeFraction": 0.03,
+          "seed": 4,
+          "turn": 0.0053565217391304265
+        },
+        {
+          "flightTurn": -0.03400602545455514,
+          "leftMeanVoltage": 0.5833340478486496,
+          "leftMinusRightVoltage": -0.023087843179244283,
+          "leftSpikeFraction": 0.03,
+          "rightMeanVoltage": 0.6064218910278939,
+          "rightMinusLeftVoltage": 0.023087843179244283,
+          "rightSpikeFraction": 0.03,
+          "seed": 5,
+          "turn": -0.01773913043478261
+        },
+        {
+          "flightTurn": -0.0005513806440538813,
+          "leftMeanVoltage": 0.5510680864082481,
+          "leftMinusRightVoltage": -0.044430647867091944,
+          "leftSpikeFraction": 0.03,
+          "rightMeanVoltage": 0.5954987342753401,
+          "rightMinusLeftVoltage": 0.044430647867091944,
+          "rightSpikeFraction": 0.03,
+          "seed": 6,
+          "turn": -0.0006260869565217433
+        }
+      ],
+      "sample": {
+        "left": {
+          "attractiveOdor": 0.0,
+          "brightness": 0.664099059545688,
+          "exitCue": 0.0,
+          "repellentOdor": 0.0,
+          "shade": 0.0
+        },
+        "right": {
+          "attractiveOdor": 0.0,
+          "brightness": 0.6639654008708581,
+          "exitCue": 0.0,
+          "repellentOdor": 0.0,
+          "shade": 0.0
+        },
+        "vision": {
+          "blocked": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "brightness": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.4714045207910318,
+            0.6666666666666667,
+            0.4714045207910318
+          ]
+        },
+        "wind": {
+          "x": 0.0,
+          "z": 0.0
+        }
+      },
+      "totalCurrent": 18.503895838868523
+    },
+    {
+      "currentsHash": "ba9ae6f98fcd95fa6e388ad579ee5e5a198e18761175d4767a522fc828212b6b",
+      "name": "lamp-right",
+      "observations": [
+        {
+          "flightTurn": -0.0022122404053045936,
+          "leftMeanVoltage": 0.5944426718268279,
+          "leftMinusRightVoltage": 0.03699508843782451,
+          "leftSpikeFraction": 0.03,
+          "rightMeanVoltage": 0.5574475833890034,
+          "rightMinusLeftVoltage": -0.03699508843782451,
+          "rightSpikeFraction": 0.03,
+          "seed": 1,
+          "turn": 0.0022956521739130337
+        },
+        {
+          "flightTurn": -0.0029415813682241486,
+          "leftMeanVoltage": 0.5722650453760976,
+          "leftMinusRightVoltage": -0.004704113791048514,
+          "leftSpikeFraction": 0.03,
+          "rightMeanVoltage": 0.5769691591671461,
+          "rightMinusLeftVoltage": 0.004704113791048514,
+          "rightSpikeFraction": 0.03,
+          "seed": 2,
+          "turn": 0.002156521739130428
+        },
+        {
+          "flightTurn": -0.005256074150898913,
+          "leftMeanVoltage": 0.5863217589851013,
+          "leftMinusRightVoltage": 0.00002061703520361835,
+          "leftSpikeFraction": 0.03,
+          "rightMeanVoltage": 0.5863011419498977,
+          "rightMinusLeftVoltage": -0.00002061703520361835,
+          "rightSpikeFraction": 0.03,
+          "seed": 3,
+          "turn": -0.01064347826086957
+        },
+        {
+          "flightTurn": 0.03751576168865032,
+          "leftMeanVoltage": 0.594730950582511,
+          "leftMinusRightVoltage": -0.021542577888636782,
+          "leftSpikeFraction": 0.03,
+          "rightMeanVoltage": 0.6162735284711478,
+          "rightMinusLeftVoltage": 0.021542577888636782,
+          "rightSpikeFraction": 0.03,
+          "seed": 4,
+          "turn": 0.0053565217391304265
+        },
+        {
+          "flightTurn": -0.03209956222974277,
+          "leftMeanVoltage": 0.5990071564355551,
+          "leftMinusRightVoltage": -0.016769568686243352,
+          "leftSpikeFraction": 0.03,
+          "rightMeanVoltage": 0.6157767251217985,
+          "rightMinusLeftVoltage": 0.016769568686243352,
+          "rightSpikeFraction": 0.03,
+          "seed": 5,
+          "turn": -0.017739130434782608
+        },
+        {
+          "flightTurn": -0.0014546356373906014,
+          "leftMeanVoltage": 0.5434496339215424,
+          "leftMinusRightVoltage": -0.05037555391227522,
+          "leftSpikeFraction": 0.03,
+          "rightMeanVoltage": 0.5938251878338177,
+          "rightMinusLeftVoltage": 0.05037555391227522,
+          "rightSpikeFraction": 0.03,
+          "seed": 6,
+          "turn": -0.0006260869565217436
+        }
+      ],
+      "sample": {
+        "left": {
+          "attractiveOdor": 0.0,
+          "brightness": 0.6639654008708581,
+          "exitCue": 0.0,
+          "repellentOdor": 0.0,
+          "shade": 0.0
+        },
+        "right": {
+          "attractiveOdor": 0.0,
+          "brightness": 0.6640990595456879,
+          "exitCue": 0.0,
+          "repellentOdor": 0.0,
+          "shade": 0.0
+        },
+        "vision": {
+          "blocked": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "brightness": [
+            0.0,
+            0.4714045207910318,
+            0.6666666666666667,
+            0.4714045207910318,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "wind": {
+          "x": 0.0,
+          "z": 0.0
+        }
+      },
+      "totalCurrent": 18.503895838868537
+    }
+  ],
+  "family": "Tm2",
+  "gain": 2,
+  "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+  "lifParams": {
+    "baseline_drive": 0.05,
+    "dt": 1.0,
+    "input_scale": 0.0002,
+    "noise_std": 0.015,
+    "refractory": 2,
+    "reset": 0.0,
+    "tau": 20.0,
+    "threshold": 1.0
+  },
+  "lifSourceHash": "dc6f1e5454acdf2d6e96a43b1ec4bed74d95f20d1e3e0a9039ce451d86c768c4",
+  "mappingHash": "494130c72903e4d740dca8fa82dc962641ac6c7871855d4cf85fffb223cdd7da",
+  "measureTicks": 100,
+  "mode": "exploratory-readout-diagnostic",
+  "pair": [
+    {
+      "bodyId": "10752",
+      "index": 636,
+      "somaSide": "L",
+      "superclass": "descending_neuron",
+      "type": "DNp03"
+    },
+    {
+      "bodyId": "10989",
+      "index": 837,
+      "somaSide": "R",
+      "superclass": "descending_neuron",
+      "type": "DNp03"
+    }
+  ],
+  "pairedLampLeftMinusLampRight": {
+    "flightTurn": {
+      "absoluteT": 1.2957081585464174,
+      "ci95": [
+        -0.002878956076150988,
+        0.008730966263729281
+      ],
+      "excludesZero": false,
+      "mean": 0.0029260050937891468,
+      "n": 6,
+      "seedDifferences": [
+        0.0008218080283231488,
+        0.013228280772164074,
+        0.004907634060712527,
+        -0.00039848406698922423,
+        -0.0019064632248123672,
+        0.0009032549933367201
+      ],
+      "standardError": 0.0022582285019117796
+    },
+    "leftMeanVoltage": {
+      "absoluteT": 0.7575382398662408,
+      "ci95": [
+        -0.012461104467001277,
+        0.006788374560751787
+      ],
+      "excludesZero": false,
+      "mean": -0.0028363649531247446,
+      "n": 6,
+      "seedDifferences": [
+        -0.003992126588452272,
+        0.0068923054021677865,
+        -0.00989013780984671,
+        -0.001973574622417429,
+        -0.015673108586905515,
+        0.0076184524867056735
+      ],
+      "standardError": 0.003744187162915451
+    },
+    "leftMinusRightVoltage": {
+      "absoluteT": 0.22300343903152495,
+      "ci95": [
+        -0.008427581089061416,
+        0.007082084617583225
+      ],
+      "excludesZero": false,
+      "mean": -0.0006727482357390957,
+      "n": 6,
+      "seedDifferences": [
+        -0.007161669501411061,
+        0.008686831088178693,
+        -0.008083626431445223,
+        0.0028953438780606744,
+        -0.0063182744930009305,
+        0.005944906045183274
+      ],
+      "standardError": 0.003016761708522318
+    },
+    "leftSpikeFraction": {
+      "absoluteT": null,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "excludesZero": false,
+      "mean": 0.0,
+      "n": 6,
+      "seedDifferences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "standardError": 0.0
+    },
+    "rightMeanVoltage": {
+      "absoluteT": 1.1707350738880413,
+      "ci95": [
+        -0.006914267790507451,
+        0.002587034355736153
+      ],
+      "excludesZero": false,
+      "mean": -0.002163616717385649,
+      "n": 6,
+      "seedDifferences": [
+        0.0031695429129587893,
+        -0.001794525686010906,
+        -0.0018065113784014875,
+        -0.004868918500478103,
+        -0.009354834093904585,
+        0.0016735464415224
+      ],
+      "standardError": 0.0018480839650598508
+    },
+    "rightMinusLeftVoltage": {
+      "absoluteT": 0.22300343903152495,
+      "ci95": [
+        -0.007082084617583225,
+        0.008427581089061416
+      ],
+      "excludesZero": false,
+      "mean": 0.0006727482357390957,
+      "n": 6,
+      "seedDifferences": [
+        0.007161669501411061,
+        -0.008686831088178693,
+        0.008083626431445223,
+        -0.0028953438780606744,
+        0.0063182744930009305,
+        -0.005944906045183274
+      ],
+      "standardError": 0.003016761708522318
+    },
+    "rightSpikeFraction": {
+      "absoluteT": null,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "excludesZero": false,
+      "mean": 0.0,
+      "n": 6,
+      "seedDifferences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "standardError": 0.0
+    },
+    "turn": {
+      "absoluteT": 0.5992178585562196,
+      "ci95": [
+        -2.0073605673987645e-18,
+        1.2484190466589114e-18
+      ],
+      "excludesZero": false,
+      "mean": -3.7947076036992655e-19,
+      "n": 6,
+      "seedDifferences": [
+        8.673617379884035e-19,
+        0.0,
+        0.0,
+        0.0,
+        -3.469446951953614e-18,
+        3.2526065174565133e-19
+      ],
+      "standardError": 6.332767873177866e-19
+    }
+  },
+  "pathEvidence": {
+    "inputCount": 366,
+    "mappingHash": "494130c72903e4d740dca8fa82dc962641ac6c7871855d4cf85fffb223cdd7da",
+    "outputs": [
+      {
+        "output": {
+          "bodyId": "10752",
+          "index": 636,
+          "somaSide": "L",
+          "superclass": "descending_neuron",
+          "type": "DNp03"
+        },
+        "reachableInputCount": 128,
+        "representativePathPerBin": [
+          {
+            "bin": 0,
+            "bodyIds": [
+              "69825",
+              "16809",
+              "10752"
+            ],
+            "indices": [
+              27692,
+              5249,
+              636
+            ],
+            "signedWeights": [
+              5.0,
+              19.0
+            ]
+          },
+          {
+            "bin": 4,
+            "bodyIds": [
+              "64530",
+              "18478",
+              "10752"
+            ],
+            "indices": [
+              25928,
+              6278,
+              636
+            ],
+            "signedWeights": [
+              6.0,
+              28.0
+            ]
+          },
+          {
+            "bin": 5,
+            "bodyIds": [
+              "19847",
+              "28980",
+              "10752"
+            ],
+            "indices": [
+              7072,
+              11712,
+              636
+            ],
+            "signedWeights": [
+              13.0,
+              25.0
+            ]
+          },
+          {
+            "bin": 6,
+            "bodyIds": [
+              "18347",
+              "20976",
+              "10752"
+            ],
+            "indices": [
+              6203,
+              7692,
+              636
+            ],
+            "signedWeights": [
+              7.0,
+              19.0
+            ]
+          },
+          {
+            "bin": 7,
+            "bodyIds": [
+              "18021",
+              "27750",
+              "10752"
+            ],
+            "indices": [
+              5998,
+              11096,
+              636
+            ],
+            "signedWeights": [
+              7.0,
+              33.0
+            ]
+          }
+        ],
+        "twoHopPathCount": 315
+      },
+      {
+        "output": {
+          "bodyId": "10989",
+          "index": 837,
+          "somaSide": "R",
+          "superclass": "descending_neuron",
+          "type": "DNp03"
+        },
+        "reachableInputCount": 231,
+        "representativePathPerBin": [
+          {
+            "bin": 0,
+            "bodyIds": [
+              "61552",
+              "23941",
+              "10989"
+            ],
+            "indices": [
+              24925,
+              9197,
+              837
+            ],
+            "signedWeights": [
+              11.0,
+              48.0
+            ]
+          },
+          {
+            "bin": 1,
+            "bodyIds": [
+              "36398",
+              "18189",
+              "10989"
+            ],
+            "indices": [
+              15139,
+              6105,
+              837
+            ],
+            "signedWeights": [
+              6.0,
+              6.0
+            ]
+          },
+          {
+            "bin": 2,
+            "bodyIds": [
+              "28076",
+              "18127",
+              "10989"
+            ],
+            "indices": [
+              11258,
+              6066,
+              837
+            ],
+            "signedWeights": [
+              5.0,
+              9.0
+            ]
+          },
+          {
+            "bin": 3,
+            "bodyIds": [
+              "42091",
+              "18127",
+              "10989"
+            ],
+            "indices": [
+              17561,
+              6066,
+              837
+            ],
+            "signedWeights": [
+              13.0,
+              9.0
+            ]
+          },
+          {
+            "bin": 4,
+            "bodyIds": [
+              "59743",
+              "17364",
+              "10989"
+            ],
+            "indices": [
+              24338,
+              5597,
+              837
+            ],
+            "signedWeights": [
+              6.0,
+              14.0
+            ]
+          }
+        ],
+        "twoHopPathCount": 502
+      }
+    ]
+  },
+  "pose": {
+    "heading": 0,
+    "position": {
+      "x": 0,
+      "z": 0
+    }
+  },
+  "probeSourceHash": "caf3563926113adf392daa10e6ccd49b19cbb649c71d5474ce24f993fb62563b",
+  "scope": "Same exploratory seeds as the failed pilot. Primary cell-pair metric is DNp03 right-minus-left mean voltage; paired contrast is lamp-left minus lamp-right. Opposite voltage sign is also retained explicitly. This observes the unchanged existing decoder; no held-out or biological effectiveness claim.",
+  "sensorySourceHash": "978acfde0d1d0c418f406ab7e6f6d2be74de2d6a734aef0fa80f39f1e292cffa",
+  "warmupTicks": 60
+}

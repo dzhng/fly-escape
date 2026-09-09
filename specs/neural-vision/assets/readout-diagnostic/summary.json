@@ -1,0 +1,59 @@
+{
+  "candidates": [
+    {
+      "family": "Tm2",
+      "gain": 2,
+      "mappingHash": "494130c72903e4d740dca8fa82dc962641ac6c7871855d4cf85fffb223cdd7da",
+      "metric": "DNp03-rightMinusLeftVoltage",
+      "pairedLampLeftMinusLampRight": {
+        "absoluteT": 0.22300343903152495,
+        "ci95": [
+          -0.007082084617583225,
+          0.008427581089061416
+        ],
+        "excludesZero": false,
+        "mean": 0.0006727482357390957,
+        "n": 6,
+        "seedDifferences": [
+          0.007161669501411061,
+          -0.008686831088178693,
+          0.008083626431445223,
+          -0.0028953438780606744,
+          0.0063182744930009305,
+          -0.005944906045183274
+        ],
+        "standardError": 0.003016761708522318
+      },
+      "population": 366
+    },
+    {
+      "family": "Tm20",
+      "gain": 2,
+      "mappingHash": "6dccd85eb907866d69b90132ac7c3e4ec2500c0771c4c0b597eb983aab5f47be",
+      "metric": "DNp03-rightMinusLeftVoltage",
+      "pairedLampLeftMinusLampRight": {
+        "absoluteT": 0.21387462858230827,
+        "ci95": [
+          -0.010183419920629237,
+          0.01203174044665725
+        ],
+        "excludesZero": false,
+        "mean": 0.0009241602630140067,
+        "n": 6,
+        "seedDifferences": [
+          0.01888426603338622,
+          -0.010236108482980844,
+          0.004518734095165122,
+          -0.002314835531839088,
+          -0.008310926704412247,
+          0.003003832168764875
+        ],
+        "standardError": 0.004321037371940307
+      },
+      "population": 810
+    }
+  ],
+  "elapsedSeconds": 3.267120208,
+  "eligibleReadoutCandidate": null,
+  "rule": "Exactly Tm2/Tm20 gain2 seeds1..6. DNp03 paired-voltage CI must exclude zero; rank eligible candidates by absolute t, ties smaller population. No runtime modification or held-out confirmation performed."
+}

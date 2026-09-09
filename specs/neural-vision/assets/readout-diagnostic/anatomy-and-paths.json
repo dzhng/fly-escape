@@ -1,0 +1,435 @@
+{
+  "annotationHash": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+  "source": {
+    "bytes": 14483314,
+    "file": "body-annotations.feather",
+    "generation": "1780494878811468",
+    "md5": "UKdxh3DFciDxYLpPQxq4ng==",
+    "sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+    "url": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-annotations-male-cns-v1.0-minconf-0.5.feather"
+  },
+  "pair": [
+    {
+      "bodyId": "10752",
+      "index": 636,
+      "type": "DNp03",
+      "somaSide": "L",
+      "superclass": "descending_neuron"
+    },
+    {
+      "bodyId": "10989",
+      "index": 837,
+      "type": "DNp03",
+      "somaSide": "R",
+      "superclass": "descending_neuron"
+    }
+  ],
+  "families": {
+    "Tm2": {
+      "inputCount": 366,
+      "mappingHash": "494130c72903e4d740dca8fa82dc962641ac6c7871855d4cf85fffb223cdd7da",
+      "outputs": [
+        {
+          "output": {
+            "bodyId": "10752",
+            "index": 636,
+            "type": "DNp03",
+            "somaSide": "L",
+            "superclass": "descending_neuron"
+          },
+          "twoHopPathCount": 315,
+          "reachableInputCount": 128,
+          "representativePathPerBin": [
+            {
+              "bin": 0,
+              "indices": [
+                27692,
+                5249,
+                636
+              ],
+              "bodyIds": [
+                "69825",
+                "16809",
+                "10752"
+              ],
+              "signedWeights": [
+                5.0,
+                19.0
+              ]
+            },
+            {
+              "bin": 4,
+              "indices": [
+                25928,
+                6278,
+                636
+              ],
+              "bodyIds": [
+                "64530",
+                "18478",
+                "10752"
+              ],
+              "signedWeights": [
+                6.0,
+                28.0
+              ]
+            },
+            {
+              "bin": 5,
+              "indices": [
+                7072,
+                11712,
+                636
+              ],
+              "bodyIds": [
+                "19847",
+                "28980",
+                "10752"
+              ],
+              "signedWeights": [
+                13.0,
+                25.0
+              ]
+            },
+            {
+              "bin": 6,
+              "indices": [
+                6203,
+                7692,
+                636
+              ],
+              "bodyIds": [
+                "18347",
+                "20976",
+                "10752"
+              ],
+              "signedWeights": [
+                7.0,
+                19.0
+              ]
+            },
+            {
+              "bin": 7,
+              "indices": [
+                5998,
+                11096,
+                636
+              ],
+              "bodyIds": [
+                "18021",
+                "27750",
+                "10752"
+              ],
+              "signedWeights": [
+                7.0,
+                33.0
+              ]
+            }
+          ]
+        },
+        {
+          "output": {
+            "bodyId": "10989",
+            "index": 837,
+            "type": "DNp03",
+            "somaSide": "R",
+            "superclass": "descending_neuron"
+          },
+          "twoHopPathCount": 502,
+          "reachableInputCount": 231,
+          "representativePathPerBin": [
+            {
+              "bin": 0,
+              "indices": [
+                24925,
+                9197,
+                837
+              ],
+              "bodyIds": [
+                "61552",
+                "23941",
+                "10989"
+              ],
+              "signedWeights": [
+                11.0,
+                48.0
+              ]
+            },
+            {
+              "bin": 1,
+              "indices": [
+                15139,
+                6105,
+                837
+              ],
+              "bodyIds": [
+                "36398",
+                "18189",
+                "10989"
+              ],
+              "signedWeights": [
+                6.0,
+                6.0
+              ]
+            },
+            {
+              "bin": 2,
+              "indices": [
+                11258,
+                6066,
+                837
+              ],
+              "bodyIds": [
+                "28076",
+                "18127",
+                "10989"
+              ],
+              "signedWeights": [
+                5.0,
+                9.0
+              ]
+            },
+            {
+              "bin": 3,
+              "indices": [
+                17561,
+                6066,
+                837
+              ],
+              "bodyIds": [
+                "42091",
+                "18127",
+                "10989"
+              ],
+              "signedWeights": [
+                13.0,
+                9.0
+              ]
+            },
+            {
+              "bin": 4,
+              "indices": [
+                24338,
+                5597,
+                837
+              ],
+              "bodyIds": [
+                "59743",
+                "17364",
+                "10989"
+              ],
+              "signedWeights": [
+                6.0,
+                14.0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "Tm20": {
+      "inputCount": 810,
+      "mappingHash": "6dccd85eb907866d69b90132ac7c3e4ec2500c0771c4c0b597eb983aab5f47be",
+      "outputs": [
+        {
+          "output": {
+            "bodyId": "10752",
+            "index": 636,
+            "type": "DNp03",
+            "somaSide": "L",
+            "superclass": "descending_neuron"
+          },
+          "twoHopPathCount": 282,
+          "reachableInputCount": 221,
+          "representativePathPerBin": [
+            {
+              "bin": 0,
+              "indices": [
+                44539,
+                10078,
+                636
+              ],
+              "bodyIds": [
+                "140691",
+                "25679",
+                "10752"
+              ],
+              "signedWeights": [
+                8.0,
+                35.0
+              ]
+            },
+            {
+              "bin": 4,
+              "indices": [
+                41123,
+                51921,
+                636
+              ],
+              "bodyIds": [
+                "120422",
+                "520078",
+                "10752"
+              ],
+              "signedWeights": [
+                10.0,
+                23.0
+              ]
+            },
+            {
+              "bin": 5,
+              "indices": [
+                14378,
+                9624,
+                636
+              ],
+              "bodyIds": [
+                "34693",
+                "24794",
+                "10752"
+              ],
+              "signedWeights": [
+                6.0,
+                23.0
+              ]
+            },
+            {
+              "bin": 6,
+              "indices": [
+                11292,
+                4960,
+                636
+              ],
+              "bodyIds": [
+                "28155",
+                "16377",
+                "10752"
+              ],
+              "signedWeights": [
+                16.0,
+                36.0
+              ]
+            },
+            {
+              "bin": 7,
+              "indices": [
+                11095,
+                8670,
+                636
+              ],
+              "bodyIds": [
+                "27748",
+                "22867",
+                "10752"
+              ],
+              "signedWeights": [
+                6.0,
+                31.0
+              ]
+            }
+          ]
+        },
+        {
+          "output": {
+            "bodyId": "10989",
+            "index": 837,
+            "type": "DNp03",
+            "somaSide": "R",
+            "superclass": "descending_neuron"
+          },
+          "twoHopPathCount": 554,
+          "reachableInputCount": 407,
+          "representativePathPerBin": [
+            {
+              "bin": 0,
+              "indices": [
+                41588,
+                7824,
+                837
+              ],
+              "bodyIds": [
+                "122619",
+                "21220",
+                "10989"
+              ],
+              "signedWeights": [
+                5.0,
+                40.0
+              ]
+            },
+            {
+              "bin": 1,
+              "indices": [
+                31997,
+                6964,
+                837
+              ],
+              "bodyIds": [
+                "82427",
+                "19653",
+                "10989"
+              ],
+              "signedWeights": [
+                12.0,
+                26.0
+              ]
+            },
+            {
+              "bin": 2,
+              "indices": [
+                24416,
+                12207,
+                837
+              ],
+              "bodyIds": [
+                "59984",
+                "29937",
+                "10989"
+              ],
+              "signedWeights": [
+                6.0,
+                23.0
+              ]
+            },
+            {
+              "bin": 3,
+              "indices": [
+                26964,
+                7439,
+                837
+              ],
+              "bodyIds": [
+                "67676",
+                "20508",
+                "10989"
+              ],
+              "signedWeights": [
+                21.0,
+                14.0
+              ]
+            },
+            {
+              "bin": 4,
+              "indices": [
+                39089,
+                8749,
+                837
+              ],
+              "bodyIds": [
+                "111027",
+                "23030",
+                "10989"
+              ],
+              "signedWeights": [
+                10.0,
+                15.0
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "pathScope": "Actual committed signed incoming CSR; all two-edge input-to-DNp03 paths counted; first lexicographic representative retained per input bin and output. Connectivity evidence, not unique functional mediation."
+}

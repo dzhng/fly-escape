@@ -1,0 +1,42 @@
+DNp03 exploratory readout diagnostic, 2026-09-09
+
+Verdict: neither candidate passes. eligibleReadoutCandidate is null. No input,
+decoder, neural or body code was changed; no freeze or held-out run was made.
+
+Primary measurement: DNp03 right-minus-left mean membrane voltage. The paired
+contrast is lamp-left minus lamp-right. Both voltage-sign conventions and all
+six individual seed differences are saved explicitly.
+
+Tm2 gain2: mean +0.0006727482357390957,
+95% paired t CI [-0.007082084617583225, +0.008427581089061416], |t|0.2230034390.
+Tm20 gain2: mean +0.0009241602630140067,
+95% paired t CI [-0.010183419920629237, +0.01203174044665725], |t|0.2138746286.
+
+Exactly two families, gain2, seeds1..6, two actual lamps, 60 warmup and 100
+measurement ticks: 24 runs. Pose, zero ambient, rate1/radius3/distance1 lamps,
+source hashes and LIF parameters are in each report. Execution took 3.27 s
+after a 5.27 s release compilation. This reuses exploratory pilot seeds; it is
+not confirmatory evidence, nor a claim about natural visual stimuli.
+
+The raw Feather was checked directly: body10752 is DNp03, somaL,
+descending_neuron, graph index636; body10989 is DNp03, somaR,
+descending_neuron, index837. anatomy-and-paths.json retains the annotation
+source/hash and actual committed signed CSR path evidence. It counts all
+two-hop paths and retains a representative for each populated bin/output.
+
+Every injected-current checksum and every per-seed existing turn/flightTurn
+mean exactly matches the original gain2 pilot. This diagnostic adds only the
+named pair's individual voltage and spike-fraction observations. The original
+pilot evidence remains unchanged.
+
+Independent Codex review: no actionable defect. Pairing, voltage signs,
+indices/provenance, fixed inputs, statistics and source snapshot hashes were
+checked without running experiments or editing files.
+
+probe.rs is the exact compiled scratch source. To reproduce from repository
+root, temporarily copy it to crates/sim/examples/neural_vision_readout_diagnostic.rs
+(the original filename is needed by its source-hash include), then run:
+cargo run -p sim --release --example neural_vision_readout_diagnostic -- specs/neural-vision/assets/readout-diagnostic
+This command overwrites the diagnostic result files. Preserve existing evidence
+and use a separate output directory containing anatomy-and-paths.json instead
+when doing a new experiment. The temporary example is not part of production.
