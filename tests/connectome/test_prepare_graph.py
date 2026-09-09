@@ -72,6 +72,14 @@ class MetadataOnlyTests(unittest.TestCase):
             self.assertEqual(refreshed['extractionExporterHash'], 'original-extractor')
             self.assertEqual((output / 'graph.bin').stat().st_mtime_ns, original_mtime)
             frozen_manifest = (output / 'manifest.json').read_bytes()
+            corrupted = bytearray(original)
+            corrupted[-1] ^= 1
+            (output / 'graph.bin').write_bytes(corrupted)
+            bad_graph = subprocess.run(command, capture_output=True, text=True, cwd=ROOT)
+            self.assertNotEqual(bad_graph.returncode, 0)
+            self.assertIn('Graph binary identity differs', bad_graph.stderr)
+            self.assertEqual((output / 'manifest.json').read_bytes(), frozen_manifest)
+            (output / 'graph.bin').write_bytes(original)
             annotations.loc[0, 'assignedOlHex1'] += 1.
             annotations.to_feather(source / 'body-annotations.feather')
             rejected = subprocess.run(command, capture_output=True, text=True, cwd=ROOT)

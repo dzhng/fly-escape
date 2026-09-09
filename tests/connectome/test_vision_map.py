@@ -3,15 +3,35 @@ import sys
 import unittest
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'scripts'))
-from connectome.vision_map import sector
+import numpy as np
+from connectome.vision_map import preferred_angle, overlap_weights
 
 
 class VisionMapTests(unittest.TestCase):
-    def test_modeled_registration_mirrors_eyes_and_keeps_forward_back_shared(self):
-        self.assertEqual([sector(x, 'R', [0., 8.]) for x in range(0, 9, 2)], [0, 1, 2, 3, 4])
-        self.assertEqual([sector(x, 'L', [0., 8.]) for x in range(0, 9, 2)], [0, 7, 6, 5, 4])
-        self.assertEqual(sector(1., 'R', [0., 8.]), 1)
-        self.assertEqual(sector(1., 'L', [0., 8.]), 7)
+    def test_modeled_angles_mirror_eyes_without_rounding_to_sectors(self):
+        self.assertAlmostEqual(preferred_angle(1., 'R', [0., 8.]), np.pi / 8)
+        self.assertAlmostEqual(preferred_angle(1., 'L', [0., 8.]), -np.pi / 8)
+        self.assertEqual(preferred_angle(8., 'R', [0., 8.]), np.pi)
+        self.assertEqual(preferred_angle(8., 'L', [0., 8.]), -np.pi)
+
+    def test_cosine_overlap_has_neighbor_support_and_no_orthogonal_leak(self):
+        weights = overlap_weights(np.arange(8) * np.pi / 4)
+        peak = 1 / (1 + np.sqrt(2))
+        neighbor = peak / np.sqrt(2)
+        np.testing.assert_allclose(weights[0], [peak, neighbor, 0., 0., 0., 0., 0., neighbor], atol=1e-15)
+        np.testing.assert_array_equal(weights[0, 2:7], np.zeros(5))
+        np.testing.assert_allclose(weights.sum(axis=0), np.ones(8), atol=1e-15)
+        np.testing.assert_allclose(weights.sum(axis=1), np.ones(8), atol=1e-15)
+
+    def test_uneven_population_preserves_equal_basis_dose_and_mixed_input_bound(self):
+        weights = overlap_weights([*list(np.arange(8) * np.pi / 4), 0., 0.])
+        np.testing.assert_allclose(weights.sum(axis=0), np.repeat(weights[:, 0].sum(), 8), atol=1e-14)
+        self.assertAlmostEqual(weights.sum(axis=1).max(), 1.)
+        self.assertTrue(np.all(weights.sum(axis=1) <= 1. + 1e-12))
+        with self.assertRaisesRegex(ValueError, 'empty direction'):
+            overlap_weights([0.])
+        with self.assertRaisesRegex(ValueError, 'finite'):
+            overlap_weights([0., float('nan')])
 
 
 class ExportTests(unittest.TestCase):
@@ -42,23 +62,32 @@ class ExportTests(unittest.TestCase):
         annotations, manifest, matrix = self.fixture()
         maps, report = audit(annotations, manifest, matrix, 'a')
         mapping = maps['Tm2']
-        self.assertEqual([len(b['indices']) for b in mapping['bins']], [2, 1, 2, 1, 2, 1, 1, 1])
-        self.assertEqual(mapping['bins'][7]['indices'], [1])
-        self.assertEqual(mapping['bins'][1]['indices'], [6])
-        self.assertEqual([len(b['indices']) * b['normalization'] for b in mapping['bins']], [1.] * 8)
+        entries = {entry['index']: entry['weights'] for entry in mapping['entries']}
+        self.assertEqual(set(entries), {*range(10), 20})
+        self.assertGreater(entries[1][7], 0.)
+        self.assertGreater(entries[1][0], 0.)
+        self.assertEqual(entries[1][1], 0.)
+        self.assertGreater(entries[6][1], 0.)
+        self.assertEqual(entries[6][7], 0.)
+        weights = np.array(list(entries.values()))
+        np.testing.assert_allclose(weights.sum(axis=0), np.repeat(weights[:, 0].sum(), 8), atol=1e-14)
+        self.assertAlmostEqual(weights.sum(axis=1).max(), 1.)
         self.assertEqual(report['candidates']['Tm2']['cells'][0]['readoutPath'], ['100', '121', '122'])
         self.assertEqual(report['candidates']['Tm2']['cells'][0]['relayPath'], ['100', '121'])
         self.assertEqual(canonical_bytes(maps), canonical_bytes(audit(annotations.iloc[::-1], manifest, matrix, 'a')[0]))
 
-    def test_missing_path_rejects_cell_and_empty_bin_rejects_candidate(self):
+    def test_missing_path_rejects_cell_and_empty_direction_rejects_candidate(self):
         from connectome.vision_map import audit
         annotations, manifest, matrix = self.fixture()
         matrix = matrix.tolil()
         matrix[21, 1] = 0.
         maps, report = audit(annotations, manifest, matrix.tocsr(), 'a')
-        self.assertNotIn('Tm2', maps)
-        self.assertIn('empty bin 7', report['candidates']['Tm2']['rejectionReasons'])
+        self.assertNotIn(1, [entry['index'] for entry in maps['Tm2']['entries']])
         self.assertIn('no downstream motor-readout path', report['candidates']['Tm2']['cells'][1]['rejected'])
+        matrix[21, :5] = 0.
+        maps, report = audit(annotations, manifest, matrix.tocsr(), 'a')
+        self.assertNotIn('Tm2', maps)
+        self.assertIn('empty directions [6]', report['candidates']['Tm2']['rejectionReasons'])
         self.assertIn('Tm20', maps)
 
     def test_full_source_range_includes_unselected_cells(self):
@@ -70,7 +99,7 @@ class ExportTests(unittest.TestCase):
         _, report = audit(annotations, manifest, matrix, 'a')
         candidate = report['candidates']['Tm2']
         self.assertEqual(candidate['sourceRanges']['L'], [0., 16.])
-        self.assertEqual(candidate['cells'][4]['bin'], 6)
+        self.assertAlmostEqual(candidate['cells'][4]['preferredAngle'], -np.pi / 2)
         self.assertEqual(candidate['sourceCount'], 12)
         self.assertEqual(candidate['selectedCount'], 11)
 

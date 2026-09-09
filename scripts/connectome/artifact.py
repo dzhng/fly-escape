@@ -89,7 +89,7 @@ def metadata(graph, annotations, source=None, vision_input=None):
         ('loom', 'Approaching objects', [lookup[int(b)] for b in annotations.loc[annotations.type == 'LC4', 'bodyId'] if int(b) in lookup]),
     ]
     if vision_input is not None:
-        mapped = {index for bin_input in vision_input['bins'] for index in bin_input['indices']}
+        mapped = {entry['index'] for entry in vision_input['entries']}
         family = vision_input['family']
         visual = [(f'vision{side}', f'Modeled vision · {family} · {label}',
                    [index for index in sorted(mapped) if sides.iloc[index] == side])

@@ -1,4 +1,4 @@
-"""Audit modeled eight-sector inputs against annotations and the shipped directed graph.
+"""Audit modeled overlapping directional inputs against annotations and the shipped directed graph.
 
 Run with `PYTHONPATH=scripts python -m connectome.vision_map --help`.
 No extraction, graph mutation, neural simulation or behavioral claim occurs here.
@@ -17,11 +17,30 @@ from connectome.artifact import read_binary
 EYEMAP_SOURCE = 'https://reiserlab.github.io/celltype-explorer-drosophila-male-cns/help.html#population-spatial-coverage'
 
 
-def sector(column, side, bounds):
-    """Nearest sector, with exact half-bin ties rounded away from the forward axis."""
+def preferred_angle(column, side, bounds):
+    """The frozen modeled hex1 projection; no calibrated retinal azimuth is implied."""
     u = (column - bounds[0]) / (bounds[1] - bounds[0])
-    nearest = math.floor(4 * u + 0.5)
-    return (nearest if side == 'R' else -nearest) % 8
+    return (1 if side == 'R' else -1) * math.pi * u
+
+
+def cosine_lobes(angles):
+    angles = np.asarray(angles, dtype=np.float64)
+    if angles.ndim != 1 or not np.isfinite(angles).all():
+        raise ValueError('Preferred angles must be a finite vector')
+    raw = np.maximum(0., np.cos(angles[:, None] - np.arange(8) * math.pi / 4))
+    raw[raw < 1e-12] = 0.
+    return raw
+
+
+def overlap_weights(angles):
+    """Equal column dose followed by one global scale bounding every row's total."""
+    raw = cosine_lobes(angles)
+    totals = raw.sum(axis=0)
+    empty = np.flatnonzero(totals == 0).tolist()
+    if empty:
+        raise ValueError(f'empty directions {empty}')
+    weights = raw / totals
+    return weights / weights.sum(axis=1).max()
 
 
 def motor_indices(manifest):
@@ -101,7 +120,6 @@ def audit(annotations, manifest, matrix, annotation_hash):
             if len(columns) == 0 or columns.min() == columns.max():
                 raise ValueError(f'{family}/{side}: no finite nondegenerate source column range')
             ranges[side] = [float(columns.min()), float(columns.max())]
-        bins = [[] for _ in range(8)]
         cells = []
         for row in selected.sort_values('bodyId').itertuples():
             index = lookup[int(row.bodyId)]
@@ -113,37 +131,48 @@ def audit(annotations, manifest, matrix, annotation_hash):
             if index in motor: reasons.append('motor readout overlap')
             if readout_paths[1][index] < 1: reasons.append('no downstream motor-readout path')
             if relay_paths[1][index] < 1: reasons.append('no downstream LC/LPLC relay path')
-            bin_index = sector(row.assignedOlHex1, row.somaSide, ranges[row.somaSide]) if finite and row.somaSide in ranges else None
-            if not reasons:
-                bins[bin_index].append(index)
+            angle = preferred_angle(row.assignedOlHex1, row.somaSide, ranges[row.somaSide]) if finite and row.somaSide in ranges else None
             cells.append(dict(bodyId=str(row.bodyId), index=index, type=row.type, superclass=row.superclass,
                               side=row.somaSide if isinstance(row.somaSide, str) else None,
                               hex=[float(v) if math.isfinite(v) else None for v in [row.assignedOlHex1, row.assignedOlHex2]],
-                              bin=bin_index, rejected=reasons,
+                              preferredAngle=angle, rejected=reasons,
                               relayPath=witness(index, relay_paths, bodies),
                               readoutPath=witness(index, readout_paths, bodies)))
-        source_bins = {side: [0] * 8 for side in ranges}
-        for row in full.itertuples():
-            if row.somaSide in ranges and math.isfinite(row.assignedOlHex1) and math.isfinite(row.assignedOlHex2):
-                source_bins[row.somaSide][sector(row.assignedOlHex1, row.somaSide, ranges[row.somaSide])] += 1
-        counts = list(map(len, bins))
-        rejected = [f'empty bin {i}' for i, count in enumerate(counts) if count == 0]
-        accepted_sides = {cell['side'] for cell in cells if not cell['rejected']}
-        if accepted_sides != {'L', 'R'}: rejected.append('missing accepted eye')
-        registration = ("MODELED, not calibrated retinal azimuth: u=(assignedOlHex1-min)/(max-min) over the full annotated family per somaSide; "
-                        "angle=+pi*u for R and -pi*u for L; bin=(sign*floor(4*u+0.5)) mod 8, sign R=+1,L=-1; "
-                        "half-bin ties away from forward. Axis, orientation, mirroring and half-circle field of view are assumptions. "
+        source_support = {}
+        for side in ranges:
+            angles = [preferred_angle(row.assignedOlHex1, side, ranges[side]) for row in full.itertuples()
+                      if row.somaSide == side and math.isfinite(row.assignedOlHex1) and math.isfinite(row.assignedOlHex2)]
+            source_support[side] = (cosine_lobes(angles) > 0).sum(axis=0).tolist()
+        included = [cell for cell in cells if not cell['rejected']]
+        rejected = []
+        if {cell['side'] for cell in included} != {'L', 'R'}:
+            rejected.append('missing accepted eye')
+        try:
+            weights = overlap_weights([cell['preferredAngle'] for cell in included])
+        except ValueError as error:
+            rejected.append(str(error))
+            weights = None
+        registration = ("MODELED, not calibrated retinal azimuth or measured receptive fields: "
+                        "u=(assignedOlHex1-min)/(max-min) over the full annotated family per somaSide; "
+                        "angle=+pi*u for R and -pi*u for L. "
+                        "raw[i,b]=max(0,cos(angle_i-b*pi/4)); raw<1e-12 becomes zero; "
+                        "divide each column by its sum, then the entire matrix by its largest row sum. "
+                        "Axis, orientation, mirroring and half-circle field of view are assumptions. "
                         f"Source hex1 ranges: L={ranges['L']}, R={ranges['R']}.")
         candidate = dict(accepted=not rejected, rejectionReasons=rejected, sourceCount=len(full), selectedCount=len(selected),
+                         includedCount=len(included),
                          sourceSideCounts=full.somaSide.fillna('unknown').value_counts().to_dict(),
                          selectedSideCounts=selected.somaSide.fillna('unknown').value_counts().to_dict(),
-                         sourceRanges=ranges, sourceBinCountsBySide=source_bins, binCounts=counts,
-                         acceptedBinCountsBySide={side: [sum(c['side'] == side and c['bin'] == i and not c['rejected'] for c in cells) for i in range(8)] for side in ranges},
+                         sourceRanges=ranges, sourceDirectionCountsBySide=source_support,
                          rejectedCellReasons=dict(Counter(reason for c in cells for reason in c['rejected'])), cells=cells)
         if not rejected:
-            minimum = min(counts)
             mapping = dict(graphHash=manifest['graphHash'], annotationHash=annotation_hash, family=family, registration=registration,
-                           bins=[dict(indices=sorted(indices), normalization=minimum / len(indices)) for indices in bins])
+                           entries=[dict(index=cell['index'], weights=row.tolist()) for cell, row in zip(included, weights)])
+            candidate.update(columnWeightSums=weights.sum(axis=0).tolist(),
+                             effectivePopulationPerDirection=float(weights.sum(axis=0).mean()),
+                             maximumRowSum=float(weights.sum(axis=1).max()),
+                             directionCounts=(weights > 0).sum(axis=0).tolist(),
+                             includedDirectionCountsBySide={side: (weights[[c['side'] == side for c in included]] > 0).sum(axis=0).tolist() for side in ranges})
             candidate['mapSha256'] = hashlib.sha256(canonical_bytes(mapping)).hexdigest()
             maps[family] = mapping
         candidates[family] = candidate
@@ -183,10 +212,10 @@ def main():
         else:
             path.unlink(missing_ok=True)
     (args.output / 'audit.json').write_bytes(canonical_bytes(report))
-    print('| Candidate | Source | Selected | Eligible bins 0–7 | Verdict |')
-    print('| --- | ---: | ---: | --- | --- |')
+    print('| Candidate | Source | Selected | Included | Effective population/direction | Verdict |')
+    print('| --- | ---: | ---: | ---: | ---: | --- |')
     for family, result in report['candidates'].items():
-        print(f"| {family} | {result['sourceCount']} | {result['selectedCount']} | {result['binCounts']} | {'accepted' if result['accepted'] else '; '.join(result['rejectionReasons'])} |")
+        print(f"| {family} | {result['sourceCount']} | {result['selectedCount']} | {result['includedCount']} | {result.get('effectivePopulationPerDirection', 0):.12f} | {'accepted' if result['accepted'] else '; '.join(result['rejectionReasons'])} |")
 
 
 if __name__ == '__main__':

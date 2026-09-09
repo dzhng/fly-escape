@@ -73,7 +73,7 @@ class VisualMetadataTests(unittest.TestCase):
         ]
         matrix = sparse.csr_matrix(([7., -4.], ([3, 3], [4, 5])), shape=(12, 12))
         graph = dict(bodies=list(range(1, 13)), matrix=matrix)
-        vision_input = dict(family='Tm2', bins=[dict(indices=[4 + i], normalization=1.) for i in range(8)])
+        vision_input = dict(family='Tm2', entries=[dict(index=4 + i, weights=[1. if b == i else 0. for b in range(8)]) for i in range(8)])
         result = metadata(graph, pd.DataFrame(annotations), source=SYNTHETIC_REGISTRY, vision_input=vision_input)
         groups = {group['id']: group for group in result['groups']}
         self.assertEqual(groups['visionL']['indices'], [4, 6, 8, 10])
