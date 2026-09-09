@@ -8,4 +8,12 @@ The [browser check](../../../../../tests/browser/physical-eyes.mjs) compares eac
 
 The visual target is two complete, clearly labeled physical eye mosaics above the retained brain view, with the circuit-input footer and acquisition time readable. Full frames, detail views, eye crops and bottom-of-panel captures are preserved at both widths. The earlier controlled-pattern evidence tests discrimination; these captures establish that actual production scene samples reach the same UI.
 
-Typechecking and the complete browser run pass. Independent code review found no actionable defects and separately passed the web tests and script syntax check. Fresh unprimed visual critique is **pending** in the integrating task; these screenshots are candidate evidence, not an accepted visual verdict.
+Typechecking and the complete browser run pass. Independent code review found no actionable defects and separately passed the web tests and script syntax check. The integrated visual verdict and subsequent user steering are recorded below.
+
+The integrating fresh reviewer inspected all ten images and found no concrete
+paired-eye defects. Labels, complete mosaics, spacing and captions pass at both
+widths. Tiny labels in the existing lower graph at 800 pixels were noted; that
+unchanged graph is outside the eye-image change. The root repeated the physical
+browser checks successfully. During the human checkpoint the user requested a
+horizontal fly strip; the grid captures are retained as the before state and the
+roster layout is being revised before final acceptance.

@@ -30,16 +30,8 @@
   medium confidence:** a deliberately narrow deterministic artifact interface;
   semantic reformatting is not supported. Applied in native slice-06 preparation.
 
-- **Derive the allowed visual dose from the validated baseline map.** At optical
-  initialization, native code totals the existing graph's baseline visual weights
-  and checks that both new families together stay within that allowance. It does
-  not trust a new map to announce its own larger allowance. The plan fixed the
-  shared dose requirement but not where runtime would obtain that bound. This
-  keeps the old map as read-only budget provenance; the optical tick does not use
-  its directional sensory signal. Removing that provenance at final cutover
-  requires another trusted owner for the bound. **Sound, high confidence:** the
-  bound is checked against the graph already accepted by native code. Applied in
-  native slice-06 preparation.
+- **Bind the visual dose to compact source metadata.** Native initialization checks the archived baseline map hash, annotation hash and original graph hash, then enforces the frozen aggregate weight sum. The source registry owns this scalar and refuses to relabel it for a changed graph. This replaces runtime retention of old directional weights while preserving their exact dose allowance. **Sound, high confidence:** the new exporter regenerates the existing retinal map and current fixtures byte for byte, and publication validates the map before overwriting output. No legacy visual sample participates in the retinal tick.
+- **Reuse existing visual activity groups.** The two visual groups now contain all mapped Tm2 and Tm20 cells by eye, preserving the sixteen-group record capacity. **Sound, high confidence:** panel labels describe the actual injected population without adding a second set of visual groups or expanding every recorded frame.
 
 ## Shared optical world integration — sound
 
