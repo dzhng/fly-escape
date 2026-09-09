@@ -1,0 +1,871 @@
+{
+  "analysisSha256": "46a310879b52e4f03e8ee9bc4148ce7bb0f39e0e47ee5a51ae1d1870a6181f99",
+  "chromaticOffPairs": [],
+  "conditions": [
+    {
+      "chromatic": false,
+      "name": "dark",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/287ee0a91c2d208b23589e89587f718d1c163ec0d54df1813b1e41e47dd4ecf4.rgb",
+      "rgbSha256": "287ee0a91c2d208b23589e89587f718d1c163ec0d54df1813b1e41e47dd4ecf4",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "gray64",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/63d6c5cc60b899ce960d717e385d2b2d91759b4de3468cfc3bc1b6a49b48778f.rgb",
+      "rgbSha256": "63d6c5cc60b899ce960d717e385d2b2d91759b4de3468cfc3bc1b6a49b48778f",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "gray128",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/279208f2fc65f6aea6350c317edf7822c3c6d896a26aedcc97efabfd68d0158e.rgb",
+      "rgbSha256": "279208f2fc65f6aea6350c317edf7822c3c6d896a26aedcc97efabfd68d0158e",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "white",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/4285745ec3744287022d3b17df3d7d77e38fd1c6866c6ae559eb246cb7ad9b00.rgb",
+      "rgbSha256": "4285745ec3744287022d3b17df3d7d77e38fd1c6866c6ae559eb246cb7ad9b00",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "Lupper",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/8f112e09395f89e93dc3a406d8e2e62a426728c12e9abe1000339c48e1625479.rgb",
+      "rgbSha256": "8f112e09395f89e93dc3a406d8e2e62a426728c12e9abe1000339c48e1625479",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "Lupper-permuted",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": true,
+      "rgbPath": "inputs/8f112e09395f89e93dc3a406d8e2e62a426728c12e9abe1000339c48e1625479.rgb",
+      "rgbSha256": "8f112e09395f89e93dc3a406d8e2e62a426728c12e9abe1000339c48e1625479",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "Llower",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/5bd6f0bdf6c7460e77823593d151e4726e51706fbe1c3d9919c888d09537cb25.rgb",
+      "rgbSha256": "5bd6f0bdf6c7460e77823593d151e4726e51706fbe1c3d9919c888d09537cb25",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "Llower-permuted",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": true,
+      "rgbPath": "inputs/5bd6f0bdf6c7460e77823593d151e4726e51706fbe1c3d9919c888d09537cb25.rgb",
+      "rgbSha256": "5bd6f0bdf6c7460e77823593d151e4726e51706fbe1c3d9919c888d09537cb25",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "Rupper",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/e4a5ea845d70c0da003485fb32efe45a8baa5dddb96aef16fe320195bb5ad8ee.rgb",
+      "rgbSha256": "e4a5ea845d70c0da003485fb32efe45a8baa5dddb96aef16fe320195bb5ad8ee",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "Rupper-permuted",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": true,
+      "rgbPath": "inputs/e4a5ea845d70c0da003485fb32efe45a8baa5dddb96aef16fe320195bb5ad8ee.rgb",
+      "rgbSha256": "e4a5ea845d70c0da003485fb32efe45a8baa5dddb96aef16fe320195bb5ad8ee",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "Rlower",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/63a82b36f07ddc158f5979d4b936a551aaf74ab3b212a99459d4b97b3643fd20.rgb",
+      "rgbSha256": "63a82b36f07ddc158f5979d4b936a551aaf74ab3b212a99459d4b97b3643fd20",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "Rlower-permuted",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": true,
+      "rgbPath": "inputs/63a82b36f07ddc158f5979d4b936a551aaf74ab3b212a99459d4b97b3643fd20.rgb",
+      "rgbSha256": "63a82b36f07ddc158f5979d4b936a551aaf74ab3b212a99459d4b97b3643fd20",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "dark-repeat",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/287ee0a91c2d208b23589e89587f718d1c163ec0d54df1813b1e41e47dd4ecf4.rgb",
+      "rgbSha256": "287ee0a91c2d208b23589e89587f718d1c163ec0d54df1813b1e41e47dd4ecf4",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "white-zero",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/4285745ec3744287022d3b17df3d7d77e38fd1c6866c6ae559eb246cb7ad9b00.rgb",
+      "rgbSha256": "4285745ec3744287022d3b17df3d7d77e38fd1c6866c6ae559eb246cb7ad9b00",
+      "silenceInputs": false,
+      "zeroCurrent": true
+    },
+    {
+      "chromatic": false,
+      "name": "dark-silenced",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/287ee0a91c2d208b23589e89587f718d1c163ec0d54df1813b1e41e47dd4ecf4.rgb",
+      "rgbSha256": "287ee0a91c2d208b23589e89587f718d1c163ec0d54df1813b1e41e47dd4ecf4",
+      "silenceInputs": true,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "white-silenced",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/4285745ec3744287022d3b17df3d7d77e38fd1c6866c6ae559eb246cb7ad9b00.rgb",
+      "rgbSha256": "4285745ec3744287022d3b17df3d7d77e38fd1c6866c6ae559eb246cb7ad9b00",
+      "silenceInputs": true,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "scene-ground",
+      "origin": {
+        "kind": "supplied browser RGB; descriptive pose condition",
+        "pose": {
+          "position": [
+            1,
+            0,
+            2.5
+          ],
+          "rotation": [
+            0,
+            0.7071067811865475,
+            0,
+            0.7071067811865476
+          ]
+        },
+        "sceneId": "709cafc63e5d9ca4bba58ab4b07df8075b5e391151a03b39bca544b1bb591e0c",
+        "source": "optics.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/70dd31782da03dd75788f0e3c3208928d971251f2b7a5701c13b38701a146c27.rgb",
+      "rgbSha256": "70dd31782da03dd75788f0e3c3208928d971251f2b7a5701c13b38701a146c27",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "scene-flight",
+      "origin": {
+        "kind": "supplied browser RGB; descriptive pose condition",
+        "pose": {
+          "position": [
+            1,
+            1.1,
+            2.5
+          ],
+          "rotation": [
+            0,
+            0.7071067811865475,
+            0,
+            0.7071067811865476
+          ]
+        },
+        "sceneId": "709cafc63e5d9ca4bba58ab4b07df8075b5e391151a03b39bca544b1bb591e0c",
+        "source": "optics.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/dfaf6f5bbcb2f988d0aade13f93619d7b3224374d6abded4de0d5bd3082f7013.rgb",
+      "rgbSha256": "dfaf6f5bbcb2f988d0aade13f93619d7b3224374d6abded4de0d5bd3082f7013",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "scene-tilted",
+      "origin": {
+        "kind": "supplied browser RGB; descriptive pose condition",
+        "pose": {
+          "position": [
+            1,
+            0.45,
+            2.5
+          ],
+          "rotation": [
+            0.20896434210788312,
+            0.6755249097756644,
+            0.20896434210788314,
+            0.6755249097756645
+          ]
+        },
+        "sceneId": "709cafc63e5d9ca4bba58ab4b07df8075b5e391151a03b39bca544b1bb591e0c",
+        "source": "optics.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/bc20ad66df4b34b575465aef84c30a75493ddda7b785b7d8ff200c5cb5ac777b.rgb",
+      "rgbSha256": "bc20ad66df4b34b575465aef84c30a75493ddda7b785b7d8ff200c5cb5ac777b",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "scene-sofa-under",
+      "origin": {
+        "kind": "supplied browser RGB; descriptive pose condition",
+        "pose": {
+          "position": [
+            1.25,
+            0.025,
+            0.675
+          ],
+          "rotation": [
+            0,
+            0.7071067811865475,
+            0,
+            0.7071067811865476
+          ]
+        },
+        "sceneId": "709cafc63e5d9ca4bba58ab4b07df8075b5e391151a03b39bca544b1bb591e0c",
+        "source": "optics.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/f4ec6bcdb3d726322d01fd8186f1e69008abed12c95508474b5c0283d7d2776b.rgb",
+      "rgbSha256": "f4ec6bcdb3d726322d01fd8186f1e69008abed12c95508474b5c0283d7d2776b",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "scene-sofa-above",
+      "origin": {
+        "kind": "supplied browser RGB; descriptive pose condition",
+        "pose": {
+          "position": [
+            1.25,
+            1.1,
+            0.675
+          ],
+          "rotation": [
+            0,
+            0.7071067811865475,
+            0,
+            0.7071067811865476
+          ]
+        },
+        "sceneId": "709cafc63e5d9ca4bba58ab4b07df8075b5e391151a03b39bca544b1bb591e0c",
+        "source": "optics.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/aa36a2f55d8e9335fe3e952ecc6d31e02803b6ef3305217aebd8689528823460.rgb",
+      "rgbSha256": "aa36a2f55d8e9335fe3e952ecc6d31e02803b6ef3305217aebd8689528823460",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "scene-markers-flat",
+      "origin": {
+        "kind": "supplied browser RGB; descriptive pose condition",
+        "pose": {
+          "position": [
+            1,
+            0.45,
+            2.5
+          ],
+          "rotation": [
+            0,
+            0.7071067811865475,
+            0,
+            0.7071067811865476
+          ]
+        },
+        "sceneId": "0aeab0f7d5b712fe50b0d718523ae4509d80e3ca19aaaf9c469bb6c11d8a52df",
+        "source": "optics.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/86cf2e4a859553bf9957c086089f4c44b4c861d1021cbe5d980f8121dd373fa8.rgb",
+      "rgbSha256": "86cf2e4a859553bf9957c086089f4c44b4c861d1021cbe5d980f8121dd373fa8",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "scene-markers-tilted",
+      "origin": {
+        "kind": "supplied browser RGB; descriptive pose condition",
+        "pose": {
+          "position": [
+            1,
+            0.45,
+            2.5
+          ],
+          "rotation": [
+            0.20896434210788312,
+            0.6755249097756644,
+            0.20896434210788314,
+            0.6755249097756645
+          ]
+        },
+        "sceneId": "0aeab0f7d5b712fe50b0d718523ae4509d80e3ca19aaaf9c469bb6c11d8a52df",
+        "source": "optics.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/4fa9e25fe9455fda64d0e233c82d3adb59373bf622439ae4f366dc2c0b2a1c36.rgb",
+      "rgbSha256": "4fa9e25fe9455fda64d0e233c82d3adb59373bf622439ae4f366dc2c0b2a1c36",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "scene-wall-adjacent",
+      "origin": {
+        "kind": "supplied browser RGB; descriptive pose condition",
+        "pose": {
+          "position": [
+            0.063,
+            0.45,
+            1.2
+          ],
+          "rotation": [
+            0,
+            -0.7071067811865475,
+            0,
+            0.7071067811865476
+          ]
+        },
+        "sceneId": "f959032525b9c4ff8bab1dde6d12444e170b7b5227390254ee76530b2acd6e2c",
+        "source": "optics.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/784d1a769af46fb53270d6d8934ddbe8e843d827bf7fc470f426d0ab536c8bc9.rgb",
+      "rgbSha256": "784d1a769af46fb53270d6d8934ddbe8e843d827bf7fc470f426d0ab536c8bc9",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "scene-lamp-near",
+      "origin": {
+        "kind": "supplied browser RGB; descriptive pose condition",
+        "pose": {
+          "position": [
+            1,
+            0.025,
+            2.5
+          ],
+          "rotation": [
+            0,
+            0.7071067811865475,
+            0,
+            0.7071067811865476
+          ]
+        },
+        "sceneId": "def32910ed1c83c1b11392eb01cd6e4ce4b4b2a58faec5d44690ce40e4b9c774",
+        "source": "optics.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/3b22b7e2efa5906392e1ae32bc3a181e34750d870f02bc8221c6849fee4be9fb.rgb",
+      "rgbSha256": "3b22b7e2efa5906392e1ae32bc3a181e34750d870f02bc8221c6849fee4be9fb",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "scene-lamp-moved",
+      "origin": {
+        "kind": "supplied browser RGB; descriptive pose condition",
+        "pose": {
+          "position": [
+            1,
+            0.025,
+            2.5
+          ],
+          "rotation": [
+            0,
+            0.7071067811865475,
+            0,
+            0.7071067811865476
+          ]
+        },
+        "sceneId": "79376c109e023db943bebf21cc42b235b9c8cc46dace66cd057bf2c3c283ec1b",
+        "source": "optics.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/e7a5c44bd96fff2024b96116809ee033d43221b1e8b2398c345341f1323c9cdc.rgb",
+      "rgbSha256": "e7a5c44bd96fff2024b96116809ee033d43221b1e8b2398c345341f1323c9cdc",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "scene-apple-supported",
+      "origin": {
+        "kind": "supplied browser RGB; descriptive pose condition",
+        "pose": {
+          "position": [
+            1.97,
+            0.06529603265120325,
+            7.5
+          ],
+          "rotation": [
+            0.008629172561128667,
+            0.004117551904283178,
+            0.4306318006189407,
+            0.9024770553553784
+          ]
+        },
+        "sceneId": "df5ca429d999eb95a1c5809eb1a1aed9cc959bab8ccd06df9c8c6e7fe388aebd",
+        "source": "optics.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/38c77094b2c0fdc91a0ac5b43c79344925fb6796c63df0a4cc23d9c37d628e81.rgb",
+      "rgbSha256": "38c77094b2c0fdc91a0ac5b43c79344925fb6796c63df0a4cc23d9c37d628e81",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "scene-apple-upright",
+      "origin": {
+        "kind": "supplied browser RGB; descriptive pose condition",
+        "pose": {
+          "position": [
+            1.97,
+            0.06719289605473927,
+            7.5
+          ],
+          "rotation": [
+            0,
+            3.061616997868383e-17,
+            0,
+            1
+          ]
+        },
+        "sceneId": "df5ca429d999eb95a1c5809eb1a1aed9cc959bab8ccd06df9c8c6e7fe388aebd",
+        "source": "optics.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/62dc5b3a50230ad0a30208b6e23283af92b11656b422ba62514de94ba4b6fe8e.rgb",
+      "rgbSha256": "62dc5b3a50230ad0a30208b6e23283af92b11656b422ba62514de94ba4b6fe8e",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "scene-turn-corner",
+      "origin": {
+        "kind": "supplied browser RGB; descriptive pose condition",
+        "pose": {
+          "position": [
+            5.5,
+            0.1,
+            6
+          ],
+          "rotation": [
+            0,
+            0.7071067811865475,
+            0,
+            0.7071067811865476
+          ]
+        },
+        "sceneId": "f3163ac7b2038629a665a17d8fd502517a5db403b6ed5dcd6d01d777ceb8586a",
+        "source": "optics.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/57adcdd5f6b265049a61fc7311e09face14cd65510b4ce3d5932a01fb4ee82a7.rgb",
+      "rgbSha256": "57adcdd5f6b265049a61fc7311e09face14cd65510b4ce3d5932a01fb4ee82a7",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "quality-landmarks",
+      "origin": {
+        "kind": "supplied browser RGB; descriptive quality condition",
+        "pose": {
+          "position": [
+            1,
+            0.45,
+            2.5
+          ],
+          "rotation": [
+            0,
+            0.7071067811865475,
+            0,
+            0.7071067811865476
+          ]
+        },
+        "source": "benchmark.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/1873822ebe934edeb2b77bc39160445d1255da26c71aaa48dd060835e99c0c78.rgb",
+      "rgbSha256": "1873822ebe934edeb2b77bc39160445d1255da26c71aaa48dd060835e99c0c78",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "quality-landmarks-turned",
+      "origin": {
+        "kind": "supplied browser RGB; descriptive quality condition",
+        "pose": {
+          "position": [
+            1,
+            0.45,
+            2.5
+          ],
+          "rotation": [
+            0,
+            0.6521356712856615,
+            0,
+            0.7581022795354196
+          ]
+        },
+        "source": "benchmark.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/f283d1f366e712e8a66d25b7fececc373b4d2dd20f22ad6c9b588052e31ac786.rgb",
+      "rgbSha256": "f283d1f366e712e8a66d25b7fececc373b4d2dd20f22ad6c9b588052e31ac786",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "quality-door-floor",
+      "origin": {
+        "kind": "supplied browser RGB; descriptive quality condition",
+        "pose": {
+          "position": [
+            3.8,
+            0.01,
+            2.55
+          ],
+          "rotation": [
+            0,
+            0.23284298551241678,
+            0,
+            0.972514341332643
+          ]
+        },
+        "source": "benchmark.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/d483b4c7d5127fc3fc8d1488ab03b9a03953828edee6f2e39f1fc7f6161667a4.rgb",
+      "rgbSha256": "d483b4c7d5127fc3fc8d1488ab03b9a03953828edee6f2e39f1fc7f6161667a4",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "quality-door-flight",
+      "origin": {
+        "kind": "supplied browser RGB; descriptive quality condition",
+        "pose": {
+          "position": [
+            3.8,
+            1.1,
+            2.55
+          ],
+          "rotation": [
+            0,
+            0.23284298551241678,
+            0,
+            0.972514341332643
+          ]
+        },
+        "source": "benchmark.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/19f7bd02fbe0f0b86faf4883318098033572b778ef03db290079dd90ca151715.rgb",
+      "rgbSha256": "19f7bd02fbe0f0b86faf4883318098033572b778ef03db290079dd90ca151715",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "occlusion-door-floor-open",
+      "origin": {
+        "kind": "fixed-pose physical occlusion",
+        "pose": {
+          "position": [
+            3.8,
+            0.01,
+            2.55
+          ],
+          "rotation": [
+            0,
+            0.23284298551241678,
+            0,
+            0.972514341332643
+          ]
+        },
+        "sceneId": "0aeab0f7d5b712fe50b0d718523ae4509d80e3ca19aaaf9c469bb6c11d8a52df",
+        "source": "benchmark.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/c9961a4c982d385eeb60e22fec8603255000cb66bc1abe12666833fe201a7431.rgb",
+      "rgbSha256": "c9961a4c982d385eeb60e22fec8603255000cb66bc1abe12666833fe201a7431",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "occlusion-door-floor-blocked",
+      "origin": {
+        "kind": "fixed-pose physical occlusion",
+        "pose": {
+          "position": [
+            3.8,
+            0.01,
+            2.55
+          ],
+          "rotation": [
+            0,
+            0.23284298551241678,
+            0,
+            0.972514341332643
+          ]
+        },
+        "sceneId": "08cb888deae7968a132f66b4e3fe96ed28f4f0a0114821165afbd8edbae0e867",
+        "source": "benchmark.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/1730cc2e0c73d7fea24183dc66647c4998c74787efa02a2ee75a3d6c33dabf3e.rgb",
+      "rgbSha256": "1730cc2e0c73d7fea24183dc66647c4998c74787efa02a2ee75a3d6c33dabf3e",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "occlusion-door-flight-open",
+      "origin": {
+        "kind": "fixed-pose physical occlusion",
+        "pose": {
+          "position": [
+            3.8,
+            1.1,
+            2.55
+          ],
+          "rotation": [
+            0,
+            0.23284298551241678,
+            0,
+            0.972514341332643
+          ]
+        },
+        "sceneId": "0aeab0f7d5b712fe50b0d718523ae4509d80e3ca19aaaf9c469bb6c11d8a52df",
+        "source": "benchmark.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/f5e5580989ab5da012affb7ad066c2d18ea30a4822f38b1456e900c598fc3d6d.rgb",
+      "rgbSha256": "f5e5580989ab5da012affb7ad066c2d18ea30a4822f38b1456e900c598fc3d6d",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "occlusion-door-flight-blocked",
+      "origin": {
+        "kind": "fixed-pose physical occlusion",
+        "pose": {
+          "position": [
+            3.8,
+            1.1,
+            2.55
+          ],
+          "rotation": [
+            0,
+            0.23284298551241678,
+            0,
+            0.972514341332643
+          ]
+        },
+        "sceneId": "08cb888deae7968a132f66b4e3fe96ed28f4f0a0114821165afbd8edbae0e867",
+        "source": "benchmark.json"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/5b937f0fdb8632bd20874e9913650115e7ed543ddf04a392958cb583c6ec85fc.rgb",
+      "rgbSha256": "5b937f0fdb8632bd20874e9913650115e7ed543ddf04a392958cb583c6ec85fc",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    }
+  ],
+  "dosePairs": [
+    {
+      "a": "Lupper",
+      "b": "Rupper",
+      "scope": "total"
+    },
+    {
+      "a": "Llower",
+      "b": "Rlower",
+      "scope": "total"
+    },
+    {
+      "a": "Lupper",
+      "b": "Llower",
+      "scope": "total"
+    },
+    {
+      "a": "Rupper",
+      "b": "Rlower",
+      "scope": "total"
+    }
+  ],
+  "exactPairs": [
+    [
+      "dark",
+      "dark-repeat"
+    ],
+    [
+      "dark",
+      "white-zero"
+    ],
+    [
+      "dark-silenced",
+      "white-silenced"
+    ]
+  ],
+  "phase": "diagnostic",
+  "preregistrationSha256": "ec3efde39458bd890194990059d7657c12105fb8739b46a201ce55fedc5a8acd",
+  "primaryContrasts": [
+    [
+      "gray64",
+      "dark"
+    ],
+    [
+      "gray128",
+      "gray64"
+    ],
+    [
+      "white",
+      "gray128"
+    ],
+    [
+      "Lupper",
+      "Rupper"
+    ],
+    [
+      "Llower",
+      "Rlower"
+    ],
+    [
+      "Lupper",
+      "Llower"
+    ],
+    [
+      "Rupper",
+      "Rlower"
+    ],
+    [
+      "occlusion-door-floor-open",
+      "occlusion-door-floor-blocked"
+    ],
+    [
+      "occlusion-door-flight-open",
+      "occlusion-door-flight-blocked"
+    ]
+  ],
+  "profile": {
+    "annotationHash": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+    "baselineMapHash": "c0ac5957037012b486cc7300ccad56015fd3215ad4c764ce4ba0b27c82a262da",
+    "colorModelHash": "f10754eec38ebd77ce25325fc10f10d700caa6c76a06f812b0a80437db4643fd",
+    "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+    "layoutHash": "8bfc77663d1917bb0653bd8e4dd72a03901bf28b77d91040e11db7b9d7f7a99c",
+    "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+    "rigHash": "95d00abd9162e75517f70ba9cc6764336b1f07dd0bf83e6fc75179c0435d667f"
+  },
+  "scope": "Fixed RGB8 native diagnostics; not a browser pose-to-tick or navigation proof.",
+  "slice": "08",
+  "sources": [
+    {
+      "filename": "optics.json",
+      "label": "provided real-world pose captures",
+      "sha256": "c5d4a930f84084bb359ec42801247e3a664ffdca9fcfd62b8b58fb878219c6e3"
+    },
+    {
+      "filename": "benchmark.json",
+      "label": "slice02 higher-resolution benchmark",
+      "sha256": "66e80c6d6fe755bb6754c273dfc2b605c38740a1ef874b4ea802b63bc9140df0"
+    },
+    {
+      "filename": "benchmark.json",
+      "label": "fixed-pose open/blocked RGB capture",
+      "sha256": "85300a5c1e927264a68c44c14d9972581e559b0f12ff7b773c66306dc05a962a"
+    },
+    {
+      "label": "slice05 frozen current fixtures",
+      "sha256": "e611abb2977c8e397ec5d8e0e00f3f6f09d38e0a6fdc04b42b172db2e9924cfe"
+    }
+  ],
+  "statisticsOwnerSha256": "56759c7e1c23f04d4e87d60e307f11ef6a0676ff7be390e8e9c62b9ec3eaa5db",
+  "version": 1
+}

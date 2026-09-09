@@ -1,0 +1,83 @@
+{
+  "slice": "09",
+  "phase": "diagnostic",
+  "panelPassed": false,
+  "completeSlicePassed": false,
+  "gatesAllPassed": true,
+  "populationCounts": {
+    "inputs": 1176,
+    "endpoints": 438,
+    "downstream": 40944,
+    "motorReadouts": 1696
+  },
+  "contrasts": [
+    {
+      "a": "color-1-a",
+      "b": "color-1-b",
+      "voltageGate": false,
+      "spikeGate": false,
+      "correctedVoltageCells": 0,
+      "correctedSpikeCells": 0,
+      "changedInjectedCells": 22,
+      "currentDifferenceL1": 0.17283443347346059,
+      "currentDifferenceMaximum": 0.03240645627627403,
+      "totalDoseA": 3.3210451841891255,
+      "totalDoseB": 3.3210451841891255,
+      "endpointsWithAnySpikeCountDifference": 1,
+      "allDownstreamCellsWithDifferentAggregatedCounts": 16,
+      "perSeedDownstreamSpikeCountDifferences": [
+        0,
+        3,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "a": "color-2-a",
+      "b": "color-2-b",
+      "voltageGate": false,
+      "spikeGate": false,
+      "correctedVoltageCells": 0,
+      "correctedSpikeCells": 0,
+      "changedInjectedCells": 22,
+      "currentDifferenceL1": 0.16104508939551648,
+      "currentDifferenceMaximum": 0.030195954261659552,
+      "totalDoseA": 4.574433155967498,
+      "totalDoseB": 4.574433155967498,
+      "endpointsWithAnySpikeCountDifference": 1,
+      "allDownstreamCellsWithDifferentAggregatedCounts": 43,
+      "perSeedDownstreamSpikeCountDifferences": [
+        2,
+        0,
+        -17,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "elapsedSeconds": 57.874456125,
+  "archive": [
+    {
+      "path": "report.json.gz",
+      "encoding": "gzip",
+      "decodedFilename": "report.json",
+      "decodedBytes": 16170938,
+      "decodedSha256": "b37996216bad537f766ccc494a05ba6f4e6bc7501cb0ff380c5cddecb1d82525",
+      "storedBytes": 2857724,
+      "storedSha256": "21a6556ec146adc9c9bfd0cc0a73fa11d85dcf2c327bbc5d2d531515768076e7"
+    },
+    {
+      "path": "analysis.json.gz",
+      "encoding": "gzip",
+      "decodedFilename": "analysis.json",
+      "decodedBytes": 819395,
+      "decodedSha256": "40ea4cadd699ae22782f4bf4729fa2f62f7d08493ee4e3156abaaeb806bf78db",
+      "storedBytes": 44778,
+      "storedSha256": "c005ce76788a234e17d1260543aa4c9e30f1aa4277a70cddaa0a6296b772a416"
+    }
+  ],
+  "scope": "Counts/voltage propagation and corrected gates are separate. Compression preserves every original report byte; no production record codec is introduced."
+}

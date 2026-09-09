@@ -1,0 +1,17 @@
+{
+  "files": [
+    "inputs-01.png",
+    "inputs-02.png",
+    "inputs-03.png",
+    "responses.png",
+    "response-01-crop.png",
+    "response-02-crop.png",
+    "downstream-counts.png",
+    "color-inputs-enlarged.png",
+    "color-patch-crops.png"
+  ],
+  "report": "report.json.gz",
+  "analysis": "analysis.json.gz",
+  "matplotlib": "3.11.1",
+  "scope": "Every frozen condition and primary contrast included; no plot changes experimental gates."
+}

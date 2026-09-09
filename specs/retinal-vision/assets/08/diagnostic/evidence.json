@@ -1,0 +1,244 @@
+{
+  "slice": "08",
+  "phase": "diagnostic",
+  "panelPassed": false,
+  "completeSlicePassed": false,
+  "gatesAllPassed": true,
+  "populationCounts": {
+    "inputs": 1176,
+    "endpoints": 438,
+    "downstream": 40944,
+    "motorReadouts": 1696
+  },
+  "contrasts": [
+    {
+      "a": "gray64",
+      "b": "dark",
+      "voltageGate": true,
+      "spikeGate": false,
+      "correctedVoltageCells": 1,
+      "correctedSpikeCells": 0,
+      "changedInjectedCells": 366,
+      "currentDifferenceL1": 110.28720626631855,
+      "currentDifferenceMaximum": 1.0026109660574414,
+      "totalDoseA": 110.28720626631859,
+      "totalDoseB": 0.0,
+      "endpointsWithAnySpikeCountDifference": 96,
+      "allDownstreamCellsWithDifferentAggregatedCounts": 553,
+      "perSeedDownstreamSpikeCountDifferences": [
+        57,
+        59,
+        13,
+        55,
+        50,
+        70
+      ]
+    },
+    {
+      "a": "gray128",
+      "b": "gray64",
+      "voltageGate": true,
+      "spikeGate": false,
+      "correctedVoltageCells": 1,
+      "correctedSpikeCells": 0,
+      "changedInjectedCells": 366,
+      "currentDifferenceL1": 55.035690015481855,
+      "currentDifferenceMaximum": 0.5003244546861989,
+      "totalDoseA": 165.3228962818004,
+      "totalDoseB": 110.28720626631859,
+      "endpointsWithAnySpikeCountDifference": 41,
+      "allDownstreamCellsWithDifferentAggregatedCounts": 299,
+      "perSeedDownstreamSpikeCountDifferences": [
+        15,
+        -5,
+        19,
+        9,
+        16,
+        16
+      ]
+    },
+    {
+      "a": "white",
+      "b": "gray128",
+      "voltageGate": true,
+      "spikeGate": false,
+      "correctedVoltageCells": 1,
+      "correctedSpikeCells": 0,
+      "changedInjectedCells": 366,
+      "currentDifferenceL1": 54.67710371819961,
+      "currentDifferenceMaximum": 0.49706457925636016,
+      "totalDoseA": 220.0,
+      "totalDoseB": 165.3228962818004,
+      "endpointsWithAnySpikeCountDifference": 37,
+      "allDownstreamCellsWithDifferentAggregatedCounts": 292,
+      "perSeedDownstreamSpikeCountDifferences": [
+        10,
+        40,
+        18,
+        9,
+        2,
+        5
+      ]
+    },
+    {
+      "a": "Lupper",
+      "b": "Rupper",
+      "voltageGate": false,
+      "spikeGate": false,
+      "correctedVoltageCells": 0,
+      "correctedSpikeCells": 0,
+      "changedInjectedCells": 2,
+      "currentDifferenceL1": 1.0019569471624268,
+      "currentDifferenceMaximum": 0.5009784735812134,
+      "totalDoseA": 0.5009784735812134,
+      "totalDoseB": 0.5009784735812134,
+      "endpointsWithAnySpikeCountDifference": 1,
+      "allDownstreamCellsWithDifferentAggregatedCounts": 34,
+      "perSeedDownstreamSpikeCountDifferences": [
+        0,
+        -2,
+        -1,
+        2,
+        -2,
+        -5
+      ]
+    },
+    {
+      "a": "Llower",
+      "b": "Rlower",
+      "voltageGate": false,
+      "spikeGate": false,
+      "correctedVoltageCells": 0,
+      "correctedSpikeCells": 0,
+      "changedInjectedCells": 2,
+      "currentDifferenceL1": 1.0019569471624268,
+      "currentDifferenceMaximum": 0.5009784735812134,
+      "totalDoseA": 0.5009784735812134,
+      "totalDoseB": 0.5009784735812134,
+      "endpointsWithAnySpikeCountDifference": 1,
+      "allDownstreamCellsWithDifferentAggregatedCounts": 28,
+      "perSeedDownstreamSpikeCountDifferences": [
+        -1,
+        0,
+        -2,
+        1,
+        0,
+        -1
+      ]
+    },
+    {
+      "a": "Lupper",
+      "b": "Llower",
+      "voltageGate": false,
+      "spikeGate": false,
+      "correctedVoltageCells": 0,
+      "correctedSpikeCells": 0,
+      "changedInjectedCells": 2,
+      "currentDifferenceL1": 1.0019569471624268,
+      "currentDifferenceMaximum": 0.5009784735812134,
+      "totalDoseA": 0.5009784735812134,
+      "totalDoseB": 0.5009784735812134,
+      "endpointsWithAnySpikeCountDifference": 2,
+      "allDownstreamCellsWithDifferentAggregatedCounts": 39,
+      "perSeedDownstreamSpikeCountDifferences": [
+        1,
+        -2,
+        0,
+        -2,
+        -2,
+        -1
+      ]
+    },
+    {
+      "a": "Rupper",
+      "b": "Rlower",
+      "voltageGate": false,
+      "spikeGate": false,
+      "correctedVoltageCells": 0,
+      "correctedSpikeCells": 0,
+      "changedInjectedCells": 2,
+      "currentDifferenceL1": 1.0019569471624268,
+      "currentDifferenceMaximum": 0.5009784735812134,
+      "totalDoseA": 0.5009784735812134,
+      "totalDoseB": 0.5009784735812134,
+      "endpointsWithAnySpikeCountDifference": 0,
+      "allDownstreamCellsWithDifferentAggregatedCounts": 23,
+      "perSeedDownstreamSpikeCountDifferences": [
+        0,
+        0,
+        -1,
+        -3,
+        0,
+        3
+      ]
+    },
+    {
+      "a": "occlusion-door-floor-open",
+      "b": "occlusion-door-floor-blocked",
+      "voltageGate": false,
+      "spikeGate": false,
+      "correctedVoltageCells": 0,
+      "correctedSpikeCells": 0,
+      "changedInjectedCells": 57,
+      "currentDifferenceL1": 12.745077938483867,
+      "currentDifferenceMaximum": 0.6822309580654398,
+      "totalDoseA": 107.16472356762789,
+      "totalDoseB": 119.9098015061117,
+      "endpointsWithAnySpikeCountDifference": 9,
+      "allDownstreamCellsWithDifferentAggregatedCounts": 77,
+      "perSeedDownstreamSpikeCountDifferences": [
+        -6,
+        -1,
+        3,
+        -13,
+        -2,
+        -9
+      ]
+    },
+    {
+      "a": "occlusion-door-flight-open",
+      "b": "occlusion-door-flight-blocked",
+      "voltageGate": true,
+      "spikeGate": false,
+      "correctedVoltageCells": 2,
+      "correctedSpikeCells": 0,
+      "changedInjectedCells": 101,
+      "currentDifferenceL1": 18.92275149805577,
+      "currentDifferenceMaximum": 0.9079184719709255,
+      "totalDoseA": 128.5809607818973,
+      "totalDoseB": 146.8416105688861,
+      "endpointsWithAnySpikeCountDifference": 15,
+      "allDownstreamCellsWithDifferentAggregatedCounts": 147,
+      "perSeedDownstreamSpikeCountDifferences": [
+        -2,
+        -4,
+        -4,
+        -11,
+        -2,
+        -11
+      ]
+    }
+  ],
+  "elapsedSeconds": 90.176298291,
+  "archive": [
+    {
+      "path": "report.json.gz",
+      "encoding": "gzip",
+      "decodedFilename": "report.json",
+      "decodedBytes": 25385792,
+      "decodedSha256": "a0d4483e6f910cb029f1e6df9547051d686bf601b560b375ede7fb15becff5cc",
+      "storedBytes": 4720145,
+      "storedSha256": "a1616096e0e5de6d6543ff60bbcc1714990518967fb50d2a89a5e22e809c0b51"
+    },
+    {
+      "path": "analysis.json.gz",
+      "encoding": "gzip",
+      "decodedFilename": "analysis.json",
+      "decodedBytes": 3595648,
+      "decodedSha256": "d879aee032a77dd01f357382a6071bd39fd951a9897d828c889e32cc6690b848",
+      "storedBytes": 261293,
+      "storedSha256": "a3279e66c1f129195c4d33e555c328a6cf553a5ac23126d424ecca26666c4262"
+    }
+  ],
+  "scope": "Counts/voltage propagation and corrected gates are separate. Compression preserves every original report byte; no production record codec is introduced."
+}

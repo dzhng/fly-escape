@@ -1,0 +1,381 @@
+{
+  "analysisSha256": "46a310879b52e4f03e8ee9bc4148ce7bb0f39e0e47ee5a51ae1d1870a6181f99",
+  "chromaticOffPairs": [
+    [
+      "color-1-a-off",
+      "color-1-b-off"
+    ],
+    [
+      "color-2-a-off",
+      "color-2-b-off"
+    ]
+  ],
+  "conditions": [
+    {
+      "chromatic": true,
+      "name": "color-1-a",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/df7dfb1eb372d5077b9393001fc5e7835f7ae7a21c60e0191cf3047f76afe1fe.rgb",
+      "rgbSha256": "df7dfb1eb372d5077b9393001fc5e7835f7ae7a21c60e0191cf3047f76afe1fe",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "color-1-a-off",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/df7dfb1eb372d5077b9393001fc5e7835f7ae7a21c60e0191cf3047f76afe1fe.rgb",
+      "rgbSha256": "df7dfb1eb372d5077b9393001fc5e7835f7ae7a21c60e0191cf3047f76afe1fe",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-1-a-silenced",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/df7dfb1eb372d5077b9393001fc5e7835f7ae7a21c60e0191cf3047f76afe1fe.rgb",
+      "rgbSha256": "df7dfb1eb372d5077b9393001fc5e7835f7ae7a21c60e0191cf3047f76afe1fe",
+      "silenceInputs": true,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-1-a-permuted",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": true,
+      "rgbPath": "inputs/df7dfb1eb372d5077b9393001fc5e7835f7ae7a21c60e0191cf3047f76afe1fe.rgb",
+      "rgbSha256": "df7dfb1eb372d5077b9393001fc5e7835f7ae7a21c60e0191cf3047f76afe1fe",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-1-b",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/406e454957c54470012e3a0b36f9798a7e7bc81c1ecaa8c0728fd577a1491d29.rgb",
+      "rgbSha256": "406e454957c54470012e3a0b36f9798a7e7bc81c1ecaa8c0728fd577a1491d29",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "color-1-b-off",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/406e454957c54470012e3a0b36f9798a7e7bc81c1ecaa8c0728fd577a1491d29.rgb",
+      "rgbSha256": "406e454957c54470012e3a0b36f9798a7e7bc81c1ecaa8c0728fd577a1491d29",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-1-b-silenced",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/406e454957c54470012e3a0b36f9798a7e7bc81c1ecaa8c0728fd577a1491d29.rgb",
+      "rgbSha256": "406e454957c54470012e3a0b36f9798a7e7bc81c1ecaa8c0728fd577a1491d29",
+      "silenceInputs": true,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-1-b-permuted",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": true,
+      "rgbPath": "inputs/406e454957c54470012e3a0b36f9798a7e7bc81c1ecaa8c0728fd577a1491d29.rgb",
+      "rgbSha256": "406e454957c54470012e3a0b36f9798a7e7bc81c1ecaa8c0728fd577a1491d29",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-1-a-repeat",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/df7dfb1eb372d5077b9393001fc5e7835f7ae7a21c60e0191cf3047f76afe1fe.rgb",
+      "rgbSha256": "df7dfb1eb372d5077b9393001fc5e7835f7ae7a21c60e0191cf3047f76afe1fe",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-1-gray",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/59be06e473947c20c5f762916496e304a1db2830445817b9f34951e47e269c2e.rgb",
+      "rgbSha256": "59be06e473947c20c5f762916496e304a1db2830445817b9f34951e47e269c2e",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "uniform-color-1-a",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/2e1b228918755bca786dd4c1d7dcdfdb64a2b64650464b7835eddaf7aab6fc41.rgb",
+      "rgbSha256": "2e1b228918755bca786dd4c1d7dcdfdb64a2b64650464b7835eddaf7aab6fc41",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "uniform-color-1-b",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/137efcf52cb27e4e4ede8e665622a4241184c3403037eb307bae8777aeb7c29f.rgb",
+      "rgbSha256": "137efcf52cb27e4e4ede8e665622a4241184c3403037eb307bae8777aeb7c29f",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-2-a",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/53ac17818078e47004d66b8731d98036536386fcb638e6198a8fff2523aa85bf.rgb",
+      "rgbSha256": "53ac17818078e47004d66b8731d98036536386fcb638e6198a8fff2523aa85bf",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "color-2-a-off",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/53ac17818078e47004d66b8731d98036536386fcb638e6198a8fff2523aa85bf.rgb",
+      "rgbSha256": "53ac17818078e47004d66b8731d98036536386fcb638e6198a8fff2523aa85bf",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-2-a-silenced",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/53ac17818078e47004d66b8731d98036536386fcb638e6198a8fff2523aa85bf.rgb",
+      "rgbSha256": "53ac17818078e47004d66b8731d98036536386fcb638e6198a8fff2523aa85bf",
+      "silenceInputs": true,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-2-a-permuted",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": true,
+      "rgbPath": "inputs/53ac17818078e47004d66b8731d98036536386fcb638e6198a8fff2523aa85bf.rgb",
+      "rgbSha256": "53ac17818078e47004d66b8731d98036536386fcb638e6198a8fff2523aa85bf",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-2-b",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/331d974a0ecde23b4ff358e4655e351dfc051f9c519e3de1c52d4724a0b17bd8.rgb",
+      "rgbSha256": "331d974a0ecde23b4ff358e4655e351dfc051f9c519e3de1c52d4724a0b17bd8",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "color-2-b-off",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/331d974a0ecde23b4ff358e4655e351dfc051f9c519e3de1c52d4724a0b17bd8.rgb",
+      "rgbSha256": "331d974a0ecde23b4ff358e4655e351dfc051f9c519e3de1c52d4724a0b17bd8",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-2-b-silenced",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/331d974a0ecde23b4ff358e4655e351dfc051f9c519e3de1c52d4724a0b17bd8.rgb",
+      "rgbSha256": "331d974a0ecde23b4ff358e4655e351dfc051f9c519e3de1c52d4724a0b17bd8",
+      "silenceInputs": true,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-2-b-permuted",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": true,
+      "rgbPath": "inputs/331d974a0ecde23b4ff358e4655e351dfc051f9c519e3de1c52d4724a0b17bd8.rgb",
+      "rgbSha256": "331d974a0ecde23b4ff358e4655e351dfc051f9c519e3de1c52d4724a0b17bd8",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-2-a-repeat",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/53ac17818078e47004d66b8731d98036536386fcb638e6198a8fff2523aa85bf.rgb",
+      "rgbSha256": "53ac17818078e47004d66b8731d98036536386fcb638e6198a8fff2523aa85bf",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-2-gray",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/3d5d591fff5a391ae31e7c9a660734eeafc11e8cb75b6358fe219cdc7786de0a.rgb",
+      "rgbSha256": "3d5d591fff5a391ae31e7c9a660734eeafc11e8cb75b6358fe219cdc7786de0a",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "uniform-color-2-a",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/e45985cb80ec618557da2ff03f1d14965af4a63b96ed95683680b6bf0d999908.rgb",
+      "rgbSha256": "e45985cb80ec618557da2ff03f1d14965af4a63b96ed95683680b6bf0d999908",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "uniform-color-2-b",
+      "origin": {
+        "kind": "declared RGB8 adapter-seam fixture"
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/7ca6bb0dc68410902e1c744f8e06a82b66dbb6afa58eea90387af89232dac7fc.rgb",
+      "rgbSha256": "7ca6bb0dc68410902e1c744f8e06a82b66dbb6afa58eea90387af89232dac7fc",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    }
+  ],
+  "dosePairs": [
+    {
+      "a": "color-1-a",
+      "b": "color-1-b",
+      "equalBrightness": true,
+      "scope": "eyeChannel"
+    },
+    {
+      "a": "color-2-a",
+      "b": "color-2-b",
+      "equalBrightness": true,
+      "scope": "eyeChannel"
+    }
+  ],
+  "exactPairs": [
+    [
+      "color-1-a",
+      "color-1-a-repeat"
+    ],
+    [
+      "color-1-a-silenced",
+      "color-1-b-silenced"
+    ],
+    [
+      "color-2-a",
+      "color-2-a-repeat"
+    ],
+    [
+      "color-2-a-silenced",
+      "color-2-b-silenced"
+    ]
+  ],
+  "phase": "diagnostic",
+  "preregistrationSha256": "9876804bd80400994c97461a34c7f391e7ae119b805d93176ea3d985798568ee",
+  "primaryContrasts": [
+    [
+      "color-1-a",
+      "color-1-b"
+    ],
+    [
+      "color-2-a",
+      "color-2-b"
+    ]
+  ],
+  "profile": {
+    "annotationHash": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+    "baselineMapHash": "c0ac5957037012b486cc7300ccad56015fd3215ad4c764ce4ba0b27c82a262da",
+    "colorModelHash": "f10754eec38ebd77ce25325fc10f10d700caa6c76a06f812b0a80437db4643fd",
+    "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+    "layoutHash": "8bfc77663d1917bb0653bd8e4dd72a03901bf28b77d91040e11db7b9d7f7a99c",
+    "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+    "rigHash": "95d00abd9162e75517f70ba9cc6764336b1f07dd0bf83e6fc75179c0435d667f"
+  },
+  "scope": "Fixed RGB8 native diagnostics; not a browser pose-to-tick or navigation proof.",
+  "slice": "09",
+  "sources": [
+    {
+      "filename": "optics.json",
+      "label": "provided real-world pose captures",
+      "sha256": "c5d4a930f84084bb359ec42801247e3a664ffdca9fcfd62b8b58fb878219c6e3"
+    },
+    {
+      "filename": "benchmark.json",
+      "label": "slice02 higher-resolution benchmark",
+      "sha256": "66e80c6d6fe755bb6754c273dfc2b605c38740a1ef874b4ea802b63bc9140df0"
+    },
+    {
+      "filename": "benchmark.json",
+      "label": "fixed-pose open/blocked RGB capture",
+      "sha256": "85300a5c1e927264a68c44c14d9972581e559b0f12ff7b773c66306dc05a962a"
+    },
+    {
+      "label": "slice05 frozen current fixtures",
+      "sha256": "e611abb2977c8e397ec5d8e0e00f3f6f09d38e0a6fdc04b42b172db2e9924cfe"
+    }
+  ],
+  "statisticsOwnerSha256": "56759c7e1c23f04d4e87d60e307f11ef6a0676ff7be390e8e9c62b9ec3eaa5db",
+  "version": 1
+}

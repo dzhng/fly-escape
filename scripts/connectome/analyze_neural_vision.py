@@ -87,6 +87,28 @@ def validate(report, freeze_bytes):
     return conditions
 
 
+def paired_cells(differences, indices, multiple_comparisons):
+    """Paired, simultaneous voltage intervals shared by frozen neural protocols."""
+    differences = np.asarray(differences, dtype=float)
+    require(differences.ndim == 2 and differences.shape[1] == len(indices) and
+            differences.shape[0] >= 2 and multiple_comparisons >= len(indices), "Invalid paired panel")
+    count = differences.shape[0]
+    critical = float(t.isf(0.05 / (2 * multiple_comparisons), count - 1))
+    cells = []
+    for j, index in enumerate(indices):
+        values = differences[:, j]
+        zero_variance = bool(np.all(values == values[0]))
+        mean = float(values[0]) if zero_variance else float(np.mean(values))
+        se = 0. if zero_variance else float(np.std(values, ddof=1) / math.sqrt(count))
+        require(math.isfinite(mean) and math.isfinite(se), "Paired statistics overflow")
+        interval = [mean - critical * se, mean + critical * se]
+        require(all(math.isfinite(x) for x in interval), "Interval overflow")
+        cells.append(dict(index=index, seedDifferences=values.tolist(), mean=mean,
+                          standardError=se, zeroVariance=zero_variance, interval=interval,
+                          significant=interval[0] > 0 or interval[1] < 0))
+    return critical, cells
+
+
 def analyze(report, freeze_bytes):
     conditions = validate(report, freeze_bytes)
     comparisons = 7 * len(report["relays"])
@@ -95,19 +117,7 @@ def analyze(report, freeze_bytes):
     for a, b in CONTRASTS:
         differences = np.array([o["relayVoltage"] for o in conditions[a]["observations"]]) - np.array(
             [o["relayVoltage"] for o in conditions[b]["observations"]])
-        cells = []
-        for j, index in enumerate(report["relays"]):
-            values = differences[:, j]
-            zero_variance = bool(np.all(values == values[0]))
-            mean = float(values[0]) if zero_variance else float(np.mean(values))
-            se = 0. if zero_variance else float(np.std(values, ddof=1) / math.sqrt(30))
-            require(math.isfinite(mean) and math.isfinite(se), "Paired statistics overflow")
-            interval = [mean - critical * se, mean + critical * se]
-            require(all(math.isfinite(x) for x in interval), "Interval overflow")
-            significant = interval[0] > 0 or interval[1] < 0
-            cells.append(dict(index=index, seedDifferences=values.tolist(), mean=mean,
-                              standardError=se, zeroVariance=zero_variance, interval=interval,
-                              significant=significant))
+        critical, cells = paired_cells(differences, report["relays"], comparisons)
         contrasts.append(dict(a=a, b=b, passed=any(c["significant"] for c in cells), cells=cells))
 
     gates = []

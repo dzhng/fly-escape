@@ -1,0 +1,689 @@
+{
+  "images": [
+    {
+      "path": "08/diagnostic/figures/downstream-counts.png",
+      "sha256": "73cfcd749e33a13dee2a90afaa221e9c77e4832ece1a9586f1b7bb26516d1d2f",
+      "width": 1800,
+      "height": 1957,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 222.64877007085664,
+      "edgeEnergy": 47.466907587151425
+    },
+    {
+      "path": "08/diagnostic/figures/inputs-01.png",
+      "sha256": "96aec8bd26273ecfef94134b11900a3f1238ab42815822687d04bc66474295b2",
+      "width": 2100,
+      "height": 1020,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 204.35153968253968,
+      "edgeEnergy": 53.7157495769169
+    },
+    {
+      "path": "08/diagnostic/figures/inputs-02.png",
+      "sha256": "340ebe84a3eb3dc4d7821ab815302afda4efa0889f8090fd1e04d2371a71f133",
+      "width": 2100,
+      "height": 1020,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 201.94377450980392,
+      "edgeEnergy": 61.95664240439345
+    },
+    {
+      "path": "08/diagnostic/figures/inputs-03.png",
+      "sha256": "5c519b996bc1ea26476906b1d833e81cbbb60dcf4f3ed84a12a9d3975b5c1362",
+      "width": 2100,
+      "height": 1020,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 217.7973789918768,
+      "edgeEnergy": 38.60974125355442
+    },
+    {
+      "path": "08/diagnostic/figures/inputs-04.png",
+      "sha256": "7bbbc37de90fab883352d4fd3a4be1faebeb2291a05cb9d5066927ee85be969a",
+      "width": 2100,
+      "height": 1020,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 217.63154882119517,
+      "edgeEnergy": 38.93781303100079
+    },
+    {
+      "path": "08/diagnostic/figures/inputs-05.png",
+      "sha256": "4425dd348a1241260cb6c1c00082e2ec6650a2a8d415815a332a046bc7ed8105",
+      "width": 2100,
+      "height": 1020,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 235.5148333840336,
+      "edgeEnergy": 27.327856598495682
+    },
+    {
+      "path": "08/diagnostic/figures/response-01-crop.png",
+      "sha256": "7d4f75d217bb632c8b3a15468c7d04f4d5aed8c89db24ba40bad2f3f2513fc92",
+      "width": 2700,
+      "height": 349,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 239.75499766762178,
+      "edgeEnergy": 76.59385100504406
+    },
+    {
+      "path": "08/diagnostic/figures/response-02-crop.png",
+      "sha256": "9ba24c891775817037f3d2a9f97e59cdbd7d54b98269c0c4a2d02d9fc7c7e3a9",
+      "width": 2700,
+      "height": 347,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 241.57165263571352,
+      "edgeEnergy": 70.6813233924292
+    },
+    {
+      "path": "08/diagnostic/figures/response-03-crop.png",
+      "sha256": "f6b65c1585a9532bed66d63d80dcb637a78ac3b5112f39f513929058e69d914a",
+      "width": 2700,
+      "height": 350,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 241.9543709699471,
+      "edgeEnergy": 68.30387395910438
+    },
+    {
+      "path": "08/diagnostic/figures/response-04-crop.png",
+      "sha256": "2d7155329282f2d3191f3f28cd58676863e52196e14fffead6c89a2cbdafe253",
+      "width": 2700,
+      "height": 347,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 244.70798710940323,
+      "edgeEnergy": 57.79531496859181
+    },
+    {
+      "path": "08/diagnostic/figures/response-05-crop.png",
+      "sha256": "2553a2e62fbb9a56a6b4bb23e6f6e5ac291d95a0b0792f994da209ab397baca7",
+      "width": 2700,
+      "height": 349,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 245.00469461487845,
+      "edgeEnergy": 55.816574923788906
+    },
+    {
+      "path": "08/diagnostic/figures/response-06-crop.png",
+      "sha256": "6d8192f454303b01af39725ceec55ef518e9aeaba2b6edef3a8b621206998f6d",
+      "width": 2700,
+      "height": 350,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 244.94509015089943,
+      "edgeEnergy": 56.51278728819929
+    },
+    {
+      "path": "08/diagnostic/figures/response-07-crop.png",
+      "sha256": "e96a680f84d6cc76ffedea9a93bfb620dde34aac8f1c8d655c8cf0ebf6e9792a",
+      "width": 2700,
+      "height": 350,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 244.71037807322728,
+      "edgeEnergy": 57.84376001331139
+    },
+    {
+      "path": "08/diagnostic/figures/response-08-crop.png",
+      "sha256": "e83612034533bba6008a4a24afbc001026da1c485a66576d49acbdd08f029531",
+      "width": 2700,
+      "height": 349,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 243.41977754282075,
+      "edgeEnergy": 66.10235432183698
+    },
+    {
+      "path": "08/diagnostic/figures/response-09-crop.png",
+      "sha256": "50bf04f871a186c2a344fdee4109a0451bb467d7b53b58e20b22cd1fac38067b",
+      "width": 2700,
+      "height": 347,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 242.7388613824314,
+      "edgeEnergy": 69.86417248328206
+    },
+    {
+      "path": "08/diagnostic/figures/responses.png",
+      "sha256": "fcddb57894dfe96a2dfb84b319024f72b8ffba7dda4b0bb53b2dcdd647b1b641",
+      "width": 2700,
+      "height": 3172,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 242.92801132142392,
+      "edgeEnergy": 66.32068273521155
+    },
+    {
+      "path": "08/confirmation/figures/downstream-counts.png",
+      "sha256": "78f78973ec25ba02b6753c665db614a09f11312e272de423df45472ce5c820b7",
+      "width": 1800,
+      "height": 1957,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 233.42117202532205,
+      "edgeEnergy": 63.544365947203836
+    },
+    {
+      "path": "08/confirmation/figures/inputs-01.png",
+      "sha256": "a97af7fa746ba894cd424638d91be77009b3b1e860145f2f948f08c3f92dbcc7",
+      "width": 2100,
+      "height": 1020,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 204.3391288515406,
+      "edgeEnergy": 53.77825830068718
+    },
+    {
+      "path": "08/confirmation/figures/inputs-02.png",
+      "sha256": "a28cf51fb23461d26235d7c4d37a175594d8ad54cdc894697f828e459a938116",
+      "width": 2100,
+      "height": 1020,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 201.9313660130719,
+      "edgeEnergy": 62.0189991871908
+    },
+    {
+      "path": "08/confirmation/figures/inputs-03.png",
+      "sha256": "2701881965b31ab332af89c3a51b8f66da40825b28be60719b2760ffcf5952b3",
+      "width": 2100,
+      "height": 1020,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 217.78496956143795,
+      "edgeEnergy": 38.67194256385485
+    },
+    {
+      "path": "08/confirmation/figures/inputs-04.png",
+      "sha256": "5175555d850b866f250fa4e7f2709b6c55ccecac9204bc3ce504ef52ce39ccc2",
+      "width": 2100,
+      "height": 1020,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 217.6191323879552,
+      "edgeEnergy": 38.99716421928828
+    },
+    {
+      "path": "08/confirmation/figures/inputs-05.png",
+      "sha256": "41eebbcd0e3b385b4a3b35630cbf4c8bdc32347107f97ce1841f592e423dea08",
+      "width": 2100,
+      "height": 1020,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 235.50242442044816,
+      "edgeEnergy": 27.390248035433473
+    },
+    {
+      "path": "08/confirmation/figures/response-01-crop.png",
+      "sha256": "15a0b76498be1c366a3234e8ec4ddf90bff3b3568b5154423982627014612698",
+      "width": 2700,
+      "height": 349,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 238.41389351841238,
+      "edgeEnergy": 80.4251922558873
+    },
+    {
+      "path": "08/confirmation/figures/response-02-crop.png",
+      "sha256": "ae1c2459b037903d3c6d07651bf0706364eb01160e508469f91e7a4492e6911d",
+      "width": 2700,
+      "height": 347,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 239.01709582559508,
+      "edgeEnergy": 79.23468191425287
+    },
+    {
+      "path": "08/confirmation/figures/response-03-crop.png",
+      "sha256": "38a6a6bad3274fa6b14446b3bf0cbf25ed1f1d730c9af17a697a0f7ccddd1695",
+      "width": 2700,
+      "height": 350,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 240.07011825925923,
+      "edgeEnergy": 73.88595945780531
+    },
+    {
+      "path": "08/confirmation/figures/response-04-crop.png",
+      "sha256": "0407344167bcba5d9a8b0c427ab39fc25d1dcbee09246ffc6958dad61beb5469",
+      "width": 2700,
+      "height": 347,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 244.34878958800297,
+      "edgeEnergy": 60.135777114007745
+    },
+    {
+      "path": "08/confirmation/figures/response-05-crop.png",
+      "sha256": "df8c6cabcac5ed4386c256a4031d466422d39e91732ccd6d6175e7373a3c1758",
+      "width": 2700,
+      "height": 349,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 244.71662643149728,
+      "edgeEnergy": 57.25631374293301
+    },
+    {
+      "path": "08/confirmation/figures/response-06-crop.png",
+      "sha256": "0d04948eab815a384981f01e490e7733bfa0d6eb4ac87e9c638b9ee3cac92c24",
+      "width": 2700,
+      "height": 350,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 244.7537646370369,
+      "edgeEnergy": 57.189300594771744
+    },
+    {
+      "path": "08/confirmation/figures/response-07-crop.png",
+      "sha256": "a39850b8d1643fe2ef2ba6e6c7a10f9140fb9e92177049e9c2ce42688537cbc8",
+      "width": 2700,
+      "height": 350,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 244.72000410455016,
+      "edgeEnergy": 57.3641142027092
+    },
+    {
+      "path": "08/confirmation/figures/response-08-crop.png",
+      "sha256": "7fb1af007dea214b405803c3d755233dcaadb9c28364287183ce39a966c69c98",
+      "width": 2700,
+      "height": 349,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 242.31631064247048,
+      "edgeEnergy": 71.66090201083937
+    },
+    {
+      "path": "08/confirmation/figures/response-09-crop.png",
+      "sha256": "c01501cb1ef1741878ef70b6fab46328444bba3420948ba5c5cee9938e127796",
+      "width": 2700,
+      "height": 347,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 241.25846333397362,
+      "edgeEnergy": 77.23072814976524
+    },
+    {
+      "path": "08/confirmation/figures/responses.png",
+      "sha256": "d3d194a34dc9e52bb26918dc8b473513379d16f13833ff5a8053b1880e33be5b",
+      "width": 2700,
+      "height": 3172,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 241.91563857650326,
+      "edgeEnergy": 70.16769834108729
+    },
+    {
+      "path": "09/diagnostic/figures/color-inputs-enlarged.png",
+      "sha256": "d12bd9d772db8537049a8e5ae257515e5f5141f54663c879b1fa0c9c509ec816",
+      "width": 1500,
+      "height": 2100,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 150.6340982565079,
+      "edgeEnergy": 60.63944097558019
+    },
+    {
+      "path": "09/diagnostic/figures/color-patch-crops.png",
+      "sha256": "443a240eec23a5cccbaf2f178102930a81d813b9d05fe98eeea6ebe1e6615c52",
+      "width": 1800,
+      "height": 1800,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 93.80506609888899,
+      "edgeEnergy": 77.44113455463281
+    },
+    {
+      "path": "09/diagnostic/figures/downstream-counts.png",
+      "sha256": "d14967a695c38c3257a92128e9f12dfa2abbeb7d73891be2b4480a4028a7dfcb",
+      "width": 1800,
+      "height": 435,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 237.6680514206897,
+      "edgeEnergy": 58.89825852460084
+    },
+    {
+      "path": "09/diagnostic/figures/inputs-01.png",
+      "sha256": "6290e02b6734bcf78936175e4e7ac40201e3a24edf54584d4a6fc923e47ab320",
+      "width": 2100,
+      "height": 1020,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 186.49058604519138,
+      "edgeEnergy": 68.14739767071372
+    },
+    {
+      "path": "09/diagnostic/figures/inputs-02.png",
+      "sha256": "588c413c1e90325259090aa90613f34c90395d5b7ca92e2abb251ee4db911206",
+      "width": 2100,
+      "height": 1020,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 196.54708052100844,
+      "edgeEnergy": 58.51409410951176
+    },
+    {
+      "path": "09/diagnostic/figures/inputs-03.png",
+      "sha256": "f9d00313dcb5aa5b08bdd3eaa7638e5b1ae078f67059ce39cacafd995553ea9b",
+      "width": 2100,
+      "height": 1020,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 200.206440611578,
+      "edgeEnergy": 61.60331223155304
+    },
+    {
+      "path": "09/diagnostic/figures/response-01-crop.png",
+      "sha256": "a7993126d73688807d5f64dc09d4ca626ed2e90bfa61c0cf7e47c68b357fda73",
+      "width": 2700,
+      "height": 321,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 244.26944075320182,
+      "edgeEnergy": 59.58238238783591
+    },
+    {
+      "path": "09/diagnostic/figures/response-02-crop.png",
+      "sha256": "d0e902d6ddf6d99ccfa202ed089e5118f105c77137bd2692002e9de898e09a8b",
+      "width": 2700,
+      "height": 318,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 244.09792669135805,
+      "edgeEnergy": 60.118257057753766
+    },
+    {
+      "path": "09/diagnostic/figures/responses.png",
+      "sha256": "597c764736d61c51fa498e90ee0aa9665006b773788f68d97a4323b0e2420aa4",
+      "width": 2700,
+      "height": 705,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 243.3965243803516,
+      "edgeEnergy": 66.09498257424399
+    },
+    {
+      "path": "09/confirmation/figures/color-inputs-enlarged.png",
+      "sha256": "d12bd9d772db8537049a8e5ae257515e5f5141f54663c879b1fa0c9c509ec816",
+      "width": 1500,
+      "height": 2100,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 150.6340982565079,
+      "edgeEnergy": 60.63944097558019
+    },
+    {
+      "path": "09/confirmation/figures/color-patch-crops.png",
+      "sha256": "443a240eec23a5cccbaf2f178102930a81d813b9d05fe98eeea6ebe1e6615c52",
+      "width": 1800,
+      "height": 1800,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 93.80506609888899,
+      "edgeEnergy": 77.44113455463281
+    },
+    {
+      "path": "09/confirmation/figures/downstream-counts.png",
+      "sha256": "8a4037223f9d782d5c2e17e13d19110de895f834c06c784fa30f65987878bad6",
+      "width": 1800,
+      "height": 435,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 239.89197425031932,
+      "edgeEnergy": 78.51193818607062
+    },
+    {
+      "path": "09/confirmation/figures/inputs-01.png",
+      "sha256": "3af49e7e3a184dbe696fe33bb3420d792a4ad5c36756f85ff0a3822d43a46742",
+      "width": 2100,
+      "height": 1020,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 186.47819062035478,
+      "edgeEnergy": 68.20901625416846
+    },
+    {
+      "path": "09/confirmation/figures/inputs-02.png",
+      "sha256": "a06db1f7196a613dff23073597d78265786762fa5aafad6089d7c4b0c3cdd1e0",
+      "width": 2100,
+      "height": 1020,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 196.53467996078436,
+      "edgeEnergy": 58.57592446089942
+    },
+    {
+      "path": "09/confirmation/figures/inputs-03.png",
+      "sha256": "40e7625159e0d0fc242955517e0065cdaa92bffc563e4912881b6ece368b85d6",
+      "width": 2100,
+      "height": 1020,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 200.19403584967324,
+      "edgeEnergy": 61.66535857888619
+    },
+    {
+      "path": "09/confirmation/figures/response-01-crop.png",
+      "sha256": "bc8a21d616f8ea135e99985baa28005f686865ff81c26cfc13144880832fa6b2",
+      "width": 2700,
+      "height": 321,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 243.75459868881973,
+      "edgeEnergy": 62.882644179707114
+    },
+    {
+      "path": "09/confirmation/figures/response-02-crop.png",
+      "sha256": "d857f166bfc6894b9baa1f533b37853ee7985f4711f2684b8e02ba7fd0b143c4",
+      "width": 2700,
+      "height": 318,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 243.21791518448623,
+      "edgeEnergy": 65.32202470104212
+    },
+    {
+      "path": "09/confirmation/figures/responses.png",
+      "sha256": "e204330f3b161b5848138411db79ba53a0c6bc9f8a2b897fbb4bc6bb8baab5bb",
+      "width": 2700,
+      "height": 705,
+      "grayRange": [
+        0.0,
+        254.99999999999997
+      ],
+      "meanGray": 242.75136992960321,
+      "edgeEnergy": 70.03999355896264
+    }
+  ],
+  "comparisons": [
+    {
+      "kind": "same frozen RGB/control panels; phase-title strip excluded, remaining label raster differences retained",
+      "slice": "08",
+      "image": "inputs-01.png",
+      "maximumRgbDifference": 4,
+      "changedPixelFraction": 0.0002900930487137384
+    },
+    {
+      "kind": "same frozen RGB/control panels; phase-title strip excluded, remaining label raster differences retained",
+      "slice": "08",
+      "image": "inputs-02.png",
+      "maximumRgbDifference": 5,
+      "changedPixelFraction": 0.0007416529830322934
+    },
+    {
+      "kind": "same frozen RGB/control panels; phase-title strip excluded, remaining label raster differences retained",
+      "slice": "08",
+      "image": "inputs-03.png",
+      "maximumRgbDifference": 0,
+      "changedPixelFraction": 0.0
+    },
+    {
+      "kind": "same frozen RGB/control panels; phase-title strip excluded, remaining label raster differences retained",
+      "slice": "08",
+      "image": "inputs-04.png",
+      "maximumRgbDifference": 0,
+      "changedPixelFraction": 0.0
+    },
+    {
+      "kind": "same frozen RGB/control panels; phase-title strip excluded, remaining label raster differences retained",
+      "slice": "08",
+      "image": "inputs-05.png",
+      "maximumRgbDifference": 0,
+      "changedPixelFraction": 0.0
+    },
+    {
+      "kind": "six-seed versus thirty-seed response figure",
+      "slice": "08",
+      "image": "responses.png",
+      "maximumRgbDifference": 255,
+      "changedPixelFraction": 0.11006246789033675
+    },
+    {
+      "kind": "same frozen RGB/control panels; phase-title strip excluded, remaining label raster differences retained",
+      "slice": "09",
+      "image": "inputs-01.png",
+      "maximumRgbDifference": 4,
+      "changedPixelFraction": 0.0005741652983032293
+    },
+    {
+      "kind": "same frozen RGB/control panels; phase-title strip excluded, remaining label raster differences retained",
+      "slice": "09",
+      "image": "inputs-02.png",
+      "maximumRgbDifference": 0,
+      "changedPixelFraction": 0.0
+    },
+    {
+      "kind": "same frozen RGB/control panels; phase-title strip excluded, remaining label raster differences retained",
+      "slice": "09",
+      "image": "inputs-03.png",
+      "maximumRgbDifference": 4,
+      "changedPixelFraction": 0.00025451559934318557
+    },
+    {
+      "kind": "identical RGB enlarged panels",
+      "slice": "09",
+      "image": "color-inputs-enlarged.png",
+      "pngBytesEqual": true
+    },
+    {
+      "kind": "identical RGB enlarged panels",
+      "slice": "09",
+      "image": "color-patch-crops.png",
+      "pngBytesEqual": true
+    },
+    {
+      "kind": "six-seed versus thirty-seed response figure",
+      "slice": "09",
+      "image": "responses.png",
+      "maximumRgbDifference": 255,
+      "changedPixelFraction": 0.10408510638297873
+    }
+  ],
+  "scope": "Every generated PNG measured; exact patch colors and unchanged frozen inputs checked. Metrics do not establish biological validity or visual readability."
+}

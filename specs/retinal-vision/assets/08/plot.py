@@ -1,0 +1,168 @@
+"""Render every frozen input and prespecified response contrast; no simulation or endpoint selection."""
+import argparse
+import gzip
+import hashlib
+import json
+import math
+from pathlib import Path
+
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+from matplotlib.collections import PolyCollection
+import numpy as np
+
+ROOT = Path(__file__).resolve().parents[4]
+plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 9, "axes.spines.top": False, "axes.spines.right": False})
+
+
+def read_json(path):
+    data = path.read_bytes()
+    return json.loads(gzip.decompress(data) if path.suffix == ".gz" else data)
+
+
+def render(report_path, analysis_path, output):
+    report = read_json(report_path)
+    analysis = read_json(analysis_path)
+    frozen = report["frozen"]
+    require_hash = lambda raw, expected: hashlib.sha256(raw).hexdigest() == expected
+    map_bytes = (ROOT / "specs/retinal-vision/assets/05/retinal-map.json").read_bytes()
+    assert require_hash(map_bytes, frozen["identities"]["mapHash"])
+    cells = json.loads(map_bytes)["profile"]["layout"]["cells"]
+    centres = np.asarray([[cell["x"], cell["y"]] for cell in cells])
+    angles = np.arange(6) * np.pi / 3 + np.pi / 6
+    vertices = centres[:, None, :] + .56 * np.stack([np.cos(angles), np.sin(angles)], axis=1)[None, :, :]
+    specifications = frozen["pack"]["conditions"]
+    rgb_root = ROOT / "specs/retinal-vision/assets/08"
+    output.mkdir(parents=True, exist_ok=True)
+    paths = []
+
+    def image(spec):
+        raw = (rgb_root / spec["rgbPath"]).read_bytes()
+        assert require_hash(raw, spec["rgbSha256"])
+        linear = np.frombuffer(raw, dtype=np.uint8).reshape(2, len(cells), 3) / 255.
+        return np.where(linear <= .0031308, 12.92 * linear, 1.055 * linear ** (1 / 2.4) - .055)
+
+    def eye(ax, rgb, label):
+        ax.add_collection(PolyCollection(vertices, facecolors=rgb, edgecolors="#444444", linewidths=.08))
+        ax.set_xlim(-16, 16)
+        ax.set_ylim(14.5, -14.5)
+        ax.set_aspect("equal")
+        ax.set_title(label, fontsize=8, pad=2)
+        ax.axis("off")
+
+    for page, offset in enumerate(range(0, len(specifications), 8), start=1):
+        group = specifications[offset:offset + 8]
+        fig = plt.figure(figsize=(14, 6.8), layout="constrained")
+        grid = fig.add_gridspec(2, 4)
+        for j, spec in enumerate(group):
+            sub = grid[j // 4, j % 4].subgridspec(2, 2, height_ratios=[.24, 1])
+            title = fig.add_subplot(sub[0, :]); title.axis("off")
+            flags = "full RGB adapter" if spec["chromatic"] else "Tm20 off"
+            if spec["silenceInputs"]: flags += ", inputs silenced"
+            if spec["zeroCurrent"]: flags += ", zero current"
+            if spec["permuteRows"]: flags += ", row permutation"
+            title.text(.5, .65, spec["name"], ha="center", va="center", fontsize=9, weight="bold")
+            title.text(.5, .05, flags, ha="center", va="center", fontsize=7)
+            colors = image(spec)
+            for side in range(2): eye(fig.add_subplot(sub[1, side]), colors[side], ["Left eye", "Right eye"][side])
+        fig.suptitle(f"Slice {frozen['slice']} — {frozen['phase']} inputs, page {page}\nExact linear RGB8 displayed through sRGB transfer; each hex is one sample. Image axes: right/down.\nFlags describe adapter or silencing controls applied after the stored RGB8.", fontsize=12)
+        path = output / f"inputs-{page:02}.png"; fig.savefig(path, dpi=150); paths.append(path.name); plt.close(fig)
+
+    contrasts = analysis["contrasts"]
+    by_name = {c["name"]: c for c in report["conditions"]}
+    fig, axes = plt.subplots(len(contrasts), 3, figsize=(18, 2.35 * len(contrasts)), squeeze=False, layout="constrained")
+    for row, contrast in enumerate(contrasts):
+        current_ax = axes[row, 0]
+        a, b = by_name[contrast["a"]], by_name[contrast["b"]]
+        current_difference = np.asarray(a["effectiveCurrentByEntry"]) - np.asarray(b["effectiveCurrentByEntry"])
+        current_ax.scatter(np.arange(len(current_difference)), current_difference,
+                           c=np.where(np.asarray(frozen["currentEntryChannels"]) == 0, "#555555", "#297699"), s=5)
+        current_ax.axhline(0, color="#404040", linewidth=.7)
+        current_ax.set_title(f"{contrast['a']} − {contrast['b']}\nTotal dose A/B: {a['effective']['total']:.5g} / {b['effective']['total']:.5g}", fontsize=9)
+        current_ax.set_xlabel("Frozen injected-entry order (all 1,176 cells)")
+        current_ax.set_ylabel("Injected current difference")
+        current_ax.grid(axis="y", alpha=.2)
+        for col, (field, ylabel) in enumerate([("cells", "Mean voltage difference"), ("spikeCells", "Spike-count difference")]):
+            ax = axes[row, col + 1]
+            data = contrast[field]
+            means = np.asarray([cell["mean"] for cell in data])
+            intervals = np.asarray([cell["interval"] for cell in data])
+            ax.vlines(np.arange(len(data)), intervals[:, 0], intervals[:, 1], colors="#92a4b0", linewidth=.6)
+            accepted = np.asarray([cell.get("responseAboveFloor", cell["significant"]) for cell in data])
+            ax.scatter(np.arange(len(data)), means, c=np.where(accepted, "#ae4c15", "#17617a"), s=7, zorder=3)
+            ax.axhline(0, color="#404040", linewidth=.7)
+            ax.set_xlim(-5, len(data) + 5)
+            ax.set_title(f"{contrast['a']} − {contrast['b']}\n{int(accepted.sum())}/{len(data)} corrected endpoints", fontsize=9)
+            ax.set_xlabel("Frozen endpoint order (all 438 native indices)")
+            ax.set_ylabel(ylabel)
+            ax.grid(axis="y", alpha=.2)
+    fig.suptitle(f"Slice {frozen['slice']} — {frozen['phase']}, all preregistered contrasts\nCurrent: Tm2 gray, Tm20 blue. Neural means with simultaneous 95% intervals; orange marks corrected responses. All injected/motor cells excluded from neural endpoints.", fontsize=12)
+    path = output / "responses.png"; fig.savefig(path, dpi=150); paths.append(path.name)
+    fig.canvas.draw()
+    # Per-row crops retain every endpoint/interval at readable scale, including failed contrasts.
+    from PIL import Image
+    full = Image.open(path)
+    width, height = full.size
+    for row in range(len(contrasts)):
+        boxes = [ax.get_tightbbox(fig.canvas.get_renderer()).transformed(fig.dpi_scale_trans.inverted()) for ax in axes[row]]
+        bottom = min(box.y0 for box in boxes); top = max(box.y1 for box in boxes)
+        crop = full.crop((0, max(0, height - math.ceil(top * 150) - 8), width, min(height, height - math.floor(bottom * 150) + 8)))
+        name = f"response-{row + 1:02}-crop.png"; crop.save(output / name); paths.append(name)
+    plt.close(fig)
+
+    fig, axes = plt.subplots(len(contrasts), 1, figsize=(12, 1.45 * len(contrasts)), squeeze=False, layout="constrained")
+    for row, contrast in enumerate(contrasts):
+        ax = axes[row, 0]
+        differences = contrast["downstreamSpikeDifferences"]
+        ax.bar(range(len(differences)), differences, color="#247482")
+        ax.axhline(0, color="#333333", linewidth=.7)
+        ax.set_xticks(range(len(differences)), analysis["seeds"], fontsize=7)
+        ax.set_title(f"{contrast['a']} − {contrast['b']}: {contrast['downstreamCellCountWithDifferentAggregatedSpikes']} cells have different aggregate counts", fontsize=9)
+        ax.set_ylabel("Δ spikes")
+    axes[-1, 0].set_xlabel("Prespecified paired seed")
+    fig.suptitle(f"All 40,944 reachable non-input/non-motor neurons — descriptive spike totals\nSlice {frozen['slice']} {frozen['phase']}; signed count differences do not replace the corrected endpoint tests.", fontsize=12)
+    path = output / "downstream-counts.png"; fig.savefig(path, dpi=150); paths.append(path.name); plt.close(fig)
+
+    if frozen["slice"] == "09":
+        pairs = [s for s in specifications if s["name"] in ["color-1-a", "color-1-b", "color-2-a", "color-2-b"]]
+        fig, axes = plt.subplots(4, 2, figsize=(10, 14), layout="constrained")
+        for row, spec in enumerate(pairs):
+            colors = image(spec)
+            for side in range(2): eye(axes[row, side], colors[side], spec["name"] + " / " + ["Left", "Right"][side])
+        fig.suptitle("Exact matched-dose color inputs — enlarged retinal samples\nA=[100,100,100], B=[35,117,123]; second level doubles each byte. Colors shown after display transfer.", fontsize=12)
+        path = output / "color-inputs-enlarged.png"; fig.savefig(path, dpi=150); paths.append(path.name); plt.close(fig)
+    if frozen["slice"] == "09":
+        selected = [s for s in specifications if s["name"] in ["color-1-a", "color-1-b", "color-2-a", "color-2-b"]]
+        spots = [(0, 163), (0, 562), (1, 170), (1, 567)]
+        fig, axes = plt.subplots(4, 4, figsize=(12, 12), layout="constrained")
+        checks = []
+        for row, spec in enumerate(selected):
+            colors = image(spec)
+            raw = np.frombuffer((rgb_root / spec["rgbPath"]).read_bytes(), dtype=np.uint8).reshape(2, len(cells), 3)
+            for column, (side, sample) in enumerate(spots):
+                ax = axes[row, column]
+                eye(ax, colors[side], f"{spec['name']} / {['L','R'][side]}{sample}\nlinear RGB8 {raw[side,sample].tolist()}")
+                x, y = centres[sample]; ax.set_xlim(x - 1.65, x + 1.65); ax.set_ylim(y + 1.65, y - 1.65)
+                checks.append((ax, x, y, np.rint(colors[side, sample] * 255).astype(int).tolist()))
+        fig.suptitle("All four matched-color locations, both intensities and swaps — tight sample crops\nCentral hex is the supplied colored sample; surrounding black samples are retained for context.", fontsize=12)
+        path = output / "color-patch-crops.png"; fig.savefig(path, dpi=150); paths.append(path.name); fig.canvas.draw()
+        pixels = np.asarray(Image.open(path).convert("RGB"))
+        observations = []
+        for ax, x, y, expected in checks:
+            px, py = ax.transData.transform((x,y)) / fig.dpi * 150
+            actual = pixels[pixels.shape[0] - 1 - round(py), round(px)].astype(int).tolist()
+            error = max(abs(a-b) for a,b in zip(actual,expected))
+            assert error <= 1, (actual, expected)
+            observations.append(dict(expectedDisplayRgb8=expected, actualDisplayRgb8=actual, maximumError=error))
+        (output / "patch-pixel-checks.json").write_text(json.dumps(observations, indent=2) + "\n")
+        plt.close(fig)
+    (output / "figures.json").write_text(json.dumps(dict(files=paths, report=report_path.name, analysis=analysis_path.name,
+        matplotlib=matplotlib.__version__, scope="Every frozen condition and primary contrast included; no plot changes experimental gates."), indent=2) + "\n")
+    print(json.dumps(dict(figures=len(paths), output=str(output))))
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("report", type=Path); parser.add_argument("analysis", type=Path); parser.add_argument("output", type=Path)
+    args = parser.parse_args(); render(args.report, args.analysis, args.output)
