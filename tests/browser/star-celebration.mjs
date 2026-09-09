@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { mkdir } from 'node:fs/promises';
 import { chromium } from 'playwright';
 const browser = await chromium.launch({channel: 'chrome', headless: true});
-const shots = 'specs/done/help-the-fly-escape/assets/evidence/35-star-celebration';
+const shots = process.env.STAR_EVIDENCE ?? '/tmp/fly-star-celebration';
 await mkdir(shots, {recursive: true});
 try {
   const page = await browser.newPage({viewport: {width: 1440, height: 900}});

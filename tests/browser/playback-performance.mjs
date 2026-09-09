@@ -4,7 +4,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { chromium } from "playwright";
 const base = process.env.BRAIN_URL ?? "http://127.0.0.1:5184";
 const output = new URL(
-  process.env.PERFORMANCE_OUTPUT ?? "../../specs/done/help-the-fly-escape/assets/evidence/05/full-playback/",
+  process.env.PERFORMANCE_OUTPUT ?? "/tmp/fly-playback-performance/",
   import.meta.url,
 );
 await mkdir(output, { recursive: true });

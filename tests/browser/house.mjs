@@ -2,7 +2,7 @@ import { zoomOut } from "./zoom-out.mjs";
 import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
 import { chromium } from "playwright";
-const output = new URL(process.env.HOUSE_OUTPUT ?? "../../specs/done/help-the-fly-escape/assets/evidence/10/selected-visibility/", import.meta.url);
+const output = new URL(process.env.HOUSE_OUTPUT ?? "/tmp/fly-house/", import.meta.url);
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ headless: true, channel: "chrome" });
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });

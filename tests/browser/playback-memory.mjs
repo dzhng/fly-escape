@@ -6,7 +6,7 @@ const base = process.env.BRAIN_URL ?? "http://127.0.0.1:5184";
 const baseline = new URL("../../specs/done/help-the-fly-escape/assets/evidence/05/", import.meta.url);
 const output = process.env.MEMORY_OUTPUT
   ? pathToFileURL(process.env.MEMORY_OUTPUT + "/")
-  : baseline;
+  : new URL("/tmp/fly-playback-memory/", import.meta.url);
 const browser = await chromium.launch({
   headless: true,
   channel: process.env.BROWSER_CHANNEL ?? "chrome",

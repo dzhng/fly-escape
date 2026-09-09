@@ -5,7 +5,7 @@ import openWindow from '../../apps/web/src/levels/open-window.ts';
 import turnTheCorner from '../../apps/web/src/levels/turn-the-corner.ts';
 
 const base = process.env.CAMPAIGN_URL ?? 'http://127.0.0.1:5194';
-const output = process.env.CAMPAIGN_OUTPUT ?? 'specs/done/campaign-vision/assets/browser';
+const output = process.env.CAMPAIGN_OUTPUT ?? '/tmp/fly-campaign-vision';
 await mkdir(output, { recursive: true });
 const rooms = [['Open Window', openWindow], ['Turn the Corner', turnTheCorner]];
 const expected = new Map();

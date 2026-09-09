@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
 import { chromium, firefox, webkit } from "playwright";
 
-const output = process.env.PLATFORM_OUTPUT ?? "specs/done/help-the-fly-escape/assets/evidence/17/platforms";
+const output = process.env.PLATFORM_OUTPUT ?? "/tmp/fly-platforms/";
 const base = process.env.BRAIN_URL ?? "http://127.0.0.1:5184";
 const engines = { chromium, firefox, webkit };
 await mkdir(output, { recursive: true });

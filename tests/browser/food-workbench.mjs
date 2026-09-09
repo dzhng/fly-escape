@@ -3,7 +3,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import assert from "node:assert/strict";
 const output =
   process.env.FOOD_WORKBENCH_EVIDENCE ??
-  "specs/done/help-the-fly-escape/assets/evidence/14/food/workbench";
+  "/tmp/fly-food-workbench/";
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ channel: "chrome", headless: true });
 try {

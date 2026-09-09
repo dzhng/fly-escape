@@ -2,7 +2,7 @@ import { chromium } from "playwright";
 import { mkdir, writeFile } from "node:fs/promises";
 import assert from "node:assert/strict";
 const destination =
-  process.env.MOTION_EVIDENCE_DIR ?? "specs/done/help-the-fly-escape/assets/evidence/08/browser";
+  process.env.MOTION_EVIDENCE_DIR ?? "/tmp/fly-motion/";
 await mkdir(destination, { recursive: true });
 const browser = await chromium.launch({ channel: "chrome", headless: true });
 const page = await browser.newPage({

@@ -5,7 +5,7 @@ import { pathToFileURL } from "node:url";
 const base = process.env.BRAIN_URL ?? "http://127.0.0.1:5184";
 const output = process.env.SCIENCE_OUTPUT
   ? pathToFileURL(process.env.SCIENCE_OUTPUT + "/")
-  : new URL("../../specs/done/help-the-fly-escape/assets/evidence/13/", import.meta.url);
+  : new URL("/tmp/fly-science-panel/", import.meta.url);
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ channel: "chrome", headless: true });
 const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });

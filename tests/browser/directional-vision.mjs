@@ -11,7 +11,7 @@ const base = process.env.BRAIN_URL ?? 'http://127.0.0.1:5173';
 const production = process.env.VISION_PRODUCTION_URL ?? base;
 const visionGain = Number(process.env.VISION_CUE_GAIN ?? 0);
 assert.ok(Number.isFinite(visionGain) && visionGain >= 0 && visionGain <= 3);
-const output = process.env.VISION_OUTPUT ?? 'specs/done/directional-vision/assets/browser';
+const output = process.env.VISION_OUTPUT ?? '/tmp/fly-directional-vision/';
 await mkdir(output, { recursive: true });
 const fixture = JSON.parse(execFileSync('cargo', ['run', '-q', '-p', 'sim', '--example', 'record_fixture'], { encoding: 'utf8' }));
 const browser = await chromium.launch({ channel: 'chrome', headless: true });

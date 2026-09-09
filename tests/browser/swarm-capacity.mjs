@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { chromium } from "playwright";
 const base = process.env.BRAIN_URL ?? "http://127.0.0.1:5173";
 const browser = await chromium.launch({
@@ -77,7 +77,7 @@ try {
   assert.equal(result.shortHorizon.spec.flyCount, 100);
   assert.equal(result.shortHorizon.result.outcomes.timedOut, 100);
   assert.ok(result.shortHorizon.archiveOwnedBytes <= result.shortHorizon.archiveBoundBytes);
-  const output = new URL("../../specs/done/help-the-fly-escape/assets/evidence/05/", import.meta.url);
+  const output = pathToFileURL((process.env.CAPACITY_OUTPUT ?? "/tmp/fly-swarm-capacity") + "/");
   await mkdir(output, { recursive: true });
   await writeFile(
     new URL("browser-capacity.json", output),
