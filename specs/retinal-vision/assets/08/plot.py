@@ -113,7 +113,7 @@ def render(report_path, analysis_path, output):
             ax.set_xlabel("Frozen endpoint order (all 438 native indices)")
             ax.set_ylabel(ylabel)
             ax.grid(axis="y", alpha=.2)
-            ax.text(.01, .98, "95% simultaneous CI; orange = corrected", transform=ax.transAxes, va="top", fontsize=6)
+            ax.text(.01, .98, "95% simultaneous CI; orange = significant after multiplicity correction", transform=ax.transAxes, va="top", fontsize=5.5)
             passing = np.flatnonzero(accepted)
             if len(passing):
                 detail.errorbar(np.arange(len(passing)), means[passing],
@@ -152,8 +152,10 @@ def render(report_path, analysis_path, output):
         differences = contrast["downstreamSpikeDifferences"]
         ax.bar(range(len(differences)), differences, color="#247482")
         ax.axhline(0, color="#333333", linewidth=.7)
+        if min(differences) < 0 < max(differences):
+            ax.set_yticks([min(differences), 0, max(differences)])
         ax.set_xticks(range(len(differences)), analysis["seeds"], fontsize=7)
-        ax.set_title(f"{contrast['a']} − {contrast['b']}: {contrast['downstreamCellCountWithDifferentAggregatedSpikes']} cells have different aggregate counts", fontsize=9)
+        ax.set_title(f"{contrast['a']} − {contrast['b']}: {contrast['downstreamCellCountWithDifferentAggregatedSpikes']} cells differ in counts summed across all seeds", fontsize=9)
         ax.set_ylabel("Δ spikes")
     axes[-1, 0].set_xlabel("Prespecified paired seed")
     fig.suptitle(f"All 40,944 reachable non-input/non-motor neurons — descriptive spike totals\nSlice {frozen['slice']} {frozen['phase']}; Rows use independent y scales; signed differences do not replace corrected endpoint tests.\nEach bar sums 40,944 cells for ONE paired seed.\n{timing}", fontsize=10)
