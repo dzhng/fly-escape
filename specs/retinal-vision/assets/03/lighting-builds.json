@@ -1,0 +1,96 @@
+{
+  "baselineCommit": "3b8a419b187341edd8824cd5543f0e433c82ba4f",
+  "note": "Reference is the retained production build already verified byte-identical in the shared-world pass; candidate is the shared-lighting worktree production build.",
+  "builds": {
+    "reference": {
+      "entry": "/assets/index-BAQCtSU4.js",
+      "entrySha256": "ce9126f99103666fbc4425873d37791f4072bdcbc3ac0fcb77448a48323b41cc"
+    },
+    "candidate": {
+      "entry": "/assets/index-C-2KI5BJ.js",
+      "entrySha256": "41f88702dca26b9a338946456baaa5da386c5f4bbeef19478592aeefa24c490a"
+    }
+  },
+  "reusedPngs": [
+    {
+      "path": "world-reference/open-window-orbit.png",
+      "sha256": "b950e4e82d37ff196d1551a4ba309a3190c33f89d250b698aa90ffaa72689516"
+    },
+    {
+      "path": "world-reference/open-window.png",
+      "sha256": "8309cdce1d21cd7a111fcf68cd40044f07e7cd85df35bc1d0a5b3bec84a3cf43"
+    },
+    {
+      "path": "world-reference/turn-the-corner-orbit.png",
+      "sha256": "0beb6cd7eeef27272ce57bb1ac3a5c6f63c10eaa36259f81a94d850b619e0097"
+    },
+    {
+      "path": "world-reference/turn-the-corner.png",
+      "sha256": "0d726e8093220ca2addc23bfbe58cb3740a4aaa2c1d978d4001f85b75321010e"
+    },
+    {
+      "path": "world-candidate/open-window-orbit.png",
+      "sha256": "b950e4e82d37ff196d1551a4ba309a3190c33f89d250b698aa90ffaa72689516"
+    },
+    {
+      "path": "world-candidate/open-window.png",
+      "sha256": "8309cdce1d21cd7a111fcf68cd40044f07e7cd85df35bc1d0a5b3bec84a3cf43"
+    },
+    {
+      "path": "world-candidate/turn-the-corner-orbit.png",
+      "sha256": "0beb6cd7eeef27272ce57bb1ac3a5c6f63c10eaa36259f81a94d850b619e0097"
+    },
+    {
+      "path": "world-candidate/turn-the-corner.png",
+      "sha256": "0d726e8093220ca2addc23bfbe58cb3740a4aaa2c1d978d4001f85b75321010e"
+    },
+    {
+      "path": "world-comparison/open-window-candidate-crop.png",
+      "sha256": "90dbf6d88987e007f3cd843b5ae15c1761f65d932ab2c3cbdae74c3f34916c8a"
+    },
+    {
+      "path": "world-comparison/open-window-orbit-candidate-crop.png",
+      "sha256": "908209aebafd2a1f102a0cddbc24858c7d31aa7dd9f15fb65a640328f4fca766"
+    },
+    {
+      "path": "world-comparison/open-window-orbit-reference-crop.png",
+      "sha256": "908209aebafd2a1f102a0cddbc24858c7d31aa7dd9f15fb65a640328f4fca766"
+    },
+    {
+      "path": "world-comparison/open-window-orbit.png",
+      "sha256": "a1e3c0eacab61c2328ac806a7d4576c1da658f9fc4d7d07a03d931454746457a"
+    },
+    {
+      "path": "world-comparison/open-window-reference-crop.png",
+      "sha256": "90dbf6d88987e007f3cd843b5ae15c1761f65d932ab2c3cbdae74c3f34916c8a"
+    },
+    {
+      "path": "world-comparison/open-window.png",
+      "sha256": "a1e3c0eacab61c2328ac806a7d4576c1da658f9fc4d7d07a03d931454746457a"
+    },
+    {
+      "path": "world-comparison/turn-the-corner-candidate-crop.png",
+      "sha256": "27c09de695e8c769e362b310f895b2434252b3a1d1752b293a362d18e49e3685"
+    },
+    {
+      "path": "world-comparison/turn-the-corner-orbit-candidate-crop.png",
+      "sha256": "0b647266cc59670eed007b9eac17356733665be77137cc6de64db61e0db60d40"
+    },
+    {
+      "path": "world-comparison/turn-the-corner-orbit-reference-crop.png",
+      "sha256": "0b647266cc59670eed007b9eac17356733665be77137cc6de64db61e0db60d40"
+    },
+    {
+      "path": "world-comparison/turn-the-corner-orbit.png",
+      "sha256": "a1e3c0eacab61c2328ac806a7d4576c1da658f9fc4d7d07a03d931454746457a"
+    },
+    {
+      "path": "world-comparison/turn-the-corner-reference-crop.png",
+      "sha256": "27c09de695e8c769e362b310f895b2434252b3a1d1752b293a362d18e49e3685"
+    },
+    {
+      "path": "world-comparison/turn-the-corner.png",
+      "sha256": "a1e3c0eacab61c2328ac806a7d4576c1da658f9fc4d7d07a03d931454746457a"
+    }
+  ]
+}

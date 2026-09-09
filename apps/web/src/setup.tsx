@@ -1,5 +1,5 @@
 import { objectThumbnails } from "../../../assets/tools/thumbnails";
-import type { RoomDetail, RoomFloor } from "@fly-escape/game-renderer";
+import type { RoomDetail, RoomFloor, WorldLightingAuthoring } from "@fly-escape/game-renderer";
 import { loadWorldAssets } from "./world-assets";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -51,6 +51,7 @@ export function SetupGame({
   content: {
     roomDetails?: readonly RoomDetail[];
     roomFloors?: readonly RoomFloor[];
+    lighting?: WorldLightingAuthoring;
     level: LevelDef;
     tuning: AttemptTuning;
     catalog: ToolDef[];
@@ -116,7 +117,7 @@ export function SetupGame({
   useEffect(() => {
     if (input || !container.current) return;
     if (!world.current) {
-      const view = new WorldView(container.current, content.level.geometry, FLY_COUNT, content.roomFloors);
+      const view = new WorldView(container.current, content.level.geometry, FLY_COUNT, content.roomFloors, content.lighting);
       world.current = view;
       worldAssets.current = loadWorldAssets(view, () => world.current === view, content.roomDetails);
       // Playback retries failed preparation through the sampler's shared loader.
@@ -248,6 +249,7 @@ export function SetupGame({
         catalog={content.catalog}
         roomDetails={content.roomDetails}
         roomFloors={content.roomFloors}
+        lighting={content.lighting}
         onReturn={() => {
           client.cancel();
           setInput(undefined);

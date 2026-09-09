@@ -4,7 +4,7 @@ import { StarCelebration, WatchedStars } from "./star-celebration";
 import { Stars } from "./stars";
 import { DepartureTail } from "./departure-tail";
 import type { PreviewUpdate } from "./fly-preview";
-import type { RoomDetail, RoomFloor } from "@fly-escape/game-renderer";
+import type { RoomDetail, RoomFloor, WorldLightingAuthoring } from "@fly-escape/game-renderer";
 import { loadWorldAssets } from "./world-assets";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -152,6 +152,7 @@ export function AttemptPlayback({
   catalog = [],
   roomDetails,
   roomFloors,
+  lighting,
   onReturn,
   onStars,
 }: {
@@ -161,6 +162,7 @@ export function AttemptPlayback({
   catalog?: ToolDef[];
   roomDetails?: readonly RoomDetail[];
   roomFloors?: readonly RoomFloor[];
+  lighting?: WorldLightingAuthoring;
   onReturn?: () => void;
   onStars?: (stars: number) => void;
 }) {
@@ -266,6 +268,7 @@ export function AttemptPlayback({
           reply.info.level.geometry,
           reply.info.spec.flyCount,
           roomFloors,
+          lighting,
         );
         scene.current.attach(container.current!);
         scene.current.setContactGeometry(

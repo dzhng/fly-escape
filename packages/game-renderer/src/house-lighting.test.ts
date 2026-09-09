@@ -4,7 +4,7 @@ import { exitEmitter, sconceEmitter, type HouseLightMount } from "@fly-escape/si
 import { RoomDetails } from "./room-details";
 import { ExitGlow } from "./exit-glow";
 
-function expectEmitter(light: THREE.PointLight, emitter: ReturnType<typeof sconceEmitter>) {
+function expectEmitter(light: THREE.PointLight, emitter: ReturnType<typeof exitEmitter>) {
   const position = light.getWorldPosition(new THREE.Vector3());
   expect(position.x).toBeCloseTo(emitter.source.position.x, 12);
   expect(position.z).toBeCloseTo(emitter.source.position.z, 12);
@@ -14,12 +14,15 @@ function expectEmitter(light: THREE.PointLight, emitter: ReturnType<typeof sconc
 }
 
 test("moving and rotating wall fixtures keeps rendered lights on their sensory sources", () => {
-  for (const quarterTurns of [0, 1, 2, 3] as const) {
+  for (const presentation of [true, false]) for (const quarterTurns of [0, 1, 2, 3] as const) {
     const mount: HouseLightMount = { position: [2 + quarterTurns, 1.1, 4 - quarterTurns], quarterTurns };
-    const details = new RoomDetails([{ ...mount, kind: "sconce" }], new Map([["sconce", new THREE.Group()]]));
+    const details = new RoomDetails([{ ...mount, kind: "sconce" }], new Map([["sconce", new THREE.Group()]]), presentation);
     details.root.updateMatrixWorld(true);
     const light = details.root.children.find(object => object instanceof THREE.PointLight) as THREE.PointLight;
     expectEmitter(light, sconceEmitter(mount));
+    expect(light.color.getHexString()).toBe("ffca88");
+    expect(light.decay).toBe(2);
+    details.dispose();
   }
 });
 

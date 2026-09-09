@@ -12,6 +12,8 @@ export type { PlacementKind } from "./placement-models";
 import { FlyTrails, type TrailPoint } from "./trails";
 export { recordedTrails } from "./trails";
 import { cutAwayOccluders, type HouseAsset } from "./house";
+import { defaultWorldLighting, type WorldLightingAuthoring } from "./world-lighting";
+export { authoredWorldLights, defaultWorldLighting, type WorldLightingAuthoring } from "./world-lighting";
 import { WorldScene } from "./world-scene";
 export { WorldScene, loadWorldSceneAssets } from "./world-scene";
 export type { WorldLight } from "./world-scene";
@@ -87,7 +89,6 @@ export class WorldView {
   readonly world: WorldScene;
   private readonly exterior: ExteriorGrass;
   private readonly sunlight = sunGlow();
-  private readonly sun = new THREE.DirectionalLight("#ffe0a0", 3.4);
   private readonly renderer: THREE.WebGLRenderer;
   private readonly flies: THREE.Object3D[] = [createPlaceholderFly()];
   private motions: FlyMotion[] = [];
@@ -122,6 +123,7 @@ export class WorldView {
     geometry: Geometry,
     flyCount = 1,
     roomFloors: readonly RoomFloor[] = [],
+    lighting: WorldLightingAuthoring = defaultWorldLighting,
   ) {
     if (!Number.isInteger(flyCount) || flyCount < 1 || flyCount > 100)
       throw new Error("Scene requires 1..100 flies");
@@ -131,7 +133,7 @@ export class WorldView {
     this.flyWallBounds.push(...this.flies.map(() => new THREE.Sphere()));
     this.outcomes = new FlyOutcomes(flyCount);
     this.scene.add(this.outcomes.root);
-    this.world = new WorldScene({ geometry, roomFloors, mode: "presentation" });
+    this.world = new WorldScene({ geometry, roomFloors, mode: "presentation", lighting });
     this.exterior = new ExteriorGrass(geometry);
     this.scene.add(this.exterior.root);
     this.bounds = new THREE.Box3();
@@ -170,7 +172,6 @@ export class WorldView {
     this.navigation = new WorldCamera(this.bounds, modelBounds.getSize(new THREE.Vector3()).y);
     this.trails = new FlyTrails(flyCount, this.navigation);
     this.scene.add(this.trails.mesh);
-    const center = this.bounds.getCenter(new THREE.Vector3());
     const radius = this.bounds.getSize(new THREE.Vector3()).length() / 2;
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.localClippingEnabled = true;
@@ -192,21 +193,10 @@ export class WorldView {
     );
     container.appendChild(canvas);
 
-    this.scene.add(new THREE.HemisphereLight("#fff0cb", "#718d80", 2.5));
-    const sun = this.sun;
-    sun.position.copy(center).add(new THREE.Vector3(radius, radius * 2, radius));
-    sun.target.position.copy(center);
-    sun.castShadow = true;
-    sun.shadow.mapSize.set(1024, 1024);
-    sun.shadow.camera.left = sun.shadow.camera.bottom = -radius * 1.5;
-    sun.shadow.camera.right = sun.shadow.camera.top = radius * 1.5;
-    sun.shadow.camera.near = 1;
-    sun.shadow.camera.far = radius * 5;
-    sun.shadow.normalBias = 0.025;
-    sun.shadow.bias = -0.001;
+    this.sunlight.position.copy(this.world.sun!.position);
+    this.sunlight.scale.setScalar(radius * 3);
+    this.exterior.setSunDirection({ x: lighting.daylightDirection[0], z: lighting.daylightDirection[1] });
     this.scene.add(
-      sun,
-      sun.target,
       this.sunlight,
       this.world.root,
       ...this.flies,
@@ -365,13 +355,6 @@ export class WorldView {
   }
 
   setContactGeometry(food: ContactSurface[], hazards: ContactRegion[], exit: ExitOpening, diagnostic = true): void {
-    const center = this.bounds.getCenter(new THREE.Vector3());
-    const radius = this.bounds.getSize(new THREE.Vector3()).length() / 2;
-    this.sun.position.set(center.x + exit.outward.x * radius * 1.5, radius * 2,
-      center.z + exit.outward.z * radius * 1.5);
-    this.sunlight.position.copy(this.sun.position);
-    this.sunlight.scale.setScalar(radius * 3);
-    this.exterior.setSunDirection(exit.outward);
     this.contactCenter.visible = diagnostic && food.length > 0;
     for (const child of [...this.contactMarkers.children]) {
       if (child instanceof THREE.Mesh) {

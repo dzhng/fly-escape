@@ -5,6 +5,7 @@ import { loadHouseAssets } from "./house-assets";
 import { PlacementModels } from "./placement-models";
 import { loadPlacementAssets } from "./placement-assets";
 import { loadRoomDetails, type RoomDetail, type RoomDetails } from "./room-details";
+import { authoredWorldLights, type WorldLightingAuthoring } from "./world-lighting";
 import { disposeObjectResources } from "./resources";
 
 type LightColor = string | number;
@@ -13,7 +14,7 @@ type Position = readonly [number, number, number];
 export type WorldLight =
   | { kind: "hemisphere"; sky: LightColor; ground: LightColor; intensity: number }
   | { kind: "point"; color: LightColor; intensity: number; position: Position; distance: number; decay: number; castShadow: boolean }
-  | { kind: "directional"; color: LightColor; intensity: number; position: Position; target: Position; castShadow: boolean };
+  | { kind: "directional"; color: LightColor; intensity: number; position: Position; target: Position; castShadow: boolean; shadow?: { mapSize: number; extent: number; near: number; far: number; normalBias: number; bias: number } };
 
 /** Each instance owns its mutable world and resources; only authoring and construction are shared. */
 export class WorldScene {
@@ -22,18 +23,22 @@ export class WorldScene {
   readonly placements: PlacementModels;
   readonly mode: "presentation" | "physical";
   details?: RoomDetails;
+  readonly sun?: THREE.DirectionalLight;
 
   constructor(options: {
     geometry: Geometry;
     roomFloors?: readonly RoomFloor[];
     mode: "presentation" | "physical";
+    lighting?: WorldLightingAuthoring;
     lights?: readonly WorldLight[];
   }) {
+    if (options.lighting && options.lights) throw new Error("Choose authored lighting or explicit lights");
+    const lights = options.lights ?? (options.lighting ? authoredWorldLights(options.geometry, options.lighting) : []);
     this.mode = options.mode;
     this.placements = new PlacementModels(this.mode === "presentation");
     this.house = new HouseGeometry(options.geometry, options.roomFloors, this.mode === "presentation");
     this.root.add(this.house.root, this.placements.root);
-    for (const source of options.lights ?? []) {
+    for (const source of lights) {
       if (source.kind === "hemisphere") {
         this.root.add(new THREE.HemisphereLight(source.sky, source.ground, source.intensity));
       } else if (source.kind === "point") {
@@ -46,6 +51,18 @@ export class WorldScene {
         light.position.fromArray(source.position);
         light.target.position.fromArray(source.target);
         light.castShadow = source.castShadow;
+        if (source.shadow) {
+          const shadow = source.shadow;
+          light.shadow.mapSize.set(shadow.mapSize, shadow.mapSize);
+          light.shadow.camera.left = light.shadow.camera.bottom = -shadow.extent;
+          light.shadow.camera.right = light.shadow.camera.top = shadow.extent;
+          light.shadow.camera.near = shadow.near;
+          light.shadow.camera.far = shadow.far;
+          light.shadow.normalBias = shadow.normalBias;
+          light.shadow.bias = shadow.bias;
+          light.shadow.camera.updateProjectionMatrix();
+        }
+        this.sun ??= light;
         this.root.add(light, light.target);
       }
     }

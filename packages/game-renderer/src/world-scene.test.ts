@@ -62,7 +62,8 @@ test("physical authored world keeps opaque geometry when the presentation camera
     expect(doorwayMaterials(presentation).every(material => material.opacity === .28 && !material.depthWrite)).toBe(true);
     const physicalLights: THREE.Light[] = [];
     physical.root.traverse(object => { if (object instanceof THREE.Light) physicalLights.push(object); });
-    expect(physicalLights).toEqual([]);
+    expect(physicalLights).toHaveLength(1);
+    expect(physicalLights[0]).toBeInstanceOf(THREE.PointLight);
     const bounds = new THREE.Box3().setFromObject(physical.placements.root, true);
     expect(bounds.min.x).toBeGreaterThan(2.95);
     expect(bounds.max.z).toBeLessThan(4.05);
@@ -110,4 +111,30 @@ test("physical light positions come only from explicit authoring and release own
   light.shadow.map.addEventListener("dispose", () => disposed++);
   world.dispose();
   expect(disposed).toBe(1);
+});
+
+
+test("campaign authoring installs identical physical and presentation light transforms and shadow volumes", () => {
+  for (const direction of [[-1, 0], [1, 0]] as const) {
+    const lighting = { daylightDirection: direction };
+    const physical = new WorldScene({ geometry, mode: "physical", lighting });
+    const presentation = new WorldScene({ geometry, mode: "presentation", lighting });
+    try {
+      const a = physical.sun!, b = presentation.sun!;
+      expect(a).toBeInstanceOf(THREE.DirectionalLight);
+      expect(a).not.toBe(b);
+      expect(a.position.toArray()).toEqual(b.position.toArray());
+      expect(a.target.position.toArray()).toEqual(b.target.position.toArray());
+      expect(a.shadow.camera.projectionMatrix.toArray()).toEqual(b.shadow.camera.projectionMatrix.toArray());
+      const camera = a.shadow.camera;
+      expect(camera.left).toBeLessThan(geometry.rooms[0].min.x);
+      expect(camera.far).toBeGreaterThan(a.position.distanceTo(a.target.position));
+      expect(a.castShadow).toBe(true);
+      expect(a.shadow.mapSize.toArray()).toEqual([1024, 1024]);
+      expect(Math.sign(a.position.x - a.target.position.x)).toBe(direction[0]);
+      expect(physical.root.children.some(child => child instanceof THREE.HemisphereLight)).toBe(true);
+      a.position.set(99, 99, 99);
+      expect(b.position.toArray()).not.toEqual(a.position.toArray());
+    } finally { physical.dispose(); presentation.dispose(); }
+  }
 });

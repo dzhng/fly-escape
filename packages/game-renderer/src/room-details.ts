@@ -84,9 +84,9 @@ export class RoomDetails {
       model.name = `RoomDetail-${detail.kind}`;
       if (detail.kind === "doorway") fitDoorway(model, detail.width);
       mount.add(model);
-      if (presentation && detail.kind === "sconce") {
+      if (detail.kind === "sconce") {
         const emitter = sconceEmitter(detail);
-        const light = new THREE.PointLight("#ffca88", emitter.intensity, emitter.source.radius, 2);
+        const light = new THREE.PointLight(emitter.color, emitter.intensity, emitter.distance, emitter.decay);
         light.position.fromArray(emitter.position);
         this.root.add(light);
       }
