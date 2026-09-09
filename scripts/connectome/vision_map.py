@@ -200,12 +200,21 @@ def main():
     parser.add_argument('--annotations', type=Path, required=True)
     parser.add_argument('--graph', type=Path, default=Path('data/processed/brain'))
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--profile', type=Path, help='Explicit provisional retinal profile; requires --color-model')
+    parser.add_argument('--color-model', type=Path, help='Frozen source-bound color model for retinal export')
     args = parser.parse_args()
+    if bool(args.profile) != bool(args.color_model):
+        parser.error('--profile and --color-model are required together')
     annotation_hash = hashlib.sha256(args.annotations.read_bytes()).hexdigest()
     graph_hash = hashlib.sha256((args.graph / 'graph.bin').read_bytes()).hexdigest()
     manifest = json.loads((args.graph / 'manifest.json').read_text())
     if manifest['graphHash'] != graph_hash:
         raise ValueError('Graph binary identity differs from manifest')
+    if args.profile:
+        from connectome.retinal_map import export_retinal
+        export_retinal(pd.read_feather(args.annotations), manifest, read_binary(args.graph / 'graph.bin'),
+                       annotation_hash, json.loads(args.profile.read_text()), json.loads(args.color_model.read_text()), args.output)
+        return
     maps, report = audit(pd.read_feather(args.annotations), manifest, read_binary(args.graph / 'graph.bin'), annotation_hash)
     report['exporterSha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     args.output.mkdir(parents=True, exist_ok=True)
