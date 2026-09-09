@@ -22,7 +22,7 @@ During development, rebuild WASM after changing Rust; the web development server
 
 **Game and workbench — [apps](../apps/).** The game composes editing, progression and observation. The [asset workbench](../apps/asset-lab/README.md) exercises the production model loader and renderer, so replacement previews test the same path players see.
 
-Resource lifetime follows the player's session: a level's visible world survives editing and playback, while each attempt starts with fresh simulation state. The campaign owns the reusable client. A roster owns its parsed preview model; only immutable downloaded bytes may outlive it. Sharing disposable model objects can let GPU listeners retain retired renderers. The [retry rationale and evidence](../specs/fast-retries/README.md) explain the ownership tradeoffs and measured bounds.
+Resource lifetime follows the player's session: a level's visible world survives editing and playback, while each attempt starts with fresh simulation state. The campaign owns the reusable client. A roster owns its parsed preview model; only immutable downloaded bytes may outlive it. Sharing disposable model objects can let GPU listeners retain retired renderers. The [retry rationale and evidence](../specs/done/fast-retries/README.md) explain the ownership tradeoffs and measured bounds.
 
 **Artwork — [assets](../assets/).** Visible geometry and physical contact must agree. The [fly](../assets/fly/README.md), [house](../assets/house/README.md), [food](../assets/food/README.md), [household objects](../assets/household/README.md), and [object registry](../assets/tools/README.md) document their authoring boundaries. The [shared proportions](../assets/proportions/README.md) connect native dimensions across Blender, Rust and the browser.
 

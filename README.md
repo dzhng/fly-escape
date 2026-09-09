@@ -47,7 +47,7 @@ To serve the finished build, or work on the simulation and artwork, see the [dev
 
 The two-level game loop is playable, but difficulty is still experimental. Object placement changes observed outcomes; consistent repulsion and the frequency of higher star scores are not established. Feeding and life extension are deferred.
 
-The simulation buffers enough recorded motion before playback to sustain real time. The [retry measurements](specs/fast-retries/README.md) cover current local startup and retry latency; the [release checks](specs/done/help-the-fly-escape/assets/evidence/release-final/README.md) preserve earlier browser coverage. Larger swarms and broader performance tuning remain future work.
+The simulation buffers enough recorded motion before playback to sustain real time. The [retry measurements](specs/done/fast-retries/README.md) cover current local startup and retry latency; the [release checks](specs/done/help-the-fly-escape/assets/evidence/release-final/README.md) preserve earlier browser coverage. Larger swarms and broader performance tuning remain future work.
 
 ## Data and credits
 
