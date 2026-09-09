@@ -4,11 +4,12 @@ Objective 3 connects the recorded eight-direction light sample to the existing M
 
 ## Next Agent Prompt
 
-Run and assess the frozen [overlapping-input pilot](slices/04-overlapping-inputs.md). The adapter, exporter and probe now share unique per-cell directional weights. The earlier hard-sector pilot and DNp03 diagnostic failed their motor gates; preserve those results. Freeze a candidate only if the new gate passes, then complete held-out causal, motion, performance and browser checks before publishing metadata. Preserve graphs directly below the brain and the compact roster. Neither a winner nor a lighting mechanic is established yet.
+Implement the preregistered [neural confirmation](slices/05-neural-confirmation.md). Every motor pilot failed; retain those failures. Confirm objective3's neural contract independently using the smaller audited Tm2 population, multiplicity-corrected endpoints and untouched seeds. Freeze identities and endpoints before execution. Then complete motion reporting, integration, resource and browser gates. No usable lighting behavior is established. Preserve graphs directly below the brain and the compact roster.
 
 - [x] Audit annotations and actual retained paths; freeze two bounded candidate maps.
 - [x] Implement graded adapter and preserve failed bounded pilot.
-- [ ] Resolve the motor gate through the overlapping-input pilot; freeze a winner only after its gate passes.
+- [x] Preserve failed hard-sector, DNp03 and overlapping-input motor pilots.
+- [ ] Pass the explicitly revised neural confirmation; motor effects remain descriptive.
 - [ ] Pass paired neural/optical silencing and closed-loop response gates.
 - [ ] Verify actual worker/playback, resource cost, tests and independent review.
 - [ ] Consolidate choices and close-spec.

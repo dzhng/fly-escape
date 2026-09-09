@@ -1,6 +1,6 @@
 # 2. Graded input and causal response
 
-The exclusive-bin projection and six-configuration pilot below are historical and failed. Slice4 supersedes their map/current shape and pilot grid. The held-out, optical, silencing, body and browser contracts remain.
+The exclusive-bin projection and six-configuration pilot below are historical and failed. Slice4 supersedes their map/current shape and pilot grid. Slice5 explicitly replaces the motor-dependent selection/confirmation gate after all motor pilots failed; optical, body and browser contracts remain with its stronger silencing panel.
 
 Replace the binary vision branch with one map-based adapter. Each bin b delivers per-neuron current `gain * brightness[b]/(brightness[b]+0.5) * normalization[b]` to its declared indices. Gain remains in [0,3]; input is finite/nonnegative. No direct motor targets and no blocked-light values enter the current. Keep odor semantics unchanged. Validate the map once in Graph. The existing manifest owns the selected map and source provenance; graphs without a map reject an enabled visual cue, rather than falling back to the old AOTU winner rule. Existing nonvisual synthetic graphs remain valid.
 
