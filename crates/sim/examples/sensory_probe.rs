@@ -62,7 +62,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let pathways: &[&str] = if exclude_readouts {
         &["EXCITATORY_LH_MOTOR"]
     } else {
-        &["EXCITATORY_LH_MOTOR", "INHIBITORY_LH_MOTOR", "AOTU"]
+        &["EXCITATORY_LH_MOTOR", "INHIBITORY_LH_MOTOR", "VISION"]
     };
     let motor = &graph.manifest.motor;
     let readout_indices: std::collections::HashSet<_> = [
@@ -80,8 +80,25 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     .copied()
     .collect();
     for &pathway in pathways {
-        let (left, right) = if pathway == "AOTU" {
-            (graph.pathway("AOTU_LEFT"), graph.pathway("AOTU_RIGHT"))
+        let (left, right) = if pathway == "VISION" {
+            (
+                graph
+                    .manifest
+                    .groups
+                    .iter()
+                    .find(|g| g.id == "visionL")
+                    .ok_or("missing left visual input group")?
+                    .indices
+                    .as_slice(),
+                graph
+                    .manifest
+                    .groups
+                    .iter()
+                    .find(|g| g.id == "visionR")
+                    .ok_or("missing right visual input group")?
+                    .indices
+                    .as_slice(),
+            )
         } else {
             match &graph.manifest.pathways[pathway] {
                 Pathway::Bilateral(p) => (p["L"].as_slice(), p["R"].as_slice()),

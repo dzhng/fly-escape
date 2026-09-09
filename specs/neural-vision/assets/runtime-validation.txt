@@ -1,0 +1,68 @@
+Native sim suite: 174 passed.
+All eight brightness channels: old binary adapter failed basis-bin test; graded adapter passed.
+Map validation: bypassing loader guard failed motor-target/cross-bin/provenance test; restored guard passed.
+Independent Codex review found missing-source provenance accepted; fixed to require an exact annotation source hash whenever a map is present. Missing and malformed sources fail the regression.
+Affected provenance and mixed-sensory Attempt tests pass after the fix.
+Type checking passes.
+
+
+running 1 test
+sensory::tests::vision_preserves_all_eight_directions_and_brightness --- FAILED
+
+failures:
+
+---- sensory::tests::vision_preserves_all_eight_directions_and_brightness stdout ----
+
+thread 'sensory::tests::vision_preserves_all_eight_directions_and_brightness' (39906854) panicked at crates/sim/src/sensory.rs:405:13:
+assertion `left == right` failed
+  left: [(1, 0.0), (2, 0.0), (3, 0.0), (5, 0.0), (6, 0.0), (7, 0.0)]
+ right: [(0, 0.5), (1, 0.0), (2, 0.0), (3, 0.0), (4, 0.0), (5, 0.0), (6, 0.0), (7, 0.0)]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    sensory::tests::vision_preserves_all_eight_directions_and_brightness
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 39 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sim --lib`
+
+
+running 1 test
+sensory::tests::visual_maps_reject_motor_targets_duplicate_channels_and_false_provenance --- FAILED
+
+failures:
+
+---- sensory::tests::visual_maps_reject_motor_targets_duplicate_channels_and_false_provenance stdout ----
+
+thread 'sensory::tests::visual_maps_reject_motor_targets_duplicate_channels_and_false_provenance' (39937529) panicked at crates/sim/src/sensory.rs:422:13:
+assertion failed: Graph::from_bytes(&bytes, &manifest.to_string()).is_err()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    sensory::tests::visual_maps_reject_motor_targets_duplicate_channels_and_false_provenance
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 40 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sim --lib`
+
+
+running 1 test
+sensory::tests::visual_maps_reject_motor_targets_duplicate_channels_and_false_provenance --- FAILED
+
+failures:
+
+---- sensory::tests::visual_maps_reject_motor_targets_duplicate_channels_and_false_provenance stdout ----
+
+thread 'sensory::tests::visual_maps_reject_motor_targets_duplicate_channels_and_false_provenance' (39964688) panicked at crates/sim/src/sensory.rs:443:13:
+assertion failed: Graph::from_bytes(&bytes, &manifest.to_string()).is_err()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    sensory::tests::visual_maps_reject_motor_targets_duplicate_channels_and_false_provenance
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 40 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sim --lib`

@@ -3,12 +3,30 @@ use sha2::{Digest, Sha256};
 use sim::{attempt::*, body::*, environment::*, Graph};
 use std::sync::Arc;
 fn graph() -> Arc<Graph> {
+    graph_with_vision(false)
+}
+fn graph_with_vision(vision: bool) -> Arc<Graph> {
+    let count = if vision { 11u32 } else { 4 };
     let mut bytes = b"FLYGRAPH".to_vec();
-    for value in [1u32, 4, 0, 0, 0, 0, 0, 0] {
+    for value in [1u32, count, 0]
+        .into_iter()
+        .chain(std::iter::repeat_n(0, count as usize + 1))
+    {
         bytes.extend(value.to_le_bytes());
     }
     let manifest = json!({"schemaVersion":1,"neuronCount":4,"edgeCount":0,"graphHash":format!("{:x}",Sha256::digest(&bytes)),"bodyIds":["1","2","3","4"],"motor":{"dnL":[0],"dnR":[1],"mnL":[],"mnR":[]},"pathways":{},"groups":[{"id":"taste","label":"Taste","indices":[2,3]},{"id":"odorExcL","label":"Left odor","indices":[2]},{"id":"odorExcR","label":"Right odor","indices":[3]},{"id":"proboscis","label":"Proboscis","indices":[3]}],"groupLinks":[],"pathwayProvenance":"synthetic attempt fixture"});
     let mut manifest = manifest;
+    manifest["neuronCount"] = json!(count);
+    manifest["bodyIds"] = json!((1..=count).map(|i| i.to_string()).collect::<Vec<_>>());
+    if vision {
+        manifest["sources"] = json!([{"file":"body-annotations.feather","sha256":"0".repeat(64)}]);
+        manifest["visionInput"] = json!({
+            "graphHash":manifest["graphHash"],"annotationHash":"0".repeat(64),
+            "family":"synthetic", "registration":"synthetic overlap at bin six",
+            "bins":([4,5,6,7,8,9,2,10].map(|index|json!({"indices":[index],"normalization":1.0})))
+        });
+    }
+
     for id in ["odorInhL", "odorInhR", "visionL", "visionR"] {
         let index = if id.ends_with('L') { 2 } else { 3 };
         manifest["groups"]
@@ -352,7 +370,7 @@ fn fixed_ablation_is_hashed_validated_and_clamps_neural_readouts() {
 #[test]
 fn simultaneous_senses_sum_and_each_channel_can_be_ablated() {
     use sim::sensory::CuePathway::*;
-    let graph = graph();
+    let graph = graph_with_vision(true);
     let mut definition = level(1);
     definition.field_config.baseline_brightness = 0.;
     definition.sources = [
@@ -427,23 +445,19 @@ fn simultaneous_senses_sum_and_each_channel_can_be_ablated() {
                 );
                 // Compose the independently tested sensory adapter outputs. This
                 // pins Attempt's channel summation without assuming fixed amplitudes.
-                let expected_current: f64 = tuning
-                    .cues
-                    .iter()
-                    .map(|cue| {
-                        sim::sensory::cue_currents(&graph, &senses, cue.pathway, cue.gain)
-                            .unwrap()
-                            .into_iter()
-                            .find(|(index, _)| *index == 2)
-                            .unwrap()
-                            .1
-                    })
-                    .sum();
-                assert!(expected_current > 0.);
+                let mut expected = std::collections::BTreeMap::new();
+                for cue in &tuning.cues {
+                    for (index, current) in
+                        sim::sensory::cue_currents(&graph, &senses, cue.pathway, cue.gain).unwrap()
+                    {
+                        *expected.entry(index).or_insert(0.) += current;
+                    }
+                }
+                assert!(expected[&2] > 0.);
                 let mut reference =
                     sim::Brain::new(graph.clone(), sim::Brain::seed_for_fly(seed, 0));
                 reference
-                    .set_external_current(&[(2, expected_current)])
+                    .set_external_current(&expected.into_iter().collect::<Vec<_>>())
                     .unwrap();
                 assert_eq!(frame.flies[0].neural, Some(reference.step()));
                 assert_eq!(Some(frame), replay.step().unwrap());

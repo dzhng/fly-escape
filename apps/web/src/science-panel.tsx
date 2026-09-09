@@ -29,7 +29,7 @@ function pathway(group: Group) {
   if (group.id.startsWith("odor"))
     return "This candidate group is labeled as a lateral-horn olfactory pathway in the source model. Excitation and inhibition describe effects on other neurons: they do not mean attraction and avoidance. Several synaptic steps can reverse an input’s net effect.";
   if (group.id.startsWith("vision"))
-    return "This candidate group is labeled as an anterior optic tubercle (AOTU) pathway. Visual circuits pass and combine signals through synapses; the activity here summarizes this chosen pathway, not the entire visual system.";
+    return "This group contains selected MaleCNS optic-lobe neurons. Recorded light enters through eight modeled directions assigned from optic-lobe column coordinates. The angle assignment and injected brightness current are modeling assumptions, not measured receptive fields. Signals must pass through the recorded circuit before reaching movement readouts.";
   if (group.id === "taste")
     return "This candidate group combines cells labeled as taste receptors and taste pathways. Sensory neurons turn chemical stimulation into electrical signals that other neurons can integrate.";
   if (group.id === "feeding")
@@ -102,9 +102,9 @@ function Explanation({ group }: { group: Group }) {
             second. Averages hide differences between cells.
           </p>
           <p>
-            Candidate group: <code>{group.id}</code>, selected MaleCNS wiring. The body-ID selection
-            was inherited from an exploratory model; its circuit label is not independent anatomical
-            validation. Group membership can overlap. Synaptic signs, injected sensory currents and
+            Candidate group: <code>{group.id}</code>, selected MaleCNS wiring. {group.id.startsWith("vision")
+              ? "Visual cells are selected from MaleCNS type, side and optic-lobe column annotations; their modeled angle assignment is not calibrated retinal azimuth."
+              : "The body-ID selection was inherited from an exploratory model; its circuit label is not independent anatomical validation."} Group membership can overlap. Synaptic signs, injected sensory currents and
             simplified voltage dynamics are modeling assumptions; these units and timing are not
             living-fly measurements.
           </p>
@@ -121,7 +121,7 @@ function Explanation({ group }: { group: Group }) {
                 group.id === "loom"
                   ? "https://www.nature.com/articles/s41586-022-05562-8"
                   : group.id.startsWith("vision")
-                    ? "https://www.nature.com/articles/s41586-024-07967-z"
+                    ? "https://reiserlab.github.io/celltype-explorer-drosophila-male-cns/"
                     : "https://www.nature.com/articles/s41586-024-07523-9"
               }
               target="_blank"
@@ -131,7 +131,7 @@ function Explanation({ group }: { group: Group }) {
               {group.id === "loom"
                 ? "LC4 looming pathways"
                 : group.id.startsWith("vision")
-                  ? "anterior visual pathways"
+                  ? "MaleCNS visual cell annotations"
                   : "descending motor circuits"}
             </a>
           </p>

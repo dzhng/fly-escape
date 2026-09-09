@@ -37,6 +37,20 @@ pub enum Pathway {
     Bilateral(HashMap<String, Vec<u32>>),
 }
 #[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct VisionBin {
+    pub indices: Vec<u32>,
+    pub normalization: f64,
+}
+#[derive(Clone, Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct VisionInput {
+    pub graph_hash: String,
+    pub annotation_hash: String,
+    pub family: String,
+    pub registration: String,
+    pub bins: [VisionBin; 8],
+}
+#[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Manifest {
     pub schema_version: u32,
@@ -49,6 +63,8 @@ pub struct Manifest {
     pub groups: Vec<Group>,
     pub group_links: Vec<GroupLink>,
     pub pathway_provenance: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub vision_input: Option<VisionInput>,
     #[serde(flatten)]
     pub provenance: HashMap<String, serde_json::Value>,
 }
@@ -189,13 +205,50 @@ impl Graph {
                 *slot += 1;
             }
         }
-        Ok(Self {
+        let graph = Self {
             manifest,
             source_offsets,
             targets,
             weights,
             body_lookup,
-        })
+        };
+        if let Some(map) = &graph.manifest.vision_input {
+            let annotation_source = graph
+                .manifest
+                .provenance
+                .get("sources")
+                .and_then(|sources| sources.as_array())
+                .and_then(|sources| {
+                    sources
+                        .iter()
+                        .find(|source| source["file"] == "body-annotations.feather")
+                })
+                .and_then(|source| source["sha256"].as_str());
+            if map.graph_hash != graph.manifest.graph_hash
+                || map.annotation_hash.len() != 64
+                || !map.annotation_hash.bytes().all(|b| b.is_ascii_hexdigit())
+                || annotation_source != Some(map.annotation_hash.as_str())
+                || map.family.trim().is_empty()
+                || map.registration.trim().is_empty()
+            {
+                return Err("Visual input provenance does not match graph annotations".into());
+            }
+            let readouts = crate::sensory::motor_readout_indices(&graph);
+            let mut used = HashSet::new();
+            let minimum = map.bins.iter().map(|bin| bin.indices.len()).min().unwrap();
+            for bin in &map.bins {
+                if bin.indices.is_empty()
+                    || !bin.normalization.is_finite()
+                    || (bin.normalization - minimum as f64 / bin.indices.len() as f64).abs() > 1e-12
+                    || bin.indices.iter().any(|&index| {
+                        index as usize >= n || readouts.contains(&index) || !used.insert(index)
+                    })
+                {
+                    return Err("Visual input requires eight disjoint non-motor bins with equal-dose normalization".into());
+                }
+            }
+        }
+        Ok(graph)
     }
     pub fn neuron_count(&self) -> usize {
         self.manifest.neuron_count as usize

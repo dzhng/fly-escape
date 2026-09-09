@@ -25,8 +25,8 @@ const ODOR_HALF_CONCENTRATION: f64 = 0.55;
 /// Local contrast selects sensory input. Side identity is retained;
 /// whether a pathway attracts or repels is an empirical result, not a sign flip.
 /// Odor is delivered graded: the detected side carries its own concentration, so a
-/// stronger smell drives a stronger current. Vision stays binary; brightness only
-/// picks a side.
+/// stronger smell drives a stronger current. Vision preserves all eight recorded
+/// brightness channels through the graph’s annotation-derived input map.
 pub fn cue_currents(
     graph: &Graph,
     sample: &SensorySample,
@@ -36,34 +36,43 @@ pub fn cue_currents(
     if !gain.is_finite() || !(0.0..=3.0).contains(&gain) {
         return Err("cue gain must be between zero and three".into());
     }
-    let (ids, mut values, graded) = match pathway {
+    let (ids, mut values) = match pathway {
         CuePathway::ExcitatoryOdor => (
             ["odorExcL", "odorExcR"],
             [
                 sample.left.attractive_odor + sample.left.exit_cue,
                 sample.right.attractive_odor + sample.right.exit_cue,
             ],
-            true,
         ),
         CuePathway::InhibitoryOdor => (
             ["odorInhL", "odorInhR"],
             [sample.left.repellent_odor, sample.right.repellent_odor],
-            true,
         ),
-        CuePathway::Vision => (
-            ["visionL", "visionR"],
-            [
-                (sample.vision.brightness[5]
-                    + sample.vision.brightness[6]
-                    + sample.vision.brightness[7])
-                    / 3.,
-                (sample.vision.brightness[1]
-                    + sample.vision.brightness[2]
-                    + sample.vision.brightness[3])
-                    / 3.,
-            ],
-            false,
-        ),
+        CuePathway::Vision => {
+            if gain == 0. {
+                return Ok(vec![]);
+            }
+            let map = graph
+                .manifest
+                .vision_input
+                .as_ref()
+                .ok_or("graph has no validated visual input map")?;
+            if sample
+                .vision
+                .brightness
+                .iter()
+                .any(|value| !value.is_finite() || *value < 0.)
+            {
+                return Err("visual brightness must be finite and nonnegative".into());
+            }
+            let mut currents =
+                Vec::with_capacity(map.bins.iter().map(|bin| bin.indices.len()).sum());
+            for (bin, brightness) in map.bins.iter().zip(sample.vision.brightness) {
+                let amplitude = gain * (brightness / (brightness + 0.5)) * bin.normalization;
+                currents.extend(bin.indices.iter().map(|&index| (index, amplitude)));
+            }
+            return Ok(currents);
+        }
         CuePathway::None => return Ok(vec![]),
     };
     // A modeled lateral detector: local field contrast chooses the sensory
@@ -72,13 +81,7 @@ pub fn cue_currents(
     let detected = values[0].max(values[1]) >= 0.05
         && (values[0] - values[1]).abs() > 0.0001 * (values[0] + values[1]);
     // Compress large odor concentrations while retaining dose sensitivity.
-    let amplitude = |concentration: f64| {
-        if graded {
-            concentration / (concentration + ODOR_HALF_CONCENTRATION)
-        } else {
-            1.0
-        }
-    };
+    let amplitude = |concentration: f64| concentration / (concentration + ODOR_HALF_CONCENTRATION);
     values = if !detected {
         [0.0, 0.0]
     } else if values[0] > values[1] {
@@ -371,53 +374,87 @@ mod tests {
             }
         }
     }
-    /// Grading is an odor property. Vision still only reports which hemisphere is brighter.
+    fn vision_fixture() -> (Vec<u8>, serde_json::Value) {
+        use sha2::{Digest, Sha256};
+        let mut bytes = b"FLYGRAPH".to_vec();
+        bytes.extend(1u32.to_le_bytes());
+        bytes.extend(10u32.to_le_bytes());
+        bytes.extend(0u32.to_le_bytes());
+        bytes.resize(64, 0);
+        let hash = format!("{:x}", Sha256::digest(&bytes));
+        let manifest = serde_json::json!({
+            "schemaVersion":1,"neuronCount":10,"edgeCount":0,"graphHash":hash,
+            "bodyIds":(1..=10).map(|i|i.to_string()).collect::<Vec<_>>(),
+            "motor":{"dnL":[8],"dnR":[9],"mnL":[],"mnR":[]},"pathways":{},
+            "groups":[{"id":"visionL","label":"Left","indices":[5,6,7]},
+                      {"id":"visionR","label":"Right","indices":[1,2,3]}],
+            "groupLinks":[],"pathwayProvenance":"synthetic visual input test",
+            "sources":[{"file":"body-annotations.feather","sha256":"0".repeat(64)}],
+            "visionInput":{"graphHash":hash,"annotationHash":"0".repeat(64),"family":"synthetic",
+                "registration":"synthetic bins", "bins":(0..8).map(|i|serde_json::json!({"indices":[i],"normalization":1.0})).collect::<Vec<_>>()}
+        });
+        (bytes, manifest)
+    }
+    fn vision_graph() -> Graph {
+        let (bytes, manifest) = vision_fixture();
+        Graph::from_bytes(&bytes, &manifest.to_string()).unwrap()
+    }
+
     #[test]
-    fn vision_reports_a_side_without_reporting_how_bright_it_is() {
-        let mut graph = fixture_graph();
-        for (id, index) in [("visionL", 0), ("visionR", 1)] {
-            graph.manifest.groups.push(
-                serde_json::from_value(
-                    serde_json::json!({"id": id, "label": id, "indices": [index]}),
-                )
-                .unwrap(),
-            );
+    fn vision_preserves_all_eight_directions_and_brightness() {
+        let graph = vision_graph();
+        let mut sample = attractive(100., 0.);
+        sample.vision.blocked = [100.; 8];
+        for bin in 0..8 {
+            sample.vision.brightness = [0.; 8];
+            sample.vision.brightness[bin] = 0.5;
+            let dim = cue_currents(&graph, &sample, CuePathway::Vision, 1.).unwrap();
+            let expected: Vec<_> = (0..8)
+                .map(|i| (i as u32, if i == bin { 0.5 } else { 0. }))
+                .collect();
+            assert_eq!(dim, expected);
+            sample.vision.brightness[bin] = 2.;
+            let bright = cue_currents(&graph, &sample, CuePathway::Vision, 1.).unwrap();
+            assert_eq!(bright[bin], (bin as u32, 0.8));
+            assert!(bright
+                .iter()
+                .all(|(index, value)| *index < 8 && *value <= 1.));
         }
-        let lit = |brightness: f64| SensorySample {
-            left: FieldSample::default(),
-            right: FieldSample {
-                brightness: 100.,
-                ..Default::default()
+    }
+    #[test]
+    fn visual_maps_reject_motor_targets_duplicate_channels_and_false_provenance() {
+        let changes: [fn(&mut serde_json::Value); 9] = [
+            |m| m["sources"] = serde_json::Value::Null,
+            |m| m["sources"][0]["sha256"] = serde_json::json!(123),
+            |m| m["visionInput"]["bins"][0]["indices"] = serde_json::json!([8]),
+            |m| m["visionInput"]["bins"][0]["indices"] = serde_json::json!([1]),
+            |m| m["visionInput"]["bins"][0]["indices"] = serde_json::json!([10]),
+            |m| m["visionInput"]["bins"][0]["indices"] = serde_json::json!([]),
+            |m| m["visionInput"]["bins"][0]["normalization"] = serde_json::json!(0.5),
+            |m| m["visionInput"]["graphHash"] = serde_json::json!("f".repeat(64)),
+            |m| {
+                m["sources"] =
+                    serde_json::json!([{"file":"body-annotations.feather","sha256":"f".repeat(64)}])
             },
-            vision: crate::environment::VisionSample {
-                brightness: [0., 0., 0., 0., 0., brightness, brightness, brightness],
-                blocked: [0.; 8],
-            },
-            wind: Point::default(),
-        };
-        assert_eq!(
-            cue_currents(&graph, &lit(0.2), CuePathway::Vision, 1.).unwrap(),
-            cue_currents(&graph, &lit(0.9), CuePathway::Vision, 1.).unwrap(),
-            "a dim and a bright lamp drive the same hemisphere equally hard"
+        ];
+        for change in changes {
+            let (bytes, mut manifest) = vision_fixture();
+            change(&mut manifest);
+            assert!(Graph::from_bytes(&bytes, &manifest.to_string()).is_err());
+        }
+        let mut sample = attractive(0., 0.);
+        sample.vision.brightness = [0.; 8];
+        assert!(
+            cue_currents(&vision_graph(), &sample, CuePathway::Vision, 3.)
+                .unwrap()
+                .iter()
+                .all(|(_, value)| *value == 0.)
         );
-        assert_eq!(
-            cue_currents(&graph, &lit(0.2), CuePathway::Vision, 1.).unwrap(),
-            vec![(0, 1.0), (1, 0.0)],
-            "the brighter hemisphere receives the whole gain"
-        );
-        let mut uniform = lit(0.);
-        uniform.vision.brightness = [2.; 8];
-        uniform.vision.brightness[0] = 100.;
-        uniform.vision.brightness[4] = 50.;
-        assert_eq!(
-            cue_currents(&graph, &uniform, CuePathway::Vision, 1.).unwrap(),
-            vec![(0, 0.), (1, 0.)]
-        );
-        let mut right = lit(0.);
-        right.vision.brightness[2] = 0.6;
-        assert_eq!(
-            cue_currents(&graph, &right, CuePathway::Vision, 1.).unwrap(),
-            vec![(0, 0.), (1, 1.)]
-        );
+        let mut graph = vision_graph();
+        graph.manifest.vision_input = None;
+        assert!(cue_currents(&graph, &sample, CuePathway::Vision, 1.).is_err());
+        assert!(cue_currents(&graph, &sample, CuePathway::Vision, 0.)
+            .unwrap()
+            .is_empty());
     }
 }
