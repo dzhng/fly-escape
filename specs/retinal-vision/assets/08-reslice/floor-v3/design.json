@@ -1,0 +1,54 @@
+{
+  "mapHash": "0039df31f97b148b73118f8d766c31b57ee71a859be42c82fc72c85dc4704e91",
+  "profileIdentities": {
+    "annotationHash": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+    "baselineMapHash": "c0ac5957037012b486cc7300ccad56015fd3215ad4c764ce4ba0b27c82a262da",
+    "colorModelHash": "f10754eec38ebd77ce25325fc10f10d700caa6c76a06f812b0a80437db4643fd",
+    "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+    "layoutHash": "8bfc77663d1917bb0653bd8e4dd72a03901bf28b77d91040e11db7b9d7f7a99c",
+    "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+    "rigHash": "95d00abd9162e75517f70ba9cc6764336b1f07dd0bf83e6fc75179c0435d667f"
+  },
+  "status": "input-only; no new neural run or seed freeze",
+  "pose": {
+    "position": [
+      4.55,
+      0,
+      2.55
+    ],
+    "rotation": [
+      0,
+      0.7071067811865475,
+      0,
+      0.7071067811865476
+    ]
+  },
+  "board": {
+    "position": [
+      5.4,
+      0.9,
+      2.55
+    ],
+    "size": [
+      0.02,
+      1.8,
+      1.2
+    ],
+    "color": 16777215
+  },
+  "blocker": {
+    "position": [
+      4.79,
+      1.05,
+      2.55
+    ],
+    "size": [
+      0.02,
+      2.1,
+      0.9
+    ],
+    "color": 0
+  },
+  "rule": "One fixed nearer view of the existing doorway; same white board and authored room lighting, with only a black doorway blocker added.",
+  "chosenBeforeCapture": true
+}
