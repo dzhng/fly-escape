@@ -10,7 +10,7 @@
 .fly-roster {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
-  gap: 6px;
+  gap: 4px;
 }
 .fly-card {
   display: grid;
@@ -19,12 +19,12 @@
   align-items: center;
   gap: 0 6px;
   text-align: left;
-  padding: 5px;
+  padding: 3px 5px;
 }
 .fly-card .fly-preview {
   grid-row: 1 / 3;
-  width: 46px;
-  height: 46px;
+  width: 34px;
+  height: 34px;
 }
 .fly-card strong {
   font-size: 12px;

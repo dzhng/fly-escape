@@ -295,6 +295,14 @@ function FlyDetails({
       data-sample-tick={tick}
     >
       <BrainView groups={info.groups} frame={frame} selected={id} />
+      <div className="science-group-picker"><span>{group.label}</span><Explanation group={group} /></div>
+      <div className="science-current">
+        <output>{activity ? activity.meanVoltage.toFixed(3) : "—"} voltage</output>
+        <output>{activity ? (activity.spikeFraction * 100).toFixed(1) + "%" : "—"} firing</output>
+      </div>
+      <Trace series={series} field="meanVoltage" endTick={tick} />
+      <Trace series={series} field="spikeFraction" endTick={tick} />
+      <div className="science-time">All {info.groups.length} recorded groups · last 10 simulated seconds · gaps = no sample</div>
       <div className="science-status">
         <span>{(fly?.body.outcome ?? fly?.body.mode ?? "Initial state").replace("timedOut", "dead")}</span>
         <small>{(tick * 0.1).toFixed(1)} s</small>
@@ -387,14 +395,6 @@ function FlyDetails({
           <span style={{ background: groupColor(index) }} />{shortNames[item.id] ?? item.label}
         </button>)}
       </div>
-      <div className="science-group-picker"><span>{group.label}</span><Explanation group={group} /></div>
-      <div className="science-current">
-        <output>{activity ? activity.meanVoltage.toFixed(3) : "—"} voltage</output>
-        <output>{activity ? (activity.spikeFraction * 100).toFixed(1) + "%" : "—"} firing</output>
-      </div>
-      <Trace series={series} field="meanVoltage" endTick={tick} />
-      <Trace series={series} field="spikeFraction" endTick={tick} />
-      <div className="science-time">All {info.groups.length} recorded groups · last 10 simulated seconds · gaps = no sample</div>
     </article>
   );
 }
