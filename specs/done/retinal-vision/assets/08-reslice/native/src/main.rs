@@ -22,7 +22,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let graph_bytes = fs::read(root.join("data/processed/brain/graph.bin"))?;
     let manifest_bytes = fs::read(root.join("data/processed/brain/manifest.json"))?;
     let map_text =
-        fs::read_to_string(root.join("specs/retinal-vision/assets/05/retinal-map.json"))?;
+        fs::read_to_string(root.join("specs/done/retinal-vision/assets/05/retinal-map.json"))?;
     if hash(map_text.as_bytes()) != proposal["mapSha256"].as_str().ok_or("map identity")? {
         return Err("map hash mismatch".into());
     }
@@ -132,7 +132,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
         panels.insert(slice.to_string(), json!(conditions));
     }
-    let output = json!({"scope":"Native retinal_currents only; Graph loaded for map validation; zero Brain instances or steps", "proposalHash":hash(&bytes),"graphHash":hash(&graph_bytes),"manifestHash":hash(&manifest_bytes),"mapHash":hash(map_text.as_bytes()),"adapterSourceHash":hash(&fs::read(root.join("crates/sim/src/sensory.rs"))?),"helperSourceHash":hash(&fs::read(root.join("specs/retinal-vision/assets/08-reslice/native/src/main.rs"))?),"panels":panels,"candidateScreen":candidate_screen});
+    let output = json!({"scope":"Native retinal_currents only; Graph loaded for map validation; zero Brain instances or steps", "proposalHash":hash(&bytes),"graphHash":hash(&graph_bytes),"manifestHash":hash(&manifest_bytes),"mapHash":hash(map_text.as_bytes()),"adapterSourceHash":hash(&fs::read(root.join("crates/sim/src/sensory.rs"))?),"helperSourceHash":hash(&fs::read(root.join("specs/done/retinal-vision/assets/08-reslice/native/src/main.rs"))?),"panels":panels,"candidateScreen":candidate_screen});
     println!("{}", serde_json::to_string(&output)?);
     Ok(())
 }

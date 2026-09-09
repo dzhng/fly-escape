@@ -124,5 +124,5 @@ if __name__ == "__main__":
     parser.add_argument("output", type=Path)
     parser.add_argument("--occlusion", type=Path)
     args = parser.parse_args()
-    root = Path(__file__).resolve().parents[4]
+    root = Path(__file__).resolve().parents[5]
     prepare(root, args.optics, root / "specs/done/retinal-vision/assets/02/higher-resolution/benchmark.json", args.output, args.occlusion)

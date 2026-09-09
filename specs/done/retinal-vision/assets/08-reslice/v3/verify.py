@@ -24,7 +24,7 @@ def verify():
     assert native['adapterSourceHash'] == sha(ROOT / 'crates/sim/src/sensory.rs')
     assert native['helperSourceHash'] == sha(HERE.parent / 'native/src/main.rs')
     for path, digest in proposal['sourceHashes'].items():
-        assert sha(ROOT / path) == digest
+        assert sha(ROOT / path.replace('specs/retinal-vision/', 'specs/done/retinal-vision/', 1)) == digest
     assert proposal['gain'] == 3 and len(proposal['endpoints']) == 438 and not proposal['runAuthorized']
     frozen = json.loads((HERE.parent / 'confirmation-08-v2/freeze.json').read_text())
     original = json.loads((HERE.parent / 'proposal.json').read_text())

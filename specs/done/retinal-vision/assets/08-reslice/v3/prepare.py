@@ -84,7 +84,8 @@ def prepare():
         seedStatus='No v3 seeds proposed or frozen; separate clearance required.',
         priorEvidence={'08': '../confirmation-08-v2/evidence.json', '09': '../confirmation-09-v2/evidence.json'},
         floorDesign=capture['design'], floorChangedSamples=capture['changedSamples'],
-        sourceHashes={str(path.relative_to(ROOT)): sha(path) for path in (
+        # Source identity names are stable even when their files move into the archive.
+        sourceHashes={str(path.relative_to(ROOT)).replace('specs/done/retinal-vision/', 'specs/retinal-vision/', 1): sha(path) for path in (
             Path(__file__), mapping_path, RESLICE / 'proposal.json',
             RESLICE / 'confirmation-08-v2/freeze.json', RESLICE / 'confirmation-09-v2/freeze.json',
             RESLICE / 'native/src/main.rs', ROOT / 'crates/sim/src/sensory.rs',

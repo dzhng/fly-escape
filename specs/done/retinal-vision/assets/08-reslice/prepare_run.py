@@ -32,7 +32,8 @@ def prepare(graph_dir, output, version=2):
         raise ValueError('Accepted input proposal changed')
     baseline_relative='specs/done/retinal-vision/assets/08/confirmation/freeze.json' if version == 2 else 'specs/done/retinal-vision/assets/08-reslice/confirmation-08-v2/freeze.json'
     baseline=ROOT/baseline_relative
-    baseline_key='original08Freeze' if version == 2 else baseline_relative
+    # Serialized identity keys remain unchanged when the evidence directory moves.
+    baseline_key='original08Freeze' if version == 2 else 'specs/retinal-vision/assets/08-reslice/confirmation-08-v2/freeze.json'
     if sha(baseline.read_bytes())!=proposal['sourceHashes'][baseline_key]:
         raise ValueError('Original reference population identity changed')
     files={'accepted-proposal.json':(accepted/'proposal.json').read_bytes(),

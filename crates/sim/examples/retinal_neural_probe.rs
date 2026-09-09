@@ -318,8 +318,9 @@ fn verify_reslice(
     let currents: Value = serde_json::from_slice(&read_bound(directory, &binding.currents)?)?;
     read_bound(directory, &binding.protocol)?;
     let baseline_hash = if pack.version == 3 {
+        // This is a frozen JSON identity key, not a path to open.
         &proposal["sourceHashes"]
-            ["specs/done/retinal-vision/assets/08-reslice/confirmation-08-v2/freeze.json"]
+            ["specs/retinal-vision/assets/08-reslice/confirmation-08-v2/freeze.json"]
     } else {
         &proposal["sourceHashes"]["original08Freeze"]
     };
