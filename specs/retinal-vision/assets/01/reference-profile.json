@@ -1,0 +1,258 @@
+{
+  "flygym_revision": "c7affce924cb1c6add16619adf83be5c6b223e89",
+  "fly_api_revision": "a6ad07a810b1a43cd0356149c07b32105eb46d2a",
+  "reproduction": "original-sampler fixtures; no MuJoCo render",
+  "cameras": {
+    "source_units": "millimetres",
+    "source_axes": "+X forward, +Y left, +Z up",
+    "euler": "MuJoCo uppercase XYZ: fixed/extrinsic axes, radians",
+    "camera_axes": "+X image right, +Y image up, -Z forward",
+    "source_to_native_body": [
+      [
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        0
+      ]
+    ],
+    "native_body_axes": "+Z forward, +Y up; apply native full quaternion after basis conversion",
+    "scope": "Neutral source head joints only. Product asset placement belongs to slice 03.",
+    "eyes": {
+      "L": {
+        "parent": "LEye",
+        "rel_pos": [
+          -0.03,
+          0.38,
+          0
+        ],
+        "orientation": [
+          1.57,
+          0.0,
+          -0.47
+        ],
+        "marker_rgba": [
+          0.07,
+          0.45,
+          0.35,
+          1
+        ],
+        "neutral_thorax_relative_mm": [
+          0.2301909041404724,
+          0.37999999906867743,
+          0.01774144172668457
+        ],
+        "camera_to_source_rotation": [
+          [
+            0.8915682881953292,
+            0.0003606454459721131,
+            -0.4528861417832447
+          ],
+          [
+            -0.4528862853790684,
+            0.0007099796423326588,
+            -0.8915680055074077
+          ],
+          [
+            2.7755575615628914e-17,
+            0.9999996829318348,
+            0.0007963267107332639
+          ]
+        ],
+        "forward_source": [
+          0.4528861417832447,
+          0.8915680055074077,
+          -0.0007963267107332639
+        ],
+        "up_source": [
+          0.0003606454459721131,
+          0.0007099796423326588,
+          0.9999996829318348
+        ],
+        "native_body_relative_metres": [
+          0.00037999999906867746,
+          1.774144172668457e-05,
+          0.00023019090414047241
+        ],
+        "camera_to_native_body_rotation": [
+          [
+            -0.4528862853790684,
+            0.0007099796423326588,
+            -0.8915680055074077
+          ],
+          [
+            2.7755575615628914e-17,
+            0.9999996829318348,
+            0.0007963267107332639
+          ],
+          [
+            0.8915682881953292,
+            0.0003606454459721131,
+            -0.4528861417832447
+          ]
+        ]
+      },
+      "R": {
+        "parent": "REye",
+        "rel_pos": [
+          -0.03,
+          -0.38,
+          0
+        ],
+        "orientation": [
+          -1.57,
+          3.14,
+          0.47
+        ],
+        "marker_rgba": [
+          0.07,
+          0.45,
+          0.35,
+          1
+        ],
+        "neutral_thorax_relative_mm": [
+          0.2301909041404724,
+          -0.37999999906867743,
+          0.01774144172668457
+        ],
+        "camera_to_source_rotation": [
+          [
+            -0.8915671574438225,
+            -0.0017806038301897142,
+            -0.45288501103209666
+          ],
+          [
+            -0.45288571099586483,
+            -1.1310792215085685e-05,
+            0.8915685798904289
+          ],
+          [
+            -0.001592652916486803,
+            0.9999984146597765,
+            -0.0007963257007737867
+          ]
+        ],
+        "forward_source": [
+          0.45288501103209666,
+          -0.8915685798904289,
+          0.0007963257007737867
+        ],
+        "up_source": [
+          -0.0017806038301897142,
+          -1.1310792215085685e-05,
+          0.9999984146597765
+        ],
+        "native_body_relative_metres": [
+          -0.00037999999906867746,
+          1.774144172668457e-05,
+          0.00023019090414047241
+        ],
+        "camera_to_native_body_rotation": [
+          [
+            -0.45288571099586483,
+            -1.1310792215085685e-05,
+            0.8915685798904289
+          ],
+          [
+            -0.001592652916486803,
+            0.9999984146597765,
+            -0.0007963257007737867
+          ],
+          [
+            -0.8915671574438225,
+            -0.0017806038301897142,
+            -0.45288501103209666
+          ]
+        ]
+      }
+    }
+  },
+  "vision": {
+    "fovy_per_eye": 157,
+    "raw_img_height_px": 512,
+    "raw_img_width_px": 450,
+    "num_ommatidia_per_eye": 721,
+    "fisheye_distortion_coefficient": 3.8,
+    "fisheye_zoom": 2.72,
+    "hidden_segments": [
+      "LFCoxa",
+      "LEye",
+      "LArista",
+      "LFuniculus",
+      "LPedicel",
+      "RFCoxa",
+      "REye",
+      "RArista",
+      "RFuniculus",
+      "RPedicel",
+      "Head",
+      "Rostrum",
+      "Haustellum",
+      "Thorax"
+    ],
+    "sensor_positions": {
+      "LEye_cam": {
+        "parent": "LEye",
+        "rel_pos": [
+          -0.03,
+          0.38,
+          0
+        ],
+        "orientation": [
+          1.57,
+          0.0,
+          -0.47
+        ],
+        "marker_rgba": [
+          0.07,
+          0.45,
+          0.35,
+          1
+        ]
+      },
+      "REye_cam": {
+        "parent": "REye",
+        "rel_pos": [
+          -0.03,
+          -0.38,
+          0
+        ],
+        "orientation": [
+          -1.57,
+          3.14,
+          0.47
+        ],
+        "marker_rgba": [
+          0.07,
+          0.45,
+          0.35,
+          1
+        ]
+      }
+    }
+  },
+  "raster": {
+    "width": 450,
+    "height": 512,
+    "aspect": 0.87890625,
+    "row_direction": "top to bottom; sampler never flips",
+    "projection": "rectilinear perspective before original correct_fisheye"
+  },
+  "samples": {
+    "per_eye": 721,
+    "order": "original map IDs 1..721; see sample-centers-row-col.npy; not product61 axial order",
+    "minimum_pool_pixels": 230,
+    "maximum_pool_pixels": 243
+  },
+  "channels": "one selected channel per sample: mask0 -> input G/output0; mask1 -> input B/output1. R ignored; no linearization.",
+  "photometry": "Original divides 8-bit channel means by255. It does not calibrate spectra or decode sRGB.",
+  "licenses": "See reproduce.md source ledger; original files fetched to temporary cache, not vendored."
+}
