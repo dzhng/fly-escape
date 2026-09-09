@@ -4,7 +4,7 @@ Objective 3 connects the recorded eight-direction light sample to the existing M
 
 ## Next Agent Prompt
 
-The [mapping audit](assets/input-map/README.md) is complete: both frozen candidates pass, with no graph rebuild. Next implement [the graded adapter and experiments](slices/02-causal-response.md); neither candidate is a behavioral winner yet. Do not specify the lighting puzzle until this objective is verified and archived. Preserve the user's new panel order: graphs directly below the brain, compact roster. Update this handoff after each committed pass.
+Run and assess the frozen [overlapping-input pilot](slices/04-overlapping-inputs.md). The adapter, exporter and probe now share unique per-cell directional weights. The earlier hard-sector pilot and DNp03 diagnostic failed their motor gates; preserve those results. Freeze a candidate only if the new gate passes, then complete held-out causal, motion, performance and browser checks before publishing metadata. Preserve graphs directly below the brain and the compact roster. Neither a winner nor a lighting mechanic is established yet.
 
 - [x] Audit annotations and actual retained paths; freeze two bounded candidate maps.
 - [x] Implement graded adapter and preserve failed bounded pilot.

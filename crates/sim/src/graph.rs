@@ -37,9 +37,9 @@ pub enum Pathway {
     Bilateral(HashMap<String, Vec<u32>>),
 }
 #[derive(Clone, Debug, Serialize, Deserialize)]
-pub struct VisionBin {
-    pub indices: Vec<u32>,
-    pub normalization: f64,
+pub struct VisionNeuron {
+    pub index: u32,
+    pub weights: [f64; 8],
 }
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -48,7 +48,7 @@ pub struct VisionInput {
     pub annotation_hash: String,
     pub family: String,
     pub registration: String,
-    pub bins: [VisionBin; 8],
+    pub entries: Vec<VisionNeuron>,
 }
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -235,17 +235,27 @@ impl Graph {
             }
             let readouts = crate::sensory::motor_readout_indices(&graph);
             let mut used = HashSet::new();
-            let minimum = map.bins.iter().map(|bin| bin.indices.len()).min().unwrap();
-            for bin in &map.bins {
-                if bin.indices.is_empty()
-                    || !bin.normalization.is_finite()
-                    || (bin.normalization - minimum as f64 / bin.indices.len() as f64).abs() > 1e-12
-                    || bin.indices.iter().any(|&index| {
-                        index as usize >= n || readouts.contains(&index) || !used.insert(index)
-                    })
+            let mut columns = [0.; 8];
+            for entry in &map.entries {
+                if entry.index as usize >= n
+                    || readouts.contains(&entry.index)
+                    || !used.insert(entry.index)
+                    || entry.weights.iter().any(|w| !w.is_finite() || *w < 0.)
+                    || entry.weights.iter().sum::<f64>() > 1. + 1e-12
+                    || !entry.weights.iter().any(|w| *w > 0.)
                 {
-                    return Err("Visual input requires eight disjoint non-motor bins with equal-dose normalization".into());
+                    return Err("Visual input requires unique non-motor cells with bounded nonnegative receptive fields".into());
                 }
+                for (sum, weight) in columns.iter_mut().zip(entry.weights) {
+                    *sum += weight;
+                }
+            }
+            if columns.iter().any(|sum| {
+                *sum <= 0. || !sum.is_finite() || (sum - columns[0]).abs() > 1e-10 * columns[0]
+            }) {
+                return Err(
+                    "Visual input must cover all eight directions with equal total weight".into(),
+                );
             }
         }
         Ok(graph)

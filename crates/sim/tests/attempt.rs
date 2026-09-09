@@ -23,7 +23,7 @@ fn graph_with_vision(vision: bool) -> Arc<Graph> {
         manifest["visionInput"] = json!({
             "graphHash":manifest["graphHash"],"annotationHash":"0".repeat(64),
             "family":"synthetic", "registration":"synthetic overlap at bin six",
-            "bins":([4,5,6,7,8,9,2,10].map(|index|json!({"indices":[index],"normalization":1.0})))
+            "entries":([4,5,6,7,8,9,2,10].into_iter().enumerate().map(|(b,index)|json!({"index":index,"weights":(0..8).map(|i|if i==b {1.0}else{0.0}).collect::<Vec<_>>()})).collect::<Vec<_>>())
         });
     }
 

@@ -65,13 +65,23 @@ pub fn cue_currents(
             {
                 return Err("visual brightness must be finite and nonnegative".into());
             }
-            let mut currents =
-                Vec::with_capacity(map.bins.iter().map(|bin| bin.indices.len()).sum());
-            for (bin, brightness) in map.bins.iter().zip(sample.vision.brightness) {
-                let amplitude = gain * (brightness / (brightness + 0.5)) * bin.normalization;
-                currents.extend(bin.indices.iter().map(|&index| (index, amplitude)));
-            }
-            return Ok(currents);
+            let amplitudes = sample
+                .vision
+                .brightness
+                .map(|brightness| brightness / (brightness + 0.5));
+            return Ok(map
+                .entries
+                .iter()
+                .map(|entry| {
+                    let signal: f64 = entry
+                        .weights
+                        .iter()
+                        .zip(amplitudes)
+                        .map(|(weight, amplitude)| weight * amplitude)
+                        .sum();
+                    (entry.index, (gain * signal).clamp(0., gain))
+                })
+                .collect());
         }
         CuePathway::None => return Ok(vec![]),
     };
@@ -391,7 +401,7 @@ mod tests {
             "groupLinks":[],"pathwayProvenance":"synthetic visual input test",
             "sources":[{"file":"body-annotations.feather","sha256":"0".repeat(64)}],
             "visionInput":{"graphHash":hash,"annotationHash":"0".repeat(64),"family":"synthetic",
-                "registration":"synthetic bins", "bins":(0..8).map(|i|serde_json::json!({"indices":[i],"normalization":1.0})).collect::<Vec<_>>()}
+                "registration":"synthetic directions", "entries":(0..8).map(|i|serde_json::json!({"index":i,"weights":(0..8).map(|b|if i==b {1.0}else{0.0}).collect::<Vec<_>>()})).collect::<Vec<_>>()}
         });
         (bytes, manifest)
     }
@@ -422,15 +432,39 @@ mod tests {
         }
     }
     #[test]
+    fn overlapping_receptive_fields_combine_directions_without_exceeding_gain() {
+        let (bytes, mut manifest) = vision_fixture();
+        for i in 0..2 {
+            manifest["visionInput"]["entries"][i]["weights"] =
+                serde_json::json!([0.5, 0.5, 0., 0., 0., 0., 0., 0.]);
+        }
+        let graph = Graph::from_bytes(&bytes, &manifest.to_string()).unwrap();
+        let mut sample = attractive(0., 0.);
+        sample.vision.brightness = [0.5, 2., 0., 0., 0., 0., 0., 0.];
+        let currents = cue_currents(&graph, &sample, CuePathway::Vision, 2.).unwrap();
+        assert_eq!(currents[0], (0, 1.3));
+        assert_eq!(currents[1], (1, 1.3));
+        sample.vision.brightness = [f64::MAX; 8];
+        assert!(cue_currents(&graph, &sample, CuePathway::Vision, 3.)
+            .unwrap()
+            .iter()
+            .all(|(_, value)| *value <= 3. && value.is_finite()));
+        sample.vision.brightness[2] = -1.;
+        assert!(cue_currents(&graph, &sample, CuePathway::Vision, 1.).is_err());
+    }
+
+    #[test]
     fn visual_maps_reject_motor_targets_duplicate_channels_and_false_provenance() {
-        let changes: [fn(&mut serde_json::Value); 9] = [
+        let changes: [fn(&mut serde_json::Value); 11] = [
+            |m| m["visionInput"]["entries"][0]["weights"][0] = serde_json::json!(2.),
+            |m| m["visionInput"]["entries"][0]["weights"][0] = serde_json::json!(-1.),
             |m| m["sources"] = serde_json::Value::Null,
             |m| m["sources"][0]["sha256"] = serde_json::json!(123),
-            |m| m["visionInput"]["bins"][0]["indices"] = serde_json::json!([8]),
-            |m| m["visionInput"]["bins"][0]["indices"] = serde_json::json!([1]),
-            |m| m["visionInput"]["bins"][0]["indices"] = serde_json::json!([10]),
-            |m| m["visionInput"]["bins"][0]["indices"] = serde_json::json!([]),
-            |m| m["visionInput"]["bins"][0]["normalization"] = serde_json::json!(0.5),
+            |m| m["visionInput"]["entries"][0]["index"] = serde_json::json!(8),
+            |m| m["visionInput"]["entries"][0]["index"] = serde_json::json!(1),
+            |m| m["visionInput"]["entries"][0]["index"] = serde_json::json!(10),
+            |m| m["visionInput"]["entries"] = serde_json::json!([]),
+            |m| m["visionInput"]["entries"][0]["weights"][0] = serde_json::json!(0.5),
             |m| m["visionInput"]["graphHash"] = serde_json::json!("f".repeat(64)),
             |m| {
                 m["sources"] =

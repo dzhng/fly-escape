@@ -1,0 +1,51 @@
+Runtime overlap validation
+
+Full cargo test -p sim: all suites passed.
+Python connectome unittest discovery: ----------------------------------------------------------------------
+Ran 21 tests in 1.911s
+
+OK
+
+Probe example: both tests passed.
+
+Deliberate mutation: use front-bin brightness for every weight; expected overlap test fails:
+warning: unused variable: `amplitude`
+  --> crates/sim/src/sensory.rs:70:86
+   |
+70 |                 let signal: f64 = entry.weights.iter().zip(amplitudes).map(|(weight, amplitude)| weight * amplitudes[0]).sum();
+   |                                                                                      ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_amplitude`
+   |
+   = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+
+running 1 test
+sensory::tests::overlapping_receptive_fields_combine_directions_without_exceeding_gain --- FAILED
+
+failures:
+
+---- sensory::tests::overlapping_receptive_fields_combine_directions_without_exceeding_gain stdout ----
+
+thread 'sensory::tests::overlapping_receptive_fields_combine_directions_without_exceeding_gain' (40032436) panicked at crates/sim/src/sensory.rs:433:9:
+assertion `left == right` failed
+  left: (0, 1.0)
+ right: (0, 1.3)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    sensory::tests::overlapping_receptive_fields_combine_directions_without_exceeding_gain
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 41 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sim --lib`
+
+Restored implementation:
+
+running 1 test
+.
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 41 filtered out; finished in 0.00s
+
+
+Independent Codex review found one issue: exporter and probe still used bins during the runtime-only review. Resolved by integrating the matching exporter and probe migration; repository search finds no bins/normalization references in those three consumers. Full Python consumer suite and native probe tests pass after integration.
+
+Shape review: replaces the single runtime projection shape, introduces no decoder, alternate map reader or dependency. Diff review: weights are finite/nonnegative, row bounded, all directions equally represented; actual current combines every direction and clamps only numerical excess. Documentation points to the frozen projection protocol; production metadata remains unpublished pending behavior.
