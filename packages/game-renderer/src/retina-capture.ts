@@ -1,12 +1,10 @@
 import * as THREE from "three";
-import { RetinaProjection, retinaProfile, type RetinaProfile } from "./retina-projection";
+import type { EyePose } from "@fly-escape/sim-client";
+import { RetinaProjection, retinaProfile, retinaCameraProjection, type RetinaProfile } from "./retina-projection";
 import { retinalEyeRig } from "./retina-eye-rig";
 import { RetinaPooling } from "./retina-pooling";
 
-export type RetinalPose = {
-  position: readonly [number, number, number];
-  rotation: readonly [number, number, number, number];
-};
+export type RetinalPose = Pick<EyePose, "position" | "rotation">;
 
 /** One renderer/readback batch for the complete frozen swarm, independent of the player's view. */
 export class RetinaCapture {
@@ -16,7 +14,7 @@ export class RetinaCapture {
   private readonly pooling: RetinaPooling;
   private readonly samplePixels: Uint8Array;
   private diagnosticPixels?: Float32Array;
-  private readonly camera = new THREE.PerspectiveCamera(157, 450 / 512, 0.00001, 100);
+  private readonly camera = new THREE.PerspectiveCamera(retinaCameraProjection.verticalFovDegrees, retinaCameraProjection.aspect, retinaCameraProjection.nearMetres, retinaCameraProjection.farMetres);
   private readonly bodyRotation = new THREE.Quaternion();
   private readonly eyeRotation = new THREE.Quaternion();
   private pending = false;
@@ -68,6 +66,10 @@ export class RetinaCapture {
     if (this.disposed) throw new Error("Retinal capture is disposed");
     if (this.pending) throw new Error("Retinal acquisition already pending");
     if (!poses.length || poses.length > 16) throw new Error("Retinal capture requires 1–16 active flies");
+    if (poses.some(pose => pose.position.length !== 3 || pose.rotation.length !== 4
+      || ![...pose.position, ...pose.rotation].every(Number.isFinite)
+      || Math.abs(pose.rotation.reduce((sum, value) => sum + value * value, 0) - 1) > 1e-6))
+      throw new Error("Retinal poses must be finite and normalized");
     this.pending = true;
     const began = performance.now(), views = poses.length * 2;
     const { width, height } = this.projection.profile;

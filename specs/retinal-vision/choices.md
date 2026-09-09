@@ -40,3 +40,9 @@
   requires another trusted owner for the bound. **Sound, high confidence:** the
   bound is checked against the graph already accepted by native code. Applied in
   native slice-06 preparation.
+
+## Shared optical world integration — sound
+
+- **Snapshot physical authoring before asynchronous loading.** Scene identity and meshes consume the same copy; later caller mutation cannot relabel a different scene. Appearance catalog fields exclude scoring and chemical effects. The generated revision follows renderer imports and assets so visual source changes invalidate identity. High confidence, tested by mutation and provenance regeneration.
+- **Share the authored lighting resolver.** Daylight direction belongs to campaign authoring and resolves against the room envelope, not an escape trigger or asynchronous mesh bounds. Fixtures use the same physical light owner. This closes the diagnostic-lighting shortcut without changing campaign light direction. High confidence from paired production images and lamp movement.
+- **Keep sensory geometry static and independently owned.** Exclude flies, decorative animation and presentation overlays; keep real openings and prop surfaces. The same world factory and loaders serve both modes. Static compatible leaves are batched only after assets finish. This implements the permitted exclusions and prevents the player camera changing input. High confidence from byte invariance and independent visual review.

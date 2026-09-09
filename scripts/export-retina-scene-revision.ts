@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import ts from "typescript";
 
 export const sceneRevisionPath = "packages/game-renderer/src/retina-scene-revision.json";
-const entrypoints = ["packages/game-renderer/package.json", "packages/game-renderer/src/world-scene.ts", "packages/game-renderer/src/static-batches.ts"];
+const entrypoints = ["packages/game-renderer/package.json", "packages/game-renderer/src/retina-world.ts"];
 const hash = (bytes: string | Uint8Array) => createHash("sha256").update(bytes).digest("hex");
 
 function runtimeImports(path: string, source: string): string[] {

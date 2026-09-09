@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "9a09731575373a950f4bb0da37ae712ad77718a9acc714efc560785904e67c5f",
+  "revision": "7e61d4060e0d159b9fcb00aa2b2e044a9e4bf28c9fdeac1ee9bd04df3dd3c28a",
   "files": [
     {
       "path": "assets/food/apple/apple.glb",
@@ -180,7 +180,7 @@
     },
     {
       "path": "package.json",
-      "sha256": "c345d6e53aea9911d3dd467e7a68e07811452e3dd7a61a825bef657dc432dcaa"
+      "sha256": "464786c1a4dc2211bb359e051fbb35e066fe7728c420a7ce0e1131ef53bee963"
     },
     {
       "path": "packages/game-renderer/package.json",
@@ -212,11 +212,15 @@
     },
     {
       "path": "packages/game-renderer/src/placement-models.ts",
-      "sha256": "386ec99e7ecfb012a05e2337c4c256604262e55d15d3a3342f5d8fbe8a8c0b27"
+      "sha256": "cea4ed940711536cddeea2c6b3615cb02eadf48bd0c82f482c2c4e3fd874ce76"
     },
     {
       "path": "packages/game-renderer/src/resources.ts",
       "sha256": "f8254fd6941fb28f91cffc987893217a076512cb82c12d4dacf6c1f0ce512bd7"
+    },
+    {
+      "path": "packages/game-renderer/src/retina-world.ts",
+      "sha256": "eac12b5a0b992f272e14ffa2932e2995be853ba7eed68961046420963a7ae6eb"
     },
     {
       "path": "packages/game-renderer/src/room-details.ts",

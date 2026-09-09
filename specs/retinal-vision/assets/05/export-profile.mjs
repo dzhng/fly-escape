@@ -11,23 +11,13 @@ const files = ["retina-projection.ts", "retina-eye-rig.ts", "retina-capture.ts",
 const paths = files.map(name => resolve(sourceRoot, "packages/game-renderer/src", name));
 const bytes = await Promise.all(paths.map(path => readFile(path)));
 const sha256 = bytes => createHash("sha256").update(bytes).digest("hex");
-const { RetinaProjection, retinaProfile } = await import(pathToFileURL(paths[0]).href);
+const { RetinaProjection, retinaProfile, retinaCameraProjection } = await import(pathToFileURL(paths[0]).href);
 const { retinalEyeRig } = await import(pathToFileURL(paths[1]).href);
-// The provisional capture owner has not exported its camera constants yet. Read its
-// literal numeric constructor, rejecting new expressions rather than guessing optics.
-const constructor = bytes[2].toString().match(/new THREE\.PerspectiveCamera\(([^)]+)\)/);
-assert(constructor, "capture camera constants unavailable");
-const camera = constructor[1].split(",").map(term => {
-  const parts = term.trim().split("/").map(part => Number(part.trim()));
-  assert(parts.length <= 2 && parts.every(Number.isFinite), "camera uses nonliteral constants");
-  return parts.length === 1 ? parts[0] : parts[0] / parts[1];
-});
-assert(camera.length === 4 && camera.every(Number.isFinite), "invalid camera projection");
 const projection = new RetinaProjection(retinaProfile);
 const { width, height, radius, distortion, zoom } = projection.profile;
 const semantic = {
   opticalModelVersion: "provisional-retina-gpu-f32-pooling-v1",
-  capture: { width, height, verticalFovDegrees: camera[0], aspect: camera[1], nearMetres: camera[2], farMetres: camera[3], distortion, zoom },
+  capture: { width, height, ...retinaCameraProjection, distortion, zoom },
   layout: { radius, cells: projection.cells },
   eyeOrder: ["L", "R"], rgbOrder: ["R", "G", "B"], imageAxes: { x: "right", y: "down" },
   rigSha256: retinalEyeRig.rigSha256,

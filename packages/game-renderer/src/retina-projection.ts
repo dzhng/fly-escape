@@ -11,6 +11,10 @@ export const retinaProfile: Readonly<RetinaProfile> = Object.freeze({
   width: 128, height: 128, radius: 15, distortion: 3.8, zoom: 2.72,
 });
 
+export const retinaCameraProjection = Object.freeze({
+  verticalFovDegrees: 157, aspect: 450 / 512, nearMetres: 0.00001, farMetres: 100,
+});
+
 export class RetinaProjection {
   readonly cells: readonly { q: number; r: number; x: number; y: number }[];
   private readonly pixelCells: Int16Array;

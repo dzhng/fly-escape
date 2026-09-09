@@ -1,14 +1,16 @@
 import { RetinaCapture } from "../../packages/game-renderer/src/retina-capture.ts";
-import { retinaFixtureScene } from "../../apps/asset-lab/src/retina-fixture.ts";
+import { createRetinaFixture } from "../../apps/asset-lab/src/retina-fixture.ts";
 self.onmessage = async () => {
   console.log("Retina probe: loading failure scene");
-  const fixture = await retinaFixtureScene();
+  const fixture = await createRetinaFixture();
   console.log("Retina probe: loaded failure scene");
   const pose = {position:[1,.45,2.5],rotation:[0,Math.SQRT1_2,0,Math.SQRT1_2]};
   const result = {retries:[]};
   try {
     const bounded = new RetinaCapture(fixture.scene);
     try {
+      try { await bounded.acquire([{ ...pose, position: [NaN, 0, 0] }]); result.invalidPose = "accepted"; }
+      catch (error) { result.invalidPose = String(error); }
       const pending = bounded.acquire([pose]);
       try { await bounded.acquire([pose]); result.overlap = "accepted"; }
       catch (error) { result.overlap = String(error); }

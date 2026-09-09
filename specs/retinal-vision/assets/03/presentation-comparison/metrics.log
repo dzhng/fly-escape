@@ -1,0 +1,1050 @@
+{
+  "kind": "screenshot-parity-diff",
+  "generatedAt": "2026-09-09T12:44:35.051Z",
+  "note": "Lower parityDistance means the candidate is closer to the reference for this fixed pair. This is a distance metric, not an acceptance gate.",
+  "pairCount": 16,
+  "worstPair": "128-15-door-flight-L",
+  "results": [
+    {
+      "id": "128-15-door-flight-L",
+      "current": "../../../../../../../tmp/fly-retina-shared-pairs/reference/128-15-door-flight-L.png",
+      "candidate": "../../../../../../../tmp/fly-retina-shared-pairs/candidate/128-15-door-flight-L.png",
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "parityDistance": 0.20148,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 51,
+          "colorEntropyBits": 3.35667,
+          "edgeDensity": 0.09015,
+          "dominantColorShare": 0.34985,
+          "transparentShare": 0.34985,
+          "luminanceMean": 101.67635,
+          "luminanceP5": 0,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 193.1004
+        },
+        "candidate": {
+          "colorBuckets": 56,
+          "colorEntropyBits": 3.38506,
+          "edgeDensity": 0.09381,
+          "dominantColorShare": 0.34985,
+          "transparentShare": 0.34985,
+          "luminanceMean": 113.65481,
+          "luminanceP5": 0,
+          "luminanceP95": 217.2638,
+          "luminanceContrast": 217.2638
+        }
+      },
+      "grayscale": {
+        "mae": 12.44876,
+        "rmse": 21.74486,
+        "diffRatio16": 0.31036,
+        "diffRatio32": 0.27155,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0.29993
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0.34985,
+        "blackRatioCandidate": 0.34985,
+        "terrainLikeRatioCurrent": 0.46973,
+        "terrainLikeRatioCandidate": 0.47437,
+        "avgLuminanceCurrent": 101.67635,
+        "avgLuminanceCandidate": 113.65481,
+        "avgLuminanceDelta": 11.97847,
+        "edgeEnergyCurrent": 0.13119,
+        "edgeEnergyCandidate": 0.142,
+        "edgeEnergyRatio": 1.08243,
+        "edgeDiffRatio32": 0.05725
+      },
+      "artifacts": {
+        "sideBySide": "comparison/128-15-door-flight-L-side-by-side.png",
+        "currentGray": "comparison/128-15-door-flight-L-current-gray.png",
+        "candidateGray": "comparison/128-15-door-flight-L-candidate-gray.png",
+        "absDiff": "comparison/128-15-door-flight-L-absdiff.png",
+        "pixelmatch": "comparison/128-15-door-flight-L-pixelmatch.png",
+        "currentEdges": "comparison/128-15-door-flight-L-current-edges.png",
+        "candidateEdges": "comparison/128-15-door-flight-L-candidate-edges.png",
+        "edgeDiff": "comparison/128-15-door-flight-L-edge-diff.png"
+      }
+    },
+    {
+      "id": "128-15-door-floor-L",
+      "current": "../../../../../../../tmp/fly-retina-shared-pairs/reference/128-15-door-floor-L.png",
+      "candidate": "../../../../../../../tmp/fly-retina-shared-pairs/candidate/128-15-door-floor-L.png",
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "parityDistance": 0.13877,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 52,
+          "colorEntropyBits": 3.415,
+          "edgeDensity": 0.0868,
+          "dominantColorShare": 0.34985,
+          "transparentShare": 0.34985,
+          "luminanceMean": 91.88705,
+          "luminanceP5": 0,
+          "luminanceP95": 183.674,
+          "luminanceContrast": 183.674
+        },
+        "candidate": {
+          "colorBuckets": 56,
+          "colorEntropyBits": 3.57889,
+          "edgeDensity": 0.09126,
+          "dominantColorShare": 0.34985,
+          "transparentShare": 0.34985,
+          "luminanceMean": 98.82361,
+          "luminanceP5": 0,
+          "luminanceP95": 216.2638,
+          "luminanceContrast": 216.2638
+        }
+      },
+      "grayscale": {
+        "mae": 8.10846,
+        "rmse": 16.07182,
+        "diffRatio16": 0.21655,
+        "diffRatio32": 0.17645,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0.19843
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0.34985,
+        "blackRatioCandidate": 0.34985,
+        "terrainLikeRatioCurrent": 0.55396,
+        "terrainLikeRatioCandidate": 0.55579,
+        "avgLuminanceCurrent": 91.88705,
+        "avgLuminanceCandidate": 98.82361,
+        "avgLuminanceDelta": 6.93656,
+        "edgeEnergyCurrent": 0.12714,
+        "edgeEnergyCandidate": 0.13701,
+        "edgeEnergyRatio": 1.0776,
+        "edgeDiffRatio32": 0.04492
+      },
+      "artifacts": {
+        "sideBySide": "comparison/128-15-door-floor-L-side-by-side.png",
+        "currentGray": "comparison/128-15-door-floor-L-current-gray.png",
+        "candidateGray": "comparison/128-15-door-floor-L-candidate-gray.png",
+        "absDiff": "comparison/128-15-door-floor-L-absdiff.png",
+        "pixelmatch": "comparison/128-15-door-floor-L-pixelmatch.png",
+        "currentEdges": "comparison/128-15-door-floor-L-current-edges.png",
+        "candidateEdges": "comparison/128-15-door-floor-L-candidate-edges.png",
+        "edgeDiff": "comparison/128-15-door-floor-L-edge-diff.png"
+      }
+    },
+    {
+      "id": "128-15-door-flight-R-camera",
+      "current": "../../../../../../../tmp/fly-retina-shared-pairs/reference/128-15-door-flight-R-camera.png",
+      "candidate": "../../../../../../../tmp/fly-retina-shared-pairs/candidate/128-15-door-flight-R-camera.png",
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "parityDistance": 0.11717,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 53,
+          "colorEntropyBits": 3.54588,
+          "edgeDensity": 0.14936,
+          "dominantColorShare": 0.36292,
+          "transparentShare": 0,
+          "luminanceMean": 163.71056,
+          "luminanceP5": 117.1604,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 75.94
+        },
+        "candidate": {
+          "colorBuckets": 53,
+          "colorEntropyBits": 3.24712,
+          "edgeDensity": 0.03801,
+          "dominantColorShare": 0.36292,
+          "transparentShare": 0,
+          "luminanceMean": 167.44003,
+          "luminanceP5": 114.7392,
+          "luminanceP95": 214.1234,
+          "luminanceContrast": 99.3842
+        }
+      },
+      "grayscale": {
+        "mae": 6.11454,
+        "rmse": 13.40898,
+        "diffRatio16": 0.14539,
+        "diffRatio32": 0.07452,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0.12372
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0.00079,
+        "blackRatioCandidate": 0.00079,
+        "terrainLikeRatioCurrent": 0.62238,
+        "terrainLikeRatioCandidate": 0.62238,
+        "avgLuminanceCurrent": 163.71056,
+        "avgLuminanceCandidate": 167.44003,
+        "avgLuminanceDelta": 3.72947,
+        "edgeEnergyCurrent": 0.08081,
+        "edgeEnergyCandidate": 0.06848,
+        "edgeEnergyRatio": 0.84746,
+        "edgeDiffRatio32": 0.09735
+      },
+      "artifacts": {
+        "sideBySide": "comparison/128-15-door-flight-R-camera-side-by-side.png",
+        "currentGray": "comparison/128-15-door-flight-R-camera-current-gray.png",
+        "candidateGray": "comparison/128-15-door-flight-R-camera-candidate-gray.png",
+        "absDiff": "comparison/128-15-door-flight-R-camera-absdiff.png",
+        "pixelmatch": "comparison/128-15-door-flight-R-camera-pixelmatch.png",
+        "currentEdges": "comparison/128-15-door-flight-R-camera-current-edges.png",
+        "candidateEdges": "comparison/128-15-door-flight-R-camera-candidate-edges.png",
+        "edgeDiff": "comparison/128-15-door-flight-R-camera-edge-diff.png"
+      }
+    },
+    {
+      "id": "128-15-landmarks-turned-L-camera",
+      "current": "../../../../../../../tmp/fly-retina-shared-pairs/reference/128-15-landmarks-turned-L-camera.png",
+      "candidate": "../../../../../../../tmp/fly-retina-shared-pairs/candidate/128-15-landmarks-turned-L-camera.png",
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "parityDistance": 0.1009,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 55,
+          "colorEntropyBits": 3.58545,
+          "edgeDensity": 0.07521,
+          "dominantColorShare": 0.2926,
+          "transparentShare": 0,
+          "luminanceMean": 146.21508,
+          "luminanceP5": 82.7736,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 110.3268
+        },
+        "candidate": {
+          "colorBuckets": 54,
+          "colorEntropyBits": 3.32099,
+          "edgeDensity": 0.04979,
+          "dominantColorShare": 0.2926,
+          "transparentShare": 0,
+          "luminanceMean": 148.18308,
+          "luminanceP5": 85.6292,
+          "luminanceP95": 213.9108,
+          "luminanceContrast": 128.2816
+        }
+      },
+      "grayscale": {
+        "mae": 5.74132,
+        "rmse": 12.54534,
+        "diffRatio16": 0.15466,
+        "diffRatio32": 0.06665,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0.13458
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0.00598,
+        "blackRatioCandidate": 0.00598,
+        "terrainLikeRatioCurrent": 0.67462,
+        "terrainLikeRatioCandidate": 0.67468,
+        "avgLuminanceCurrent": 146.21508,
+        "avgLuminanceCandidate": 148.18308,
+        "avgLuminanceDelta": 1.968,
+        "edgeEnergyCurrent": 0.08789,
+        "edgeEnergyCandidate": 0.07916,
+        "edgeEnergyRatio": 0.90068,
+        "edgeDiffRatio32": 0.08514
+      },
+      "artifacts": {
+        "sideBySide": "comparison/128-15-landmarks-turned-L-camera-side-by-side.png",
+        "currentGray": "comparison/128-15-landmarks-turned-L-camera-current-gray.png",
+        "candidateGray": "comparison/128-15-landmarks-turned-L-camera-candidate-gray.png",
+        "absDiff": "comparison/128-15-landmarks-turned-L-camera-absdiff.png",
+        "pixelmatch": "comparison/128-15-landmarks-turned-L-camera-pixelmatch.png",
+        "currentEdges": "comparison/128-15-landmarks-turned-L-camera-current-edges.png",
+        "candidateEdges": "comparison/128-15-landmarks-turned-L-camera-candidate-edges.png",
+        "edgeDiff": "comparison/128-15-landmarks-turned-L-camera-edge-diff.png"
+      }
+    },
+    {
+      "id": "128-15-door-floor-R-camera",
+      "current": "../../../../../../../tmp/fly-retina-shared-pairs/reference/128-15-door-floor-R-camera.png",
+      "candidate": "../../../../../../../tmp/fly-retina-shared-pairs/candidate/128-15-door-floor-R-camera.png",
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "parityDistance": 0.09528,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 59,
+          "colorEntropyBits": 4.01346,
+          "edgeDensity": 0.1377,
+          "dominantColorShare": 0.26624,
+          "transparentShare": 0,
+          "luminanceMean": 157.28522,
+          "luminanceP5": 112.5266,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 80.5738
+        },
+        "candidate": {
+          "colorBuckets": 54,
+          "colorEntropyBits": 3.84504,
+          "edgeDensity": 0.04086,
+          "dominantColorShare": 0.26624,
+          "transparentShare": 0,
+          "luminanceMean": 160.62018,
+          "luminanceP5": 110.5174,
+          "luminanceP95": 214.9108,
+          "luminanceContrast": 104.3934
+        }
+      },
+      "grayscale": {
+        "mae": 5.52404,
+        "rmse": 12.13741,
+        "diffRatio16": 0.11945,
+        "diffRatio32": 0.05884,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0.10254
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0.00049,
+        "blackRatioCandidate": 0.00049,
+        "terrainLikeRatioCurrent": 0.72028,
+        "terrainLikeRatioCandidate": 0.72028,
+        "avgLuminanceCurrent": 157.28522,
+        "avgLuminanceCandidate": 160.62018,
+        "avgLuminanceDelta": 3.33496,
+        "edgeEnergyCurrent": 0.09534,
+        "edgeEnergyCandidate": 0.08237,
+        "edgeEnergyRatio": 0.86391,
+        "edgeDiffRatio32": 0.06958
+      },
+      "artifacts": {
+        "sideBySide": "comparison/128-15-door-floor-R-camera-side-by-side.png",
+        "currentGray": "comparison/128-15-door-floor-R-camera-current-gray.png",
+        "candidateGray": "comparison/128-15-door-floor-R-camera-candidate-gray.png",
+        "absDiff": "comparison/128-15-door-floor-R-camera-absdiff.png",
+        "pixelmatch": "comparison/128-15-door-floor-R-camera-pixelmatch.png",
+        "currentEdges": "comparison/128-15-door-floor-R-camera-current-edges.png",
+        "candidateEdges": "comparison/128-15-door-floor-R-camera-candidate-edges.png",
+        "edgeDiff": "comparison/128-15-door-floor-R-camera-edge-diff.png"
+      }
+    },
+    {
+      "id": "128-15-door-flight-L-camera",
+      "current": "../../../../../../../tmp/fly-retina-shared-pairs/reference/128-15-door-flight-L-camera.png",
+      "candidate": "../../../../../../../tmp/fly-retina-shared-pairs/candidate/128-15-door-flight-L-camera.png",
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "parityDistance": 0.0934,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 30,
+          "colorEntropyBits": 3.03153,
+          "edgeDensity": 0.03739,
+          "dominantColorShare": 0.32227,
+          "transparentShare": 0,
+          "luminanceMean": 156.69224,
+          "luminanceP5": 117.2326,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 75.8678
+        },
+        "candidate": {
+          "colorBuckets": 33,
+          "colorEntropyBits": 2.98845,
+          "edgeDensity": 0.03553,
+          "dominantColorShare": 0.32227,
+          "transparentShare": 0,
+          "luminanceMean": 160.74414,
+          "luminanceP5": 115.2326,
+          "luminanceP95": 215.336,
+          "luminanceContrast": 100.1034
+        }
+      },
+      "grayscale": {
+        "mae": 5.57027,
+        "rmse": 14.1181,
+        "diffRatio16": 0.11932,
+        "diffRatio32": 0.1142,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0.11694
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.66675,
+        "terrainLikeRatioCandidate": 0.66675,
+        "avgLuminanceCurrent": 156.69224,
+        "avgLuminanceCandidate": 160.74414,
+        "avgLuminanceDelta": 4.0519,
+        "edgeEnergyCurrent": 0.05707,
+        "edgeEnergyCandidate": 0.06227,
+        "edgeEnergyRatio": 1.09111,
+        "edgeDiffRatio32": 0.0213
+      },
+      "artifacts": {
+        "sideBySide": "comparison/128-15-door-flight-L-camera-side-by-side.png",
+        "currentGray": "comparison/128-15-door-flight-L-camera-current-gray.png",
+        "candidateGray": "comparison/128-15-door-flight-L-camera-candidate-gray.png",
+        "absDiff": "comparison/128-15-door-flight-L-camera-absdiff.png",
+        "pixelmatch": "comparison/128-15-door-flight-L-camera-pixelmatch.png",
+        "currentEdges": "comparison/128-15-door-flight-L-camera-current-edges.png",
+        "candidateEdges": "comparison/128-15-door-flight-L-camera-candidate-edges.png",
+        "edgeDiff": "comparison/128-15-door-flight-L-camera-edge-diff.png"
+      }
+    },
+    {
+      "id": "128-15-landmarks-L-camera",
+      "current": "../../../../../../../tmp/fly-retina-shared-pairs/reference/128-15-landmarks-L-camera.png",
+      "candidate": "../../../../../../../tmp/fly-retina-shared-pairs/candidate/128-15-landmarks-L-camera.png",
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "parityDistance": 0.08678,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 57,
+          "colorEntropyBits": 3.5507,
+          "edgeDensity": 0.06634,
+          "dominantColorShare": 0.27209,
+          "transparentShare": 0,
+          "luminanceMean": 147.07354,
+          "luminanceP5": 82.7736,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 110.3268
+        },
+        "candidate": {
+          "colorBuckets": 55,
+          "colorEntropyBits": 3.34889,
+          "edgeDensity": 0.05258,
+          "dominantColorShare": 0.27209,
+          "transparentShare": 0,
+          "luminanceMean": 148.54749,
+          "luminanceP5": 86.7696,
+          "luminanceP95": 213.9108,
+          "luminanceContrast": 127.1412
+        }
+      },
+      "grayscale": {
+        "mae": 5.46082,
+        "rmse": 12.16468,
+        "diffRatio16": 0.14484,
+        "diffRatio32": 0.06665,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0.12598
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0.00433,
+        "blackRatioCandidate": 0.00433,
+        "terrainLikeRatioCurrent": 0.69104,
+        "terrainLikeRatioCandidate": 0.69122,
+        "avgLuminanceCurrent": 147.07354,
+        "avgLuminanceCandidate": 148.54749,
+        "avgLuminanceDelta": 1.47395,
+        "edgeEnergyCurrent": 0.08667,
+        "edgeEnergyCandidate": 0.08169,
+        "edgeEnergyRatio": 0.94255,
+        "edgeDiffRatio32": 0.0766
+      },
+      "artifacts": {
+        "sideBySide": "comparison/128-15-landmarks-L-camera-side-by-side.png",
+        "currentGray": "comparison/128-15-landmarks-L-camera-current-gray.png",
+        "candidateGray": "comparison/128-15-landmarks-L-camera-candidate-gray.png",
+        "absDiff": "comparison/128-15-landmarks-L-camera-absdiff.png",
+        "pixelmatch": "comparison/128-15-landmarks-L-camera-pixelmatch.png",
+        "currentEdges": "comparison/128-15-landmarks-L-camera-current-edges.png",
+        "candidateEdges": "comparison/128-15-landmarks-L-camera-candidate-edges.png",
+        "edgeDiff": "comparison/128-15-landmarks-L-camera-edge-diff.png"
+      }
+    },
+    {
+      "id": "128-15-door-floor-L-camera",
+      "current": "../../../../../../../tmp/fly-retina-shared-pairs/reference/128-15-door-floor-L-camera.png",
+      "candidate": "../../../../../../../tmp/fly-retina-shared-pairs/candidate/128-15-door-floor-L-camera.png",
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "parityDistance": 0.08336,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 34,
+          "colorEntropyBits": 3.67193,
+          "edgeDensity": 0.04972,
+          "dominantColorShare": 0.18494,
+          "transparentShare": 0,
+          "luminanceMean": 149.10387,
+          "luminanceP5": 111.667,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 81.4334
+        },
+        "candidate": {
+          "colorBuckets": 29,
+          "colorEntropyBits": 3.64774,
+          "edgeDensity": 0.0501,
+          "dominantColorShare": 0.18494,
+          "transparentShare": 0,
+          "luminanceMean": 152.40411,
+          "luminanceP5": 109.8796,
+          "luminanceP95": 216.8386,
+          "luminanceContrast": 106.959
+        }
+      },
+      "grayscale": {
+        "mae": 5.35167,
+        "rmse": 12.79291,
+        "diffRatio16": 0.11664,
+        "diffRatio32": 0.10693,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0.11621
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.80408,
+        "terrainLikeRatioCandidate": 0.80408,
+        "avgLuminanceCurrent": 149.10387,
+        "avgLuminanceCandidate": 152.40411,
+        "avgLuminanceDelta": 3.30024,
+        "edgeEnergyCurrent": 0.08339,
+        "edgeEnergyCandidate": 0.08791,
+        "edgeEnergyRatio": 1.05426,
+        "edgeDiffRatio32": 0.02179
+      },
+      "artifacts": {
+        "sideBySide": "comparison/128-15-door-floor-L-camera-side-by-side.png",
+        "currentGray": "comparison/128-15-door-floor-L-camera-current-gray.png",
+        "candidateGray": "comparison/128-15-door-floor-L-camera-candidate-gray.png",
+        "absDiff": "comparison/128-15-door-floor-L-camera-absdiff.png",
+        "pixelmatch": "comparison/128-15-door-floor-L-camera-pixelmatch.png",
+        "currentEdges": "comparison/128-15-door-floor-L-camera-current-edges.png",
+        "candidateEdges": "comparison/128-15-door-floor-L-camera-candidate-edges.png",
+        "edgeDiff": "comparison/128-15-door-floor-L-camera-edge-diff.png"
+      }
+    },
+    {
+      "id": "128-15-landmarks-R-camera",
+      "current": "../../../../../../../tmp/fly-retina-shared-pairs/reference/128-15-landmarks-R-camera.png",
+      "candidate": "../../../../../../../tmp/fly-retina-shared-pairs/candidate/128-15-landmarks-R-camera.png",
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "parityDistance": 0.08208,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 56,
+          "colorEntropyBits": 3.76267,
+          "edgeDensity": 0.07769,
+          "dominantColorShare": 0.26373,
+          "transparentShare": 0,
+          "luminanceMean": 135.92694,
+          "luminanceP5": 77.4928,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 115.6076
+        },
+        "candidate": {
+          "colorBuckets": 46,
+          "colorEntropyBits": 3.60197,
+          "edgeDensity": 0.06144,
+          "dominantColorShare": 0.26373,
+          "transparentShare": 0,
+          "luminanceMean": 137.76975,
+          "luminanceP5": 77.7054,
+          "luminanceP95": 213.9108,
+          "luminanceContrast": 136.2054
+        }
+      },
+      "grayscale": {
+        "mae": 5.05722,
+        "rmse": 12.07984,
+        "diffRatio16": 0.13983,
+        "diffRatio32": 0.0661,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0.12201
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.67023,
+        "terrainLikeRatioCandidate": 0.67035,
+        "avgLuminanceCurrent": 135.92694,
+        "avgLuminanceCandidate": 137.76975,
+        "avgLuminanceDelta": 1.84281,
+        "edgeEnergyCurrent": 0.10383,
+        "edgeEnergyCandidate": 0.09926,
+        "edgeEnergyRatio": 0.95601,
+        "edgeDiffRatio32": 0.07483
+      },
+      "artifacts": {
+        "sideBySide": "comparison/128-15-landmarks-R-camera-side-by-side.png",
+        "currentGray": "comparison/128-15-landmarks-R-camera-current-gray.png",
+        "candidateGray": "comparison/128-15-landmarks-R-camera-candidate-gray.png",
+        "absDiff": "comparison/128-15-landmarks-R-camera-absdiff.png",
+        "pixelmatch": "comparison/128-15-landmarks-R-camera-pixelmatch.png",
+        "currentEdges": "comparison/128-15-landmarks-R-camera-current-edges.png",
+        "candidateEdges": "comparison/128-15-landmarks-R-camera-candidate-edges.png",
+        "edgeDiff": "comparison/128-15-landmarks-R-camera-edge-diff.png"
+      }
+    },
+    {
+      "id": "128-15-landmarks-turned-L",
+      "current": "../../../../../../../tmp/fly-retina-shared-pairs/reference/128-15-landmarks-turned-L.png",
+      "candidate": "../../../../../../../tmp/fly-retina-shared-pairs/candidate/128-15-landmarks-turned-L.png",
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "parityDistance": 0.05196,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 93,
+          "colorEntropyBits": 3.86005,
+          "edgeDensity": 0.10552,
+          "dominantColorShare": 0.34985,
+          "transparentShare": 0.34985,
+          "luminanceMean": 89.1717,
+          "luminanceP5": 0,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 193.1004
+        },
+        "candidate": {
+          "colorBuckets": 98,
+          "colorEntropyBits": 3.90444,
+          "edgeDensity": 0.1059,
+          "dominantColorShare": 0.34985,
+          "transparentShare": 0.34985,
+          "luminanceMean": 90.69325,
+          "luminanceP5": 0,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 193.1004
+        }
+      },
+      "grayscale": {
+        "mae": 3.68534,
+        "rmse": 9.73007,
+        "diffRatio16": 0.10583,
+        "diffRatio32": 0.03253,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0.09039
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0.36462,
+        "blackRatioCandidate": 0.36462,
+        "terrainLikeRatioCurrent": 0.43561,
+        "terrainLikeRatioCandidate": 0.43762,
+        "avgLuminanceCurrent": 89.1717,
+        "avgLuminanceCandidate": 90.69325,
+        "avgLuminanceDelta": 1.52155,
+        "edgeEnergyCurrent": 0.13521,
+        "edgeEnergyCandidate": 0.13769,
+        "edgeEnergyRatio": 1.01837,
+        "edgeDiffRatio32": 0.05615
+      },
+      "artifacts": {
+        "sideBySide": "comparison/128-15-landmarks-turned-L-side-by-side.png",
+        "currentGray": "comparison/128-15-landmarks-turned-L-current-gray.png",
+        "candidateGray": "comparison/128-15-landmarks-turned-L-candidate-gray.png",
+        "absDiff": "comparison/128-15-landmarks-turned-L-absdiff.png",
+        "pixelmatch": "comparison/128-15-landmarks-turned-L-pixelmatch.png",
+        "currentEdges": "comparison/128-15-landmarks-turned-L-current-edges.png",
+        "candidateEdges": "comparison/128-15-landmarks-turned-L-candidate-edges.png",
+        "edgeDiff": "comparison/128-15-landmarks-turned-L-edge-diff.png"
+      }
+    },
+    {
+      "id": "128-15-landmarks-turned-R-camera",
+      "current": "../../../../../../../tmp/fly-retina-shared-pairs/reference/128-15-landmarks-turned-R-camera.png",
+      "candidate": "../../../../../../../tmp/fly-retina-shared-pairs/candidate/128-15-landmarks-turned-R-camera.png",
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "parityDistance": 0.04937,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 48,
+          "colorEntropyBits": 3.61774,
+          "edgeDensity": 0.05115,
+          "dominantColorShare": 0.2486,
+          "transparentShare": 0,
+          "luminanceMean": 137.14152,
+          "luminanceP5": 77.0624,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 116.038
+        },
+        "candidate": {
+          "colorBuckets": 40,
+          "colorEntropyBits": 3.50049,
+          "edgeDensity": 0.0527,
+          "dominantColorShare": 0.2486,
+          "transparentShare": 0,
+          "luminanceMean": 137.48976,
+          "luminanceP5": 77.4928,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 115.6076
+        }
+      },
+      "grayscale": {
+        "mae": 3.75902,
+        "rmse": 9.76989,
+        "diffRatio16": 0.09796,
+        "diffRatio32": 0.03992,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0.0863
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0,
+        "blackRatioCandidate": 0,
+        "terrainLikeRatioCurrent": 0.66614,
+        "terrainLikeRatioCandidate": 0.66638,
+        "avgLuminanceCurrent": 137.14152,
+        "avgLuminanceCandidate": 137.48976,
+        "avgLuminanceDelta": 0.34823,
+        "edgeEnergyCurrent": 0.08862,
+        "edgeEnergyCandidate": 0.08943,
+        "edgeEnergyRatio": 1.00907,
+        "edgeDiffRatio32": 0.04749
+      },
+      "artifacts": {
+        "sideBySide": "comparison/128-15-landmarks-turned-R-camera-side-by-side.png",
+        "currentGray": "comparison/128-15-landmarks-turned-R-camera-current-gray.png",
+        "candidateGray": "comparison/128-15-landmarks-turned-R-camera-candidate-gray.png",
+        "absDiff": "comparison/128-15-landmarks-turned-R-camera-absdiff.png",
+        "pixelmatch": "comparison/128-15-landmarks-turned-R-camera-pixelmatch.png",
+        "currentEdges": "comparison/128-15-landmarks-turned-R-camera-current-edges.png",
+        "candidateEdges": "comparison/128-15-landmarks-turned-R-camera-candidate-edges.png",
+        "edgeDiff": "comparison/128-15-landmarks-turned-R-camera-edge-diff.png"
+      }
+    },
+    {
+      "id": "128-15-landmarks-L",
+      "current": "../../../../../../../tmp/fly-retina-shared-pairs/reference/128-15-landmarks-L.png",
+      "candidate": "../../../../../../../tmp/fly-retina-shared-pairs/candidate/128-15-landmarks-L.png",
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "parityDistance": 0.041,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 93,
+          "colorEntropyBits": 3.84732,
+          "edgeDensity": 0.10236,
+          "dominantColorShare": 0.34985,
+          "transparentShare": 0.34985,
+          "luminanceMean": 89.12055,
+          "luminanceP5": 0,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 193.1004
+        },
+        "candidate": {
+          "colorBuckets": 94,
+          "colorEntropyBits": 3.85285,
+          "edgeDensity": 0.10335,
+          "dominantColorShare": 0.34985,
+          "transparentShare": 0.34985,
+          "luminanceMean": 90.21856,
+          "luminanceP5": 0,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 193.1004
+        }
+      },
+      "grayscale": {
+        "mae": 3.11495,
+        "rmse": 8.76183,
+        "diffRatio16": 0.08618,
+        "diffRatio32": 0.02209,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0.07257
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0.36298,
+        "blackRatioCandidate": 0.36298,
+        "terrainLikeRatioCurrent": 0.4436,
+        "terrainLikeRatioCandidate": 0.4436,
+        "avgLuminanceCurrent": 89.12055,
+        "avgLuminanceCandidate": 90.21856,
+        "avgLuminanceDelta": 1.09801,
+        "edgeEnergyCurrent": 0.1318,
+        "edgeEnergyCandidate": 0.13356,
+        "edgeEnergyRatio": 1.01341,
+        "edgeDiffRatio32": 0.04895
+      },
+      "artifacts": {
+        "sideBySide": "comparison/128-15-landmarks-L-side-by-side.png",
+        "currentGray": "comparison/128-15-landmarks-L-current-gray.png",
+        "candidateGray": "comparison/128-15-landmarks-L-candidate-gray.png",
+        "absDiff": "comparison/128-15-landmarks-L-absdiff.png",
+        "pixelmatch": "comparison/128-15-landmarks-L-pixelmatch.png",
+        "currentEdges": "comparison/128-15-landmarks-L-current-edges.png",
+        "candidateEdges": "comparison/128-15-landmarks-L-candidate-edges.png",
+        "edgeDiff": "comparison/128-15-landmarks-L-edge-diff.png"
+      }
+    },
+    {
+      "id": "128-15-landmarks-R",
+      "current": "../../../../../../../tmp/fly-retina-shared-pairs/reference/128-15-landmarks-R.png",
+      "candidate": "../../../../../../../tmp/fly-retina-shared-pairs/candidate/128-15-landmarks-R.png",
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "parityDistance": 0.03666,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 70,
+          "colorEntropyBits": 3.40139,
+          "edgeDensity": 0.07731,
+          "dominantColorShare": 0.34985,
+          "transparentShare": 0.34985,
+          "luminanceMean": 88.41243,
+          "luminanceP5": 0,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 193.1004
+        },
+        "candidate": {
+          "colorBuckets": 74,
+          "colorEntropyBits": 3.41204,
+          "edgeDensity": 0.08048,
+          "dominantColorShare": 0.34985,
+          "transparentShare": 0.34985,
+          "luminanceMean": 89.01437,
+          "luminanceP5": 0,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 193.1004
+        }
+      },
+      "grayscale": {
+        "mae": 2.24574,
+        "rmse": 7.59239,
+        "diffRatio16": 0.06567,
+        "diffRatio32": 0.01868,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0.05402
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0.34985,
+        "blackRatioCandidate": 0.34985,
+        "terrainLikeRatioCurrent": 0.47437,
+        "terrainLikeRatioCandidate": 0.4754,
+        "avgLuminanceCurrent": 88.41243,
+        "avgLuminanceCandidate": 89.01437,
+        "avgLuminanceDelta": 0.60194,
+        "edgeEnergyCurrent": 0.10952,
+        "edgeEnergyCandidate": 0.11282,
+        "edgeEnergyRatio": 1.03009,
+        "edgeDiffRatio32": 0.04083
+      },
+      "artifacts": {
+        "sideBySide": "comparison/128-15-landmarks-R-side-by-side.png",
+        "currentGray": "comparison/128-15-landmarks-R-current-gray.png",
+        "candidateGray": "comparison/128-15-landmarks-R-candidate-gray.png",
+        "absDiff": "comparison/128-15-landmarks-R-absdiff.png",
+        "pixelmatch": "comparison/128-15-landmarks-R-pixelmatch.png",
+        "currentEdges": "comparison/128-15-landmarks-R-current-edges.png",
+        "candidateEdges": "comparison/128-15-landmarks-R-candidate-edges.png",
+        "edgeDiff": "comparison/128-15-landmarks-R-edge-diff.png"
+      }
+    },
+    {
+      "id": "128-15-landmarks-turned-R",
+      "current": "../../../../../../../tmp/fly-retina-shared-pairs/reference/128-15-landmarks-turned-R.png",
+      "candidate": "../../../../../../../tmp/fly-retina-shared-pairs/candidate/128-15-landmarks-turned-R.png",
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "parityDistance": 0.02879,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 65,
+          "colorEntropyBits": 3.33149,
+          "edgeDensity": 0.07446,
+          "dominantColorShare": 0.34985,
+          "transparentShare": 0.34985,
+          "luminanceMean": 87.59544,
+          "luminanceP5": 0,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 193.1004
+        },
+        "candidate": {
+          "colorBuckets": 67,
+          "colorEntropyBits": 3.29927,
+          "edgeDensity": 0.07756,
+          "dominantColorShare": 0.34985,
+          "transparentShare": 0.34985,
+          "luminanceMean": 88.13863,
+          "luminanceP5": 0,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 193.1004
+        }
+      },
+      "grayscale": {
+        "mae": 1.9995,
+        "rmse": 6.9508,
+        "diffRatio16": 0.05768,
+        "diffRatio32": 0.01141,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0.04962
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0.34985,
+        "blackRatioCandidate": 0.34985,
+        "terrainLikeRatioCurrent": 0.4903,
+        "terrainLikeRatioCandidate": 0.4903,
+        "avgLuminanceCurrent": 87.59544,
+        "avgLuminanceCandidate": 88.13863,
+        "avgLuminanceDelta": 0.54319,
+        "edgeEnergyCurrent": 0.10938,
+        "edgeEnergyCandidate": 0.11128,
+        "edgeEnergyRatio": 1.01743,
+        "edgeDiffRatio32": 0.03461
+      },
+      "artifacts": {
+        "sideBySide": "comparison/128-15-landmarks-turned-R-side-by-side.png",
+        "currentGray": "comparison/128-15-landmarks-turned-R-current-gray.png",
+        "candidateGray": "comparison/128-15-landmarks-turned-R-candidate-gray.png",
+        "absDiff": "comparison/128-15-landmarks-turned-R-absdiff.png",
+        "pixelmatch": "comparison/128-15-landmarks-turned-R-pixelmatch.png",
+        "currentEdges": "comparison/128-15-landmarks-turned-R-current-edges.png",
+        "candidateEdges": "comparison/128-15-landmarks-turned-R-candidate-edges.png",
+        "edgeDiff": "comparison/128-15-landmarks-turned-R-edge-diff.png"
+      }
+    },
+    {
+      "id": "128-15-door-flight-R",
+      "current": "../../../../../../../tmp/fly-retina-shared-pairs/reference/128-15-door-flight-R.png",
+      "candidate": "../../../../../../../tmp/fly-retina-shared-pairs/candidate/128-15-door-flight-R.png",
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "parityDistance": 0.02215,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 66,
+          "colorEntropyBits": 3.27416,
+          "edgeDensity": 0.07229,
+          "dominantColorShare": 0.34985,
+          "transparentShare": 0.34985,
+          "luminanceMean": 103.13337,
+          "luminanceP5": 0,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 193.1004
+        },
+        "candidate": {
+          "colorBuckets": 66,
+          "colorEntropyBits": 3.28898,
+          "edgeDensity": 0.07465,
+          "dominantColorShare": 0.34985,
+          "transparentShare": 0.34985,
+          "luminanceMean": 103.41043,
+          "luminanceP5": 0,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 193.1004
+        }
+      },
+      "grayscale": {
+        "mae": 1.53491,
+        "rmse": 5.32205,
+        "diffRatio16": 0.03253,
+        "diffRatio32": 0.00885,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0.01947
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0.34985,
+        "blackRatioCandidate": 0.34985,
+        "terrainLikeRatioCurrent": 0.43738,
+        "terrainLikeRatioCandidate": 0.43842,
+        "avgLuminanceCurrent": 103.13337,
+        "avgLuminanceCandidate": 103.41043,
+        "avgLuminanceDelta": 0.27706,
+        "edgeEnergyCurrent": 0.10317,
+        "edgeEnergyCandidate": 0.10708,
+        "edgeEnergyRatio": 1.03791,
+        "edgeDiffRatio32": 0.02454
+      },
+      "artifacts": {
+        "sideBySide": "comparison/128-15-door-flight-R-side-by-side.png",
+        "currentGray": "comparison/128-15-door-flight-R-current-gray.png",
+        "candidateGray": "comparison/128-15-door-flight-R-candidate-gray.png",
+        "absDiff": "comparison/128-15-door-flight-R-absdiff.png",
+        "pixelmatch": "comparison/128-15-door-flight-R-pixelmatch.png",
+        "currentEdges": "comparison/128-15-door-flight-R-current-edges.png",
+        "candidateEdges": "comparison/128-15-door-flight-R-candidate-edges.png",
+        "edgeDiff": "comparison/128-15-door-flight-R-edge-diff.png"
+      }
+    },
+    {
+      "id": "128-15-door-floor-R",
+      "current": "../../../../../../../tmp/fly-retina-shared-pairs/reference/128-15-door-floor-R.png",
+      "candidate": "../../../../../../../tmp/fly-retina-shared-pairs/candidate/128-15-door-floor-R.png",
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "parityDistance": 0.00942,
+      "sceneMetrics": {
+        "current": {
+          "colorBuckets": 63,
+          "colorEntropyBits": 3.54208,
+          "edgeDensity": 0.07397,
+          "dominantColorShare": 0.34985,
+          "transparentShare": 0.34985,
+          "luminanceMean": 97.72875,
+          "luminanceP5": 0,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 193.1004
+        },
+        "candidate": {
+          "colorBuckets": 68,
+          "colorEntropyBits": 3.60471,
+          "edgeDensity": 0.07521,
+          "dominantColorShare": 0.34985,
+          "transparentShare": 0.34985,
+          "luminanceMean": 98.01858,
+          "luminanceP5": 0,
+          "luminanceP95": 193.1004,
+          "luminanceContrast": 193.1004
+        }
+      },
+      "grayscale": {
+        "mae": 1.33055,
+        "rmse": 3.67968,
+        "diffRatio16": 0.01251,
+        "diffRatio32": 0.00104,
+        "diffRatio64": 0,
+        "pixelmatchRatio": 0.008
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0.34985,
+        "blackRatioCandidate": 0.34985,
+        "terrainLikeRatioCurrent": 0.51392,
+        "terrainLikeRatioCandidate": 0.51392,
+        "avgLuminanceCurrent": 97.72875,
+        "avgLuminanceCandidate": 98.01858,
+        "avgLuminanceDelta": 0.28983,
+        "edgeEnergyCurrent": 0.10449,
+        "edgeEnergyCandidate": 0.10705,
+        "edgeEnergyRatio": 1.02451,
+        "edgeDiffRatio32": 0.00726
+      },
+      "artifacts": {
+        "sideBySide": "comparison/128-15-door-floor-R-side-by-side.png",
+        "currentGray": "comparison/128-15-door-floor-R-current-gray.png",
+        "candidateGray": "comparison/128-15-door-floor-R-candidate-gray.png",
+        "absDiff": "comparison/128-15-door-floor-R-absdiff.png",
+        "pixelmatch": "comparison/128-15-door-floor-R-pixelmatch.png",
+        "currentEdges": "comparison/128-15-door-floor-R-current-edges.png",
+        "candidateEdges": "comparison/128-15-door-floor-R-candidate-edges.png",
+        "edgeDiff": "comparison/128-15-door-floor-R-edge-diff.png"
+      }
+    }
+  ]
+}
+wrote ../../../../../../../tmp/fly-retina-shared-pairs/comparison/visual-parity-diff.json

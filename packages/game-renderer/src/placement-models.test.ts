@@ -11,13 +11,6 @@ test("edible assets preserve native metres while floor cues retain catalog scali
         kind: "fruit",
         footprintRadius: 0.35,
         contact: "apple",
-        contactHazard: null, edible: true,
-        effect: {
-          type: "source",
-          kind: "attractiveOdor",
-          radius: 0.75,
-          rate: 1,
-        },
       },
     ],
   );
@@ -87,7 +80,7 @@ test("banana stays native sized after placement and rejects mismatched apple geo
   const model = await loadPlacementModel(bytes, "banana");
   const models = new PlacementModels();
   models.replace("banana", model.root);
-  models.setPlacements([{ id: 1, kind: "banana", position: { x: 2, z: 3 }, heading: Math.PI / 2 }], [{ kind: "banana", footprintRadius: 0.12, contact: "banana", contactHazard: null, edible: true, effect: { type: "source", kind: "attractiveOdor", radius: 0.75, rate: 1 } }]);
+  models.setPlacements([{ id: 1, kind: "banana", position: { x: 2, z: 3 }, heading: Math.PI / 2 }], [{ kind: "banana", footprintRadius: 0.12, contact: "banana" }]);
   const bounds = new THREE.Box3().setFromObject(models.root);
   expect(bounds.max.z - bounds.min.z).toBeCloseTo(model.bounds.max.x - model.bounds.min.x, 6);
   expect(bounds.max.z - bounds.min.z).toBeGreaterThan(0.22);
@@ -109,7 +102,6 @@ for (const [kind, folder] of [
     models.replace(kind, model.root);
     models.setPlacements([{ id: 1, kind, position: { x: 2, z: 3 }, heading: Math.PI / 2 }], [{
       kind, footprintRadius: 0.4, contact: kind,
-      contactHazard: null, edible: false, effect: { type: "none" },
     }]);
     const bounds = new THREE.Box3().setFromObject(models.root);
     expect(bounds.max.z - bounds.min.z).toBeCloseTo(nativeBounds.max.x - nativeBounds.min.x, 6);

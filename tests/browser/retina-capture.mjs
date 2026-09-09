@@ -32,6 +32,7 @@ try {
       });
     } finally { worker.terminate(); }
   }, `${base}/@fs${resolve("tests/browser/retina-failures-worker.mjs")}`);
+  assert.match(report.failures.invalidPose, /finite/);
   assert.match(report.failures.overlap, /already pending/);
   assert.equal(report.failures.originalCompleted, true);
   assert.match(report.failures.overload, /1–16/);
@@ -44,7 +45,7 @@ try {
     assert.ok(report.failures.retries.every(run => run[key] === report.failures.retries[0][key]), `${key} grew across retries`);
   console.log(JSON.stringify({failures: report.failures}));
   // This page continues rendering the authored room throughout acquisition.
-  for (const [size, radius] of (process.argv.includes("--faults-only") ? [] : [[64, 15], [128, 15], [256, 15], [128, 8], [128, 12]])) {
+  for (const [size, radius] of (process.argv.includes("--faults-only") ? [] : process.argv.includes("--selected-only") ? [[128, 15]] : [[64, 15], [128, 15], [256, 15], [128, 8], [128, 12]])) {
     const result = await page.evaluate(async ({ size, radius, projectionUrl }) => {
       const { RetinaProjection } = await import(projectionUrl);
       const worker = new Worker(new URL("/src/retina-worker.ts", location.href), { type: "module" });
@@ -92,7 +93,7 @@ try {
           wasmSized.set(batch.samples);
           runs.push({ ...batch.metrics, copyMs: performance.now() - began });
         }
-        await request({ type: "start", profile: ready.profile, doorwayBlocked: true });
+        const blockedReady = await request({ type: "start", profile: ready.profile, doorwayBlocked: true });
         const occlusion = [];
         for (const item of quality.filter(item => item.name.startsWith("door-"))) {
           const blocked = await request({ type: "capture", poses: [item.pose] });
@@ -104,7 +105,7 @@ try {
             }
             return count;
           };
-          occlusion.push({ name: item.name, openBlue: blueCount(item.samples), blockedBlue: blueCount(blocked.samples) });
+          occlusion.push({ name: item.name, pose: item.pose, openSceneId: ready.sceneId, blockedSceneId: blockedReady.sceneId, openSamples: item.samples, blockedSamples: Array.from(blocked.samples), openBlue: blueCount(item.samples), blockedBlue: blueCount(blocked.samples) });
         }
         await request({ type: "dispose" });
         return { occlusion, quality, ready, first: { ...first, samples: Array.from(first.samples) }, turned: Array.from(turned.samples), repeat: Array.from(repeat.samples), runs };

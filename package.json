@@ -2,8 +2,10 @@
   "name": "fly-escape",
   "private": true,
   "packageManager": "bun@1.3.14",
-  "trustedDependencies": ["wasm-pack"],
-  "description": "Help the Fly Escape — local 3D browser game",
+  "trustedDependencies": [
+    "wasm-pack"
+  ],
+  "description": "Help the Fly Escape \u2014 local 3D browser game",
   "scripts": {
     "data:prepare": ".venv/bin/python scripts/prepare-graph.py --download",
     "test:graph": ".venv/bin/python -m unittest discover -s tests/connectome -v",
@@ -11,7 +13,7 @@
     "dev": "bun run --cwd apps/web dev",
     "build:vercel": "bun run build && bun scripts/package-vercel.ts",
     "build:wasm": "wasm-pack build crates/game-wasm --target web --release --out-dir ../../packages/sim-client/src/wasm",
-    "build": "bun run types:generate && bun run assets:brain && bun run build:wasm && bun run --cwd apps/web build && bun run --cwd apps/asset-lab build",
+    "build": "bun run types:generate && bun run assets:brain && bun run assets:retina && bun run build:wasm && bun run --cwd apps/web build && bun run --cwd apps/asset-lab build",
     "typecheck": "tsc --noEmit",
     "test": "bun run test:graph && bun run test:reference && cargo test && bun run test:client && bun run test:renderer && bun run test:assets && bun run test:web",
     "test:web": "bun test apps/web/src",
@@ -29,7 +31,9 @@
     "test:placement": "node tests/browser/placement.mjs",
     "test:setup": "bun test apps/web/src/progress.test.ts && node tests/browser/setup.mjs && node tests/browser/setup-commit.mjs",
     "dev:retina": "bun run --cwd apps/asset-lab dev --open /retina",
-    "probe:retina-capture": "node tests/browser/retina-capture.mjs"
+    "probe:retina-capture": "node tests/browser/retina-capture.mjs",
+    "assets:retina": "bun scripts/export-retina-scene-revision.ts",
+    "test:retina-optics": "bun tests/browser/retina-optics.mjs"
   },
   "type": "module",
   "workspaces": [

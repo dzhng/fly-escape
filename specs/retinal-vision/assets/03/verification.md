@@ -1,0 +1,13 @@
+# Shared optical world verification
+
+The integrated acquisition passes the slice-03 physical-scene and pose gates. This establishes optical correctness; gameplay tick integration and downstream neural effects remain separate gates.
+
+`bun run test:retina-optics` produced [frozen poses, identities, sample bytes and checks](optics/optics.json) on Chrome 153.0.8010.36, hardware ANGLE Metal on Apple M5 Pro. The cases cover ground, flight, native tilted support on the actual apple asset, above/below a sofa, wall adjacency, moved lamps and both campaign rooms. Independent asymmetric markers verify eye handedness and quaternion projection. Moving the player camera, deselecting the fly, enabling cutaways, resizing and changing the inspection camera all leave frozen sensory bytes exact.
+
+The [shared-world acquisition run](shared-benchmark/benchmark.json) includes actual blocked/open doorways at floor and flight heights, return-to-pose byte equality, sixteen moving poses and concurrent presentation. Complete capture plus copy measured 11.1 ms p95, 18.7 ms worst on this machine; this is acquisition timing, not the full neural campaign budget. [Presentation comparisons](presentation-comparison/comparison/) preserve the earlier baseline checks and expose changed pixels for inspection.
+
+The first mounted-eye inspection was too small to judge. Its rejected captures remain archived. The replacement frames show the neutral asset and fixed origins closely; an unprimed critic accepted the revised optical framing and visibility cases. The shots were opened for about five minutes, then closed without user feedback. Acceptance relies on measured transforms, pixel checks and that critique.
+
+Independent code review found two real failures: a GPU copy could fail after the fence test and retain stale bytes, and a synchronously stalled worker could evade its own timeout. Capture now checks context/error state after copying; the workbench terminates stalled requests and permits explicit restart. The follow-up independent review found no remaining concrete issue. Fault probes cover malformed poses, overlap, capacity, cancellation, lost context, stalled fence, failed copy and ten fresh captures with stable resource counts. Type checking and the focused scene/projection/rig/resource tests pass.
+
+Safari 26.4 was also exercised through its native browser on the failure harness: the initial frame completed, overlapping and oversized batches were rejected, cancellation settled in 2 ms, context loss in 1 ms and stalled-fence rejection in about 4902 ms. Ten recreated captures kept resource counts stable. This is a compatibility smoke check, not Safari performance acceptance.

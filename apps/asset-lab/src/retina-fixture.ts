@@ -1,57 +1,47 @@
 import * as THREE from "three";
 import { campaignLevels } from "../../web/src/campaign-content";
-import { WorldScene, loadWorldSceneAssets } from "../../../packages/game-renderer/src/world-scene";
-import { batchStaticMeshes } from "../../../packages/game-renderer/src/static-batches";
-import { housePalette } from "../../../packages/game-renderer/src/house-materials";
+import { createRetinaWorld } from "../../../packages/game-renderer/src/retina-world";
 import { disposeObjectResources } from "../../../packages/game-renderer/src/resources";
-import { sconceEmitter } from "../../../packages/sim-client/src/house-lighting";
 import initWasm, { tool_catalog } from "../../../packages/sim-client/src/wasm/game_wasm";
-import type { ToolDef } from "../../../packages/sim-client/src/generated/sim";
+import type { Placement, ToolDef } from "../../../packages/sim-client/src/generated/sim";
 
 let wasmReady: ReturnType<typeof initWasm> | undefined;
+export type RetinaStimulus = { position: number[]; size: number[]; color: number };
+export type RetinaFixtureOptions = { stimuli?: RetinaStimulus[]; doorwayBlocked?: boolean; landmarks?: boolean; levelIndex?: number; placements?: Placement[] };
 
-/** Authored physical world plus diagnostic landmarks; no independent room geometry. */
-export async function retinaFixtureScene(doorwayBlocked = false) {
-  const content = campaignLevels[0];
+/** Diagnostic stimuli surround the same physical world factory used by gameplay acquisition. */
+export async function createRetinaFixture(options: RetinaFixtureOptions = {}, isCurrent: () => boolean = () => true) {
+  const content = campaignLevels[options.levelIndex ?? 0];
+  if (!content?.lighting) throw new Error("Optical fixture requires authored campaign lighting");
   await (wasmReady ??= initWasm());
   const catalog = JSON.parse(tool_catalog()) as ToolDef[];
-  const world = new WorldScene({ geometry: content.level.geometry, roomFloors: content.roomFloors, mode: "physical" });
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(housePalette.background);
-  scene.add(world.root, new THREE.HemisphereLight("#fff0cb", "#718d80", 2.5));
-  const sun = new THREE.DirectionalLight("#ffe0a0", 3.4);
-  sun.position.set(-8, 20, 5); sun.target.position.set(5, 0, 5); sun.castShadow = true;
-  sun.shadow.mapSize.set(1024, 1024);
-  sun.shadow.camera.left = sun.shadow.camera.bottom = -20;
-  sun.shadow.camera.right = sun.shadow.camera.top = 20;
-  sun.shadow.camera.near = 0.1; sun.shadow.camera.far = 80;
-  scene.add(sun, sun.target);
-  // Shared light authoring extraction completes slice 03; these remain the measured probe values.
-  for (const detail of content.roomDetails ?? []) if (detail.kind === "sconce") {
-    const source = sconceEmitter(detail);
-    const light = new THREE.PointLight("#ffca88", source.intensity, source.source.radius, 2);
-    light.position.fromArray(source.position); scene.add(light);
-  }
+  const placements = options.placements ?? content.level.fixedObjects;
+  const world = await createRetinaWorld({ geometry: content.level.geometry,
+    roomFloors: content.roomFloors ?? [], roomDetails: content.roomDetails ?? [], lighting: content.lighting,
+    placements, catalog }, isCurrent);
   const landmarks = new THREE.Group();
-  let releaseBatches: (() => void) | undefined;
-  const dispose = () => { releaseBatches?.(); world.dispose(); disposeObjectResources(scene); scene.clear(); };
+  let disposed = false;
+  const dispose = () => {
+    if (disposed) return;
+    disposed = true;
+    landmarks.removeFromParent(); disposeObjectResources(landmarks); landmarks.clear(); world.dispose();
+  };
   try {
-    world.placements.setPlacements(content.level.fixedObjects, catalog);
-    await loadWorldSceneAssets(world, content.roomDetails ?? [], () => true);
-    for (const [x, y, z, color] of [[2, 0.35, 2, 0xee3322], [2, 0.35, 3, 0x2255ff], [2, 0.9, 2.5, 0x22cc55]]) {
-      const mesh = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.25, 0.25), new THREE.MeshBasicMaterial({ color }));
-      mesh.position.set(x, y, z); landmarks.add(mesh);
-    }
-    const doorwayTarget = new THREE.Mesh(new THREE.BoxGeometry(0.02, 1.8, 1.2), new THREE.MeshBasicMaterial({ color: 0x1649bb }));
-    doorwayTarget.position.set(5.4, 0.9, 2.55); landmarks.add(doorwayTarget);
-    if (doorwayBlocked) {
-      const blocker = new THREE.Mesh(new THREE.BoxGeometry(0.02, 2.1, 0.9), new THREE.MeshBasicMaterial({ color: 0xbba986 }));
-      blocker.position.set(4.79, 1.05, 2.55); landmarks.add(blocker);
+    const stimuli = options.stimuli ?? (options.landmarks === false ? [] : [
+      { position: [2, .35, 2], size: [.25, .25, .25], color: 0xee3322 },
+      { position: [2, .35, 3], size: [.25, .25, .25], color: 0x2255ff },
+      { position: [2, .9, 2.5], size: [.25, .25, .25], color: 0x22cc55 },
+      { position: [5.4, .9, 2.55], size: [.02, 1.8, 1.2], color: 0x1649bb },
+    ]);
+    if (options.doorwayBlocked) stimuli.push({ position: [4.79, 1.05, 2.55], size: [.02, 2.1, .9], color: 0xbba986 });
+    for (const stimulus of stimuli) {
+      const mesh = new THREE.Mesh(new THREE.BoxGeometry(...stimulus.size), new THREE.MeshBasicMaterial({ color: stimulus.color }));
+      mesh.position.fromArray(stimulus.position); landmarks.add(mesh);
     }
     landmarks.name = "OpticalFixtureLandmarks";
-    scene.add(landmarks); scene.updateMatrixWorld(true);
-    releaseBatches = batchStaticMeshes(scene);
-    scene.matrixWorldAutoUpdate = false;
-    return { scene, catalog, dispose };
+    world.scene.add(landmarks); world.scene.updateMatrixWorld(true);
+    const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(JSON.stringify({ world: world.sceneId, stimuli })));
+    const sceneId = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, "0")).join("");
+    return { scene: world.scene, sceneId, catalog, placements, dispose };
   } catch (error) { dispose(); throw error; }
 }

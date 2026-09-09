@@ -1,13 +1,13 @@
-import type { ToolDef } from "../../../packages/sim-client/src/generated/sim";
+import type { Placement, ToolDef } from "../../../packages/sim-client/src/generated/sim";
 import { RetinaCapture, type RetinalPose } from "../../../packages/game-renderer/src/retina-capture";
 import { RetinaProjection, retinaProfile, type RetinaProfile } from "../../../packages/game-renderer/src/retina-projection";
-import { retinaFixtureScene } from "./retina-fixture";
+import { createRetinaFixture, type RetinaFixtureOptions } from "./retina-fixture";
 
 export type CaptureCommand =
-  | { type: "start"; profile?: RetinaProfile; doorwayBlocked?: boolean }
+  | { type: "start"; profile?: RetinaProfile } & RetinaFixtureOptions
   | { type: "capture"; poses: RetinalPose[]; cameraImages?: boolean }
   | { type: "dispose" };
-export type CaptureReady = { type: "ready"; profile: RetinaProfile; cells: number; gpu: string; initializationMs: number; catalog: ToolDef[] };
+export type CaptureReady = { type: "ready"; profile: RetinaProfile; cells: number; gpu: string; initializationMs: number; sceneId: string; placements: Placement[]; catalog: ToolDef[] };
 export type CaptureResult = { type: "captured"; cameraImages?: Uint8ClampedArray<ArrayBuffer>[] } & Awaited<ReturnType<RetinaCapture["acquire"]>>;
 export type CaptureReply = CaptureReady | CaptureResult | { type: "disposed" } | { type: "error"; message: string };
 let capture: RetinaCapture | undefined;
@@ -32,11 +32,11 @@ self.onmessage = async (event: MessageEvent<CaptureCommand>) => {
       disposeScene?.();
       capture = undefined;
       const began = performance.now();
-      const fixture = await retinaFixtureScene(message.doorwayBlocked);
+      const fixture = await createRetinaFixture(message, () => ticket === generation);
       if (ticket !== generation) { fixture.dispose(); return; }
       disposeScene = fixture.dispose;
       capture = new RetinaCapture(fixture.scene, message.profile ?? retinaProfile);
-      self.postMessage({ type: "ready", profile: capture.projection.profile, cells: capture.projection.cells.length, gpu: capture.gpu, catalog: fixture.catalog, initializationMs: performance.now() - began });
+      self.postMessage({ type: "ready", profile: capture.projection.profile, cells: capture.projection.cells.length, gpu: capture.gpu, sceneId: fixture.sceneId, placements: fixture.placements, catalog: fixture.catalog, initializationMs: performance.now() - began });
     } else {
       if (!capture) throw new Error("Eye capture is not initialized");
       const result = await capture.acquire(message.poses, message.cameraImages);
