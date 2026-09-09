@@ -541,6 +541,40 @@ fn write_new(path: &Path, bytes: &[u8]) -> Result<(), Box<dyn std::error::Error>
     file.write_all(bytes)?;
     Ok(())
 }
+// Flush completed conditions so output memory is bounded by one condition.
+fn write_report(
+    path: &Path,
+    freeze_hash: &str,
+    frozen: &Value,
+    conditions: impl Iterator<Item = Result<Value, Box<dyn std::error::Error>>>,
+    start: Instant,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let file = fs::OpenOptions::new()
+        .write(true)
+        .create_new(true)
+        .open(path)?;
+    let mut writer = std::io::BufWriter::new(file);
+    writer.write_all(br#"{"freezeHash":"#)?;
+    serde_json::to_writer(&mut writer, freeze_hash)?;
+    writer.write_all(br#", "frozen":"#)?;
+    serde_json::to_writer(&mut writer, frozen)?;
+    writer.write_all(br#", "conditions":["#)?;
+    for (index, condition) in conditions.enumerate() {
+        let condition = condition?;
+        if index > 0 {
+            writer.write_all(b",")?;
+        }
+        serde_json::to_writer(&mut writer, &condition)?;
+        writer.flush()?;
+    }
+    writer.write_all(br#"], "elapsedSeconds":"#)?;
+    serde_json::to_writer(&mut writer, &start.elapsed().as_secs_f64())?;
+    writer.write_all(br#", "scope":"#)?;
+    serde_json::to_writer(&mut writer, "offline fixed supplied RGB8; no native renderer, body movement, optical feedback, browser transaction, or navigation acceptance")?;
+    writer.write_all(b"}")?;
+    writer.flush()?;
+    Ok(())
+}
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<_> = std::env::args().collect();
     if args.len() != 6 || !matches!(args[1].as_str(), "freeze" | "run") {
@@ -605,34 +639,70 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         &serde_json::to_vec(&json!({"freezeHash":hash(&freeze_bytes)}))?,
     )?;
     let start = Instant::now();
-    let mut conditions = vec![];
-    for stimulus in &stimuli {
+    let conditions = stimuli.iter().map(|stimulus| {
         let mut downstream_spike_totals = vec![0u64; model.downstream.len()];
         let observations = seeds
             .iter()
             .map(|&seed| run(&model, stimulus, seed, &mut downstream_spike_totals))
             .collect::<Result<Vec<_>, _>>()?;
-        conditions.push(json!({"name":stimulus.spec.name,"rgbSha256":hash(&stimulus.rgb),
+        let condition = json!({"name":stimulus.spec.name,"rgbSha256":hash(&stimulus.rgb),
             "requested":dose(&model.entries,&stimulus.requested),"effective":dose(&model.entries,&stimulus.effective),
             "requestedCurrentByEntry":stimulus.requested.iter().map(|(_,v)| v).collect::<Vec<_>>(),
             "effectiveCurrentByEntry":stimulus.effective.iter().map(|(_,v)| v).collect::<Vec<_>>(),
-            "observations":observations,"downstreamSpikeTotalsByIndex":downstream_spike_totals}));
+            "observations":observations,"downstreamSpikeTotalsByIndex":downstream_spike_totals});
         eprintln!(
             "{} {} complete ({:.1}s)",
             pack.slice,
             stimulus.spec.name,
             start.elapsed().as_secs_f64()
         );
-    }
-    let report = json!({"freezeHash":hash(&freeze_bytes),"frozen":expected,"conditions":conditions,"elapsedSeconds":start.elapsed().as_secs_f64(),
-        "scope":"offline fixed supplied RGB8; no native renderer, body movement, optical feedback, browser transaction, or navigation acceptance"});
-    write_new(&output.join("report.json"), &serde_json::to_vec(&report)?)?;
+        Ok(condition)
+    });
+    write_report(
+        &output.join("report.json"),
+        &hash(&freeze_bytes),
+        &expected,
+        conditions,
+        start,
+    )?;
     Ok(())
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn report_flushes_each_condition_and_preserves_json_values() {
+        let path = std::env::temp_dir().join(format!("retinal-report-{}.json", std::process::id()));
+        let _ = fs::remove_file(&path);
+        let expected = vec![
+            json!({"name":"quoted \"color\"", "values":[0, 1.5, -2]}),
+            json!({"name":"second", "nested":{"seed":42}}),
+        ];
+        let conditions = expected.iter().enumerate().map(|(index, value)| {
+            if index == 1 {
+                let prefix = fs::read_to_string(&path).unwrap();
+                let partial: Value = serde_json::from_str(&(prefix + "]}"))
+                    .expect("first condition is flushed before the next is evaluated");
+                assert_eq!(partial["conditions"][0], expected[0]);
+            }
+            Ok(value.clone())
+        });
+        write_report(
+            &path,
+            "fixture-hash",
+            &json!({"seeds":[1,2]}),
+            conditions,
+            Instant::now(),
+        )
+        .unwrap();
+        let report: Value = serde_json::from_slice(&fs::read(&path).unwrap()).unwrap();
+        assert_eq!(report["conditions"], json!(expected));
+        assert_eq!(report["freezeHash"], "fixture-hash");
+        assert_eq!(report["frozen"], json!({"seeds":[1,2]}));
+        assert!(report["elapsedSeconds"].as_f64().unwrap() >= 0.0);
+        fs::remove_file(path).unwrap();
+    }
     #[test]
     fn controls_preserve_full_input_identity_and_permute_only_within_eye_channel() {
         let entries = vec![

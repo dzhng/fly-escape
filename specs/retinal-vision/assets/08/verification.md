@@ -19,3 +19,9 @@ A fresh unprimed screenshot review is pending; direct inspection is not an indep
 ## Choices requiring future evidence
 
 The 438 endpoint cells are a frozen audited path-witness union, not a claim to exhaust downstream visual processing. Full counts for 40,944 downstream cells preserve the distinction. The single-sample equal-dose patches and integer-doubled color levels were chosen before execution; their small support and transfer saturation may limit sensitivity. Neither broader populations nor larger patches were substituted after seeing results. Motor channels remain descriptive only, with all motor/readout cells excluded from endpoints. Any new endpoint or stimulus area requires a new preregistration and fresh seeds.
+
+## Output maintenance after the frozen runs
+
+Commit `ea17454f` preserves the exact native source used by all four archived experiments. The following output-only cleanup writes and flushes one completed condition at a time, releasing its JSON values before computing the next. It does not change neural loops, seeds, parameters, currents, endpoints, exclusions or criteria. Interrupted output remains incomplete JSON with the existing started marker; output files still require create-new semantics. Existing freezes intentionally reject the changed source. No neural rerun was used to replace these outcomes.
+
+A focused file-based test failed when the per-condition flush was omitted, then passed with incremental flushing; it checks the first condition is visible before evaluating the next and checks finished JSON values. Both native probe tests pass. A second independent code review found no actionable issue in this maintenance diff; it confirmed computation/criteria are unchanged and the output test is meaningful. No reduced-memory numerical claim is made without a new measured run.
