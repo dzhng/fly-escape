@@ -79,6 +79,12 @@ fn main() {
                         shade: 0.7,
                         exit_cue: 0.8,
                     },
+                    vision: VisionSample {
+                        brightness: std::array::from_fn(|i| {
+                            (f64::from(tick) + f64::from(id) + i as f64 / 17.) / 7.
+                        }),
+                        blocked: std::array::from_fn(|i| (f64::from(tick) + i as f64 / 13.) / 11.),
+                    },
                     wind: Point { x: -0.9, z: 1.1 },
                 }),
                 neural: (tick != 4 && !(tick == 2 && id == 0)).then_some(StepOutput {

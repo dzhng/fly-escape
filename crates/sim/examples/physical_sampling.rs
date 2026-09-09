@@ -30,7 +30,7 @@ fn sampling(fields: &FieldSet, pose: BodyPose, offset: f64, forward: f64) -> Sen
             x: centre.x - dx,
             z: centre.z - dz,
         }),
-        wind: fields.sample(pose.position, pose.heading, 0).wind,
+        ..fields.sample(pose.position, pose.heading, 0)
     }
 }
 fn values(sample: &SensorySample, cue: CuePathway) -> [f64; 2] {

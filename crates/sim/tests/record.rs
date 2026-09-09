@@ -42,6 +42,12 @@ fn frame(tick: u32) -> AttemptFrame {
                     shade: 0.7,
                     exit_cue: 0.8,
                 },
+                vision: VisionSample {
+                    brightness: std::array::from_fn(|i| {
+                        (f64::from(tick) + 0. + i as f64 / 17.) / 7.
+                    }),
+                    blocked: std::array::from_fn(|i| (f64::from(tick) + i as f64 / 13.) / 11.),
+                },
                 wind: Point { x: -0.9, z: 1.1 },
             }),
             neural: Some(StepOutput {

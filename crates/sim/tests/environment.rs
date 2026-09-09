@@ -525,3 +525,146 @@ fn forward_and_lateral_sample_points_rotate_with_the_body() {
         assert_eq!(sample.right, fields.sample_point(points[1]));
     }
 }
+
+#[test]
+fn directional_vision_rotates_with_heading_and_increases_with_lamp_strength() {
+    let sample = |rate, heading| {
+        FieldSet::new(
+            chambers(true),
+            FieldConfig::default(),
+            vec![Source {
+                position: Point { x: 6., z: 2. },
+                radius: 8.,
+                rate,
+                kind: SourceKind::Lamp,
+            }],
+            None,
+        )
+        .unwrap()
+        .sample(Point { x: 2., z: 2. }, heading, 0)
+        .vision
+    };
+    let first = sample(4., 0.);
+    assert_eq!(first.brightness[0], 3.);
+    assert_eq!(first.brightness[4], 1.);
+    let rotated = sample(4., std::f64::consts::FRAC_PI_4);
+    for i in 0..8 {
+        assert!((rotated.brightness[i] - first.brightness[(i + 1) % 8]).abs() < 1e-12);
+    }
+    assert!(sample(8., 0.).brightness[0] > first.brightness[0]);
+    assert_eq!(first, sample(4., 0.));
+}
+
+#[test]
+fn directional_vision_records_wall_and_furniture_loss_and_doorway_visibility() {
+    let source = Source {
+        position: Point { x: 6., z: 2. },
+        radius: 8.,
+        rate: 4.,
+        kind: SourceKind::Lamp,
+    };
+    let sample = |geometry| {
+        FieldSet::new(geometry, FieldConfig::default(), vec![source.clone()], None)
+            .unwrap()
+            .sample(Point { x: 2., z: 2. }, 0., 0)
+            .vision
+    };
+    let visible = sample(chambers(true));
+    let blocked = sample(chambers(false));
+    assert_eq!(blocked.brightness, [1.; 8]);
+    for i in 0..8 {
+        assert!((blocked.blocked[i] - (visible.brightness[i] - 1.)).abs() < 1e-12);
+    }
+    let mut furniture = chambers(true);
+    furniture.solids.push(SolidProp {
+        id: 8,
+        furnishing: None,
+        min: Point { x: 3., z: 1.5 },
+        max: Point { x: 3.5, z: 2.5 },
+        height: 0.2,
+    });
+    assert_eq!(sample(furniture), blocked);
+    assert_eq!(visible.blocked, [0.; 8]);
+}
+
+#[test]
+fn directional_shade_removes_local_light_including_ambient_only_when_visible() {
+    let position = Point { x: 2., z: 2. };
+    let sample = |rate, source_position, geometry| {
+        FieldSet::new(
+            geometry,
+            FieldConfig::default(),
+            vec![Source {
+                position: source_position,
+                radius: 8.,
+                rate,
+                kind: SourceKind::Shade,
+            }],
+            None,
+        )
+        .unwrap()
+        .sample(position, 1.234, 0)
+        .vision
+    };
+    let dim = sample(0.25, position, chambers(true));
+    assert_eq!(dim.brightness, [0.75; 8]);
+    assert_eq!(dim.blocked, [0.25; 8]);
+    let dark = sample(10., position, chambers(true));
+    assert_eq!(dark.brightness, [0.; 8]);
+    assert_eq!(dark.blocked, [1.; 8]);
+    let hidden = sample(10., Point { x: 6., z: 2. }, chambers(false));
+    assert_eq!(hidden.brightness, [1.; 8]);
+    assert_eq!(hidden.blocked, [0.; 8]);
+}
+
+#[test]
+fn colocated_lamps_are_uniform_and_extreme_light_stays_finite() {
+    let position = Point { x: 2., z: 2. };
+    let fields = FieldSet::new(
+        chambers(true),
+        FieldConfig {
+            baseline_brightness: f64::MAX,
+            ..Default::default()
+        },
+        vec![
+            Source {
+                position,
+                radius: 8.,
+                rate: f64::MAX,
+                kind: SourceKind::Lamp
+            };
+            2
+        ],
+        None,
+    )
+    .unwrap();
+    let sample = fields.sample(position, 0., 0);
+    assert_eq!(sample.vision.brightness, [MAX_VISION_BRIGHTNESS; 8]);
+    assert_eq!(sample.vision.blocked, [0.; 8]);
+    assert!(sample.left.brightness.is_finite());
+}
+
+#[test]
+fn excessive_directional_visibility_work_is_rejected_before_grid_construction() {
+    let mut geometry = chambers(true);
+    geometry.walls = vec![wall(4., 0., 4., 1.); 257];
+    let sources = vec![
+        Source {
+            position: Point { x: 2., z: 2. },
+            radius: 8.,
+            rate: 1.,
+            kind: SourceKind::Lamp
+        };
+        256
+    ];
+    let config = FieldConfig {
+        cell_size: 4.,
+        ..Default::default()
+    };
+    let error = FieldSet::new(geometry.clone(), config.clone(), sources.clone(), None)
+        .err()
+        .unwrap();
+    assert!(error.contains("vision source-times-obstacle"), "{error}");
+    geometry.walls.pop();
+    assert!(FieldSet::new(geometry, config, sources, None).is_ok());
+}

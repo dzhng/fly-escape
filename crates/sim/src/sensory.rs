@@ -52,7 +52,16 @@ pub fn cue_currents(
         ),
         CuePathway::Vision => (
             ["visionL", "visionR"],
-            [sample.left.brightness, sample.right.brightness],
+            [
+                (sample.vision.brightness[5]
+                    + sample.vision.brightness[6]
+                    + sample.vision.brightness[7])
+                    / 3.,
+                (sample.vision.brightness[1]
+                    + sample.vision.brightness[2]
+                    + sample.vision.brightness[3])
+                    / 3.,
+            ],
             false,
         ),
         CuePathway::None => return Ok(vec![]),
@@ -183,6 +192,7 @@ mod tests {
                 attractive_odor: right,
                 ..Default::default()
             },
+            vision: Default::default(),
             wind: Point::default(),
         }
     }
@@ -202,6 +212,7 @@ mod tests {
                 repellent_odor: 0.8,
                 ..Default::default()
             },
+            vision: Default::default(),
             wind: Point::default(),
         };
         let excitatory = cue_currents(&graph, &opposed, CuePathway::ExcitatoryOdor, 1.).unwrap();
@@ -224,6 +235,7 @@ mod tests {
                 exit_cue: 0.2,
                 ..Default::default()
             },
+            vision: Default::default(),
             wind: Point::default(),
         };
         assert_eq!(
@@ -359,7 +371,7 @@ mod tests {
             }
         }
     }
-    /// Grading is an odor property. Vision still only reports which eye is brighter.
+    /// Grading is an odor property. Vision still only reports which hemisphere is brighter.
     #[test]
     fn vision_reports_a_side_without_reporting_how_bright_it_is() {
         let mut graph = fixture_graph();
@@ -372,22 +384,40 @@ mod tests {
             );
         }
         let lit = |brightness: f64| SensorySample {
-            left: FieldSample {
-                brightness,
+            left: FieldSample::default(),
+            right: FieldSample {
+                brightness: 100.,
                 ..Default::default()
             },
-            right: FieldSample::default(),
+            vision: crate::environment::VisionSample {
+                brightness: [0., 0., 0., 0., 0., brightness, brightness, brightness],
+                blocked: [0.; 8],
+            },
             wind: Point::default(),
         };
         assert_eq!(
             cue_currents(&graph, &lit(0.2), CuePathway::Vision, 1.).unwrap(),
             cue_currents(&graph, &lit(0.9), CuePathway::Vision, 1.).unwrap(),
-            "a dim and a bright lamp drive the same eye equally hard"
+            "a dim and a bright lamp drive the same hemisphere equally hard"
         );
         assert_eq!(
             cue_currents(&graph, &lit(0.2), CuePathway::Vision, 1.).unwrap(),
             vec![(0, 1.0), (1, 0.0)],
-            "the brighter eye receives the whole gain"
+            "the brighter hemisphere receives the whole gain"
+        );
+        let mut uniform = lit(0.);
+        uniform.vision.brightness = [2.; 8];
+        uniform.vision.brightness[0] = 100.;
+        uniform.vision.brightness[4] = 50.;
+        assert_eq!(
+            cue_currents(&graph, &uniform, CuePathway::Vision, 1.).unwrap(),
+            vec![(0, 0.), (1, 0.)]
+        );
+        let mut right = lit(0.);
+        right.vision.brightness[2] = 0.6;
+        assert_eq!(
+            cue_currents(&graph, &right, CuePathway::Vision, 1.).unwrap(),
+            vec![(0, 0.), (1, 1.)]
         );
     }
 }

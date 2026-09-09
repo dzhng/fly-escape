@@ -18,7 +18,7 @@ pub struct ChunkHeader {
     pub result: Option<AttemptResult>,
 }
 
-pub const RECORD_SCHEMA_VERSION: u32 = 4;
+pub const RECORD_SCHEMA_VERSION: u32 = 5;
 pub const MAX_CHUNK_TICKS: u32 = 10;
 pub const ARCHIVE_CAP_BYTES: u64 = 128 * 1024 * 1024;
 // Landing, starting/ending feeding and termination emit at most six events.
@@ -26,7 +26,7 @@ pub const ARCHIVE_CAP_BYTES: u64 = 128 * 1024 * 1024;
 pub const MAX_EVENTS_PER_FLY_TICK: usize = 8;
 pub const NO_SUPPORT: u32 = u32::MAX;
 const STATE_STRIDE: usize = 5;
-const VALUE_FIELDS: [&str; 28] = [
+const VALUE_FIELDS: [&str; 44] = [
     "inputX",
     "inputZ",
     "inputHeading",
@@ -55,6 +55,22 @@ const VALUE_FIELDS: [&str; 28] = [
     "rotationY",
     "rotationZ",
     "rotationW",
+    "visionBrightness0",
+    "visionBrightness1",
+    "visionBrightness2",
+    "visionBrightness3",
+    "visionBrightness4",
+    "visionBrightness5",
+    "visionBrightness6",
+    "visionBrightness7",
+    "visionBlocked0",
+    "visionBlocked1",
+    "visionBlocked2",
+    "visionBlocked3",
+    "visionBlocked4",
+    "visionBlocked5",
+    "visionBlocked6",
+    "visionBlocked7",
 ];
 
 #[derive(Clone, Debug, Serialize, TS)]
@@ -287,6 +303,7 @@ impl PackedChunk {
                     motor.flight_turn,
                 ]);
                 let sense = fly.sensory.unwrap_or(SensorySample {
+                    vision: VisionSample::default(),
                     left: FieldSample::default(),
                     right: FieldSample::default(),
                     wind: Point { x: 0., z: 0. },
@@ -302,6 +319,8 @@ impl PackedChunk {
                 }
                 chunk.values.extend([sense.wind.x, sense.wind.z, b.height]);
                 chunk.values.extend(b.rotation);
+                chunk.values.extend(sense.vision.brightness);
+                chunk.values.extend(sense.vision.blocked);
                 if let Some(neural) = &fly.neural {
                     if neural
                         .groups
@@ -423,6 +442,10 @@ impl PackedChunk {
                         outcome: at(&layout.outcomes, s[1])?,
                     },
                     sensory: (s[2] & 1 != 0).then(|| SensorySample {
+                        vision: VisionSample {
+                            brightness: std::array::from_fn(|i| v[28 + i]),
+                            blocked: std::array::from_fn(|i| v[36 + i]),
+                        },
                         left: field(11),
                         right: field(16),
                         wind: Point { x: v[21], z: v[22] },

@@ -82,6 +82,7 @@ fn main() {
         ExitCue::decl(),
         FieldSample::decl(),
         SensorySample::decl(),
+        VisionSample::decl(),
         FieldGrid::decl(),
         CuePathway::decl(),
         Group::decl(),
