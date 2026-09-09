@@ -431,6 +431,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     } else {
         None
     };
+    if let Some(f) = &frozen {
+        if !matches!(f["axis"].as_str(), Some("turn" | "flightTurn")) {
+            return Err("freeze must name the pilot-selected turn or flightTurn axis".into());
+        }
+    }
     let families: Vec<&str> = if let Some(f) = &frozen {
         vec![f["family"]
             .as_str()
@@ -528,7 +533,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     ));
                 }
             }
-            let report = json!({"mode":args[1],"family":family,"gain":gain,"mappingHash":map_hash,"graphHash":graph.manifest.graph_hash,"auditHash":hash(&audit_bytes),"probeSourceHash":hash(include_bytes!("neural_vision_probe.rs")),"sensorySourceHash":hash(include_bytes!("../src/sensory.rs")),"warmupTicks":WARMUP,"measuredTicks":TICKS,"lifParams":LifParams::default(),"fixedPose":{"position":{"x":0,"z":0},"heading":0},"inputs":inputs,"relays":relays,"sham":sham,"shamSelection":"Ascending graph indices, zero outgoing edges, matched input count, outside all mapped inputs, audited relay paths and motor readouts; this tests silencing machinery without a connected-neuron perturbation.","conditions":conditions,"comparisons":comparisons,"scope":"Paired seed means. Relay coordinate intervals are descriptive, not multiplicity-adjusted; actual retained paths establish connectivity, not a unique causal route. Basis stimuli replace only recorded brightness at the sensory seam; lamps use production FieldSet. Neural hashes cover voltage, spikes and refractory state on all measured ticks."});
+            let primary = frozen.as_ref().map(|f| {
+                let stats=if f["axis"]=="turn" { &turn } else { &flight };
+                json!({"axis":f["axis"],"statistics":stats,"directionalGatePassed":stats.excludes_zero,"pilotMean":f["statistics"]["mean"],"sameSignAsPilot":f["statistics"]["mean"].as_f64().map(|m|m.signum()==stats.mean.signum())})
+            });
+            let report = json!({"mode":args[1],"family":family,"gain":gain,"mappingHash":map_hash,"graphHash":graph.manifest.graph_hash,"auditHash":hash(&audit_bytes),"probeSourceHash":hash(include_bytes!("neural_vision_probe.rs")),"sensorySourceHash":hash(include_bytes!("../src/sensory.rs")),"frozenPrimary":primary,"warmupTicks":WARMUP,"measuredTicks":TICKS,"lifParams":LifParams::default(),"fixedPose":{"position":{"x":0,"z":0},"heading":0},"inputs":inputs,"relays":relays,"sham":sham,"shamSelection":"Ascending graph indices, zero outgoing edges, matched input count, outside all mapped inputs, audited relay paths and motor readouts; this tests silencing machinery without a connected-neuron perturbation.","conditions":conditions,"comparisons":comparisons,"scope":"Paired seed means. Only frozenPrimary is the confirmatory motor endpoint; other readout and relay coordinate intervals are descriptive, not multiplicity-adjusted. Actual retained paths establish connectivity, not a unique causal route. Basis stimuli replace only recorded brightness at the sensory seam; lamps use production FieldSet. Neural hashes cover voltage, spikes and refractory state on all measured ticks."});
             let filename = format!("{}-{family}-{gain}.json", args[1]);
             write(&output.join(&filename), &report)?;
             let (axis, stats) = if flight.absolute_t.unwrap_or(0.) > turn.absolute_t.unwrap_or(0.) {
