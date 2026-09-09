@@ -1,0 +1,19 @@
+{
+  "files": [
+    "inputs-01.png",
+    "inputs-02.png",
+    "inputs-03.png",
+    "responses.png",
+    "response-01-crop.png",
+    "response-02-crop.png",
+    "downstream-counts.png",
+    "color-inputs-enlarged.png",
+    "color-patch-crops.png"
+  ],
+  "report": "report.json.gz",
+  "analysis": "analysis.json.gz",
+  "reportSha256": "15ad3b97cacb9fa5f41ee1f6aeabffaf2e6d31e424713c1f344df98687f608fa",
+  "analysisSha256": "c4a149d720ad78a1520d4e6fa793bcf5ddd2f1572d738ce95824a2a0d8ee29dd",
+  "matplotlib": "3.11.1",
+  "scope": "Every frozen condition and primary contrast included; no plot changes experimental gates."
+}

@@ -18,12 +18,14 @@ plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 9, "axes.spines.
 
 def read_json(path):
     data = path.read_bytes()
-    return json.loads(gzip.decompress(data) if path.suffix == ".gz" else data)
+    decoded = gzip.decompress(data) if path.suffix == ".gz" else data
+    return json.loads(decoded), hashlib.sha256(decoded).hexdigest()
 
 
-def render(report_path, analysis_path, output):
-    report = read_json(report_path)
-    analysis = read_json(analysis_path)
+def render(report_path, analysis_path, output, input_root=None):
+    report, report_hash = read_json(report_path)
+    analysis, analysis_hash = read_json(analysis_path)
+    assert analysis["reportSha256"] == report_hash and analysis["freezeHash"] == report["freezeHash"]
     frozen = report["frozen"]
     ticks, dt = frozen["measuredTicks"], frozen["lifParams"]["dt"]
     window = f"{ticks} neural steps at dt={dt:g} = {ticks * dt:g} model-time units"
@@ -36,7 +38,15 @@ def render(report_path, analysis_path, output):
     angles = np.arange(6) * np.pi / 3 + np.pi / 6
     vertices = centres[:, None, :] + .56 * np.stack([np.cos(angles), np.sin(angles)], axis=1)[None, :, :]
     specifications = frozen["pack"]["conditions"]
-    rgb_root = ROOT / "specs/retinal-vision/assets/08"
+    if frozen["pack"]["version"] == 2 and input_root is None:
+        raise ValueError("Version-2 figures require --input-root pointing to the frozen prepared pack")
+    rgb_root = input_root or ROOT / "specs/retinal-vision/assets/08"
+    proposal = None
+    if frozen["pack"]["version"] == 2:
+        binding = frozen["pack"]["reslice"]["proposal"]
+        raw = (rgb_root / binding["path"]).read_bytes()
+        assert require_hash(raw, binding["sha256"])
+        proposal = json.loads(raw)
     output.mkdir(parents=True, exist_ok=True)
     paths = []
 
@@ -91,11 +101,10 @@ def render(report_path, analysis_path, output):
         current_ax.scatter(np.arange(len(current_difference)), current_difference,
                            c=np.where(np.asarray(frozen["currentEntryChannels"]) == 0, "#555555", "#297699"), s=5)
         current_ax.axhline(0, color="#404040", linewidth=.7)
-        current_ax.set_title(f"{contrast['a']} − {contrast['b']}\nTotal dose A/B: {a['effective']['total']:.5g} / {b['effective']['total']:.5g}", fontsize=9)
+        current_ax.set_title(f"{contrast['a']} − {contrast['b']}\nTotal dose A/B: {a['effective']['total']:.5g} / {b['effective']['total']:.5g}\nTm2 gray; Tm20 blue", fontsize=9)
         current_ax.set_xlabel("Frozen injected-entry order (all 1,176 cells)")
         current_ax.set_ylabel("Injected Δ current (model units)")
         current_ax.grid(axis="y", alpha=.2)
-        current_ax.text(.01, .98, "Tm2 gray; Tm20 blue", transform=current_ax.transAxes, va="top", fontsize=7)
         for col, (field, ylabel) in enumerate([("cells", "Mean Δ voltage (model units)"), ("spikeCells", f"Δ spikes / {ticks}-step window")]):
             neural_grid = grid[row, col + 1].subgridspec(2, 1, height_ratios=[2, 1])
             ax = fig.add_subplot(neural_grid[0])
@@ -167,7 +176,12 @@ def render(report_path, analysis_path, output):
         for row, spec in enumerate(pairs):
             colors = image(spec)
             for side in range(2): eye(axes[row, side], colors[side], spec["name"] + " / " + ["Left", "Right"][side])
-        fig.suptitle("Exact matched-dose color inputs — enlarged retinal samples\nA=[100,100,100], B=[35,117,123]; second level doubles each byte. Colors shown after display transfer.\nBoth eyes use image-right/down axes, without mirroring. Sample IDs are shown in color-patch-crops.png.", fontsize=12)
+        if proposal:
+            level = proposal["colorSearch"]["levels"][0]
+            caption = f"color-1 lower context: A={level['a']}, B={level['b']}; color-2 adds 100 to R/G, holding blue fixed.\nPattern a: upper=A / lower=B; pattern b: upper=B / lower=A in both eyes."
+        else:
+            caption = "A=[100,100,100], B=[35,117,123]; second level doubles each byte."
+        fig.suptitle("Exact matched-dose color inputs — enlarged retinal samples\n" + caption + "\nColors shown after display transfer. Both eyes use image-right/down axes, without mirroring. Sample IDs: color-patch-crops.png.", fontsize=11)
         path = output / "color-inputs-enlarged.png"; fig.savefig(path, dpi=150); paths.append(path.name); plt.close(fig)
     if frozen["slice"] == "09":
         selected = [s for s in specifications if s["name"] in ["color-1-a", "color-1-b", "color-2-a", "color-2-b"]]
@@ -182,7 +196,8 @@ def render(report_path, analysis_path, output):
                 eye(ax, colors[side], f"{spec['name']} / {['L','R'][side]}{sample}\nlinear RGB8 {raw[side,sample].tolist()}")
                 x, y = centres[sample]; ax.set_xlim(x - 1.65, x + 1.65); ax.set_ylim(y + 1.65, y - 1.65)
                 checks.append((ax, x, y, np.rint(colors[side, sample] * 255).astype(int).tolist()))
-        fig.suptitle("All four matched-color locations, both intensities and swaps — tight sample crops\nCentral hex is the supplied colored sample; surrounding black samples are retained for context.\nL/R identify the eye; numbers are zero-based frozen layout sample indices. Image axes right/down; neither eye mirrored.", fontsize=12)
+        context = "Central hex is the original anchor within a 32-sample supported patch; neighboring samples retain their supplied colors." if proposal else "Central hex is the supplied colored sample; surrounding black samples are retained for context."
+        fig.suptitle("All four matched-color locations, both contexts and swaps — tight sample crops\n" + context + "\nL/R identify the eye; numbers are zero-based frozen layout sample indices. Image axes right/down; neither eye mirrored.", fontsize=11)
         path = output / "color-patch-crops.png"; fig.savefig(path, dpi=150); paths.append(path.name); fig.canvas.draw()
         pixels = np.asarray(Image.open(path).convert("RGB"))
         observations = []
@@ -195,11 +210,12 @@ def render(report_path, analysis_path, output):
         (output / "patch-pixel-checks.json").write_text(json.dumps(observations, indent=2) + "\n")
         plt.close(fig)
     (output / "figures.json").write_text(json.dumps(dict(files=paths, report=report_path.name, analysis=analysis_path.name,
-        matplotlib=matplotlib.__version__, scope="Every frozen condition and primary contrast included; no plot changes experimental gates."), indent=2) + "\n")
+        reportSha256=report_hash, analysisSha256=analysis_hash, matplotlib=matplotlib.__version__, scope="Every frozen condition and primary contrast included; no plot changes experimental gates."), indent=2) + "\n")
     print(json.dumps(dict(figures=len(paths), output=str(output))))
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("report", type=Path); parser.add_argument("analysis", type=Path); parser.add_argument("output", type=Path)
-    args = parser.parse_args(); render(args.report, args.analysis, args.output)
+    parser.add_argument("--input-root", type=Path, help="Directory containing the exact RGB files referenced by the frozen pack")
+    args = parser.parse_args(); render(args.report, args.analysis, args.output, args.input_root)

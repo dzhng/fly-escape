@@ -1,0 +1,61 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on artifact directory
+    Finished `release` profile [optimized] target(s) in 0.11s
+     Running `target/release/examples/retinal_neural_probe run data/processed/brain specs/retinal-vision/assets/05 specs/retinal-vision/assets/08-reslice/prepared-v2/inputs-08-v2.json specs/retinal-vision/assets/08-reslice/confirmation-08-v2`
+08 dark complete (11.9s)
+08 gray64 complete (23.9s)
+08 gray128 complete (35.9s)
+08 white complete (47.9s)
+08 Lupper complete (59.8s)
+08 Lupper-permuted complete (71.8s)
+08 Llower complete (83.8s)
+08 Llower-permuted complete (96.2s)
+08 Rupper complete (108.5s)
+08 Rupper-permuted complete (120.8s)
+08 Rlower complete (133.4s)
+08 Rlower-permuted complete (146.4s)
+08 dark-repeat complete (159.2s)
+08 white-zero complete (172.2s)
+08 dark-silenced complete (184.9s)
+08 white-silenced complete (200.7s)
+08 scene-ground complete (212.8s)
+08 scene-flight complete (225.8s)
+08 scene-tilted complete (240.2s)
+08 scene-sofa-under complete (255.4s)
+08 scene-sofa-above complete (275.7s)
+08 scene-markers-flat complete (296.1s)
+08 scene-markers-tilted complete (311.5s)
+08 scene-wall-adjacent complete (324.1s)
+08 scene-lamp-near complete (336.2s)
+08 scene-lamp-moved complete (348.4s)
+08 scene-apple-supported complete (360.7s)
+08 scene-apple-upright complete (372.7s)
+08 scene-turn-corner complete (384.8s)
+08 quality-landmarks complete (396.8s)
+08 quality-landmarks-turned complete (408.8s)
+08 quality-door-floor complete (420.9s)
+08 quality-door-flight complete (433.1s)
+08 occlusion-door-floor-open complete (445.2s)
+08 occlusion-door-floor-blocked complete (457.3s)
+08 occlusion-door-flight-open complete (469.3s)
+08 occlusion-door-flight-blocked complete (481.3s)
+      481.84 real       471.61 user         5.25 sys
+           114573312  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               14547  page reclaims
+                 253  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  54  voluntary context switches
+              539335  involuntary context switches
+       7733125902935  instructions retired
+       1910336847384  cycles elapsed
+            87540168  peak memory footprint

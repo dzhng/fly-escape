@@ -1,0 +1,48 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on shared package cache
+    Finished `release` profile [optimized] target(s) in 0.10s
+     Running `target/release/examples/retinal_neural_probe run data/processed/brain specs/retinal-vision/assets/05 specs/retinal-vision/assets/08-reslice/prepared-v2/inputs-09-v2.json specs/retinal-vision/assets/08-reslice/confirmation-09-v2`
+09 color-1-a complete (11.9s)
+09 color-1-a-off complete (23.9s)
+09 color-1-a-silenced complete (35.9s)
+09 color-1-a-permuted complete (47.9s)
+09 color-1-b complete (59.8s)
+09 color-1-b-off complete (71.8s)
+09 color-1-b-silenced complete (83.8s)
+09 color-1-b-permuted complete (96.1s)
+09 color-1-a-repeat complete (108.4s)
+09 color-1-gray complete (120.7s)
+09 uniform-color-1-a complete (133.3s)
+09 uniform-color-1-b complete (146.2s)
+09 color-2-a complete (159.0s)
+09 color-2-a-off complete (172.0s)
+09 color-2-a-silenced complete (184.7s)
+09 color-2-a-permuted complete (200.4s)
+09 color-2-b complete (212.5s)
+09 color-2-b-off complete (225.4s)
+09 color-2-b-silenced complete (239.8s)
+09 color-2-b-permuted complete (255.0s)
+09 color-2-a-repeat complete (275.1s)
+09 color-2-gray complete (295.5s)
+09 uniform-color-2-a complete (311.1s)
+09 uniform-color-2-b complete (323.7s)
+      324.23 real       316.52 user         3.47 sys
+           114802688  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               14488  page reclaims
+                 762  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  25  voluntary context switches
+              452488  involuntary context switches
+       5021133952134  instructions retired
+       1241519459096  cycles elapsed
+            87474608  peak memory footprint
