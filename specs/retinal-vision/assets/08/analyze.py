@@ -19,9 +19,13 @@ def protocol_seeds(frozen):
         ("retinal-fixed-input-diagnostic-v1", 1, "diagnostic"): list(range(1, 7)),
         ("retinal-fixed-input-diagnostic-v1", 1, "confirmation"): list(range(100, 130)),
         ("retinal-supported-area-confirmation-v2", 2, "reslice-confirmation"): list(range(200, 230)),
+        ("retinal-spatial-confirmation-v3", 3, "spatial-confirmation"): list(range(300, 330)),
     }
     require(key in panels, "Unsupported protocol/version/phase combination")
-    if frozen["pack"]["version"] == 2:
+    if frozen["pack"]["version"] == 3:
+        require(frozen["slice"] == frozen["pack"]["slice"] == "08", "v3 is spatial-only")
+        require(len(frozen["pack"]["primaryContrasts"]) == 9, "v3 requires all nine contrasts")
+    if frozen["pack"]["version"] >= 2:
         checks = frozen["resliceChecks"]
         require(all(checks[k] is True for k in ["retainedPopulationsExactlyEqual", "acceptedCurrentVectorsExactlyEqual",
             "exactBrightnessControls", "colorContrastAcrossContextsExactlyEqual"]), "Reslice input contract not verified")

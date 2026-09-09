@@ -38,11 +38,11 @@ def render(report_path, analysis_path, output, input_root=None):
     angles = np.arange(6) * np.pi / 3 + np.pi / 6
     vertices = centres[:, None, :] + .56 * np.stack([np.cos(angles), np.sin(angles)], axis=1)[None, :, :]
     specifications = frozen["pack"]["conditions"]
-    if frozen["pack"]["version"] == 2 and input_root is None:
-        raise ValueError("Version-2 figures require --input-root pointing to the frozen prepared pack")
+    if frozen["pack"]["version"] >= 2 and input_root is None:
+        raise ValueError("Reslice figures require --input-root pointing to the frozen prepared pack")
     rgb_root = input_root or ROOT / "specs/retinal-vision/assets/08"
     proposal = None
-    if frozen["pack"]["version"] == 2:
+    if frozen["pack"]["version"] >= 2:
         binding = frozen["pack"]["reslice"]["proposal"]
         raw = (rgb_root / binding["path"]).read_bytes()
         assert require_hash(raw, binding["sha256"])

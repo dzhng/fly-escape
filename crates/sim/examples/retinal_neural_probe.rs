@@ -280,6 +280,10 @@ fn protocol(version: u32, phase: &str) -> Result<(&'static str, Vec<u64>), Strin
             "retinal-supported-area-confirmation-v2",
             (200..230).collect(),
         )),
+        (3, "spatial-confirmation") => Ok((
+            "retinal-spatial-confirmation-v3",
+            (300..330).collect(),
+        )),
         _ => Err("unsupported protocol version/seed phase combination".into()),
     }
 }
@@ -307,16 +311,31 @@ fn verify_reslice(
     let binding = pack
         .reslice
         .as_ref()
-        .ok_or("v2 requires accepted reslice bindings")?;
+        .ok_or("reslice requires accepted input bindings")?;
     let proposal_bytes = read_bound(directory, &binding.proposal)?;
     let proposal: Value = serde_json::from_slice(&proposal_bytes)?;
     let baseline: Value = serde_json::from_slice(&read_bound(directory, &binding.baseline)?)?;
     let currents: Value = serde_json::from_slice(&read_bound(directory, &binding.currents)?)?;
     read_bound(directory, &binding.protocol)?;
+    let baseline_hash = if pack.version == 3 {
+        &proposal["sourceHashes"]
+            ["specs/retinal-vision/assets/08-reslice/confirmation-08-v2/freeze.json"]
+    } else {
+        &proposal["sourceHashes"]["original08Freeze"]
+    };
+    let protocol_hash = if pack.version == 3 {
+        hash(include_bytes!(
+            "../../../specs/retinal-vision/assets/08-reslice/v3/preregistration.md"
+        ))
+    } else {
+        hash(include_bytes!(
+            "../../../specs/retinal-vision/assets/08-reslice/preregistration.md"
+        ))
+    };
     if model.identities["manifestHash"] != binding.manifest_sha256
         || model.identities["graphHash"] != baseline["identities"]["graphHash"]
         || model.identities["mapHash"] != proposal["mapSha256"]
-        || binding.baseline.sha256 != proposal["sourceHashes"]["original08Freeze"]
+        || binding.baseline.sha256 != baseline_hash.as_str().ok_or("baseline freeze hash")?
         || currents["proposalHash"] != hash(&proposal_bytes)
         || currents["mapHash"] != model.identities["mapHash"]
         || currents["graphHash"] != model.identities["graphHash"]
@@ -328,10 +347,7 @@ fn verify_reslice(
             != hash(include_bytes!(
                 "../../../scripts/connectome/analyze_neural_vision.py"
             ))
-        || binding.protocol.sha256
-            != hash(include_bytes!(
-                "../../../specs/retinal-vision/assets/08-reslice/preregistration.md"
-            ))
+        || binding.protocol.sha256 != protocol_hash
         || raw_pack["preregistrationSha256"] != binding.protocol.sha256
     {
         return Err("reslice source/accepted-input identity differs".into());
@@ -348,7 +364,7 @@ fn verify_reslice(
     }
     if model.endpoints.len() != 438
         || json!(&model.endpoints) != proposal["endpoints"]
-        || json!(seeds) != proposal["proposedSeeds"]
+        || (pack.version == 2 && json!(seeds) != proposal["proposedSeeds"])
         || json!(LifParams::default()) != proposal["lifParams"]
         || proposal["gain"] != GAIN
         || proposal["warmupTicks"] != WARMUP
@@ -367,7 +383,16 @@ fn verify_reslice(
         "chromaticOffPairs",
         "dosePairs",
     ] {
-        if raw_pack[key] != proposal["panels"][&pack.slice][key] {
+        let mut expected = proposal["panels"][&pack.slice][key].clone();
+        if pack.version == 3 && key == "conditions" {
+            for condition in expected.as_array_mut().ok_or("accepted conditions")? {
+                condition["rgbPath"] = json!(format!(
+                    "inputs/{}.rgb",
+                    condition["rgbSha256"].as_str().ok_or("accepted RGB hash")?
+                ));
+            }
+        }
+        if raw_pack[key] != expected {
             return Err(format!("reslice changed accepted {key}").into());
         }
     }
@@ -796,10 +821,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Err("unsupported retinal experiment pack".into());
     }
     let (protocol_id, seeds) = protocol(pack.version, &pack.phase)?;
-    if (pack.version == 2) != pack.reslice.is_some() {
+    if pack.version == 3 && (pack.slice != "08" || pack.primary_contrasts.len() != 9) {
+        return Err("v3 requires the complete nine-contrast spatial panel".into());
+    }
+    if (pack.version >= 2) != pack.reslice.is_some() {
         return Err("protocol/reslice binding mismatch".into());
     }
-    if pack.version == 2 {
+    if pack.version >= 2 {
         let manifest: Value =
             serde_json::from_slice(&fs::read(Path::new(&args[2]).join("manifest.json"))?)?;
         let mapping: Value =
@@ -817,7 +845,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     )?;
     let controls = control_checks(&model, &pack, &stimuli)?;
     let raw_pack: Value = serde_json::from_slice(&pack_bytes)?;
-    let reslice_checks = if pack.version == 2 {
+    let reslice_checks = if pack.version >= 2 {
         verify_reslice(
             &model,
             &pack,
