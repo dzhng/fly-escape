@@ -1,0 +1,55 @@
+08 dark complete (22.4s)
+08 gray64 complete (44.6s)
+08 gray128 complete (63.9s)
+08 white complete (82.7s)
+08 Lupper complete (102.8s)
+08 Lupper-permuted complete (123.2s)
+08 Llower complete (144.3s)
+08 Llower-permuted complete (164.5s)
+08 Rupper complete (185.9s)
+08 Rupper-permuted complete (215.4s)
+08 Rlower complete (231.4s)
+08 Rlower-permuted complete (246.5s)
+08 dark-repeat complete (266.6s)
+08 white-zero complete (279.9s)
+08 dark-silenced complete (292.6s)
+08 white-silenced complete (306.9s)
+08 scene-ground complete (324.5s)
+08 scene-flight complete (344.1s)
+08 scene-tilted complete (361.5s)
+08 scene-sofa-under complete (378.6s)
+08 scene-sofa-above complete (399.2s)
+08 scene-markers-flat complete (419.8s)
+08 scene-markers-tilted complete (438.9s)
+08 scene-wall-adjacent complete (457.5s)
+08 scene-lamp-near complete (475.7s)
+08 scene-lamp-moved complete (497.8s)
+08 scene-apple-supported complete (523.0s)
+08 scene-apple-upright complete (543.9s)
+08 scene-turn-corner complete (567.0s)
+08 quality-landmarks complete (590.2s)
+08 quality-landmarks-turned complete (612.5s)
+08 quality-door-floor complete (632.0s)
+08 quality-door-flight complete (646.5s)
+08 occlusion-door-floor-open complete (661.8s)
+08 occlusion-door-floor-blocked complete (677.6s)
+08 occlusion-door-flight-open complete (693.7s)
+08 occlusion-door-flight-blocked complete (709.8s)
+      710.02 real       669.20 user        11.18 sys
+           145653760  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               22632  page reclaims
+                  55  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  62  voluntary context switches
+             1650994  involuntary context switches
+       7745362072071  instructions retired
+       2125507635187  cycles elapsed
+           118014480  peak memory footprint
