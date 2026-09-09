@@ -1,5 +1,7 @@
 # Recoverable recording errors
 
+**Superseded:** the integrating review rejected the icon-only recovery affordance. The current candidate and checks are in [recovery](recovery/README.md). This file preserves the earlier assessment as review provenance.
+
 Target: the message must say what failed and give a practical next step without clipping; the existing recovery control must remain visible and usable. Compare only the message/action region. The world render is context and is outside this change.
 
 All seven captured states, their enlarged message/control crops, and the standard-versus-unsupported comparison were inspected. A fresh screenshot reviewer could not be started: the collaboration tool returned `agent thread limit reached`. This assessment uses the screenshot-critique skill's explicit no-agent fallback. It is an adversarial self-review, not an independent review.

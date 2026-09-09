@@ -30,6 +30,13 @@ try {
     });
     page.setDefaultTimeout(120000);
     const errors = [];
+    const failedRequests = [];
+    page.on("requestfailed", (request) =>
+      failedRequests.push({
+        url: request.url(),
+        failure: request.failure()?.errorText,
+      }),
+    );
     page.on("pageerror", (error) => errors.push(error.message));
     await page.addInitScript(
       ({ fault, legacy }) => {
@@ -98,9 +105,46 @@ try {
     const progress = await page.evaluate(() =>
       localStorage.getItem("fly-escape-progress"),
     );
+    await page.waitForFunction(
+      () =>
+        document.querySelector(".setup-game")?.dataset.worldState === "ready",
+    );
+    await page.evaluate(
+      () =>
+        new Promise((resolve) =>
+          requestAnimationFrame(() => requestAnimationFrame(resolve)),
+        ),
+    );
+    if (fault === "standard-error")
+      await page.screenshot({ path: `${output}/settled-setup.png` });
     await release.click();
     const alert = page.getByRole("alert");
     await alert.waitFor();
+    for (const name of ["Pause","Play","Fast","Replay"]) assert.equal(await page.getByRole("button",{name,exact:true}).count(),0);
+    assert.equal(await page.getByTestId("round-time").count(),0);
+    assert.equal(await page.getByTestId("playback-seek").count(),0);
+    const recovery = page.getByRole("button", {
+      name: "Back to setup",
+      exact: true,
+    });
+    assert.equal((await recovery.textContent()).trim(), "Back to setup");
+    const errorRect = await alert.boundingBox(),
+      actionRect = await recovery.boundingBox();
+    assert.ok(
+      Math.abs(actionRect.y - errorRect.y) < 150,
+      "recovery action must be near the error message",
+    );
+    await page.waitForFunction(
+      () =>
+        document.querySelector(".playback-lab")?.dataset.worldAssetsReady ===
+        "true",
+    );
+    await page.evaluate(async () => {
+      await document.fonts.ready;
+      await new Promise((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve)),
+      );
+    });
     const text = await alert.textContent();
     const deliveredChunks = await page.evaluate(
       () => window.__retinaRecordChunks ?? 0,
@@ -110,6 +154,32 @@ try {
         deliveredChunks >= 2,
         "fault must follow a valid production chunk",
       );
+    const hasFrames =
+      fault === "old-after-valid" || fault === "invalid-payload";
+    const unavailable = page.getByText("Recording unavailable", {
+      exact: true,
+    });
+    if (hasFrames) {
+      assert.equal(await unavailable.count(), 0);
+      assert.ok(
+        (await page.getByTestId("active-count").textContent()).includes(
+          "recorded flies",
+        ),
+      );
+      assert.equal(await page.getByTestId("fly-card-0").count(), 1);
+      assert.ok(
+        (await page.locator(".record-paused").textContent()).includes(
+          "recorded at",
+        ),
+      );
+    } else {
+      assert.equal(await unavailable.count(), 1);
+      assert.equal(await page.getByTestId("active-count").count(), 0);
+      assert.equal(await page.getByText("What do these numbers mean?",{exact:true}).count(),0);
+      assert.equal(await page.getByTestId("fly-card-0").count(), 0);
+    }
+    const assetFailuresAtCapture = [...failedRequests];
+    assert.deepEqual(assetFailuresAtCapture, []);
     if (fault.startsWith("old"))
       assert.ok(
         text.includes(
@@ -159,6 +229,9 @@ try {
     report.cases.push({
       fault,
       deliveredChunks,
+      hasFrames,
+      assetsReady: true,
+      assetFailuresAtCapture,
       messageBounds,
       returnBounds,
       message: text,

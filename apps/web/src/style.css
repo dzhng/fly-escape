@@ -424,3 +424,7 @@ progress {
   width: 100%;
   accent-color: #769553;
 }
+
+.recording-error p { margin: 0 0 10px; }
+.recording-error button { max-width: 100%; }
+.record-unavailable, .record-paused { font-size: 12px; line-height: 1.45; }

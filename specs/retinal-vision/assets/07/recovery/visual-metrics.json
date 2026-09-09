@@ -1,0 +1,159 @@
+{
+  "target": "Nearby visible recovery action; inactive transport and truthful record state.",
+  "cases": {
+    "standard-error": {
+      "region": [
+        1102,
+        18,
+        1422,
+        290
+      ],
+      "meanAbsoluteRgbChange": 16.558183976715686,
+      "diffRatio16": 0.1973690257352941,
+      "messageBounds": {
+        "x": 1115,
+        "y": 31,
+        "width": 294,
+        "height": 99
+      },
+      "returnBounds": {
+        "x": 1127,
+        "y": 83,
+        "width": 105.671875,
+        "height": 35
+      }
+    },
+    "old-layout": {
+      "region": [
+        1102,
+        18,
+        1422,
+        290
+      ],
+      "meanAbsoluteRgbChange": 17.281426164215688,
+      "diffRatio16": 0.20412454044117648,
+      "messageBounds": {
+        "x": 1115,
+        "y": 31,
+        "width": 294,
+        "height": 99
+      },
+      "returnBounds": {
+        "x": 1127,
+        "y": 83,
+        "width": 105.671875,
+        "height": 35
+      }
+    },
+    "future-layout": {
+      "region": [
+        1102,
+        18,
+        1422,
+        290
+      ],
+      "meanAbsoluteRgbChange": 17.627071844362746,
+      "diffRatio16": 0.1977251838235294,
+      "messageBounds": {
+        "x": 1115,
+        "y": 31,
+        "width": 294,
+        "height": 114
+      },
+      "returnBounds": {
+        "x": 1127,
+        "y": 98,
+        "width": 105.671875,
+        "height": 35
+      }
+    },
+    "truncated-layout": {
+      "region": [
+        1102,
+        18,
+        1422,
+        290
+      ],
+      "meanAbsoluteRgbChange": 16.8390625,
+      "diffRatio16": 0.19871323529411763,
+      "messageBounds": {
+        "x": 1115,
+        "y": 31,
+        "width": 294,
+        "height": 99
+      },
+      "returnBounds": {
+        "x": 1127,
+        "y": 83,
+        "width": 105.671875,
+        "height": 35
+      }
+    },
+    "corrupt-layout": {
+      "region": [
+        1102,
+        18,
+        1422,
+        290
+      ],
+      "meanAbsoluteRgbChange": 16.850589767156862,
+      "diffRatio16": 0.19786305147058825,
+      "messageBounds": {
+        "x": 1115,
+        "y": 31,
+        "width": 294,
+        "height": 99
+      },
+      "returnBounds": {
+        "x": 1127,
+        "y": 83,
+        "width": 105.671875,
+        "height": 35
+      }
+    },
+    "old-after-valid": {
+      "region": [
+        1102,
+        18,
+        1422,
+        290
+      ],
+      "meanAbsoluteRgbChange": 14.626880361519607,
+      "diffRatio16": 0.180859375,
+      "messageBounds": {
+        "x": 1115,
+        "y": 31,
+        "width": 294,
+        "height": 99
+      },
+      "returnBounds": {
+        "x": 1127,
+        "y": 83,
+        "width": 105.671875,
+        "height": 35
+      }
+    },
+    "invalid-payload": {
+      "region": [
+        1102,
+        18,
+        1422,
+        290
+      ],
+      "meanAbsoluteRgbChange": 14.213618259803921,
+      "diffRatio16": 0.17488511029411766,
+      "messageBounds": {
+        "x": 1115,
+        "y": 31,
+        "width": 294,
+        "height": 99
+      },
+      "returnBounds": {
+        "x": 1127,
+        "y": 83,
+        "width": 105.671875,
+        "height": 35
+      }
+    }
+  }
+}

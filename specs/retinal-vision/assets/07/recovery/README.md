@@ -1,0 +1,7 @@
+# Recording recovery
+
+The text recovery action belongs to the existing playback-control owner and appears inside the error message through a portal. It uses the same confirmation and return callback; the icon is removed from the remote control bar while the text action is present. Empty recordings show “Recording unavailable,” with no invented fly roster or paused count. A failure after accepted records preserves the valid recorded state and labels its time.
+
+The browser regression first failed because the original recovery button had no visible text. The updated test checks visible text and proximity, the unavailable-versus-retained state, all seven recovery paths, and unchanged seeded stars and arrangements. It waits for setup's asset-ready state, fonts, and settled animation frames, and records asset readiness plus failed requests in [the report](report.json). The settled setup screenshot is a reference for the same physical world before the recording fault. No world art was changed.
+
+Independent code review found no actionable regressions; typechecking and client/web tests pass. The integrating task’s fresh visual reviewer accepted the seven full error screenshots, enlarged crops, and side-by-side comparisons: recovery messages and actions are readable, format failures remain distinct, and no overlap or clipping was found. The existing recorded-fly count and timestamp identify retained state. The washed-out world also appears in the unchanged setup reference and is outside this recovery change.

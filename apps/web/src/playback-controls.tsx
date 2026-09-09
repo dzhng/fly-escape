@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import type { PlaybackMode } from "@fly-escape/sim-client";
 
 type Icon = "pause" | "play" | "fast" | "replay" | "cancel";
@@ -20,9 +21,9 @@ function IconButton({ icon, label, tooltip = label, ...props }: {
   </span>;
 }
 
-export function PlaybackControls({ ready, fastReady, replayReady, requested, mode, returnLabel, returnToSetup, onPause, onResume, onPlay, onFast, onReplay, onReturn }: {
+export function PlaybackControls({ ready, fastReady, replayReady, requested, mode, returnLabel, returnToSetup, returnTarget, inactive = false, onPause, onResume, onPlay, onFast, onReplay, onReturn }: {
   ready: boolean; fastReady: boolean; replayReady: boolean; requested: boolean; mode: PlaybackMode;
-  returnLabel: string; returnToSetup: boolean;
+  returnLabel: string; returnToSetup: boolean; returnTarget?: HTMLElement | null; inactive?: boolean;
   onPause: () => void; onResume: () => void; onPlay: () => void; onFast: () => void;
   onReplay: () => void; onReturn: () => void;
 }) {
@@ -39,11 +40,15 @@ export function PlaybackControls({ ready, fastReady, replayReady, requested, mod
   };
   const replay = confirmation?.action === "replay";
   return <>
+    {!inactive && <>
     <IconButton icon="pause" label="Pause" tooltip="Pause playback" disabled={!ready} aria-pressed={!requested} onClick={onPause} />
     <IconButton icon="play" label="Play" tooltip="Play in real time" disabled={!ready} aria-pressed={requested && mode === "realTime"} onClick={onPlay} />
     <IconButton icon="fast" label="Fast" tooltip={fastReady ? "Fast-forward — fit the attempt into about a minute" : "Fast-forward will be ready when the simulation has finished computing"} disabled={!fastReady} aria-pressed={requested && mode === "fast"} onClick={onFast} />
     <IconButton icon="replay" label="Replay" tooltip="Replay this attempt from the beginning" disabled={!replayReady} onClick={() => ask("replay")} />
-    <IconButton icon="cancel" label={returnLabel} tooltip={returnLabel} onClick={() => ask("return")} />
+    </>}
+    {returnTarget
+      ? createPortal(<button type="button" onClick={() => ask("return")}>{returnLabel}</button>, returnTarget)
+      : <IconButton icon="cancel" label={returnLabel} tooltip={returnLabel} onClick={() => ask("return")} />}
     {confirmation && <dialog ref={dialog} className="playback-confirmation" aria-labelledby="playback-confirmation-title" onCancel={event => { event.preventDefault(); dismiss(); }}>
       <h2 id="playback-confirmation-title">{replay ? "Replay this attempt?" : "Leave this attempt?"}</h2>
       <p>{replay
