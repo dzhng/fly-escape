@@ -421,18 +421,21 @@ export function SciencePanel({
   const registerPreview = useFlyPreviews(previews);
   return (
     <div className="science-panel">
-      <div className="fly-roster" role="group" aria-label="Fly roster">
-        {Array.from({ length: info.spec.flyCount }, (_, id) => (
-          <RosterEntry
-            key={id}
-            id={id}
-            fly={frame?.flies[id]}
-            selected={selected === id}
-            selectFly={selectFly}
-            register={register}
-            registerPreview={registerPreview}
-          />
-        ))}
+      <div className="fly-roster-section">
+        <div className="fly-roster-heading"><span>Flies</span>{info.spec.flyCount > 1 && <span>Scroll ↔</span>}</div>
+        <div className="fly-roster" role="group" aria-label="Fly roster">
+          {Array.from({ length: info.spec.flyCount }, (_, id) => (
+            <RosterEntry
+              key={id}
+              id={id}
+              fly={frame?.flies[id]}
+              selected={selected === id}
+              selectFly={selectFly}
+              register={register}
+              registerPreview={registerPreview}
+            />
+          ))}
+        </div>
       </div>
       {selected !== null ? <FlyDetails id={selected} info={info} frame={frame} archive={archive} />
         : <p className="eye-selection-prompt">Select a fly to view its recorded eyes and neural activity.</p>}

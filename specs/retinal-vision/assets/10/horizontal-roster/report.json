@@ -1,0 +1,825 @@
+{
+  "source": "production AttemptClient and physical capture worker",
+  "cases": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "roster": {
+        "height": 54,
+        "sectionHeight": 71,
+        "width": 316,
+        "scrollWidth": 1728,
+        "cardTops": [
+          132,
+          132,
+          132,
+          132,
+          132,
+          132,
+          132,
+          132,
+          132,
+          132,
+          132,
+          132,
+          132,
+          132,
+          132,
+          132
+        ]
+      },
+      "keyboardAll16": true,
+      "selectedCardVisible": true,
+      "archive": {
+        "chunks": 2,
+        "ticks": 12,
+        "config": {
+          "clientGeneration": 1,
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2",
+          "mapHash": "0039df31f97b148b73118f8d766c31b57ee71a859be42c82fc72c85dc4704e91",
+          "profile": {
+            "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+            "layoutHash": "8bfc77663d1917bb0653bd8e4dd72a03901bf28b77d91040e11db7b9d7f7a99c",
+            "rigHash": "95d00abd9162e75517f70ba9cc6764336b1f07dd0bf83e6fc75179c0435d667f",
+            "colorModelHash": "f10754eec38ebd77ce25325fc10f10d700caa6c76a06f812b0a80437db4643fd",
+            "width": 128,
+            "height": 128,
+            "sampleCount": 721
+          }
+        }
+      },
+      "visits": [
+        {
+          "id": 0,
+          "tick": 4,
+          "sha256": "c263a3af34c014044df55065d58820ec17db7a4f661038cac94d01bef72bd832",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 0,
+            "position": [
+              2.68338765019875,
+              0.075,
+              6.957199080547145
+            ],
+            "rotation": [
+              0,
+              0.5667079472690323,
+              0,
+              0.8239187475122288
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 1,
+          "tick": 4,
+          "sha256": "58488c739c135d7d01d3592c8cd2d376d0170c4fc2382046df5d22a5e1b4ff35",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 1,
+            "position": [
+              2.8822535759803833,
+              0.075,
+              6.675748928236864
+            ],
+            "rotation": [
+              0,
+              0.16510582582562827,
+              0,
+              0.9862758570899105
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 2,
+          "tick": 4,
+          "sha256": "fe0b66d3fade823a40279baf708d9de80077512413fc88b09e5003b0f16b6203",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 2,
+            "position": [
+              2.639003789316224,
+              0.6,
+              6.673154527668942
+            ],
+            "rotation": [
+              0,
+              0.7787299328601549,
+              0,
+              0.6273593002957866
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 3,
+          "tick": 4,
+          "sha256": "23ec99d1656933f57e18648d33242d9cb22d445a81c518bb2d76783eb5ece79a",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 3,
+            "position": [
+              3.069769614948992,
+              0.6,
+              6.785466822818692
+            ],
+            "rotation": [
+              0,
+              -0.14524068774631457,
+              0,
+              0.9893963526428513
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 4,
+          "tick": 4,
+          "sha256": "9c246cbb6f27334afe331bd66079226c4012b2661cbe3d9f73c3bfb2ff46c763",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 4,
+            "position": [
+              2.8651167588179214,
+              0.6,
+              6.721965113166139
+            ],
+            "rotation": [
+              0,
+              0.23400772268119396,
+              0,
+              0.9722347379751258
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 5,
+          "tick": 4,
+          "sha256": "32767c5403e7990c30256f2d33f4cd9b603ca0c02817d3ea90f1e2439365ad5c",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 5,
+            "position": [
+              2.80417075497591,
+              0.6,
+              6.722029348809041
+            ],
+            "rotation": [
+              0,
+              0.9102197508543354,
+              0,
+              0.4141255910405342
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 6,
+          "tick": 4,
+          "sha256": "83cb2ad1c402ff3064c2dda1601dc5df2b0e591c1bdedd5e671d40468b41bfdc",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 6,
+            "position": [
+              2.323163164192893,
+              0.075,
+              7.125967787135388
+            ],
+            "rotation": [
+              0,
+              0.8909851996844137,
+              0,
+              -0.45403234900536044
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 7,
+          "tick": 4,
+          "sha256": "3e00ae9f5feb38deeacb4934e01f2c32f81bbd5ed351574993ecf57c3e0465a2",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 7,
+            "position": [
+              3.0618924502190525,
+              0.6,
+              6.842224877829734
+            ],
+            "rotation": [
+              0,
+              -0.20971647168816854,
+              0,
+              0.9777622418065988
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 8,
+          "tick": 4,
+          "sha256": "3738282365c154702dfdaaea2858ba65ce08b86fa010a96e7bc7271d3648dd9d",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 8,
+            "position": [
+              2.6301867813929056,
+              0.075,
+              7.003320968693981
+            ],
+            "rotation": [
+              0,
+              0.7875451163633078,
+              0,
+              0.6162569997105947
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 9,
+          "tick": 4,
+          "sha256": "e0ff609031d778e8bd28b593f8b70407c2899926457d4c9ec9f283e1ee82e7cd",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 9,
+            "position": [
+              2.722932791005719,
+              0.075,
+              6.74173349983656
+            ],
+            "rotation": [
+              0,
+              0.7755270948326071,
+              0,
+              -0.6313142839984667
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 10,
+          "tick": 4,
+          "sha256": "c67a949ce80579bc341edfd1a3e4cce7c6e8c4529a77147cc1e9f1edf0c49c3f",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 10,
+            "position": [
+              2.306750541481193,
+              0.6,
+              7.089101688567823
+            ],
+            "rotation": [
+              0,
+              0.13618273886682955,
+              0,
+              0.9906837344151407
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 11,
+          "tick": 4,
+          "sha256": "cdbf18f7ed8734c88b0637a56beb7697ce74a4d2ab1646d5c6583e50ac82b883",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 11,
+            "position": [
+              2.824783058293467,
+              0.075,
+              6.982867838891269
+            ],
+            "rotation": [
+              0,
+              0.9822511338426837,
+              0,
+              -0.18757054690105826
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 12,
+          "tick": 4,
+          "sha256": "a7804ee0be0ce7c781b28ece695785fc64991eb81ba0ccd5f29454ac41a4f034",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 12,
+            "position": [
+              3.014833315338113,
+              0.6,
+              6.593535134574501
+            ],
+            "rotation": [
+              0,
+              0.7355256262854554,
+              0,
+              0.6774969026330592
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 13,
+          "tick": 4,
+          "sha256": "cddb6a1d280f3cd5a3eb3015c50c8f8381739685c610efb298414dd4e7ce9eb4",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 13,
+            "position": [
+              2.469807882290174,
+              0.075,
+              6.761071958707703
+            ],
+            "rotation": [
+              0,
+              0.9891631824979048,
+              0,
+              -0.14682029284338236
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 14,
+          "tick": 4,
+          "sha256": "1d0d209c2966649d77a0069b272d488df71d2b1281e5aa167f6ad92ad56d9a65",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 14,
+            "position": [
+              2.660763668356794,
+              0.6,
+              6.713737193181634
+            ],
+            "rotation": [
+              0,
+              0.9998739960478132,
+              0,
+              -0.015874256750395475
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 15,
+          "tick": 4,
+          "sha256": "e05bb9911ef6e86bb1f293b36492e5fc895f43f4b8cae19590dcfdf0ee58f532",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 15,
+            "position": [
+              2.356338250573481,
+              0.15000000000000002,
+              6.98259408913193
+            ],
+            "rotation": [
+              0,
+              0.9374789418578566,
+              0,
+              0.3480419997257135
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        }
+      ],
+      "exactPixels": true,
+      "backwardChunkBoundary": true,
+      "terminalTickPresent": true,
+      "cameraInvariant": true,
+      "verticalScroll": true,
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 800,
+        "height": 1000
+      },
+      "roster": {
+        "height": 54,
+        "sectionHeight": 71,
+        "width": 263,
+        "scrollWidth": 1728,
+        "cardTops": [
+          126,
+          126,
+          126,
+          126,
+          126,
+          126,
+          126,
+          126,
+          126,
+          126,
+          126,
+          126,
+          126,
+          126,
+          126,
+          126
+        ]
+      },
+      "keyboardAll16": true,
+      "selectedCardVisible": true,
+      "archive": {
+        "chunks": 2,
+        "ticks": 12,
+        "config": {
+          "clientGeneration": 1,
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2",
+          "mapHash": "0039df31f97b148b73118f8d766c31b57ee71a859be42c82fc72c85dc4704e91",
+          "profile": {
+            "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+            "layoutHash": "8bfc77663d1917bb0653bd8e4dd72a03901bf28b77d91040e11db7b9d7f7a99c",
+            "rigHash": "95d00abd9162e75517f70ba9cc6764336b1f07dd0bf83e6fc75179c0435d667f",
+            "colorModelHash": "f10754eec38ebd77ce25325fc10f10d700caa6c76a06f812b0a80437db4643fd",
+            "width": 128,
+            "height": 128,
+            "sampleCount": 721
+          }
+        }
+      },
+      "visits": [
+        {
+          "id": 0,
+          "tick": 4,
+          "sha256": "c263a3af34c014044df55065d58820ec17db7a4f661038cac94d01bef72bd832",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 0,
+            "position": [
+              2.68338765019875,
+              0.075,
+              6.957199080547145
+            ],
+            "rotation": [
+              0,
+              0.5667079472690323,
+              0,
+              0.8239187475122288
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 1,
+          "tick": 4,
+          "sha256": "58488c739c135d7d01d3592c8cd2d376d0170c4fc2382046df5d22a5e1b4ff35",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 1,
+            "position": [
+              2.8822535759803833,
+              0.075,
+              6.675748928236864
+            ],
+            "rotation": [
+              0,
+              0.16510582582562827,
+              0,
+              0.9862758570899105
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 2,
+          "tick": 4,
+          "sha256": "fe0b66d3fade823a40279baf708d9de80077512413fc88b09e5003b0f16b6203",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 2,
+            "position": [
+              2.639003789316224,
+              0.6,
+              6.673154527668942
+            ],
+            "rotation": [
+              0,
+              0.7787299328601549,
+              0,
+              0.6273593002957866
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 3,
+          "tick": 4,
+          "sha256": "23ec99d1656933f57e18648d33242d9cb22d445a81c518bb2d76783eb5ece79a",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 3,
+            "position": [
+              3.069769614948992,
+              0.6,
+              6.785466822818692
+            ],
+            "rotation": [
+              0,
+              -0.14524068774631457,
+              0,
+              0.9893963526428513
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 4,
+          "tick": 4,
+          "sha256": "9c246cbb6f27334afe331bd66079226c4012b2661cbe3d9f73c3bfb2ff46c763",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 4,
+            "position": [
+              2.8651167588179214,
+              0.6,
+              6.721965113166139
+            ],
+            "rotation": [
+              0,
+              0.23400772268119396,
+              0,
+              0.9722347379751258
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 5,
+          "tick": 4,
+          "sha256": "32767c5403e7990c30256f2d33f4cd9b603ca0c02817d3ea90f1e2439365ad5c",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 5,
+            "position": [
+              2.80417075497591,
+              0.6,
+              6.722029348809041
+            ],
+            "rotation": [
+              0,
+              0.9102197508543354,
+              0,
+              0.4141255910405342
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 6,
+          "tick": 4,
+          "sha256": "83cb2ad1c402ff3064c2dda1601dc5df2b0e591c1bdedd5e671d40468b41bfdc",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 6,
+            "position": [
+              2.323163164192893,
+              0.075,
+              7.125967787135388
+            ],
+            "rotation": [
+              0,
+              0.8909851996844137,
+              0,
+              -0.45403234900536044
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 7,
+          "tick": 4,
+          "sha256": "3e00ae9f5feb38deeacb4934e01f2c32f81bbd5ed351574993ecf57c3e0465a2",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 7,
+            "position": [
+              3.0618924502190525,
+              0.6,
+              6.842224877829734
+            ],
+            "rotation": [
+              0,
+              -0.20971647168816854,
+              0,
+              0.9777622418065988
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 8,
+          "tick": 4,
+          "sha256": "3738282365c154702dfdaaea2858ba65ce08b86fa010a96e7bc7271d3648dd9d",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 8,
+            "position": [
+              2.6301867813929056,
+              0.075,
+              7.003320968693981
+            ],
+            "rotation": [
+              0,
+              0.7875451163633078,
+              0,
+              0.6162569997105947
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 9,
+          "tick": 4,
+          "sha256": "e0ff609031d778e8bd28b593f8b70407c2899926457d4c9ec9f283e1ee82e7cd",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 9,
+            "position": [
+              2.722932791005719,
+              0.075,
+              6.74173349983656
+            ],
+            "rotation": [
+              0,
+              0.7755270948326071,
+              0,
+              -0.6313142839984667
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 10,
+          "tick": 4,
+          "sha256": "c67a949ce80579bc341edfd1a3e4cce7c6e8c4529a77147cc1e9f1edf0c49c3f",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 10,
+            "position": [
+              2.306750541481193,
+              0.6,
+              7.089101688567823
+            ],
+            "rotation": [
+              0,
+              0.13618273886682955,
+              0,
+              0.9906837344151407
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 11,
+          "tick": 4,
+          "sha256": "cdbf18f7ed8734c88b0637a56beb7697ce74a4d2ab1646d5c6583e50ac82b883",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 11,
+            "position": [
+              2.824783058293467,
+              0.075,
+              6.982867838891269
+            ],
+            "rotation": [
+              0,
+              0.9822511338426837,
+              0,
+              -0.18757054690105826
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 12,
+          "tick": 4,
+          "sha256": "a7804ee0be0ce7c781b28ece695785fc64991eb81ba0ccd5f29454ac41a4f034",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 12,
+            "position": [
+              3.014833315338113,
+              0.6,
+              6.593535134574501
+            ],
+            "rotation": [
+              0,
+              0.7355256262854554,
+              0,
+              0.6774969026330592
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 13,
+          "tick": 4,
+          "sha256": "cddb6a1d280f3cd5a3eb3015c50c8f8381739685c610efb298414dd4e7ce9eb4",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 13,
+            "position": [
+              2.469807882290174,
+              0.075,
+              6.761071958707703
+            ],
+            "rotation": [
+              0,
+              0.9891631824979048,
+              0,
+              -0.14682029284338236
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 14,
+          "tick": 4,
+          "sha256": "1d0d209c2966649d77a0069b272d488df71d2b1281e5aa167f6ad92ad56d9a65",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 14,
+            "position": [
+              2.660763668356794,
+              0.6,
+              6.713737193181634
+            ],
+            "rotation": [
+              0,
+              0.9998739960478132,
+              0,
+              -0.015874256750395475
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        },
+        {
+          "id": 15,
+          "tick": 4,
+          "sha256": "e05bb9911ef6e86bb1f293b36492e5fc895f43f4b8cae19590dcfdf0ee58f532",
+          "nonzeroBytes": 4326,
+          "pose": {
+            "flyId": 15,
+            "position": [
+              2.356338250573481,
+              0.15000000000000002,
+              6.98259408913193
+            ],
+            "rotation": [
+              0,
+              0.9374789418578566,
+              0,
+              0.3480419997257135
+            ]
+          },
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "sceneId": "5c6d882a3e05aea90eee706d8759e3bf7757741065dbc6458f4f9160cf7ff2a2"
+        }
+      ],
+      "exactPixels": true,
+      "backwardChunkBoundary": true,
+      "terminalTickPresent": true,
+      "cameraInvariant": true,
+      "verticalScroll": true,
+      "errors": []
+    }
+  ]
+}

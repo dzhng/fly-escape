@@ -7,12 +7,24 @@
   gap: 12px;
   margin: 14px 0;
 }
+.fly-roster-heading {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  font-size: 11px;
+  color: #63705d;
+}
 .fly-roster {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  display: flex;
   gap: 4px;
+  overflow-x: auto;
+  padding: 2px 2px 8px;
+  scroll-padding-inline: 2px;
+  scrollbar-width: thin;
 }
 .fly-card {
+  flex: 0 0 104px;
+  min-height: 44px;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   grid-template-rows: auto auto;

@@ -14,16 +14,21 @@ try {
   assert.deepEqual(await page.evaluate(()=>window.physicalEyes.errors),[]);
   await page.waitForFunction(()=>document.querySelector(".playback-lab")?.dataset.worldState==="ready");
   const pause=page.getByRole("button",{name:"Pause",exact:true});if(await pause.count())await pause.click();
+  const roster=await page.locator(".fly-roster").evaluate(el=>({height:el.clientHeight,sectionHeight:el.parentElement.clientHeight,width:el.clientWidth,scrollWidth:el.scrollWidth,cardTops:[...el.children].map(card=>card.getBoundingClientRect().top)}));
+  assert.equal(new Set(roster.cardTops).size,1,"fly roster must occupy one horizontal row");
+  assert.ok(roster.scrollWidth>roster.width,"roster should scroll horizontally");
   const seek=async tick=>{
    await page.getByTestId("playback-seek").evaluate((slider,tick)=>{Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,"value").set.call(slider,String(tick));slider.dispatchEvent(new Event("input",{bubbles:true}));slider.dispatchEvent(new Event("change",{bubbles:true}));},tick);
    await page.waitForFunction(tick=>Math.floor(Number(document.querySelector(".playback-lab").dataset.cursorTick))===Math.floor(tick),tick);
   };
   const inspect=async(id,tick)=>{
-   await page.getByRole("button",{name:`Select fly ${id+1}`,exact:true}).click();
+   await page.getByRole("button",{name:`Select fly ${id+1}`,exact:true}).evaluate(button=>button.click());
    await page.waitForFunction(({id,tick})=>{const el=document.querySelector(".eye-panels");return el?.dataset.flyId===String(id)&&el.dataset.eyeTick===String(tick)&&el.dataset.eyeState==="present";},{id,tick});
    return await page.evaluate(async({root,id,tick})=>{
     const {RetinaProjection,retinaProfile}=await import(`/@fs${root}/packages/game-renderer/src/retina-projection.ts`);
     const projection=new RetinaProjection(retinaProfile),sample=window.physicalEyes.archive.retina(tick,id);
+    const selected=document.querySelector(`.fly-card[data-fly-id="${id}"]`).getBoundingClientRect(),roster=document.querySelector(".fly-roster").getBoundingClientRect();
+    if(selected.left<roster.left||selected.right>roster.right)throw Error("Selected fly is outside roster viewport");
     const panel=document.querySelector(".eye-panels"),canvases=panel.querySelectorAll("canvas"),stride=projection.cells.length*3;
     if(canvases.length!==2)throw Error("Missing paired eyes");
     for(let eye=0;eye<2;eye++){
@@ -35,7 +40,15 @@ try {
     return {id,tick,sha256:hash,nonzeroBytes:sample.rgb.filter(value=>value!==0).length,pose:sample.pose,profileHash:panel.dataset.profileHash,sceneId:panel.dataset.sceneId};
    },{root,id,tick});
   };
-  await seek(4.7);const visits=[];for(let id=0;id<16;id++)visits.push(await inspect(id,4));
+  await seek(4.7);
+  await page.getByRole("button",{name:"Select fly 1",exact:true}).focus();
+  for(let id=0;id<16;id++){
+   assert.equal(await page.evaluate(()=>document.activeElement.dataset.flyId),String(id));
+   await page.keyboard.press("Space");
+   await page.waitForFunction(id=>document.querySelector(".eye-panels")?.dataset.flyId===String(id),id);
+   if(id<15)await page.keyboard.press("Tab");
+  }
+  const visits=[];for(let id=0;id<16;id++)visits.push(await inspect(id,4));
   assert.ok(visits.every(visit=>visit.nonzeroBytes>0));assert.ok(new Set(visits.map(visit=>visit.sha256)).size>1);
   await seek(11);await inspect(2,11);await seek(10);await inspect(8,10);await seek(12);await inspect(3,12);
   await seek(4);await inspect(5,4);
@@ -47,7 +60,7 @@ try {
   await page.screenshot({path:`${output}/${viewport.width}-selected.png`});await page.locator(".science-details").screenshot({path:`${output}/${viewport.width}-details.png`});await page.locator(".eye-panels").screenshot({path:`${output}/${viewport.width}-eyes.png`});
   const finalTrace=page.locator(".science-trace").last();await finalTrace.evaluate(el=>el.scrollIntoView({block:"center",behavior:"instant"}));await page.waitForFunction(()=>{const el=[...document.querySelectorAll(".science-trace")].at(-1),r=el.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight;});await page.screenshot({path:`${output}/${viewport.width}-bottom.png`});
   const archive=await page.evaluate(()=>({chunks:window.physicalEyes.chunks,ticks:window.physicalEyes.archive.computedTick,config:window.physicalEyes.info.retinalConfig}));
-  assert.equal(archive.ticks,12);assert.deepEqual(errors,[]);report.cases.push({viewport,archive,visits,exactPixels:true,backwardChunkBoundary:true,terminalTickPresent:true,cameraInvariant:true,verticalScroll:true,errors});await page.close();
+  assert.equal(archive.ticks,12);assert.deepEqual(errors,[]);report.cases.push({viewport,roster,keyboardAll16:true,selectedCardVisible:true,archive,visits,exactPixels:true,backwardChunkBoundary:true,terminalTickPresent:true,cameraInvariant:true,verticalScroll:true,errors});await page.close();
  }
 } finally {await writeFile(`${output}/report.json`,JSON.stringify(report,null,2)+"\n");await browser.close();}
 console.log(JSON.stringify({viewports:report.cases.length,all16:true,exactPixels:true}));
