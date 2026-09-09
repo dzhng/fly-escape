@@ -9,6 +9,8 @@ import { chromium } from 'playwright';
 // production frame pacing remains the separate playback acceptance surface.
 const base = process.env.BRAIN_URL ?? 'http://127.0.0.1:5173';
 const production = process.env.VISION_PRODUCTION_URL ?? base;
+const visionGain = Number(process.env.VISION_CUE_GAIN ?? 0);
+assert.ok(Number.isFinite(visionGain) && visionGain >= 0 && visionGain <= 3);
 const output = process.env.VISION_OUTPUT ?? 'specs/done/directional-vision/assets/browser';
 await mkdir(output, { recursive: true });
 const fixture = JSON.parse(execFileSync('cargo', ['run', '-q', '-p', 'sim', '--example', 'record_fixture'], { encoding: 'utf8' }));
@@ -35,13 +37,14 @@ try {
   assert.ok(decoded.frames[0].flies[0].sensory.vision.brightness.some(value => value > 0));
   assert.ok(decoded.frames[0].flies[0].sensory.vision.blocked.some(value => value > 0));
   assert.equal(decoded.initial.flies[0].sensory, null);
-  const workerSample = await page.evaluate(async moduleRoot => {
+  const workerSample = await page.evaluate(async ({ moduleRoot, visionGain }) => {
     const { AttemptClient } = await import(`${moduleRoot}/attempt-client.ts`);
     const { FrameArchive } = await import(`${moduleRoot}/record.ts`);
     const { default: content } = await import('/src/levels/open-window.ts');
     const level = structuredClone(content.level);
     level.durationTicks = 30;
     level.sources.push({ kind: 'lamp', position: { x: 2.6, z: 6.9 }, radius: 3, rate: 2 });
+    const tuning = visionGain ? { ...content.tuning, cues: [{ pathway: 'vision', gain: visionGain }], tasteGain: 0 } : content.tuning;
     return new Promise((resolve, reject) => {
       let archive;
       const timer = setTimeout(() => { client.dispose(); reject(new Error('Directional worker timeout')); }, 60000);
@@ -53,9 +56,9 @@ try {
           if (archive.complete) { clearTimeout(timer); const first = archive.frame(1); client.dispose(); resolve({ first, computedTick: archive.computedTick }); }
         }
       });
-      client.start({ level, tuning: content.tuning, placements: [], flyCount: 16, attemptId: 'vision-worker', rootSeed: '42' });
+      client.start({ level, tuning, placements: [], flyCount: 16, attemptId: 'vision-worker', rootSeed: '42' });
     });
-  }, '/@fs' + fileURLToPath(new URL('../../packages/sim-client/src', import.meta.url)));
+  }, { moduleRoot: '/@fs' + fileURLToPath(new URL('../../packages/sim-client/src', import.meta.url)), visionGain });
   assert.equal(workerSample.computedTick, 30);
   for (const fly of workerSample.first.flies) {
     const { brightness, blocked } = fly.sensory.vision;
@@ -81,9 +84,18 @@ try {
   assert.equal(await page.getByTestId('selected-fly').innerText(), first);
   const paused = await report();
   await page.screenshot({ path: `${output}/paused-rewind.png` });
+  if (visionGain) {
+    await page.getByRole('button', { name: 'Vision L', exact: true }).click();
+    await page.getByTestId('selected-fly').evaluate(element => element.scrollIntoView({ block: 'start' }));
+    await page.waitForFunction(() => document.querySelector('.science-group-picker')?.textContent.includes('Tm2'));
+    await page.screenshot({ path: `${output}/vision-details.png` });
+    await page.getByRole('button', { name: 'Explain Modeled vision · Tm2 · left', exact: true }).click();
+    await page.screenshot({ path: `${output}/vision-explanation.png` });
+    assert.ok((await page.getByRole('region', { name: 'Modeled vision · Tm2 · left explained', exact: true }).innerText()).includes('modeling assumptions'));
+  }
   assert.equal(paused.sampleTick, 10);
   assert.equal(paused.underruns, 0);
   assert.ok(playing.cursorTick >= 30);
   assert.deepEqual(errors, []);
-  await writeFile(`${output}/report.json`, JSON.stringify({ nativeFixtureRoundTrip: true, seekOrder: decoded.frames.map(frame => frame.tick), schema: decoded.schema, workerSample, playbackOrigin: production, playing, paused, errors }, null, 2));
+  await writeFile(`${output}/report.json`, JSON.stringify({ nativeFixtureRoundTrip: true, seekOrder: decoded.frames.map(frame => frame.tick), schema: decoded.schema, visionGain, workerSample, playbackOrigin: production, playing, paused, errors }, null, 2));
 } finally { await browser.close(); }

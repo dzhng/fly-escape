@@ -1,0 +1,19 @@
+{
+  "publishedMapHash": "c0ac5957037012b486cc7300ccad56015fd3215ad4c764ce4ba0b27c82a262da",
+  "publishedManifestHash": "e545579d7de5311e4d5348034d781bcaeaf6548c6a340205d3ec5cde4b23c45f",
+  "graphBytesAndMtimeUnchanged": true,
+  "groupCount": 16,
+  "validation": {
+    "nativeFullSuite": "passed before metadata publication; runtime source unchanged thereafter",
+    "connectome": "29 tests passed after registry/publication",
+    "clientAndWeb": "38 passed, 360 expectations",
+    "typecheck": "passed",
+    "wasmBuild": "passed",
+    "webBuild": "passed after published assets",
+    "browser": "actual vision-only gain3 worker:16 flies30ticks; actual production campaign playback pause10/20/10; zero underruns and page errors",
+    "finalNativePerformance": "published manifest threepairs: median+0.77945%, all1600steps/run active; below10%",
+    "independentWholeReview": "no actionable correctness regressions; 96 focused Python/Rust tests passed in review"
+  },
+  "visualLimitations": "Existing long scroll column and dense all-group traces remain; no new structural clipping/overlap; updated explanation readable.",
+  "semanticPublication": "Frozen map and graph bytes match confirmation. Display groups change to the mapped source-sided cells; other motor/odor pathways remain unchanged. Confirmation retains the exact tested manifest separately."
+}

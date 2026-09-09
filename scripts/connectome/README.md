@@ -22,11 +22,11 @@ Run `.venv/bin/python -m unittest discover -s tests/connectome -v` for small syn
 
 ## Visual inputs are metadata
 
-The annotation-derived visual map lives inside the graph manifest. Its two display groups follow the mapped cells' source soma sides; they do not retain the former AOTU membership or claim retinal reconstruction. The [map exporter](vision_map.py) owns the modeled column registration and connectivity audit. Candidate JSON files are experiment evidence, never a second runtime data channel.
+The annotation-derived visual map lives inside the graph manifest. Its two display groups follow the mapped cells' source soma sides. Column registration and overlapping directional weights are model assumptions, not retinal reconstruction. The [map exporter](vision_map.py) owns the modeled column registration and connectivity audit. Candidate JSON files are experiment evidence, never a second runtime data channel.
 
 A metadata-only preparation reads the existing graph and verifies its hash plus the annotation source before updating the manifest and group connectivity. It does not read the full source weights, run extraction or rewrite graph bytes. Original extraction provenance is retained separately from the current metadata exporter identity.
 
-Select an experimental family with `--vision-family`; after the pilot freezes its winner, the existing pathway registry's `visionFamily` becomes the default. Both export modes reject an absent choice until then. Use `--metadata-only` against an existing graph directory to publish that choice. A successful export contains the selected map alone; missing or empty sectors are errors, not permission to restore a binary AOTU adapter.
+Use `--vision-family` for a controlled candidate export. The existing pathway registry's `visionFamily` owns the production choice after its validation gates pass; both export modes require an explicit choice until then. Use `--metadata-only` against an existing graph directory to publish it. Every direction must have equal total input weight, and each cell's combined directional weight is bounded. These dose constraints control modeled input; they do not guarantee turning or attraction.
 
 ## Data attribution
 
