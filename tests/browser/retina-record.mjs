@@ -4,7 +4,7 @@ import { readFile, mkdir, writeFile } from "node:fs/promises";
 const legacy = JSON.parse(
   await readFile(
     new URL(
-      "../../specs/retinal-vision/assets/07/schema-5.json",
+      "../../specs/done/retinal-vision/assets/07/schema-5.json",
       import.meta.url,
     ),
     "utf8",

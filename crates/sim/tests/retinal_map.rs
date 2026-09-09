@@ -10,7 +10,7 @@ fn native_currents_match_the_offline_spatial_and_color_oracle() {
         include_str!("../../../data/processed/brain/manifest.json"),
     )
     .unwrap();
-    let map_json = include_str!("../../../specs/retinal-vision/assets/05/retinal-map.json");
+    let map_json = include_str!("../../../specs/done/retinal-vision/assets/05/retinal-map.json");
     let data: Value = serde_json::from_str(map_json).unwrap();
     let ids = &data["identities"];
     let profile = EyeProfile {
@@ -24,7 +24,7 @@ fn native_currents_match_the_offline_spatial_and_color_oracle() {
     };
     let map = RetinalMap::from_json(&graph, &profile, map_json).unwrap();
     let oracle: Value = serde_json::from_str(include_str!(
-        "../../../specs/retinal-vision/assets/05/current-fixtures.json"
+        "../../../specs/done/retinal-vision/assets/05/current-fixtures.json"
     ))
     .unwrap();
     let indices = oracle["entryIndices"].as_array().unwrap();

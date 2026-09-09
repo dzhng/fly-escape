@@ -15,7 +15,7 @@ A fully 3D browser game that runs locally, with Rust compiled to WebAssembly for
 Place objects around the house, then **Release the flies**. Earn stars for the flies that escape and change your arrangement for the next attempt. The fun is discovering what they respond to—and whether that response actually helps them leave.
 
 - **Explore two furnished houses.** Work around the surroundings already there, with a limited selection of objects of your own.
-- **Follow an individual.** Click a fly or its roster card to follow it and inspect its simulated neural activity. The brain view and traces come with plain-language explanations.
+- **Follow an individual.** Click a fly or its roster card to follow it, see its recorded left/right color inputs, and inspect its simulated neural activity. The brain view and traces come with plain-language explanations.
 - **Watch at your own pace.** Choose real time or a fast replay that fits the full round into about a minute. Pause and rewind to inspect a moment.
 
 Scroll to zoom, move to the screen edge or drag to pan, and hold the right mouse button while dragging to rotate. The rotation-reset button restores the original angle. Progress and arrangements are saved in your browser.
@@ -47,7 +47,7 @@ To serve the finished build, or work on the simulation and artwork, see the [dev
 
 The two-level game loop is playable, but difficulty is still experimental. Object placement changes observed outcomes; consistent repulsion and the frequency of higher star scores are not established. Feeding and life extension are deferred.
 
-The simulation buffers enough recorded motion before playback to sustain real time. The [retry measurements](specs/done/fast-retries/README.md) cover current local startup and retry latency; the [release checks](specs/done/help-the-fly-escape/assets/evidence/release-final/README.md) preserve earlier browser coverage. Larger swarms and broader performance tuning remain future work.
+The simulation buffers enough recorded motion before playback to sustain real time. The [retry measurements](specs/done/fast-retries/README.md) document the earlier startup and retry design; the [release checks](specs/done/help-the-fly-escape/assets/evidence/release-final/README.md) preserve earlier browser coverage. The [retinal-vision release record](specs/done/retinal-vision/README.md) covers paired color input, replay, observed gameplay changes and current performance/research limits. Larger swarms and broader performance tuning remain future work.
 
 ## Data and credits
 

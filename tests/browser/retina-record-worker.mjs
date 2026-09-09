@@ -19,7 +19,7 @@ self.onmessage = async (event) => {
       fetch("/brain/manifest.json").then((r) => r.text()),
       fetch(
         new URL(
-          "../../specs/retinal-vision/assets/05/retinal-map.json",
+          "../../specs/done/retinal-vision/assets/05/retinal-map.json",
           import.meta.url,
         ),
       ).then((r) => r.text()),

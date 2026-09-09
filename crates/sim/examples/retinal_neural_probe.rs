@@ -319,17 +319,17 @@ fn verify_reslice(
     read_bound(directory, &binding.protocol)?;
     let baseline_hash = if pack.version == 3 {
         &proposal["sourceHashes"]
-            ["specs/retinal-vision/assets/08-reslice/confirmation-08-v2/freeze.json"]
+            ["specs/done/retinal-vision/assets/08-reslice/confirmation-08-v2/freeze.json"]
     } else {
         &proposal["sourceHashes"]["original08Freeze"]
     };
     let protocol_hash = if pack.version == 3 {
         hash(include_bytes!(
-            "../../../specs/retinal-vision/assets/08-reslice/v3/preregistration.md"
+            "../../../specs/done/retinal-vision/assets/08-reslice/v3/preregistration.md"
         ))
     } else {
         hash(include_bytes!(
-            "../../../specs/retinal-vision/assets/08-reslice/preregistration.md"
+            "../../../specs/done/retinal-vision/assets/08-reslice/preregistration.md"
         ))
     };
     if model.identities["manifestHash"] != binding.manifest_sha256
@@ -341,7 +341,7 @@ fn verify_reslice(
         || currents["graphHash"] != model.identities["graphHash"]
         || raw_pack["analysisSha256"]
             != hash(include_bytes!(
-                "../../../specs/retinal-vision/assets/08/analyze.py"
+                "../../../specs/done/retinal-vision/assets/08/analyze.py"
             ))
         || raw_pack["statisticsOwnerSha256"]
             != hash(include_bytes!(

@@ -52,10 +52,18 @@ try {
   await page.getByRole("button",{name:"Pause",exact:true}).click();
   const seek=page.getByTestId("playback-seek");
   for(const tick of [horizon,Math.floor(horizon/2),1,Math.floor(horizon/2)]) {await seek.fill(String(tick));await seek.dispatchEvent("input");}
+  await seek.fill("1"); await seek.dispatchEvent("input");
+  await page.getByRole("button",{name:"Fast",exact:true}).click();
+  await page.waitForFunction(() => document.querySelector('[data-testid="playback-lab"]')?.dataset.playbackState === "ended", undefined, {timeout:120000});
+  const played = await report();
+  assert.equal(played.underruns,0);
+  assert.ok(played.frameIntervals.p95Ms<=33,"Playback frame p95 exceeds 33 ms");
+  assert.ok(result.productionMs<=horizon*100,"Production must keep up with simulation time");
+  await seek.fill(String(Math.floor(horizon/2))); await seek.dispatchEvent("input");
   await page.screenshot({path:`${output}/level-${level}-rewind.png`});
   assert.deepEqual(errors,[]);
   const profiler=await page.evaluate(()=>window.retinalMeasureCost);
   assert.ok(profiler.properties<10000,"Component profiling must not expand retinal byte arrays");
-  await writeFile(`${output}/level-${level}.json`,JSON.stringify({browser:browser.version(),diagnosticHorizon:horizon,gpu,productionBuild:!!process.env.RETINA_PRODUCTION,errors,profiler,...result},null,2)+"\n");
+  await writeFile(`${output}/level-${level}.json`,JSON.stringify({browser:browser.version(),diagnosticHorizon:horizon,gpu,productionBuild:!!process.env.RETINA_PRODUCTION,errors,profiler,fullPlayback:played,...result},null,2)+"\n");
   console.log(JSON.stringify({level,complete:true,memory:result.memory,activeNeuralSteps:result.activeNeuralSteps,productionMs:result.productionMs}));
 } catch(error) {console.error(await page.locator("body").innerText().catch(()=>"Browser target unavailable"));throw error;} finally {await browser.close();}

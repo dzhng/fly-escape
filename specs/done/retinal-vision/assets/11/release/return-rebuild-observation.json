@@ -1,0 +1,122 @@
+[
+  {
+    "before": {
+      "batches": 0,
+      "clumps": 0,
+      "candidateCells": 0,
+      "packedBytes": 0,
+      "spacing": 0,
+      "radius": 0
+    },
+    "after": {
+      "batches": 220,
+      "clumps": 785739,
+      "candidateCells": 1048576,
+      "packedBytes": 25143648,
+      "spacing": 0.05859375,
+      "radius": 30
+    },
+    "ms": 364.5,
+    "phase": "setup"
+  },
+  {
+    "before": {
+      "batches": 220,
+      "clumps": 785739,
+      "candidateCells": 1048576,
+      "packedBytes": 25143648,
+      "spacing": 0.05859375,
+      "radius": 30
+    },
+    "after": {
+      "batches": 220,
+      "clumps": 794236,
+      "candidateCells": 1048576,
+      "packedBytes": 25415552,
+      "spacing": 0.068359375,
+      "radius": 35
+    },
+    "ms": 436.1999999284744,
+    "phase": "setup"
+  },
+  {
+    "before": {
+      "batches": 220,
+      "clumps": 794236,
+      "candidateCells": 1048576,
+      "packedBytes": 25415552,
+      "spacing": 0.068359375,
+      "radius": 35
+    },
+    "after": {
+      "batches": 224,
+      "clumps": 795526,
+      "candidateCells": 1048576,
+      "packedBytes": 25456832,
+      "spacing": 0.0703125,
+      "radius": 36
+    },
+    "ms": 277.5,
+    "phase": "playback"
+  },
+  {
+    "before": {
+      "batches": 224,
+      "clumps": 795526,
+      "candidateCells": 1048576,
+      "packedBytes": 25456832,
+      "spacing": 0.0703125,
+      "radius": 36
+    },
+    "after": {
+      "batches": 220,
+      "clumps": 794236,
+      "candidateCells": 1048576,
+      "packedBytes": 25415552,
+      "spacing": 0.068359375,
+      "radius": 35
+    },
+    "ms": 365.10000002384186,
+    "phase": "setup"
+  },
+  {
+    "before": {
+      "batches": 220,
+      "clumps": 794236,
+      "candidateCells": 1048576,
+      "packedBytes": 25415552,
+      "spacing": 0.068359375,
+      "radius": 35
+    },
+    "after": {
+      "batches": 224,
+      "clumps": 795526,
+      "candidateCells": 1048576,
+      "packedBytes": 25456832,
+      "spacing": 0.0703125,
+      "radius": 36
+    },
+    "ms": 278.5,
+    "phase": "playback"
+  },
+  {
+    "before": {
+      "batches": 224,
+      "clumps": 795526,
+      "candidateCells": 1048576,
+      "packedBytes": 25456832,
+      "spacing": 0.0703125,
+      "radius": 36
+    },
+    "after": {
+      "batches": 220,
+      "clumps": 794236,
+      "candidateCells": 1048576,
+      "packedBytes": 25415552,
+      "spacing": 0.068359375,
+      "radius": 35
+    },
+    "ms": 392.10000002384186,
+    "phase": "setup"
+  }
+]

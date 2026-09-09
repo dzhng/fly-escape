@@ -23,7 +23,7 @@ def main():
     parser.add_argument('--download', action='store_true')
     parser.add_argument('--verify-reference', action='store_true')
     parser.add_argument('--metadata-only', action='store_true', help='Read the existing output graph and update only its manifest and reports')
-    parser.add_argument('--retinal-profile', type=Path, default=Path('specs/retinal-vision/assets/05/provisional-profile.json'))
+    parser.add_argument('--retinal-profile', type=Path, default=Path('specs/done/retinal-vision/assets/05/provisional-profile.json'))
     parser.add_argument('--retinal-map', type=Path, help='Validated retinal artifact to publish; full exports default to the committed map')
     args = parser.parse_args()
     registry = json.loads(Path(__file__).with_name('connectome').joinpath('pathways.json').read_text())

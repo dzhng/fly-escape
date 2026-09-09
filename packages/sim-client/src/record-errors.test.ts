@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test";
 import { FrameArchive, RecordDecodeError, parseRecordHeader } from "./record";
 import type { RecordLayout } from "./generated/sim";
-import legacy from "../../../specs/retinal-vision/assets/07/schema-5.json";
+import legacy from "../../../specs/done/retinal-vision/assets/07/schema-5.json";
 
 test("public archive rejects frozen old schema before touching its layout", () => {
   for (const layout of [
