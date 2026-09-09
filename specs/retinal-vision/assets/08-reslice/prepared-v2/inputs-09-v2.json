@@ -1,0 +1,427 @@
+{
+  "analysisSha256": "23f4046a2268464f78e17a4f04a3ecadc5abb9a2aade1bc3b2e8b008eb9c2f31",
+  "chromaticOffPairs": [
+    [
+      "color-1-a-off",
+      "color-1-b-off"
+    ],
+    [
+      "color-2-a-off",
+      "color-2-b-off"
+    ]
+  ],
+  "conditions": [
+    {
+      "chromatic": true,
+      "name": "color-1-a",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 1
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/0346bcce1569b661d1c5fa528e02238e3a9c534fe6c73c5efd358a79051ae20d.rgb",
+      "rgbSha256": "0346bcce1569b661d1c5fa528e02238e3a9c534fe6c73c5efd358a79051ae20d",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "color-1-a-off",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 1
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/0346bcce1569b661d1c5fa528e02238e3a9c534fe6c73c5efd358a79051ae20d.rgb",
+      "rgbSha256": "0346bcce1569b661d1c5fa528e02238e3a9c534fe6c73c5efd358a79051ae20d",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-1-a-silenced",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 1
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/0346bcce1569b661d1c5fa528e02238e3a9c534fe6c73c5efd358a79051ae20d.rgb",
+      "rgbSha256": "0346bcce1569b661d1c5fa528e02238e3a9c534fe6c73c5efd358a79051ae20d",
+      "silenceInputs": true,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-1-a-permuted",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 1
+      },
+      "permuteRows": true,
+      "rgbPath": "inputs/0346bcce1569b661d1c5fa528e02238e3a9c534fe6c73c5efd358a79051ae20d.rgb",
+      "rgbSha256": "0346bcce1569b661d1c5fa528e02238e3a9c534fe6c73c5efd358a79051ae20d",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-1-b",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 1
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/598db5d72ded41095ded85f2492eb727dd6f77e598bb66497e2716136aa19c74.rgb",
+      "rgbSha256": "598db5d72ded41095ded85f2492eb727dd6f77e598bb66497e2716136aa19c74",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "color-1-b-off",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 1
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/598db5d72ded41095ded85f2492eb727dd6f77e598bb66497e2716136aa19c74.rgb",
+      "rgbSha256": "598db5d72ded41095ded85f2492eb727dd6f77e598bb66497e2716136aa19c74",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-1-b-silenced",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 1
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/598db5d72ded41095ded85f2492eb727dd6f77e598bb66497e2716136aa19c74.rgb",
+      "rgbSha256": "598db5d72ded41095ded85f2492eb727dd6f77e598bb66497e2716136aa19c74",
+      "silenceInputs": true,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-1-b-permuted",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 1
+      },
+      "permuteRows": true,
+      "rgbPath": "inputs/598db5d72ded41095ded85f2492eb727dd6f77e598bb66497e2716136aa19c74.rgb",
+      "rgbSha256": "598db5d72ded41095ded85f2492eb727dd6f77e598bb66497e2716136aa19c74",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-1-a-repeat",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 1
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/0346bcce1569b661d1c5fa528e02238e3a9c534fe6c73c5efd358a79051ae20d.rgb",
+      "rgbSha256": "0346bcce1569b661d1c5fa528e02238e3a9c534fe6c73c5efd358a79051ae20d",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-1-gray",
+      "origin": {
+        "grayscaleDiagnosticOnly": true,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 1
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/b5aae7bce423cc326bdf78bd521587f37d11b703fd4d70b426ef6318fd822fc1.rgb",
+      "rgbSha256": "b5aae7bce423cc326bdf78bd521587f37d11b703fd4d70b426ef6318fd822fc1",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "uniform-color-1-a",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 1
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/3364090026d1f17f1919fd46a6b099a462934a29f38b4352b51ef2a70eb733b1.rgb",
+      "rgbSha256": "3364090026d1f17f1919fd46a6b099a462934a29f38b4352b51ef2a70eb733b1",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "uniform-color-1-b",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 1
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/aa1942d398f71f90d11a66f03be980a1077eb91c980b7101922d63bc0165075f.rgb",
+      "rgbSha256": "aa1942d398f71f90d11a66f03be980a1077eb91c980b7101922d63bc0165075f",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-2-a",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 2
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/ff77377887cf6cd19c35007c999073c1bd8502f1e89dc5c77fab7013b3935fe5.rgb",
+      "rgbSha256": "ff77377887cf6cd19c35007c999073c1bd8502f1e89dc5c77fab7013b3935fe5",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "color-2-a-off",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 2
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/ff77377887cf6cd19c35007c999073c1bd8502f1e89dc5c77fab7013b3935fe5.rgb",
+      "rgbSha256": "ff77377887cf6cd19c35007c999073c1bd8502f1e89dc5c77fab7013b3935fe5",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-2-a-silenced",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 2
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/ff77377887cf6cd19c35007c999073c1bd8502f1e89dc5c77fab7013b3935fe5.rgb",
+      "rgbSha256": "ff77377887cf6cd19c35007c999073c1bd8502f1e89dc5c77fab7013b3935fe5",
+      "silenceInputs": true,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-2-a-permuted",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 2
+      },
+      "permuteRows": true,
+      "rgbPath": "inputs/ff77377887cf6cd19c35007c999073c1bd8502f1e89dc5c77fab7013b3935fe5.rgb",
+      "rgbSha256": "ff77377887cf6cd19c35007c999073c1bd8502f1e89dc5c77fab7013b3935fe5",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-2-b",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 2
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/758adf5fb943cd5ff35911ea37cbd8d25e35bbae5a52f4687fe0e432433afaa3.rgb",
+      "rgbSha256": "758adf5fb943cd5ff35911ea37cbd8d25e35bbae5a52f4687fe0e432433afaa3",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": false,
+      "name": "color-2-b-off",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 2
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/758adf5fb943cd5ff35911ea37cbd8d25e35bbae5a52f4687fe0e432433afaa3.rgb",
+      "rgbSha256": "758adf5fb943cd5ff35911ea37cbd8d25e35bbae5a52f4687fe0e432433afaa3",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-2-b-silenced",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 2
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/758adf5fb943cd5ff35911ea37cbd8d25e35bbae5a52f4687fe0e432433afaa3.rgb",
+      "rgbSha256": "758adf5fb943cd5ff35911ea37cbd8d25e35bbae5a52f4687fe0e432433afaa3",
+      "silenceInputs": true,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-2-b-permuted",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 2
+      },
+      "permuteRows": true,
+      "rgbPath": "inputs/758adf5fb943cd5ff35911ea37cbd8d25e35bbae5a52f4687fe0e432433afaa3.rgb",
+      "rgbSha256": "758adf5fb943cd5ff35911ea37cbd8d25e35bbae5a52f4687fe0e432433afaa3",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-2-a-repeat",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 2
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/ff77377887cf6cd19c35007c999073c1bd8502f1e89dc5c77fab7013b3935fe5.rgb",
+      "rgbSha256": "ff77377887cf6cd19c35007c999073c1bd8502f1e89dc5c77fab7013b3935fe5",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "color-2-gray",
+      "origin": {
+        "grayscaleDiagnosticOnly": true,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 2
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/0e87e74b817de33780003d03314b1b5a4d6c4646e2c458be995d6ffa6d9de037.rgb",
+      "rgbSha256": "0e87e74b817de33780003d03314b1b5a4d6c4646e2c458be995d6ffa6d9de037",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "uniform-color-2-a",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 2
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/5a6fa076f7d45c677ff869c8e7d1de0d22723b23ce1d285de02495271198b070.rgb",
+      "rgbSha256": "5a6fa076f7d45c677ff869c8e7d1de0d22723b23ce1d285de02495271198b070",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    },
+    {
+      "chromatic": true,
+      "name": "uniform-color-2-b",
+      "origin": {
+        "grayscaleDiagnosticOnly": false,
+        "kind": "proposed matched-adapter-contrast RGB8",
+        "level": 2
+      },
+      "permuteRows": false,
+      "rgbPath": "inputs/c1e6b632fe12cb5b7a06bb647c6c69ad62c39bab63b0e8b4f411d10564cbfb0e.rgb",
+      "rgbSha256": "c1e6b632fe12cb5b7a06bb647c6c69ad62c39bab63b0e8b4f411d10564cbfb0e",
+      "silenceInputs": false,
+      "zeroCurrent": false
+    }
+  ],
+  "dosePairs": [
+    {
+      "a": "color-1-a",
+      "b": "color-1-b",
+      "equalBrightness": true,
+      "scope": "eyeChannel"
+    },
+    {
+      "a": "color-2-a",
+      "b": "color-2-b",
+      "equalBrightness": true,
+      "scope": "eyeChannel"
+    }
+  ],
+  "exactPairs": [
+    [
+      "color-1-a",
+      "color-1-a-repeat"
+    ],
+    [
+      "color-1-a-silenced",
+      "color-1-b-silenced"
+    ],
+    [
+      "color-2-a",
+      "color-2-a-repeat"
+    ],
+    [
+      "color-2-a-silenced",
+      "color-2-b-silenced"
+    ]
+  ],
+  "phase": "reslice-confirmation",
+  "preregistrationSha256": "4553d178fd8e5e467a02bd90161ab9b8cdb7e85dca2aff7d8febe708fe34f108",
+  "primaryContrasts": [
+    [
+      "color-1-a",
+      "color-1-b"
+    ],
+    [
+      "color-2-a",
+      "color-2-b"
+    ]
+  ],
+  "profile": {
+    "annotationHash": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+    "baselineMapHash": "c0ac5957037012b486cc7300ccad56015fd3215ad4c764ce4ba0b27c82a262da",
+    "colorModelHash": "f10754eec38ebd77ce25325fc10f10d700caa6c76a06f812b0a80437db4643fd",
+    "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+    "layoutHash": "8bfc77663d1917bb0653bd8e4dd72a03901bf28b77d91040e11db7b9d7f7a99c",
+    "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+    "rigHash": "95d00abd9162e75517f70ba9cc6764336b1f07dd0bf83e6fc75179c0435d667f"
+  },
+  "reslice": {
+    "baseline": {
+      "path": "accepted-baseline.json",
+      "sha256": "dfa14bce5e1e1c4b156b929268c7dd9cb85c81217571d3f90f6400aaad94486d"
+    },
+    "currents": {
+      "path": "accepted-currents.json",
+      "sha256": "9213a24932cc216f572b67682b02598b46386a65ea3a38391452fe6057eb5468"
+    },
+    "manifestSha256": "79dfba6ce9b78d5758a8bc7988886f3f37959242ce93fd62fb8a5c15e93cb6f3",
+    "proposal": {
+      "path": "accepted-proposal.json",
+      "sha256": "0aae0679a659699bae482b920d9abc20e698e090f67617a1319ac8953d650173"
+    },
+    "protocol": {
+      "path": "preregistration.md",
+      "sha256": "4553d178fd8e5e467a02bd90161ab9b8cdb7e85dca2aff7d8febe708fe34f108"
+    }
+  },
+  "scope": "Accepted supported-area/luminance-context experiment; freeze separately after root clearance. No completed browser proof.",
+  "slice": "09",
+  "statisticsOwnerSha256": "56759c7e1c23f04d4e87d60e307f11ef6a0676ff7be390e8e9c62b9ec3eaa5db",
+  "version": 2
+}

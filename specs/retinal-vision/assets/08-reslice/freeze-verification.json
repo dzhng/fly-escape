@@ -1,0 +1,320 @@
+{
+  "status": "Both v2 freezes complete; no run-started marker, Brain construction, neural step or report",
+  "sourceRevision": "030a86e8",
+  "currentFixturesSha256": "e611abb2977c8e397ec5d8e0e00f3f6f09d38e0a6fdc04b42b172db2e9924cfe",
+  "seeds": [
+    200,
+    201,
+    202,
+    203,
+    204,
+    205,
+    206,
+    207,
+    208,
+    209,
+    210,
+    211,
+    212,
+    213,
+    214,
+    215,
+    216,
+    217,
+    218,
+    219,
+    220,
+    221,
+    222,
+    223,
+    224,
+    225,
+    226,
+    227,
+    228,
+    229
+  ],
+  "panels": [
+    {
+      "slice": "08",
+      "freezePath": "specs/retinal-vision/assets/08-reslice/confirmation-08-v2/freeze.json",
+      "freezeSha256": "0ae9e7f9cb5f7f038d8e951b5e1b9d574cda7bab3b20e7e103975c8b547e045d",
+      "inputPackHash": "46ca4dd9f6074adcdd5578642c82dcd451f5e1576ce86a591c08956515dbc8b3",
+      "conditionCount": 37,
+      "primaryContrastCount": 9,
+      "multiplicity": 7884,
+      "populationCounts": {
+        "inputs": 1176,
+        "endpoints": 438,
+        "downstream": 40944,
+        "motorReadouts": 1696
+      },
+      "controls": [
+        {
+          "a": "dark",
+          "b": "dark-repeat",
+          "kind": "exact effective input",
+          "passed": true
+        },
+        {
+          "a": "dark",
+          "b": "white-zero",
+          "kind": "exact effective input",
+          "passed": true
+        },
+        {
+          "a": "dark-silenced",
+          "b": "white-silenced",
+          "kind": "exact effective input",
+          "passed": true
+        },
+        {
+          "a": "Lupper",
+          "b": "Rupper",
+          "brightnessCurrentMaximumDifference": 0.0,
+          "doseDifference": 0.0,
+          "kind": "matched dose",
+          "luminanceMaximumDifference": 0.0,
+          "passed": true,
+          "scope": "total"
+        },
+        {
+          "a": "Llower",
+          "b": "Rlower",
+          "brightnessCurrentMaximumDifference": 0.0,
+          "doseDifference": 0.0,
+          "kind": "matched dose",
+          "luminanceMaximumDifference": 0.0,
+          "passed": true,
+          "scope": "total"
+        },
+        {
+          "a": "Lupper",
+          "b": "Llower",
+          "brightnessCurrentMaximumDifference": 0.0,
+          "doseDifference": 3.552713678800501e-15,
+          "kind": "matched dose",
+          "luminanceMaximumDifference": 0.0,
+          "passed": true,
+          "scope": "total"
+        },
+        {
+          "a": "Rupper",
+          "b": "Rlower",
+          "brightnessCurrentMaximumDifference": 0.0,
+          "doseDifference": 3.552713678800501e-15,
+          "kind": "matched dose",
+          "luminanceMaximumDifference": 0.0,
+          "passed": true,
+          "scope": "total"
+        },
+        {
+          "condition": "Lupper-permuted",
+          "kind": "permutation dose",
+          "maximumDifference": 0.0,
+          "passed": true
+        },
+        {
+          "condition": "Llower-permuted",
+          "kind": "permutation dose",
+          "maximumDifference": 0.0,
+          "passed": true
+        },
+        {
+          "condition": "Rupper-permuted",
+          "kind": "permutation dose",
+          "maximumDifference": 0.0,
+          "passed": true
+        },
+        {
+          "condition": "Rlower-permuted",
+          "kind": "permutation dose",
+          "maximumDifference": 0.0,
+          "passed": true
+        }
+      ],
+      "resliceChecks": {
+        "acceptedCurrentEvidenceHash": "9213a24932cc216f572b67682b02598b46386a65ea3a38391452fe6057eb5468",
+        "acceptedCurrentVectorsExactlyEqual": true,
+        "acceptedProposalHash": "0aae0679a659699bae482b920d9abc20e698e090f67617a1319ac8953d650173",
+        "baselineFreezeHash": "dfa14bce5e1e1c4b156b929268c7dd9cb85c81217571d3f90f6400aaad94486d",
+        "colorContrastAcrossContextsExactlyEqual": true,
+        "exactBrightnessControls": true,
+        "manifestHash": "79dfba6ce9b78d5758a8bc7988886f3f37959242ce93fd62fb8a5c15e93cb6f3",
+        "retainedPopulationsExactlyEqual": true
+      },
+      "identities": {
+        "auditHash": "757cebb339fa347566300c2baf6024debc14036b50c7f0ad4586229d61566f51",
+        "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+        "manifestHash": "79dfba6ce9b78d5758a8bc7988886f3f37959242ce93fd62fb8a5c15e93cb6f3",
+        "mapHash": "0039df31f97b148b73118f8d766c31b57ee71a859be42c82fc72c85dc4704e91",
+        "mappingIdentities": {
+          "annotationHash": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+          "baselineMapHash": "c0ac5957037012b486cc7300ccad56015fd3215ad4c764ce4ba0b27c82a262da",
+          "colorModelHash": "f10754eec38ebd77ce25325fc10f10d700caa6c76a06f812b0a80437db4643fd",
+          "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+          "layoutHash": "8bfc77663d1917bb0653bd8e4dd72a03901bf28b77d91040e11db7b9d7f7a99c",
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "rigHash": "95d00abd9162e75517f70ba9cc6764336b1f07dd0bf83e6fc75179c0435d667f"
+        },
+        "profile": {
+          "colorModelHash": "f10754eec38ebd77ce25325fc10f10d700caa6c76a06f812b0a80437db4643fd",
+          "height": 128,
+          "layoutHash": "8bfc77663d1917bb0653bd8e4dd72a03901bf28b77d91040e11db7b9d7f7a99c",
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "rigHash": "95d00abd9162e75517f70ba9cc6764336b1f07dd0bf83e6fc75179c0435d667f",
+          "sampleCount": 721,
+          "width": 128
+        },
+        "sources": {
+          "graph": "5986b3b17d2aa0174e887b63b7459652e772207ab917c1b247e46ef6b91a6991",
+          "lif": "dc6f1e5454acdf2d6e96a43b1ec4bed74d95f20d1e3e0a9039ce451d86c768c4",
+          "probe": "6f30558cb01452583bf121c33d0df6fedc017cb654901215b3e12453f82845de",
+          "retinalMap": "0b0ec2934a616a9cba701182ce8c57689a351dd49103e9caec3cc217d6e1e850",
+          "sensory": "d9a2c059089b1afda4842781949fd6c363b0ea5c32931e31f43d5d10161f6343"
+        }
+      }
+    },
+    {
+      "slice": "09",
+      "freezePath": "specs/retinal-vision/assets/08-reslice/confirmation-09-v2/freeze.json",
+      "freezeSha256": "9927f5ceed293f86782a4425f8f3fb5824fc5c48d4806ebbf76562f7fe86e15c",
+      "inputPackHash": "8438289c7079f43de76bf93cc0e54359cd3f6a3d27a925b4d5b6411694fd1d5b",
+      "conditionCount": 24,
+      "primaryContrastCount": 2,
+      "multiplicity": 1752,
+      "populationCounts": {
+        "inputs": 1176,
+        "endpoints": 438,
+        "downstream": 40944,
+        "motorReadouts": 1696
+      },
+      "controls": [
+        {
+          "a": "color-1-a",
+          "b": "color-1-a-repeat",
+          "kind": "exact effective input",
+          "passed": true
+        },
+        {
+          "a": "color-1-a-silenced",
+          "b": "color-1-b-silenced",
+          "kind": "exact effective input",
+          "passed": true
+        },
+        {
+          "a": "color-2-a",
+          "b": "color-2-a-repeat",
+          "kind": "exact effective input",
+          "passed": true
+        },
+        {
+          "a": "color-2-a-silenced",
+          "b": "color-2-b-silenced",
+          "kind": "exact effective input",
+          "passed": true
+        },
+        {
+          "a": "color-1-a-off",
+          "b": "color-1-b-off",
+          "kind": "chromatic-off current",
+          "maximumDifference": 0.0,
+          "passed": true
+        },
+        {
+          "a": "color-2-a-off",
+          "b": "color-2-b-off",
+          "kind": "chromatic-off current",
+          "maximumDifference": 0.0,
+          "passed": true
+        },
+        {
+          "a": "color-1-a",
+          "b": "color-1-b",
+          "brightnessCurrentMaximumDifference": 0.0,
+          "doseDifference": 1.0658141036401503e-14,
+          "kind": "matched dose",
+          "luminanceMaximumDifference": 0.0,
+          "passed": true,
+          "scope": "eyeChannel"
+        },
+        {
+          "a": "color-2-a",
+          "b": "color-2-b",
+          "brightnessCurrentMaximumDifference": 0.0,
+          "doseDifference": 1.0658141036401503e-14,
+          "kind": "matched dose",
+          "luminanceMaximumDifference": 0.0,
+          "passed": true,
+          "scope": "eyeChannel"
+        },
+        {
+          "condition": "color-1-a-permuted",
+          "kind": "permutation dose",
+          "maximumDifference": 0.0,
+          "passed": true
+        },
+        {
+          "condition": "color-1-b-permuted",
+          "kind": "permutation dose",
+          "maximumDifference": 0.0,
+          "passed": true
+        },
+        {
+          "condition": "color-2-a-permuted",
+          "kind": "permutation dose",
+          "maximumDifference": 0.0,
+          "passed": true
+        },
+        {
+          "condition": "color-2-b-permuted",
+          "kind": "permutation dose",
+          "maximumDifference": 0.0,
+          "passed": true
+        }
+      ],
+      "resliceChecks": {
+        "acceptedCurrentEvidenceHash": "9213a24932cc216f572b67682b02598b46386a65ea3a38391452fe6057eb5468",
+        "acceptedCurrentVectorsExactlyEqual": true,
+        "acceptedProposalHash": "0aae0679a659699bae482b920d9abc20e698e090f67617a1319ac8953d650173",
+        "baselineFreezeHash": "dfa14bce5e1e1c4b156b929268c7dd9cb85c81217571d3f90f6400aaad94486d",
+        "colorContrastAcrossContextsExactlyEqual": true,
+        "exactBrightnessControls": true,
+        "manifestHash": "79dfba6ce9b78d5758a8bc7988886f3f37959242ce93fd62fb8a5c15e93cb6f3",
+        "retainedPopulationsExactlyEqual": true
+      },
+      "identities": {
+        "auditHash": "757cebb339fa347566300c2baf6024debc14036b50c7f0ad4586229d61566f51",
+        "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+        "manifestHash": "79dfba6ce9b78d5758a8bc7988886f3f37959242ce93fd62fb8a5c15e93cb6f3",
+        "mapHash": "0039df31f97b148b73118f8d766c31b57ee71a859be42c82fc72c85dc4704e91",
+        "mappingIdentities": {
+          "annotationHash": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+          "baselineMapHash": "c0ac5957037012b486cc7300ccad56015fd3215ad4c764ce4ba0b27c82a262da",
+          "colorModelHash": "f10754eec38ebd77ce25325fc10f10d700caa6c76a06f812b0a80437db4643fd",
+          "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+          "layoutHash": "8bfc77663d1917bb0653bd8e4dd72a03901bf28b77d91040e11db7b9d7f7a99c",
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "rigHash": "95d00abd9162e75517f70ba9cc6764336b1f07dd0bf83e6fc75179c0435d667f"
+        },
+        "profile": {
+          "colorModelHash": "f10754eec38ebd77ce25325fc10f10d700caa6c76a06f812b0a80437db4643fd",
+          "height": 128,
+          "layoutHash": "8bfc77663d1917bb0653bd8e4dd72a03901bf28b77d91040e11db7b9d7f7a99c",
+          "profileHash": "07696d3bf264481e3a2e1ebe52066f1881c7ca7b70f5b897007eead7f7e6ffce",
+          "rigHash": "95d00abd9162e75517f70ba9cc6764336b1f07dd0bf83e6fc75179c0435d667f",
+          "sampleCount": 721,
+          "width": 128
+        },
+        "sources": {
+          "graph": "5986b3b17d2aa0174e887b63b7459652e772207ab917c1b247e46ef6b91a6991",
+          "lif": "dc6f1e5454acdf2d6e96a43b1ec4bed74d95f20d1e3e0a9039ce451d86c768c4",
+          "probe": "6f30558cb01452583bf121c33d0df6fedc017cb654901215b3e12453f82845de",
+          "retinalMap": "0b0ec2934a616a9cba701182ce8c57689a351dd49103e9caec3cc217d6e1e850",
+          "sensory": "d9a2c059089b1afda4842781949fd6c363b0ea5c32931e31f43d5d10161f6343"
+        }
+      }
+    }
+  ],
+  "hold": "Await explicit root Brain-run clearance and clear CPU window; do not modify bound sources/protocol/packs."
+}
