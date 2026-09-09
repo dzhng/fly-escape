@@ -20,6 +20,7 @@ use std::{
 
 const WARMUP: usize = 60;
 const TICKS: usize = 100;
+const PROTOCOL: &str = "overlapping-cosine-gain3-v1";
 
 fn hash(bytes: &[u8]) -> String {
     format!("{:x}", Sha256::digest(bytes))
@@ -248,17 +249,11 @@ fn populations(
     audit: &Value,
     edges: &[Vec<u32>],
 ) -> Result<(Vec<u32>, Vec<u32>, Vec<u32>), String> {
-    let inputs: BTreeSet<u32> = mapping["bins"]
+    let inputs: BTreeSet<u32> = mapping["entries"]
         .as_array()
         .unwrap()
         .iter()
-        .flat_map(|b| {
-            b["indices"]
-                .as_array()
-                .unwrap()
-                .iter()
-                .map(|i| i.as_u64().unwrap() as u32)
-        })
+        .map(|entry| entry["index"].as_u64().unwrap() as u32)
         .collect();
     let excluded = readouts(graph);
     if inputs.iter().any(|i| excluded.contains(i)) {
@@ -417,6 +412,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let maps = Path::new(&args[3]);
     let output = Path::new(&args[4]);
     fs::create_dir_all(output)?;
+    if output.join("pilot-summary.json").exists() {
+        let prior: Value = serde_json::from_slice(&fs::read(output.join("pilot-summary.json"))?)?;
+        if prior["protocol"] != PROTOCOL {
+            return Err(
+                "output directory contains a different pilot protocol; preserve its evidence"
+                    .into(),
+            );
+        }
+    }
     let bytes = fs::read(graph_dir.join("graph.bin"))?;
     let base: Value = serde_json::from_slice(&fs::read(graph_dir.join("manifest.json"))?)?;
     // Validate before reading CSR offsets or using source annotations.
@@ -432,6 +436,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         None
     };
     if let Some(f) = &frozen {
+        if f["protocol"] != PROTOCOL {
+            return Err("freeze belongs to a different projection protocol".into());
+        }
+        if f["gain"].as_f64() != Some(3.) {
+            return Err("overlapping-input protocol freezes gain three".into());
+        }
         if !matches!(f["axis"].as_str(), Some("turn" | "flightTurn")) {
             return Err("freeze must name the pilot-selected turn or flightTurn axis".into());
         }
@@ -466,10 +476,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             &serde_json::to_string(&manifest)?,
         )?);
         let (inputs, relays, sham) = populations(&graph, &mapping, &audit, &edges)?;
+        let effective_population: [f64; 8] = std::array::from_fn(|b| {
+            mapping["entries"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|entry| entry["weights"][b].as_f64().unwrap())
+                .sum()
+        });
         let gains = if let Some(f) = &frozen {
             vec![f["gain"].as_f64().ok_or("freeze missing gain")?]
         } else {
-            vec![1., 2., 3.]
+            vec![3.]
         };
         for gain in gains {
             let mut conditions = vec![];
@@ -537,7 +555,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 let stats=if f["axis"]=="turn" { &turn } else { &flight };
                 json!({"axis":f["axis"],"statistics":stats,"directionalGatePassed":stats.excludes_zero,"pilotMean":f["statistics"]["mean"],"sameSignAsPilot":f["statistics"]["mean"].as_f64().map(|m|m.signum()==stats.mean.signum())})
             });
-            let report = json!({"mode":args[1],"family":family,"gain":gain,"mappingHash":map_hash,"graphHash":graph.manifest.graph_hash,"auditHash":hash(&audit_bytes),"probeSourceHash":hash(include_bytes!("neural_vision_probe.rs")),"sensorySourceHash":hash(include_bytes!("../src/sensory.rs")),"frozenPrimary":primary,"warmupTicks":WARMUP,"measuredTicks":TICKS,"lifParams":LifParams::default(),"fixedPose":{"position":{"x":0,"z":0},"heading":0},"inputs":inputs,"relays":relays,"sham":sham,"shamSelection":"Ascending graph indices, zero outgoing edges, matched input count, outside all mapped inputs, audited relay paths and motor readouts; this tests silencing machinery without a connected-neuron perturbation.","conditions":conditions,"comparisons":comparisons,"scope":"Paired seed means. Only frozenPrimary is the confirmatory motor endpoint; other readout and relay coordinate intervals are descriptive, not multiplicity-adjusted. Actual retained paths establish connectivity, not a unique causal route. Basis stimuli replace only recorded brightness at the sensory seam; lamps use production FieldSet. Neural hashes cover voltage, spikes and refractory state on all measured ticks."});
+            let report = json!({"protocol":PROTOCOL,"mode":args[1],"family":family,"gain":gain,"mappingHash":map_hash,"effectivePopulationPerDirection":effective_population,"graphHash":graph.manifest.graph_hash,"auditHash":hash(&audit_bytes),"probeSourceHash":hash(include_bytes!("neural_vision_probe.rs")),"sensorySourceHash":hash(include_bytes!("../src/sensory.rs")),"frozenPrimary":primary,"warmupTicks":WARMUP,"measuredTicks":TICKS,"lifParams":LifParams::default(),"fixedPose":{"position":{"x":0,"z":0},"heading":0},"inputs":inputs,"relays":relays,"sham":sham,"shamSelection":"Ascending graph indices, zero outgoing edges, matched input count, outside all mapped inputs, audited relay paths and motor readouts; this tests silencing machinery without a connected-neuron perturbation.","conditions":conditions,"comparisons":comparisons,"scope":"Paired seed means. Only frozenPrimary is the confirmatory motor endpoint; other readout and relay coordinate intervals are descriptive, not multiplicity-adjusted. Actual retained paths establish connectivity, not a unique causal route. Basis stimuli replace only recorded brightness at the sensory seam; lamps use production FieldSet. Neural hashes cover voltage, spikes and refractory state on all measured ticks."});
             let filename = format!("{}-{family}-{gain}.json", args[1]);
             write(&output.join(&filename), &report)?;
             let (axis, stats) = if flight.absolute_t.unwrap_or(0.) > turn.absolute_t.unwrap_or(0.) {
@@ -545,7 +563,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             } else {
                 ("turn", &turn)
             };
-            candidates.push(json!({"family":family,"gain":gain,"population":inputs.len(),"mappingHash":map_hash,"axis":axis,"statistics":stats,"report":filename}));
+            candidates.push(json!({"protocol":PROTOCOL,"family":family,"gain":gain,"population":inputs.len(),"mappingHash":map_hash,"axis":axis,"statistics":stats,"report":filename}));
         }
     }
     if !confirm {
@@ -568,7 +586,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             .cloned();
         write(
             &output.join("pilot-summary.json"),
-            &json!({"candidates":candidates,"selected":selected,"rule":"Largest absolute paired t for mirrored actual lamps in existing turn or flightTurn, pilot 95% interval excludes zero; ties smaller input population then lower gain. No desired motor sign."}),
+            &json!({"protocol":PROTOCOL,"candidates":candidates,"selected":selected,"rule":"Exactly Tm2/Tm20 at gain3, seeds1..6. Largest absolute paired t for mirrored actual lamps in existing turn or flightTurn, pilot 95% interval excludes zero; ties smaller input population. No desired motor sign."}),
         )?;
         // The caller reviews the pilot and explicitly writes freeze.json; this process never runs held-out seeds.
     }
