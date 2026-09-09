@@ -6,16 +6,17 @@ This is a plan, not an implemented or verified feature. Spatial and color input,
 
 ## Next Agent Prompt
 
-**Status: implementation started; updated 2026-09-09.** Reference optics and the independent color-source audit are the first work. No implementation slice has passed yet. You should start with [01 — reproduce the reference optics](slices/01-reference.md), then execute the graph below. Read [contracts](contracts.md), [research](research.md), and [decisions](decisions.md) first. Update this prompt, the checklist, and the owning slice's verdict before ending each pass.
+**Status: reference optics and color-model audit passed; acquisition feasibility in progress (2026-09-09).** Continue [02 — acquisition feasibility](slices/02-feasibility.md). The `/retina` workbench captures actual authored room assets in a worker and shows canonical RGB samples. Initial 16-fly p95 is 26.7 ms, above the 20 ms gate; profile selection and full archive admission remain unresolved. No gameplay integration has started. Independent preparation is deriving the asset eye rig and auditing archive arithmetic.
 
+Completed evidence: [reference reproduction](assets/01/review.md), [color audit](assets/04/verification.md). The model is Tm2 brightness plus Tm20 blue, with explicitly unmeasured coefficients; unsupported Tm5 cells are excluded. Freeze the combined dose and spatial map in slice 05 before testing neural color responses. See [choices](choices.md).
 The code inspected for this plan is `88813fe5c552e42269ba63858fe0e0057fbfcb43`, the integrated `origin/main`. Implementation fast-forwarded local `main` from `2b500c7` to that integrated revision using Git’s no-overwrite-ignore protection. Unrelated local files remain outside the feature. Inspect current Git state before each pass. The user explicitly requested removal of all `codex/` branches: do not recreate one for this work. A detached worktree is available if isolation is necessary.
 
 The first unresolved technical gate is whether the low-resolution renderer can meet the measured cost and readability requirements. Do not infer that small textures make capture cheap. A second gate is whether the retained graph supports a declared color-channel mapping in addition to spatial brightness responses. No missing art or credentials block slice 01: use asymmetric generated optical fixtures; the existing authored assets are the production source.
 
-- [ ] [01 Reference optics](slices/01-reference.md): reproduce, pin and measure the reference.
+- [x] [01 Reference optics](slices/01-reference.md): reproduce, pin and measure the reference.
 - [ ] [02 Acquisition feasibility](slices/02-feasibility.md): settle capture cost, quality profile and archive arithmetic before integration.
 - [ ] [03 Shared world and eye rig](slices/03-world-and-eyes.md): sample the authoritative world with full pre-neural orientation.
-- [ ] [04 Color-model feasibility](slices/04-color-model.md): audit retained cells and freeze a defensible rendered-color adapter.
+- [x] [04 Color-model feasibility](slices/04-color-model.md): audit retained cells and freeze a defensible rendered-color adapter.
 - [ ] [05 Retinal input map](slices/05-input-map.md): export bounded spatial and channel assignments.
 - [ ] [06 Tick rendezvous](slices/06-tick.md): consume exactly one matching eye batch before each neural tick.
 - [ ] [07 Exact replay](slices/07-records.md): retain consumed bytes and reject old records without crashing.
