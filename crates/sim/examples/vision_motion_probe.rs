@@ -8,7 +8,7 @@ use sim::{
     environment::{FieldConfig, Geometry, Point, RectRoom, Source, SourceKind, Wall},
     placement::PlacementRules,
     sensory::CuePathway,
-    spawn::SpawnDef,
+    spawn::{SpawnDef, SpawnMode, SpawnState},
     Graph,
 };
 use std::{path::Path, sync::Arc, time::Instant};
@@ -23,7 +23,7 @@ fn point(x: f64, z: f64) -> Point {
 fn distance(a: Point, b: Point) -> f64 {
     (a.x - b.x).hypot(a.z - b.z)
 }
-fn fixture(mut level: LevelDef, lamp: Option<Point>) -> LevelDef {
+fn fixture(mut level: LevelDef, lamp: Option<Point>, mode: SpawnMode) -> LevelDef {
     level.id = "vision-motion".into();
     level.geometry = Geometry {
         rooms: vec![RectRoom {
@@ -45,10 +45,15 @@ fn fixture(mut level: LevelDef, lamp: Option<Point>) -> LevelDef {
         })
         .to_vec(),
     };
-    level.spawn = SpawnDef::fixed(vec![BodyPose {
-        position: point(0., 0.),
-        heading: 0.,
-    }]);
+    level.spawn = SpawnDef::Fixed {
+        states: vec![SpawnState {
+            pose: BodyPose {
+                position: point(0., 0.),
+                heading: 0.,
+            },
+            mode,
+        }],
+    };
     level.exit = ExitOpening {
         a: point(10., -0.5),
         b: point(10., 0.5),
@@ -200,11 +205,16 @@ fn classification(distance: &Summary) -> &'static str {
 }
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<_> = std::env::args().collect();
-    if args.len() != 6 {
+    if !(6..=7).contains(&args.len()) {
         return Err(
-            "Usage: vision_motion_probe GRAPH_DIR MAP_JSON CONTENT_JSON GAIN OUTPUT_JSON".into(),
+            "Usage: vision_motion_probe GRAPH_DIR MAP_JSON CONTENT_JSON GAIN OUTPUT_JSON [walking|flying]".into(),
         );
     }
+    let initial_mode = match args.get(6).map(String::as_str) {
+        None | Some("walking") => SpawnMode::Walking,
+        Some("flying") => SpawnMode::Flying,
+        _ => return Err("initial mode must be walking or flying".into()),
+    };
     let gain: f64 = args[4].parse()?;
     if !gain.is_finite() || !(0. ..=3.).contains(&gain) {
         return Err("gain must be finite and within 0..3".into());
@@ -238,12 +248,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut rows = vec![];
     let start = Instant::now();
     for seed in 100..130 {
-        let dark = run(&graph, fixture(content.level.clone(), None), gain, seed)?;
+        let dark = run(
+            &graph,
+            fixture(content.level.clone(), None, initial_mode),
+            gain,
+            seed,
+        )?;
         let mut conditions = vec![];
         for (index, (name, reference)) in references.into_iter().enumerate() {
             let lit = run(
                 &graph,
-                fixture(content.level.clone(), Some(reference)),
+                fixture(content.level.clone(), Some(reference), initial_mode),
                 gain,
                 seed,
             )?;
@@ -269,8 +284,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let report = json!({"family":family,"mapSha256":format!("{:x}",Sha256::digest(&map_bytes)),
         "contentSha256":format!("{:x}",Sha256::digest(&content_bytes)),"graphHash":graph.manifest.graph_hash,"simulationBuildId":SIMULATION_BUILD_ID,
         "probeSourceSha256":format!("{:x}",Sha256::digest(include_bytes!("vision_motion_probe.rs"))),"gain":gain,"seedRangeInclusive":[100,129],"seedCount":30,"durationTicks":300,
-        "warmupTicks":0,"fixture":fixture(content.level,None),"wallSeconds":start.elapsed().as_secs_f64(),"rows":rows,"summaries":summaries,
-        "scope":"One walking fly, normal Attempt startup, unmodified supplied BodyConfig. One source-free run per seed is reused for the three reference-point comparisons. Reference points enter no dark-condition body or sensory input. No odor, food, fan, suction, exit cue or additional ablation. Classification uses unadjusted paired seed-level 95% t intervals of lamp-minus-dark distance reduction; approach/avoidance are relative to dark, not proof of absolute attraction. Neither means no resolved difference in this bounded panel. Early outcomes and boundary contact remain reported, not excluded.",
+        "warmupTicks":0,"initialMode":initial_mode,"fixture":fixture(content.level,None,initial_mode),"wallSeconds":start.elapsed().as_secs_f64(),"rows":rows,"summaries":summaries,
+        "scope":"One fly in the declared initial mode, normal Attempt startup, unmodified supplied BodyConfig. One source-free run per seed is reused for the three reference-point comparisons. Reference points enter no dark-condition body or sensory input. No odor, food, fan, suction, exit cue or additional ablation. Classification uses unadjusted paired seed-level 95% t intervals of lamp-minus-dark distance reduction; approach/avoidance are relative to dark, not proof of absolute attraction. Neither means no resolved difference in this bounded panel. Early outcomes and boundary contact remain reported, not excluded.",
         "metrics":"Distance reduction is initial minus final distance. Heading alignment is the mean heading dot current reference bearing over initial and tick-end poses; exact coincident positions are omitted and final alignment is null there. Path length uses tick-end displacements. Trajectory hash covers initial complete BodyState, then each tick number and complete tick-end BodyState in order."});
     std::fs::write(&args[5], serde_json::to_string_pretty(&report)?)?;
     Ok(())
@@ -301,53 +316,55 @@ mod tests {
         });
         assert!(source.exit_suction.is_some() && !source.fixed_objects.is_empty());
         let expected_body = source.body_config.clone();
-        let lit = fixture(source.clone(), Some(point(0., -1.)));
-        let dark = fixture(source, None);
-        assert_eq!(lit.body_config, expected_body);
-        assert_eq!(dark.body_config, expected_body);
-        assert!(lit.exit_suction.is_none() && dark.exit_suction.is_none());
-        let initial = sim::spawn::resolve(&lit, 100, 1).unwrap().remove(0);
-        assert_eq!(
-            initial.pose,
-            BodyPose {
-                position: point(0., 0.),
-                heading: 0.
-            }
-        );
-        assert_eq!(initial.mode, sim::body::BodyMode::Walking);
-        assert_eq!(
-            sim::spawn::resolve(&lit, 100, 1).unwrap(),
-            sim::spawn::resolve(&dark, 100, 1).unwrap()
-        );
-        let setup = resolve_placements(&lit, &[]).unwrap();
-        assert!(
-            setup.state.food.is_empty()
-                && setup.state.objects.is_empty()
-                && setup.state.contact_hazards.is_empty()
-        );
-        let sample = FieldSet::new(
-            lit.geometry,
-            setup.field_config,
-            setup.sources,
-            lit.exit_cue,
-        )
-        .unwrap()
-        .sample(point(0., 0.), 0., 0);
-        assert_eq!(sample.wind, point(0., 0.));
-        assert_eq!(
-            sample.left.attractive_odor + sample.left.repellent_odor + sample.left.exit_cue,
-            0.
-        );
-        assert!((sample.vision.brightness[6] - 2. / 3.).abs() < 1e-12);
-        let dark_sample = FieldSet::new(
-            dark.geometry,
-            dark.field_config,
-            dark.sources,
-            dark.exit_cue,
-        )
-        .unwrap()
-        .sample(point(0., 0.), 0., 0);
-        assert_eq!(dark_sample.vision.brightness, [0.; 8]);
+        for mode in [SpawnMode::Walking, SpawnMode::Flying] {
+            let lit = fixture(source.clone(), Some(point(0., -1.)), mode);
+            let dark = fixture(source.clone(), None, mode);
+            assert_eq!(lit.body_config, expected_body);
+            assert_eq!(dark.body_config, expected_body);
+            assert!(lit.exit_suction.is_none() && dark.exit_suction.is_none());
+            let initial = sim::spawn::resolve(&lit, 100, 1).unwrap().remove(0);
+            assert_eq!(
+                initial.pose,
+                BodyPose {
+                    position: point(0., 0.),
+                    heading: 0.
+                }
+            );
+            assert_eq!(initial.mode, mode.body_mode());
+            assert_eq!(
+                sim::spawn::resolve(&lit, 100, 1).unwrap(),
+                sim::spawn::resolve(&dark, 100, 1).unwrap()
+            );
+            let setup = resolve_placements(&lit, &[]).unwrap();
+            assert!(
+                setup.state.food.is_empty()
+                    && setup.state.objects.is_empty()
+                    && setup.state.contact_hazards.is_empty()
+            );
+            let sample = FieldSet::new(
+                lit.geometry,
+                setup.field_config,
+                setup.sources,
+                lit.exit_cue,
+            )
+            .unwrap()
+            .sample(point(0., 0.), 0., 0);
+            assert_eq!(sample.wind, point(0., 0.));
+            assert_eq!(
+                sample.left.attractive_odor + sample.left.repellent_odor + sample.left.exit_cue,
+                0.
+            );
+            assert!((sample.vision.brightness[6] - 2. / 3.).abs() < 1e-12);
+            let dark_sample = FieldSet::new(
+                dark.geometry,
+                dark.field_config,
+                dark.sources,
+                dark.exit_cue,
+            )
+            .unwrap()
+            .sample(point(0., 0.), 0., 0);
+            assert_eq!(dark_sample.vision.brightness, [0.; 8]);
+        }
     }
     #[test]
     fn reporting_changes_sign_when_movement_reverses_and_leaves_coincidence_undefined() {

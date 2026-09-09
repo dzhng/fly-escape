@@ -5,20 +5,30 @@ Command: cargo test -p sim --example vision_motion_probe --quiet
 Result: 2 passed, 0 failed.
 
 The fixture test reads the authored Open Window content, preserves its complete
-BodyConfig, confirms a walking origin/heading-zero start, clears its fixed
+BodyConfig, confirms walking and flying origin/heading-zero starts, clears its fixed
 objects and exit suction, and verifies zero odor/wind alongside directional
 lamp input. A deliberate mutation retaining ambient wind failed with
 actual Point { x: 3.0, z: -2.0 } versus expected Point { x: 0.0, z: 0.0 }.
 Restoring wind removal passed both tests.
 
 Independent Codex review found no actionable defects; both example tests passed
-there as well. No closed-loop neural panel has been executed. Family and gain
-must come from the frozen pilot winner before that execution is authorized.
+there as well. No closed-loop neural panel has been executed. Family, gain and the neural-confirmation protocol must be frozen before
+execution; motion remains descriptive even when neural propagation passes.
 
 CLI:
-vision_motion_probe GRAPH_DIR MAP_JSON CONTENT_JSON GAIN OUTPUT_JSON
+vision_motion_probe GRAPH_DIR MAP_JSON CONTENT_JSON GAIN OUTPUT_JSON [walking|flying]
 CONTENT_JSON contains the level object from the authored campaign content.
 The output reports the input/content/graph identities, supplied body settings,
 per-seed dark and lamp runs, actual outcomes and boundary observations, and
 paired seed-level intervals. Approach/avoidance labels describe the distance
 change relative to dark, not proof of absolute attraction or campaign utility.
+
+The optional initial mode defaults to walking. Flying uses the normal SpawnDef
+mode and Body initialization, with no invented height or body/neural gain change.
+Run the two modes into separate outputs; comparisons pair light and dark within
+the same mode and seed, never pool the two modes into one interval.
+
+Flying-mode negative control: forcing the fixture to start every body walking
+failed the test at actual Walking versus expected Flying. Restoring the normal
+spawn-mode forwarding passed both tests. This checks initialization without
+running the neural motion panel.
