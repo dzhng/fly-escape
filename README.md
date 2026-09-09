@@ -56,4 +56,4 @@ The game uses a selected subgraph of **Janelia FlyEM’s MaleCNS v1.0**. See the
 For contributors, the [development guide](docs/development.md) explains the code and asset boundaries. The [design rationale](specs/done/help-the-fly-escape/README.md) preserves the reasoning, research and modeling decisions behind the game.
 
 The [directional sensing rationale](specs/done/directional-vision/README.md) records the coarse light model, replay contract and measured limits.
-The [neural vision rationale](specs/done/neural-vision/README.md) separates validated circuit responses from the still-unproven lighting gameplay.
+The [neural vision rationale](specs/done/neural-vision/README.md) separates validated circuit responses from unproven attraction. [Campaign vision](specs/done/campaign-vision/README.md) records the enabled room lighting and gameplay regression checks.

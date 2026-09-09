@@ -1,0 +1,50 @@
+{
+  "results": [
+    {
+      "id": "open-window",
+      "startToPlaybackMs": 965.8592909999998,
+      "returnToEditingMs": 54.78512499999488,
+      "outcome": {
+        "escaped": 3,
+        "starved": 0,
+        "zapped": 0,
+        "caught": 2,
+        "timedOut": 11,
+        "score": 3
+      },
+      "stars": 1,
+      "levelHash": "ee8276f722858d3f4830276b6c9d902c33436edfbeaaeafe863bdd8fb65f0b43",
+      "tuningHash": "bc711759a8657245880d6d6bc176ec4a7b0fa936f00b7128ec0aa6f8ba417881",
+      "rootSeed": "5675621181797977812",
+      "computedTick": 6000,
+      "completedTick": 6000,
+      "underruns": 0,
+      "pauseSeekRewind": true,
+      "placementsRetained": true
+    },
+    {
+      "id": "turn-the-corner",
+      "startToPlaybackMs": 1088.2346250000119,
+      "returnToEditingMs": 50.834250000014435,
+      "outcome": {
+        "escaped": 0,
+        "starved": 0,
+        "zapped": 2,
+        "caught": 0,
+        "timedOut": 14,
+        "score": 0
+      },
+      "stars": 0,
+      "levelHash": "6ce68a903e4e3ca7d9e6c758536730718de9b13a3f573ffe5032520e551eb90d",
+      "tuningHash": "bc711759a8657245880d6d6bc176ec4a7b0fa936f00b7128ec0aa6f8ba417881",
+      "rootSeed": "10286293286857692629",
+      "computedTick": 3000,
+      "completedTick": 3000,
+      "underruns": 0,
+      "pauseSeekRewind": true,
+      "placementsRetained": true
+    }
+  ],
+  "errors": [],
+  "providedEarnedProgress": true
+}

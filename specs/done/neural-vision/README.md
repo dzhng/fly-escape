@@ -16,7 +16,7 @@ The [offline exporter](../../../scripts/connectome/vision_map.py) owns the sourc
 
 The [sensory adapter](../../../crates/sim/src/sensory.rs) consumes brightness only. Blocked-light telemetry, exit bearings, camera state and odor do not become visual current. Existing neural dynamics and body decoding remain unchanged. The visual map and current reach movement through Brain; they cannot directly command a turn. An enabled visual cue requires a map, while nonvisual synthetic graphs remain usable.
 
-Directional sensing and replay retain the [recorded-sample contract](../directional-vision/README.md). Publishing new visual display groups changes their anatomical membership, not the campaign's authored body settings, timers, population or star thresholds. The existing campaign still has vision disabled at this checkpoint; decorative wall lights are not simulation sources. That incomplete gameplay integration is explicit, not evidence that vision leaves difficulty unchanged.
+Directional sensing and replay retain the [recorded-sample contract](../directional-vision/README.md). Publishing new visual display groups changes their anatomical membership, not the campaign's authored body settings, timers, population or star thresholds. At this neural checkpoint the campaign had vision disabled and decorative wall lights were not simulation sources. The subsequent [campaign integration](../campaign-vision/README.md) enables both; its separate gameplay checks do not establish unchanged difficulty.
 
 ## Evidence and rejected approaches
 
@@ -28,7 +28,7 @@ The [hard-sector pilot](assets/experiments), [DNp03 diagnostic](assets/readout-d
 
 [Production-body motion panels](assets/closed-loop/README.md) likewise resolve neither approach nor avoidance from walking or flying starts. Light changes individual trajectories, but their paired directional means do not establish a reliable player-controllable effect. A lighting puzzle needs additional behavioral evidence.
 
-[Final published-metadata performance](assets/performance/published/summary.json) measures three paired 16-fly active workloads: median overhead is 0.78%, below the 10% gate. This is bounded native throughput, not browser pacing. The [integration record](assets/integration.json) distinguishes native, client, build and browser checks. The [real browser harness](../../../tests/browser/directional-vision.mjs) exercises a vision-enabled worker, exact native-record decoding and campaign pause/seek/rewind with zero underruns in its bounded run. It does not claim that the campaign already uses vision.
+[Final published-metadata performance](assets/performance/published/summary.json) measures three paired 16-fly active workloads: median overhead is 0.78%, below the 10% gate. This is bounded native throughput, not browser pacing. The [integration record](assets/integration.json) distinguishes native, client, build and browser checks. The [real browser harness](../../../tests/browser/directional-vision.mjs) exercises a vision-enabled worker, exact native-record decoding and campaign pause/seek/rewind with zero underruns in its bounded run. That checkpoint does not claim campaign vision integration; the subsequent campaign record supplies that evidence.
 
 ## Visual provenance
 

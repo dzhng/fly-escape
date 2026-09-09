@@ -1,0 +1,13 @@
+{
+  "implementationCommit": "977d362",
+  "affectedTypeScriptTests": { "passed": 123, "webAndRenderer": 91, "client": 32 },
+  "rustExampleTestsPassed": 5,
+  "typecheck": "passed",
+  "wasmBuild": "passed",
+  "webBuild": "passed",
+  "independentReview": "123 affected tests and typecheck passed; resolved exports equal native recorded content; only finding was missing Bun runner",
+  "reviewFindingResolution": "package.json now provides test:campaign-vision using Bun; actual TypeScript exports import successfully with Bun",
+  "nativeEvidence": "Reused earlier complete fixed-seed physical-light runs only after deep equality with actual resolved exports; no simulation production changes since those runs",
+  "browserEvidence": "browser/summary.json, full production horizon both rooms; source and tuning hashes checked; saved setups and pre-existing Open Window star retained",
+  "fixtureMutationCheck": "Renderer position mutation caused consumer test failure before restoration"
+}

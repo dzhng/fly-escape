@@ -1,0 +1,23 @@
+{
+  "base": "4cb4163009abddcfe6ef31d2fe49c92a3b9cdc0e",
+  "counts": {
+    "Specs & docs": [
+      452,
+      1
+    ],
+    "Production code (excl. comments)": [
+      836,
+      177
+    ],
+    "Comments": [
+      22,
+      9
+    ],
+    "Tests / harness": [
+      2526,
+      61
+    ]
+  },
+  "method": "Changed lines including blank lines; standalone comment prefixes; tests include native examples/experimental analyzer; excludes non-Markdown assets, JSON/data and binaries. Inline comments stay with their code line.",
+  "excludedFiles": 133
+}

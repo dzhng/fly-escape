@@ -21,6 +21,7 @@
     "test:browser": "node tests/browser/brain.mjs && node tests/browser/fields.mjs && node tests/browser/lifecycle.mjs",
     "test:client": "bun test packages/sim-client/src",
     "test:transport": "node tests/browser/attempt-transport.mjs",
+    "test:campaign-vision": "bun tests/browser/campaign-vision.mjs",
     "test:playback": "node tests/browser/playback.mjs",
     "test:playback-performance": "node tests/browser/playback-performance.mjs",
     "dev:assets": "bun run --cwd apps/asset-lab dev",

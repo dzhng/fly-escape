@@ -1,0 +1,98 @@
+{
+  "before-open-window.png": {
+    "size": [
+      1440,
+      1000
+    ],
+    "averageLuminance": 122.23774166666666,
+    "luminanceContrastP95P5": 167.0,
+    "edgeEnergy": 17.946872861027963
+  },
+  "before-turn-the-corner.png": {
+    "size": [
+      1440,
+      1000
+    ],
+    "averageLuminance": 142.38948402777777,
+    "luminanceContrastP95P5": 152.0,
+    "edgeEnergy": 17.003693057488807
+  },
+  "open-window-result.png": {
+    "size": [
+      1440,
+      1000
+    ],
+    "averageLuminance": 145.85608958333333,
+    "luminanceContrastP95P5": 198.0,
+    "edgeEnergy": 7.53161832284373
+  },
+  "open-window-rewind.png": {
+    "size": [
+      1440,
+      1000
+    ],
+    "averageLuminance": 148.6572972222222,
+    "luminanceContrastP95P5": 170.0,
+    "edgeEnergy": 10.898272031200378
+  },
+  "open-window-setup.png": {
+    "size": [
+      1440,
+      1000
+    ],
+    "averageLuminance": 128.7663048611111,
+    "luminanceContrastP95P5": 168.0,
+    "edgeEnergy": 17.30930155506831
+  },
+  "turn-the-corner-result.png": {
+    "size": [
+      1440,
+      1000
+    ],
+    "averageLuminance": 143.35258541666667,
+    "luminanceContrastP95P5": 165.0,
+    "edgeEnergy": 4.9797070308282185
+  },
+  "turn-the-corner-rewind.png": {
+    "size": [
+      1440,
+      1000
+    ],
+    "averageLuminance": 150.45282847222222,
+    "luminanceContrastP95P5": 148.0,
+    "edgeEnergy": 10.366679392329555
+  },
+  "turn-the-corner-setup.png": {
+    "size": [
+      1440,
+      1000
+    ],
+    "averageLuminance": 142.63652708333333,
+    "luminanceContrastP95P5": 151.0,
+    "edgeEnergy": 17.079179120998074
+  },
+  "open-window-full-pair": {
+    "mae": 13.218720138888889,
+    "rmse": 33.07611313949489,
+    "diffRatio32": 0.07475069444444445,
+    "comparable": "Same viewport/room; Open Window placements differ; UI state and seed may differ. Diagnostic, not pixel acceptance."
+  },
+  "open-window-world-pair": {
+    "mae": 4.372063768115942,
+    "rmse": 9.090690412389646,
+    "diffRatio32": 0.013315942028985507,
+    "comparable": "Same viewport/room; Open Window placements differ; UI state and seed may differ. Diagnostic, not pixel acceptance."
+  },
+  "turn-the-corner-full-pair": {
+    "mae": 6.540422222222222,
+    "rmse": 10.894583197881209,
+    "diffRatio32": 0.015765277777777777,
+    "comparable": "Same viewport/room; Open Window placements differ; UI state and seed may differ. Diagnostic, not pixel acceptance."
+  },
+  "turn-the-corner-world-pair": {
+    "mae": 4.467694202898551,
+    "rmse": 8.923807515837067,
+    "diffRatio32": 0.010176811594202898,
+    "comparable": "Same viewport/room; Open Window placements differ; UI state and seed may differ. Diagnostic, not pixel acceptance."
+  }
+}
