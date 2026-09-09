@@ -50,6 +50,23 @@ struct Pack {
     exact_pairs: Vec<[String; 2]>,
     chromatic_off_pairs: Vec<[String; 2]>,
     dose_pairs: Vec<DosePair>,
+    #[serde(default)]
+    reslice: Option<ResliceBinding>,
+}
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct BoundFile {
+    path: String,
+    sha256: String,
+}
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct ResliceBinding {
+    proposal: BoundFile,
+    baseline: BoundFile,
+    currents: BoundFile,
+    protocol: BoundFile,
+    manifest_sha256: String,
 }
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -237,6 +254,195 @@ fn controlled_currents(
         }
     }
     values
+}
+
+fn read_bound(directory: &Path, file: &BoundFile) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+    let path = Path::new(&file.path);
+    if path.is_absolute()
+        || path
+            .components()
+            .any(|p| !matches!(p, Component::Normal(_)))
+    {
+        return Err("bound input path must be local to its pack".into());
+    }
+    let bytes = fs::read(directory.join(path))?;
+    if hash(&bytes) != file.sha256 {
+        return Err("bound input identity mismatch".into());
+    }
+    Ok(bytes)
+}
+
+fn protocol(version: u32, phase: &str) -> Result<(&'static str, Vec<u64>), String> {
+    match (version, phase) {
+        (1, "diagnostic") => Ok(("retinal-fixed-input-diagnostic-v1", (1..7).collect())),
+        (1, "confirmation") => Ok(("retinal-fixed-input-diagnostic-v1", (100..130).collect())),
+        (2, "reslice-confirmation") => Ok((
+            "retinal-supported-area-confirmation-v2",
+            (200..230).collect(),
+        )),
+        _ => Err("unsupported protocol version/seed phase combination".into()),
+    }
+}
+
+fn require_cutover(manifest: &Value, mapping: &Value) -> Result<(), String> {
+    let id = &mapping["identities"];
+    let expected = json!({"sourceGraphHash":id["graphHash"],"annotationHash":id["annotationHash"],
+        "sourceMapHash":id["baselineMapHash"],"weightSum":mapping["budget"]["baselineWeightSum"]});
+    if manifest.get("visionInput").is_some() || manifest["retinalBudget"] != expected {
+        return Err(
+            "reslice freeze/run requires the completed compact retinalBudget cutover".into(),
+        );
+    }
+    Ok(())
+}
+
+fn verify_reslice(
+    model: &Model,
+    pack: &Pack,
+    raw_pack: &Value,
+    directory: &Path,
+    stimuli: &[Stimulus],
+    seeds: &[u64],
+) -> Result<Value, Box<dyn std::error::Error>> {
+    let binding = pack
+        .reslice
+        .as_ref()
+        .ok_or("v2 requires accepted reslice bindings")?;
+    let proposal_bytes = read_bound(directory, &binding.proposal)?;
+    let proposal: Value = serde_json::from_slice(&proposal_bytes)?;
+    let baseline: Value = serde_json::from_slice(&read_bound(directory, &binding.baseline)?)?;
+    let currents: Value = serde_json::from_slice(&read_bound(directory, &binding.currents)?)?;
+    read_bound(directory, &binding.protocol)?;
+    if model.identities["manifestHash"] != binding.manifest_sha256
+        || model.identities["graphHash"] != baseline["identities"]["graphHash"]
+        || model.identities["mapHash"] != proposal["mapSha256"]
+        || binding.baseline.sha256 != proposal["sourceHashes"]["original08Freeze"]
+        || currents["proposalHash"] != hash(&proposal_bytes)
+        || currents["mapHash"] != model.identities["mapHash"]
+        || currents["graphHash"] != model.identities["graphHash"]
+        || raw_pack["analysisSha256"]
+            != hash(include_bytes!(
+                "../../../specs/retinal-vision/assets/08/analyze.py"
+            ))
+        || raw_pack["statisticsOwnerSha256"]
+            != hash(include_bytes!(
+                "../../../scripts/connectome/analyze_neural_vision.py"
+            ))
+        || binding.protocol.sha256
+            != hash(include_bytes!(
+                "../../../specs/retinal-vision/assets/08-reslice/preregistration.md"
+            ))
+        || raw_pack["preregistrationSha256"] != binding.protocol.sha256
+    {
+        return Err("reslice source/accepted-input identity differs".into());
+    }
+    for (name, actual) in [
+        ("inputs", &model.inputs),
+        ("endpoints", &model.endpoints),
+        ("downstream", &model.downstream),
+        ("motorReadouts", &model.readouts),
+    ] {
+        if json!(actual) != baseline[name] {
+            return Err(format!("reslice changed retained {name}").into());
+        }
+    }
+    if model.endpoints.len() != 438
+        || json!(&model.endpoints) != proposal["endpoints"]
+        || json!(seeds) != proposal["proposedSeeds"]
+        || json!(LifParams::default()) != proposal["lifParams"]
+        || proposal["gain"] != GAIN
+        || proposal["warmupTicks"] != WARMUP
+        || proposal["measuredTicks"] != TICKS
+        || proposal["prng"] != PRNG_ID
+        || proposal["voltageResponseFloor"] != 1e-9
+        || proposal["statistics"]["comparisonsByPanel"][&pack.slice]
+            != 2 * 438 * pack.primary_contrasts.len()
+    {
+        return Err("reslice changed retained model/population/statistical contract".into());
+    }
+    for key in [
+        "conditions",
+        "primaryContrasts",
+        "exactPairs",
+        "chromaticOffPairs",
+        "dosePairs",
+    ] {
+        if raw_pack[key] != proposal["panels"][&pack.slice][key] {
+            return Err(format!("reslice changed accepted {key}").into());
+        }
+    }
+    let expected_currents = currents["panels"][&pack.slice]
+        .as_array()
+        .ok_or("accepted current panel")?;
+    if expected_currents.len() != stimuli.len() {
+        return Err("accepted current panel incomplete".into());
+    }
+    for (actual, expected) in stimuli.iter().zip(expected_currents) {
+        if expected["name"] != actual.spec.name
+            || expected["rgbSha256"] != hash(&actual.rgb)
+            || serde_json::from_value::<Vec<(u32, f64)>>(expected["requested"].clone())?
+                != actual.requested
+            || serde_json::from_value::<Vec<(u32, f64)>>(expected["effective"].clone())?
+                != actual.effective
+        {
+            return Err("post-cutover currents differ from accepted native input evidence".into());
+        }
+    }
+    let find = |name: &str| {
+        stimuli
+            .iter()
+            .find(|s| s.spec.name == name)
+            .ok_or("missing accepted control")
+    };
+    for [a, b] in &pack.chromatic_off_pairs {
+        if find(a)?.effective != find(b)?.effective {
+            return Err("v2 requires exact chromatic-off vectors".into());
+        }
+    }
+    for pair in pack.dose_pairs.iter().filter(|p| p.equal_brightness) {
+        let a = find(&pair.a)?;
+        let b = find(&pair.b)?;
+        if model
+            .entries
+            .iter()
+            .zip(a.requested.iter().zip(&b.requested))
+            .any(|(e, (a, b))| e.channel == 0 && a != b)
+        {
+            return Err("v2 requires exact Tm2 vectors within color swaps".into());
+        }
+        let luminance = |rgb: &[u8]| {
+            rgb.iter()
+                .zip([0.2126, 0.7152, 0.0722])
+                .map(|(&v, c)| v as f64 / 255. * c)
+                .sum::<f64>()
+        };
+        if a.rgb
+            .chunks_exact(3)
+            .zip(b.rgb.chunks_exact(3))
+            .any(|(a, b)| luminance(a) != luminance(b))
+        {
+            return Err("v2 requires exact diagnostic luminance within color swaps".into());
+        }
+    }
+    if pack.slice == "09" {
+        let difference = |level| -> Result<Vec<f64>, &str> {
+            Ok(find(&format!("color-{level}-a"))?
+                .effective
+                .iter()
+                .zip(&find(&format!("color-{level}-b"))?.effective)
+                .map(|(a, b)| a.1 - b.1)
+                .collect())
+        };
+        if difference(1)? != difference(2)? {
+            return Err("v2 color contrast differs across luminance contexts".into());
+        }
+    }
+    Ok(
+        json!({"retainedPopulationsExactlyEqual":true,"acceptedCurrentVectorsExactlyEqual":true,
+        "exactBrightnessControls":true,"colorContrastAcrossContextsExactlyEqual":true,
+        "acceptedProposalHash":binding.proposal.sha256,"acceptedCurrentEvidenceHash":binding.currents.sha256,
+        "baselineFreezeHash":binding.baseline.sha256,"manifestHash":binding.manifest_sha256}),
+    )
 }
 
 fn load_stimuli(
@@ -586,14 +792,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let pack_path = Path::new(&args[4]);
     let pack_bytes = fs::read(pack_path)?;
     let pack: Pack = serde_json::from_slice(&pack_bytes)?;
-    if pack.version != 1 || !matches!(pack.slice.as_str(), "08" | "09") {
+    if !matches!(pack.slice.as_str(), "08" | "09") {
         return Err("unsupported retinal experiment pack".into());
     }
-    let seeds: Vec<u64> = match pack.phase.as_str() {
-        "diagnostic" => (1..7).collect(),
-        "confirmation" => (100..130).collect(),
-        _ => return Err("unknown seed panel".into()),
-    };
+    let (protocol_id, seeds) = protocol(pack.version, &pack.phase)?;
+    if (pack.version == 2) != pack.reslice.is_some() {
+        return Err("protocol/reslice binding mismatch".into());
+    }
+    if pack.version == 2 {
+        let manifest: Value =
+            serde_json::from_slice(&fs::read(Path::new(&args[2]).join("manifest.json"))?)?;
+        let mapping: Value =
+            serde_json::from_slice(&fs::read(Path::new(&args[3]).join("retinal-map.json"))?)?;
+        require_cutover(&manifest, &mapping)?;
+    }
     let model = load_model(Path::new(&args[2]), Path::new(&args[3]))?;
     if pack.profile != model.identities["mappingIdentities"] {
         return Err("input pack profile/map identities differ".into());
@@ -604,8 +816,21 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         pack_path.parent().ok_or("pack needs a directory")?,
     )?;
     let controls = control_checks(&model, &pack, &stimuli)?;
+    let raw_pack: Value = serde_json::from_slice(&pack_bytes)?;
+    let reslice_checks = if pack.version == 2 {
+        verify_reslice(
+            &model,
+            &pack,
+            &raw_pack,
+            pack_path.parent().ok_or("pack directory")?,
+            &stimuli,
+            &seeds,
+        )?
+    } else {
+        Value::Null
+    };
     let summaries: Vec<_> = stimuli.iter().map(|stimulus| json!({"condition":stimulus.spec,"requested":dose(&model.entries,&stimulus.requested),"effective":dose(&model.entries,&stimulus.effective)})).collect();
-    let expected = json!({"protocol":"retinal-fixed-input-diagnostic-v1","slice":pack.slice,"phase":pack.phase,
+    let expected = json!({"protocol":protocol_id,"slice":pack.slice,"phase":pack.phase,
         "inputPackHash":hash(&pack_bytes),"pack":serde_json::from_slice::<Value>(&pack_bytes)?,"identities":model.identities,
         "gain":GAIN,"lifParams":LifParams::default(),"prng":PRNG_ID,"warmupTicks":WARMUP,"measuredTicks":TICKS,"seeds":seeds,
         "initialState":"native Brain zero voltage, false spikes, zero refractory; no sensory current in warmup",
@@ -617,7 +842,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         "downstreamRule":"all graph-reachable nodes from any injected index, excluding every injected and motor/readout index",
         "voltageResponseFloor":1e-9,
         "statistics":"mean voltage primary, spike counts secondary; paired two-sided Bonferroni 95% intervals across two endpoint measures times contrasts times cells; motors descriptive",
-        "stimuli":summaries,"controlChecks":controls});
+        "stimuli":summaries,"controlChecks":controls,"resliceChecks":reslice_checks});
     let output = Path::new(&args[5]);
     fs::create_dir_all(output)?;
     if args[1] == "freeze" {
@@ -671,6 +896,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn cutover_rejects_coexisting_legacy_input_and_changed_budget() {
+        let mapping = json!({"identities":{"graphHash":"graph","annotationHash":"annotation","baselineMapHash":"baseline"},"budget":{"baselineWeightSum":7.5}});
+        let mut manifest = json!({"retinalBudget":{"sourceGraphHash":"graph","annotationHash":"annotation","sourceMapHash":"baseline","weightSum":7.5}});
+        assert!(require_cutover(&manifest, &mapping).is_ok());
+        manifest["visionInput"] = json!({"entries":[]});
+        assert!(require_cutover(&manifest, &mapping).is_err());
+        manifest.as_object_mut().unwrap().remove("visionInput");
+        manifest["retinalBudget"]["weightSum"] = json!(8.0);
+        assert!(require_cutover(&manifest, &mapping).is_err());
+        assert!(protocol(2, "confirmation").is_err());
+        assert!(protocol(1, "reslice-confirmation").is_err());
+    }
     #[test]
     fn report_flushes_each_condition_and_preserves_json_values() {
         let path = std::env::temp_dir().join(format!("retinal-report-{}.json", std::process::id()));

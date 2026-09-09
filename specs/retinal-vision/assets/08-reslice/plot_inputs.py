@@ -21,9 +21,12 @@ for i,(panel,name) in enumerate(selected):
  raw=(HERE/spec['rgbPath']).read_bytes();rgb=np.frombuffer(raw,dtype=np.uint8).reshape(2,721,3)/255
  display=np.where(rgb<=.0031308,12.92*rgb,1.055*rgb**(1/2.4)-.055)
  sub=grid[i//4,i%4].subgridspec(2,2,height_ratios=[.18,1])
- title=fig.add_subplot(sub[0,:]);title.axis('off');title.text(.5,.5,name,ha='center',weight='bold')
+ title=fig.add_subplot(sub[0,:]);title.axis('off');label=name
+ if panel=='09':
+  label += '\n'+('lower context' if '-1-' in name else 'higher context')+'; '+('upper=A, lower=B' if name.endswith('-a') else 'upper=B, lower=A')
+ title.text(.5,.5,label,ha='center',weight='bold',fontsize=9)
  for eye in [0,1]:
   ax=fig.add_subplot(sub[1,eye]);ax.add_collection(PolyCollection(polygons,facecolors=display[eye],edgecolors='#666',linewidths=.15))
   ax.set_xlim(-16,16);ax.set_ylim(14.5,-14.5);ax.set_aspect('equal');ax.axis('off');ax.set_title(['Left','Right'][eye],fontsize=9)
-fig.suptitle('INPUT-ONLY PROPOSAL — no neural run\n32 jointly supported samples per patch; original anchors and image axes retained. Both eyes: right/down, neither mirrored.\nTop: gray 128, Tm20 off. Bottom: matched-brightness A/B swaps; higher level adds 100 to R/G while holding B fixed.\nStored linear RGB8 displayed through sRGB transfer. Exact indices, colors, currents and controls: proposal.json / evidence.json.',fontsize=12)
+fig.suptitle('INPUT-ONLY PROPOSAL — no neural run\n32 jointly supported samples per patch; original anchors and image axes retained. Both eyes: right/down, neither mirrored.\nTop: gray 128, Tm20 off. color-1: lower context A=[66,120,2], B=[134,80,198].\ncolor-2: add 100 to R/G of A and B, holding blue fixed. Pattern a: upper=A/lower=B; pattern b: upper=B/lower=A, in BOTH eyes.\nStored linear RGB8 displayed through sRGB transfer. Exact indices, colors, currents and controls: proposal.json / evidence.json.',fontsize=12)
 fig.savefig(HERE/'proposed-inputs.png',dpi=160);plt.close(fig)

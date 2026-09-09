@@ -13,13 +13,30 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from connectome.analyze_neural_vision import paired_cells, require, finite_vector
 
 
+def protocol_seeds(frozen):
+    key = (frozen["protocol"], frozen["pack"]["version"], frozen["phase"])
+    panels = {
+        ("retinal-fixed-input-diagnostic-v1", 1, "diagnostic"): list(range(1, 7)),
+        ("retinal-fixed-input-diagnostic-v1", 1, "confirmation"): list(range(100, 130)),
+        ("retinal-supported-area-confirmation-v2", 2, "reslice-confirmation"): list(range(200, 230)),
+    }
+    require(key in panels, "Unsupported protocol/version/phase combination")
+    if frozen["pack"]["version"] == 2:
+        checks = frozen["resliceChecks"]
+        require(all(checks[k] is True for k in ["retainedPopulationsExactlyEqual", "acceptedCurrentVectorsExactlyEqual",
+            "exactBrightnessControls", "colorContrastAcrossContextsExactlyEqual"]), "Reslice input contract not verified")
+        require(checks["manifestHash"] == frozen["identities"]["manifestHash"] == frozen["pack"]["reslice"]["manifestSha256"], "Reslice manifest differs")
+        require(len(frozen["endpoints"]) == 438, "Reslice changed endpoint population")
+    return panels[key]
+
+
 def analyze(report, freeze_bytes):
     frozen = report["frozen"]
     require(hashlib.sha256(freeze_bytes).hexdigest() == report["freezeHash"] and json.loads(freeze_bytes) == frozen,
             "Freeze identity mismatch")
-    require(frozen["protocol"] == "retinal-fixed-input-diagnostic-v1" and frozen["gain"] == 3 and
+    require(frozen["gain"] == 3 and
             frozen["warmupTicks"] == 60 and frozen["measuredTicks"] == 100, "Wrong frozen protocol")
-    seeds = list(range(1, 7)) if frozen["phase"] == "diagnostic" else list(range(100, 130))
+    seeds = protocol_seeds(frozen)
     require(frozen["seeds"] == seeds, "Wrong seed panel")
     populations = {name: frozen[name] for name in ["inputs", "endpoints", "downstream", "motorReadouts"]}
     for name, indices in populations.items():

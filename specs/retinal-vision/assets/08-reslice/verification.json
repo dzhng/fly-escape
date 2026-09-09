@@ -3,7 +3,7 @@
   "sourceHashes": {
     "prepare.py": "33842999c80fac4e11a4ac638468a5eaba5655366950680313c5d579d7bd6c8e",
     "summarize.py": "f06a060fd11fbe853e13301a87ebb26494ce974b78a0417c4a4b17b296b3df50",
-    "plot_inputs.py": "3502e1995da6eb4e40e4483aca539aa94adb20d2b26bbe646d84513afe623610",
+    "plot_inputs.py": "e8a1baef56c209255bffe6054fd196b5046a00319d2b9dd79c83dc227870e76d",
     "native/src/main.rs": "7e5769a1a2ad6fe76971b057ea1809bf5f753d282f1a1ad057152ac6682a76e3",
     "native/Cargo.lock": "21d227e8b739cec1d3afd964a2cf4590d85a4a64e7604151f211ac83610d58ba",
     "native/Cargo.toml": "b8cddf6bb7557f062f970024a4ec0f4b5a9f6bf6eaa4579d31be590ba0373e0d"
@@ -12,7 +12,7 @@
   "currentEvidenceHash": "9213a24932cc216f572b67682b02598b46386a65ea3a38391452fe6057eb5468",
   "summaryHash": "3425004181a3d7617f1b2abb83b46cbd22ced2182d88fe611ac029e3a63ef24c",
   "image": {
-    "sha256": "2a49c9ccf9200a429fa735912a63b5f848eb4e8a6bbc6e828c9fe647b4d3466f",
+    "sha256": "12e3f6e960b8939bdc823f8c4ad5c34deec4cea64df431d2fed5c5d58a8b101c",
     "width": 2560,
     "height": 1440,
     "colors": [
@@ -27,7 +27,7 @@
           188,
           188
         ],
-        "pixelsWithinOneByte": 6951
+        "pixelsWithinOneByte": 6977
       },
       {
         "linearRgb8": [
@@ -40,7 +40,7 @@
           182,
           22
         ],
-        "pixelsWithinOneByte": 6521
+        "pixelsWithinOneByte": 6516
       },
       {
         "linearRgb8": [
@@ -53,7 +53,7 @@
           152,
           228
         ],
-        "pixelsWithinOneByte": 6477
+        "pixelsWithinOneByte": 6476
       },
       {
         "linearRgb8": [
@@ -66,7 +66,7 @@
           239,
           22
         ],
-        "pixelsWithinOneByte": 6418
+        "pixelsWithinOneByte": 6424
       },
       {
         "linearRgb8": [
@@ -79,11 +79,11 @@
           219,
           228
         ],
-        "pixelsWithinOneByte": 6418
+        "pixelsWithinOneByte": 6424
       }
     ]
   },
   "native": "Rust 1.94.1, offline Cargo lock; shared sim::sensory::retinal_currents, Graph/map validation only",
   "review": "Independent read-only code review found no actionable findings; reproduced summary with writes suppressed and checked geometry/candidates/hashes/exclusions/contrasts/multiplicity.",
-  "visualLimit": "Direct image inspection and palette checks; fresh visual review belongs to root review checkpoint."
+  "visualLimit": "Fresh review accepted cell display and legibility; requested context/pattern legend added and directly inspected. Final caption checkpoint belongs to root."
 }

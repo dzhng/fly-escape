@@ -1,0 +1,29 @@
+# Retinal supported-area confirmation protocol v2
+
+The input design is accepted. This protocol becomes frozen only when a new write-once `freeze.json` binds the final post-cutover sources, manifest, exact input pack and all identities. No source freeze or Brain execution is permitted before the compact `retinalBudget` cutover is integrated and root grants an execution window. Original v1 diagnostic and held-out failures remain preserved; their exact source is available in the original commits.
+
+## Unchanged neural and statistical contract
+
+Use the existing Brain and retinal adapter at gain 3, unchanged graph bytes, map, RGB coefficients, transfer, motor/readout exclusions and 438-cell endpoint union. The union consists of non-input/non-motor cells on every retained audited relay/readout path. Exclude all 1,176 injected indices and all 1,696 motor/readout indices. Verify these index arrays and all 40,944 reachable downstream indices exactly against the original frozen population before creating any Brain. Metadata publication may change the manifest and source identities, but it must not change these populations, model parameters or any accepted input current.
+
+Use only seeds 200–229, each transformed by `Brain::seed_for_fly(seed, 0)`. Each condition/seed starts from the same native zero-state policy, with 60 unforced warmup steps followed by 100 measured `Brain::step` calls holding the exact RGB image fixed. Frozen LIF dt is 1, so the measurement covers 100 model-time units; no physical-time calibration is claimed. There is no body movement or optical feedback. No seed replacement, early stopping or optional rerun is permitted.
+
+Mean measured membrane voltage per endpoint is primary; per-endpoint spike counts are secondary. Retain the existing two-sided paired Bonferroni 95% simultaneous intervals over both measures, all 438 endpoints, and every primary contrast in each panel. The spatial/brightness/occlusion family has nine contrasts and 7,884 comparisons; the chromatic family has two contrasts and 1,752 comparisons. An interval must lie wholly beyond ±1e-9 model-voltage units for a primary response, or beyond zero for the secondary count response. Every primary contrast must have at least one corrected voltage endpoint to pass its panel, and every exact/control gate must pass. Do not substitute the spike endpoint, motor sign or a broader population statistic after seeing outcomes.
+
+Retain per-seed counts for every downstream index, population sums and active counts, and full/downstream voltage/spike/refractory trajectory hashes. These distinguish spontaneous dark activity from paired stimulus-induced differences. Motor outputs remain unselected descriptive readouts. Input-only checks and native neural propagation do not complete browser capture/transaction/record/body or physiological-color proof.
+
+## Accepted supplied images
+
+The immutable accepted proposal and current evidence are copied into the prepared pack and hash-bound. All conditions, contrast ordering, control flags and RGB files must match that proposal exactly. Each single-sample spatial anchor becomes the nearest 32 jointly supported image samples at the same L163/L562/R170/R567 anchors, with squared-distance then sample-index ordering and no within-eye upper/lower overlap. The four gray-128 patches have Tm20 off and equal delivered dose within 1e-9. Upper/lower remain image-row labels, not anatomical field assignments.
+
+Retain all original primary contrast names and directions: gray64−dark, gray128−gray64, white−gray128, Lupper−Rupper, Llower−Rlower, Lupper−Llower, Rupper−Rlower, floor opening−blocker and flight opening−blocker. Existing captured scene/quality images remain descriptive and retain their exact bytes. No unchanged failed brightness or occlusion contrast is removed.
+
+The chromatic panel swaps the accepted A/B colors across two 32-sample regions in each eye. Lower-context A=[66,120,2], B=[134,80,198]; higher-context A=[166,220,2], B=[234,180,198]. The higher case adds 100 to R/G while holding B fixed: it is a luminance-context shift with fixed chromatic contrast, not a doubled all-channel intensity. The native adapter must produce exactly equal diagnostic luminance and Tm2 current vectors within each pair, exactly equal full Tm20-off vectors, matched per-eye/channel dose within 1e-9, and exactly identical A−B current-difference vectors across the two contexts.
+
+These colors were selected using only the archived finite native-adapter/gamut screen, never neural responses. Area and chromatic contrast both increase; a future response cannot isolate which change addressed the earlier failure. Grayscale and uniform controls remain descriptive. The higher grayscale RGB193 diagnostic approximates luminance192.78 and is not an exact brightness acceptance control.
+
+## Execution boundaries
+
+Version-2 preparation rejects manifests that still contain `visionInput` or lack the accepted compact `retinalBudget` provenance and weight sum. It binds the final manifest hash only after publication. Before freeze/run, the runner validates every requested and delivered current vector against the accepted input-only evidence, all retained populations against the original freeze, the accepted condition/contrast/control manifest, and the exact color controls. Any mismatch stops before Brain construction; it is not repaired by relaxing a tolerance.
+
+Freeze and run are separate actions in a new output directory for each panel. A started marker prevents reuse, and completed conditions stream to disk without changing simulation order. Interrupted output remains incomplete evidence. The analyzer accepts this protocol only with version2, phase `reslice-confirmation`, seeds200–229 and the bound reslice checks. Source or manifest changes after freeze require a new reviewed freeze; they never silently replace an old experiment.
