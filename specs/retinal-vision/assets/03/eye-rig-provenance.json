@@ -1,0 +1,33 @@
+{
+  "rigSha256": "95d00abd9162e75517f70ba9cc6764336b1f07dd0bf83e6fc75179c0435d667f",
+  "threeRevision": "185",
+  "asset": "assets/fly/fly.glb",
+  "measurement": "GLTFLoader bind pose -> updateMatrixWorld -> skeleton.update -> precise skinned Box3 centre; native asset metres, no scale/animation",
+  "sourceProfile": "specs/retinal-vision/assets/01/reference-profile.json",
+  "boundsByMesh": {
+    "EyeR021": {
+      "min": [
+        0.00006217619975999332,
+        0.0010030248228773283,
+        0.0005378239591402633
+      ],
+      "max": [
+        0.0006528497773378295,
+        0.0017491387798743952,
+        0.001283938032552645
+      ]
+    },
+    "EyeL021": {
+      "min": [
+        -0.0006528497773378353,
+        0.0010030248228773122,
+        0.000537823959140267
+      ],
+      "max": [
+        -0.00006217619975999921,
+        0.001749138779874379,
+        0.0012839380325526484
+      ]
+    }
+  }
+}
