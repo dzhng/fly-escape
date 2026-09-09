@@ -1,0 +1,20 @@
+[
+  {
+    "failure": "json",
+    "firstError": "SyntaxError: Unexpected token 'o', \"not-json\" is not valid JSON",
+    "recovered": true,
+    "requests": 2
+  },
+  {
+    "failure": "profile",
+    "firstError": "Error: Retinal map does not match the installed optical profile",
+    "recovered": true,
+    "requests": 2
+  },
+  {
+    "failure": "native-map",
+    "firstError": "invalid retinal map: invalid value: integer `-1`, expected u32 at line 1 column 219654",
+    "recovered": true,
+    "requests": 2
+  }
+]

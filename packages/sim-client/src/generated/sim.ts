@@ -108,7 +108,7 @@ reserved: Array<ContactRegion>, };
 export type Placement = { id: number, kind: ToolKind, position: Point, heading: number, };
 export type PlacementEdit = { "type": "place", placement: Placement, } | { "type": "move", id: number, position: Point, heading: number, } | { "type": "remove", id: number, };
 export type PlacementState = { placements: Array<Placement>, remaining: Array<ToolStock>, food: Array<ContactSurface>, objects: Array<ContactSurface>, contactHazards: Array<ContactHazard>, };
-export type ResolvedSetup = { state: PlacementState, sources: Array<Source>, fieldConfig: FieldConfig, };
+export type ResolvedSetup = { fixedPlacements: Array<Placement>, state: PlacementState, sources: Array<Source>, fieldConfig: FieldConfig, };
 export type CueInput = { pathway: CuePathway, gain: number, };
 export type AttemptTuning = { cues: Array<CueInput>, tasteGain: number,
 /**

@@ -13,6 +13,7 @@ import type {
   SetupCommand,
   SetupReply,
   WorkerFailure,
+  WorkerProgress,
 } from "./attempt-protocol";
 
 /** Transfers bounded production credits independently of the playback cursor. */
@@ -20,10 +21,21 @@ export class AttemptClient {
   private worker: Worker | undefined;
   private attemptId: string | undefined;
   private pendingCredits = 0;
+  private outstandingCredits = 0;
   private generation = 0;
   private hidden = false;
   private ready = false;
   private finished = false;
+  private watchdog?: ReturnType<typeof setTimeout>;
+  private deadlineMs = 0;
+  private monitor(ms: number) {
+    clearTimeout(this.watchdog);
+    this.deadlineMs = ms;
+    if (!ms || this.hidden || !this.worker) return;
+    const worker = this.worker;
+    this.watchdog = setTimeout(() => this.retireWorker(worker,
+      "Simulation stopped making progress. Start a new attempt to retry."), ms);
+  }
   constructor(private receive: (reply: AttemptReply) => void) {}
   setReceiver(receive: (reply: AttemptReply) => void) {
     this.receive = receive;
@@ -51,7 +63,7 @@ export class AttemptClient {
     const worker = new Worker(new URL("./attempt-worker.ts", import.meta.url), {
       type: "module",
     });
-    worker.onmessage = (event: MessageEvent<AttemptEnvelope | SetupReply | WorkerFailure>) => {
+    worker.onmessage = (event: MessageEvent<AttemptEnvelope | SetupReply | WorkerFailure | WorkerProgress>) => {
       if ("type" in event.data && event.data.type === "fatal") {
         this.retireWorker(worker, event.data.message);
         return;
@@ -64,13 +76,20 @@ export class AttemptClient {
         else pending.resolve(event.data.value);
         return;
       }
+      if ("type" in event.data && event.data.type === "progress") {
+        if (event.data.generation === this.generation && event.data.attemptId === this.attemptId)
+          this.monitor(event.data.phase === "capture" ? 5000 : event.data.phase === "compute" || this.outstandingCredits > 0 ? 30000 : 0);
+        return;
+      }
       if (!("generation" in event.data)) return;
       if (event.data.generation !== this.generation) return;
       const reply = event.data.reply;
       const generation = this.generation;
       if (reply.attemptId !== this.attemptId) return;
-      if (reply.type === "ready") this.ready = true;
+      if (reply.type === "frames") this.outstandingCredits = Math.max(0, this.outstandingCredits - 1);
+      if (reply.type === "ready") { this.ready = true; this.monitor(0); }
       if (reply.type === "complete" || reply.type === "error") {
+        this.monitor(0);
         this.finished = true;
         this.pendingCredits = 0;
       }
@@ -98,6 +117,7 @@ export class AttemptClient {
   }
   private retireWorker(worker: Worker, message: string) {
     if (this.worker !== worker) return;
+    this.monitor(0);
     this.setupPending?.reject(new Error(message));
     this.setupPending = undefined;
     worker.terminate();
@@ -105,6 +125,7 @@ export class AttemptClient {
     this.ready = false;
     this.finished = true;
     this.pendingCredits = 0;
+    this.outstandingCredits = 0;
     const attemptId = this.attemptId;
     this.attemptId = undefined;
     if (attemptId) this.receive({ type: "error", attemptId, message });
@@ -127,16 +148,20 @@ export class AttemptClient {
     this.worker ??= this.createWorker();
     this.attemptId = attemptId;
     this.pendingCredits = 0;
+    this.outstandingCredits = 0;
     this.ready = false;
     this.finished = false;
+    this.monitor(30000);
   }
-  start(input: StartAttempt) {
+  start(input: StartAttempt, opticalWorld?: import("./attempt-optics").AttemptWorldAuthoring) {
     this.prepare(input.attemptId);
-    this.send({ type: "start", input });
+    this.send({ type: "start", input, opticalWorld });
   }
   private flushCredits() {
     if (this.hidden || !this.ready || this.finished || !this.attemptId || !this.pendingCredits)
       return;
+    this.monitor(30000);
+    this.outstandingCredits += this.pendingCredits;
     this.send({
       type: "grantCredits",
       attemptId: this.attemptId,
@@ -146,15 +171,18 @@ export class AttemptClient {
   }
   setHidden(hidden: boolean) {
     this.hidden = hidden;
+    this.monitor(this.deadlineMs);
     this.flushCredits();
   }
   cancel() {
+    this.monitor(0);
     this.setupPending?.reject(new Error("Setup cancelled"));
     this.setupPending = undefined;
     if (this.attemptId) this.send({ type: "cancel", attemptId: this.attemptId });
     this.generation++;
     this.attemptId = undefined;
     this.pendingCredits = 0;
+    this.outstandingCredits = 0;
     this.ready = false;
     this.finished = true;
   }

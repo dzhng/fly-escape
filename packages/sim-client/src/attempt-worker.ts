@@ -7,11 +7,16 @@ import init, {
   edit_setup,
   type InitOutput,
 } from "./wasm/game_wasm";
-import type { AttemptInfo, AttemptStep } from "./generated/sim";
+import type { AttemptInfo, AttemptStep, VisionRequest, ResolvedSetup, ToolDef } from "./generated/sim";
 import { parseRecordHeader, RecordDecodeError, type TransferChunk } from "./record";
-import type { AttemptRequest, AttemptReply, SetupRequest, WorkerFailure } from "./attempt-protocol";
+import type { AttemptRequest, AttemptReply, SetupRequest, WorkerFailure, WorkerProgress } from "./attempt-protocol";
+
+import { prepareAttemptOptics } from "./attempt-optics";
+import { createRetinaWorld } from "../../game-renderer/src/retina-world";
+import { RetinaCapture } from "../../game-renderer/src/retina-capture";
 
 let generation = 0;
+let initializing: AbortController | undefined;
 let currentAttemptId: string | undefined;
 let currentClientGeneration = 0;
 let pumping = false;
@@ -26,6 +31,7 @@ let active:
       granted: boolean;
       neuralSteps: number;
       chunkTicks: number;
+      optics?: { capture: RetinaCapture; world: Awaited<ReturnType<typeof createRetinaWorld>> };
     }
   | undefined;
 const send = (
@@ -86,9 +92,17 @@ function dispose(value: { free(): void }, primaryError?: unknown): boolean {
   }
 }
 function release(primaryError?: unknown): boolean {
+  initializing?.abort();
+  initializing = undefined;
   const previous = active;
   active = undefined;
-  return !previous || dispose(previous.core, primaryError);
+  if (!previous) return true;
+  try {
+    previous.optics?.capture.dispose();
+    previous.optics?.world.dispose();
+    previous.core.cancel();
+  } catch (error) { retire(primaryError ?? error); return false; }
+  return dispose(previous.core, primaryError);
 }
 function fail(id: string, error: unknown) {
   if (active?.id === id && !release(error)) return;
@@ -96,6 +110,9 @@ function fail(id: string, error: unknown) {
   // A trap can strand a borrowed Rust value; retire the whole instance.
   if (error instanceof WebAssembly.RuntimeError) retire(error);
   else send({ type: "error", attemptId: id, message: error instanceof RecordDecodeError ? error.userMessage : String(error), ...(error instanceof RecordDecodeError ? {recordError:error.code} : {}) });
+}
+function progress(run: NonNullable<typeof active>, phase: WorkerProgress["phase"]) {
+  self.postMessage({ type: "progress", attemptId: run.id, generation: run.clientGeneration, phase } satisfies WorkerProgress);
 }
 async function pump() {
   if (pumping) return;
@@ -109,7 +126,17 @@ async function pump() {
       let status: AttemptStep;
       do {
         if (active !== run) return;
-        status = JSON.parse(run.core.step()) as AttemptStep;
+        progress(run, "compute");
+        if (run.optics) {
+          const requestText = run.core.prepare_tick();
+          const request = JSON.parse(requestText) as VisionRequest | null;
+          if (!request) throw new Error("Retinal producer prepared no tick");
+          progress(run, "capture");
+          const rgb = request.poses.length ? (await run.optics.capture.acquire(request.poses)).samples : new Uint8Array();
+          if (active !== run) return;
+          progress(run, "compute");
+          status = JSON.parse(run.core.commit_tick(requestText, rgb)) as AttemptStep;
+        } else status = JSON.parse(run.core.step()) as AttemptStep;
         run.neuralSteps = status.neuralSteps;
         // A cancel/start can run after every complete core tick, never only after a chunk.
         await yieldToMessages();
@@ -169,6 +196,7 @@ async function pump() {
   } finally {
     pumping = false;
     if (active && active.credits > 0) void pump();
+    else if (active === run && run) progress(run, "idle");
   }
 }
 self.onmessage = async (event: MessageEvent<AttemptRequest | SetupRequest>) => {
@@ -216,6 +244,8 @@ self.onmessage = async (event: MessageEvent<AttemptRequest | SetupRequest>) => {
     currentAttemptId = id;
     currentClientGeneration = message.generation;
     const started = performance.now();
+    const initialization = new AbortController();
+    initializing = initialization;
     try {
       const [wasm, bytes, manifest] = await loadAssets();
       if (ticket !== generation) return;
@@ -224,14 +254,32 @@ self.onmessage = async (event: MessageEvent<AttemptRequest | SetupRequest>) => {
         message.type === "start"
           ? JSON.stringify(message.input)
           : swarm_request(id, message.rootSeed, message.flyCount, message.durationTicks);
-      const core = new AttemptSession(bytes, manifest, input);
+      const optical = message.type === "start" && message.opticalWorld
+        ? await prepareAttemptOptics(message.input, message.opticalWorld,
+          JSON.parse(resolve_setup(JSON.stringify(message.input.level), JSON.stringify(message.input.placements))) as ResolvedSetup,
+          JSON.parse(tool_catalog()) as ToolDef[], message.generation, initialization.signal)
+        : undefined;
+      if (ticket !== generation) return;
+      const core = optical
+        ? AttemptSession.new_retinal(bytes, manifest, input, JSON.stringify(optical.config), optical.mapText)
+        : new AttemptSession(bytes, manifest, input);
+      let optics: { capture: RetinaCapture; world: Awaited<ReturnType<typeof createRetinaWorld>> } | undefined;
       let info: AttemptInfo;
       try {
         info = JSON.parse(core.info()) as AttemptInfo;
+        if (optical) {
+          const world = await createRetinaWorld(optical.definition, () => ticket === generation, initialization.signal);
+          try { optics = { world, capture: new RetinaCapture(world.scene) }; }
+          catch (error) { world.dispose(); throw error; }
+        }
+        if (ticket !== generation) {
+          optics?.capture.dispose(); optics?.world.dispose(); dispose(core); return;
+        }
       } catch (error) {
         if (!dispose(core, error)) return;
         throw error;
       }
+      initializing = undefined;
       active = {
         id,
         clientGeneration: message.generation,
@@ -241,6 +289,7 @@ self.onmessage = async (event: MessageEvent<AttemptRequest | SetupRequest>) => {
         granted: false,
         neuralSteps: 0,
         chunkTicks: info.recordLayout.maxChunkTicks,
+        optics,
       };
       send({
         type: "ready",
@@ -250,7 +299,7 @@ self.onmessage = async (event: MessageEvent<AttemptRequest | SetupRequest>) => {
         wasmBytes: memory.buffer.byteLength,
       });
     } catch (error) {
-      if (ticket === generation) fail(id, error);
+      if (ticket === generation) { initializing = undefined; fail(id, error); }
     }
   } else if (message.type === "cancel") {
     // Invalidate an outstanding asynchronous load as well as a running attempt.

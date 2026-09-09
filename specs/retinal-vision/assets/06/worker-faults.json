@@ -1,0 +1,21 @@
+{
+  "results": [
+    {
+      "mode": "context",
+      "failure": {
+        "message": "Error: Retinal acquisition cancelled or context lost",
+        "settledMs": 160.79999995231628
+      },
+      "retryFrames": 1
+    },
+    {
+      "mode": "unresponsive",
+      "failure": {
+        "message": "Error: Retinal acquisition cancelled or context lost",
+        "settledMs": 4910
+      },
+      "retryFrames": 1
+    }
+  ],
+  "errors": []
+}

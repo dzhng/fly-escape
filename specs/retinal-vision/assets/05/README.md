@@ -25,4 +25,8 @@ PYTHONPATH=scripts python -m connectome.vision_map \
 python -m unittest discover -s tests/connectome
 ```
 
-To create a new provisional optical snapshot from a compatible capture owner, run `bun specs/retinal-vision/assets/05/export-profile.mjs SOURCE_ROOT OUTPUT.json`. It rejects nonliteral camera constructors instead of guessing. A new snapshot requires regenerating the map and repeating its gates; it must not silently replace the frozen evidence here.
+To create a new provisional optical snapshot from a compatible capture owner, run `bun specs/retinal-vision/assets/05/export-profile.mjs SOURCE_ROOT OUTPUT.json`. The exporter and browser binding check now share the semantic profile owner. A new snapshot requires regenerating the map and repeating its gates; it must not silently replace the frozen evidence here.
+
+## Integration binding
+
+The selected optics match this frozen semantic map exactly. The reviewed map is published separately under `data/processed/brain/retinal-map.json`; build preparation validates the installed profile and graph identity, copies the map without reserialization, and generates the eye-panel identity artifact. Native remains the full map/hash/budget validator. The optical-model identifier retains its original provisional name so the frozen identity does not change merely for a label. This is bounded registration acceptance, not a positive downstream-neural verdict.

@@ -41,9 +41,10 @@ export async function retinaWorldIdentity(definition: RetinaWorldDefinition): Pr
 }
 
 /** A static sensory world owns every mesh/resource independently of the presentation world. */
-export async function createRetinaWorld(authoring: RetinaWorldDefinition, isCurrent: () => boolean = () => true) {
+export async function createRetinaWorld(authoring: RetinaWorldDefinition, isCurrent: () => boolean = () => true, signal?: AbortSignal) {
   const definition = physicalDefinition(authoring);
   const sceneId = await retinaWorldIdentity(definition);
+  signal?.throwIfAborted();
   const world = new WorldScene({ ...definition, mode: "physical" });
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(housePalette.background);
@@ -57,7 +58,7 @@ export async function createRetinaWorld(authoring: RetinaWorldDefinition, isCurr
   };
   try {
     world.placements.setPlacements(definition.placements, definition.catalog);
-    await loadWorldSceneAssets(world, definition.roomDetails, isCurrent);
+    await loadWorldSceneAssets(world, definition.roomDetails, isCurrent, signal);
     if (!isCurrent()) throw new Error("Retinal world initialization cancelled");
     releaseBatches = batchStaticMeshes(world.root);
     scene.updateMatrixWorld(true);

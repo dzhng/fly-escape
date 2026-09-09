@@ -7,7 +7,7 @@ import { pathToFileURL } from "node:url";
 
 const [sourceRoot, output] = process.argv.slice(2);
 assert(sourceRoot && output, "usage: bun export-profile.mjs SOURCE_ROOT OUTPUT.json");
-const files = ["retina-projection.ts", "retina-eye-rig.ts", "retina-capture.ts", "retina-pooling.ts"];
+const files = ["retina-projection.ts", "retina-eye-rig.ts", "retina-capture.ts", "retina-pooling.ts", "retina-profile.ts"];
 const paths = files.map(name => resolve(sourceRoot, "packages/game-renderer/src", name));
 const bytes = await Promise.all(paths.map(path => readFile(path)));
 const sha256 = bytes => createHash("sha256").update(bytes).digest("hex");
@@ -15,14 +15,8 @@ const { RetinaProjection, retinaProfile, retinaCameraProjection } = await import
 const { retinalEyeRig } = await import(pathToFileURL(paths[1]).href);
 const projection = new RetinaProjection(retinaProfile);
 const { width, height, radius, distortion, zoom } = projection.profile;
-const semantic = {
-  opticalModelVersion: "provisional-retina-gpu-f32-pooling-v1",
-  capture: { width, height, ...retinaCameraProjection, distortion, zoom },
-  layout: { radius, cells: projection.cells },
-  eyeOrder: ["L", "R"], rgbOrder: ["R", "G", "B"], imageAxes: { x: "right", y: "down" },
-  rigSha256: retinalEyeRig.rigSha256,
-  photometry: { encoding: "linear-RGB8", exposure: 1, pooling: "GPU-float32-mean", quantization: "floor(255*clamp(mean,0,1)+0.5)", toneMapping: "none" },
-};
+const { retinalProfileSemantic } = await import(pathToFileURL(resolve(sourceRoot, "packages/game-renderer/src/retina-profile.ts")).href);
+const semantic = retinalProfileSemantic();
 const after = await Promise.all(paths.map(path => readFile(path)));
 bytes.forEach((value, index) => assert(value.equals(after[index]), "source changed while exporting profile"));
 await writeFile(output, JSON.stringify({

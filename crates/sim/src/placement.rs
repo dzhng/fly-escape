@@ -234,6 +234,7 @@ pub struct PlacementState {
 #[derive(Clone, Debug, Serialize, TS)]
 #[serde(rename_all = "camelCase")]
 pub struct ResolvedSetup {
+    pub fixed_placements: Vec<Placement>,
     pub state: PlacementState,
     pub sources: Vec<Source>,
     pub field_config: FieldConfig,
@@ -410,6 +411,7 @@ pub fn resolve_placements(
         return Err("resolved setup exceeds field/body source limits".into());
     }
     Ok(ResolvedSetup {
+        fixed_placements: fixed,
         state: PlacementState {
             placements,
             food,

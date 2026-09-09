@@ -220,6 +220,9 @@ export class FrameArchive {
     this.valueStride =
       layout.valueFields.length + layout.groupIds.length * layout.groupFields.length;
   }
+  get retinalConfig() {
+    return this.layout.retinalConfig === null ? null : structuredClone(this.layout.retinalConfig);
+  }
   get computedTick() {
     return this.lastTick;
   }
@@ -577,16 +580,24 @@ export class FrameArchive {
     return points;
   }
 
-  /** Fresh selected-fly bytes; no observer state or decoded history is retained. */
-  retina(tick: number, flyId: number): { pose: EyePose; rgb: Uint8Array } | null {
+  private retinalRecord(tick: number, flyId: number): { chunk: TransferChunk; record: number } | null {
     require(integer(tick) && tick <= this.lastTick && integer(flyId) && flyId < this.spec.flyCount, "Retinal selection has not been recorded");
-    const config = this.layout.retinalConfig;
-    if (tick === 0 || !config) return null;
+    if (tick === 0 || !this.layout.retinalConfig) return null;
     const chunk = this.chunkAt(tick);
     const record = (tick - chunk.startTick) * chunk.flyCount + flyId;
-    if (!(chunk.states[record * this.layout.stateFields.length + this.stateOffsets.presence] & this.layout.retinalPresentMask)) return null;
+    return chunk.states[record * this.layout.stateFields.length + this.stateOffsets.presence] & this.layout.retinalPresentMask
+      ? { chunk, record } : null;
+  }
+  /** Presence is independent of pixel intensity; this does not copy eye bytes. */
+  hasRetina(tick: number, flyId: number): boolean { return this.retinalRecord(tick, flyId) !== null; }
+
+  /** Fresh selected-fly bytes; no observer state or decoded history is retained. */
+  retina(tick: number, flyId: number): { pose: EyePose; rgb: Uint8Array } | null {
+    const input = this.retinalRecord(tick, flyId);
+    if (!input) return null;
+    const { chunk, record } = input;
     const v = (name: string) => chunk.values[record * this.valueStride + this.valueOffsets[name]];
-    const width = config.profile.sampleCount * 6;
+    const width = this.layout.retinalConfig!.profile.sampleCount * 6;
     return { pose: { flyId, position: [v("inputX"),v("inputHeight"),v("inputZ")], rotation: [v("inputRotationX"),v("inputRotationY"),v("inputRotationZ"),v("inputRotationW")] }, rgb: chunk.retinaRgb.slice(record * width, (record + 1) * width) };
   }
   private retinalFrame(tick: number): RetinaBatch | null {
@@ -598,7 +609,8 @@ export class FrameArchive {
     return { request: { attemptId:this.spec.attemptId,clientGeneration:config.clientGeneration,tick,profileHash:config.profile.profileHash,sceneId:config.sceneId,poses:inputs.map(input=>input.pose) }, rgb };
   }
 
-  frame(tick: number): AttemptFrame {
+  /** Playback reads body/neural state; selected eye views use retina() directly. */
+  frame(tick: number, options: { retina?: boolean } = {}): AttemptFrame {
     if (tick === 0)
       return {
         tick: 0,
@@ -691,7 +703,7 @@ export class FrameArchive {
     return {
       tick,
       neuralSteps: chunk.tickNeuralSteps[tickIndex],
-      ...(this.layout.retinalConfig ? { retina: this.retinalFrame(tick)! } : {}),
+      ...(this.layout.retinalConfig && options.retina !== false ? { retina: this.retinalFrame(tick)! } : {}),
       flies,
       result: chunk.result?.completedTick === tick ? structuredClone(chunk.result) : null,
     };

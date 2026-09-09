@@ -109,11 +109,11 @@ export class RoomDetails {
   }
 }
 
-export async function loadRoomDetails(world: WorldScene, details: readonly RoomDetail[], isCurrent: () => boolean) {
+export async function loadRoomDetails(world: WorldScene, details: readonly RoomDetail[], isCurrent: () => boolean, signal?: AbortSignal) {
   if (details.length > 16 || details.filter(detail => detail.kind === "sconce").length > 4)
     throw new Error("A room scene supports at most 16 wall details and four household lights");
   const results = await Promise.allSettled([...new Set(details.map(detail => detail.kind))].map(async kind => {
-    const response = await fetch(assets[kind].url);
+    const response = await fetch(assets[kind].url, { signal });
     if (!response.ok) throw new Error(`Room ${kind} request failed (${response.status})`);
     const contract = assets[kind];
     const bounds = "bounds" in contract ? contract.bounds : (() => {

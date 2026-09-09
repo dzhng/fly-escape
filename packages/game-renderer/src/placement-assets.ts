@@ -2,10 +2,10 @@ import { loadPlacementModel, type PlacementModels } from "./placement-models";
 import { placementAssetUrls } from "../../../assets/tools/registry";
 
 /** Install a complete template set; stale or failed loads release every unaccepted result. */
-export async function loadPlacementAssets(models: PlacementModels, isCurrent: () => boolean): Promise<void> {
+export async function loadPlacementAssets(models: PlacementModels, isCurrent: () => boolean, signal?: AbortSignal): Promise<void> {
   const results = await Promise.allSettled(
     Object.entries(placementAssetUrls).map(async ([kind, url]) => {
-      const response = await fetch(url);
+      const response = await fetch(url, { signal });
       if (!response.ok) throw new Error(`${kind} model request failed (${response.status})`);
       const key = kind as keyof typeof placementAssetUrls;
       return { kind: key, model: await loadPlacementModel(await response.arrayBuffer(), key) };

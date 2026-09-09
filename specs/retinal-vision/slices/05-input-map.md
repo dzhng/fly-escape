@@ -28,4 +28,4 @@ Use [compare-screenshots](../../../.agents/skills/compare-screenshots/SKILL.md) 
 
 Human review is non-blocking: open shots with [preview-shots](../../../.agents/skills/preview-shots/SKILL.md), allow about five minutes while doing independent work, then decide from evidence if no response arrives, record the rationale and close the shots. Correctness/resource failures still fail. Any user feedback changing this slice's named variable must update its contract before further implementation.
 
-**Status:** planned; no implementation or verification result yet. Record the exact artifact, tests, observed limits and pass/fail verdict here when executed, then update the README handoff.
+**Status: passed.** Offline map/atlas checks and deterministic export are recorded in [review](../assets/05/review.md); [integration binding](../assets/05/README.md#integration-binding) checks the same semantic profile against actual installed optics. Coverage remains modeled and incomplete. Downstream failures belong to slices 08/09 and are not concealed by map acceptance.

@@ -34,7 +34,8 @@
     "probe:retina-capture": "node tests/browser/retina-capture.mjs",
     "assets:retina": "bun scripts/export-retina-scene-revision.ts",
     "test:retina-optics": "bun tests/browser/retina-optics.mjs",
-    "test:retina-record": "bun test packages/sim-client/src/record.test.ts packages/sim-client/src/record-errors.test.ts packages/sim-client/src/retina-record.test.ts && bun tests/retina-record-memory.ts && node tests/browser/retina-record-wasm.mjs && node tests/browser/retina-record.mjs"
+    "test:retina-record": "bun test packages/sim-client/src/record.test.ts packages/sim-client/src/record-errors.test.ts packages/sim-client/src/retina-record.test.ts && bun tests/retina-record-memory.ts && node tests/browser/retina-record-wasm.mjs && node tests/browser/retina-record.mjs",
+    "test:retina-tick": "cargo test -p sim --test retina_tick --test retinal_map && bun test packages/sim-client/src/attempt-client.test.ts packages/sim-client/src/attempt-watchdog.test.ts packages/game-renderer/src/retina-profile.test.ts && node tests/browser/retina-attempt.mjs && node tests/browser/retina-attempt-cancel.mjs && RETINA_CANCEL_TARGET=map node tests/browser/retina-attempt-cancel.mjs && node tests/browser/retina-attempt-faults.mjs && node tests/browser/retina-map-retry.mjs"
   },
   "type": "module",
   "workspaces": [

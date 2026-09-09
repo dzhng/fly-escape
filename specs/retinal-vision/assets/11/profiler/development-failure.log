@@ -1,0 +1,26 @@
+{"level":0,"tick":280,"archiveMiB":23.007076263427734,"wasmMiB":86.25,"frameP95":117}
+{"level":0,"tick":560,"archiveMiB":46.00226974487305,"wasmMiB":86.25,"frameP95":117}
+{"level":0,"tick":840,"archiveMiB":68.95735168457031,"wasmMiB":86.25,"frameP95":117}
+{"level":0,"tick":1130,"archiveMiB":92.75704193115234,"wasmMiB":86.25,"frameP95":101}
+{"level":0,"tick":1410,"archiveMiB":115.71471786499023,"wasmMiB":86.25,"frameP95":101}
+{"level":0,"tick":1690,"archiveMiB":138.67304229736328,"wasmMiB":86.25,"frameP95":101}
+{"level":0,"tick":1990,"archiveMiB":163.25209045410156,"wasmMiB":86.25,"frameP95":101}
+{"level":0,"tick":2350,"archiveMiB":192.59765625,"wasmMiB":86.25,"frameP95":100}
+{"level":0,"tick":2670,"archiveMiB":218.67957305908203,"wasmMiB":86.25,"frameP95":100}
+Failed to execute 'measure' on 'Performance': Data cannot be cloned, out of memory.
+Should not already be working.
+{"level":0,"tick":2790,"archiveMiB":228.44562911987305,"wasmMiB":86.25,"frameP95":100}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.innerText: Target crashed 
+Call log:
+[2m  - waiting for locator('body')[22m
+
+    at /Users/david/dev/fly-escape/tests/browser/retina-campaign-memory.mjs:41:58 {
+  log: [ "  - waiting for locator('body')" ],
+  name: 'Error'
+}
+
+Node.js v24.14.0

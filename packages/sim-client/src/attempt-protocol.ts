@@ -8,7 +8,7 @@ export type AttemptCommand =
       flyCount: number;
       durationTicks: number;
     }
-  | { type: "start"; input: StartAttempt }
+  | { type: "start"; input: StartAttempt; opticalWorld?: import("./attempt-optics").AttemptWorldAuthoring }
   | { type: "grantCredits"; attemptId: string; count: number }
   | { type: "cancel"; attemptId: string };
 export type AttemptRequest = AttemptCommand & { generation: number };
@@ -32,6 +32,8 @@ export type AttemptReply =
     }
   | { type: "complete"; attemptId: string; result: AttemptResult }
   | { type: "error"; attemptId: string; message: string; recordError?: "unsupported-record" | "invalid-record" };
+
+export type WorkerProgress = { type: "progress"; generation: number; attemptId: string; phase: "capture" | "compute" | "idle" };
 
 export type WorkerFailure = { type: "fatal"; message: string };
 

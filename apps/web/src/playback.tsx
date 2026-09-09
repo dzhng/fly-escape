@@ -9,6 +9,7 @@ import { loadWorldAssets } from "./world-assets";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   WorldView,
+  defaultWorldLighting,
   flyAnimation,
   departingFly,
   recordedTrails,
@@ -116,7 +117,7 @@ function sample(run: Run): FlyPose[] {
   const tick = Math.floor(run.clock.cursorTick);
   if (tick !== run.cachedTick) {
     run.cachedTick = tick;
-    run.lower = run.archive.frame(tick);
+    run.lower = run.archive.frame(tick, { retina: false });
     run.trailHistory = run.archive.poseHistory(tick);
   }
   const motions = run.archive.motion(run.clock.cursorTick);
@@ -282,7 +283,7 @@ export function AttemptPlayback({
         scene.current.setSupportSurfaces([
           ...reply.info.resolvedSetup.state.food, ...reply.info.resolvedSetup.state.objects,
         ]);
-        scene.current.setPlacements(reply.info.spec.placements, catalog, undefined, reply.info.level.fixedObjects);
+        scene.current.setPlacements(reply.info.spec.placements, catalog, undefined, reply.info.resolvedSetup.fixedPlacements);
         scene.current.setPoses(sample(run.current));
         scene.current.enableSelection(selectFly);
         scene.current.selectFly(null);
@@ -351,7 +352,9 @@ export function AttemptPlayback({
       setSelected(null);
       lastFrameAt = null;
       requestedAt = performance.now();
-      if (input) observer.start(input);
+      if (input) observer.start(input, input.tuning.cues.some(cue => cue.pathway === "vision")
+        ? { roomDetails: roomDetails ?? [], roomFloors: roomFloors ?? [], lighting: lighting ?? defaultWorldLighting }
+        : undefined);
       else observer.startLab(crypto.randomUUID(), "42", LAB_FLY_COUNT, DURATION_TICKS);
     };
     const visibility = () => {

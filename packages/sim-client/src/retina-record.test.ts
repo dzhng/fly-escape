@@ -60,6 +60,7 @@ test("native RGB slots survive chunk boundaries, arbitrary selection and seek wi
     for (const fly of [1, 0, 1]) {
       const sample = archive.retina(tick, fly);
       const index = expected.request.poses.findIndex((p) => p.flyId === fly);
+      expect(archive.hasRetina(tick, fly)).toBe(index >= 0);
       if (index < 0) expect(sample).toBeNull();
       else {
         expect(sample!.pose).toEqual(expected.request.poses[index]);
@@ -70,6 +71,13 @@ test("native RGB slots survive chunk boundaries, arbitrary selection and seek wi
       }
     }
   }
+  expect(archive.hasRetina(0, 0)).toBe(false);
+  expect(archive.hasRetina(1, 0)).toBe(true);
+  expect(archive.hasRetina(4, 0)).toBe(false);
+  const full = archive.frame(2);
+  const { retina: omitted, ...bodyAndNeural } = full;
+  expect(omitted).toBeDefined();
+  expect(archive.frame(2, { retina: false })).toEqual(bodyAndNeural);
   expect(archive.retina(1, 0)!.rgb.every((v) => v === 0)).toBe(true);
   expect(archive.retina(3, 0)).not.toBeNull();
   expect(archive.retina(4, 0)).toBeNull();

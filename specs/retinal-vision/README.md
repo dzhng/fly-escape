@@ -8,7 +8,7 @@ This is a plan, not an implemented or verified feature. Spatial and color input,
 
 **Status: slices 01–04 passed; native tick and exact-record integration underway (2026-09-09).** Acquisition uses 128×128 cameras and 721 RGB8 samples per eye. [Shared-world verification](assets/03/verification.md) passes physical visibility, full-pose transforms and player-view invariance. The measured complete acquisition/copy p95 is 11.1 ms for sixteen moving flies on the documented hardware, not a full neural budget claim. The 512 MiB archive cap still requires production campaign accounting.
 
-Integrate the prepared schema-6 record commit, then wire the production worker's prepare/capture/commit rendezvous and recorded-eye panels. The sparse map and native seam are prepared. Frozen downstream experiments have failed required spatial/color gates; retain the negative results and reslice before release, with no post-hoc tuning or grayscale shortcut.
+The schema-6 record and production worker rendezvous are integrated; [browser transaction/failure checks](assets/06/browser-integration.md) pass. Integrate the prepared recorded-eye panel and recovery UI commits next. The sparse map matches the installed optics; final one-fly diagnostics and full campaign resources remain open. Frozen downstream experiments have failed required spatial/color gates; retain the negative results and reslice before release, with no post-hoc tuning or grayscale shortcut.
 
 Completed evidence: [reference reproduction](assets/01/review.md), [color audit](assets/04/verification.md). The model is Tm2 brightness plus Tm20 blue, with explicitly unmeasured coefficients; unsupported Tm5 cells are excluded. Freeze the combined dose and spatial map in slice 05 before testing neural color responses. See [choices](choices.md).
 
@@ -22,7 +22,7 @@ The next unresolved gates are complete physical-scene invariance, the declared s
 - [x] [02 Acquisition feasibility](slices/02-feasibility.md): settle capture cost, quality profile and archive arithmetic before integration.
 - [x] [03 Shared world and eye rig](slices/03-world-and-eyes.md): sample the authoritative world with full pre-neural orientation.
 - [x] [04 Color-model feasibility](slices/04-color-model.md): audit retained cells and freeze a defensible rendered-color adapter.
-- [ ] [05 Retinal input map](slices/05-input-map.md): export bounded spatial and channel assignments.
+- [x] [05 Retinal input map](slices/05-input-map.md): export bounded spatial and channel assignments.
 - [ ] [06 Tick rendezvous](slices/06-tick.md): consume exactly one matching eye batch before each neural tick.
 - [ ] [07 Exact replay](slices/07-records.md): retain consumed bytes and reject old records without crashing.
 - [ ] [08 Spatial neural proof](slices/08-neural-proof.md): verify the complete one-fly spatial/brightness chain.

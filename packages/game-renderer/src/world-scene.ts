@@ -86,11 +86,11 @@ export class WorldScene {
 }
 
 /** Readiness covers every physical asset category; instances never borrow another world's templates. */
-export async function loadWorldSceneAssets(world: WorldScene, details: readonly RoomDetail[], isCurrent: () => boolean): Promise<void> {
+export async function loadWorldSceneAssets(world: WorldScene, details: readonly RoomDetail[], isCurrent: () => boolean, signal?: AbortSignal): Promise<void> {
   const results = await Promise.allSettled([
-    loadHouseAssets(world.house, isCurrent),
-    loadRoomDetails(world, details, isCurrent),
-    loadPlacementAssets(world.placements, isCurrent),
+    loadHouseAssets(world.house, isCurrent, undefined, signal),
+    loadRoomDetails(world, details, isCurrent, signal),
+    loadPlacementAssets(world.placements, isCurrent, signal),
   ]);
   const failure = results.find(result => result.status === "rejected");
   if (failure?.status === "rejected") throw failure.reason;
