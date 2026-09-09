@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepare a browser graph from checksum-verified MaleCNS Feather sources."""
+"""Prepare graph artifacts, or refresh a selected visual map without rebuilding graph bytes."""
 import argparse
 import hashlib
 import html
@@ -11,6 +11,7 @@ import pyarrow.feather as feather
 from connectome.download import FILES, download, hashes
 from connectome.extract import extract
 from connectome.artifact import metadata, read_binary, write_binary
+from connectome.vision_map import audit
 
 
 def main():
@@ -19,48 +20,78 @@ def main():
     parser.add_argument('--output', type=Path, default=Path('data/processed/brain'))
     parser.add_argument('--download', action='store_true')
     parser.add_argument('--verify-reference', action='store_true')
+    parser.add_argument('--metadata-only', action='store_true', help='Read the existing output graph and update only its manifest and reports')
+    parser.add_argument('--vision-family', choices=['Tm2', 'Tm20'], help='Override the frozen visionFamily in connectome/pathways.json')
     args = parser.parse_args()
-    sources = download(args.source) if args.download else json.loads((args.source / 'sources.json').read_text())
-    if len(sources) != len(FILES) or {s['file'] for s in sources} != set(FILES):
-        raise ValueError('Provenance must identify all three full-source Feather files')
-    for source in sources:
-        if hashes(args.source / source['file'])[0] != source['sha256']:
-            raise ValueError(f"Source checksum mismatch: {source['file']}")
+    registry = json.loads(Path(__file__).with_name('connectome').joinpath('pathways.json').read_text())
+    family = args.vision_family or registry.get('visionFamily')
+    if args.metadata_only and (args.download or args.verify_reference):
+        parser.error('--metadata-only cannot download or re-extract reference data')
+    if family is None:
+        parser.error('Choose --vision-family until a pilot winner is frozen in pathways.json')
+    if family not in ['Tm2', 'Tm20']:
+        parser.error('visionFamily must be Tm2 or Tm20')
     start = time.perf_counter()
+    if args.metadata_only:
+        manifest = json.loads((args.output / 'manifest.json').read_text())
+        sources = manifest['sources']
+        if hashes(args.output / 'graph.bin')[0] != manifest['graphHash']:
+            raise ValueError('Graph binary identity differs from manifest')
+        matrix = read_binary(args.output / 'graph.bin')
+        graph = dict(bodies=list(map(int, manifest['bodyIds'])), matrix=matrix)
+        # Preserve the extraction identity when only metadata is re-exported.
+        manifest.setdefault('extractionExporterHash', manifest['exporterHash'])
+        manifest.setdefault('extractionExporterRevision', manifest['exporterRevision'])
+    else:
+        sources = download(args.source) if args.download else json.loads((args.source / 'sources.json').read_text())
+        if len(sources) != len(FILES) or {s['file'] for s in sources} != set(FILES):
+            raise ValueError('Provenance must identify all three full-source Feather files')
+    for source in sources:
+        if not args.metadata_only or source['file'] == 'body-annotations.feather':
+            if hashes(args.source / source['file'])[0] != source['sha256']:
+                raise ValueError(f"Source checksum mismatch: {source['file']}")
+    annotation_source = next(s for s in sources if s['file'] == 'body-annotations.feather')
     annotations = feather.read_feather(args.source / 'body-annotations.feather')
-    transmitters = feather.read_feather(args.source / 'body-neurotransmitters.feather')
-    weights = feather.read_feather(args.source / 'connectome-weights.feather')
-    graph = extract(annotations, transmitters, weights)
-    args.output.mkdir(parents=True, exist_ok=True)
-    graph_hash = write_binary(args.output / 'graph.bin', graph['matrix'])
-    loaded = read_binary(args.output / 'graph.bin')
-    if (loaded != graph['matrix']).nnz:
-        raise AssertionError('Graph binary round-trip changed incoming currents')
+    if not args.metadata_only:
+        transmitters = feather.read_feather(args.source / 'body-neurotransmitters.feather')
+        weights = feather.read_feather(args.source / 'connectome-weights.feather')
+        graph = extract(annotations, transmitters, weights)
+        args.output.mkdir(parents=True, exist_ok=True)
+        graph_hash = write_binary(args.output / 'graph.bin', graph['matrix'])
+        loaded = read_binary(args.output / 'graph.bin')
+        if (loaded != graph['matrix']).nnz:
+            raise AssertionError('Graph binary round-trip changed incoming currents')
+        previous_mbons = set(list(set(map(int, annotations.loc[annotations['type'].fillna('').str.startswith('MBON'), 'bodyId'])))[:200])
+        stable_mbons = set(graph['mbon'])
+        manifest = dict(schemaVersion=1, dataset='MaleCNS v1.0', synthetic=False,
+            attribution='Janelia FlyEM MaleCNS; https://male-cns.janelia.org/download/ (CC-BY; see source terms)',
+            graphHash=graph_hash, sources=sources,
+            extraction=dict(target=70000, minimumWeight=5, edges='seed-touching', tieBreak='body-id-ascending', mbonLimit=200),
+            neuronCount=len(graph['bodies']), edgeCount=graph['matrix'].nnz,
+            fallbackCount=graph['fallbackCount'], missingAnnotations=graph['missingAnnotations'],
+            selectionCorrection=dict(mbonRemoved=list(map(str, sorted(previous_mbons - stable_mbons))),
+                                     mbonAdded=list(map(str, sorted(stable_mbons - previous_mbons)))),
+            binary=dict(magic='FLYGRAPH', version=1, byteOrder='little', rowMeaning='postsynaptic',
+                        header='8-byte magic, u32 version, u32 neurons, u32 edges',
+                        arrays='u32 rowOffsets[neurons+1], u32 presynapticIndices[edges], f64 weights[edges]'))
+    manifest.update(metadata(graph, annotations, source=registry))
+    maps, evidence = audit(annotations, manifest, graph['matrix'], annotation_source['sha256'])
+    if family not in maps:
+        raise ValueError(f"Rejected visual candidate {family}: {evidence['candidates'][family]['rejectionReasons']}")
+    manifest.update(metadata(graph, annotations, source=registry, vision_input=maps[family]))
     exporter_files = [Path(__file__)] + sorted(Path(__file__).with_name('connectome').glob('*.py')) + [Path(__file__).with_name('connectome') / 'pathways.json']
-    exporter_hash = hashlib.sha256(b''.join(f.read_bytes() for f in exporter_files)).hexdigest()
-    previous_mbons = set(list(set(map(int, annotations.loc[annotations['type'].fillna('').str.startswith('MBON'), 'bodyId'])))[:200])
-    stable_mbons = set(graph['mbon'])
-    manifest = dict(schemaVersion=1, dataset='MaleCNS v1.0', synthetic=False,
-        attribution='Janelia FlyEM MaleCNS; https://male-cns.janelia.org/download/ (CC-BY; see source terms)',
-        graphHash=graph_hash, exporterHash=exporter_hash,
-        exporterRevision=subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
-        sources=sources, extraction=dict(target=70000, minimumWeight=5, edges='seed-touching', tieBreak='body-id-ascending', mbonLimit=200),
-        neuronCount=len(graph['bodies']), edgeCount=graph['matrix'].nnz,
-        fallbackCount=graph['fallbackCount'], missingAnnotations=graph['missingAnnotations'],
-        selectionCorrection=dict(mbonRemoved=list(map(str, sorted(previous_mbons - stable_mbons))),
-                                 mbonAdded=list(map(str, sorted(stable_mbons - previous_mbons)))),
-        binary=dict(magic='FLYGRAPH', version=1, byteOrder='little', rowMeaning='postsynaptic',
-                    header='8-byte magic, u32 version, u32 neurons, u32 edges',
-                    arrays='u32 rowOffsets[neurons+1], u32 presynapticIndices[edges], f64 weights[edges]'),
-        **metadata(graph, annotations))
+    manifest['exporterHash'] = hashlib.sha256(b''.join(f.read_bytes() for f in exporter_files)).hexdigest()
+    manifest['exporterRevision'] = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
     (args.output / 'manifest.json').write_text(json.dumps(manifest, separators=(',', ':'), sort_keys=True) + '\n')
-    summary = {key: manifest[key] for key in ['graphHash','exporterHash','neuronCount','edgeCount','fallbackCount','missingAnnotations']}
+    summary = {key: manifest[key] for key in ['graphHash', 'exporterHash', 'neuronCount', 'edgeCount', 'fallbackCount', 'missingAnnotations']}
+    summary['metadataOnly'] = args.metadata_only
+    summary['visionFamily'] = family
     summary['groups'] = {g['id']: len(g['indices']) for g in manifest['groups']}
     summary['seconds'] = round(time.perf_counter() - start, 3)
     if args.verify_reference:
         summary['reference'] = verify_reference(annotations, transmitters, weights, graph)
     (args.output / 'report.json').write_text(json.dumps(summary, indent=2) + '\n')
-    (args.output / 'report.html').write_text('<!doctype html><meta charset="utf-8"><title>MaleCNS graph evidence</title><style>body{font:16px/1.5 system-ui;max-width:950px;margin:40px auto;background:#f3f3e9;color:#23413a}pre{white-space:pre-wrap;padding:24px;background:white}h1{font-size:30px}</style><h1>Real MaleCNS graph extraction</h1><p>Reproducible source and signed incoming-edge evidence. This is not a browser performance claim.</p><pre>' + html.escape(json.dumps(summary, indent=2)) + '</pre>')
+    (args.output / 'report.html').write_text('<!doctype html><meta charset="utf-8"><title>MaleCNS graph evidence</title><style>body{font:16px/1.5 system-ui;max-width:950px;margin:40px auto;background:#f3f3e9;color:#23413a}pre{white-space:pre-wrap;padding:24px;background:white}h1{font-size:30px}</style><h1>Real MaleCNS graph metadata</h1><p>Source and signed incoming-edge evidence. This is not a browser performance claim.</p><pre>' + html.escape(json.dumps(summary, indent=2)) + '</pre>')
     print(json.dumps(summary, indent=2))
 
 

@@ -21,7 +21,7 @@ SYNTHETIC_ANNOTATIONS = [
 SYNTHETIC_REGISTRY = {'provenance': 'synthetic', 'bodies': dict(
     OLFACTORY_DN_LEFT=[1], OLFACTORY_DN_RIGHT=[2],
     EXCITATORY_LH_MOTOR={'L': [3], 'R': [3]}, INHIBITORY_LH_MOTOR={'L': [3], 'R': [3]},
-    AOTU_LEFT=[3], AOTU_RIGHT=[3], FLIGHT_DN_LEFT=[1], FLIGHT_DN_RIGHT=[2],
+    FLIGHT_DN_LEFT=[1], FLIGHT_DN_RIGHT=[2],
     LANDING_DN_LEFT=[1], LANDING_DN_RIGHT=[2], TARSAL_GRN_IDS=[3], BM_TASTE_IDS=[3],
     GNG_INTERNEURON_IDS=[3], PROBOSCIS_MN_IDS=[3])}
 
@@ -63,6 +63,24 @@ class ShippedRegistryTests(unittest.TestCase):
 
     def test_intrinsic_cell_rejected_as_a_readout_keeps_its_lateral_horn_membership(self):
         self.assertIn(13500, REGISTRY['EXCITATORY_LH_MOTOR']['R'])
+
+
+class VisualMetadataTests(unittest.TestCase):
+    def test_visual_display_groups_follow_map_cells_and_source_sides(self):
+        annotations = SYNTHETIC_ANNOTATIONS + [
+            {'bodyId': 5 + i, 'type': 'Tm2', 'superclass': 'ol_intrinsic', 'somaSide': 'L' if i % 2 == 0 else 'R'}
+            for i in range(8)
+        ]
+        matrix = sparse.csr_matrix(([7., -4.], ([3, 3], [4, 5])), shape=(12, 12))
+        graph = dict(bodies=list(range(1, 13)), matrix=matrix)
+        vision_input = dict(family='Tm2', bins=[dict(indices=[4 + i], normalization=1.) for i in range(8)])
+        result = metadata(graph, pd.DataFrame(annotations), source=SYNTHETIC_REGISTRY, vision_input=vision_input)
+        groups = {group['id']: group for group in result['groups']}
+        self.assertEqual(groups['visionL']['indices'], [4, 6, 8, 10])
+        self.assertEqual(groups['visionR']['indices'], [5, 7, 9, 11])
+        self.assertEqual(groups['visionL']['label'], 'Modeled vision · Tm2 · left')
+        self.assertIn(dict(source='visionL', target='loom', edgeCount=1, positiveWeight=7., negativeWeight=0.), result['groupLinks'])
+        self.assertEqual(result['visionInput'], vision_input)
 
 
 if __name__ == '__main__':

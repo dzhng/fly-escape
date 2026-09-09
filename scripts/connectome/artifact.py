@@ -60,7 +60,7 @@ def check_olfactory_readouts(candidates, annotations):
                          f'each must be descending_neuron on its named side: {"; ".join(contradicted)}')
 
 
-def metadata(graph, annotations, source=None):
+def metadata(graph, annotations, source=None, vision_input=None):
     lookup = {body: i for i, body in enumerate(graph['bodies'])}
     source = source or json.loads(Path(__file__).with_name('pathways.json').read_text())
     check_olfactory_readouts(source['bodies'], annotations)
@@ -80,7 +80,6 @@ def metadata(graph, annotations, source=None):
         ('odorExcR', 'Smell excitation · right', pathways['EXCITATORY_LH_MOTOR']['R']),
         ('odorInhL', 'Smell inhibition · left', pathways['INHIBITORY_LH_MOTOR']['L']),
         ('odorInhR', 'Smell inhibition · right', pathways['INHIBITORY_LH_MOTOR']['R']),
-        ('visionL', 'Vision · left', pathways['AOTU_LEFT']), ('visionR', 'Vision · right', pathways['AOTU_RIGHT']),
         ('turnL', 'Turning · left', pathways['OLFACTORY_DN_LEFT']), ('turnR', 'Turning · right', pathways['OLFACTORY_DN_RIGHT']),
         ('flightL', 'Flight · left', pathways['FLIGHT_DN_LEFT']), ('flightR', 'Flight · right', pathways['FLIGHT_DN_RIGHT']),
         ('landingL', 'Landing · left', pathways['LANDING_DN_LEFT']), ('landingR', 'Landing · right', pathways['LANDING_DN_RIGHT']),
@@ -89,9 +88,19 @@ def metadata(graph, annotations, source=None):
         ('proboscis', 'Proboscis motor neurons', pathways['PROBOSCIS_MN_IDS']),
         ('loom', 'Approaching objects', [lookup[int(b)] for b in annotations.loc[annotations.type == 'LC4', 'bodyId'] if int(b) in lookup]),
     ]
+    if vision_input is not None:
+        mapped = {index for bin_input in vision_input['bins'] for index in bin_input['indices']}
+        family = vision_input['family']
+        visual = [(f'vision{side}', f'Modeled vision · {family} · {label}',
+                   [index for index in sorted(mapped) if sides.iloc[index] == side])
+                  for side, label in [('L', 'left'), ('R', 'right')]]
+        definitions[4:4] = visual
     groups = [dict(id=id, label=label, indices=sorted(set(indices))) for id, label, indices in definitions]
     missing = [g['id'] for g in groups if not g['indices']]
     if missing:
         raise ValueError(f'Required pathway groups are empty: {missing}')
-    return dict(bodyIds=list(map(str, graph['bodies'])), motor=motor, pathways=pathways, groups=groups,
-                groupLinks=group_links(graph['matrix'], groups), pathwayProvenance=source['provenance'])
+    result = dict(bodyIds=list(map(str, graph['bodies'])), motor=motor, pathways=pathways, groups=groups,
+                  groupLinks=group_links(graph['matrix'], groups), pathwayProvenance=source['provenance'])
+    if vision_input is not None:
+        result['visionInput'] = vision_input
+    return result

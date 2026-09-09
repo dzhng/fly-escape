@@ -20,6 +20,14 @@ The manifest identifies the dataset, actual source hashes/generations, exporter 
 
 Run `.venv/bin/python -m unittest discover -s tests/connectome -v` for small synthetic extraction/format contracts. Their graphs are test inputs, never evidence of successful real-fly behavior.
 
+## Visual inputs are metadata
+
+The annotation-derived visual map lives inside the graph manifest. Its two display groups follow the mapped cells' source soma sides; they do not retain the former AOTU membership or claim retinal reconstruction. The [map exporter](vision_map.py) owns the modeled column registration and connectivity audit. Candidate JSON files are experiment evidence, never a second runtime data channel.
+
+A metadata-only preparation reads the existing graph and verifies its hash plus the annotation source before updating the manifest and group connectivity. It does not read the full source weights, run extraction or rewrite graph bytes. Original extraction provenance is retained separately from the current metadata exporter identity.
+
+Select an experimental family with `--vision-family`; after the pilot freezes its winner, the existing pathway registry's `visionFamily` becomes the default. Both export modes reject an absent choice until then. Use `--metadata-only` against an existing graph directory to publish that choice. A successful export contains the selected map alone; missing or empty sectors are errors, not permission to restore a binary AOTU adapter.
+
 ## Data attribution
 
 The source is [Janelia FlyEM MaleCNS v1.0](https://male-cns.janelia.org/download/). The source project credits FlyEM at HHMI Janelia, the University of Cambridge, the MRC Laboratory of Molecular Biology and Google Research. Its download page identifies the dataset as [Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/).
