@@ -1,0 +1,138 @@
+{
+  "walking": {
+    "summaries": [
+      {
+        "classification": "neither",
+        "direction": "left",
+        "pairedDistanceReduction": {
+          "ci95": [
+            -0.5371644262394981,
+            0.3355278046880506
+          ],
+          "mean": -0.10081831077572373,
+          "sdAcrossSeeds": 1.16855635863973
+        },
+        "pairedMeanHeadingAlignment": {
+          "ci95": [
+            -0.08105406240430466,
+            0.043333609830334116
+          ],
+          "mean": -0.018860226286985266,
+          "sdAcrossSeeds": 0.16655815208952984
+        }
+      },
+      {
+        "classification": "neither",
+        "direction": "right",
+        "pairedDistanceReduction": {
+          "ci95": [
+            -0.3456508026670218,
+            0.3906720261470486
+          ],
+          "mean": 0.022510611740013373,
+          "sdAcrossSeeds": 0.9859543755852562
+        },
+        "pairedMeanHeadingAlignment": {
+          "ci95": [
+            -0.052209718196098064,
+            0.04937792939525577
+          ],
+          "mean": -0.001415894400421149,
+          "sdAcrossSeeds": 0.13602835838925215
+        }
+      },
+      {
+        "classification": "neither",
+        "direction": "forward",
+        "pairedDistanceReduction": {
+          "ci95": [
+            -0.262236236692065,
+            0.3243611248039725
+          ],
+          "mean": 0.03106244405595374,
+          "sdAcrossSeeds": 0.7854682927667672
+        },
+        "pairedMeanHeadingAlignment": {
+          "ci95": [
+            -0.033356217252756525,
+            0.041835449327309794
+          ],
+          "mean": 0.004239616037276637,
+          "sdAcrossSeeds": 0.10068349067971666
+        }
+      }
+    ],
+    "boundaryTicks": 0,
+    "changedLampTrajectories": 90,
+    "attempts": 120,
+    "wallSeconds": 30.976672792
+  },
+  "flying": {
+    "summaries": [
+      {
+        "classification": "neither",
+        "direction": "left",
+        "pairedDistanceReduction": {
+          "ci95": [
+            -0.581361204359263,
+            0.2566125719409996
+          ],
+          "mean": -0.1623743162091317,
+          "sdAcrossSeeds": 1.122067494090381
+        },
+        "pairedMeanHeadingAlignment": {
+          "ci95": [
+            -0.08193417626013126,
+            0.03526258059500928
+          ],
+          "mean": -0.023335797832560994,
+          "sdAcrossSeeds": 0.15692933955590424
+        }
+      },
+      {
+        "classification": "neither",
+        "direction": "right",
+        "pairedDistanceReduction": {
+          "ci95": [
+            -0.3360602821467626,
+            0.42768271338222946
+          ],
+          "mean": 0.04581121561773345,
+          "sdAcrossSeeds": 1.0226706531389445
+        },
+        "pairedMeanHeadingAlignment": {
+          "ci95": [
+            -0.04533835228321137,
+            0.057916745783047535
+          ],
+          "mean": 0.00628919674991808,
+          "sdAcrossSeeds": 0.1382611155814368
+        }
+      },
+      {
+        "classification": "neither",
+        "direction": "forward",
+        "pairedDistanceReduction": {
+          "ci95": [
+            -0.33785236223579784,
+            0.26161785424227335
+          ],
+          "mean": -0.03811725399676222,
+          "sdAcrossSeeds": 0.8027053621596211
+        },
+        "pairedMeanHeadingAlignment": {
+          "ci95": [
+            -0.046063549271740785,
+            0.0355741353014128
+          ],
+          "mean": -0.005244706985163992,
+          "sdAcrossSeeds": 0.1093148672942675
+        }
+      }
+    ],
+    "boundaryTicks": 0,
+    "changedLampTrajectories": 90,
+    "attempts": 120,
+    "wallSeconds": 30.26996275
+  }
+}
