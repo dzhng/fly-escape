@@ -66,13 +66,12 @@ fn measure(name: &str, fields: FieldSet, local_light: bool) -> Value {
 }
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut results = vec![];
-    for source in [
-        include_str!("../../../apps/web/src/levels/open-window.ts"),
-        include_str!("../../../apps/web/src/levels/turn-the-corner.ts"),
-    ] {
-        let start = source.find("= {").unwrap() + 2;
-        let end = source.rfind("};").unwrap() + 1;
-        let content: Value = serde_json::from_str(&source[start..end])?;
+    let paths: Vec<_> = std::env::args().skip(1).collect();
+    if paths.len() != 2 {
+        return Err("Usage: vision_probe OPEN_WINDOW_RESOLVED_JSON TURN_THE_CORNER_RESOLVED_JSON".into());
+    }
+    for path in paths {
+        let content: Value = serde_json::from_slice(&std::fs::read(path)?)?;
         let level: LevelDef = serde_json::from_value(content["level"].clone())?;
         let setup = resolve_placements(&level, &[])?;
         let fields = FieldSet::new(

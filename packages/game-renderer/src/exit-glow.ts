@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import type { ExitOpening } from "@fly-escape/sim-client";
+import { exitEmitter, type ExitOpening } from "@fly-escape/sim-client";
 import { disposeObjectResources } from "./resources";
 
 /** Metres the floor pool reaches into the room. */
@@ -88,9 +88,9 @@ function lightMaterial(color: string, map: THREE.DataTexture, opacity: number) {
 }
 
 /**
- * Renderer-only daylight spilling inward through the level's exit, so the player can see
- * where the objective is. Carries no simulation meaning and feeds no sensor; the fly's
- * brightness field is owned by the core. Owns every resource it adds to the scene.
+ * Daylight spilling inward through the level's exit. Its emitter shares authored
+ * position and parameters with the core light source; the decorative pool and haze
+ * feed no sensor. Owns every resource it adds to the scene.
  */
 export class ExitGlow {
   readonly root = new THREE.Group();
@@ -122,8 +122,10 @@ export class ExitGlow {
     haze.position.set(0, HAZE_HEIGHT / 2, HAZE_INSET);
 
     // The one local light: warms the real floor, jambs and furnishings the spill falls on.
-    const lamp = new THREE.PointLight(LAMP_COLOR, 9, 4.6, 1.6);
-    lamp.position.set(0, 1.15, 0.55);
+    const emitter = exitEmitter(exit);
+    const lamp = new THREE.PointLight(LAMP_COLOR, emitter.intensity, emitter.source.radius, 1.6);
+    this.root.updateMatrixWorld(true);
+    lamp.position.copy(this.root.worldToLocal(new THREE.Vector3(...emitter.position)));
     this.root.add(pool, haze, lamp);
   }
 

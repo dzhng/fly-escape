@@ -1,3 +1,4 @@
+import { resolveHouseLighting, turnTheCornerSconces } from "./house-lighting";
 import type { CampaignLevel } from "../campaign";
 const content: Pick<CampaignLevel, "level" | "tuning"> = {
   "level": {
@@ -494,10 +495,12 @@ const content: Pick<CampaignLevel, "level" | "tuning"> = {
       {
         "gain": 2,
         "pathway": "inhibitoryOdor"
-      }
+      },
+      { "pathway": "vision", "gain": 3 }
     ],
     "silencedNeurons": [],
     "tasteGain": 1
   }
 };
+content.level = resolveHouseLighting(content.level, turnTheCornerSconces);
 export default content;

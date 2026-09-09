@@ -68,3 +68,6 @@ export { HouseProbeClient } from "./house-probe";
 
 export { loadMotionSampler } from "./motion-sampler";
 export type { MotionSampler, RecordedTransform } from "./record";
+
+export { sconceEmitter, exitEmitter } from "./house-lighting";
+export type { HouseLightMount } from "./house-lighting";

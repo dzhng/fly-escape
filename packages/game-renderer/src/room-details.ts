@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { loadStaticHouseModel } from "./house";
 import type { WorldView } from "./index";
-import type { Geometry } from "@fly-escape/sim-client";
+import { sconceEmitter, type HouseLightMount, type Geometry } from "@fly-escape/sim-client";
 import { doorwayOpenings } from "./doorways";
 import doorwayEnvelope from "../../../assets/house/doorway/envelope.json";
 import exitWindowUrl from "../../../assets/house/exit-window/exit-window.glb?url";
@@ -11,11 +11,8 @@ import windowUrl from "../../../assets/house/window/window.glb?url";
 import plantUrl from "../../../assets/house/wall-plant/wall-plant.glb?url";
 import sconceUrl from "../../../assets/house/sconce/sconce.glb?url";
 
-/** Wall attachments in metres. Local +Z faces into the room; no core occupancy or sensory cue is added. */
-export type RoomDetail = {
-  position: readonly [number, number, number];
-  quarterTurns: 0 | 1 | 2 | 3;
-} & ({ kind: "doorway"; width: number } | { kind: "window" | "sconce" | "plant" | "exitWindow" });
+/** Wall attachments in metres. Local +Z faces inward; sconces share authored sensory emitters. */
+export type RoomDetail = HouseLightMount & ({ kind: "doorway"; width: number } | { kind: "window" | "sconce" | "plant" | "exitWindow" });
 const [left, floor, outward, right, top, inward] = exitWindowEnvelope.bounds;
 const [doorLeft, doorFloor, doorBack, doorRight, doorTop, doorFront] = doorwayEnvelope.bounds;
 const assets = {
@@ -86,9 +83,10 @@ export class RoomDetails {
       if (detail.kind === "doorway") fitDoorway(model, detail.width);
       mount.add(model);
       if (detail.kind === "sconce") {
-        const light = new THREE.PointLight("#ffca88", 0.45, 2.5, 2);
-        light.position.set(0, 0.18, 0.22);
-        mount.add(light);
+        const emitter = sconceEmitter(detail);
+        const light = new THREE.PointLight("#ffca88", emitter.intensity, emitter.source.radius, 2);
+        light.position.fromArray(emitter.position);
+        this.root.add(light);
       }
       this.root.add(mount);
       if (detail.kind !== "doorway" && detail.kind !== "exitWindow") this.attachments.push({ model, inward: new THREE.Vector3(0, 0, 1).applyAxisAngle(new THREE.Vector3(0, 1, 0), mount.rotation.y) });

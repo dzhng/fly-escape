@@ -300,6 +300,7 @@ mod tests {
     };
     #[test]
     fn fixture_preserves_body_configuration_and_removes_nonvisual_cues() {
+        // This fixture borrows body settings only; it replaces the authored environment.
         let authored = include_str!("../../../apps/web/src/levels/open-window.ts");
         let begin = authored.find("= {").unwrap() + 2;
         let end = authored.rfind("};").unwrap() + 1;

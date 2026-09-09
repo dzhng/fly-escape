@@ -553,8 +553,7 @@ fn acceptance(
 mod tests {
     use super::*;
     fn level(source: &str) -> LevelDef {
-        // The authored TypeScript modules hold JSON literals. Read those same
-        // levels so topology checks cannot drift into a separate test campaign.
+        // Read base geometry for topology checks, not the resolved campaign light field.
         let start = source.find("= {").unwrap() + 2;
         let end = source.rfind("};").unwrap() + 1;
         let mut content: Value = serde_json::from_str(&source[start..end]).unwrap();
