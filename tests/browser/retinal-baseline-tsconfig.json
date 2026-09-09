@@ -1,0 +1,4 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": ["../../apps/*/src", "../../packages/*/src", "./retinal-baseline-*.ts"]
+}
