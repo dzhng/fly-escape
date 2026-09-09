@@ -8,7 +8,7 @@ The [mapping audit](assets/input-map/README.md) is complete: both frozen candida
 
 - [x] Audit annotations and actual retained paths; freeze two bounded candidate maps.
 - [x] Implement graded adapter and preserve failed bounded pilot.
-- [ ] Resolve the motor gate through the bounded flight-readout diagnostic; freeze a winner only after its gate passes.
+- [ ] Resolve the motor gate through the overlapping-input pilot; freeze a winner only after its gate passes.
 - [ ] Pass paired neural/optical silencing and closed-loop response gates.
 - [ ] Verify actual worker/playback, resource cost, tests and independent review.
 - [ ] Consolidate choices and close-spec.
@@ -24,7 +24,7 @@ Three independent drafts informed this plan. Fewest-slices proposed audit then c
 ## Ownership and firewalls
 
 - `scripts/connectome` owns the reproducible annotation-to-input-map export and provenance; `Graph` validates/resolves it once. Reuse the existing graph manifest, not a second runtime file/service/cache.
-- `sensory.rs` owns actual brightness-to-current conversion. Neural parameters, signed circuit weights and body configuration stay unchanged. The failed motor gate permits only the separately specified, evidence-gated DNp03 flight-readout revision. `FieldSet` and schema-5 records retain the objective-2 contract.
+- `sensory.rs` owns actual brightness-to-current conversion. Neural parameters, signed circuit weights and body configuration stay unchanged. The failed DNp03 gate leaves all motor decoding unchanged; only the separately specified input projection revision is authorized. `FieldSet` and schema-5 records retain the objective-2 contract.
 - No input can target any motor readout, use exit direction, odor, blocked-light telemetry, renderer state or player-camera data. All eight brightness bins have a nonempty declared route.
 - Coordinate-to-angle registration, positive brightness current, normalization and temporal units are explicit modeling assumptions. Do not claim retinal reconstruction, living-fly firing rates or universal attraction.
 - Preserve 16 flies, 2/5/10 stars, 128 MiB archive cap, existing saved arrangements and About. Existing campaign rooms keep their cue configuration; only a diagnostic run enables vision here. The later puzzle gets its own evidence-led content spec.
