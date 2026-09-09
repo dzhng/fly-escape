@@ -6,6 +6,7 @@ import type {
   AttemptSpec,
   BodyEventKind,
   FieldSample,
+  SensorySample,
   PackedChunk,
   RecordLayout,
 } from "./generated/sim";
@@ -87,7 +88,7 @@ export class FrameArchive {
       integer(spec.durationTicks) &&
       spec.durationTicks >= 1 &&
       spec.durationTicks <= 6000, "Invalid attempt horizon");
-    require(layout.schemaVersion === 4 && integer(layout.noSupport) && layout.noSupport <= 0xffffffff &&
+    require(layout.schemaVersion === 5 && integer(layout.noSupport) && layout.noSupport <= 0xffffffff &&
       layout.groupIds.length <= 16, "Unsupported record layout");
     // The core sampler consumes this version's canonical wire order directly.
     require(layout.maxMotionPoints === 129 &&
@@ -144,6 +145,8 @@ export class FrameArchive {
       "windZ",
       "height",
       "rotationX", "rotationY", "rotationZ", "rotationW",
+      ...Array.from({ length: 8 }, (_, i) => `visionBrightness${i}`),
+      ...Array.from({ length: 8 }, (_, i) => `visionBlocked${i}`),
     ])
       require(name in this.valueOffsets, `Missing record field ${name}`);
     for (const name of ["mode", "outcome", "presence", "spikeCount", "support"])
@@ -545,6 +548,10 @@ export class FrameArchive {
                 left: side("left"),
                 right: side("right"),
                 wind: { x: v("windX"), z: v("windZ") },
+                vision: {
+                  brightness: Array.from({ length: 8 }, (_, i) => v(`visionBrightness${i}`)) as SensorySample["vision"]["brightness"],
+                  blocked: Array.from({ length: 8 }, (_, i) => v(`visionBlocked${i}`)) as SensorySample["vision"]["blocked"],
+                },
               }
             : null,
         neural:

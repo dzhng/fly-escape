@@ -1,0 +1,4033 @@
+{
+  "nativeFixtureRoundTrip": true,
+  "seekOrder": [
+    1,
+    3,
+    2,
+    4,
+    1
+  ],
+  "schema": 5,
+  "workerSample": {
+    "first": {
+      "tick": 1,
+      "neuralSteps": 16,
+      "flies": [
+        {
+          "id": 0,
+          "inputPose": {
+            "position": {
+              "x": 2.675188033540913,
+              "z": 6.954045723897513
+            },
+            "heading": 0.37250112152182463
+          },
+          "body": {
+            "support": null,
+            "rotation": [
+              0,
+              0.5639387544487977,
+              0,
+              0.8258166147703365
+            ],
+            "height": 0,
+            "pose": {
+              "position": {
+                "x": 2.675744744793492,
+                "z": 6.954263255115397
+              },
+              "heading": 0.37250112152182463
+            },
+            "mode": "walking",
+            "reserve": 0,
+            "outcome": null
+          },
+          "sensory": {
+            "left": {
+              "attractiveOdor": 0.0017350545188701341,
+              "repellentOdor": 0,
+              "brightness": 2.9109307078438835,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "right": {
+              "attractiveOdor": 0.0017416277372342178,
+              "repellentOdor": 0,
+              "brightness": 2.9107756106535985,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "wind": {
+              "x": 0,
+              "z": 0
+            },
+            "vision": {
+              "brightness": [
+                1,
+                1,
+                1,
+                1.9876453558422609,
+                2.8776591594614658,
+                2.6677656929822104,
+                1.480917702414539,
+                1
+              ],
+              "blocked": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "neural": {
+            "motor": {
+              "thrust": 0.049808469933306856,
+              "turn": 0,
+              "flightThrust": 0.10154069549929953,
+              "flightTurn": -0.00009059203859071094
+            },
+            "spikeCount": 0,
+            "groups": [
+              {
+                "id": "odorExcL",
+                "meanVoltage": 0.04919772987736411,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorExcR",
+                "meanVoltage": 0.05727479483371366,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhL",
+                "meanVoltage": 0.04554681106795269,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhR",
+                "meanVoltage": 0.05163755695558871,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionL",
+                "meanVoltage": 0.05097683162042687,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionR",
+                "meanVoltage": 0.05253224233901098,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnL",
+                "meanVoltage": 0.04878462102838191,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnR",
+                "meanVoltage": 0.04718484074946828,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightL",
+                "meanVoltage": 0.051109675798281705,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightR",
+                "meanVoltage": 0.05092849172110028,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingL",
+                "meanVoltage": 0.041733343288906065,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingR",
+                "meanVoltage": 0.04850730303802652,
+                "spikeFraction": 0
+              },
+              {
+                "id": "taste",
+                "meanVoltage": 0.04722163058819109,
+                "spikeFraction": 0
+              },
+              {
+                "id": "feeding",
+                "meanVoltage": 0.053924481783834265,
+                "spikeFraction": 0
+              },
+              {
+                "id": "proboscis",
+                "meanVoltage": 0.05282635795576304,
+                "spikeFraction": 0
+              },
+              {
+                "id": "loom",
+                "meanVoltage": 0.04914301213603587,
+                "spikeFraction": 0
+              }
+            ]
+          },
+          "events": []
+        },
+        {
+          "id": 1,
+          "inputPose": {
+            "position": {
+              "x": 2.87946632280224,
+              "z": 6.6676711489727465
+            },
+            "heading": 1.2364998789124853
+          },
+          "body": {
+            "support": null,
+            "rotation": [
+              0,
+              0.16637099788651621,
+              0,
+              0.9860632287344685
+            ],
+            "height": 0,
+            "pose": {
+              "position": {
+                "x": 2.879663016879292,
+                "z": 6.668237448068716
+              },
+              "heading": 1.2364998789124853
+            },
+            "mode": "walking",
+            "reserve": 0,
+            "outcome": null
+          },
+          "sensory": {
+            "left": {
+              "attractiveOdor": 0.00004972127301395247,
+              "repellentOdor": 0,
+              "brightness": 2.75376083662944,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "right": {
+              "attractiveOdor": 0.00004985454570664369,
+              "repellentOdor": 0,
+              "brightness": 2.7539892198818006,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "wind": {
+              "x": 0,
+              "z": 0
+            },
+            "vision": {
+              "brightness": [
+                1.6179783724662034,
+                2.6005207137299067,
+                2.645499727749696,
+                1.7265673181349497,
+                1,
+                1,
+                1,
+                1
+              ],
+              "blocked": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "neural": {
+            "motor": {
+              "thrust": 0.04995715011406818,
+              "turn": 0,
+              "flightThrust": 0.09640750599592834,
+              "flightTurn": 0.003055815959568109
+            },
+            "spikeCount": 0,
+            "groups": [
+              {
+                "id": "odorExcL",
+                "meanVoltage": 0.050298335500689774,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorExcR",
+                "meanVoltage": 0.05397946876200044,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhL",
+                "meanVoltage": 0.05725621324705881,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhR",
+                "meanVoltage": 0.04336511938998877,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionL",
+                "meanVoltage": 0.04933456607141915,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionR",
+                "meanVoltage": 0.05128801231689701,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnL",
+                "meanVoltage": 0.05130402441728129,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnR",
+                "meanVoltage": 0.05300347850084708,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightL",
+                "meanVoltage": 0.04448060384323379,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightR",
+                "meanVoltage": 0.05059223576236999,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingL",
+                "meanVoltage": 0.053560235406061155,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingR",
+                "meanVoltage": 0.05556880750104249,
+                "spikeFraction": 0
+              },
+              {
+                "id": "taste",
+                "meanVoltage": 0.0523714144424034,
+                "spikeFraction": 0
+              },
+              {
+                "id": "feeding",
+                "meanVoltage": 0.051901139840927236,
+                "spikeFraction": 0
+              },
+              {
+                "id": "proboscis",
+                "meanVoltage": 0.06023748673786156,
+                "spikeFraction": 0
+              },
+              {
+                "id": "loom",
+                "meanVoltage": 0.04949433605224186,
+                "spikeFraction": 0
+              }
+            ]
+          },
+          "events": []
+        },
+        {
+          "id": 2,
+          "inputPose": {
+            "position": {
+              "x": 2.626237688087541,
+              "z": 6.675975967535907
+            },
+            "heading": 6.058878797260349
+          },
+          "body": {
+            "support": null,
+            "rotation": [
+              0,
+              0.7818381791765515,
+              0,
+              0.6234814043593397
+            ],
+            "height": 0.6,
+            "pose": {
+              "position": {
+                "x": 2.6283868964671657,
+                "z": 6.675485376174517
+              },
+              "heading": 6.058764350405434
+            },
+            "mode": "flying",
+            "reserve": 0,
+            "outcome": null
+          },
+          "sensory": {
+            "left": {
+              "attractiveOdor": 0.00010954688345335746,
+              "repellentOdor": 0,
+              "brightness": 2.835495555776029,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "right": {
+              "attractiveOdor": 0.00010975490887741896,
+              "repellentOdor": 0,
+              "brightness": 2.835743399716078,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "wind": {
+              "x": 0,
+              "z": 0
+            },
+            "vision": {
+              "brightness": [
+                1,
+                1.795357613206518,
+                2.7431941740438646,
+                2.66989122957608,
+                1.618388650510512,
+                1,
+                1,
+                1
+              ],
+              "blocked": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "neural": {
+            "motor": {
+              "thrust": 0.04968561252640439,
+              "turn": 0,
+              "flightThrust": 0.09185375361780623,
+              "flightTurn": -0.0001430585686449451
+            },
+            "spikeCount": 0,
+            "groups": [
+              {
+                "id": "odorExcL",
+                "meanVoltage": 0.05313016097721009,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorExcR",
+                "meanVoltage": 0.04929600112567203,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhL",
+                "meanVoltage": 0.05730403325003722,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhR",
+                "meanVoltage": 0.04504988939982827,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionL",
+                "meanVoltage": 0.04938802632714061,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionR",
+                "meanVoltage": 0.04886744655704611,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnL",
+                "meanVoltage": 0.05002598168348147,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnR",
+                "meanVoltage": 0.055765576698261016,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightL",
+                "meanVoltage": 0.044757260010988925,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightR",
+                "meanVoltage": 0.04447114287369904,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingL",
+                "meanVoltage": 0.04622924991700193,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingR",
+                "meanVoltage": 0.049834165170715136,
+                "spikeFraction": 0
+              },
+              {
+                "id": "taste",
+                "meanVoltage": 0.05401227961020939,
+                "spikeFraction": 0
+              },
+              {
+                "id": "feeding",
+                "meanVoltage": 0.04695209264243109,
+                "spikeFraction": 0
+              },
+              {
+                "id": "proboscis",
+                "meanVoltage": 0.04988976874216022,
+                "spikeFraction": 0
+              },
+              {
+                "id": "loom",
+                "meanVoltage": 0.05013632130393531,
+                "spikeFraction": 0
+              }
+            ]
+          },
+          "events": []
+        },
+        {
+          "id": 3,
+          "inputPose": {
+            "position": {
+              "x": 3.073622844839691,
+              "z": 6.772726884003054
+            },
+            "heading": 1.870377540541293
+          },
+          "body": {
+            "support": null,
+            "rotation": [
+              0,
+              -0.14743530350220885,
+              0,
+              0.9890717017897194
+            ],
+            "height": 0.6,
+            "pose": {
+              "position": {
+                "x": 3.0729821853370827,
+                "z": 6.77482807067857
+              },
+              "heading": 1.8667457959694194
+            },
+            "mode": "flying",
+            "reserve": 0,
+            "outcome": null
+          },
+          "sensory": {
+            "left": {
+              "attractiveOdor": 0.0000785838953424802,
+              "repellentOdor": 0,
+              "brightness": 2.667012019619307,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "right": {
+              "attractiveOdor": 0.00007874124919304512,
+              "repellentOdor": 0,
+              "brightness": 2.6672351022926266,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "wind": {
+              "x": 0,
+              "z": 0
+            },
+            "vision": {
+              "brightness": [
+                1.8916785135261125,
+                2.631512648289303,
+                2.4156288008678644,
+                1.370488801183993,
+                1,
+                1,
+                1,
+                1
+              ],
+              "blocked": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "neural": {
+            "motor": {
+              "thrust": 0.050033704983867784,
+              "turn": 0,
+              "flightThrust": 0.0915285896027416,
+              "flightTurn": -0.004539680714841978
+            },
+            "spikeCount": 0,
+            "groups": [
+              {
+                "id": "odorExcL",
+                "meanVoltage": 0.04675666356010053,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorExcR",
+                "meanVoltage": 0.04427737341678123,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhL",
+                "meanVoltage": 0.054442146575526935,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhR",
+                "meanVoltage": 0.045488628210527814,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionL",
+                "meanVoltage": 0.051061131364400776,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionR",
+                "meanVoltage": 0.050087502876075,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnL",
+                "meanVoltage": 0.04515722375498437,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnR",
+                "meanVoltage": 0.053361220098984675,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightL",
+                "meanVoltage": 0.04879297219533321,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightR",
+                "meanVoltage": 0.039713610765649256,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingL",
+                "meanVoltage": 0.05382193267992732,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingR",
+                "meanVoltage": 0.03246272302224383,
+                "spikeFraction": 0
+              },
+              {
+                "id": "taste",
+                "meanVoltage": 0.051366873127829914,
+                "spikeFraction": 0
+              },
+              {
+                "id": "feeding",
+                "meanVoltage": 0.041101443556128936,
+                "spikeFraction": 0
+              },
+              {
+                "id": "proboscis",
+                "meanVoltage": 0.048814512998066564,
+                "spikeFraction": 0
+              },
+              {
+                "id": "loom",
+                "meanVoltage": 0.05122651629930192,
+                "spikeFraction": 0
+              }
+            ]
+          },
+          "events": []
+        },
+        {
+          "id": 4,
+          "inputPose": {
+            "position": {
+              "x": 2.85889145722414,
+              "z": 6.709703655205475
+            },
+            "heading": 1.1106384971121368
+          },
+          "body": {
+            "support": null,
+            "rotation": [
+              0,
+              0.22985738374485779,
+              0,
+              0.9732243231331454
+            ],
+            "height": 0.6,
+            "pose": {
+              "position": {
+                "x": 2.8599404494651193,
+                "z": 6.7118005142257395
+              },
+              "heading": 1.106934046066058
+            },
+            "mode": "flying",
+            "reserve": 0,
+            "outcome": null
+          },
+          "sensory": {
+            "left": {
+              "attractiveOdor": 0.00008830103535973835,
+              "repellentOdor": 0,
+              "brightness": 2.7806835356835986,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "right": {
+              "attractiveOdor": 0.0000888370887668837,
+              "repellentOdor": 0,
+              "brightness": 2.780896872420211,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "wind": {
+              "x": 0,
+              "z": 0
+            },
+            "vision": {
+              "brightness": [
+                1.3086385503658358,
+                2.46198673285703,
+                2.758922915250107,
+                2.0255059090584937,
+                1,
+                1,
+                1,
+                1
+              ],
+              "blocked": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "neural": {
+            "motor": {
+              "thrust": 0.04952721753006481,
+              "turn": 0,
+              "flightThrust": 0.09769214038260912,
+              "flightTurn": -0.004630563807598437
+            },
+            "spikeCount": 0,
+            "groups": [
+              {
+                "id": "odorExcL",
+                "meanVoltage": 0.04804860271874906,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorExcR",
+                "meanVoltage": 0.043911937785992484,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhL",
+                "meanVoltage": 0.04312643009980575,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhR",
+                "meanVoltage": 0.034671274746671366,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionL",
+                "meanVoltage": 0.048785330119147506,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionR",
+                "meanVoltage": 0.04994291162945114,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnL",
+                "meanVoltage": 0.049343809894558534,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnR",
+                "meanVoltage": 0.050002328844344204,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightL",
+                "meanVoltage": 0.053047169287052644,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightR",
+                "meanVoltage": 0.04378604167185577,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingL",
+                "meanVoltage": 0.044440962136172074,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingR",
+                "meanVoltage": 0.049272523776938734,
+                "spikeFraction": 0
+              },
+              {
+                "id": "taste",
+                "meanVoltage": 0.0521608984581702,
+                "spikeFraction": 0
+              },
+              {
+                "id": "feeding",
+                "meanVoltage": 0.04670901883073254,
+                "spikeFraction": 0
+              },
+              {
+                "id": "proboscis",
+                "meanVoltage": 0.058914619457051204,
+                "spikeFraction": 0
+              },
+              {
+                "id": "loom",
+                "meanVoltage": 0.05074151381429404,
+                "spikeFraction": 0
+              }
+            ]
+          },
+          "events": []
+        },
+        {
+          "id": 5,
+          "inputPose": {
+            "position": {
+              "x": 2.7938634965689766,
+              "z": 6.731072931949964
+            },
+            "heading": 5.556159945323661
+          },
+          "body": {
+            "support": null,
+            "rotation": [
+              0,
+              0.9118884397350759,
+              0,
+              0.41043814817525043
+            ],
+            "height": 0.6,
+            "pose": {
+              "position": {
+                "x": 2.7956662735508138,
+                "z": 6.729475989749647
+              },
+              "heading": 5.55825796971777
+            },
+            "mode": "flying",
+            "reserve": 0,
+            "outcome": null
+          },
+          "sensory": {
+            "left": {
+              "attractiveOdor": 0.00016500351580256385,
+              "repellentOdor": 0,
+              "brightness": 2.8170262839712983,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "right": {
+              "attractiveOdor": 0.00016568279454265658,
+              "repellentOdor": 0,
+              "brightness": 2.816989450991831,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "wind": {
+              "x": 0,
+              "z": 0
+            },
+            "vision": {
+              "brightness": [
+                1,
+                1,
+                1,
+                2.2796714927459965,
+                2.8284792312112295,
+                2.3061886345504545,
+                1.0187504507876175,
+                1
+              ],
+              "blocked": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "neural": {
+            "motor": {
+              "thrust": 0.04955330448289706,
+              "turn": 0,
+              "flightThrust": 0.1003486045046707,
+              "flightTurn": 0.0026225304926361694
+            },
+            "spikeCount": 0,
+            "groups": [
+              {
+                "id": "odorExcL",
+                "meanVoltage": 0.05513902400322794,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorExcR",
+                "meanVoltage": 0.04659117848086411,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhL",
+                "meanVoltage": 0.05909009675615754,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhR",
+                "meanVoltage": 0.051314793079938116,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionL",
+                "meanVoltage": 0.051688168092264064,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionR",
+                "meanVoltage": 0.04943880247818511,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnL",
+                "meanVoltage": 0.04943057295378424,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnR",
+                "meanVoltage": 0.05359719224032783,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightL",
+                "meanVoltage": 0.047748512925383596,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightR",
+                "meanVoltage": 0.052993573910655935,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingL",
+                "meanVoltage": 0.04685647244060577,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingR",
+                "meanVoltage": 0.06949930245321434,
+                "spikeFraction": 0
+              },
+              {
+                "id": "taste",
+                "meanVoltage": 0.050483305546482025,
+                "spikeFraction": 0
+              },
+              {
+                "id": "feeding",
+                "meanVoltage": 0.05817568011097959,
+                "spikeFraction": 0
+              },
+              {
+                "id": "proboscis",
+                "meanVoltage": 0.04179314864155245,
+                "spikeFraction": 0
+              },
+              {
+                "id": "loom",
+                "meanVoltage": 0.05002521460906391,
+                "spikeFraction": 0
+              }
+            ]
+          },
+          "events": []
+        },
+        {
+          "id": 6,
+          "inputPose": {
+            "position": {
+              "x": 2.3299783861872645,
+              "z": 7.130926889665128
+            },
+            "heading": 3.7737734150869695
+          },
+          "body": {
+            "support": null,
+            "rotation": [
+              0,
+              0.8918815703110365,
+              0,
+              -0.4522690178859476
+            ],
+            "height": 0,
+            "pose": {
+              "position": {
+                "x": 2.329505397804462,
+                "z": 7.130580444534572
+              },
+              "heading": 3.7737734150869695
+            },
+            "mode": "walking",
+            "reserve": 0,
+            "outcome": null
+          },
+          "sensory": {
+            "left": {
+              "attractiveOdor": 0.005985407473967676,
+              "repellentOdor": 0,
+              "brightness": 2.7579635712414934,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "right": {
+              "attractiveOdor": 0.005967601952944417,
+              "repellentOdor": 0,
+              "brightness": 2.758225955514402,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "wind": {
+              "x": 0,
+              "z": 0
+            },
+            "vision": {
+              "brightness": [
+                1,
+                1.928017557422056,
+                2.7162593659766117,
+                2.4991397144919176,
+                1.4038443501499875,
+                1,
+                1,
+                1
+              ],
+              "blocked": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "neural": {
+            "motor": {
+              "thrust": 0.04885794592715593,
+              "turn": 0,
+              "flightThrust": 0.10322956786967392,
+              "flightTurn": 0.0004893468616107045
+            },
+            "spikeCount": 0,
+            "groups": [
+              {
+                "id": "odorExcL",
+                "meanVoltage": 0.0534067047364508,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorExcR",
+                "meanVoltage": 0.03788205531818766,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhL",
+                "meanVoltage": 0.05102395305774551,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhR",
+                "meanVoltage": 0.049688867035735475,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionL",
+                "meanVoltage": 0.04790897496201433,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionR",
+                "meanVoltage": 0.05208749493200865,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnL",
+                "meanVoltage": 0.050313991304993214,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnR",
+                "meanVoltage": 0.053034245867064914,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightL",
+                "meanVoltage": 0.05180620309836562,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightR",
+                "meanVoltage": 0.05278489682158703,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingL",
+                "meanVoltage": 0.0531198550544079,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingR",
+                "meanVoltage": 0.04747544693756269,
+                "spikeFraction": 0
+              },
+              {
+                "id": "taste",
+                "meanVoltage": 0.0488347385251179,
+                "spikeFraction": 0
+              },
+              {
+                "id": "feeding",
+                "meanVoltage": 0.05481760348097019,
+                "spikeFraction": 0
+              },
+              {
+                "id": "proboscis",
+                "meanVoltage": 0.04164034135013904,
+                "spikeFraction": 0
+              },
+              {
+                "id": "loom",
+                "meanVoltage": 0.053351488057735826,
+                "spikeFraction": 0
+              }
+            ]
+          },
+          "events": []
+        },
+        {
+          "id": 7,
+          "inputPose": {
+            "position": {
+              "x": 3.067484372167685,
+              "z": 6.829838728094639
+            },
+            "heading": 1.9977287912591408
+          },
+          "body": {
+            "support": null,
+            "rotation": [
+              0,
+              -0.2121432961612981,
+              0,
+              0.9772385695897495
+            ],
+            "height": 0.6,
+            "pose": {
+              "position": {
+                "x": 3.0664395126629254,
+                "z": 6.832131890545953
+              },
+              "heading": 1.9983316399320863
+            },
+            "mode": "flying",
+            "reserve": 0,
+            "outcome": null
+          },
+          "sensory": {
+            "left": {
+              "attractiveOdor": 0.00013179809256379785,
+              "repellentOdor": 0,
+              "brightness": 2.678948037715877,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "right": {
+              "attractiveOdor": 0.00013202827984700437,
+              "repellentOdor": 0,
+              "brightness": 2.679160457100866,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "wind": {
+              "x": 0,
+              "z": 0
+            },
+            "vision": {
+              "brightness": [
+                1.9175585143151972,
+                2.6480157865885077,
+                2.4130877620832343,
+                1.3503920913730478,
+                1,
+                1,
+                1,
+                1
+              ],
+              "blocked": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "neural": {
+            "motor": {
+              "thrust": 0.049399803731483394,
+              "turn": 0,
+              "flightThrust": 0.10499938337121911,
+              "flightTurn": 0.0007535608411818571
+            },
+            "spikeCount": 0,
+            "groups": [
+              {
+                "id": "odorExcL",
+                "meanVoltage": 0.058094930969894265,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorExcR",
+                "meanVoltage": 0.04091878586556772,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhL",
+                "meanVoltage": 0.051282947814371344,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhR",
+                "meanVoltage": 0.04761351273997529,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionL",
+                "meanVoltage": 0.05125754252061823,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionR",
+                "meanVoltage": 0.04926822576082307,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnL",
+                "meanVoltage": 0.042458016183242825,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnR",
+                "meanVoltage": 0.05144222032072062,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightL",
+                "meanVoltage": 0.05273362970260527,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightR",
+                "meanVoltage": 0.05424075138496899,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingL",
+                "meanVoltage": 0.03143795103136287,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingR",
+                "meanVoltage": 0.0546402311757344,
+                "spikeFraction": 0
+              },
+              {
+                "id": "taste",
+                "meanVoltage": 0.049627659055983944,
+                "spikeFraction": 0
+              },
+              {
+                "id": "feeding",
+                "meanVoltage": 0.04996195603743977,
+                "spikeFraction": 0
+              },
+              {
+                "id": "proboscis",
+                "meanVoltage": 0.048635749151269364,
+                "spikeFraction": 0
+              },
+              {
+                "id": "loom",
+                "meanVoltage": 0.047031340826554725,
+                "spikeFraction": 0
+              }
+            ]
+          },
+          "events": []
+        },
+        {
+          "id": 8,
+          "inputPose": {
+            "position": {
+              "x": 2.6219296207310085,
+              "z": 7.0053632778969925
+            },
+            "heading": 6.042104299568234
+          },
+          "body": {
+            "support": null,
+            "rotation": [
+              0,
+              0.7870046096052066,
+              0,
+              0.6169471164209751
+            ],
+            "height": 0,
+            "pose": {
+              "position": {
+                "x": 2.6225079464384193,
+                "z": 7.00522108914733
+              },
+              "heading": 6.042104299568234
+            },
+            "mode": "walking",
+            "reserve": 0,
+            "outcome": null
+          },
+          "sensory": {
+            "left": {
+              "attractiveOdor": 0.002726950934408615,
+              "repellentOdor": 0,
+              "brightness": 2.890141273243538,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "right": {
+              "attractiveOdor": 0.0027336063046080822,
+              "repellentOdor": 0,
+              "brightness": 2.8899795719150267,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "wind": {
+              "x": 0,
+              "z": 0
+            },
+            "vision": {
+              "brightness": [
+                1.0691654824327512,
+                1,
+                1,
+                1,
+                1,
+                2.3136956232268293,
+                2.927011649630308,
+                2.4115103865313037
+              ],
+              "blocked": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "neural": {
+            "motor": {
+              "thrust": 0.04962905905472307,
+              "turn": 0,
+              "flightThrust": 0.09390461356368056,
+              "flightTurn": -0.0021432370020819276
+            },
+            "spikeCount": 0,
+            "groups": [
+              {
+                "id": "odorExcL",
+                "meanVoltage": 0.047233818305653825,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorExcR",
+                "meanVoltage": 0.04913509909757328,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhL",
+                "meanVoltage": 0.06145773432495231,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhR",
+                "meanVoltage": 0.049112456328821115,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionL",
+                "meanVoltage": 0.05014142033830382,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionR",
+                "meanVoltage": 0.050411394875957236,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnL",
+                "meanVoltage": 0.05177195075813313,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnR",
+                "meanVoltage": 0.05341158052610723,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightL",
+                "meanVoltage": 0.048066319523819935,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightR",
+                "meanVoltage": 0.043779845519656066,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingL",
+                "meanVoltage": 0.06709190980812707,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingR",
+                "meanVoltage": 0.04488367903792427,
+                "spikeFraction": 0
+              },
+              {
+                "id": "taste",
+                "meanVoltage": 0.04716310257821539,
+                "spikeFraction": 0
+              },
+              {
+                "id": "feeding",
+                "meanVoltage": 0.04971876754940273,
+                "spikeFraction": 0
+              },
+              {
+                "id": "proboscis",
+                "meanVoltage": 0.054846824491005766,
+                "spikeFraction": 0
+              },
+              {
+                "id": "loom",
+                "meanVoltage": 0.048768326476694726,
+                "spikeFraction": 0
+              }
+            ]
+          },
+          "events": []
+        },
+        {
+          "id": 9,
+          "inputPose": {
+            "position": {
+              "x": 2.7313002809735387,
+              "z": 6.743467182810003
+            },
+            "heading": 3.3458913316307326
+          },
+          "body": {
+            "support": null,
+            "rotation": [
+              0,
+              0.7755257806581471,
+              0,
+              -0.6313158983698822
+            ],
+            "height": 0,
+            "pose": {
+              "position": {
+                "x": 2.730706150002504,
+                "z": 6.743344085240219
+              },
+              "heading": 3.3458913316307326
+            },
+            "mode": "walking",
+            "reserve": 0,
+            "outcome": null
+          },
+          "sensory": {
+            "left": {
+              "attractiveOdor": 0.0002426285794481203,
+              "repellentOdor": 0,
+              "brightness": 2.8538023538829083,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "right": {
+              "attractiveOdor": 0.00024129900545787533,
+              "repellentOdor": 0,
+              "brightness": 2.8536105907334424,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "wind": {
+              "x": 0,
+              "z": 0
+            },
+            "vision": {
+              "brightness": [
+                1.8831613052484775,
+                1,
+                1,
+                1,
+                1,
+                1.5360608360688528,
+                2.6412658098741097,
+                2.785039531714375
+              ],
+              "blocked": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "neural": {
+            "motor": {
+              "thrust": 0.050562435443539694,
+              "turn": 0,
+              "flightThrust": 0.10017653574730459,
+              "flightTurn": 0.0006773183536409426
+            },
+            "spikeCount": 0,
+            "groups": [
+              {
+                "id": "odorExcL",
+                "meanVoltage": 0.04776562676835936,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorExcR",
+                "meanVoltage": 0.041987141072382925,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhL",
+                "meanVoltage": 0.05987110916609312,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhR",
+                "meanVoltage": 0.024597335039606805,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionL",
+                "meanVoltage": 0.0488598089922331,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionR",
+                "meanVoltage": 0.04894872870467433,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnL",
+                "meanVoltage": 0.05109279150001998,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnR",
+                "meanVoltage": 0.05306098283595818,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightL",
+                "meanVoltage": 0.04919553333308604,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightR",
+                "meanVoltage": 0.050550170040367916,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingL",
+                "meanVoltage": 0.05279295137017709,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingR",
+                "meanVoltage": 0.0495645286982585,
+                "spikeFraction": 0
+              },
+              {
+                "id": "taste",
+                "meanVoltage": 0.046166473972435604,
+                "spikeFraction": 0
+              },
+              {
+                "id": "feeding",
+                "meanVoltage": 0.05396841812306112,
+                "spikeFraction": 0
+              },
+              {
+                "id": "proboscis",
+                "meanVoltage": 0.04876323677190508,
+                "spikeFraction": 0
+              },
+              {
+                "id": "loom",
+                "meanVoltage": 0.049497607106305956,
+                "spikeFraction": 0
+              }
+            ]
+          },
+          "events": []
+        },
+        {
+          "id": 10,
+          "inputPose": {
+            "position": {
+              "x": 2.302705571239734,
+              "z": 7.0744720693867365
+            },
+            "heading": 1.3094842976632757
+          },
+          "body": {
+            "support": null,
+            "rotation": [
+              0,
+              0.1309338195833678,
+              0,
+              0.9913911109593985
+            ],
+            "height": 0.6,
+            "pose": {
+              "position": {
+                "x": 2.3033850534281766,
+                "z": 7.076999615877453
+              },
+              "heading": 1.3081746271893013
+            },
+            "mode": "flying",
+            "reserve": 0,
+            "outcome": null
+          },
+          "sensory": {
+            "left": {
+              "attractiveOdor": 0.003683423997887537,
+              "repellentOdor": 0,
+              "brightness": 2.7660915705975566,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "right": {
+              "attractiveOdor": 0.0036835615013536267,
+              "repellentOdor": 0,
+              "brightness": 2.765882018510692,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "wind": {
+              "x": 0,
+              "z": 0
+            },
+            "vision": {
+              "brightness": [
+                1,
+                1,
+                1,
+                1,
+                1.471132947539448,
+                2.539710800182717,
+                2.706346948211281,
+                1.8734281960916177
+              ],
+              "blocked": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "neural": {
+            "motor": {
+              "thrust": 0.049889360051974654,
+              "turn": 0,
+              "flightThrust": 0.10905359369191853,
+              "flightTurn": -0.0016370880924679032
+            },
+            "spikeCount": 0,
+            "groups": [
+              {
+                "id": "odorExcL",
+                "meanVoltage": 0.045077558396320036,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorExcR",
+                "meanVoltage": 0.06085206291043869,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhL",
+                "meanVoltage": 0.0492440344210466,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhR",
+                "meanVoltage": 0.051864694372296495,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionL",
+                "meanVoltage": 0.049912418500769676,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionR",
+                "meanVoltage": 0.05099846037175816,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnL",
+                "meanVoltage": 0.050030328918344316,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnR",
+                "meanVoltage": 0.0539083118359625,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightL",
+                "meanVoltage": 0.0576550519721755,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightR",
+                "meanVoltage": 0.05438087578723971,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingL",
+                "meanVoltage": 0.042754853356229486,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingR",
+                "meanVoltage": 0.05459389593885236,
+                "spikeFraction": 0
+              },
+              {
+                "id": "taste",
+                "meanVoltage": 0.05167152912236773,
+                "spikeFraction": 0
+              },
+              {
+                "id": "feeding",
+                "meanVoltage": 0.051801800049029754,
+                "spikeFraction": 0
+              },
+              {
+                "id": "proboscis",
+                "meanVoltage": 0.06468989949727766,
+                "spikeFraction": 0
+              },
+              {
+                "id": "loom",
+                "meanVoltage": 0.04914181251792964,
+                "spikeFraction": 0
+              }
+            ]
+          },
+          "events": []
+        },
+        {
+          "id": 11,
+          "inputPose": {
+            "position": {
+              "x": 2.8280157056993915,
+              "z": 6.991044158820749
+            },
+            "heading": 4.3393231682866125
+          },
+          "body": {
+            "support": null,
+            "rotation": [
+              0,
+              0.9826531231346725,
+              0,
+              -0.18545306574353065
+            ],
+            "height": 0,
+            "pose": {
+              "position": {
+                "x": 2.827796250295982,
+                "z": 6.990483457378582
+              },
+              "heading": 4.3393231682866125
+            },
+            "mode": "walking",
+            "reserve": 0,
+            "outcome": null
+          },
+          "sensory": {
+            "left": {
+              "attractiveOdor": 0.0016427362750196725,
+              "repellentOdor": 0,
+              "brightness": 2.823472968237888,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "right": {
+              "attractiveOdor": 0.0016391257678194683,
+              "repellentOdor": 0,
+              "brightness": 2.823298511808808,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "wind": {
+              "x": 0,
+              "z": 0
+            },
+            "vision": {
+              "brightness": [
+                2.255677160459676,
+                1,
+                1,
+                1,
+                1,
+                1.0595580636720754,
+                2.3399049818534055,
+                2.8353537339562864
+              ],
+              "blocked": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "neural": {
+            "motor": {
+              "thrust": 0.05017654812241901,
+              "turn": 0,
+              "flightThrust": 0.09650022445664178,
+              "flightTurn": -0.0042774173122836455
+            },
+            "spikeCount": 0,
+            "groups": [
+              {
+                "id": "odorExcL",
+                "meanVoltage": 0.04848562548326672,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorExcR",
+                "meanVoltage": 0.05377601730714458,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhL",
+                "meanVoltage": 0.04856381078188834,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhR",
+                "meanVoltage": 0.04992674216253328,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionL",
+                "meanVoltage": 0.051849579056757626,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionR",
+                "meanVoltage": 0.04828977851707831,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnL",
+                "meanVoltage": 0.0528335753889185,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnR",
+                "meanVoltage": 0.053117423494904656,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightL",
+                "meanVoltage": 0.05215559830211579,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightR",
+                "meanVoltage": 0.04360076367754851,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingL",
+                "meanVoltage": 0.05811234548210814,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingR",
+                "meanVoltage": 0.04822650310079371,
+                "spikeFraction": 0
+              },
+              {
+                "id": "taste",
+                "meanVoltage": 0.05278800059093153,
+                "spikeFraction": 0
+              },
+              {
+                "id": "feeding",
+                "meanVoltage": 0.05318667282750763,
+                "spikeFraction": 0
+              },
+              {
+                "id": "proboscis",
+                "meanVoltage": 0.053812750550304544,
+                "spikeFraction": 0
+              },
+              {
+                "id": "loom",
+                "meanVoltage": 0.05057894918118873,
+                "spikeFraction": 0
+              }
+            ]
+          },
+          "events": []
+        },
+        {
+          "id": 12,
+          "inputPose": {
+            "position": {
+              "x": 3.0001851918619176,
+              "z": 6.594789835260458
+            },
+            "heading": 6.193242568944677
+          },
+          "body": {
+            "support": null,
+            "rotation": [
+              0,
+              0.7384998616363012,
+              0,
+              0.6742536276232883
+            ],
+            "height": 0.6,
+            "pose": {
+              "position": {
+                "x": 3.0026689059931866,
+                "z": 6.594563468859239
+              },
+              "heading": 6.192296130722157
+            },
+            "mode": "flying",
+            "reserve": 0,
+            "outcome": null
+          },
+          "sensory": {
+            "left": {
+              "attractiveOdor": 0.00001599529745923281,
+              "repellentOdor": 0,
+              "brightness": 2.6570453847893774,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "right": {
+              "attractiveOdor": 0.00001605292008126682,
+              "repellentOdor": 0,
+              "brightness": 2.6571876847055393,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "wind": {
+              "x": 0,
+              "z": 0
+            },
+            "vision": {
+              "brightness": [
+                1,
+                1,
+                1.8864276754153666,
+                2.6229707204681008,
+                2.408799528805055,
+                1.3693726798328334,
+                1,
+                1
+              ],
+              "blocked": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "neural": {
+            "motor": {
+              "thrust": 0.050436929497495134,
+              "turn": 0,
+              "flightThrust": 0.10391701444630669,
+              "flightTurn": -0.0011830477781495166
+            },
+            "spikeCount": 0,
+            "groups": [
+              {
+                "id": "odorExcL",
+                "meanVoltage": 0.05200264055481402,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorExcR",
+                "meanVoltage": 0.04733929455872464,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhL",
+                "meanVoltage": 0.038351536364689326,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhR",
+                "meanVoltage": 0.05341213178815304,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionL",
+                "meanVoltage": 0.05039590030277838,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionR",
+                "meanVoltage": 0.05345616873904168,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnL",
+                "meanVoltage": 0.05007536941068408,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnR",
+                "meanVoltage": 0.04698502613378697,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightL",
+                "meanVoltage": 0.053606312450944237,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightR",
+                "meanVoltage": 0.051240216894645196,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingL",
+                "meanVoltage": 0.047630443881714626,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingR",
+                "meanVoltage": 0.060830501875545395,
+                "spikeFraction": 0
+              },
+              {
+                "id": "taste",
+                "meanVoltage": 0.04623450724036175,
+                "spikeFraction": 0
+              },
+              {
+                "id": "feeding",
+                "meanVoltage": 0.05291821422936908,
+                "spikeFraction": 0
+              },
+              {
+                "id": "proboscis",
+                "meanVoltage": 0.060411797602122085,
+                "spikeFraction": 0
+              },
+              {
+                "id": "loom",
+                "meanVoltage": 0.04873510990193071,
+                "spikeFraction": 0
+              }
+            ]
+          },
+          "events": []
+        },
+        {
+          "id": 13,
+          "inputPose": {
+            "position": {
+              "x": 2.472269555813208,
+              "z": 6.7692330934653775
+            },
+            "heading": 4.426059632892876
+          },
+          "body": {
+            "support": null,
+            "rotation": [
+              0,
+              0.9897694299367907,
+              0,
+              -0.1426761212067403
+            ],
+            "height": 0,
+            "pose": {
+              "position": {
+                "x": 2.4720987152984826,
+                "z": 6.768652831470631
+              },
+              "heading": 4.426059632892876
+            },
+            "mode": "walking",
+            "reserve": 0,
+            "outcome": null
+          },
+          "sensory": {
+            "left": {
+              "attractiveOdor": 0.00042108749193262864,
+              "repellentOdor": 0,
+              "brightness": 2.863967193722772,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "right": {
+              "attractiveOdor": 0.0004207827403430614,
+              "repellentOdor": 0,
+              "brightness": 2.8641281702713948,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "wind": {
+              "x": 0,
+              "z": 0
+            },
+            "vision": {
+              "brightness": [
+                1,
+                1,
+                1.879459132390204,
+                2.7953155630784536,
+                2.6595004856548345,
+                1.5515725304993517,
+                1,
+                1
+              ],
+              "blocked": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "neural": {
+            "motor": {
+              "thrust": 0.050407400251605616,
+              "turn": 0,
+              "flightThrust": 0.10242332833524212,
+              "flightTurn": 0.0008695617248978618
+            },
+            "spikeCount": 0,
+            "groups": [
+              {
+                "id": "odorExcL",
+                "meanVoltage": 0.053340733248204694,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorExcR",
+                "meanVoltage": 0.05041139339111257,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhL",
+                "meanVoltage": 0.042693362034548606,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhR",
+                "meanVoltage": 0.04172263608630004,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionL",
+                "meanVoltage": 0.04947579705297692,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionR",
+                "meanVoltage": 0.04834160394906976,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnL",
+                "meanVoltage": 0.053889569245246974,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnR",
+                "meanVoltage": 0.05561603829772327,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightL",
+                "meanVoltage": 0.05047030078205984,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightR",
+                "meanVoltage": 0.052209424231855574,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingL",
+                "meanVoltage": 0.053927065536943715,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingR",
+                "meanVoltage": 0.057514910601474734,
+                "spikeFraction": 0
+              },
+              {
+                "id": "taste",
+                "meanVoltage": 0.05447504669239865,
+                "spikeFraction": 0
+              },
+              {
+                "id": "feeding",
+                "meanVoltage": 0.06201133517832812,
+                "spikeFraction": 0
+              },
+              {
+                "id": "proboscis",
+                "meanVoltage": 0.061175024093642054,
+                "spikeFraction": 0
+              },
+              {
+                "id": "loom",
+                "meanVoltage": 0.04850302548502828,
+                "spikeFraction": 0
+              }
+            ]
+          },
+          "events": []
+        },
+        {
+          "id": 14,
+          "inputPose": {
+            "position": {
+              "x": 2.6612019369685163,
+              "z": 6.728577919692594
+            },
+            "heading": 4.686083808328546
+          },
+          "body": {
+            "support": null,
+            "rotation": [
+              0,
+              0.9999230512758854,
+              0,
+              -0.01240530237934762
+            ],
+            "height": 0.6,
+            "pose": {
+              "position": {
+                "x": 2.661135986497941,
+                "z": 6.7259203768228275
+              },
+              "heading": 4.687577739224946
+            },
+            "mode": "flying",
+            "reserve": 0,
+            "outcome": null
+          },
+          "sensory": {
+            "left": {
+              "attractiveOdor": 0.0002160873414719738,
+              "repellentOdor": 0,
+              "brightness": 2.8621231341713007,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "right": {
+              "attractiveOdor": 0.0002159388450637759,
+              "repellentOdor": 0,
+              "brightness": 2.862118754420131,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "wind": {
+              "x": 0,
+              "z": 0
+            },
+            "vision": {
+              "brightness": [
+                1,
+                1,
+                1,
+                1.7594715192097734,
+                2.752046363555512,
+                2.718296210036894,
+                1.677991440852952,
+                1
+              ],
+              "blocked": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "neural": {
+            "motor": {
+              "thrust": 0.05000181540864441,
+              "turn": 0,
+              "flightThrust": 0.11076504451063643,
+              "flightTurn": 0.0018674136204996812
+            },
+            "spikeCount": 0,
+            "groups": [
+              {
+                "id": "odorExcL",
+                "meanVoltage": 0.054902062274388354,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorExcR",
+                "meanVoltage": 0.04786436512861773,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhL",
+                "meanVoltage": 0.04331748024584595,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhR",
+                "meanVoltage": 0.05368214519584152,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionL",
+                "meanVoltage": 0.05004874853407221,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionR",
+                "meanVoltage": 0.04961327528032384,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnL",
+                "meanVoltage": 0.046603570275740476,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnR",
+                "meanVoltage": 0.047588787878615646,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightL",
+                "meanVoltage": 0.05511624087254746,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightR",
+                "meanVoltage": 0.05885106811354682,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingL",
+                "meanVoltage": 0.04379119667141032,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingR",
+                "meanVoltage": 0.049906129272777294,
+                "spikeFraction": 0
+              },
+              {
+                "id": "taste",
+                "meanVoltage": 0.04385351926848297,
+                "spikeFraction": 0
+              },
+              {
+                "id": "feeding",
+                "meanVoltage": 0.05648770354154865,
+                "spikeFraction": 0
+              },
+              {
+                "id": "proboscis",
+                "meanVoltage": 0.04288481234200914,
+                "spikeFraction": 0
+              },
+              {
+                "id": "loom",
+                "meanVoltage": 0.049800567747188176,
+                "spikeFraction": 0
+              }
+            ]
+          },
+          "events": []
+        },
+        {
+          "id": 15,
+          "inputPose": {
+            "position": {
+              "x": 2.348030979263474,
+              "z": 6.992209696048124
+            },
+            "heading": 5.430066509258589
+          },
+          "body": {
+            "support": null,
+            "rotation": [
+              0,
+              0.9363052659402197,
+              0,
+              0.3511871993290966
+            ],
+            "height": 0,
+            "pose": {
+              "position": {
+                "x": 2.348426132822881,
+                "z": 6.991757040379799
+              },
+              "heading": 5.430066509258589
+            },
+            "mode": "walking",
+            "reserve": 0,
+            "outcome": null
+          },
+          "sensory": {
+            "left": {
+              "attractiveOdor": 0.002412062950923495,
+              "repellentOdor": 0,
+              "brightness": 2.809500573218645,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "right": {
+              "attractiveOdor": 0.002417399089282311,
+              "repellentOdor": 0,
+              "brightness": 2.809607060788126,
+              "shade": 0,
+              "exitCue": 0
+            },
+            "wind": {
+              "x": 0,
+              "z": 0
+            },
+            "vision": {
+              "brightness": [
+                2.596175687903719,
+                2.748635230055067,
+                1.876767970083554,
+                1,
+                1,
+                1,
+                1,
+                1.508698075708577
+              ],
+              "blocked": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "neural": {
+            "motor": {
+              "thrust": 0.050072412118926636,
+              "turn": 0,
+              "flightThrust": 0.10453340912576867,
+              "flightTurn": -0.0007999734034992295
+            },
+            "spikeCount": 0,
+            "groups": [
+              {
+                "id": "odorExcL",
+                "meanVoltage": 0.05688829408627757,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorExcR",
+                "meanVoltage": 0.049689621486080124,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhL",
+                "meanVoltage": 0.039124263756636087,
+                "spikeFraction": 0
+              },
+              {
+                "id": "odorInhR",
+                "meanVoltage": 0.061144675015293644,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionL",
+                "meanVoltage": 0.05193612729061506,
+                "spikeFraction": 0
+              },
+              {
+                "id": "visionR",
+                "meanVoltage": 0.04845892473882656,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnL",
+                "meanVoltage": 0.05648794631908321,
+                "spikeFraction": 0
+              },
+              {
+                "id": "turnR",
+                "meanVoltage": 0.05005589218470338,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightL",
+                "meanVoltage": 0.05390575355422529,
+                "spikeFraction": 0
+              },
+              {
+                "id": "flightR",
+                "meanVoltage": 0.05230580674722685,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingL",
+                "meanVoltage": 0.05431021986418263,
+                "spikeFraction": 0
+              },
+              {
+                "id": "landingR",
+                "meanVoltage": 0.044372447953941935,
+                "spikeFraction": 0
+              },
+              {
+                "id": "taste",
+                "meanVoltage": 0.051065811985683114,
+                "spikeFraction": 0
+              },
+              {
+                "id": "feeding",
+                "meanVoltage": 0.05367675804459983,
+                "spikeFraction": 0
+              },
+              {
+                "id": "proboscis",
+                "meanVoltage": 0.06245942252124302,
+                "spikeFraction": 0
+              },
+              {
+                "id": "loom",
+                "meanVoltage": 0.04971818271830644,
+                "spikeFraction": 0
+              }
+            ]
+          },
+          "events": []
+        }
+      ],
+      "result": null
+    },
+    "computedTick": 30
+  },
+  "playbackOrigin": "http://127.0.0.1:5194",
+  "playing": {
+    "spec": {
+      "schemaVersion": 1,
+      "attemptId": "fd8f4531-23de-42d1-bb7c-8a76df5a02d4",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "458f8e27d389e2b0f6a706009a49b661f19a6515c8742ef8ff4084efe98a8db3",
+      "simulationBuildId": "1c07f2fbbddba72ac39d5e3c5015b184565ec80f2a4c70c95c38bec7d716fc99",
+      "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb",
+      "placements": [],
+      "levelHash": "0e05f55e97828d08f6daf665a3d203ca3a6c5e471a08a69fb2e0b7a9116792d0",
+      "levelId": "open-window",
+      "rootSeed": "12457747995915979443",
+      "flyCount": 16,
+      "durationTicks": 6000
+    },
+    "initialBodies": [
+      {
+        "pose": {
+          "position": {
+            "x": 2.567295794809844,
+            "z": 6.961998645410848
+          },
+          "heading": 3.7725981391448826
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.8916156458867488,
+          0,
+          -0.4527930432437713
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.0478843194729874,
+            "z": 6.620945263076914
+          },
+          "heading": 3.4645430552904823
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.8115928206974412,
+          0,
+          -0.5842234960974876
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.798466133375973,
+            "z": 6.7155682070563945
+          },
+          "heading": 1.298717174657717
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.13562035540495146,
+          0,
+          0.9907608789207588
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.8633798026078,
+            "z": 7.140714217625342
+          },
+          "heading": 4.844715813675233
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9978119995058098,
+          0,
+          0.06611515440667022
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.02614859265878,
+            "z": 7.013894402551612
+          },
+          "heading": 0.30682342338025237
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.5907487021307035,
+          0,
+          0.8068556072376827
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.998992152042274,
+            "z": 6.67375187103376
+          },
+          "heading": 1.8268764073747406
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          -0.12769047351127716,
+          0,
+          0.9918140667355276
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.3380880916029154,
+            "z": 6.567823611472552
+          },
+          "heading": 5.88730593252153
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.8323519987678811,
+          0,
+          0.554247372702039
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.578894179479712,
+            "z": 6.623844395149576
+          },
+          "heading": 0.973443164945775
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.29425563770459856,
+          0,
+          0.9557267494838994
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.5007166912457746,
+            "z": 7.0039521266560305
+          },
+          "heading": 1.0912816475990332
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.2374669141674769,
+          0,
+          0.9713956272681982
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.882459790908105,
+            "z": 6.573993699383462
+          },
+          "heading": 1.8320226404275883
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          -0.13024210114685011,
+          0,
+          0.991482221267156
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.6932049204538635,
+            "z": 6.855577590382173
+          },
+          "heading": 2.5459069798483798
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          -0.46846746825541136,
+          0,
+          0.883480747490496
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.056461883346964,
+            "z": 6.950986356869718
+          },
+          "heading": 3.7259818672614475
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.8808206569490529,
+          0,
+          -0.4734500715934458
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.2566262557708443,
+            "z": 6.970956886528075
+          },
+          "heading": 2.272023141093276
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          -0.34347396084633947,
+          0,
+          0.939162200165939
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.399127021600988,
+            "z": 7.066162921138871
+          },
+          "heading": 6.240346840224556
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.7220891100714468,
+          0,
+          0.6918000557359231
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.0722484717138294,
+            "z": 6.965120934977077
+          },
+          "heading": 5.04035504986084
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9865848841464278,
+          0,
+          0.1632490930259022
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.737686477226651,
+            "z": 6.601290768723587
+          },
+          "heading": 0.19911602902733722
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.6333234154516815,
+          0,
+          0.773887234318164
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      }
+    ],
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+    "viewport": [
+      1440,
+      900
+    ],
+    "devicePixelRatio": 1,
+    "cursorTick": 30.165,
+    "sampleTick": 30,
+    "computedTick": 120,
+    "state": "playing",
+    "mode": "realTime",
+    "speed": 1,
+    "fastMultiplier": 10,
+    "complete": false,
+    "initialWaitMs": 1175.3999999761581,
+    "warmWaitMs": 882.5,
+    "startup": {
+      "attemptReadyMs": 292.89999997615814,
+      "firstChunkMs": 848.7999999523163,
+      "assetsReadyMs": 302.6999999284744,
+      "firstPlaybackMs": 1175.3999999761581
+    },
+    "productionMs": 3731.399999856949,
+    "activeNeuralSteps": 1920,
+    "activeEquivalentProductionRate": 3.215951117666304,
+    "underruns": 0,
+    "frameIntervals": {
+      "count": 172,
+      "p95Ms": 34,
+      "p95Capped": false,
+      "maxMs": 449.9000000000001,
+      "histogramResolutionMs": 1
+    },
+    "interactions": {
+      "count": 0,
+      "p95Ms": null,
+      "p95Capped": false,
+      "maxMs": 0,
+      "histogramResolutionMs": 1,
+      "measurement": "control callback to synchronous scene render completion; excludes browser paint"
+    },
+    "memory": {
+      "wasmBytes": 89980928,
+      "archiveOwnedChunkBytes": 2122096,
+      "archiveBoundBytes": 134217728,
+      "graphBytes": 9864584,
+      "brainStateBytes": 51520000,
+      "observedJSHeapBytes": 364596782,
+      "note": "WASM includes graph and brain state; do not add those again. Download report includes an on-demand GPU memory estimate."
+    },
+    "renderer": {
+      "flyCount": 16,
+      "modelKind": "glb",
+      "drawCalls": 2015,
+      "triangles": 4487372,
+      "geometries": 357,
+      "textures": 29
+    },
+    "camera": {
+      "near": 0.1,
+      "far": 66.61252042167926,
+      "fov": 38,
+      "following": false,
+      "distance": 20.745148090393798,
+      "minDistance": 0.023551270405206073,
+      "maxDistance": 20.745148090393798,
+      "closeDistance": 0.047102540810412145,
+      "target": [
+        4.2,
+        0.5,
+        4.6
+      ],
+      "yaw": 0.7853981633974483,
+      "elevation": 0.9048518739413057,
+      "rotated": false,
+      "width": 1440,
+      "height": 900,
+      "selectedFlyId": null,
+      "displayScale": 65.25307943475492,
+      "flies": [
+        {
+          "id": 0,
+          "worldPosition": [
+            1.9955166334129972,
+            0.6,
+            6.550370949180161
+          ],
+          "recordedPosition": [
+            1.9955166334129972,
+            0.6,
+            6.550370949180161
+          ],
+          "displayScale": 65.25307943475492,
+          "x": 365.79397537695854,
+          "y": 434.90852361360675,
+          "visible": true
+        },
+        {
+          "id": 1,
+          "worldPosition": [
+            2.3899812896382335,
+            0.6,
+            6.304649890483849
+          ],
+          "recordedPosition": [
+            2.3899812896382335,
+            0.6,
+            6.304649890483849
+          ],
+          "displayScale": 65.25307943475492,
+          "x": 393.8381777060923,
+          "y": 440.0911468494109,
+          "visible": true
+        },
+        {
+          "id": 2,
+          "worldPosition": [
+            3.0729417371199435,
+            0.6,
+            7.390279515978921
+          ],
+          "recordedPosition": [
+            3.0729417371199435,
+            0.6,
+            7.390279515978921
+          ],
+          "displayScale": 65.25307943475492,
+          "x": 369.02944668119693,
+          "y": 504.30804512266985,
+          "visible": true
+        },
+        {
+          "id": 3,
+          "worldPosition": [
+            2.9507518406384365,
+            0.6,
+            6.408273831667195
+          ],
+          "recordedPosition": [
+            2.9507518406384365,
+            0.6,
+            6.408273831667195
+          ],
+          "displayScale": 65.25307943475492,
+          "x": 412.33245620647244,
+          "y": 463.6439880726182,
+          "visible": true
+        },
+        {
+          "id": 4,
+          "worldPosition": [
+            3.723485801437609,
+            0.6,
+            7.233046491505408
+          ],
+          "recordedPosition": [
+            3.723485801437609,
+            0.6,
+            7.233046491505408
+          ],
+          "displayScale": 65.25307943475492,
+          "x": 404.9708985011477,
+          "y": 523.119426051332,
+          "visible": true
+        },
+        {
+          "id": 5,
+          "worldPosition": [
+            2.711924624340412,
+            0.6,
+            7.33811560283488
+          ],
+          "recordedPosition": [
+            2.711924624340412,
+            0.6,
+            7.33811560283488
+          ],
+          "displayScale": 65.25307943475492,
+          "x": 356.44761758263525,
+          "y": 488.8630679022752,
+          "visible": true
+        },
+        {
+          "id": 6,
+          "worldPosition": [
+            3.0387025357525936,
+            0.6,
+            6.335715557879868
+          ],
+          "recordedPosition": [
+            3.0387025357525936,
+            0.6,
+            6.335715557879868
+          ],
+          "displayScale": 65.25307943475492,
+          "x": 419.5686332499815,
+          "y": 464.19760597548685,
+          "visible": true
+        },
+        {
+          "id": 7,
+          "worldPosition": [
+            2.880339904383423,
+            0.6,
+            7.268891069386475
+          ],
+          "recordedPosition": [
+            2.880339904383423,
+            0.6,
+            7.268891069386475
+          ],
+          "displayScale": 65.25307943475492,
+          "x": 366.99014924847927,
+          "y": 492.5454925807173,
+          "visible": true
+        },
+        {
+          "id": 8,
+          "worldPosition": [
+            2.785841277560195,
+            0.6,
+            7.677315874009098
+          ],
+          "recordedPosition": [
+            2.785841277560195,
+            0.6,
+            7.677315874009098
+          ],
+          "displayScale": 65.25307943475492,
+          "x": 342.35958827178683,
+          "y": 504.30562722819,
+          "visible": true
+        },
+        {
+          "id": 9,
+          "worldPosition": [
+            2.6243734175866695,
+            0.6,
+            7.2394229995938595
+          ],
+          "recordedPosition": [
+            2.6243734175866695,
+            0.6,
+            7.2394229995938595
+          ],
+          "displayScale": 65.25307943475492,
+          "x": 357.7437808576024,
+          "y": 481.9916012008976,
+          "visible": true
+        },
+        {
+          "id": 10,
+          "worldPosition": [
+            2.1091259221135807,
+            0.6,
+            7.2876570126701825
+          ],
+          "recordedPosition": [
+            2.1091259221135807,
+            0.6,
+            7.2876570126701825
+          ],
+          "displayScale": 65.25307943475492,
+          "x": 334.1040955814576,
+          "y": 465.0026519876242,
+          "visible": true
+        },
+        {
+          "id": 11,
+          "worldPosition": [
+            2.4289046663274414,
+            0.6,
+            6.580256053170286
+          ],
+          "recordedPosition": [
+            2.4289046663274414,
+            0.6,
+            6.580256053170286
+          ],
+          "displayScale": 65.25307943475492,
+          "x": 382.1319339574607,
+          "y": 451.1582324642615,
+          "visible": true
+        },
+        {
+          "id": 12,
+          "worldPosition": [
+            1.9229218878246772,
+            0.6,
+            7.592250656330737
+          ],
+          "recordedPosition": [
+            1.9229218878246772,
+            0.6,
+            7.592250656330737
+          ],
+          "displayScale": 65.25307943475492,
+          "x": 311.2178450665723,
+          "y": 469.2771139682494,
+          "visible": true
+        },
+        {
+          "id": 13,
+          "worldPosition": [
+            3.124766455591692,
+            0.6,
+            7.105702791454756
+          ],
+          "recordedPosition": [
+            3.124766455591692,
+            0.6,
+            7.105702791454756
+          ],
+          "displayScale": 65.25307943475492,
+          "x": 385.50204319636345,
+          "y": 495.5733261447358,
+          "visible": true
+        },
+        {
+          "id": 14,
+          "worldPosition": [
+            3.3581772410436845,
+            0.6,
+            6.306464703728901
+          ],
+          "recordedPosition": [
+            3.3581772410436845,
+            0.6,
+            6.306464703728901
+          ],
+          "displayScale": 65.25307943475492,
+          "x": 434.6654751676269,
+          "y": 474.70490890157396,
+          "visible": true
+        },
+        {
+          "id": 15,
+          "worldPosition": [
+            3.457319403515437,
+            0.6,
+            6.751691847924614
+          ],
+          "recordedPosition": [
+            3.457319403515437,
+            0.6,
+            6.751691847924614
+          ],
+          "displayScale": 65.25307943475492,
+          "x": 417.295230719645,
+          "y": 494.77252064786967,
+          "visible": true
+        }
+      ]
+    },
+    "result": null
+  },
+  "paused": {
+    "spec": {
+      "schemaVersion": 1,
+      "attemptId": "fd8f4531-23de-42d1-bb7c-8a76df5a02d4",
+      "graphHash": "6218f74521ca39652c59bd7524fb6aa5fe587058ce438a3fa08e4d8eee7cd454",
+      "graphManifestHash": "458f8e27d389e2b0f6a706009a49b661f19a6515c8742ef8ff4084efe98a8db3",
+      "simulationBuildId": "1c07f2fbbddba72ac39d5e3c5015b184565ec80f2a4c70c95c38bec7d716fc99",
+      "tuningHash": "59b4eb3640c5c6cbd2c0e8d0a99240cbc13cebd527870d5e1c874f92ddf6defb",
+      "placements": [],
+      "levelHash": "0e05f55e97828d08f6daf665a3d203ca3a6c5e471a08a69fb2e0b7a9116792d0",
+      "levelId": "open-window",
+      "rootSeed": "12457747995915979443",
+      "flyCount": 16,
+      "durationTicks": 6000
+    },
+    "initialBodies": [
+      {
+        "pose": {
+          "position": {
+            "x": 2.567295794809844,
+            "z": 6.961998645410848
+          },
+          "heading": 3.7725981391448826
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.8916156458867488,
+          0,
+          -0.4527930432437713
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.0478843194729874,
+            "z": 6.620945263076914
+          },
+          "heading": 3.4645430552904823
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.8115928206974412,
+          0,
+          -0.5842234960974876
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.798466133375973,
+            "z": 6.7155682070563945
+          },
+          "heading": 1.298717174657717
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.13562035540495146,
+          0,
+          0.9907608789207588
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.8633798026078,
+            "z": 7.140714217625342
+          },
+          "heading": 4.844715813675233
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.9978119995058098,
+          0,
+          0.06611515440667022
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.02614859265878,
+            "z": 7.013894402551612
+          },
+          "heading": 0.30682342338025237
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.5907487021307035,
+          0,
+          0.8068556072376827
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.998992152042274,
+            "z": 6.67375187103376
+          },
+          "heading": 1.8268764073747406
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          -0.12769047351127716,
+          0,
+          0.9918140667355276
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.3380880916029154,
+            "z": 6.567823611472552
+          },
+          "heading": 5.88730593252153
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.8323519987678811,
+          0,
+          0.554247372702039
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.578894179479712,
+            "z": 6.623844395149576
+          },
+          "heading": 0.973443164945775
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.29425563770459856,
+          0,
+          0.9557267494838994
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.5007166912457746,
+            "z": 7.0039521266560305
+          },
+          "heading": 1.0912816475990332
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.2374669141674769,
+          0,
+          0.9713956272681982
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.882459790908105,
+            "z": 6.573993699383462
+          },
+          "heading": 1.8320226404275883
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          -0.13024210114685011,
+          0,
+          0.991482221267156
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.6932049204538635,
+            "z": 6.855577590382173
+          },
+          "heading": 2.5459069798483798
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          -0.46846746825541136,
+          0,
+          0.883480747490496
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.056461883346964,
+            "z": 6.950986356869718
+          },
+          "heading": 3.7259818672614475
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.8808206569490529,
+          0,
+          -0.4734500715934458
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.2566262557708443,
+            "z": 6.970956886528075
+          },
+          "heading": 2.272023141093276
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          -0.34347396084633947,
+          0,
+          0.939162200165939
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.399127021600988,
+            "z": 7.066162921138871
+          },
+          "heading": 6.240346840224556
+        },
+        "height": 0,
+        "rotation": [
+          0,
+          0.7220891100714468,
+          0,
+          0.6918000557359231
+        ],
+        "support": null,
+        "mode": "walking",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 3.0722484717138294,
+            "z": 6.965120934977077
+          },
+          "heading": 5.04035504986084
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.9865848841464278,
+          0,
+          0.1632490930259022
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      },
+      {
+        "pose": {
+          "position": {
+            "x": 2.737686477226651,
+            "z": 6.601290768723587
+          },
+          "heading": 0.19911602902733722
+        },
+        "height": 0.6,
+        "rotation": [
+          0,
+          0.6333234154516815,
+          0,
+          0.773887234318164
+        ],
+        "support": null,
+        "mode": "flying",
+        "reserve": 0,
+        "outcome": null
+      }
+    ],
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+    "viewport": [
+      1440,
+      900
+    ],
+    "devicePixelRatio": 1,
+    "cursorTick": 10,
+    "sampleTick": 10,
+    "computedTick": 130,
+    "state": "paused",
+    "mode": "realTime",
+    "speed": 1,
+    "fastMultiplier": 10,
+    "complete": false,
+    "initialWaitMs": 1175.3999999761581,
+    "warmWaitMs": 882.5,
+    "startup": {
+      "attemptReadyMs": 292.89999997615814,
+      "firstChunkMs": 848.7999999523163,
+      "assetsReadyMs": 302.6999999284744,
+      "firstPlaybackMs": 1175.3999999761581
+    },
+    "productionMs": 4034.399999856949,
+    "activeNeuralSteps": 2080,
+    "activeEquivalentProductionRate": 3.2222883205584356,
+    "underruns": 0,
+    "frameIntervals": {
+      "count": 188,
+      "p95Ms": 34,
+      "p95Capped": false,
+      "maxMs": 449.9000000000001,
+      "histogramResolutionMs": 1
+    },
+    "interactions": {
+      "count": 5,
+      "p95Ms": 77,
+      "p95Capped": false,
+      "maxMs": 76.39999997615814,
+      "histogramResolutionMs": 1,
+      "measurement": "control callback to synchronous scene render completion; excludes browser paint"
+    },
+    "memory": {
+      "wasmBytes": 89980928,
+      "archiveOwnedChunkBytes": 2295944,
+      "archiveBoundBytes": 134217728,
+      "graphBytes": 9864584,
+      "brainStateBytes": 51520000,
+      "observedJSHeapBytes": 347497531,
+      "note": "WASM includes graph and brain state; do not add those again. Download report includes an on-demand GPU memory estimate."
+    },
+    "renderer": {
+      "flyCount": 16,
+      "modelKind": "glb",
+      "drawCalls": 1007,
+      "triangles": 319224,
+      "geometries": 358,
+      "textures": 29
+    },
+    "camera": {
+      "near": 0.002355127040520607,
+      "far": 58.864041043888655,
+      "fov": 38,
+      "following": true,
+      "distance": 0.047102540810412145,
+      "minDistance": 0.023551270405206073,
+      "maxDistance": 20.745148090393798,
+      "closeDistance": 0.047102540810412145,
+      "target": [
+        2.4858485779776247,
+        0.6000431435572783,
+        6.898369103435568
+      ],
+      "yaw": 0.7853981633974483,
+      "elevation": 0.9048518739413057,
+      "rotated": false,
+      "width": 1440,
+      "height": 900,
+      "selectedFlyId": 0,
+      "displayScale": 0.047882002897385645,
+      "flies": [
+        {
+          "id": 0,
+          "worldPosition": [
+            2.4858485779776247,
+            0.6,
+            6.898369103435568
+          ],
+          "recordedPosition": [
+            2.4858485779776247,
+            0.6,
+            6.898369103435568
+          ],
+          "displayScale": 0.047882002897385645,
+          "x": 551,
+          "y": 450.00000000002467,
+          "visible": true
+        },
+        {
+          "id": 1,
+          "worldPosition": [
+            2.9469477200536365,
+            0.6,
+            6.584430068487958
+          ],
+          "recordedPosition": [
+            2.9469477200536365,
+            0.6,
+            6.584430068487958
+          ],
+          "displayScale": 0.047882002897385645,
+          "x": -41127.11377965888,
+          "y": -5772.743749329173,
+          "visible": false
+        },
+        {
+          "id": 2,
+          "worldPosition": [
+            2.83119446362897,
+            0.6,
+            6.825786735481495
+          ],
+          "recordedPosition": [
+            2.83119446362897,
+            0.6,
+            6.825786735481495
+          ],
+          "displayScale": 0.047882002897385645,
+          "x": -4808.999499036845,
+          "y": -2300.781920251179,
+          "visible": false
+        },
+        {
+          "id": 3,
+          "worldPosition": [
+            2.8749123182434317,
+            0.6,
+            7.03308191031963
+          ],
+          "recordedPosition": [
+            2.8749123182434317,
+            0.6,
+            7.03308191031963
+          ],
+          "displayScale": 0.047882002897385645,
+          "x": -742.538737822222,
+          "y": -1644.5899403658698,
+          "visible": false
+        },
+        {
+          "id": 4,
+          "worldPosition": [
+            3.134548554731324,
+            0.6,
+            7.046005670611983
+          ],
+          "recordedPosition": [
+            3.134548554731324,
+            0.6,
+            7.046005670611983
+          ],
+          "displayScale": 0.047882002897385645,
+          "x": -988.4701918333169,
+          "y": -1473.8982629628306,
+          "visible": false
+        },
+        {
+          "id": 5,
+          "worldPosition": [
+            2.96454856321137,
+            0.6,
+            6.782739013698319
+          ],
+          "recordedPosition": [
+            2.96454856321137,
+            0.6,
+            6.782739013698319
+          ],
+          "displayScale": 0.047882002897385645,
+          "x": -4374.586390921509,
+          "y": -1916.0686158728781,
+          "visible": false
+        },
+        {
+          "id": 6,
+          "worldPosition": [
+            2.44465522970205,
+            0.6,
+            6.526741883255595
+          ],
+          "recordedPosition": [
+            2.44465522970205,
+            0.6,
+            6.526741883255595
+          ],
+          "displayScale": 0.7290733581649965,
+          "x": 1896.421014572996,
+          "y": -873.9107155792454,
+          "visible": false
+        },
+        {
+          "id": 7,
+          "worldPosition": [
+            2.6367218386118587,
+            0.6,
+            6.714414245536488
+          ],
+          "recordedPosition": [
+            2.6367218386118587,
+            0.6,
+            6.714414245536488
+          ],
+          "displayScale": 0.047882002897385645,
+          "x": 5577.771722764686,
+          "y": 59.464450528068525,
+          "visible": false
+        },
+        {
+          "id": 8,
+          "worldPosition": [
+            2.5506833329277114,
+            0.6,
+            7.107655768447179
+          ],
+          "recordedPosition": [
+            2.5506833329277114,
+            0.6,
+            7.107655768447179
+          ],
+          "displayScale": 0.047882002897385645,
+          "x": 2388.4923676431326,
+          "y": -2291.9030171383665,
+          "visible": false
+        },
+        {
+          "id": 9,
+          "worldPosition": [
+            2.854573384392117,
+            0.6,
+            6.67750427676457
+          ],
+          "recordedPosition": [
+            2.854573384392117,
+            0.6,
+            6.67750427676457
+          ],
+          "displayScale": 0.047882002897385645,
+          "x": -30600.285834952498,
+          "y": -5693.044242774964,
+          "visible": false
+        },
+        {
+          "id": 10,
+          "worldPosition": [
+            2.5965420087541933,
+            0.6,
+            6.9157371615588845
+          ],
+          "recordedPosition": [
+            2.5965420087541933,
+            0.6,
+            6.9157371615588845
+          ],
+          "displayScale": 0.047882002897385645,
+          "x": -9203.50693014787,
+          "y": -10075.215515890033,
+          "visible": false
+        },
+        {
+          "id": 11,
+          "worldPosition": [
+            2.9665491829209345,
+            0.6,
+            6.892111911918199
+          ],
+          "recordedPosition": [
+            2.9665491829209345,
+            0.6,
+            6.892111911918199
+          ],
+          "displayScale": 0.047882002897385645,
+          "x": -2258.736326226458,
+          "y": -1702.610856541163,
+          "visible": false
+        },
+        {
+          "id": 12,
+          "worldPosition": [
+            2.1880149233925232,
+            0.6,
+            7.055688048499874
+          ],
+          "recordedPosition": [
+            2.1880149233925232,
+            0.6,
+            7.055688048499874
+          ],
+          "displayScale": 0.047882002897385645,
+          "x": -3326.0936003205275,
+          "y": -491.191312338174,
+          "visible": false
+        },
+        {
+          "id": 13,
+          "worldPosition": [
+            2.515041588470478,
+            0.6,
+            7.060040572453925
+          ],
+          "recordedPosition": [
+            2.515041588470478,
+            0.6,
+            7.060040572453925
+          ],
+          "displayScale": 0.047882002897385645,
+          "x": 3925.7346782520685,
+          "y": -3373.1940535863587,
+          "visible": false
+        },
+        {
+          "id": 14,
+          "worldPosition": [
+            3.1133395106517616,
+            0.6,
+            6.8630478472862935
+          ],
+          "recordedPosition": [
+            3.1133395106517616,
+            0.6,
+            6.8630478472862935
+          ],
+          "displayScale": 0.047882002897385645,
+          "x": -2343.843902235439,
+          "y": -1583.7037535886423,
+          "visible": false
+        },
+        {
+          "id": 15,
+          "worldPosition": [
+            2.851602094629168,
+            0.6,
+            6.6254838030790735
+          ],
+          "recordedPosition": [
+            2.851602094629168,
+            0.6,
+            6.6254838030790735
+          ],
+          "displayScale": 0.047882002897385645,
+          "x": 90890.31977656776,
+          "y": 10779.884608007436,
+          "visible": false
+        }
+      ]
+    },
+    "result": null
+  },
+  "errors": []
+}

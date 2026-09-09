@@ -1,0 +1,247 @@
+173 native tests passed.
+38 client/web tests passed; typecheck passed.
+WASM and production web builds passed.
+Independent integration Codex review: no actionable defects in bin ordering, schema-5 offsets/bounds, finite-value handling, terminal absence or consumer compatibility. Browser coverage source inspected only; actual browser report is separate.
+
+Decoder falsification: replaced actual visionBrightness field reads with zero. Native-to-TypeScript tests failed; restored exact decoder and reran green.
+bun test v1.3.14 (0d9b296a)
+
+packages/sim-client/src/record.test.ts:
+43 |   );
+44 | 
+45 | test("Rust packed records decode exactly across flies, chunks, events and terminal absence", () => {
+46 |   const record = archive();
+47 |   for (const chunk of fixture.chunks) record.append(transfer(chunk));
+48 |   for (const frame of fixture.frames) expect(record.frame(frame.tick)).toEqual(frame);
+                                                                            ^
+error: expect(received).toEqual(expected)
+
+@@ -76,18 +76,18 @@
+              0.12587412587412586,
+              0.1328671328671329,
+              0.13986013986013984,
+            ],
+            "brightness": [
+-             0.14285714285714285,
+-             0.15126050420168066,
+-             0.1596638655462185,
+-             0.16806722689075632,
+-             0.17647058823529413,
+-             0.18487394957983194,
+-             0.19327731092436976,
+-             0.20168067226890754,
++             0,
++             0,
++             0,
++             0,
++             0,
++             0,
++             0,
++             0,
+            ],
+          },
+          "wind": {
+            "x": -0.9,
+            "z": 1.1,
+
+- Expected  - 8
++ Received  + 8
+
+      at <anonymous> (/Users/david/dev/fly-escape/packages/sim-client/src/record.test.ts:48:72)
+(fail) Rust packed records decode exactly across flies, chunks, events and terminal absence [2.14ms]
+76 |     const stride = names.length + layout.groupIds.length * layout.groupFields.length;
+77 |     for (let i = 0; i < chunk.values.length; i += stride)
+78 |       [chunk.values[i + a], chunk.values[i + b]] = [chunk.values[i + b], chunk.values[i + a]];
+79 |     record.append(chunk);
+80 |   }
+81 |   for (const frame of fixture.frames) expect(record.frame(frame.tick)).toEqual(frame);
+                                                                            ^
+error: expect(received).toEqual(expected)
+
+@@ -76,18 +76,18 @@
+              0.12587412587412586,
+              0.1328671328671329,
+              0.13986013986013984,
+            ],
+            "brightness": [
+-             0.14285714285714285,
+-             0.15126050420168066,
+-             0.1596638655462185,
+-             0.16806722689075632,
+-             0.17647058823529413,
+-             0.18487394957983194,
+-             0.19327731092436976,
+-             0.20168067226890754,
++             0,
++             0,
++             0,
++             0,
++             0,
++             0,
++             0,
++             0,
+            ],
+          },
+          "wind": {
+            "x": -0.9,
+            "z": 1.1,
+
+- Expected  - 8
++ Received  + 8
+
+      at <anonymous> (/Users/david/dev/fly-escape/packages/sim-client/src/record.test.ts:81:72)
+(fail) metadata field order determines the consumer offsets [0.51ms]
+125 |   for (const change of changes) {
+126 |     const chunk = transfer(fixture.chunks[1]);
+127 |     change(chunk);
+128 |     expect(() => record.append(chunk)).toThrow();
+129 |     expect(record.ownedBytes).toBe(before);
+130 |     expect(record.frame(2)).toEqual(fixture.frames[1]);
+                                  ^
+error: expect(received).toEqual(expected)
+
+@@ -56,18 +56,18 @@
+              0.21678321678321677,
+              0.22377622377622378,
+              0.23076923076923075,
+            ],
+            "brightness": [
+-             0.2857142857142857,
+-             0.2941176470588235,
+-             0.3025210084033613,
+-             0.3109243697478991,
+-             0.319327731092437,
+-             0.3277310924369748,
+-             0.33613445378151263,
+-             0.3445378151260504,
++             0,
++             0,
++             0,
++             0,
++             0,
++             0,
++             0,
++             0,
+            ],
+          },
+          "wind": {
+            "x": -0.9,
+            "z": 1.1,
+@@ -150,18 +150,18 @@
+              0.21678321678321677,
+              0.22377622377622378,
+              0.23076923076923075,
+            ],
+            "brightness": [
+-             0.42857142857142855,
+-             0.43697478991596633,
+-             0.44537815126050423,
+-             0.453781512605042,
+-             0.46218487394957986,
+-             0.47058823529411764,
+-             0.4789915966386555,
+-             0.48739495798319327,
++             0,
++             0,
++             0,
++             0,
++             0,
++             0,
++             0,
++             0,
+            ],
+          },
+          "wind": {
+            "x": -0.9,
+            "z": 1.1,
+
+- Expected  - 16
++ Received  + 16
+
+      at <anonymous> (/Users/david/dev/fly-escape/packages/sim-client/src/record.test.ts:130:29)
+(fail) stale attempts are ignored and invalid current chunks fail without changing history [0.39ms]
+(pass) archive limits count retained backing allocations, and reject unsupported metadata [0.21ms]
+187 |   spec.flyCount = 99;
+188 |   layout.modes.reverse();
+189 |   layout.groupIds.reverse();
+190 |   first.startTick = 100;
+191 |   first.values[0] = 999;
+192 |   expect(record.frame(1)).toEqual(fixture.frames[0]);
+                                ^
+error: expect(received).toEqual(expected)
+
+@@ -76,18 +76,18 @@
+              0.12587412587412586,
+              0.1328671328671329,
+              0.13986013986013984,
+            ],
+            "brightness": [
+-             0.14285714285714285,
+-             0.15126050420168066,
+-             0.1596638655462185,
+-             0.16806722689075632,
+-             0.17647058823529413,
+-             0.18487394957983194,
+-             0.19327731092436976,
+-             0.20168067226890754,
++             0,
++             0,
++             0,
++             0,
++             0,
++             0,
++             0,
++             0,
+            ],
+          },
+          "wind": {
+            "x": -0.9,
+            "z": 1.1,
+
+- Expected  - 8
++ Received  + 8
+
+      at <anonymous> (/Users/david/dev/fly-escape/packages/sim-client/src/record.test.ts:192:27)
+(fail) accepting a chunk takes ownership and snapshots metadata and results [0.21ms]
+(pass) missing or malformed results cannot finish the archive [0.50ms]
+(pass) motion phase freezes at terminal and reverse seek restores the prior phase [0.18ms]
+(pass) motion follows packed mode transitions across chunk boundaries and resets on clear [0.17ms]
+(pass) bounded neural traces match recorded frames across seek and terminal gaps [0.22ms]
+(pass) pose-only windows preserve recorded positions and terminal states across chunks and seeks [0.22ms]
+(pass) tick zero and rewind preserve immutable core initial poses and mixed modes [0.20ms]
+(pass) support identity and quaternion corruption fail before archive mutation [0.13ms]
+(pass) malformed motion fails atomically before any buffer is detached [0.37ms]
+(pass) motion backing allocations count against the same archive capacity [0.06ms]
+(pass) the core sampler replays interior knots, seeks across chunks, and releases history [6.42ms]
+(pass) caught survives Rust packing and validates its summary count [0.29ms]
+
+ 12 pass
+ 4 fail
+ 146 expect() calls
+Ran 16 tests across 1 file. [329.00ms]
+
+Restored:
+bun test v1.3.14 (0d9b296a)
+
+packages/sim-client/src/record.test.ts:
+(pass) Rust packed records decode exactly across flies, chunks, events and terminal absence [1.76ms]
+(pass) metadata field order determines the consumer offsets [0.33ms]
+(pass) stale attempts are ignored and invalid current chunks fail without changing history [0.61ms]
+(pass) archive limits count retained backing allocations, and reject unsupported metadata [0.25ms]
+(pass) accepting a chunk takes ownership and snapshots metadata and results [0.24ms]
+(pass) missing or malformed results cannot finish the archive [0.44ms]
+(pass) motion phase freezes at terminal and reverse seek restores the prior phase [0.20ms]
+(pass) motion follows packed mode transitions across chunk boundaries and resets on clear [0.13ms]
+(pass) bounded neural traces match recorded frames across seek and terminal gaps [0.26ms]
+(pass) pose-only windows preserve recorded positions and terminal states across chunks and seeks [0.41ms]
+(pass) tick zero and rewind preserve immutable core initial poses and mixed modes [0.23ms]
+(pass) support identity and quaternion corruption fail before archive mutation [0.20ms]
+(pass) malformed motion fails atomically before any buffer is detached [0.45ms]
+(pass) motion backing allocations count against the same archive capacity [0.08ms]
+(pass) the core sampler replays interior knots, seeks across chunks, and releases history [6.91ms]
+(pass) caught survives Rust packing and validates its summary count [0.28ms]
+
+ 16 pass
+ 0 fail
+ 193 expect() calls
+Ran 16 tests across 1 file. [320.00ms]
