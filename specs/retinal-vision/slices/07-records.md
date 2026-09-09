@@ -6,7 +6,7 @@
 
 Implement development schema 6 in native `RecordLayout`/`PackedChunk`, WASM transfer and `FrameArchive`. Carry contiguous RGB8 samples, full pre-neural eye pose, presence and profile/color-model identity using the existing chunk owner. Remove the sixteen eight-direction numeric fields from the new layout; do not store RGB as f64. Old controls may retain their test-only artifacts, but do not implement a second production archive.
 
-Extend admission and cumulative quota accounting before allocation. At the initial 61-sample profile, eye bytes alone cost 35,136,000 bytes at sixteen flies and 6000 ticks. Prove the full fixed and variable-motion archive fits; count transfer/staging/consumer memory independently. Retain all ticks, not just the currently selected fly. The display can be built later; this slice exposes decoded bytes in the workbench.
+Extend admission and cumulative quota accounting before allocation. At the current 721-sample candidate, eye bytes alone cost 415,296,000 bytes at sixteen flies and 6000 ticks. Prove the full fixed and variable-motion archive fits; count transfer/staging/consumer memory independently. Retain all ticks, not just the currently selected fly. The display can be built later; this slice exposes decoded bytes in the workbench.
 
 ## Runnable artifact and verification
 
@@ -18,7 +18,7 @@ Exercise the public decoder and its browser failure consumer with the actual sch
 
 ## Verdict and decision budget
 
-Pass only when exact bytes survive replay, worst admitted records are bounded and old versions fail safely. Delegate buffer packing details and wording that preserves the specified meaning. Do not delegate migrations, archive eviction, approximate replay or a larger cap. Existing record/motion/progress persistence tests remain green; update current-format fixtures explicitly.
+Pass only when exact bytes survive replay, worst admitted records are bounded and old versions fail safely. Delegate buffer packing details and wording that preserves the specified meaning. Do not implement migrations, archive eviction or approximate replay. Practical archive sizing is delegated by the user; measure the current 512 MiB target before changing it. Existing record/motion/progress persistence tests remain green; update current-format fixtures explicitly.
 
 ## Review protocol
 

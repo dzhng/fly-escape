@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><title>Retinal capture failure probe</title>
+<h1>Retinal capture failure probe</h1><p id="summary"></p><pre id="result">Checking cancellation, context loss, timeout, and ten restarts…</pre>
+<script type="module">
+const output = document.querySelector("#result");
+const worker = new Worker(new URL("./retina-failures-worker.mjs", import.meta.url), {type:"module"});
+worker.onmessage = ({data}) => {
+  const r = data.result;
+  document.querySelector("#summary").textContent = r
+    ? `Overlap: ${r.overlap}; first frame completed: ${r.originalCompleted}; overload: ${r.overload}; cancel: ${r.cancel.ms} ms (${r.cancel.error}); context: ${r.context.ms} ms (${r.context.error}); timeout: ${r.unresponsive.ms} ms (${r.unresponsive.error}); ${r.retries.length} restarts; resource counts stable: ${r.retries.every(x => x.geometries===r.retries[0].geometries && x.textures===r.retries[0].textures)}.`
+    : data.error;
+  output.textContent = JSON.stringify(data, null, 2); worker.terminate();
+};
+worker.onerror = event => { output.textContent = event.message; worker.terminate(); };
+worker.postMessage({});
+</script></html>

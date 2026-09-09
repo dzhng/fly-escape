@@ -1,0 +1,9 @@
+.retina-workbench { grid-template-columns: minmax(0, 1fr) 440px; }
+.retina-world { min-width: 0; min-height: 0; }
+.retina-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+.retina-pair figure { margin: 0; }
+.retina-pair figcaption { margin-bottom: 6px; font-weight: 600; }
+.retina-pair canvas { width: 100%; aspect-ratio: 1; background: #e1e7df; image-rendering: pixelated; border: 1px solid #a8bcb1; }
+.retina-workbench label { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 12px 0; }
+.retina-workbench pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 180px; overflow: auto; font-size: 11px; }
+@media (max-width: 780px) { .retina-workbench { grid-template-columns: 1fr; height: auto; } .retina-world { height: 320px; } }

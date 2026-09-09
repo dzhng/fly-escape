@@ -10,7 +10,7 @@ Remove named baseline-control entry points/adapters introduced during slices 02â
 
 ## Runnable artifact and verification
 
-Run the complete budget matrix from [contracts](../contracts.md#resource-budgets) with actual neural color input enabled, after the earlier acquisition-only measurements. Test both full 6000-tick, sixteen-fly campaign levels, saved arrangements, playback modes, pause/rewind/fly switching, scoring and retry. Include a paired capture-only baseline control and ten warm retries. Verify the 128 MiB cumulative archive and bounded producer/GPU/JS memory independently. Run current relevant native, client, renderer, web, build and browser checks once after final changes.
+Run the complete budget matrix from [contracts](../contracts.md#resource-budgets) with actual neural color input enabled, after the earlier acquisition-only measurements. Test both full 6000-tick, sixteen-fly campaign levels, saved arrangements, playback modes, pause/rewind/fly switching, scoring and retry. Include a paired capture-only baseline control and ten warm retries. Verify the 512 MiB cumulative archive and bounded producer/GPU/JS memory independently. Run current relevant native, client, renderer, web, build and browser checks once after final changes.
 
 Exercise old schema 5 through the public decoder and browser error consumer again in the final build. Start a new attempt afterwards and verify saved stars/arrangements. No uncaught exceptions, blank app or migration are acceptable.
 

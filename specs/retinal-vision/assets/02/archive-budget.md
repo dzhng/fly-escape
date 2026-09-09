@@ -1,3 +1,5 @@
+> Historical arithmetic for the rejected 61-cell/128 MiB candidate. The user subsequently delegated practical budgets; the selected higher-detail investigation uses 721 cells and a 512 MiB target. See [higher-resolution evidence](higher-resolution/verification.md) for revised totals. The accounting method and bounded-overflow analysis below remain applicable.
+
 # Retinal archive admission audit
 
 **The 61-cell RGB proposal fits representative complete-record arithmetic under the existing conditional archive admission policy.** At 16 flies × 6,000 ticks, the proposed layout with two motion points per fly-tick costs **124,288,384 bytes (118.531 MiB)** under the existing conservative event/chunk allowances. At 129 points it costs **1,099,648,384 bytes (1,048.706 MiB)**. The maximum does not fit, which is already true of the baseline. It is not by itself a new failing gate: the current policy caps storage and reports variable-motion overflow explicitly. Full campaign measurements still decide practical acceptance; eye-byte arithmetic alone cannot replace them.
