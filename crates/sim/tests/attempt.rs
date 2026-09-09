@@ -3,10 +3,7 @@ use sha2::{Digest, Sha256};
 use sim::{attempt::*, body::*, environment::*, Graph};
 use std::sync::Arc;
 fn graph() -> Arc<Graph> {
-    graph_with_vision(false)
-}
-fn graph_with_vision(vision: bool) -> Arc<Graph> {
-    let count = if vision { 11u32 } else { 4 };
+    let count = 4u32;
     let mut bytes = b"FLYGRAPH".to_vec();
     for value in [1u32, count, 0]
         .into_iter()
@@ -18,16 +15,8 @@ fn graph_with_vision(vision: bool) -> Arc<Graph> {
     let mut manifest = manifest;
     manifest["neuronCount"] = json!(count);
     manifest["bodyIds"] = json!((1..=count).map(|i| i.to_string()).collect::<Vec<_>>());
-    if vision {
-        manifest["sources"] = json!([{"file":"body-annotations.feather","sha256":"0".repeat(64)}]);
-        manifest["visionInput"] = json!({
-            "graphHash":manifest["graphHash"],"annotationHash":"0".repeat(64),
-            "family":"synthetic", "registration":"synthetic overlap at bin six",
-            "entries":([4,5,6,7,8,9,2,10].into_iter().enumerate().map(|(b,index)|json!({"index":index,"weights":(0..8).map(|i|if i==b {1.0}else{0.0}).collect::<Vec<_>>()})).collect::<Vec<_>>())
-        });
-    }
 
-    for id in ["odorInhL", "odorInhR", "visionL", "visionR"] {
+    for id in ["odorInhL", "odorInhR"] {
         let index = if id.ends_with('L') { 2 } else { 3 };
         manifest["groups"]
             .as_array_mut()
@@ -367,27 +356,39 @@ fn fixed_ablation_is_hashed_validated_and_clamps_neural_readouts() {
     assert!(Attempt::describe(&graph, &level, &invalid, "invalid", 1, 1, &[]).is_err());
 }
 
+#[path = "fixtures/retina.rs"]
+mod retinal_fixture;
+
 #[test]
-fn simultaneous_senses_sum_and_each_channel_can_be_ablated() {
+fn simultaneous_retinal_and_odor_currents_sum_and_each_can_be_ablated() {
     use sim::sensory::CuePathway::*;
-    let graph = graph_with_vision(true);
+    let (mut graph, config, data) = retinal_fixture::fixture();
+    let graph_mut = Arc::get_mut(&mut graph).unwrap();
+    for (id, index) in [
+        ("odorExcL", 2),
+        ("odorExcR", 3),
+        ("odorInhL", 2),
+        ("odorInhR", 3),
+    ] {
+        graph_mut.manifest.groups.push(sim::Group {
+            id: id.into(),
+            label: id.into(),
+            indices: vec![index],
+        });
+    }
+    let map_json = data.to_string();
+    let map = sim::RetinalMap::from_json(&graph, &config.profile, &map_json).unwrap();
+    let rgb = vec![255, 128, 0, 0, 64, 255, 32, 16, 255, 192, 128, 64];
     let mut definition = level(1);
-    definition.field_config.baseline_brightness = 0.;
-    definition.sources = [
-        SourceKind::AttractiveOdor,
-        SourceKind::RepellentOdor,
-        SourceKind::Lamp,
-    ]
-    .into_iter()
-    .map(|kind| Source {
-        position: Point { x: 2., z: 1.6 },
-        radius: 0.8,
-        rate: 2.,
-        kind,
-    })
-    .collect();
-    // A tiny graph with overlapping sensory populations makes the exact sum
-    // observable in membrane voltage without relying on a lucky motor response.
+    definition.sources = [SourceKind::AttractiveOdor, SourceKind::RepellentOdor]
+        .into_iter()
+        .map(|kind| Source {
+            position: Point { x: 2., z: 1.6 },
+            radius: 0.8,
+            rate: 2.,
+            kind,
+        })
+        .collect();
     for seed in [0, 7, 42] {
         for enabled in [
             [true, false, false],
@@ -398,74 +399,87 @@ fn simultaneous_senses_sum_and_each_channel_can_be_ablated() {
             [true, false, true],
             [true, true, false],
         ] {
-            for remove_disabled_sources in [false, true] {
-                let mut definition = definition.clone();
-                if remove_disabled_sources {
-                    definition.sources = definition
-                        .sources
-                        .into_iter()
-                        .zip(enabled)
-                        .filter(|(_, on)| *on)
-                        .map(|(s, _)| s)
-                        .collect();
-                }
-                // Paired with the source list above: attractive odor feeds the
-                // excitatory-labelled groups, repellent odor the inhibitory ones.
-                let cues: Vec<_> = [ExcitatoryOdor, InhibitoryOdor, Vision]
+            let tuning = AttemptTuning {
+                cues: [ExcitatoryOdor, InhibitoryOdor, Vision]
                     .into_iter()
                     .zip(enabled)
-                    .filter(|(_, on)| *on)
-                    .map(|(pathway, _)| CueInput { pathway, gain: 0.1 })
-                    .collect();
-                let tuning = AttemptTuning {
-                    cues,
-                    ..Default::default()
+                    .map(|(pathway, on)| CueInput {
+                        pathway,
+                        gain: if on { 0.1 } else { 0. },
+                    })
+                    .collect(),
+                ..Default::default()
+            };
+            let make = || {
+                let spec =
+                    Attempt::describe(&graph, &definition, &tuning, "mixed", seed, 1, &[]).unwrap();
+                Attempt::new_retinal(
+                    graph.clone(),
+                    definition.clone(),
+                    tuning.clone(),
+                    spec,
+                    config.clone(),
+                    &map_json,
+                )
+                .unwrap()
+            };
+            let step = |attempt: &mut Attempt| {
+                let request = attempt.prepare_tick().unwrap().unwrap();
+                attempt
+                    .commit_tick(sim::vision::RetinaBatch {
+                        request,
+                        rgb: rgb.clone(),
+                    })
+                    .unwrap()
+            };
+            let mut attempt = make();
+            let mut replay = make();
+            let frame = step(&mut attempt);
+            let senses = frame.flies[0].sensory.unwrap();
+            let mut expected = std::collections::BTreeMap::new();
+            for cue in &tuning.cues {
+                let currents = if cue.pathway == Vision {
+                    sim::sensory::retinal_currents(&map, &rgb, cue.gain).unwrap()
+                } else {
+                    sim::sensory::cue_currents(&graph, &senses, cue.pathway, cue.gain).unwrap()
                 };
-                let make = || {
-                    let spec =
-                        Attempt::describe(&graph, &definition, &tuning, "mixed", seed, 1, &[])
-                            .unwrap();
-                    Attempt::new(graph.clone(), definition.clone(), tuning.clone(), spec).unwrap()
-                };
-                let mut attempt = make();
-                let mut replay = make();
-                let frame = attempt.step().unwrap().unwrap();
-                let senses = frame.flies[0].sensory.unwrap();
-                assert_eq!(
-                    senses.left.attractive_odor > senses.right.attractive_odor,
-                    !remove_disabled_sources || enabled[0]
-                );
-                assert_eq!(
-                    senses.left.repellent_odor > senses.right.repellent_odor,
-                    !remove_disabled_sources || enabled[1]
-                );
-                assert_eq!(
-                    senses.left.brightness > senses.right.brightness,
-                    !remove_disabled_sources || enabled[2]
-                );
-                // Compose the independently tested sensory adapter outputs. This
-                // pins Attempt's channel summation without assuming fixed amplitudes.
-                let mut expected = std::collections::BTreeMap::new();
-                for cue in &tuning.cues {
-                    for (index, current) in
-                        sim::sensory::cue_currents(&graph, &senses, cue.pathway, cue.gain).unwrap()
-                    {
-                        *expected.entry(index).or_insert(0.) += current;
-                    }
-                }
-                assert!(expected[&2] > 0.);
-                let mut reference =
-                    sim::Brain::new(graph.clone(), sim::Brain::seed_for_fly(seed, 0));
-                reference
-                    .set_external_current(&expected.into_iter().collect::<Vec<_>>())
-                    .unwrap();
-                assert_eq!(frame.flies[0].neural, Some(reference.step()));
-                assert_eq!(Some(frame), replay.step().unwrap());
-                for _ in 0..19 {
-                    assert_eq!(attempt.step().unwrap(), replay.step().unwrap());
+                for (index, current) in currents {
+                    *expected.entry(index).or_insert(0.) += current;
                 }
             }
+            assert!(expected.values().any(|value| *value > 0.));
+            let mut reference = sim::Brain::new(graph.clone(), sim::Brain::seed_for_fly(seed, 0));
+            reference
+                .set_external_current(&expected.into_iter().collect::<Vec<_>>())
+                .unwrap();
+            assert_eq!(frame.flies[0].neural, Some(reference.step()));
+            assert_eq!(frame, step(&mut replay));
+            for _ in 1..definition.duration_ticks {
+                assert_eq!(step(&mut attempt), step(&mut replay));
+            }
+            assert!(attempt.prepare_tick().unwrap().is_none());
+            assert!(replay.prepare_tick().unwrap().is_none());
         }
+    }
+}
+
+#[test]
+fn vision_requires_retinal_acquisition_even_when_gain_is_zero() {
+    for gain in [0., 1.] {
+        let graph = graph();
+        let definition = level(1);
+        let tuning = AttemptTuning {
+            cues: vec![CueInput {
+                pathway: sim::sensory::CuePathway::Vision,
+                gain,
+            }],
+            ..Default::default()
+        };
+        let spec = Attempt::describe(&graph, &definition, &tuning, "no-retina", 1, 1, &[]).unwrap();
+        assert!(Attempt::new(graph, definition, tuning, spec)
+            .err()
+            .unwrap()
+            .contains("retinal"));
     }
 }
 

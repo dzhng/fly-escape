@@ -53,8 +53,6 @@ test("Rust packed records decode exactly across flies, chunks, events and termin
   expect(() => record.frame(5)).toThrow("not been recorded");
   // Consumers receive fresh views of a frame, not mutable cached history.
   record.frame(2).flies[0].body.reserve = -1;
-  record.frame(2).flies[0].sensory!.vision.brightness[3] = -1;
-  record.frame(2).flies[0].sensory!.vision.blocked[6] = -1;
   record.frame(4).result!.stars = 3;
   expect(record.frame(4)).toEqual(fixture.frames[3]);
   expect(record.frame(2)).toEqual(fixture.frames[1]);

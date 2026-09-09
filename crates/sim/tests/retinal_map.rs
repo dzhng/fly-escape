@@ -173,3 +173,17 @@ fn trusted_source_budget_cannot_be_relabelled_or_expanded() {
     graph.manifest.retinal_budget = None;
     assert!(RetinalMap::from_json(graph, &config.profile, &map.to_string()).is_err());
 }
+
+#[test]
+fn directional_metadata_is_rejected_instead_of_retained_as_provenance() {
+    let mut manifest: Value =
+        serde_json::from_str(include_str!("../../../data/processed/brain/manifest.json")).unwrap();
+    manifest["visionInput"] = json!({"entries":[]});
+    let error = Graph::from_bytes(
+        include_bytes!("../../../data/processed/brain/graph.bin"),
+        &manifest.to_string(),
+    )
+    .err()
+    .unwrap();
+    assert!(error.contains("Directional vision metadata"));
+}

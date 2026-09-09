@@ -43,7 +43,6 @@ fn frame(tick: u32) -> AttemptFrame {
                     shade: 0.7,
                     exit_cue: 0.8,
                 },
-                vision: VisionSample::default(),
                 wind: Point { x: -0.9, z: 1.1 },
             }),
             neural: Some(StepOutput {
@@ -502,7 +501,6 @@ fn retinal_bytes_preserve_black_terminal_transition_absence_and_full_input_trans
         .unwrap();
     let mut frames: Vec<_> = (1..=3).map(frame).collect();
     for frame in &mut frames {
-        frame.flies[0].sensory.as_mut().unwrap().vision = VisionSample::default();
         let poses = if frame.tick < 3 {
             vec![EyePose {
                 fly_id: 0,

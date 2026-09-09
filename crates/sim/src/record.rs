@@ -366,7 +366,6 @@ impl PackedChunk {
                     motor.flight_turn,
                 ]);
                 let sense = fly.sensory.unwrap_or(SensorySample {
-                    vision: VisionSample::default(),
                     left: FieldSample::default(),
                     right: FieldSample::default(),
                     wind: Point { x: 0., z: 0. },
@@ -521,7 +520,6 @@ impl PackedChunk {
                         outcome: at(&layout.outcomes, s[1])?,
                     },
                     sensory: (s[2] & 1 != 0).then(|| SensorySample {
-                        vision: VisionSample::default(),
                         left: field(11),
                         right: field(16),
                         wind: Point { x: v[21], z: v[22] },

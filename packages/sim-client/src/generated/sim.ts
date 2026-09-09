@@ -169,8 +169,7 @@ export type Source = { position: Point, radius: number,
 rate: number, kind: SourceKind, };
 export type ExitCue = { position: Point, roomId: number, radius: number, strength: number, };
 export type FieldSample = { attractiveOdor: number, repellentOdor: number, brightness: number, shade: number, exitCue: number, };
-export type SensorySample = { vision: VisionSample, left: FieldSample, right: FieldSample, wind: Point, };
-export type VisionSample = { brightness: [number, number, number, number, number, number, number, number], blocked: [number, number, number, number, number, number, number, number], };
+export type SensorySample = { left: FieldSample, right: FieldSample, wind: Point, };
 export type FieldGrid = { origin: Point, max: Point, cellSize: number, width: number, height: number, cells: Array<FieldSample | null>,
 /**
  * Uniform ambient vector for diagnostic labels; local samples use wind_cells.

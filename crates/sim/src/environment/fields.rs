@@ -100,22 +100,13 @@ pub struct FieldSample {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize, TS)]
 pub struct SensorySample {
-    pub vision: VisionSample,
     pub left: FieldSample,
     pub right: FieldSample,
     pub wind: Point,
 }
-/// Eight horizontal directions starting forward, increasing toward +Z at heading zero.
-/// Blocked values are modeled brightness withheld by opaque footprints or local shade.
-#[derive(Debug, Clone, Copy, Default, PartialEq, Serialize, Deserialize, TS)]
-pub struct VisionSample {
-    pub brightness: [f64; 8],
-    pub blocked: [f64; 8],
-}
 /// Finite modeled brightness ceiling, well above authored room light levels.
 /// Saturating each contribution and accumulation also bounds extreme finite source rates.
-pub const MAX_VISION_BRIGHTNESS: f64 = 1_000_000.;
-const MAX_VISION_WORK: usize = 65_536;
+pub const MAX_FIELD_BRIGHTNESS: f64 = 1_000_000.;
 
 /// Row-major z then x; entries outside open floor (including solids) are None. Values are
 /// exactly sample_point at each cell center, including the local exit gate.
@@ -149,7 +140,6 @@ pub struct FieldSet {
     injection: [Vec<f64>; 2],
     brightness: Vec<f64>,
     shade: Vec<f64>,
-    visual_sources: Vec<Source>,
 }
 const MAX_CELLS: usize = 65_536;
 const MAX_WORK: usize = 8_000_000;
@@ -209,19 +199,6 @@ impl FieldSet {
             {
                 return Err("sources require floor position, positive finite radius and nonnegative finite rate".into());
             }
-        }
-        let visual_sources: Vec<_> = sources
-            .iter()
-            .filter(|s| matches!(s.kind, SourceKind::Lamp | SourceKind::Shade))
-            .cloned()
-            .collect();
-        let vision_work = visual_sources
-            .len()
-            .saturating_mul(geometry.walls.len() + geometry.solids.len());
-        if vision_work > MAX_VISION_WORK {
-            return Err(format!(
-                "vision source-times-obstacle work limit {MAX_VISION_WORK} exceeded: {vision_work}"
-            ));
         }
         if let Some(e) = &exit {
             if !e.position.finite()
@@ -290,7 +267,6 @@ impl FieldSet {
             injection: std::array::from_fn(|_| vec![0.; count]),
             brightness: vec![0.; count],
             shade: vec![0.; count],
-            visual_sources,
         };
         for i in 0..count {
             set.active[i] = set.geometry.contains_body(set.center(i), 0.);
@@ -361,20 +337,20 @@ impl FieldSet {
                     }
                     SourceKind::Lamp => {
                         set.brightness[i] = (set.brightness[i]
-                            + (s.rate * w).min(MAX_VISION_BRIGHTNESS))
-                        .min(MAX_VISION_BRIGHTNESS)
+                            + (s.rate * w).min(MAX_FIELD_BRIGHTNESS))
+                        .min(MAX_FIELD_BRIGHTNESS)
                     }
                     SourceKind::Shade => {
-                        set.shade[i] = (set.shade[i] + (s.rate * w).min(MAX_VISION_BRIGHTNESS))
-                            .min(MAX_VISION_BRIGHTNESS)
+                        set.shade[i] = (set.shade[i] + (s.rate * w).min(MAX_FIELD_BRIGHTNESS))
+                            .min(MAX_FIELD_BRIGHTNESS)
                     }
                 }
             }
         }
         for i in 0..count {
-            set.brightness[i] = ((set.config.baseline_brightness.min(MAX_VISION_BRIGHTNESS)
+            set.brightness[i] = ((set.config.baseline_brightness.min(MAX_FIELD_BRIGHTNESS)
                 + set.brightness[i])
-                .min(MAX_VISION_BRIGHTNESS)
+                .min(MAX_FIELD_BRIGHTNESS)
                 - set.shade[i])
                 .max(0.);
         }
@@ -544,79 +520,9 @@ impl FieldSet {
             },
         ]
     }
-    fn sample_vision(&self, position: Point, heading: f64) -> VisionSample {
-        if !position.finite() || !heading.is_finite() {
-            return VisionSample::default();
-        }
-        let mut vision = VisionSample {
-            brightness: [self.config.baseline_brightness.min(MAX_VISION_BRIGHTNESS); 8],
-            blocked: [0.; 8],
-        };
-        let (sin, cos) = heading.sin_cos();
-        let diagonal = std::f64::consts::FRAC_1_SQRT_2;
-        let directions = [
-            (1., 0.),
-            (diagonal, diagonal),
-            (0., 1.),
-            (-diagonal, diagonal),
-            (-1., 0.),
-            (-diagonal, -diagonal),
-            (0., -1.),
-            (diagonal, -diagonal),
-        ];
-        let mut shade = 0.;
-        for source in &self.visual_sources {
-            let dx = source.position.x - position.x;
-            let dz = source.position.z - position.z;
-            let distance = dx.hypot(dz);
-            if distance >= source.radius {
-                continue;
-            }
-            let contribution =
-                (source.rate * (1. - distance / source.radius)).min(MAX_VISION_BRIGHTNESS);
-            let visible = self.geometry.line_of_sight(position, source.position);
-            if source.kind == SourceKind::Shade {
-                if visible {
-                    shade = (shade + contribution).min(MAX_VISION_BRIGHTNESS);
-                }
-                continue;
-            }
-            let values = if visible {
-                &mut vision.brightness
-            } else {
-                &mut vision.blocked
-            };
-            // Transform the bearing once; each source gets one visibility query, never eight.
-            let forward = if distance == 0. {
-                0.
-            } else {
-                (dx / distance) * cos + (dz / distance) * sin
-            };
-            let right = if distance == 0. {
-                0.
-            } else {
-                -(dx / distance) * sin + (dz / distance) * cos
-            };
-            for (value, (x, z)) in values.iter_mut().zip(directions) {
-                let lobe = if distance == 0. {
-                    1.
-                } else {
-                    (x * forward + z * right).clamp(0., 1.)
-                };
-                *value = (*value + contribution * lobe).min(MAX_VISION_BRIGHTNESS);
-            }
-        }
-        for i in 0..8 {
-            let removed = shade.min(vision.brightness[i]);
-            vision.brightness[i] -= removed;
-            vision.blocked[i] = (vision.blocked[i] + removed).min(MAX_VISION_BRIGHTNESS);
-        }
-        vision
-    }
     pub fn sample(&self, position: Point, heading: f64, _tick: u32) -> SensorySample {
         let [left, right] = self.sample_points(position, heading);
         SensorySample {
-            vision: self.sample_vision(position, heading),
             left: self.sample_point(left),
             right: self.sample_point(right),
             wind: self

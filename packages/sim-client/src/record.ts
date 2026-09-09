@@ -9,7 +9,6 @@ import type {
   AttemptSpec,
   BodyEventKind,
   FieldSample,
-  SensorySample,
   PackedChunk,
   RecordLayout,
 } from "./generated/sim";
@@ -661,10 +660,6 @@ export class FrameArchive {
                 left: side("left"),
                 right: side("right"),
                 wind: { x: v("windX"), z: v("windZ") },
-                vision: {
-                  brightness: Array.from({ length: 8 }, () => 0) as SensorySample["vision"]["brightness"],
-                  blocked: Array.from({ length: 8 }, () => 0) as SensorySample["vision"]["blocked"],
-                },
               }
             : null,
         neural:

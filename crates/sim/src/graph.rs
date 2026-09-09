@@ -39,20 +39,6 @@ pub enum Pathway {
     Indices(Vec<u32>),
     Bilateral(HashMap<String, Vec<u32>>),
 }
-#[derive(Clone, Debug, Serialize, Deserialize)]
-pub struct VisionNeuron {
-    pub index: u32,
-    pub weights: [f64; 8],
-}
-#[derive(Clone, Debug, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct VisionInput {
-    pub graph_hash: String,
-    pub annotation_hash: String,
-    pub family: String,
-    pub registration: String,
-    pub entries: Vec<VisionNeuron>,
-}
 /// Frozen aggregate dose, bound to the graph and archived source-map identity.
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -76,8 +62,6 @@ pub struct Manifest {
     pub group_links: Vec<GroupLink>,
     pub pathway_provenance: String,
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub vision_input: Option<VisionInput>,
-    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub retinal_budget: Option<RetinalBudget>,
     #[serde(flatten)]
     pub provenance: HashMap<String, serde_json::Value>,
@@ -98,6 +82,9 @@ impl Graph {
     pub fn from_bytes(bytes: &[u8], manifest_json: &str) -> Result<Self, String> {
         let manifest: Manifest = serde_json::from_str(manifest_json)
             .map_err(|e| format!("Invalid graph manifest: {e}"))?;
+        if manifest.provenance.contains_key("visionInput") {
+            return Err("Directional vision metadata is no longer supported".into());
+        }
         if bytes.len() < 20 || &bytes[..8] != b"FLYGRAPH" {
             return Err("Invalid graph header".into());
         }
@@ -226,52 +213,6 @@ impl Graph {
             weights,
             body_lookup,
         };
-        if let Some(map) = &graph.manifest.vision_input {
-            let annotation_source = graph
-                .manifest
-                .provenance
-                .get("sources")
-                .and_then(|sources| sources.as_array())
-                .and_then(|sources| {
-                    sources
-                        .iter()
-                        .find(|source| source["file"] == "body-annotations.feather")
-                })
-                .and_then(|source| source["sha256"].as_str());
-            if map.graph_hash != graph.manifest.graph_hash
-                || map.annotation_hash.len() != 64
-                || !map.annotation_hash.bytes().all(|b| b.is_ascii_hexdigit())
-                || annotation_source != Some(map.annotation_hash.as_str())
-                || map.family.trim().is_empty()
-                || map.registration.trim().is_empty()
-            {
-                return Err("Visual input provenance does not match graph annotations".into());
-            }
-            let readouts = crate::sensory::motor_readout_indices(&graph);
-            let mut used = HashSet::new();
-            let mut columns = [0.; 8];
-            for entry in &map.entries {
-                if entry.index as usize >= n
-                    || readouts.contains(&entry.index)
-                    || !used.insert(entry.index)
-                    || entry.weights.iter().any(|w| !w.is_finite() || *w < 0.)
-                    || entry.weights.iter().sum::<f64>() > 1. + 1e-12
-                    || !entry.weights.iter().any(|w| *w > 0.)
-                {
-                    return Err("Visual input requires unique non-motor cells with bounded nonnegative receptive fields".into());
-                }
-                for (sum, weight) in columns.iter_mut().zip(entry.weights) {
-                    *sum += weight;
-                }
-            }
-            if columns.iter().any(|sum| {
-                *sum <= 0. || !sum.is_finite() || (sum - columns[0]).abs() > 1e-10 * columns[0]
-            }) {
-                return Err(
-                    "Visual input must cover all eight directions with equal total weight".into(),
-                );
-            }
-        }
         Ok(graph)
     }
     pub fn neuron_count(&self) -> usize {

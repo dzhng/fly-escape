@@ -292,12 +292,7 @@ mod tests {
                 (status.tick, status.neural_steps, status.complete),
                 (tick, tick * 2, false)
             );
-            let mut frame = direct.step().unwrap().unwrap();
-            for fly in &mut frame.flies {
-                if let Some(sense) = &mut fly.sensory {
-                    sense.vision = sim::environment::VisionSample::default();
-                }
-            }
+            let frame = direct.step().unwrap().unwrap();
             expected.push(frame);
         }
         assert!(session.advance().is_err());
@@ -311,12 +306,7 @@ mod tests {
         expected.clear();
         for _ in 0..2 {
             session.advance().unwrap();
-            let mut frame = direct.step().unwrap().unwrap();
-            for fly in &mut frame.flies {
-                if let Some(sense) = &mut fly.sensory {
-                    sense.vision = sim::environment::VisionSample::default();
-                }
-            }
+            let frame = direct.step().unwrap().unwrap();
             expected.push(frame);
         }
         let complete = session.advance().unwrap();
@@ -433,14 +423,7 @@ mod tests {
             })
             .unwrap_err()
             .contains("no retinal tick"));
-        let mut expected = session.frames.clone();
-        for frame in &mut expected {
-            for fly in &mut frame.flies {
-                if let Some(sense) = &mut fly.sensory {
-                    sense.vision = sim::environment::VisionSample::default();
-                }
-            }
-        }
+        let expected = session.frames.clone();
         let mut chunk = session.flush().unwrap().unwrap();
         assert_eq!(
             chunk.chunk.decode(&session.info.record_layout).unwrap(),
