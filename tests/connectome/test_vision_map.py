@@ -18,14 +18,14 @@ class VisionMapTests(unittest.TestCase):
         weights = overlap_weights(np.arange(8) * np.pi / 4)
         peak = 1 / (1 + np.sqrt(2))
         neighbor = peak / np.sqrt(2)
-        np.testing.assert_allclose(weights[0], [peak, neighbor, 0., 0., 0., 0., 0., neighbor], atol=1e-15)
+        np.testing.assert_allclose(weights[0], [peak, neighbor, 0., 0., 0., 0., 0., neighbor], atol=1e-15, rtol=0)
         np.testing.assert_array_equal(weights[0, 2:7], np.zeros(5))
-        np.testing.assert_allclose(weights.sum(axis=0), np.ones(8), atol=1e-15)
-        np.testing.assert_allclose(weights.sum(axis=1), np.ones(8), atol=1e-15)
+        np.testing.assert_allclose(weights.sum(axis=0), np.ones(8), atol=1e-15, rtol=0)
+        np.testing.assert_allclose(weights.sum(axis=1), np.ones(8), atol=1e-15, rtol=0)
 
     def test_uneven_population_preserves_equal_basis_dose_and_mixed_input_bound(self):
         weights = overlap_weights([*list(np.arange(8) * np.pi / 4), 0., 0.])
-        np.testing.assert_allclose(weights.sum(axis=0), np.repeat(weights[:, 0].sum(), 8), atol=1e-14)
+        np.testing.assert_allclose(weights.sum(axis=0), np.repeat(weights[:, 0].sum(), 8), atol=1e-14, rtol=0)
         self.assertAlmostEqual(weights.sum(axis=1).max(), 1.)
         self.assertTrue(np.all(weights.sum(axis=1) <= 1. + 1e-12))
         with self.assertRaisesRegex(ValueError, 'empty direction'):
@@ -70,7 +70,7 @@ class ExportTests(unittest.TestCase):
         self.assertGreater(entries[6][1], 0.)
         self.assertEqual(entries[6][7], 0.)
         weights = np.array(list(entries.values()))
-        np.testing.assert_allclose(weights.sum(axis=0), np.repeat(weights[:, 0].sum(), 8), atol=1e-14)
+        np.testing.assert_allclose(weights.sum(axis=0), np.repeat(weights[:, 0].sum(), 8), atol=1e-14, rtol=0)
         self.assertAlmostEqual(weights.sum(axis=1).max(), 1.)
         self.assertEqual(report['candidates']['Tm2']['cells'][0]['readoutPath'], ['100', '121', '122'])
         self.assertEqual(report['candidates']['Tm2']['cells'][0]['relayPath'], ['100', '121'])
