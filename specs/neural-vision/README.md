@@ -7,7 +7,8 @@ Objective 3 connects the recorded eight-direction light sample to the existing M
 The [mapping audit](assets/input-map/README.md) is complete: both frozen candidates pass, with no graph rebuild. Next implement [the graded adapter and experiments](slices/02-causal-response.md); neither candidate is a behavioral winner yet. Do not specify the lighting puzzle until this objective is verified and archived. Preserve the user's new panel order: graphs directly below the brain, compact roster. Update this handoff after each committed pass.
 
 - [x] Audit annotations and actual retained paths; freeze two bounded candidate maps.
-- [ ] Implement one graded map adapter, run bounded pilot, freeze the winner and held-out protocol.
+- [x] Implement graded adapter and preserve failed bounded pilot.
+- [ ] Resolve the motor gate through the bounded flight-readout diagnostic; freeze a winner only after its gate passes.
 - [ ] Pass paired neural/optical silencing and closed-loop response gates.
 - [ ] Verify actual worker/playback, resource cost, tests and independent review.
 - [ ] Consolidate choices and close-spec.
@@ -23,7 +24,7 @@ Three independent drafts informed this plan. Fewest-slices proposed audit then c
 ## Ownership and firewalls
 
 - `scripts/connectome` owns the reproducible annotation-to-input-map export and provenance; `Graph` validates/resolves it once. Reuse the existing graph manifest, not a second runtime file/service/cache.
-- `sensory.rs` owns actual brightness-to-current conversion. `Brain`, neural parameters, signed circuit weights and body decoding stay unchanged. `FieldSet` and schema-5 records retain the objective-2 contract.
+- `sensory.rs` owns actual brightness-to-current conversion. Neural parameters, signed circuit weights and body configuration stay unchanged. The failed motor gate permits only the separately specified, evidence-gated DNp03 flight-readout revision. `FieldSet` and schema-5 records retain the objective-2 contract.
 - No input can target any motor readout, use exit direction, odor, blocked-light telemetry, renderer state or player-camera data. All eight brightness bins have a nonempty declared route.
 - Coordinate-to-angle registration, positive brightness current, normalization and temporal units are explicit modeling assumptions. Do not claim retinal reconstruction, living-fly firing rates or universal attraction.
 - Preserve 16 flies, 2/5/10 stars, 128 MiB archive cap, existing saved arrangements and About. Existing campaign rooms keep their cue configuration; only a diagnostic run enables vision here. The later puzzle gets its own evidence-led content spec.
