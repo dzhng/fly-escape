@@ -1,0 +1,2413 @@
+{
+  "meta": {
+    "warmup_values": [
+      0,
+      30,
+      60,
+      120
+    ],
+    "seeds": 20,
+    "trial_ticks": 600,
+    "stimulus_conditions": [
+      "fruit",
+      "vinegar",
+      "empty"
+    ]
+  },
+  "trials": [
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 0,
+      "mean_distance": 144.50262416958887,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 11.590183063242577
+    },
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 1,
+      "mean_distance": 135.92592560372088,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 10.636187351706981
+    },
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 2,
+      "mean_distance": 146.14688922793914,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06,
+      "closest_approach": 24.523716534694096
+    },
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 3,
+      "mean_distance": 121.2276354151923,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 7.812610753178216
+    },
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 4,
+      "mean_distance": 86.68740490817333,
+      "distance_reduction": 0.680833567609419,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.0262729507880113
+    },
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 5,
+      "mean_distance": 130.72651091487472,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.3957194039908587
+    },
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 6,
+      "mean_distance": 145.53229242722892,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 4.255505691640912
+    },
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 7,
+      "mean_distance": 138.63872693373176,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 13.23597099012389
+    },
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 8,
+      "mean_distance": 139.48777783776998,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 2.6722571530418695
+    },
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 9,
+      "mean_distance": 137.91322720862507,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 11.00623394959257
+    },
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 10,
+      "mean_distance": 146.91350712481446,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06166666666666667,
+      "closest_approach": 21.209776214126908
+    },
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 11,
+      "mean_distance": 143.5453454544785,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 4.718714002088584
+    },
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 12,
+      "mean_distance": 149.89887511203284,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.055,
+      "closest_approach": 32.201914211289264
+    },
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 13,
+      "mean_distance": 145.80926786112502,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 10.820770291970554
+    },
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 14,
+      "mean_distance": 144.0931594443915,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 14.079954027713365
+    },
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 15,
+      "mean_distance": 133.14507117173616,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.0551452277643214
+    },
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 16,
+      "mean_distance": 133.60717982773033,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 5.9190127390416905
+    },
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 17,
+      "mean_distance": 143.6026614202801,
+      "distance_reduction": 0.33335446765196414,
+      "time_in_zone": 0.065,
+      "closest_approach": 10.648081655687166
+    },
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 18,
+      "mean_distance": 140.62217044528825,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 10.717853395417766
+    },
+    {
+      "warmup": 0,
+      "stimulus": "fruit",
+      "seed": 19,
+      "mean_distance": 138.5999654421271,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.5462231058059432
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 0,
+      "mean_distance": 127.08882572967154,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 7.497914264468564
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 1,
+      "mean_distance": 122.63692307165266,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06,
+      "closest_approach": 27.405281262735684
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 2,
+      "mean_distance": 91.53214754081695,
+      "distance_reduction": 0.6521135392042344,
+      "time_in_zone": 0.065,
+      "closest_approach": 14.887185603363111
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 3,
+      "mean_distance": 86.71954558447507,
+      "distance_reduction": 0.676783075600067,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 0.5015109187912062
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 4,
+      "mean_distance": 136.30898796413564,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 12.88532868173468
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 5,
+      "mean_distance": 132.63922495950018,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 7.631097767227458
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 6,
+      "mean_distance": 101.12575821632682,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 8.14006766129883
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 7,
+      "mean_distance": 99.14762862714905,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 2.3819376040600364
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 8,
+      "mean_distance": 126.19453692980092,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 4.079002444357683
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 9,
+      "mean_distance": 109.37988479881254,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 6.321508400886521
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 10,
+      "mean_distance": 112.52118596115164,
+      "distance_reduction": 0.5149578171372021,
+      "time_in_zone": 0.065,
+      "closest_approach": 14.917933027340592
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 11,
+      "mean_distance": 131.63678825670286,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 5.341897953679277
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 12,
+      "mean_distance": 127.01763035647818,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06166666666666667,
+      "closest_approach": 18.355989882593445
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 13,
+      "mean_distance": 94.19935153723566,
+      "distance_reduction": 0.5833464750690084,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 5.157718548444025
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 14,
+      "mean_distance": 114.24015870992706,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 3.25657471359787
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 15,
+      "mean_distance": 130.6265707148311,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 13.354083736089942
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 16,
+      "mean_distance": 121.63686920505216,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 13.988564844313817
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 17,
+      "mean_distance": 91.71105172458871,
+      "distance_reduction": 0.3808819969275054,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.7406628242988504
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 18,
+      "mean_distance": 104.30419317581746,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 9.590268047587989
+    },
+    {
+      "warmup": 0,
+      "stimulus": "vinegar",
+      "seed": 19,
+      "mean_distance": 88.60052496412338,
+      "distance_reduction": 0.6859141502731673,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 5.605034063708984
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 0,
+      "mean_distance": 125.36821692178972,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 3.5986180080099177
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 1,
+      "mean_distance": 90.24578437378729,
+      "distance_reduction": 0.6539652335825819,
+      "time_in_zone": 0.06166666666666667,
+      "closest_approach": 21.317691212096623
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 2,
+      "mean_distance": 127.81469241366506,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 14.850914677341262
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 3,
+      "mean_distance": 84.9032029611175,
+      "distance_reduction": 0.687336784101515,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.3374677897162899
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 4,
+      "mean_distance": 136.8167443038396,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 7.6448296202802055
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 5,
+      "mean_distance": 120.04690257980886,
+      "distance_reduction": 0.328568875288591,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 3.8787525250845074
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 6,
+      "mean_distance": 134.1994185252153,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 3.458551802419689
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 7,
+      "mean_distance": 92.06475235176704,
+      "distance_reduction": 0.6053383253342414,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 5.252979339262762
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 8,
+      "mean_distance": 110.30257463125318,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 2.9061446684352745
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 9,
+      "mean_distance": 111.2556489091614,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 5.00503564656851
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 10,
+      "mean_distance": 138.95329101684604,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 16.30616256595375
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 11,
+      "mean_distance": 93.46055193040566,
+      "distance_reduction": 0.5344854224211925,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.349924322187382
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 12,
+      "mean_distance": 135.82806137045117,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 18.135210198482113
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 13,
+      "mean_distance": 136.6699225811211,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 5.885975846484638
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 14,
+      "mean_distance": 102.04531169453912,
+      "distance_reduction": 0.4958102595754852,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.4426596719704698
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 15,
+      "mean_distance": 129.002387430765,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 10.73855636607886
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 16,
+      "mean_distance": 126.75535696094907,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 16.217442418385573
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 17,
+      "mean_distance": 118.62436125344202,
+      "distance_reduction": 0.6041735154968078,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 4.873856242265076
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 18,
+      "mean_distance": 89.4237356830044,
+      "distance_reduction": 0.6455344967203174,
+      "time_in_zone": 0.065,
+      "closest_approach": 6.804014782458123
+    },
+    {
+      "warmup": 0,
+      "stimulus": "empty",
+      "seed": 19,
+      "mean_distance": 89.4864397785826,
+      "distance_reduction": 0.6506109862376829,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 8.277778296002571
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 0,
+      "mean_distance": 145.52810939421403,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06,
+      "closest_approach": 27.88831177742648
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 1,
+      "mean_distance": 136.57648546028543,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 10.274812668795986
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 2,
+      "mean_distance": 138.00111479977554,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 12.479103766669738
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 3,
+      "mean_distance": 137.57605636175975,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 12.534215607415458
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 4,
+      "mean_distance": 119.6861104834587,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 5.175354555910848
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 5,
+      "mean_distance": 130.5782278360278,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.350102938760573
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 6,
+      "mean_distance": 140.51538917279055,
+      "distance_reduction": 0.3744887838403217,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 7.543354845813189
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 7,
+      "mean_distance": 130.9359576034474,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 12.300407816921679
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 8,
+      "mean_distance": 143.51360284300245,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 11.980607968638719
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 9,
+      "mean_distance": 142.43414619660257,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.058333333333333334,
+      "closest_approach": 28.39211322922318
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 10,
+      "mean_distance": 136.65920668045305,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 10.30436923976511
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 11,
+      "mean_distance": 141.20982140535713,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 14.119555162797605
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 12,
+      "mean_distance": 147.4596505107754,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06,
+      "closest_approach": 26.425378209352314
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 13,
+      "mean_distance": 143.5565221616319,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 9.630616968332776
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 14,
+      "mean_distance": 134.58468478228008,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 7.047734897368987
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 15,
+      "mean_distance": 112.75420536032182,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06166666666666667,
+      "closest_approach": 19.041809744837376
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 16,
+      "mean_distance": 89.98712144540063,
+      "distance_reduction": 0.46468436544515335,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 21.829303148044268
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 17,
+      "mean_distance": 145.07737274284094,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06,
+      "closest_approach": 23.716474325056872
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 18,
+      "mean_distance": 143.48874895250614,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 14.28975201905795
+    },
+    {
+      "warmup": 30,
+      "stimulus": "fruit",
+      "seed": 19,
+      "mean_distance": 132.9206575581356,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 3.1583368819139244
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 0,
+      "mean_distance": 135.69862600881086,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 19.915690352708317
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 1,
+      "mean_distance": 118.08728324858413,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 16.730830780419524
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 2,
+      "mean_distance": 101.07956180264786,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.9643609453761832
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 3,
+      "mean_distance": 129.23021535700053,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.4088058361324152
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 4,
+      "mean_distance": 138.7483187624952,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 16.883167989893636
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 5,
+      "mean_distance": 141.15461190277117,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 14.365839040635711
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 6,
+      "mean_distance": 87.39650467630565,
+      "distance_reduction": 0.5282184359518189,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.3208919793402185
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 7,
+      "mean_distance": 129.64642253134173,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 6.7622679772349255
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 8,
+      "mean_distance": 102.67327277589136,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 6.122694006710597
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 9,
+      "mean_distance": 84.99187198583128,
+      "distance_reduction": 0.6825147942482775,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 9.427248357249761
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 10,
+      "mean_distance": 128.56716506662124,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 5.227219106701624
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 11,
+      "mean_distance": 138.06858691542146,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 16.208742547828717
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 12,
+      "mean_distance": 83.35340984943541,
+      "distance_reduction": 0.6619324142600507,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 10.340573443562947
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 13,
+      "mean_distance": 83.4741577869453,
+      "distance_reduction": 0.6531189598058467,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 6.804941226335082
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 14,
+      "mean_distance": 99.3769204128823,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 2.6134627429017705
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 15,
+      "mean_distance": 143.5478467685909,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06166666666666667,
+      "closest_approach": 18.38333385280361
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 16,
+      "mean_distance": 124.28555398771404,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 19.494786301777527
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 17,
+      "mean_distance": 98.01882029958543,
+      "distance_reduction": 0.4223378453707234,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 14.59347615081481
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 18,
+      "mean_distance": 119.05125944970015,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 8.344056048507316
+    },
+    {
+      "warmup": 30,
+      "stimulus": "vinegar",
+      "seed": 19,
+      "mean_distance": 92.63207200193574,
+      "distance_reduction": 0.623330545077635,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.6235037094757605
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 0,
+      "mean_distance": 135.18811147342208,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 18.716576153413893
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 1,
+      "mean_distance": 97.6401334018521,
+      "distance_reduction": 0.39332395317044894,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 14.991688247953133
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 2,
+      "mean_distance": 95.07653885713458,
+      "distance_reduction": 0.4640376687821349,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.5338285462823344
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 3,
+      "mean_distance": 82.20480553583336,
+      "distance_reduction": 0.6843462488015063,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.3224048627364484
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 4,
+      "mean_distance": 138.70869760446382,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 11.28421935498989
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 5,
+      "mean_distance": 125.35121857539099,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 13.723468348784916
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 6,
+      "mean_distance": 138.77507560901208,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 4.063372621943305
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 7,
+      "mean_distance": 85.81042099073704,
+      "distance_reduction": 0.6552198281680308,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 4.7292901695883405
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 8,
+      "mean_distance": 116.0019542853018,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.8591421396735492
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 9,
+      "mean_distance": 115.99208868766722,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 12.4683429918429
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 10,
+      "mean_distance": 134.7712984014603,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 10.924759773333896
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 11,
+      "mean_distance": 99.5025626643982,
+      "distance_reduction": 0.6089501662385773,
+      "time_in_zone": 0.065,
+      "closest_approach": 11.755134766486483
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 12,
+      "mean_distance": 130.32641596009924,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 16.1127384948167
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 13,
+      "mean_distance": 138.7597663502431,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 9.70963793965157
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 14,
+      "mean_distance": 99.59700152521462,
+      "distance_reduction": 0.5422649108406096,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 3.5161720666518677
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 15,
+      "mean_distance": 131.60918495874893,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06166666666666667,
+      "closest_approach": 18.75468376633659
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 16,
+      "mean_distance": 122.6582309120195,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 16.34147701665102
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 17,
+      "mean_distance": 131.6551141290828,
+      "distance_reduction": 0.5363642867216571,
+      "time_in_zone": 0.06166666666666667,
+      "closest_approach": 22.026036929567702
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 18,
+      "mean_distance": 81.97163091434776,
+      "distance_reduction": 0.6686018687592167,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 3.9996005978739224
+    },
+    {
+      "warmup": 30,
+      "stimulus": "empty",
+      "seed": 19,
+      "mean_distance": 83.27784809931445,
+      "distance_reduction": 0.6860943360794067,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 5.575864890700699
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 0,
+      "mean_distance": 128.68212017676754,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 0.5656541307419309
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 1,
+      "mean_distance": 145.5784970014615,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06,
+      "closest_approach": 24.72910416734657
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 2,
+      "mean_distance": 144.18790038199333,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 17.864915913929874
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 3,
+      "mean_distance": 116.34467341083179,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 8.59104546560797
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 4,
+      "mean_distance": 138.1189580950063,
+      "distance_reduction": 0.4769858243942231,
+      "time_in_zone": 0.055,
+      "closest_approach": 34.47424288425991
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 5,
+      "mean_distance": 121.05690192499785,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 14.441884794555888
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 6,
+      "mean_distance": 136.05177685553952,
+      "distance_reduction": 0.5473390209846934,
+      "time_in_zone": 0.055,
+      "closest_approach": 32.66247909502254
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 7,
+      "mean_distance": 125.78690302270452,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.3838902729796276
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 8,
+      "mean_distance": 133.23318799618596,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 4.754325669986743
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 9,
+      "mean_distance": 123.03932208042478,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 13.058908634537168
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 10,
+      "mean_distance": 136.3124066916216,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 19.20132177047581
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 11,
+      "mean_distance": 140.1032613693495,
+      "distance_reduction": 0.5363951600195472,
+      "time_in_zone": 0.056666666666666664,
+      "closest_approach": 28.431382806760865
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 12,
+      "mean_distance": 143.19639838603325,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 16.947008611800616
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 13,
+      "mean_distance": 147.64857275564063,
+      "distance_reduction": 0.3214182722974081,
+      "time_in_zone": 0.056666666666666664,
+      "closest_approach": 28.086208104367707
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 14,
+      "mean_distance": 135.76426717325612,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 5.084570261283769
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 15,
+      "mean_distance": 132.77275214046256,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.1978303834810045
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 16,
+      "mean_distance": 146.4368941107858,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06166666666666667,
+      "closest_approach": 23.806603052469335
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 17,
+      "mean_distance": 142.70546423481684,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.055,
+      "closest_approach": 34.84405285417876
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 18,
+      "mean_distance": 146.30095885572342,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.058333333333333334,
+      "closest_approach": 30.91363198519714
+    },
+    {
+      "warmup": 60,
+      "stimulus": "fruit",
+      "seed": 19,
+      "mean_distance": 131.1994977066719,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 2.996093458121735
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 0,
+      "mean_distance": 132.78913568667977,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 3.4336692381688145
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 1,
+      "mean_distance": 107.7291158462952,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 17.266766543352762
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 2,
+      "mean_distance": 90.76200671269551,
+      "distance_reduction": 0.5891307441355542,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 12.491123203190073
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 3,
+      "mean_distance": 99.78495385451698,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 14.037614618701744
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 4,
+      "mean_distance": 123.81251489304648,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 20.427175227070514
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 5,
+      "mean_distance": 126.03532540382609,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.058333333333333334,
+      "closest_approach": 27.907281597774265
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 6,
+      "mean_distance": 133.84520952446198,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 20.035326324958728
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 7,
+      "mean_distance": 123.21540493956653,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 3.052143068081381
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 8,
+      "mean_distance": 131.21401095047887,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 8.441017747714572
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 9,
+      "mean_distance": 131.54838064674806,
+      "distance_reduction": 0.4781662594888074,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 7.236435103428307
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 10,
+      "mean_distance": 145.40283097096028,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.058333333333333334,
+      "closest_approach": 28.22732002943895
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 11,
+      "mean_distance": 122.62752393297706,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 17.068146159188455
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 12,
+      "mean_distance": 130.95785834519538,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 9.178183136278085
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 13,
+      "mean_distance": 130.88046098702372,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 13.62589589959012
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 14,
+      "mean_distance": 134.29003382736425,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06166666666666667,
+      "closest_approach": 22.602817337928045
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 15,
+      "mean_distance": 87.91768469095533,
+      "distance_reduction": 0.4810718217240199,
+      "time_in_zone": 0.065,
+      "closest_approach": 10.81186222319966
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 16,
+      "mean_distance": 105.15391503777346,
+      "distance_reduction": 0.6874844964527088,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 18.697751613936184
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 17,
+      "mean_distance": 144.49061980145555,
+      "distance_reduction": 0.5168403526583151,
+      "time_in_zone": 0.043333333333333335,
+      "closest_approach": 46.86275903631033
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 18,
+      "mean_distance": 92.51722084460327,
+      "distance_reduction": 0.3630735124395154,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 17.324530522345622
+    },
+    {
+      "warmup": 60,
+      "stimulus": "vinegar",
+      "seed": 19,
+      "mean_distance": 129.77793797738252,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06166666666666667,
+      "closest_approach": 19.35968204991232
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 0,
+      "mean_distance": 107.00298671853102,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 5.407374219208414
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 1,
+      "mean_distance": 139.91987790552986,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 20.17160324958434
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 2,
+      "mean_distance": 110.21963148124688,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 10.694177081363856
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 3,
+      "mean_distance": 89.65913499551253,
+      "distance_reduction": 0.6263114593613349,
+      "time_in_zone": 0.065,
+      "closest_approach": 16.829980415952484
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 4,
+      "mean_distance": 126.05310389951417,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 22.721957286158624
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 5,
+      "mean_distance": 127.06733885498576,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.056666666666666664,
+      "closest_approach": 31.851019362962894
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 6,
+      "mean_distance": 145.84609200828268,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06166666666666667,
+      "closest_approach": 21.887075614525266
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 7,
+      "mean_distance": 85.57820827735871,
+      "distance_reduction": 0.6384122838082745,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 9.139589957788674
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 8,
+      "mean_distance": 111.39990828716554,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 8.929920319104458
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 9,
+      "mean_distance": 108.85407664724315,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 14.809289271621862
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 10,
+      "mean_distance": 139.8984828121488,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06166666666666667,
+      "closest_approach": 21.533610603550013
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 11,
+      "mean_distance": 99.16565894663839,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06166666666666667,
+      "closest_approach": 21.176864625409117
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 12,
+      "mean_distance": 125.70931691523728,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 4.504699417558801
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 13,
+      "mean_distance": 140.69150935145032,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 13.480979834429405
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 14,
+      "mean_distance": 118.7982044405803,
+      "distance_reduction": 0.39415712288323485,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 10.518628328197131
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 15,
+      "mean_distance": 99.23776735588406,
+      "distance_reduction": 0.3822612197883346,
+      "time_in_zone": 0.065,
+      "closest_approach": 11.731792054682385
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 16,
+      "mean_distance": 87.31035345913347,
+      "distance_reduction": 0.6188536051238139,
+      "time_in_zone": 0.065,
+      "closest_approach": 16.31761278769206
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 17,
+      "mean_distance": 130.89889236367583,
+      "distance_reduction": 0.5853040003561314,
+      "time_in_zone": 0.051666666666666666,
+      "closest_approach": 39.98095618526195
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 18,
+      "mean_distance": 84.27220194644211,
+      "distance_reduction": 0.6873538759135511,
+      "time_in_zone": 0.065,
+      "closest_approach": 13.2669010534722
+    },
+    {
+      "warmup": 60,
+      "stimulus": "empty",
+      "seed": 19,
+      "mean_distance": 86.99120705749624,
+      "distance_reduction": 0.6628101304012782,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 13.26505126763072
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 0,
+      "mean_distance": 129.42118012289674,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 5.130340740967394
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 1,
+      "mean_distance": 142.98145523841828,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 0.6436974280740457
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 2,
+      "mean_distance": 119.41606585469536,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 18.666301316223333
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 3,
+      "mean_distance": 130.64792081184646,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 7.478230499812343
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 4,
+      "mean_distance": 117.37984094798533,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.1983488556221948
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 5,
+      "mean_distance": 143.19853329802908,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 18.983339297016858
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 6,
+      "mean_distance": 139.04894933841717,
+      "distance_reduction": 0.4628262333919576,
+      "time_in_zone": 0.041666666666666664,
+      "closest_approach": 46.30939300477529
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 7,
+      "mean_distance": 107.44044250073445,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06166666666666667,
+      "closest_approach": 20.60674947050513
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 8,
+      "mean_distance": 128.65651859253987,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 11.933642846001243
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 9,
+      "mean_distance": 131.50114319854006,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 10.970793737136422
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 10,
+      "mean_distance": 143.95337469772616,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 12.946571561099828
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 11,
+      "mean_distance": 90.89653204703616,
+      "distance_reduction": 0.6368065735901013,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 18.879189497810238
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 12,
+      "mean_distance": 148.4241379406881,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.05333333333333334,
+      "closest_approach": 33.63325753745269
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 13,
+      "mean_distance": 149.7873067607689,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.045,
+      "closest_approach": 43.040641353188256
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 14,
+      "mean_distance": 143.0705815316215,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06166666666666667,
+      "closest_approach": 24.80001051128112
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 15,
+      "mean_distance": 141.3630352923067,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 8.649767157748386
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 16,
+      "mean_distance": 144.87103709160627,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06,
+      "closest_approach": 24.821179672863153
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 17,
+      "mean_distance": 131.02065611744666,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 15.364536828944539
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 18,
+      "mean_distance": 131.2419246614694,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 2.327403496035072
+    },
+    {
+      "warmup": 120,
+      "stimulus": "fruit",
+      "seed": 19,
+      "mean_distance": 140.8362478343476,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 2.7893952866456857
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 0,
+      "mean_distance": 101.07196715141869,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.211258894307723
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 1,
+      "mean_distance": 127.05333150992442,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06166666666666667,
+      "closest_approach": 22.488758118369017
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 2,
+      "mean_distance": 90.56864921775104,
+      "distance_reduction": 0.6537656147339937,
+      "time_in_zone": 0.06166666666666667,
+      "closest_approach": 22.527994560254175
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 3,
+      "mean_distance": 111.43572073001653,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.147075882971859
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 4,
+      "mean_distance": 144.20093634365156,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 20.763815481641778
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 5,
+      "mean_distance": 88.469241135746,
+      "distance_reduction": 0.5529069140609437,
+      "time_in_zone": 0.065,
+      "closest_approach": 13.972804225087655
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 6,
+      "mean_distance": 146.10641776870986,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.051666666666666666,
+      "closest_approach": 38.582205628726456
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 7,
+      "mean_distance": 149.7097518426489,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.051666666666666666,
+      "closest_approach": 36.20645790417441
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 8,
+      "mean_distance": 122.83855290161787,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 2.0062273244884468
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 9,
+      "mean_distance": 104.94024440660367,
+      "distance_reduction": 0.43069758859055585,
+      "time_in_zone": 0.06,
+      "closest_approach": 24.300358171682806
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 10,
+      "mean_distance": 130.51077539667324,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 10.580289556653845
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 11,
+      "mean_distance": 140.85796596539575,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 20.783968367349217
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 12,
+      "mean_distance": 86.19010268766705,
+      "distance_reduction": 0.6223337983234116,
+      "time_in_zone": 0.065,
+      "closest_approach": 12.516291996950022
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 13,
+      "mean_distance": 117.47195925848212,
+      "distance_reduction": 0.4585016286327998,
+      "time_in_zone": 0.06,
+      "closest_approach": 29.448817303466228
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 14,
+      "mean_distance": 119.34203962899362,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 19.81610463190326
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 15,
+      "mean_distance": 123.20344012539678,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 8.318980478281153
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 16,
+      "mean_distance": 134.13281502097954,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 9.005815137111473
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 17,
+      "mean_distance": 127.66942568137384,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 17.34590245235101
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 18,
+      "mean_distance": 105.40344396990402,
+      "distance_reduction": 0.4238898801891683,
+      "time_in_zone": 0.058333333333333334,
+      "closest_approach": 31.34536915741773
+    },
+    {
+      "warmup": 120,
+      "stimulus": "vinegar",
+      "seed": 19,
+      "mean_distance": 103.23669415916766,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 8.089850628694435
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 0,
+      "mean_distance": 115.30477557960924,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 2.2216016601603292
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 1,
+      "mean_distance": 121.98469563804284,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.065,
+      "closest_approach": 13.71018380335421
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 2,
+      "mean_distance": 98.51956284557451,
+      "distance_reduction": 0.6393035720629161,
+      "time_in_zone": 0.06166666666666667,
+      "closest_approach": 20.233700990501717
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 3,
+      "mean_distance": 96.64529114716414,
+      "distance_reduction": 0.44860198802535933,
+      "time_in_zone": 0.065,
+      "closest_approach": 4.242291670792213
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 4,
+      "mean_distance": 143.94964927724035,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 19.46307024373067
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 5,
+      "mean_distance": 131.9819807003282,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06,
+      "closest_approach": 24.27542326730969
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 6,
+      "mean_distance": 146.1528125861902,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.051666666666666666,
+      "closest_approach": 37.36408832530615
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 7,
+      "mean_distance": 149.72292130794685,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.05333333333333334,
+      "closest_approach": 34.62303422426161
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 8,
+      "mean_distance": 131.5061782305045,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06166666666666667,
+      "closest_approach": 19.87837519297017
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 9,
+      "mean_distance": 96.97270391337058,
+      "distance_reduction": 0.5425514176764655,
+      "time_in_zone": 0.06,
+      "closest_approach": 23.509803692247857
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 10,
+      "mean_distance": 136.39803259016074,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 7.017868000900466
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 11,
+      "mean_distance": 135.01780579864854,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 17.86483458798358
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 12,
+      "mean_distance": 140.03677001754016,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 15.657110993030486
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 13,
+      "mean_distance": 142.39513079337596,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.058333333333333334,
+      "closest_approach": 29.074647839772858
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 14,
+      "mean_distance": 89.92057969881826,
+      "distance_reduction": 0.5255089659100863,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 19.268292975437618
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 15,
+      "mean_distance": 94.34596453071089,
+      "distance_reduction": 0.6332744791804779,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 2.5662261995554205
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 16,
+      "mean_distance": 110.51691384845084,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 1.0567380858155722
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 17,
+      "mean_distance": 128.4528156377201,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06,
+      "closest_approach": 27.878124191390377
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 18,
+      "mean_distance": 121.69624717043399,
+      "distance_reduction": 0.3197988451118955,
+      "time_in_zone": 0.06333333333333334,
+      "closest_approach": 17.996492952106912
+    },
+    {
+      "warmup": 120,
+      "stimulus": "empty",
+      "seed": 19,
+      "mean_distance": 116.0315315703063,
+      "distance_reduction": 0.34397665262537713,
+      "time_in_zone": 0.06666666666666667,
+      "closest_approach": 2.3435193897835855
+    }
+  ],
+  "summary": {
+    "warmup_0": {
+      "fruit": {
+        "mean_distance": {
+          "mean": 137.33131089754247,
+          "std": 13.345347876297792
+        },
+        "distance_reduction": {
+          "mean": 0.3385283623637751,
+          "std": 0.07858559964190116
+        },
+        "time_in_zone": {
+          "mean": 0.06466666666666665,
+          "std": 0.0028185890875479605
+        },
+        "closest_approach": {
+          "mean": 10.05360513564528,
+          "std": 8.075276236176846
+        }
+      },
+      "vinegar": {
+        "mean_distance": {
+          "mean": 112.46338940141247,
+          "std": 16.27075584634432
+        },
+        "distance_reduction": {
+          "mean": 0.3985590442888861,
+          "std": 0.1340006274175569
+        },
+        "time_in_zone": {
+          "mean": 0.06533333333333333,
+          "std": 0.0017159383568311661
+        },
+        "closest_approach": {
+          "mean": 9.151978112528928,
+          "std": 6.451490773473216
+        }
+      },
+      "empty": {
+        "mean_distance": {
+          "mean": 114.66336788357557,
+          "std": 18.68370002527654
+        },
+        "distance_reduction": {
+          "mean": 0.4361805597494633,
+          "std": 0.14679009418816283
+        },
+        "time_in_zone": {
+          "mean": 0.06575,
+          "std": 0.0013411230782859219
+        },
+        "closest_approach": {
+          "mean": 7.96412829997418,
+          "std": 5.991423350526724
+        }
+      },
+      "fruit_vs_control_effect_d": -1.3608488153285456,
+      "vinegar_vs_control_effect_d": -0.12239829642472941
+    },
+    "warmup_30": {
+      "fruit": {
+        "mean_distance": {
+          "mean": 134.65215958755337,
+          "std": 13.274440424409995
+        },
+        "distance_reduction": {
+          "mean": 0.32977761806497974,
+          "std": 0.033159678230777354
+        },
+        "time_in_zone": {
+          "mean": 0.06433333333333333,
+          "std": 0.0027080128015453202
+        },
+        "closest_approach": {
+          "mean": 13.974085788605148,
+          "std": 7.871255545996861
+        }
+      },
+      "vinegar": {
+        "mean_distance": {
+          "mean": 113.95412407952558,
+          "std": 20.918066380183827
+        },
+        "distance_reduction": {
+          "mean": 0.40243184131404447,
+          "std": 0.13587508267388765
+        },
+        "time_in_zone": {
+          "mean": 0.0655,
+          "std": 0.0016749792701868126
+        },
+        "closest_approach": {
+          "mean": 9.926794619820523,
+          "std": 6.442671087316628
+        }
+      },
+      "empty": {
+        "mean_distance": {
+          "mean": 114.24390494678718,
+          "std": 20.778969408413936
+        },
+        "distance_reduction": {
+          "mean": 0.4378495281896219,
+          "std": 0.14641204067562433
+        },
+        "time_in_zone": {
+          "mean": 0.06516666666666668,
+          "std": 0.0017400510848184232
+        },
+        "closest_approach": {
+          "mean": 10.170421983963958,
+          "std": 6.319346777704724
+        }
+      },
+      "fruit_vs_control_effect_d": -1.140878317162899,
+      "vinegar_vs_control_effect_d": -0.013547336157282906
+    },
+    "warmup_60": {
+      "fruit": {
+        "mean_distance": {
+          "mean": 135.72603571851374,
+          "std": 8.952181479241993
+        },
+        "distance_reduction": {
+          "mean": 0.34994598997431003,
+          "std": 0.07253339141423155
+        },
+        "time_in_zone": {
+          "mean": 0.06225000000000001,
+          "std": 0.004449563024737498
+        },
+        "closest_approach": {
+          "mean": 17.201757715855244,
+          "std": 11.771964663576332
+        }
+      },
+      "vinegar": {
+        "mean_distance": {
+          "mean": 121.23760724370031,
+          "std": 17.10902458932488
+        },
+        "distance_reduction": {
+          "mean": 0.3796475509232729,
+          "std": 0.1067432250163723
+        },
+        "time_in_zone": {
+          "mean": 0.06283333333333332,
+          "std": 0.005085382100797451
+        },
+        "closest_approach": {
+          "mean": 16.904375034028444,
+          "std": 9.70757552535156
+        }
+      },
+      "empty": {
+        "mean_distance": {
+          "mean": 113.22869768620285,
+          "std": 20.09890706845116
+        },
+        "distance_reduction": {
+          "mean": 0.42165249194893495,
+          "std": 0.1431942875441862
+        },
+        "time_in_zone": {
+          "mean": 0.06341666666666666,
+          "std": 0.0035541446853560206
+        },
+        "closest_approach": {
+          "mean": 16.410954146807732,
+          "std": 8.423014007362653
+        }
+      },
+      "fruit_vs_control_effect_d": -1.4094087897349126,
+      "vinegar_vs_control_effect_d": 0.41824622126892164
+    },
+    "warmup_120": {
+      "fruit": {
+        "mean_distance": {
+          "mean": 132.75784419395603,
+          "std": 14.410764744429791
+        },
+        "distance_reduction": {
+          "mean": 0.3428006009498089,
+          "std": 0.0742863104079708
+        },
+        "time_in_zone": {
+          "mean": 0.06191666666666666,
+          "std": 0.006957709552878895
+        },
+        "closest_approach": {
+          "mean": 16.45863950496016,
+          "std": 12.786851379681636
+        }
+      },
+      "vinegar": {
+        "mean_distance": {
+          "mean": 118.7206737451061,
+          "std": 18.91048708845383
+        },
+        "distance_reduction": {
+          "mean": 0.38096396280487055,
+          "std": 0.10605401395817346
+        },
+        "time_in_zone": {
+          "mean": 0.06266666666666668,
+          "std": 0.004390646624106497
+        },
+        "closest_approach": {
+          "mean": 17.522917295094135,
+          "std": 10.851358290636204
+        }
+      },
+      "empty": {
+        "mean_distance": {
+          "mean": 122.37761814410688,
+          "std": 18.718103788474775
+        },
+        "distance_reduction": {
+          "mean": 0.380520045352361,
+          "std": 0.10856314727138704
+        },
+        "time_in_zone": {
+          "mean": 0.06233333333333333,
+          "std": 0.004129837231121289
+        },
+        "closest_approach": {
+          "mean": 17.012271414320573,
+          "std": 10.693835496486757
+        }
+      },
+      "fruit_vs_control_effect_d": -0.6056920872184556,
+      "vinegar_vs_control_effect_d": -0.18944647308248652
+    }
+  }
+}
