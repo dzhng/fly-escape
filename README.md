@@ -57,3 +57,7 @@ For contributors, the [development guide](docs/development.md) explains the code
 
 The [directional sensing rationale](specs/done/directional-vision/README.md) records the coarse light model, replay contract and measured limits.
 The [neural vision rationale](specs/done/neural-vision/README.md) separates validated circuit responses from unproven attraction. [Campaign vision](specs/done/campaign-vision/README.md) records the enabled room lighting and gameplay regression checks.
+
+## Ratchet Files
+
+Source files are limited to 8,000 estimated tokens (bytes divided by four). The pre-commit hook runs `scripts/check-file-size.mjs` through lint-staged, so a clone must install the repository dependencies before commits. Existing oversized authored files are frozen at their current size; generated and vendored paths are excluded through `.gitattributes`. A file may use `@ratchet-files-ignore` in its first 10 lines only when splitting it would cost more than it saves, with the reason beside the pragma.

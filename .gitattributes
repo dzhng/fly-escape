@@ -1,0 +1,5 @@
+
+# Ratchet exclusions: generated and vendored source is maintained by its producer.
+**/generated/** linguist-generated
+**/*.generated.* linguist-generated
+**/vendor/** linguist-vendored
