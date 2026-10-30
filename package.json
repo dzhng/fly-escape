@@ -40,7 +40,7 @@
     "test:retina-one-fly": "node tests/browser/retina-one-fly.mjs",
     "test:physical-eyes": "node tests/browser/physical-eyes.mjs",
     "probe:retina-neural": "cargo run --release -p sim --example retinal_neural_probe --",
-    "prepare": "husky"
+    "prepare": "node scripts/install-git-hooks.mjs"
   },
   "type": "module",
   "workspaces": [
@@ -53,7 +53,6 @@
     "typescript": "^6.0.3",
     "wasm-pack": "0.15.0",
     "linguist-languages": "9.5.0",
-    "husky": "9.1.7",
     "lint-staged": "17.6.0"
   },
   "patchedDependencies": {
